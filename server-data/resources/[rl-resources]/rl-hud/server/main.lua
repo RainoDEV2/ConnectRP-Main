@@ -98,6 +98,5 @@ RLCore.Functions.CreateCallback('QBCore:HasMoney', function(source, cb, count)
 end)
 
 RLCore.Functions.CreateUseableItem('watch', function(source)
-    local src = source
-    TriggerClientEvent('hud:toggleWatch', src)
+    TriggerEvent("carHud:compass")
 end)
