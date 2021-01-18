@@ -68,7 +68,6 @@ RLCore.Functions.SpawnVehicle = function(model, cb, coords, isnetworked)
     SetVehRadioStation(veh, "OFF")
 
 	SetModelAsNoLongerNeeded(model)
-	
 	TriggerEvent("debug", 'RLCore: Spawn ' .. model .. ' (' .. (isnetworked and 'Networked' or 'Local') .. ')', 'normal')
 
     if cb ~= nil then
@@ -296,19 +295,28 @@ RLCore.Functions.Progressbar = function(name, label, duration, useWhileDead, can
 end
 
 RLCore.Functions.GetVehicleProperties = function(vehicle)
-	local color1, color2               = GetVehicleColours(vehicle)
+	local color1, color2 = GetVehicleColours(vehicle)
 	local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
-	
-	return {
+	local extras = {}
 
+	for id=0, 12 do
+		if DoesExtraExist(vehicle, id) then
+			local state = IsVehicleExtraTurnedOn(vehicle, id) == 1
+			extras[tostring(id)] = state
+		end
+	end
+
+	return {
 		model             = GetEntityModel(vehicle),
 
 		plate             = GetVehicleNumberPlateText(vehicle),
 		plateIndex        = GetVehicleNumberPlateTextIndex(vehicle),
 
-		health            = GetEntityHealth(vehicle),
-		dirtLevel         = GetVehicleDirtLevel(vehicle),
+		bodyHealth        = GetVehicleBodyHealth(vehicle),
+		engineHealth      = GetVehicleEngineHealth(vehicle),
 
+		fuelLevel         = GetVehicleFuelLevel(vehicle),
+		dirtLevel         = GetVehicleDirtLevel(vehicle),
 		color1            = color1,
 		color2            = color2,
 
@@ -325,9 +333,7 @@ RLCore.Functions.GetVehicleProperties = function(vehicle)
 			IsVehicleNeonLightEnabled(vehicle, 3)
 		},
 
-		extras            = {
-			
-		},
+		extras            = extras,
 
 		neonColor         = table.pack(GetVehicleNeonLightsColour(vehicle)),
 		tyreSmokeColor    = table.pack(GetVehicleTyreSmokeColor(vehicle)),
@@ -380,8 +386,7 @@ RLCore.Functions.GetVehicleProperties = function(vehicle)
 		modTrimB          = GetVehicleMod(vehicle, 44),
 		modTank           = GetVehicleMod(vehicle, 45),
 		modWindows        = GetVehicleMod(vehicle, 46),
-		modLivery         = GetVehicleMod(vehicle, 48),
-		modCustomTyres	  = GetVehicleModVariation(vehicle, 23)
+		modLivery         = GetVehicleLivery(vehicle)
 	}
 end
 
@@ -400,12 +405,20 @@ RLCore.Functions.SetVehicleProperties = function(vehicle, props)
 		SetVehicleNumberPlateTextIndex(vehicle, props.plateIndex)
 	end
 
-	if props.health ~= nil then
-		SetEntityHealth(vehicle, props.health)
+	if props.bodyHealth ~= nil then
+		SetVehicleBodyHealth(vehicle, props.bodyHealth + 0.0)
+	end
+
+	if props.engineHealth ~= nil then
+		SetVehicleEngineHealth(vehicle, props.engineHealth + 0.0)
+	end
+
+	if props.fuelLevel ~= nil then
+		SetVehicleFuelLevel(vehicle, props.fuelLevel + 0.0)
 	end
 
 	if props.dirtLevel ~= nil then
-		SetVehicleDirtLevel(vehicle, props.dirtLevel)
+		SetVehicleDirtLevel(vehicle, props.dirtLevel + 0.0)
 	end
 
 	if props.color1 ~= nil then
@@ -441,6 +454,16 @@ RLCore.Functions.SetVehicleProperties = function(vehicle, props)
 		SetVehicleNeonLightEnabled(vehicle, 1, props.neonEnabled[2])
 		SetVehicleNeonLightEnabled(vehicle, 2, props.neonEnabled[3])
 		SetVehicleNeonLightEnabled(vehicle, 3, props.neonEnabled[4])
+	end
+
+	if props.extras ~= nil then
+		for id,enabled in pairs(props.extras) do
+			if enabled then
+				SetVehicleExtra(vehicle, tonumber(id), 0)
+			else
+				SetVehicleExtra(vehicle, tonumber(id), 1)
+			end
+		end
 	end
 
 	if props.neonColor ~= nil then
@@ -627,13 +650,8 @@ RLCore.Functions.SetVehicleProperties = function(vehicle, props)
 		SetVehicleMod(vehicle, 46, props.modWindows, false)
 	end
 
-	if props.modCustomTyres ~= nil and props.modCustomTyres then 
-		SetVehicleMod(vehicle, 23, props.modCustomTyres, true)
-	end
-
 	if props.modLivery ~= nil then
 		SetVehicleMod(vehicle, 48, props.modLivery, false)
+		SetVehicleLivery(vehicle, props.modLivery)
 	end
-
-	return true
 end
