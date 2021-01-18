@@ -370,7 +370,7 @@ Citizen.CreateThread(function()
     end
 end)
 
-Controlkey = {["generalUse"] = {38,"E"}} 
+--[[ Controlkey = {["generalUse"] = {38,"E"}} 
 RegisterNetEvent('event:control:update')
 AddEventHandler('event:control:update', function(table)
     Controlkey["generalUse"] = table["generalUse"]
@@ -435,4 +435,4 @@ function SetFuel(vehicle, fuel)
         DecorSetInt(vehicle, "CurrentFuel", fuel)
         Fuel = 100
 	end
-end
+end ]]
