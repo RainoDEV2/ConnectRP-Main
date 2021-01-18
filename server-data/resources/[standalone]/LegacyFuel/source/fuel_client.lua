@@ -282,6 +282,36 @@ Citizen.CreateThread(function()
 	end
 end)
 
+local alarm = true
+
+Citizen.CreateThread(function()
+	while true do
+		vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
+		Citizen.Wait(1000)
+		local ped = PlayerPedId()
+		if IsPedInAnyVehicle(ped) then
+			if GetVehicleFuelLevel(vehicle) < 16 and GetVehicleFuelLevel(vehicle) > 15 and alarm then
+				alarm = false
+				TriggerEvent('RLCore:Notify', "Fuel level low.", "error")
+				PlaySound(-1, "5_SEC_WARNING", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
+			end
+			if GetVehicleFuelLevel(vehicle) < 11 and GetIsVehicleEngineRunning(vehicle) then
+				
+				TriggerEvent('RLCore:Notify', "You ran the fuel pump dry.", "error")
+				Wait(500)
+				PlaySound(-1, "5_SEC_WARNING", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
+				Wait(500)
+				PlaySound(-1, "5_SEC_WARNING", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
+				Wait(500)
+				PlaySound(-1, "5_SEC_WARNING", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
+				alarm = true
+				Wait(1000)
+				SetVehicleUndriveable(vehicle, true)
+			end
+		end
+	end
+end)
+
 function CreateBlip(coords)
 	local blip = AddBlipForCoord(coords)
 
@@ -292,7 +322,7 @@ function CreateBlip(coords)
 	SetBlipAsShortRange(blip, true)
 
 	BeginTextCommandSetBlipName("STRING")
-	AddTextComponentString("Tankstation")
+	AddTextComponentString("Fuel")
 	EndTextCommandSetBlipName(blip)
 
 	return blip

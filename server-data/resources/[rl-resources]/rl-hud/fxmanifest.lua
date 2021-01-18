@@ -64,7 +64,7 @@ client_scripts {
 	'client/hud-c.lua',
 	'client/stress.lua',
 	--'client/vhud-c.lua',
-	'client/fuel.lua',
+	--'client/fuel.lua',
 }
 
 server_scripts {
