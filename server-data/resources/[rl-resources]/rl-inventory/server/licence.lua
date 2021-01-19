@@ -1,21 +1,45 @@
 RLCore = nil
 TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
 
-function AddLicense(target, type, cb)
-	local identifier = GetPlayerIdentifiers(target, 0) 
+RegisterNetEvent('tp_gunschool:addLicense')
+AddEventHandler('tp_gunschool:addLicense', function(type)
 
-	RLCore.Functions.ExecuteSql(false, 'INSERT INTO user_licenses (type, owner) VALUES (@type, @owner)', {
-        ['@type']  = type,
-        ['@owner'] = identifier
-    }, function(rowsChanged)
-        
+	TriggerEvent('esx_license:addLicense', source, type, function()
+		TriggerEvent('esx_license:getLicenses', source, function(licenses)
+			--[[ TriggerClientEvent('tp_gunschool:loadLicenses', _source, licenses) ]]
+		end)
+	end) 
+end)
+
+function AddLicense(target, type, cb) -- source, weapon, callback (MAYBE IM MISSING SOMETHING HERE AND ITS GETTING CONFUSSED?)
+	print("YEET")
+	local xPlayer = RLCore.Functions.GetPlayer(target) 
+	local identifier = GetPlayerIdentifiers(target, 0)
+
+	print(json.encode(type))
+	print(json.encode(xPlayer.PlayerData.citizenid))
+	print(json.encode(identifier))
+
+	-- This way says type = null
+
+	RLCore.Functions.ExecuteSql(false, 'INSERT INTO user_licenses (type, citizenid, owner) VALUES (@type, @citizenid, @owner)', {
+		['@type']  = type,
+		['@citizenid'] = xPlayer.PlayerData.citizenid,
+		['@owner'] = identifier
+	}, function(rowsChanged)
+
+	--The below give colum errors for identifier i beleive 
+
+	--[[ exports['ghmattimysql']:execute('INSERT INTO user_licenses (type, citizenid, owner) VALUES (@type, @citizenid, @owner)', {
+		['@type']  = type,
+		['@citizenid'] = xPlayer.PlayerData.citizenid,
+		['@owner'] = identifier
+	}, function(rowsChanged) ]]
 		if cb ~= nil then
-			cb()
-		end
+			cb() 
+		end 
 	end)
 end
-
-
 
 function RemoveLicense(target, type, cb)
 	local identifier = GetPlayerIdentifiers(target, 0)
@@ -147,46 +171,46 @@ AddEventHandler("rlcore:checkLicence", function(shop, shopitems)
   local source = source
   local xPlayer = RLCore.Functions.GetPlayer(source)
   exports['ghmattimysql']:execute('SELECT type FROM user_licenses WHERE citizenid = "' .. xPlayer.PlayerData.citizenid .. '" AND type = @licence AND revoked = 0', {
-	['@licence'] = "weapon"}, 
+	['@licence'] = "weapon"},  
 	function(result)
 		--print(json.encode(result[1]))
 		if(result[1] == nil) then
 			TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'You do not have a license!' })
 		else
-			TriggerClientEvent("rlshopsclient:inv", shop, ShopItems)
+			TriggerClientEvent('rlshopsclient:inv', source, shop, shopitems)
 			print("Sent to client")
 		end
 	end)
 end)
 
-RegisterNetEvent('RLCore_licence:addLicense')
-AddEventHandler('RLCore_licence:addLicense', function(target, type, cb)
+RegisterNetEvent('esx_license:addLicense')
+AddEventHandler('esx_license:addLicense', function(target, type, cb)
 	AddLicense(target, type, cb)
 end)
 
-RegisterNetEvent('RLCore_licence:removeLicense')
-AddEventHandler('RLCore_licence:removeLicense', function(target, type, cb)
+RegisterNetEvent('esx_license:removeLicense')
+AddEventHandler('esx_license:removeLicense', function(target, type, cb)
 	RemoveLicense(target, type, cb)
 end)
 
-RegisterNetEvent('RLCore_licence:revokeLicense')
-AddEventHandler('RLCore_licence:revokeLicense', function(target, type, cb)
+RegisterNetEvent('esx_license:revokeLicense')
+AddEventHandler('esx_license:revokeLicense', function(target, type, cb)
 	RevokeLicense(target, type, cb)
 end)
 
-AddEventHandler('RLCore_licence:getLicense', function(type, cb)
+AddEventHandler('esx_license:getLicense', function(type, cb)
 	GetLicense(type, cb)
 end)
 
-AddEventHandler('RLCore_licence:getLicenses', function(target, cb)
+AddEventHandler('esx_license:getLicenses', function(target, cb)
 	GetLicenses(target, cb)
 end)
 
-AddEventHandler('RLCore_licence:checkLicense', function(target, type, cb)
+AddEventHandler('esx_license:checkLicense', function(target, type, cb)
 	CheckLicense(target, type, cb)
 end)
 
-AddEventHandler('RLCore_licence:getLicensesList', function(cb)
+AddEventHandler('esx_license:getLicensesList', function(cb)
 	GetLicensesList(cb)
 end) 
 

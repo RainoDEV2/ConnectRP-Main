@@ -57,29 +57,33 @@ Citizen.CreateThread(function()
                             elseif Config.Locations[shop]["type"] == 'weapon' then
                                 print("IM A WEAPON STORE")
                                 TriggerServerEvent('rlcore:checkLicence', shop, ShopItems)
-                                
                             else
                                 TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_"..shop, ShopItems)
                             end
                             TriggerEvent("debug", 'Shops: ' .. Config.Locations[shop]["label"], 'success')
                         end
-                    end 
+                    end  
                 end
             end
         end
 
         if not InRange then
             Citizen.Wait(5000)
-        end
-        Citizen.Wait(5)
+        end 
+        Citizen.Wait(5) 
     end
 end)
 
-RegisterNetEvent("rlshopsclient:inv")
-AddEventHandler("rlshopsclient:inv", function(x, y)
-    print("TRIGGERING")
+
+RegisterCommand('fuk', function(source, args, rawCommand)
+	TriggerServerEvent('tp_gunschool:addLicense', 'weapon')
+end, false)
+
+
+RegisterNetEvent('rlshopsclient:inv')
+AddEventHandler('rlshopsclient:inv', function(x, y)
     TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_"..x, y)
-end)
+end) 
 
 RegisterNetEvent('rl-shops:client:UpdateShop')
 AddEventHandler('rl-shops:client:UpdateShop', function(shop, itemData, amount)
