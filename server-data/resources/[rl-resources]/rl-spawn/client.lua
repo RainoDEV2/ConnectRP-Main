@@ -34,8 +34,8 @@ RegisterNUICallback('chooseAppa', function(data)
     local appaYeet = data.appType
 
     SetDisplay(false)
-    DoScreenFadeOut(500)
-    Citizen.Wait(5000)
+    DoScreenFadeOut(250)
+    Citizen.Wait(250)
     TriggerServerEvent("apartments:server:CreateApartment", appaYeet, Apartments.Locations[appaYeet].label)
     FreezeEntityPosition(GetPlayerPed(-1), false)
     SetEntityVisible(GetPlayerPed(-1), true)
@@ -57,7 +57,7 @@ RegisterNUICallback('spawnplayer', function(data)
         TriggerEvent("debug", 'Spawn: Last Location', 'success')
 
         SetDisplay(false)
-        Citizen.Wait(2000)
+        Citizen.Wait(250)
         RLCore.Functions.GetPlayerData(function(PlayerData)
             SetEntityCoords(GetPlayerPed(-1), PlayerData.position.x, PlayerData.position.y, PlayerData.position.z)
             SetEntityHeading(GetPlayerPed(-1), PlayerData.position.a)
@@ -80,7 +80,7 @@ RegisterNUICallback('spawnplayer', function(data)
         TriggerEvent("debug", 'Spawn: Owned House', 'success')
 
         SetDisplay(false)
-        Citizen.Wait(2000)
+        Citizen.Wait(250)
         TriggerEvent('rl-houses:client:enterOwnedHouse', location)
         TriggerServerEvent('rl-houses:server:SetInsideMeta', 0, false)
         TriggerServerEvent('rl-apartments:server:SetInsideMeta', 0, 0, false)
@@ -94,11 +94,11 @@ RegisterNUICallback('spawnplayer', function(data)
 
         local pos = Config.Spawns[location].coords
         SetDisplay(false)
-        Citizen.Wait(2000)
+        Citizen.Wait(250)
         SetEntityCoords(ped, pos.x, pos.y, pos.z)
         TriggerServerEvent('rl-houses:server:SetInsideMeta', 0, false)
         TriggerServerEvent('rl-apartments:server:SetInsideMeta', 0, 0, false)
-        Citizen.Wait(500)
+        Citizen.Wait(250)
         SetEntityCoords(ped, pos.x, pos.y, pos.z)
         SetEntityHeading(ped, pos.h)
         FreezeEntityPosition(ped, false)
@@ -154,7 +154,7 @@ AddEventHandler('rl-spawn:client:setupSpawns', function(cData, new, apps)
                         end
                     end
 
-                    Citizen.Wait(500)
+                    Citizen.Wait(250)
                     SendNUIMessage({
                         action = "setupLocations",
                         locations = Config.Spawns,
@@ -163,11 +163,11 @@ AddEventHandler('rl-spawn:client:setupSpawns', function(cData, new, apps)
                 end, cData.citizenid)
             else
                 SetDisplay(false)
-                Citizen.Wait(2000)
+                Citizen.Wait(250)
                 SetEntityCoords(PlayerPedId(), 1769.14, 257709, 45.72)
                 TriggerServerEvent('rl-houses:server:SetInsideMeta', 0, false)
                 TriggerServerEvent('rl-apartments:server:SetInsideMeta', 0, 0, false)
-                Citizen.Wait(500)
+                Citizen.Wait(250)
                 SetEntityCoords(PlayerPedId(), 1769.14, 257709, 45.72)
                 SetEntityHeading(PlayerPedId(), 269.01)
                 FreezeEntityPosition(PlayerPedId(), false)
@@ -235,8 +235,8 @@ AddEventHandler('rl-spawn:client:openUI', function(value)
     ToggleSound(muteSound)
     if not IsPlayerSwitchInProgress() then
         CreateThread(function()
-            Wait(1000)
-            DoScreenFadeIn(750)
+            Wait(250)
+            DoScreenFadeIn(250)
         end)
         SwitchOutPlayer(PlayerPedId(), 1, 1)
     end
