@@ -1,34 +1,32 @@
 RLCore = nil
 
 Config = {
-    PedCoords = {x = -813.97, y = 176.22, z = 76.74, h = -7.5, r = 1.0}, 
-    HiddenCoords = {x = -812.23, y = 182.54, z = 76.74, h = 156.5, r = 1.0}, 
-    CamCoords = {x = -814.02, y = 179.56, z = 76.74, h = 198.5, r = 1.0}, 
+    PedCoords = {x = 103.20265, y = -1715.479, z = 31.362436, h = 48.542221, r = 1.0}, 
 
     spawns = {
-        [1] = {
-            coords = vector3(-1035.691, -2738.945, 20.169267),
-            heading = 12.683959
+        --[[middle]][1] = {
+            coords = vector3(99.210258, -1712.209, 30.112476),
+            heading = 230.0
         },
 
-        [2] = {
-            coords = vector3(-1037.3, -2739.961, 20.169281),
-            heading = 6.0901341
+        --[[right1]][2] = {
+            coords = vector3(100.45861, -1711.265, 30.120094),
+            heading = 200.0
         },
 
-        [3] = {
-            coords = vector3(-1038.816, -2739.806, 20.169281),
-            heading = 330.1156
+        --[[left1]][3] = {
+            coords = vector3(98.568862, -1713.697, 30.11063),
+            heading = 270.0
         },
 
-        [4] = {
-            coords = vector3(-1039.881, -2738.181, 20.169267),
-            heading = 307.3962
+        --[[left2]][4] = {
+            coords = vector3(99.394676, -1714.851, 30.110197),
+            heading = 270.0
         },
 
-        [5] = {
-            coords = vector3(-1039.538, -2736.306, 20.169267),
-            heading = 284.73489
+        --[[right2]][5] = {
+            coords = vector3(101.87945, -1711.992, 30.114706),
+            heading = 200.0
         }
     },
 
@@ -74,9 +72,9 @@ function openCharMenu(bool)
     choosingCharacter = bool
 
     if bool == true then
-        DoScreenFadeIn(3000)
+        DoScreenFadeIn(2000)
         createCamera('create')
-        Wait(1500)
+        Wait(750)
 
         local html = ""
         for k, v in ipairs(createdChars) do
@@ -325,7 +323,7 @@ end)
 RegisterNUICallback('removeCharacter', function()
     TriggerServerEvent('bb-multicharacter:server:deleteCharacter', currentChar.dat[1])
     DoScreenFadeOut(750)
-    Wait(1500)
+    Wait(500)
     TriggerEvent('bb-multicharacter:refreshPeds')
 end)
 
@@ -339,21 +337,14 @@ end)
 
 function createCamera(typ, pedData)
     SetRainFxIntensity(0.0)
-    TriggerEvent('rl-weathersync:client:DisableSync')
-    SetWeatherTypePersist('EXTRASUNNY')
-    SetWeatherTypeNow('EXTRASUNNY')
-    SetWeatherTypeNowPersist('EXTRASUNNY')
-    NetworkOverrideClockTime(12, 0, 0)
 
     if typ == 'create' then
         DoScreenFadeIn(1000)
-        SetTimecycleModifierStrength(1.0)
         FreezeEntityPosition(GetPlayerPed(-1), false)
-        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -1035.697, -2734.057, 21.482341, -10.0, 0.0, 150.0, 60.00, false, 0)
+        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", 103.20265, -1715.479, 31.362436, -15.0, 0.5, 50.542221, 60.00, false, 0)
         SetCamActive(cam, true)
         RenderScriptCams(true, false, 1, true, true)
     elseif typ == 'exit' then
-        SetTimecycleModifier('default')
         SetCamActive(cam, false)
         DestroyCam(cam, true)
         RenderScriptCams(false, false, 1, true, true)
@@ -371,7 +362,6 @@ function createCamera(typ, pedData)
         end
     end
 end
-
 
 -- Gta V Switch
 local cloudOpacity = 0.01
@@ -393,7 +383,6 @@ function InitialSetup()
 end
 
 function ClearScreen()
-    SetCloudHatOpacity(cloudOpacity)
     HideHudAndRadarThisFrame()
     SetDrawOrigin(0.0, 0.0, 0.0, 0)
 end
@@ -420,7 +409,7 @@ AddEventHandler('bb-multicharacter:client:chooseChar', function()
 
     CreatePeds()
     ShutdownLoadingScreenNui()
-    SetEntityCoords(GetPlayerPed(-1), vector3(-1049.942, -2724.759, 20.169294))
+    SetEntityCoords(GetPlayerPed(-1), vector3(103.20265, -1715.479, 29.362436))
     SetEntityVisible(GetPlayerPed(-1), false, false)
     FreezeEntityPosition(GetPlayerPed(-1), true)
     Citizen.CreateThread(function()
@@ -431,7 +420,7 @@ AddEventHandler('bb-multicharacter:client:chooseChar', function()
         end
     end)
 
-    DoScreenFadeIn(250)
+    --DoScreenFadeIn(250)
     while true do
         ClearScreen()
         Citizen.Wait(0)
@@ -439,7 +428,7 @@ AddEventHandler('bb-multicharacter:client:chooseChar', function()
             SwitchInPlayer(PlayerPedId())
             ClearScreen()
             CreateThread(function()
-                Wait(4000)
+                Wait(500)
                 DoScreenFadeOut(350)
             end)
 
