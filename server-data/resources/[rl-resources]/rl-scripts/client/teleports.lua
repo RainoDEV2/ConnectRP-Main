@@ -13,7 +13,7 @@ Teleports.Locations = {
         [2] = {x = 125.57, y = -1296.88, z = 29.26, h = 115.70, r = 1.0},
     }
 }
-
+ 
 JustTeleported = false
 
 function DrawText3Ds(x, y, z, text)
