@@ -11,7 +11,7 @@ AddEventHandler('tp_gunschool:addLicense', function(type)
 	end) 
 end)
 
-function AddLicense(target, type, cb)
+function AddLicense(target, type, cb) -- source, weapon, callback (MAYBE IM MISSING SOMETHING HERE AND ITS GETTING CONFUSSED?)
 	print("YEET")
 	local xPlayer = RLCore.Functions.GetPlayer(target) 
 	local identifier = GetPlayerIdentifiers(target, 0)
@@ -21,7 +21,7 @@ function AddLicense(target, type, cb)
 	print(json.encode(identifier))
 
 	-- This way says type = null
-	
+
 	RLCore.Functions.ExecuteSql(false, 'INSERT INTO user_licenses (type, citizenid, owner) VALUES (@type, @citizenid, @owner)', {
 		['@type']  = type,
 		['@citizenid'] = xPlayer.PlayerData.citizenid,
