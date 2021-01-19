@@ -4,10 +4,16 @@ shared_script "@nevo-scripts/cl_errorlog.lua"
 
 server_scripts {
 	'config.lua',
-	'server/main.lua'
+	'server/main.lua',
+	'server/sv_doors.lua'
 }
 
 client_scripts {
 	'config.lua',
-	'client/main.lua'
+	'client/main.lua',
+	'client/cl_doors.lua'
 }
+
+shared_script "shared/sh_doors.lua"
+
+server_export 'isDoorLocked'
