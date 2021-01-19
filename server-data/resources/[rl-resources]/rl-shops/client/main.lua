@@ -63,7 +63,7 @@ Citizen.CreateThread(function()
                             TriggerEvent("debug", 'Shops: ' .. Config.Locations[shop]["label"], 'success')
                         end
                     end  
-                end
+                end 
             end
         end
 

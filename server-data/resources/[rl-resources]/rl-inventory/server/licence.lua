@@ -21,12 +21,8 @@ function AddLicense(target, type, cb) -- source, weapon, callback (MAYBE IM MISS
 	print(json.encode(identifier))
 
 	-- This way says type = null
-
-	RLCore.Functions.ExecuteSql(false, 'INSERT INTO user_licenses (type, citizenid, owner) VALUES (@type, @citizenid, @owner)', {
-		['@type']  = type,
-		['@citizenid'] = xPlayer.PlayerData.citizenid,
-		['@owner'] = identifier
-	}, function(rowsChanged)
+ 
+	RLCore.Functions.ExecuteSql(false, 'INSERT INTO user_licenses (`type`, `citizenid`, `owner`) VALUES ('..type..', '..xPlayer.PlayerData.clientid..', '..identifier..')', function(rowsChanged)
 
 	--The below give colum errors for identifier i beleive 
 
