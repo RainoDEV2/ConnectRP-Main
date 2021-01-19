@@ -14,11 +14,13 @@ client_scripts {
 	'client/evidence.lua',
 	'client/objects.lua',
 	'client/tracker.lua',
+	'garage/client.lua',
 }
 
 server_scripts {
 	'config.lua',
 	'server/main.lua',
+	'garage/server.lua',
 }
 
 ui_page "html/index.html"
