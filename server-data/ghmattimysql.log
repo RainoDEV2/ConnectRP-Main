@@ -1,1 +1,2 @@
 [32m[ghmattimysql][0m Database server connection established.
+[ERROR] [MariaDB:10.4.17-MariaDB] [ax-mdt] An error happens on MySQL for query "INSERT INTO `user_mdt` (`char_id`, `notes`, `mugshot_url`, `fingerprint`) VALUES (?, ?, ?, ?) : ["PFQ17435","","",""]": ER_BAD_FIELD_ERROR: Unknown column 'fingerprint' in 'field list'
