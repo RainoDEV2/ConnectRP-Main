@@ -240,9 +240,13 @@ Citizen.CreateThread(function()
       end
 
       DisableAllControlActions(0)
+      FreezeEntityPosition(PlayerPedId(), true)
+      TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_BUM_BIN", 0, true)
       RLCore.Functions.Progressbar("search_"..myRobbableItems[i]['name'], "Searching "..myRobbableItems[i]['name'], 20000, false, true, {}, {}, {}, {}, function()
         EnableAllControlActions(0)
+        ClearPedTasks(playerPed)
         TriggerServerEvent('houseRobberies:searchItem')
+        FreezeEntityPosition(PlayerPedId(), false)
       end)
      end
     end
