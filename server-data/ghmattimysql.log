@@ -1,2 +1,5 @@
 [32m[ghmattimysql][0m Database server connection established.
 [ERROR] [MariaDB:10.4.17-MariaDB] [ax-mdt] An error happens on MySQL for query "INSERT INTO `user_mdt` (`char_id`, `notes`, `mugshot_url`, `fingerprint`) VALUES (?, ?, ?, ?) : ["PFQ17435","","",""]": ER_BAD_FIELD_ERROR: Unknown column 'fingerprint' in 'field list'
+[ERROR] [MariaDB:10.4.17-MariaDB] [ax-mdt] An error happens on MySQL for query "SELECT players.cid, players.citizenid, players.charinfo, user_mdt.fingerprint, user_mdt.notes FROM players INNER JOIN user_mdt ON players.citizenid = user_mdt.char_id : []": ER_BAD_FIELD_ERROR: Unknown column 'user_mdt.fingerprint' in 'field list'
+[ERROR] [MariaDB:10.4.17-MariaDB] [rl-core] An error happens on MySQL for query "SELECT type FROM user_licenses WHERE owner = @owner AND type = @licence AND revoked = 0 : []": ER_NO_SUCH_TABLE: Table 'realisticlifev2.user_licenses' doesn't exist
+[ERROR] [MariaDB:10.4.17-MariaDB] [rl-core] An error happens on MySQL for query "SELECT type FROM user_licenses WHERE owner = @owner AND type = @licence AND revoked = 0 : []": ER_NO_SUCH_TABLE: Table 'realisticlifev2.user_licenses' doesn't exist

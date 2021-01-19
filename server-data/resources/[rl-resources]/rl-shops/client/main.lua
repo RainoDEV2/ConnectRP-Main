@@ -54,12 +54,16 @@ Citizen.CreateThread(function()
                             ShopItems.slots = 30
                             if Config.Locations[shop]["type"] == 'dede' then
                                 TriggerServerEvent("inventory:server:OpenInventory", "dede", "Itemshop_"..shop, ShopItems)
+                            elseif Config.Locations[shop]["type"] == 'weapon' then
+                                print("IM A WEAPON STORE")
+                                TriggerServerEvent('rlcore:checkLicence', shop, ShopItems)
+                                
                             else
                                 TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_"..shop, ShopItems)
                             end
                             TriggerEvent("debug", 'Shops: ' .. Config.Locations[shop]["label"], 'success')
                         end
-                    end
+                    end 
                 end
             end
         end
@@ -69,6 +73,12 @@ Citizen.CreateThread(function()
         end
         Citizen.Wait(5)
     end
+end)
+
+RegisterNetEvent("rlshopsclient:inv")
+AddEventHandler("rlshopsclient:inv", function(x, y)
+    print("TRIGGERING")
+    TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_"..x, y)
 end)
 
 RegisterNetEvent('rl-shops:client:UpdateShop')

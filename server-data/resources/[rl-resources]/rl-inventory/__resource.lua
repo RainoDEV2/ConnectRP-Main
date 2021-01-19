@@ -5,6 +5,7 @@ shared_script "@nevo-scripts/cl_errorlog.lua"
 server_scripts {
 	"config.lua",
 	"server/main.lua",
+	"server/licence.lua"
 }
 
 client_scripts {
