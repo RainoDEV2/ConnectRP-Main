@@ -49,19 +49,6 @@ Citizen.CreateThread(function()
         local armor = GetPedArmour(player)
 		local oxy = oxygenTank
         local talking = false
-        
-        
-        --[[
-        local mumbleData = exports["mumble-voip"]:RetrieveMumbleData()
-
-		if mumbleData and mumbleData[svrId] and not mumbleData[svrId].radioActive and NetworkIsPlayerTalking(PlayerId()) then 
-			talking = 'normal'
-		elseif mumbleData and mumbleData[svrId] and mumbleData[svrId].radioActive then 
-			talking = 'radio'
-		else 
-			talking = false 
-        end
-        ]]
         local iTalking = exports['tokovoip_script']:getPlayerDataS(GetPlayerServerId(PlayerId()), 'radio:talking') ~= nil and exports['tokovoip_script']:getPlayerDataS(GetPlayerServerId(PlayerId()), 'radio:talking') == true and 'radio' or exports['tokovoip_script']:getPlayerDataS(GetPlayerServerId(PlayerId()), "voip:talking") ~= nil and exports['tokovoip_script']:getPlayerDataS(GetPlayerServerId(PlayerId()), "voip:talking") == 1 and 'normal' or false
         
         SendNUIMessage({
@@ -70,13 +57,14 @@ Citizen.CreateThread(function()
             health = health,
             armour = armor,
 			oxygen = oxy,
-			mumble = mumbleInfo,
+			--mumble = mumbleInfo,
 			talking = iTalking,
 		})
 		
         Citizen.Wait(200)
     end
 end)
+
 
 --Food Thirst
 Citizen.CreateThread(function()
@@ -91,3 +79,12 @@ Citizen.CreateThread(function()
         Citizen.Wait(5000)
     end
 end)
+
+--[[ Citizen.CreateThread(function()
+    while true do
+        local player = PlayerPedId()
+        local health = (GetEntityHealth(player) - 100)
+        print(health)
+        Citizen.Wait(5000)
+    end
+end) ]]
