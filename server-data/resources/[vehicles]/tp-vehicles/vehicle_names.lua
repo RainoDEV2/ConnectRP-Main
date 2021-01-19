@@ -1,0 +1,15 @@
+--[[ function AddTextEntry(key, value)
+    Citizen.InvokeNative(GetHashKey(ADD_TEXT_ENTRY), key, value)
+end ]]
+
+Citizen.CreateThread(function()
+	Citizen.Wait(0)
+	AddTextEntry('vic', '2011 Ford Crown Victoria')
+	AddTextEntry('tau', '2015 Ford Taurus')
+	AddTextEntry('charger18', '2018 Dodge Charger')
+	AddTextEntry('charger14', '2014 Dodge Charger')
+	AddTextEntry('explorer16', '2016 Ford Explorer')
+	AddTextEntry('2015polstan', '2015 Ford Mustang GT500')
+    AddTextEntry('raptortruck', '2017 Ford F150 Raptor')
+    AddTextEntry('camaro', '2020 Chevrolet Camaro ZL1')
+end) 
