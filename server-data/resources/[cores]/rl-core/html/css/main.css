@@ -7,38 +7,36 @@ body {
 }
 
 .notif-container {
-    width: 20vw;
+    width: 20%;
     position: absolute;
-    top: 4vh;
-    right: 12vw;
+    right: 15%;
     display: flex;
     flex-flow: row;
     flex-wrap: wrap;
 }
 
 .notification {
-    position: relative;
-    padding: 1vh;
+    padding: 8px;
     width: fit-content;
-    border-radius: .4vh;
+    border-radius: 3px;
     margin: 5px;
     font: caption;
-    font-size: 1.2vh;
+    font-size: 12px;
     font-weight: bold;
-    float: left;
+    text-align: center;
 }
 
 .success {
-    background: #27ae60;
+    background-color: rgba(144, 194, 139, 0.85);
     color: #fff;
 }
 
 .primary {
-    background-color: #2980b9;
+    background-color: rgba(51, 112, 165, 0.85);
     color: #ffffff;
 }
 
 .error {
-    background: #c0392b;
+    background-color: rgba(181, 82, 85, 0.85);
     color: #fff;
 }
