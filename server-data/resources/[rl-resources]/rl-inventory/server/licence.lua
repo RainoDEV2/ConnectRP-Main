@@ -5,32 +5,22 @@ RegisterNetEvent('tp_gunschool:addLicense')
 AddEventHandler('tp_gunschool:addLicense', function(type)
 
 	TriggerEvent('esx_license:addLicense', source, type, function()
-		TriggerEvent('esx_license:getLicenses', source, function(licenses)
+		--TriggerEvent('esx_license:getLicenses', source, function(licenses)
 			--[[ TriggerClientEvent('tp_gunschool:loadLicenses', _source, licenses) ]]
-		end)
+		--end)
 	end) 
 end)
 
 function AddLicense(target, type, cb) -- source, weapon, callback (MAYBE IM MISSING SOMETHING HERE AND ITS GETTING CONFUSSED?)
 	print("YEET")
 	local xPlayer = RLCore.Functions.GetPlayer(target) 
-	local identifier = GetPlayerIdentifiers(target, 0)
+	local identifier = GetPlayerIdentifier(target, 0) 
 
-	print(json.encode(type))
-	print(json.encode(xPlayer.PlayerData.citizenid))
-	print(json.encode(identifier))
-
-	-- This way says type = null
- 
-	RLCore.Functions.ExecuteSql(false, 'INSERT INTO user_licenses (`type`, `citizenid`, `owner`) VALUES ('..type..', '..xPlayer.PlayerData.clientid..', '..identifier..')', function(rowsChanged)
-
-	--The below give colum errors for identifier i beleive 
-
-	--[[ exports['ghmattimysql']:execute('INSERT INTO user_licenses (type, citizenid, owner) VALUES (@type, @citizenid, @owner)', {
+	exports['ghmattimysql']:execute('INSERT INTO user_licenses (type, citizenid, owner) VALUES (@type, @citizenid, @owner)', {
 		['@type']  = type,
 		['@citizenid'] = xPlayer.PlayerData.citizenid,
 		['@owner'] = identifier
-	}, function(rowsChanged) ]]
+	}, function(rowsChanged)
 		if cb ~= nil then
 			cb() 
 		end 
@@ -38,7 +28,7 @@ function AddLicense(target, type, cb) -- source, weapon, callback (MAYBE IM MISS
 end
 
 function RemoveLicense(target, type, cb)
-	local identifier = GetPlayerIdentifiers(target, 0)
+	local identifier = GetPlayerIdentifier(target, 0)
 
     RLCore.Functions.ExecuteSql(false, 'DELETE FROM user_licenses WHERE type = @type AND owner = @owner', {
 		['@type']  = type,
@@ -52,7 +42,7 @@ function RemoveLicense(target, type, cb)
 end
 
 function RevokeLicense(target, type, cb)
-	local identifier = GetPlayerIdentifiers(target, 0)
+	local identifier = GetPlayerIdentifier(target, 0)
 
 	RLCore.Functions.ExecuteSql(false, 'UPDATE user_licenses SET revoked = not revoked WHERE type = @type AND owner = @owner', {
 		['@type']  = type,
@@ -67,9 +57,13 @@ end
 
 function GetLicense(type, cb)
 
-    RLCore.Functions.ExecuteSql(false, 'SELECT * FROM licenses WHERE type = @type', {
+	exports['ghmattimysql']:execute('SELECT * FROM licenses WHERE type = @type', {
         ['@type'] = type
     }, function(result)
+
+    --[[ RLCore.Functions.ExecuteSql(false, 'SELECT * FROM licenses WHERE type = @type', {
+        ['@type'] = type
+    }, function(result) ]]
 
 		local data = {
 			type  = type,
@@ -80,12 +74,17 @@ function GetLicense(type, cb)
 	end)
 end
 
+
+
 function GetLicenses(target, cb)
-	local identifier = GetPlayerIdentifiers(target, 0)
+	local xPlayer = RLCore.Functions.GetPlayer(target) 
+	local identifier = GetPlayerIdentifier(target, 0) 
 
     RLCore.Functions.ExecuteSql(false, 'SELECT * FROM user_licenses WHERE owner = @owner', {
         ['@owner'] = identifier
-    }, function(result)
+	}, function(result)
+		
+		
 
 		local licenses   = {}
         local asyncTasks = {}
@@ -127,7 +126,7 @@ function GetLicenses(target, cb)
 end
 
 function CheckLicense(target, type, cb)
-	local identifier = GetPlayerIdentifiers(target, 0)
+	local identifier = GetPlayerIdentifier(target, 0)
 
 	RLCore.Functions.ExecuteSql(false, 'SELECT COUNT(*) as count FROM user_licenses WHERE type = @type AND owner = @owner', {
         ['@type']  = type,
