@@ -350,14 +350,6 @@ Config.Products = {
             type = "item",
             slot = 3,
         },
-        [4] = {
-            name = "fitbit",
-            price = 100,
-            amount = 150,
-            info = {},
-            type = "item",
-            slot = 4,
-        },
         [5] = {
             name = "cleaningkit",
             price = 350,
