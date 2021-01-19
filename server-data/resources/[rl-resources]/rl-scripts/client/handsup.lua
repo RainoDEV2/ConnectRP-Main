@@ -3,7 +3,7 @@ CreateThread(function()
 	while true do
 		Wait(1)
 		local playerPed = PlayerPedId()
-		if IsControlJustReleased(0, 246) then
+		if IsControlJustReleased(0, 73) then
 			RequestAnimDict('missminuteman_1ig_2')
 			while not HasAnimDictLoaded('missminuteman_1ig_2') do
 				Wait(100)
