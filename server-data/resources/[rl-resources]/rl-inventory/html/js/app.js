@@ -552,27 +552,6 @@ function handleDragDrop() {
         }
     });
 
-    $("#item-give").droppable({
-        hoverClass: 'button-hover',
-        drop: function(event, ui) {
-            setTimeout(function(){
-                IsDragging = false;
-            }, 300)
-            fromData = ui.draggable.data("item");
-            fromInventory = ui.draggable.parent().attr("data-inventory");
-            if(fromData.useable) {
-                if (fromData.shouldClose) {
-                    Inventory.Close();
-                }
-                $.post("http://rl-inventory/GiveItem", JSON.stringify({
-                    inventory: fromInventory,
-                    item: fromData,
-                }));
-                Inventory.Close();
-            }
-        }
-    });
-
     $("#item-drop").droppable({
         hoverClass: 'item-slot-hoverClass',
         drop: function(event, ui) {
