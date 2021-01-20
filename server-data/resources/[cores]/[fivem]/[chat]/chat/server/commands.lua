@@ -28,16 +28,18 @@ RLCore.Commands.Add('clearall', 'Clear chat for everyone.', {}, false, function(
 	TriggerClientEvent('chat:client:ClearChat', -1)
 end, "admin")
 
---[[
+
 RegisterServerEvent('bb-chat:sendOocGlobally')
 AddEventHandler('bb-chat:sendOocGlobally', function(playername, msg)
-	local name = playername
+	local xPlayer = RLCore.Functions.GetPlayer(source)
+	local name = xPlayer.PlayerData.charinfo.firstname
+	--local alt = xPlayer.PlayerData.charinfo.lastname
 
 	TriggerClientEvent('chat:addMessage', -1, {
-        template = '<div class="chat-message" style="background-color: rgba(51, 112, 165, 0.75);"><b>OOC | {0}</b> {1}</div>',
-        args = { name, msg}
+        template = '<div class="chat-message" style="background-color: rgba(51, 112, 165, 0.75);"><b>OOC - '..xPlayer.PlayerData.charinfo.firstname ..' '.. xPlayer.PlayerData.charinfo.lastname ..' | {0}</b> </div>',
+        args = { msg}
     })
-end)]]
+end)
 
 RLCore.Commands.Add('police', 'Police message.', {}, false, function(source, args)
 	-- If From Console
