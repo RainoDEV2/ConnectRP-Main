@@ -746,18 +746,18 @@ local myBlips = {}
 RegisterNetEvent('dispatch:sendNewsBlip')
 AddEventHandler('dispatch:sendNewsBlip', function(data)
     local blip = AddBlipForCoord(data.blipLocation.x, data.blipLocation.y, data.blipLocation.z)
-  SetBlipScale(blip, 1.1)
-  if data.isImportant then
-    SetBlipFlashesAlternate(blip,true)
-  end
-  SetBlipSprite(blip, data.blipSprite)
-  SetBlipColour(blip, data.blipColor)
-  if data.currentJob == "reporter" then
-    SetBlipSprite(blip, 459)
-  end
-  SetBlipAlpha(blip, 250)
-  SetBlipHighDetail(blip, 1)
-  BeginTextCommandSetBlipName("STRING")
+    SetBlipScale(blip, 2.0)
+    if data.isImportant then
+      SetBlipFlashesAlternate(blip,true)
+    end
+    SetBlipSprite(blip, data.blipSprite)
+    SetBlipColour(blip, data.blipColor)
+    if data.currentJob == "reporter" then
+      SetBlipSprite(blip, 459)
+    end
+    SetBlipAlpha(blip, 150)
+    SetBlipHighDetail(blip, 1)
+    BeginTextCommandSetBlipName("STRING")
   local displayText = data.blipDescription
   if data.currentJob == "reporter" then
     displayText = 'Scanner | ' .. data.blipDescription
@@ -781,6 +781,17 @@ AddEventHandler('dispatch:sendNewsBlip', function(data)
   }
   PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
 end)
+
+RegisterCommand('cb', function(source)
+    local ped = PlayerPedId()
+    local pos = GetEntityCoords(ped)
+    local curTime = GetGameTimer()
+
+    for key, item in pairs(myBlips) do
+        RemoveBlip(item.blip)
+    end
+end)
+
 
 Citizen.CreateThread(function()
     while true do
