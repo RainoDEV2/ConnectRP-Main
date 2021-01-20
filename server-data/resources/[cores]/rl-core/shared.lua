@@ -7151,10 +7151,19 @@ RLShared.VehicleModels = {
 
 RLShared.Gangs = {
 	["ballas"] = {
-		label = "Ballas Gang"
+		label = "East Side Ballas"
 	},
 	["vagos"] = {
-		label = "Vagos Gang"
+		label = "East Side Vagos"
+	},
+	["gsf"] = {
+		label = "Grove Street Familes"
+	},
+	["lost"] = {
+		label = "Lost MC"
+	},
+	["aztecas"] = {
+		label = "Aztecas Gang"
 	}
 }
 

@@ -34,6 +34,7 @@ client_scripts {
 	"client/teleports.lua",
     "client/vehmod.lua",
 	"client/weapdraw.lua",
+	"client/ragdoll.lua",
 	"@warmenu/warmenu.lua",
 }
 

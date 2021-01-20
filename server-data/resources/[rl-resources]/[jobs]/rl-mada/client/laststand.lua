@@ -13,8 +13,8 @@ end)
 -- Config
 LaststandCarObject = {}
 Laststand = Laststand or {}
-Laststand.ReviveInterval = 360
-Laststand.MinimumRevive = 300
+Laststand.ReviveInterval = 120
+Laststand.MinimumRevive = 90
 
 -- Code
 
@@ -134,7 +134,7 @@ end
 RegisterNetEvent('hospital:client:CanHelp')
 AddEventHandler('hospital:client:CanHelp', function(helperId)
     if InLaststand then
-        if LaststandTime <= 300 then
+        if LaststandTime <= 90 then
             TriggerServerEvent('hospital:server:CanHelp', helperId, true)
         else
             TriggerServerEvent('hospital:server:CanHelp', helperId, false)
