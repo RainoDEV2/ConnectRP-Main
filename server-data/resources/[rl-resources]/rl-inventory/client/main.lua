@@ -1,4 +1,4 @@
-QBCore = nil
+RLCore = nil
 
 inInventory = false
 hotbarOpen = false
@@ -22,8 +22,8 @@ local showTrunkPos = false
 Citizen.CreateThread(function() 
     while true do
         Citizen.Wait(10)
-        if QBCore == nil then
-            TriggerEvent("QBCore:GetObject", function(obj) QBCore = obj end)    
+        if RLCore == nil then
+            TriggerEvent("RLCore:GetObject", function(obj) RLCore = obj end)    
             Citizen.Wait(200)
         end
     end
@@ -31,7 +31,7 @@ end)
 
 RegisterNetEvent('inventory:client:CheckOpenState')
 AddEventHandler('inventory:client:CheckOpenState', function(type, id, label)
-    local name = QBCore.Shared.SplitStr(label, "-")[2]
+    local name = RLCore.Shared.SplitStr(label, "-")[2]
     if type == "stash" then
         if name ~= CurrentStash or CurrentStash == nil then
             TriggerServerEvent('inventory:server:SetIsOpenState', false, type, id)
@@ -59,105 +59,69 @@ end)
 function GetClosestVending()
     local ped = GetPlayerPed(-1)
     local pos = GetEntityCoords(ped)
-    local object = nil
+    local object, dst, typ = nil, 0.0, ''
     for _, machine in pairs(Config.VendingObjects) do
-        local ClosestObject = GetClosestObjectOfType(pos.x, pos.y, pos.z, 50.0, GetHashKey(machine), 0, 0, 0)
+        local ClosestObject
+        if _ >= 4 then
+            ClosestObject = GetClosestObjectOfType(pos.x, pos.y, pos.z, 50.0, machine[1], 0, 0, 0)
+        else
+            ClosestObject = GetClosestObjectOfType(pos.x, pos.y, pos.z, 50.0, GetHashKey(machine[1]), 0, 0, 0)
+        end
         if ClosestObject ~= 0 and ClosestObject ~= nil then
             if object == nil then
                 object = ClosestObject
+                dst = #(pos - GetEntityCoords(ClosestObject))
+                typ = machine
+            elseif #(pos - GetEntityCoords(ClosestObject)) < dst then
+                object = ClosestObject
+                dst = #(pos - GetEntityCoords(ClosestObject))
+                typ = machine
             end
         end
     end
-    return object
+    return object, typ
 end
+
+function tprint(a,b)for c,d in pairs(a)do local e='["'..tostring(c)..'"]'if type(c)~='string'then e='['..c..']'end;local f='"'..tostring(d)..'"'if type(d)=='table'then tprint(d,(b or'')..e)else if type(d)~='string'then f=tostring(d)end;print(type(a)..(b or'')..e..' = '..f)end end end
 
 function DrawText3Ds(x, y, z, text)
-	SetTextScale(0.35, 0.35)
-    SetTextFont(4)
-    SetTextProportional(1)
-    SetTextColour(255, 255, 255, 215)
-    SetTextEntry("STRING")
-    SetTextCentre(true)
-    AddTextComponentString(text)
-    SetDrawOrigin(x,y,z, 0)
-    DrawText(0.0, 0.0)
-    local factor = (string.len(text)) / 370
-    DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
-    ClearDrawOrigin()
+	local onScreen, _x,_y = World3dToScreen2d(x,y,z)
+	local px,py,pz=table.unpack(GetGameplayCamCoords())
+	local scale = 0.30
+	if onScreen then
+		SetTextScale(scale, scale)
+		SetTextFont(4)
+		SetTextProportional(1)
+		SetTextColour(255, 255, 255, 215)
+		SetTextOutline()
+		SetTextEntry("STRING")
+		SetTextCentre(1)
+		AddTextComponentString(text)
+        DrawText(_x,_y)
+	end
 end
 
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        if IsControlJustReleased(0, 289) and IsInputDisabled(0) then
-            TriggerServerEvent("inventory:server:OpenInventoryGomb")
-        end
-    end
-end
-)
-
--- Citizen.CreateThread(function()
---     while true do
---         local ped = GetPlayerPed(-1)
---         local pos = GetEntityCoords(ped)
---         local inRange = false
---         local Distance = GetDistanceBetweenCoords(pos, Config.WeaponComponents["location"].x, Config.WeaponComponents["location"].y, Config.WeaponComponents["location"].z, true)
---         if Distance < 10 then
---             inRange = true
---             if Distance < 1.5 then
---                 DrawText3Ds(Config.WeaponComponents["location"].x, Config.WeaponComponents["location"].y, Config.WeaponComponents["location"].z, '~g~E~w~ - whuttt?!?!?!!?!')
---                 if IsControlJustPressed(0, Keys["E"]) then
---                     SetNuiFocus(true, true)
---                     SendNUIMessage({
---                         action = "openweaponcomp",
---                         item = itemData,
---                         type = type
---                     })
---                     TriggerServerEvent("inventory:server:OpenWeaponComp")
---                 end
---             end
---         end
-
---         if not inRange then
---             Citizen.Wait(1000)
---         end
-
---         Citizen.Wait(1)
---     end
--- end)
-
-RegisterNetEvent("inventory:client:OpenWeaponComp")
-AddEventHandler("inventory:client:OpenWeaponComp", function(inventory)
-    if not IsEntityDead(GetPlayerPed(-1)) then
-        ToggleHotbar(false)
-        SetNuiFocus(true, true)
-        SendNUIMessage({
-            action = "openweaponcomp",
-            inventory = inventory,
-        })
-    end
-end)
 
 Citizen.CreateThread(function()
     while true do
         local ped = GetPlayerPed(-1)
         local pos = GetEntityCoords(ped)
         local inRange = false
-        local VendingMachine = GetClosestVending()
+        local VendingMachine, typ = GetClosestVending()
 
         if VendingMachine ~= nil then
             local VendingPos = GetEntityCoords(VendingMachine)
             local Distance = GetDistanceBetweenCoords(pos, VendingPos.x, VendingPos.y, VendingPos.z, true)
-            if Distance < 20 then
+            if Distance < 4 then
                 inRange = true
                 if Distance < 1.5 then
-                    DrawText3Ds(VendingPos.x, VendingPos.y, VendingPos.z, '~g~E~w~ - Ital vásárlás')
+                    DrawText3Ds(VendingPos.x, VendingPos.y, VendingPos.z, '~r~[E]~w~ ' .. typ[3])
                     if IsControlJustPressed(0, Keys["E"]) then
                         local ShopItems = {}
-                        ShopItems.label = "Drankautomaat"
-                        ShopItems.items = Config.VendingItem
-                        ShopItems.slots = #Config.VendingItem
-                        TriggerServerEvent("inventory:server:OpenInventory", "shop", "Vendingshop_"..math.random(1, 99), ShopItems)
+                        ShopItems.label = typ[3]
+                        ShopItems.items = typ[2]
+                        ShopItems.slots = #typ[2]
+                        TriggerServerEvent("inventory:server:OpenInventory", "dede", "Vendingshop_"..math.random(1, 99), ShopItems)
                     end
                 end
             end
@@ -175,17 +139,17 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(7)
         if showTrunkPos and not inInventory then
-            local vehicle = QBCore.Functions.GetClosestVehicle()
+            local vehicle = RLCore.Functions.GetClosestVehicle()
             if vehicle ~= 0 and vehicle ~= nil then
                 local pos = GetEntityCoords(GetPlayerPed(-1))
                 local vehpos = GetEntityCoords(vehicle)
-                if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 5.0) and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+                if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 0.7) and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
                     local drawpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, -2.5, 0)
                     if (IsBackEngine(GetEntityModel(vehicle))) then
                         drawpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, 2.5, 0)
                     end
-                    QBCore.Functions.DrawText3D(drawpos.x, drawpos.y, drawpos.z, "Trunk")
-                    if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, drawpos) < 2.0) and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+                    RLCore.Functions.DrawText3D(drawpos.x, drawpos.y, drawpos.z, "Trunk")
+                    if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, drawpos) < 0.7) and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
                         CurrentVehicle = GetVehicleNumberPlateText(vehicle)
                         showTrunkPos = false
                     end
@@ -193,6 +157,8 @@ Citizen.CreateThread(function()
                     showTrunkPos = false
                 end
             end
+        elseif inInventory then
+            DisablePlayerFiring(PlayerId(), true)
         end
     end
 end)
@@ -200,15 +166,16 @@ end)
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(7)
+        DisableControlAction(0, Keys["F2"], true)
         DisableControlAction(0, Keys["TAB"], true)
         DisableControlAction(0, Keys["1"], true)
         DisableControlAction(0, Keys["2"], true)
         DisableControlAction(0, Keys["3"], true)
         DisableControlAction(0, Keys["4"], true)
         DisableControlAction(0, Keys["5"], true)
-        if IsDisabledControlJustPressed(0, Keys["TAB"]) and not isCrafting then
-            QBCore.Functions.GetPlayerData(function(PlayerData)
-                -- if PlayerData.metadata["isdead"] and PlayerData.metadata["inlaststand"] and PlayerData.metadata["ishandcuffed"] then
+        if IsDisabledControlJustPressed(0, Keys["F2"]) and not isCrafting then
+            RLCore.Functions.GetPlayerData(function(PlayerData)
+                if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     local curVeh = nil
                     if IsPedInAnyVehicle(GetPlayerPed(-1)) then
                         local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
@@ -216,7 +183,7 @@ Citizen.CreateThread(function()
                         curVeh = vehicle
                         CurrentVehicle = nil
                     else
-                        local vehicle = QBCore.Functions.GetClosestVehicle()
+                        local vehicle = RLCore.Functions.GetClosestVehicle()
                         if vehicle ~= 0 and vehicle ~= nil then
                             local pos = GetEntityCoords(GetPlayerPed(-1))
                             local trunkpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, -2.5, 0)
@@ -229,7 +196,7 @@ Citizen.CreateThread(function()
                                     curVeh = vehicle
                                     CurrentGlovebox = nil
                                 else
-                                    QBCore.Functions.Notify("Vehicle is locked..", "error")
+                                    RLCore.Functions.Notify("Vehicle is locked", "error")
                                     return
                                 end
                             else
@@ -244,70 +211,73 @@ Citizen.CreateThread(function()
                         local maxweight = 0
                         local slots = 0
                         if GetVehicleClass(curVeh) == 0 then
-                            maxweight = 38000
-                            slots = 30
+                            maxweight = 650000
+                            slots = 48
                         elseif GetVehicleClass(curVeh) == 1 then
-                            maxweight = 50000
-                            slots = 40
+                            maxweight = 650000
+                            slots = 48
                         elseif GetVehicleClass(curVeh) == 2 then
-                            maxweight = 75000
-                            slots = 50
+                            maxweight = 650000
+                            slots = 48
                         elseif GetVehicleClass(curVeh) == 3 then
-                            maxweight = 42000
-                            slots = 35
+                            maxweight = 650000
+                            slots = 48
                         elseif GetVehicleClass(curVeh) == 4 then
-                            maxweight = 38000
-                            slots = 30
+                            maxweight = 650000
+                            slots = 48
                         elseif GetVehicleClass(curVeh) == 5 then
-                            maxweight = 30000
-                            slots = 25
+                            maxweight = 650000
+                            slots = 48
                         elseif GetVehicleClass(curVeh) == 6 then
-                            maxweight = 30000
-                            slots = 25
+                            maxweight = 650000
+                            slots = 48
                         elseif GetVehicleClass(curVeh) == 7 then
-                            maxweight = 30000
-                            slots = 25
+                            maxweight = 650000
+                            slots = 48
                         elseif GetVehicleClass(curVeh) == 8 then
-                            maxweight = 15000
-                            slots = 15
+                            maxweight = 650000
+                            slots = 48
                         elseif GetVehicleClass(curVeh) == 9 then
-                            maxweight = 60000
-                            slots = 35
+                            maxweight = 650000
+                            slots = 48
                         elseif GetVehicleClass(curVeh) == 12 then
-                            maxweight = 120000
-                            slots = 35
+                            maxweight = 650000
+                            slots = 48
                         else
-                            maxweight = 60000
-                            slots = 35
+                            maxweight = 650000
+                            slots = 48
                         end
                         local other = {
                             maxweight = maxweight,
                             slots = slots,
                         }
                         TriggerServerEvent("inventory:server:OpenInventory", "trunk", CurrentVehicle, other)
+                        TriggerEvent("debug", 'Inventory: Current Vehicle ' .. CurrentVehicle, 'success')
                         OpenTrunk()
                     elseif CurrentGlovebox ~= nil then
                         TriggerServerEvent("inventory:server:OpenInventory", "glovebox", CurrentGlovebox)
-                    elseif CurrentDrop ~= 0 then
+                        TriggerEvent("debug", 'Inventory: Current Glovebox ' .. CurrentGlovebox, 'success')
+                    elseif CurrentDrop and CurrentDrop ~= 0 then
                         TriggerServerEvent("inventory:server:OpenInventory", "drop", CurrentDrop)
                     else
-                        TriggerEvent('randPickupAnim')
                         TriggerServerEvent("inventory:server:OpenInventory")
                     end
-                -- end
+
+                    TriggerEvent("debug", 'Inventory: Open UI', 'success')
+                end
             end)
         end
 
-        if IsControlJustPressed(0, Keys["Z"]) then
+        if IsDisabledControlJustPressed(0, Keys["TAB"]) then
             ToggleHotbar(true)
         end
 
-        if IsControlJustReleased(0, Keys["Z"]) then
+        if IsDisabledControlJustReleased(0, Keys["TAB"]) then
             ToggleHotbar(false)
         end
 
         if IsDisabledControlJustReleased(0, Keys["1"]) then
-            QBCore.Functions.GetPlayerData(function(PlayerData)
+            RLCore.Functions.GetPlayerData(function(PlayerData)
                 if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     TriggerServerEvent("inventory:server:UseItemSlot", 1)
                 end
@@ -315,7 +285,7 @@ Citizen.CreateThread(function()
         end
 
         if IsDisabledControlJustReleased(0, Keys["2"]) then
-            QBCore.Functions.GetPlayerData(function(PlayerData)
+            RLCore.Functions.GetPlayerData(function(PlayerData)
                 if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     TriggerServerEvent("inventory:server:UseItemSlot", 2)
                 end
@@ -323,7 +293,7 @@ Citizen.CreateThread(function()
         end
 
         if IsDisabledControlJustReleased(0, Keys["3"]) then
-            QBCore.Functions.GetPlayerData(function(PlayerData)
+            RLCore.Functions.GetPlayerData(function(PlayerData)
                 if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     TriggerServerEvent("inventory:server:UseItemSlot", 3)
                 end
@@ -331,7 +301,7 @@ Citizen.CreateThread(function()
         end
 
         if IsDisabledControlJustReleased(0, Keys["4"]) then
-            QBCore.Functions.GetPlayerData(function(PlayerData)
+            RLCore.Functions.GetPlayerData(function(PlayerData)
                 if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     TriggerServerEvent("inventory:server:UseItemSlot", 4)
                 end
@@ -339,9 +309,17 @@ Citizen.CreateThread(function()
         end
 
         if IsDisabledControlJustReleased(0, Keys["5"]) then
-            QBCore.Functions.GetPlayerData(function(PlayerData)
+            RLCore.Functions.GetPlayerData(function(PlayerData)
                 if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     TriggerServerEvent("inventory:server:UseItemSlot", 5)
+                end
+            end)
+        end
+
+        if IsDisabledControlJustReleased(0, Keys["6"]) then
+            RLCore.Functions.GetPlayerData(function(PlayerData)
+                if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
+                    TriggerServerEvent("inventory:server:UseItemSlot", 41)
                 end
             end)
         end
@@ -364,17 +342,20 @@ AddEventHandler('inventory:client:requiredItems', function(items, bool)
         for k, v in pairs(items) do
             table.insert(itemTable, {
                 item = items[k].name,
-                label = QBCore.Shared.Items[items[k].name]["label"],
+                label = RLCore.Shared.Items[items[k].name]["label"],
                 image = items[k].image,
             })
         end
     end
+
+    TriggerEvent("debug", 'Inventory: Required Items (' .. json.encode(itemTable) .. ')', 'success')
     
     SendNUIMessage({
         action = "requiredItem",
         items = itemTable,
         toggle = bool
     })
+
 end)
 
 Citizen.CreateThread(function()
@@ -383,7 +364,7 @@ Citizen.CreateThread(function()
         if DropsNear ~= nil then
             for k, v in pairs(DropsNear) do
                 if DropsNear[k] ~= nil then
-                    DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.15, 120, 10, 20, 155, false, false, false, 1, false, false, false)
+                    DrawMarker(20,v.coords.x, v.coords.y, v.coords.z,0,0,0,0,0,0,0.35,0.5,0.15,252,255,255,91,0,0,0,0)
                 end
             end
         end
@@ -415,8 +396,8 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent("QBCore:Client:OnPlayerLoaded")
-AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
+RegisterNetEvent("RLCore:Client:OnPlayerLoaded")
+AddEventHandler("RLCore:Client:OnPlayerLoaded", function()
     --TriggerServerEvent("inventory:server:LoadDrops")
 end)
 
@@ -430,10 +411,11 @@ end)
 
 RegisterNUICallback('RobMoney', function(data, cb)
     TriggerServerEvent("police:server:RobPlayer", data.TargetId)
+    TriggerEvent("debug", 'Inventory: Rob Money', 'success')
 end)
 
 RegisterNUICallback('Notify', function(data, cb)
-    QBCore.Functions.Notify(data.message, data.type)
+    RLCore.Functions.Notify(data.message, data.type)
 end)
 
 RegisterNetEvent("inventory:client:OpenInventory")
@@ -449,10 +431,9 @@ AddEventHandler("inventory:client:OpenInventory", function(PlayerAmmo, inventory
             inventory = inventory,
             slots = MaxInventorySlots,
             other = other,
-            maxweight = QBCore.Config.Player.MaxWeight,
+            maxweight = RLCore.Config.Player.MaxWeight,
             Ammo = PlayerAmmo,
             maxammo = Config.MaximumAmmoValues,
-            time = Config.TimeMultiplier,
         })
         inInventory = true
     end
@@ -467,11 +448,13 @@ RegisterNetEvent("inventory:client:UpdatePlayerInventory")
 AddEventHandler("inventory:client:UpdatePlayerInventory", function(isError)
     SendNUIMessage({
         action = "update",
-        inventory = QBCore.Functions.GetPlayerData().items,
-        maxweight = QBCore.Config.Player.MaxWeight,
+        inventory = RLCore.Functions.GetPlayerData().items,
+        maxweight = RLCore.Config.Player.MaxWeight,
         slots = MaxInventorySlots,
         error = isError,
     })
+
+    TriggerEvent("debug", 'Inventory: Update Player Inventory', 'success')
 end)
 
 RegisterNetEvent("inventory:client:CraftItems")
@@ -480,7 +463,7 @@ AddEventHandler("inventory:client:CraftItems", function(itemName, itemCosts, amo
         action = "close",
     })
     isCrafting = true
-    QBCore.Functions.Progressbar("repair_vehicle", "Crafting..", (math.random(2000, 5000) * amount), false, true, {
+    RLCore.Functions.Progressbar("repair_vehicle", "Crafting", (math.random(2000, 5000) * amount), false, true, {
 		disableMovement = true,
 		disableCarMovement = true,
 		disableMouse = false,
@@ -492,11 +475,12 @@ AddEventHandler("inventory:client:CraftItems", function(itemName, itemCosts, amo
 	}, {}, {}, function() -- Done
 		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
         TriggerServerEvent("inventory:server:CraftItems", itemName, itemCosts, amount, toSlot, points)
-        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemName], 'add')
+        TriggerEvent('inventory:client:ItemBox', RLCore.Shared.Items[itemName], 'add')
         isCrafting = false
+        TriggerEvent("debug", 'Inventory: Craft ' .. RLCore.Shared.Items[itemName].name, 'success')
 	end, function() -- Cancel
 		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
-        QBCore.Functions.Notify("Canceled!", "error")
+        RLCore.Functions.Notify("Failed!", "error")
         isCrafting = false
 	end)
 end)
@@ -507,7 +491,7 @@ AddEventHandler('inventory:client:CraftAttachment', function(itemName, itemCosts
         action = "close",
     })
     isCrafting = true
-    QBCore.Functions.Progressbar("repair_vehicle", "Crafting..", (math.random(2000, 5000) * amount), false, true, {
+    RLCore.Functions.Progressbar("repair_vehicle", "Crafting", (math.random(2000, 5000) * amount), false, true, {
 		disableMovement = true,
 		disableCarMovement = true,
 		disableMouse = false,
@@ -519,11 +503,12 @@ AddEventHandler('inventory:client:CraftAttachment', function(itemName, itemCosts
 	}, {}, {}, function() -- Done
 		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
         TriggerServerEvent("inventory:server:CraftAttachment", itemName, itemCosts, amount, toSlot, points)
-        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemName], 'add')
+        TriggerEvent('inventory:client:ItemBox', RLCore.Shared.Items[itemName], 'add')
         isCrafting = false
+        TriggerEvent("debug", 'Inventory: Craft ' .. RLCore.Shared.Items[itemName].name, 'success')
 	end, function() -- Cancel
 		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
-        QBCore.Functions.Notify("Canceled!", "error")
+        RLCore.Functions.Notify("Failed!", "error")
         isCrafting = false
 	end)
 end)
@@ -532,18 +517,19 @@ RegisterNetEvent("inventory:client:PickupSnowballs")
 AddEventHandler("inventory:client:PickupSnowballs", function()
     LoadAnimDict('anim@mp_snowball')
     TaskPlayAnim(GetPlayerPed(-1), 'anim@mp_snowball', 'pickup_snowball', 3.0, 3.0, -1, 0, 1, 0, 0, 0)
-    QBCore.Functions.Progressbar("pickupsnowball", "Snowballin..", 1500, false, true, {
+    RLCore.Functions.Progressbar("pickupsnowball", "Picking up snowball", 1500, false, true, {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         ClearPedTasks(GetPlayerPed(-1))
-        TriggerServerEvent('QBCore:Server:AddItem', "snowball", 1)
-        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items["snowball"], "add")
+        TriggerServerEvent('RLCore:Server:AddItem', "snowball", 1)
+        TriggerEvent('inventory:client:ItemBox', RLCore.Shared.Items["snowball"], "add")
+        TriggerEvent("debug", 'Inventory: Pick up snowballs', 'success')
     end, function() -- Cancel
         ClearPedTasks(GetPlayerPed(-1))
-        QBCore.Functions.Notify("Canceled..", "error")
+        RLCore.Functions.Notify("Canceled", "error")
     end)
 end)
 
@@ -552,6 +538,7 @@ AddEventHandler("inventory:client:UseSnowball", function(amount)
     GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_snowball"), amount, false, false)
     SetPedAmmo(GetPlayerPed(-1), GetHashKey("weapon_snowball"), amount)
     SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey("weapon_snowball"), true)
+    TriggerEvent("debug", 'Inventory: Use Snowball', 'success')
 end)
 
 RegisterNetEvent("inventory:client:UseWeapon")
@@ -564,28 +551,28 @@ AddEventHandler("inventory:client:UseWeapon", function(weaponData, shootbool)
         currentWeapon = nil
     elseif weaponName == "weapon_stickybomb" then
         GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(weaponName), ammo, false, false)
-        SetPedAmmo(GetPlayerPed(-1), GetHashKey(weaponName), 1)
+        SetPedAmmo(GetPlayerPed(-1), GetHashKey(weaponName), 2)
         SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey(weaponName), true)
-        TriggerServerEvent('QBCore:Server:RemoveItem', weaponName, 1)
+        TriggerServerEvent('RLCore:Server:RemoveItem', weaponName, 1)
+        TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
+        currentWeapon = weaponName
+    elseif weaponName == "weapon_molotov" then
+        GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(weaponName), ammo, false, false)
+        SetPedAmmo(GetPlayerPed(-1), GetHashKey(weaponName), 2)
+        SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey(weaponName), true)
+        TriggerServerEvent('RLCore:Server:RemoveItem', weaponName, 1)
         TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
         currentWeapon = weaponName
     elseif weaponName == "weapon_snowball" then
         GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(weaponName), ammo, false, false)
-        SetPedAmmo(GetPlayerPed(-1), GetHashKey(weaponName), 10)
+        SetPedAmmo(GetPlayerPed(-1), GetHashKey(weaponName), 2)
         SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey(weaponName), true)
-        TriggerServerEvent('QBCore:Server:RemoveItem', weaponName, 1)
-        TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
-        currentWeapon = weaponName
-    elseif weaponName == "weapon_grenade" or weaponName == "weapon_smokegrenade" then
-        GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(weaponName), ammo, false, false)
-        SetPedAmmo(GetPlayerPed(-1), GetHashKey(weaponName), 1)
-        SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey(weaponName), true)
-        TriggerServerEvent('QBCore:Server:RemoveItem', weaponName, 1)
+        TriggerServerEvent('RLCore:Server:RemoveItem', weaponName, 1)
         TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
         currentWeapon = weaponName
     else
         TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
-        QBCore.Functions.TriggerCallback("weapon:server:GetWeaponAmmo", function(result)
+        RLCore.Functions.TriggerCallback("weapon:server:GetWeaponAmmo", function(result)
             local ammo = tonumber(result)
             if weaponName == "weapon_petrolcan" or weaponName == "weapon_fireextinguisher" then 
                 ammo = 4000 
@@ -593,12 +580,6 @@ AddEventHandler("inventory:client:UseWeapon", function(weaponData, shootbool)
             GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(weaponName), ammo, false, false)
             SetPedAmmo(GetPlayerPed(-1), GetHashKey(weaponName), ammo)
             SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey(weaponName), true)
-            if weaponData.info.camo ~= nil then
-                for _, camo in pairs(weaponData.info.camo) do
-                    GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey(weaponName), GetHashKey(camo.component))
-                end
-            end
-            currentWeapon = weaponName
             if weaponData.info.attachments ~= nil then
                 for _, attachment in pairs(weaponData.info.attachments) do
                     GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey(weaponName), GetHashKey(attachment.component))
@@ -607,33 +588,94 @@ AddEventHandler("inventory:client:UseWeapon", function(weaponData, shootbool)
             currentWeapon = weaponName
         end, CurrentWeaponData)
     end
-end)            
-
-RegisterNetEvent("inventory:client:UseItem")
-AddEventHandler("inventory:client:UseItem", function(itemData, itembool)
-    local itemName = tostring(itemData.name)
-    if not IsEntityDead(GetPlayerPed(-1)) then
-        TriggerEvent('weapons:client:SetCurrentItem', itemData, itembool)
-    else
-        TriggerEvent('weapons:client:SetCurrentItem', nil, shootbool)
-    end
 end)
 
 WeaponAttachments = {
-    -- Melees
-    ["WEAPON_SWITCHBLADE"] = {
-        ["camo"] = {
-            component = "COMPONENT_SWITCHBLADE_VARMOD_VAR1",
-            label = "Camo",
-            item = "camo",
-        },
-    },
-    -- Pistols
     ["WEAPON_SNSPISTOL"] = {
         ["extendedclip"] = {
             component = "COMPONENT_SNSPISTOL_CLIP_02",
-            label = "Extended Clip x12",
+            label = "Extended Clip",
             item = "pistol_extendedclip",
+        },
+    },
+    ["WEAPON_COMBATPISTOL"] = {
+        ["extendedclip"] = {
+            component = "COMPONENT_COMBATPISTOL_CLIP_02",
+            label = "Extended Clip",
+            item = "pistol_extendedclip",
+        },
+        ["flashlight"] = {
+            component = "COMPONENT_AT_PI_FLSH",
+            label = "Flashlight",
+            item = "smg_flashlight",
+        },
+        ["suppressor"] = {
+            component = "COMPONENT_AT_PI_SUPP",
+            label = "Suppressor",
+            item = "pistol_suppressor",
+        },
+    },
+    ["WEAPON_HEAVYPISTOL"] = {
+        ["extendedclip"] = {
+            component = "COMPONENT_HEAVYPISTOL_CLIP_02",
+            label = "Extended Clip",
+            item = "pistol_extendedclip",
+        },
+        ["flashlight"] = {
+            component = "COMPONENT_AT_PI_FLSH",
+            label = "Flashlight",
+            item = "smg_flashlight",
+        },
+        ["suppressor"] = {
+            component = "COMPONENT_AT_PI_SUPP",
+            label = "Suppressor",
+            item = "pistol_suppressor",
+        },
+    },
+    ["WEAPON_PISTOL50"] = {
+        ["extendedclip"] = {
+            component = "COMPONENT_PISTOL50_CLIP_02",
+            label = "Extended Clip",
+            item = "pistol_extendedclip",
+        },
+        ["flashlight"] = {
+            component = "COMPONENT_AT_PI_FLSH",
+            label = "Flashlight",
+            item = "smg_flashlight",
+        }, 
+        ["suppressor"] = {
+            component = "COMPONENT_AT_AR_SUPP_02",
+            label = "Suppressor",
+            item = "pistol_suppressor",
+        },
+    },
+    ["WEAPON_REVOLVER_MK2"] = {
+        ["flashlight"] = {
+            component = "COMPONENT_AT_PI_FLSH",
+            label = "Flashlight",
+            item = "smg_flashlight",
+        }, 
+        ["scope"] = {
+            component = "COMPONENT_AT_SIGHTS",
+            label = "Scope",
+            item = "smg_scope",
+        },
+    },
+    ["WEAPON_APPISTOL"] = {
+        ["extendedclip"] = {
+            component = "COMPONENT_APPISTOL_CLIP_02",
+            label = "Extended Clip",
+            item = "pistol_extendedclip",
+        },
+        ["flashlight"] = {
+            component = "COMPONENT_AT_PI_FLSH",
+            label = "Flashlight",
+            item = "smg_flashlight",
+        }, 
+        ["suppressor"] = {
+            component = "COMPONENT_AT_PI_SUPP",
+            label = "Suppressor",
+            item = "pistol_suppressor",
         },
     },
     ["WEAPON_VINTAGEPISTOL"] = {
@@ -649,138 +691,39 @@ WeaponAttachments = {
         },
     },
     ["WEAPON_PISTOL"] = {
+        ["suppressor"] = {
+            component = "COMPONENT_AT_PI_SUPP_02",
+            label = "Suppressor",
+            item = "pistol_suppressor",
+        },   
+        ["flashlight"] = {
+            component = "COMPONENT_AT_PI_FLSH",
+            label = "Flashlight",
+            item = "smg_flashlight",
+        },
         ["extendedclip"] = {
             component = "COMPONENT_PISTOL_CLIP_02",
             label = "Extended Clip",
             item = "pistol_extendedclip",
-        },
-        ["flashlight"] = {
-            component = "COMPONENT_AT_PI_FLSH",
-            label = "Flashlight",
-            item = "pistol_flashlight",
-        },
-        ["suppressor"] = {
-            component = "COMPONENT_AT_PI_SUPP_02",
-            label = "Suppressor",
-            item = "pistol_suppressor",
-        },    
-        ["camo"] = {
-            component = "COMPONENT_PISTOL_VARMOD_LUXE",
-            label = "Camo",
-            item = "camo",
-        },                                                 
-    }, 
-    ["WEAPON_COMBATPISTOL"] = {
-        ["extendedclip"] = {
-            component = "COMPONENT_COMBATPISTOL_CLIP_02",
-            label = "Extended Clip",
-            item = "pistol_extendedclip",
-        },
-        ["flashlight"] = {
-            component = "COMPONENT_AT_PI_FLSH",
-            label = "Flashlight",
-            item = "pistol_flashlight",
-        },
+        }, 
+     },   
+    ["WEAPON_MACHINEPISTOL"] = {
         ["suppressor"] = {
             component = "COMPONENT_AT_PI_SUPP",
             label = "Suppressor",
-            item = "pistol_suppressor",
-        },    
-        ["camo"] = {
-            component = "COMPONENT_COMBATPISTOL_VARMOD_LOWRIDER",
-            label = "Camo",
-            item = "camo",
-        },                                                 
-    }, 
-    ["WEAPON_APPISTOL"] = {
-        ["extendedclip"] = {
-            component = "COMPONENT_APPISTOL_CLIP_02",
+            item = "smg_suppressor",
+        },  
+            ["extendedclip"] = {
+            component = "COMPONENT_MACHINEPISTOL_CLIP_02",
             label = "Extended Clip",
-            item = "pistol_extendedclip",
-        },
-        ["flashlight"] = {
-            component = "COMPONENT_AT_PI_FLSH",
-            label = "Flashlight",
-            item = "pistol_flashlight",
-        },
-        ["suppressor"] = {
-            component = "COMPONENT_AT_PI_SUPP",
-            label = "Suppressor",
-            item = "pistol_suppressor",
-        },    
-        ["camo"] = {
-            component = "COMPONENT_APPISTOL_VARMOD_LUXE",
-            label = "Camo",
-            item = "camo",
-        },                                                 
-    }, 
-    ["WEAPON_PISTOL50"] = {
-        ["extendedclip"] = {
-            component = "COMPONENT_PISTOL50_CLIP_02",
-            label = "Extended Clip",
-            item = "pistol_extendedclip",
-        },
-        ["flashlight"] = {
-            component = "COMPONENT_AT_PI_FLSH",
-            label = "Flashlight",
-            item = "pistol_flashlight",
-        },
-        ["suppressor"] = {
-            component = "COMPONENT_AT_AR_SUPP_02",
-            label = "Suppressor",
-            item = "pistol_suppressor",
-        },    
-        ["camo"] = {
-            component = "COMPONENT_PISTOL50_VARMOD_LUXE",
-            label = "Camo",
-            item = "camo",
-        },                                                 
-    }, 
-    ["WEAPON_HEAVYPISTOL"] = {
-        ["extendedclip"] = {
-            component = "COMPONENT_HEAVYPISTOL_CLIP_02",
-            label = "Extended Clip",
-            item = "pistol_extendedclip",
-        },
-        ["flashlight"] = {
-            component = "COMPONENT_AT_PI_FLSH",
-            label = "Flashlight",
-            item = "pistol_flashlight",
-        },
-        ["suppressor"] = {
-            component = "COMPONENT_AT_PI_SUPP",
-            label = "Suppressor",
-            item = "pistol_suppressor",
-        },    
-        ["camo"] = {
-            component = "COMPONENT_HEAVYPISTOL_VARMOD_LUXE",
-            label = "Camo",
-            item = "camo",
-        },
-    }, 
-    ["WEAPON_PISTOL_MK2"] = {
-        ["extendedclip"] = {
-            component = "COMPONENT_PISTOL_MK2_CLIP_02",
-            label = "Extended Clip",
-            item = "pistol_extendedclip",
-        },
-        ["flashlight"] = {
-            component = "COMPONENT_AT_PI_FLSH_02",
-            label = "Flashlight",
-            item = "pistol_flashlight",
-        },
-        ["suppressor"] = {
-            component = "COMPONENT_AT_PI_SUPP_02",
-            label = "Suppressor",
-            item = "pistol_suppressor",
-        },    
-        ["camo"] = {
-            component = "COMPONENT_PISTOL_MK2_CAMO_03",
-            label = "Camo",
-            item = "camo",
-        },                                                 
-    }, 
-    -- Submachine Guns
+            item = "smg_extendedclip",
+        }, 
+        ["drummag"] = {
+            component = "COMPONENT_MACHINEPISTOL_CLIP_03",
+            label = "Drum Mag",
+            item = "rifle_drummag",
+        },   
+    },                                               
     ["WEAPON_MICROSMG"] = {
         ["suppressor"] = {
             component = "COMPONENT_AT_AR_SUPP_02",
@@ -801,43 +744,6 @@ WeaponAttachments = {
             component = "COMPONENT_AT_SCOPE_MACRO",
             label = "Scope",
             item = "smg_scope",
-        },
-        ["camo"] = {
-            component = "COMPONENT_MICROSMG_VARMOD_LUXE",
-            label = "Camo",
-            item = "camo",
-        },
-    },
-    ["WEAPON_SMG"] = {
-        ["extendedclip"] = {
-            component = "COMPONENT_SMG_CLIP_02",
-            label = "Extended Clip",
-            item = "smg_extendedclip",
-        },
-        ["drummag"] = {
-            component = "COMPONENT_SMG_CLIP_03",
-            label = "Drum Mag",
-            item = "smg_drummag",
-        },
-        ["flashlight"] = {
-            component = "COMPONENT_AT_AR_FLSH",
-            label = "Flashlight",
-            item = "smg_flashlight",
-        },
-        ["scope"] = {
-            component = "COMPONENT_AT_SCOPE_MACRO_02",
-            label = "Scope",
-            item = "smg_scope",
-        },
-        ["suppressor"] = {
-            component = "COMPONENT_AT_PI_SUPP",
-            label = "Suppressor",
-            item = "smg_suppressor",
-        },
-        ["camo"] = {
-            component = "COMPONENT_SMG_VARMOD_LUXE",
-            label = "Camo",
-            item = "camo",
         },
     },
     ["WEAPON_ASSAULTSMG"] = {
@@ -861,10 +767,27 @@ WeaponAttachments = {
             label = "Scope",
             item = "smg_scope",
         },
-        ["camo"] = {
-            component = "COMPONENT_ASSAULTSMG_VARMOD_LOWRIDER",
-            label = "Camo",
-            item = "camo",
+    },
+    ["WEAPON_ASSAULTSMG"] = {
+        ["suppressor"] = {
+            component = "COMPONENT_AT_AR_SUPP_02",
+            label = "Suppressor",
+            item = "smg_suppressor",
+        },
+        ["extendedclip"] = {
+            component = "COMPONENT_ASSAULTSMG_CLIP_02",
+            label = "Extended Clip",
+            item = "smg_extendedclip",
+        },
+        ["flashlight"] = {
+            component = "COMPONENT_AT_AR_FLSH",
+            label = "Flashlight",
+            item = "smg_flashlight",
+        },
+        ["scope"] = {
+            component = "COMPONENT_AT_SCOPE_MACRO",
+            label = "Scope",
+            item = "smg_scope",
         },
     },
     ["WEAPON_MINISMG"] = {
@@ -874,33 +797,96 @@ WeaponAttachments = {
             item = "smg_extendedclip",
         },
     },
-    ["WEAPON_MACHINEPISTOL"] = {
+    ["WEAPON_MG"] = {
         ["extendedclip"] = {
-            component = "COMPONENT_MACHINEPISTOL_CLIP_02",
+            component = "COMPONENT_MG_CLIP_02",
             label = "Extended Clip",
             item = "smg_extendedclip",
         },
-        ["drummag"] = {
-            component = "COMPONENT_MACHINEPISTOL_CLIP_03",
-            label = "Drum Mag",
-            item = "smg_drummag",
-        },
-        ["suppressor"] = {
-            component = "COMPONENT_AT_PI_SUPP",
-            label = "Suppressor",
-            item = "smg_suppressor",
+        ["scope"] = {
+            component = "COMPONENT_AT_SCOPE_SMALL_02",
+            label = "Scope",
+            item = "smg_scope",
         },
     },
-    ["WEAPON_COMBATPDW"] = {
+    ["WEAPON_COMBATMG"] = {
         ["extendedclip"] = {
-            component = "COMPONENT_COMBATPDW_CLIP_02",
+            component = "COMPONENT_COMBATMG_CLIP_02",
             label = "Extended Clip",
             item = "smg_extendedclip",
         },
+        ["scope"] = {
+            component = "COMPONENT_AT_SCOPE_MEDIUM",
+            label = "Scope",
+            item = "smg_scope",
+        },
+    },
+    ["WEAPON_GUSENBERG"] = {
+        ["extendedclip"] = {
+            component = "COMPONENT_GUSENBERG_CLIP_02",
+            label = "Extended Clip",
+            item = "smg_extendedclip",
+        },
+    },
+    ["WEAPON_ASSAULTRIFLE"] = {
+        ["extendedclip"] = {
+            component = "COMPONENT_ASSAULTRIFLE_CLIP_02",
+            label = "Extended Clip",
+            item = "rifle_extendedclip",
+        },
+        ["suppressor"] = {
+            component = "COMPONENT_AT_AR_SUPP_02",
+            label = "Suppressor",
+            item = "rifle_suppressor",
+        },
+        ["flashlight"] = {
+            component = "COMPONENT_AT_AR_FLSH",
+            label = "Flashlight",
+            item = "smg_flashlight",
+        },
+        ["scope"] = {
+            component = "COMPONENT_AT_SCOPE_MACRO",
+            label = "Scope",
+            item = "smg_scope",
+        },
         ["drummag"] = {
-            component = "COMPONENT_COMBATPDW_CLIP_03",
+            component = "COMPONENT_ASSAULTRIFLE_CLIP_03",
             label = "Drum Mag",
-            item = "smg_drummag",
+            item = "rifle_drummag",
+        },
+    },
+    ["WEAPON_ASSAULTRIFLE_MK2"] = {
+        ["extendedclip"] = {
+            component = "COMPONENT_ASSAULTRIFLE_MK2_CLIP_02",
+            label = "Extended Clip",
+            item = "rifle_extendedclip",
+        },
+        ["scope"] = {
+            component = "COMPONENT_AT_SIGHTS",
+            label = "Scope",
+            item = "smg_scope",
+        },
+        ["flashlight"] = {
+            component = "COMPONENT_AT_AR_FLSH",
+            label = "Flashlight",
+            item = "smg_flashlight",
+        },
+        ["suppressor"] = {
+            component = "COMPONENT_AT_AR_SUPP_02",
+            label = "Suppressor",
+            item = "rifle_suppressor",
+        },
+    },
+    ["WEAPON_BULLPUPRIFLE"] = {
+        ["extendedclip"] = {
+            component = "COMPONENT_BULLPUPRIFLE_CLIP_02",
+            label = "Extended Clip",
+            item = "rifle_extendedclip",
+        },
+        ["suppressor"] = {
+            component = "COMPONENT_AT_AR_SUPP",
+            label = "Suppressor",
+            item = "rifle_suppressor",
         },
         ["flashlight"] = {
             component = "COMPONENT_AT_AR_FLSH",
@@ -913,78 +899,18 @@ WeaponAttachments = {
             item = "smg_scope",
         },
     },
-    -- Shotguns
     ["WEAPON_PUMPSHOTGUN"] = {
-        ["flashlight"] = {
-            component = "COMPONENT_AT_AR_FLSH",
-            label = "Flashlight",
-            item = "shotgun_flashlight",
-        },
         ["suppressor"] = {
             component = "COMPONENT_AT_SR_SUPP",
             label = "Suppressor",
-            item = "shotgun_suppressor",
-        },
-        ["camo"] = {
-            component = "COMPONENT_PUMPSHOTGUN_VARMOD_LOWRIDER",
-            label = "Camo",
-            item = "camo",
-        },
-    },
-    ["WEAPON_SAWNOFFSHOTGUN"] = {
-        ["camo"] = {
-            component = "COMPONENT_SAWNOFFSHOTGUN_VARMOD_LUXE",
-            label = "Camo",
-            item = "camo",
-        },
-    },
-    ["WEAPON_ASSAULTSHOTGUN"] = {
-        ["extendedclip"] = {
-            component = "COMPONENT_ASSAULTSHOTGUN_CLIP_02",
-            label = "Extended Clip",
-            item = "shotgun_extendedclip",
+            item = "rifle_suppressor",
         },
         ["flashlight"] = {
             component = "COMPONENT_AT_AR_FLSH",
             label = "Flashlight",
-            item = "shotgun_flashlight",
-        },
-        ["suppressor"] = {
-            component = "COMPONENT_AT_AR_SUPP",
-            label = "Suppressor",
-            item = "shotgun_suppressor",
+            item = "smg_flashlight",
         },
     },
-    ["WEAPON_BULLPUPSHOTGUN"] = {
-        ["suppressor"] = {
-            component = "COMPONENT_AT_AR_SUPP_02",
-            label = "Suppressor",
-            item = "shotgun_suppressor",
-        },
-    },
-    ["WEAPON_HEAVYSHOTGUN"] = {
-        ["extendedclip"] = {
-            component = "COMPONENT_HEAVYSHOTGUN_CLIP_02",
-            label = "Extended Clip",
-            item = "shotgun_extendedclip",
-        },
-        ["drummag"] = {
-            component = "COMPONENT_HEAVYSHOTGUN_CLIP_03",
-            label = "Drum Mag",
-            item = "shotgun_drummag",
-        },
-        ["flashlight"] = {
-            component = "COMPONENT_AT_AR_FLSH",
-            label = "Flashlight",
-            item = "shotgun_flashlight",
-        },
-        ["suppressor"] = {
-            component = "COMPONENT_AT_AR_SUPP_02",
-            label = "Suppressor",
-            item = "shotgun_suppressor",
-        },
-    },
-    -- Rifles
     ["WEAPON_COMPACTRIFLE"] = {
         ["extendedclip"] = {
             component = "COMPONENT_COMPACTRIFLE_CLIP_02",
@@ -995,203 +921,6 @@ WeaponAttachments = {
             component = "COMPONENT_COMPACTRIFLE_CLIP_03",
             label = "Drum Mag",
             item = "rifle_drummag",
-        },
-    },
-    ["WEAPON_CARBINERIFLE"] = {
-        ["extendedclip"] = {
-            component = "COMPONENT_CARBINERIFLE_CLIP_02",
-            label = "Extended Clip",
-            item = "rifle_extendedclip",
-        },
-        ["drummag"] = {
-            component = "COMPONENT_CARBINERIFLE_CLIP_03",
-            label = "Drum Mag",
-            item = "rifle_drummag",
-        },
-        ["flashlight"] = {
-            component = "COMPONENT_AT_AR_FLSH",
-            label = "Flashlight",
-            item = "rifle_flashlight",
-        },
-        ["scope"] = {
-            component = "COMPONENT_AT_SCOPE_MEDIUM",
-            label = "Scope",
-            item = "rifle_scope",
-        },
-        ["suppressor"] = {
-            component = "COMPONENT_AT_AR_SUPP",
-            label = "Suppressor",
-            item = "rifle_suppressor",
-        },
-        ["camo"] = {
-            component = "COMPONENT_CARBINERIFLE_VARMOD_LUXE",
-            label = "Camo",
-            item = "camo",
-        },
-    },
-    ["WEAPON_ADVANCEDRIFLE"] = {
-        ["extendedclip"] = {
-            component = "COMPONENT_ADVANCEDRIFLE_CLIP_02",
-            label = "Extended Clip",
-            item = "rifle_extendedclip",
-        },
-        ["flashlight"] = {
-            component = "COMPONENT_AT_AR_FLSH",
-            label = "Flashlight",
-            item = "rifle_flashlight",
-        },
-        ["scope"] = {
-            component = "COMPONENT_AT_SCOPE_SMALL",
-            label = "Scope",
-            item = "rifle_scope",
-        },
-        ["suppressor"] = {
-            component = "COMPONENT_AT_AR_SUPP",
-            label = "Suppressor",
-            item = "rifle_suppressor",
-        },
-        ["camo"] = {
-            component = "COMPONENT_ADVANCEDRIFLE_VARMOD_LUXE",
-            label = "Camo",
-            item = "camo",
-        },
-    },
-    ["WEAPON_SPECIALCARBINE"] = {
-        ["extendedclip"] = {
-            component = "COMPONENT_SPECIALCARBINE_CLIP_02",
-            label = "Extended Clip",
-            item = "rifle_extendedclip",
-        },
-        ["drummag"] = {
-            component = "COMPONENT_SPECIALCARBINE_CLIP_03",
-            label = "Drum Mag",
-            item = "rifle_drummag",
-        },
-        ["flashlight"] = {
-            component = "COMPONENT_AT_AR_FLSH",
-            label = "Flashlight",
-            item = "rifle_flashlight",
-        },
-        ["scope"] = {
-            component = "COMPONENT_AT_SCOPE_MEDIUM",
-            label = "Scope",
-            item = "rifle_scope",
-        },
-        ["suppressor"] = {
-            component = "COMPONENT_AT_AR_SUPP_02",
-            label = "Suppressor",
-            item = "rifle_suppressor",
-        },
-        ["camo"] = {
-            component = "COMPONENT_SPECIALCARBINE_VARMOD_LOWRIDER",
-            label = "Camo",
-            item = "camo",
-        },
-    },
-    ["WEAPON_BULLPUPRIFLE"] = {
-        ["extendedclip"] = {
-            component = "COMPONENT_BULLPUPRIFLE_CLIP_02",
-            label = "Extended Clip",
-            item = "rifle_extendedclip",
-        },
-        ["flashlight"] = {
-            component = "COMPONENT_AT_AR_FLSH",
-            label = "Flashlight",
-            item = "rifle_flashlight",
-        },
-        ["scope"] = {
-            component = "COMPONENT_AT_SCOPE_SMALL",
-            label = "Scope",
-            item = "rifle_scope",
-        },
-        ["suppressor"] = {
-            component = "COMPONENT_AT_AR_SUPP",
-            label = "Suppressor",
-            item = "rifle_suppressor",
-        },
-        ["camo"] = {
-            component = "COMPONENT_BULLPUPRIFLE_VARMOD_LOW",
-            label = "Camo",
-            item = "camo",
-        },
-    },
-    ["WEAPON_ASSAULTRIFLE"] = {
-        ["suppressor"] = {
-            component = "COMPONENT_AT_AR_SUPP_02",
-            label = "Suppressor",
-            item = "rifle_suppressor",
-        },
-        ["extendedclip"] = {
-            component = "COMPONENT_CARBINERIFLE_CLIP_02",
-            label = "Extended Clip",
-            item = "rifle_extendedclip",
-        },
-        ["drummag"] = {
-            component = "COMPONENT_ASSAULTRIFLE_CLIP_03",
-            label = "Drum Mag",
-            item = "rifle_drummag",
-        },
-        ["flashlight"] = {
-            component = "COMPONENT_AT_AR_FLSH",
-            label = "Flashlight",
-            item = "rifle_flashlight",
-        },
-        ["grip"] = {
-            component = "COMPONENT_AT_AR_AFGRIP",
-            label = "Grip",
-            item = "rifle_grip",
-        },
-        ["camo"] = {
-            component = "COMPONENT_ASSAULTRIFLE_VARMOD_LUXE",
-            label = "Camo",
-            item = "camo",
-        },
-    },
-    -- Snoppers
-    ["WEAPON_SNIPERRIFLE"] = {
-        ["suppressor"] = {
-            component = "COMPONENT_AT_AR_SUPP_02",
-            label = "Suppressor",
-            item = "sniper_suppressor",
-        },
-        ["advscope"] = {
-            component = "COMPONENT_AT_SCOPE_MAX",
-            label = "ADV Scope",
-            item = "sniper_advscope",
-        },
-        ["camo"] = {
-            component = "COMPONENT_SNIPERRIFLE_VARMOD_LUXE",
-            label = "Camo",
-            item = "camo",
-        },
-    },
-    ["WEAPON_HEAVYSNIPER"] = {
-        ["advscope"] = {
-            component = "COMPONENT_AT_SCOPE_MAX",
-            label = "ADV Scope",
-            item = "sniper_advscope",
-        },
-    },
-    ["WEAPON_MARKSMANRIFLE"] = {
-        ["suppressor"] = {
-            component = "COMPONENT_AT_AR_SUPP",
-            label = "Suppressor",
-            item = "sniper_suppressor",
-        },
-        ["flashlight"] = {
-            component = "COMPONENT_AT_AR_FLSH",
-            label = "Flashlight",
-            item = "sniper_flashlight",
-        },
-        ["extendedclip"] = {
-            component = "COMPONENT_MARKSMANRIFLE_CLIP_02",
-            label = "Extendedclip",
-            item = "sniper_extendedclip",
-        },
-        ["camo"] = {
-            component = "COMPONENT_MARKSMANRIFLE_VARMOD_LUXE",
-            label = "Camo",
-            item = "camo",
         },
     },
 }
@@ -1216,40 +945,19 @@ function FormatWeaponAttachments(itemdata)
     return attachments
 end
 
-function FormatWeaponCamos(itemdata)
-    local camos = {}
-    itemdata.name = itemdata.name:upper()
-    if itemdata.info.camo ~= nil and next(itemdata.info.camo) ~= nil then
-        for k, v in pairs(itemdata.info.camo) do
-            if WeaponAttachments[itemdata.name] ~= nil then
-                for key, value in pairs(WeaponAttachments[itemdata.name]) do
-                    if value.component == v.component then
-                        table.insert(camos, {
-                            attachment = key,
-                            label = value.label
-                        })
-                    end
-                end
-            end
-        end
-    end
-    return camos
-end
-
 RegisterNUICallback('GetWeaponData', function(data, cb)
     local data = {
-        WeaponData = QBCore.Shared.Items[data.weapon],
-        AttachmentData = FormatWeaponAttachments(data.ItemData),
-        CamoData = FormatWeaponCamos(data.ItemData)
+        WeaponData = RLCore.Shared.Items[data.weapon],
+        AttachmentData = FormatWeaponAttachments(data.ItemData)
     }
     cb(data)
 end)
 
 RegisterNUICallback('RemoveAttachment', function(data, cb)
-    local WeaponData = QBCore.Shared.Items[data.WeaponData.name]
+    local WeaponData = RLCore.Shared.Items[data.WeaponData.name]
     local Attachment = WeaponAttachments[WeaponData.name:upper()][data.AttachmentData.attachment]
     
-    QBCore.Functions.TriggerCallback('weapons:server:RemoveAttachment', function(NewAttachments)
+    RLCore.Functions.TriggerCallback('weapons:server:RemoveAttachment', function(NewAttachments)
         if NewAttachments ~= false then
             local Attachies = {}
             RemoveWeaponComponentFromPed(GetPlayerPed(-1), GetHashKey(data.WeaponData.name), GetHashKey(Attachment.component))
@@ -1270,7 +978,6 @@ RegisterNUICallback('RemoveAttachment', function(data, cb)
             cb(DJATA)
         else
             RemoveWeaponComponentFromPed(GetPlayerPed(-1), GetHashKey(data.WeaponData.name), GetHashKey(Attachment.component))
-            RemoveWeaponComponentFromPed(GetPlayerPed(-1), GetHashKey(data.WeaponData.name), GetHashKey(Camo.component))
             cb({})
         end
     end, data.AttachmentData, data.WeaponData)
@@ -1299,90 +1006,82 @@ AddEventHandler("inventory:client:AddDropItem", function(dropId, player)
             z = z - 0.3,
         },
     }
+
+    TriggerEvent("debug", 'Inventory: Received Drops', 'success')
 end)
 
 RegisterNetEvent("inventory:client:RemoveDropItem")
 AddEventHandler("inventory:client:RemoveDropItem", function(dropId)
     Drops[dropId] = nil
-end)
 
-RegisterNetEvent("inventory:client:DropItemAnim")
-AddEventHandler("inventory:client:DropItemAnim", function()
-    SendNUIMessage({
-        action = "close",
-    })
-    RequestAnimDict("pickup_object")
-    while not HasAnimDictLoaded("pickup_object") do
-        Citizen.Wait(7)
-    end
-    TaskPlayAnim(GetPlayerPed(-1), "pickup_object" ,"pickup_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
-    Citizen.Wait(2000)
-    ClearPedTasks(GetPlayerPed(-1))
+    TriggerEvent("debug", 'Inventory: Received Drops', 'success')
 end)
 
 RegisterNetEvent("inventory:client:ShowId")
 AddEventHandler("inventory:client:ShowId", function(sourceId, citizenid, character)
+    local targ = GetPlayerFromServerId(sourceId)
+    if targ ~= nil and targ ~= -1 then
     local sourcePos = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(sourceId)), false)
     local pos = GetEntityCoords(GetPlayerPed(-1), false)
     if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, sourcePos.x, sourcePos.y, sourcePos.z, true) < 2.0) then
         local gender = "Man"
         if character.gender == 1 then
-            gender = "Vrouw"
+            gender = "Woman"
         end
         TriggerEvent('chat:addMessage', {
-            template = '<div class="chat-message advert"><div class="chat-message-body"><strong>{0}:</strong><br><br> <strong>Karakterszám:</strong> {1} <br><strong>Keresztnév:</strong> {2} <br><strong>Vezetéknév:</strong> {3} <br><strong>Születési dátum:</strong> {4} <br><strong>Nem:</strong> {5} <br><strong>Nemzetiség:</strong> {6}</div></div>',
-            args = {'Személyi igazolvány', character.citizenid, character.firstname, character.lastname, character.birthdate, gender, character.nationality}
+            template = '<div class="chat-message advert"><div class="chat-message-body"><strong>{0}:</strong><br><br> <strong>BSN:</strong> {1} <br><strong>First Name:</strong> {2} <br><strong>Last name:</strong> {3} <br><strong>Birthday:</strong> {4} <br><strong>Sex:</strong> {5} <br><strong>Nationality:</strong> {6}</div></div>',
+            args = {'ID card', character.citizenid, character.firstname, character.lastname, character.birthdate, gender, character.nationality}
         })
     end
-end)
-
-RegisterNetEvent("inventory:client:ShowWallet")
-AddEventHandler("inventory:client:ShowWallet", function(sourceId, citizenid, character)
-    local sourcePos = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(sourceId)), false)
-    local pos = GetEntityCoords(GetPlayerPed(-1), false)
-    if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, sourcePos.x, sourcePos.y, sourcePos.z, true) < 2.0) then
-        local gender = "Man"
-        if character.gender == 1 then
-            gender = "Vrouw"
-        end
-        TriggerEvent('chat:addMessage', {
-            template = '<div class="chat-message advert"><div class="chat-message-body"><strong>{0}</strong><br><br> <strong>Tartalma:</strong> {1}</div></div>',
-            args = {'-----Tárca-----', character.tarca}
-        })
-    end
+end
 end)
 
 RegisterNetEvent("inventory:client:ShowDriverLicense")
 AddEventHandler("inventory:client:ShowDriverLicense", function(sourceId, citizenid, character)
+    local targ = GetPlayerFromServerId(sourceId)
+    if targ ~= nil and targ ~= -1 then
     local sourcePos = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(sourceId)), false)
     local pos = GetEntityCoords(GetPlayerPed(-1), false)
     if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, sourcePos.x, sourcePos.y, sourcePos.z, true) < 2.0) then
         TriggerEvent('chat:addMessage', {
-            template = '<div class="chat-message advert"><div class="chat-message-body"><strong>{0}:</strong><br><br> <strong>Keresztnév:</strong> {1} <br><strong>Vezetéknév:</strong> {2} <br><strong>Születési dátum:</strong> {3} <br><strong>Vezetői engedély:</strong> {4}</div></div>',
-            args = {'Jogositvány', character.firstname, character.lastname, character.birthdate, character.type}
+            template = '<div class="chat-message advert"><div class="chat-message-body"><strong>{0}:</strong><br><br> <strong>First Name:</strong> {1} <br><strong>Last name:</strong> {2} <br><strong>Birthday:</strong> {3} <br><strong>Driving licenses:</strong> {4}</div></div>',
+            args = {'Drivers license', character.firstname, character.lastname, character.birthdate, character.type}
         })
+        
+        TriggerEvent("debug", 'Licenses: Show Driver', 'success')
+    end
+    end
+end)
+
+RegisterNetEvent("inventory:client:ShowWeaponLicense")
+AddEventHandler("inventory:client:ShowWeaponLicense", function(sourceId, citizenid, character)
+    local targ = GetPlayerFromServerId(sourceId)
+    if targ ~= nil and targ ~= -1 then
+    local sourcePos = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(sourceId)), false)
+    local pos = GetEntityCoords(GetPlayerPed(-1), false)
+    if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, sourcePos.x, sourcePos.y, sourcePos.z, true) < 2.0) then
+        local gender = "Man"
+        if character.gender == 1 then
+            gender = "Woman"
+        end
+        TriggerEvent('chat:addMessage', {
+            template = '<div class="chat-message advert"><div class="chat-message-body"><strong>{0}:</strong><br><br> <strong>BSN:</strong> {1} <br><strong>First Name:</strong> {2} <br><strong>Last name:</strong> {3} <br><strong>Birthday:</strong> {4} <br><strong>Sex:</strong> {5} <br><strong>Nationality:</strong> {6}</div></div>',
+            args = {'Weapon License', character.citizenid, character.firstname, character.lastname, character.birthdate, gender, character.nationality}
+        })
+        
+        TriggerEvent("debug", 'Licenses: Show Weapon', 'success')
+    end
     end
 end)
 
 RegisterNetEvent("inventory:client:SetCurrentStash")
 AddEventHandler("inventory:client:SetCurrentStash", function(stash)
     CurrentStash = stash
-end)
-
-RegisterNetEvent('randPickupAnim')
-AddEventHandler('randPickupAnim', function()
-    LoadAnimDict('pickup_object')
-    TaskPlayAnim(PlayerPedId(),'pickup_object', 'putdown_low',5.0, 1.5, 1.0, 48, 0.0, 0, 0, 0)
-    Wait(1000)
-    ClearPedSecondaryTask(PlayerPedId())
+    TriggerEvent("debug", 'Inventory: Current Stash (' .. stash .. ')', 'success')
 end)
 
 RegisterNUICallback('getCombineItem', function(data, cb)
-    cb(QBCore.Shared.Items[data.item])
-end)
-
-RegisterNUICallback("CloseComponents", function(data, cb)
-    SetNuiFocus(false, false)
+    cb(RLCore.Shared.Items[data.item])
 end)
 
 RegisterNUICallback("CloseInventory", function(data, cb)
@@ -1412,87 +1111,17 @@ RegisterNUICallback("CloseInventory", function(data, cb)
     end
     SetNuiFocus(false, false)
     inInventory = false
+
+    TriggerEvent("debug", 'Inventory: Close', 'error')
 end)
-
-function GetClosestPlayer()
-    local closestPlayers = QBCore.Functions.GetPlayersFromCoords()
-    local closestDistance = -1
-    local closestPlayer = -1
-    local coords = GetEntityCoords(GetPlayerPed(-1))
-
-    for i=1, #closestPlayers, 1 do
-        if closestPlayers[i] ~= PlayerId() then
-            local pos = GetEntityCoords(GetPlayerPed(closestPlayers[i]))
-            local distance = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, coords.x, coords.y, coords.z, true)
-
-            if closestDistance == -1 or closestDistance > distance then
-                closestPlayer = closestPlayers[i]
-                closestDistance = distance
-            end
-        end
-	end
-
-	return closestPlayer, closestDistance
-end
-
-
 RegisterNUICallback("UseItem", function(data, cb)
     TriggerServerEvent("inventory:server:UseItem", data.inventory, data.item)
-end)
-
-RegisterNUICallback("GiveItem", function(data, cb)
-    local player, distance = GetClosestPlayer()
-    if player ~= -1 and distance < 2.5 then
-        local playerPed = GetPlayerPed(player)
-        local playerId = GetPlayerServerId(player)
-        local plyCoords = GetEntityCoords(playerPed)
-        local pos = GetEntityCoords(GetPlayerPed(-1))
-        local dist = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, plyCoords.x, plyCoords.y, plyCoords.z, true)
-        if dist < 2.5 then
-            TriggerServerEvent("inventory:server:GiveItem", playerId, data.inventory, data.item)
-        else
-            QBCore.Functions.Notify("No one nearby!", "error")
-        end
-    else
-        QBCore.Functions.Notify("No one nearby!", "error")
-    end
-end)
-
--- RegisterNetEvent('inventory:client:GiveItem')
--- AddEventHandler('inventory:client:GiveItem', function()
---     local player, distance = GetClosestPlayer()
---     if player ~= -1 and distance < 2.5 then
---         local playerPed = GetPlayerPed(player)
---         local playerId = GetPlayerServerId(player)
---         local plyCoords = GetEntityCoords(playerPed)
---         local pos = GetEntityCoords(GetPlayerPed(-1))
---         local dist = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, plyCoords.x, plyCoords.y, plyCoords.z, true)
---         if dist < 2.5 then
---             TriggerServerEvent("inventory:server:GiveItem", playerId)
---         else
---             QBCore.Functions.Notify("No one nearby!", "error")
---         end
---     else
---         QBCore.Functions.Notify("No one nearby!", "error")
---     end
--- end)
-
-RegisterNUICallback("UpdateStash", function(data, cb)
-    if CurrentVehicle ~= nil then
-        TriggerServerEvent("inventory:server:SaveInventory", "trunk", CurrentVehicle)
-    elseif CurrentGlovebox ~= nil then
-        TriggerServerEvent("inventory:server:SaveInventory", "glovebox", CurrentGlovebox)
-    elseif CurrentStash ~= nil then
-        TriggerServerEvent("inventory:server:SaveInventory", "stash", CurrentStash)
-    else
-        TriggerServerEvent("inventory:server:SaveInventory", "drop", CurrentDrop)
-    end
 end)
 
 RegisterNUICallback("combineItem", function(data)
     Citizen.Wait(150)
     TriggerServerEvent('inventory:server:combineItem', data.reward, data.fromItem, data.toItem)
-    TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[data.reward], 'add')
+    TriggerEvent('inventory:client:ItemBox', RLCore.Shared.Items[data.reward], 'add')
 end)
 
 RegisterNUICallback('combineWithAnim', function(data)
@@ -1502,7 +1131,7 @@ RegisterNUICallback('combineWithAnim', function(data)
     local animText = combineData.anim.text
     local animTimeout = combineData.anim.timeOut
 
-    QBCore.Functions.Progressbar("combine_anim", animText, animTimeout, false, true, {
+    RLCore.Functions.Progressbar("combine_anim", animText, animTimeout, false, true, {
         disableMovement = false,
         disableCarMovement = true,
         disableMouse = false,
@@ -1514,10 +1143,10 @@ RegisterNUICallback('combineWithAnim', function(data)
     }, {}, {}, function() -- Done
         StopAnimTask(GetPlayerPed(-1), aDict, aLib, 1.0)
         TriggerServerEvent('inventory:server:combineItem', combineData.reward, data.requiredItem, data.usedItem)
-        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[combineData.reward], 'add')
+        TriggerEvent('inventory:client:ItemBox', RLCore.Shared.Items[combineData.reward], 'add')
     end, function() -- Cancel
         StopAnimTask(GetPlayerPed(-1), aDict, aLib, 1.0)
-        QBCore.Functions.Notify("Canceled!", "error")
+        RLCore.Functions.Notify("Failed!", "error")
     end)
 end)
 
@@ -1534,7 +1163,7 @@ RegisterNUICallback("PlayDropFail", function(data, cb)
 end)
 
 function OpenTrunk()
-    local vehicle = QBCore.Functions.GetClosestVehicle()
+    local vehicle = RLCore.Functions.GetClosestVehicle()
     while (not HasAnimDictLoaded("amb@prop_human_bum_bin@idle_b")) do
         RequestAnimDict("amb@prop_human_bum_bin@idle_b")
         Citizen.Wait(100)
@@ -1548,7 +1177,7 @@ function OpenTrunk()
 end
 
 function CloseTrunk()
-    local vehicle = QBCore.Functions.GetClosestVehicle()
+    local vehicle = RLCore.Functions.GetClosestVehicle()
     while (not HasAnimDictLoaded("amb@prop_human_bum_bin@idle_b")) do
         RequestAnimDict("amb@prop_human_bum_bin@idle_b")
         Citizen.Wait(100)
@@ -1572,11 +1201,12 @@ end
 
 function ToggleHotbar(toggle)
     local HotbarItems = {
-        [1] = QBCore.Functions.GetPlayerData().items[1],
-        [2] = QBCore.Functions.GetPlayerData().items[2],
-        [3] = QBCore.Functions.GetPlayerData().items[3],
-        [4] = QBCore.Functions.GetPlayerData().items[4],
-        [5] = QBCore.Functions.GetPlayerData().items[5],
+        [1] = RLCore.Functions.GetPlayerData().items[1],
+        [2] = RLCore.Functions.GetPlayerData().items[2],
+        [3] = RLCore.Functions.GetPlayerData().items[3],
+        [4] = RLCore.Functions.GetPlayerData().items[4],
+        [5] = RLCore.Functions.GetPlayerData().items[5],
+        [41] = RLCore.Functions.GetPlayerData().items[41],
     } 
 
     if toggle then
