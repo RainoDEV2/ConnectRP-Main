@@ -1451,6 +1451,7 @@ function AddToDrop(dropId, slot, itemName, amount, info)
 end
 
 function RemoveFromDrop(dropId, slot, itemName, amount)
+	TriggerClientEvent("inventory:client:DropItemAnim", source)
 	if Drops[dropId].items[slot] ~= nil and Drops[dropId].items[slot].name == itemName then
 		if Drops[dropId].items[slot].amount > amount then
 			Drops[dropId].items[slot].amount = Drops[dropId].items[slot].amount - amount
@@ -1511,6 +1512,7 @@ function CreateNewDrop(src, fromSlot, toSlot, itemAmount)
 		}
 		TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="3drop", name=itemData.name, amount=itemAmount})
 		TriggerEvent("rl-log:server:CreateLog", "drop", "New Item Drop", "red", "**".. GetPlayerName(source) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..source.."*) dropped new item; name: **"..itemData.name.."**, amount: **" .. itemAmount .. "**")
+		TriggerClientEvent("inventory:client:DropItemAnim", source)
 		TriggerClientEvent("inventory:client:AddDropItem", -1, dropId, source)
 	else
 		TriggerClientEvent("RLCore:Notify", src, "You don't have this item!", "error")

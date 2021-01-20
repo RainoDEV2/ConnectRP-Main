@@ -260,6 +260,7 @@ Citizen.CreateThread(function()
                     elseif CurrentDrop and CurrentDrop ~= 0 then
                         TriggerServerEvent("inventory:server:OpenInventory", "drop", CurrentDrop)
                     else
+                        TriggerEvent('randPickupAnim')
                         TriggerServerEvent("inventory:server:OpenInventory")
                     end
 
@@ -1017,6 +1018,20 @@ AddEventHandler("inventory:client:RemoveDropItem", function(dropId)
     TriggerEvent("debug", 'Inventory: Received Drops', 'success')
 end)
 
+RegisterNetEvent("inventory:client:DropItemAnim")
+AddEventHandler("inventory:client:DropItemAnim", function()
+    SendNUIMessage({
+        action = "close",
+    })
+    RequestAnimDict("pickup_object")
+    while not HasAnimDictLoaded("pickup_object") do
+        Citizen.Wait(7)
+    end
+    TaskPlayAnim(GetPlayerPed(-1), "pickup_object" ,"pickup_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
+    Citizen.Wait(2000)
+    ClearPedTasks(GetPlayerPed(-1))
+end)
+
 RegisterNetEvent("inventory:client:ShowId")
 AddEventHandler("inventory:client:ShowId", function(sourceId, citizenid, character)
     local targ = GetPlayerFromServerId(sourceId)
@@ -1078,6 +1093,14 @@ RegisterNetEvent("inventory:client:SetCurrentStash")
 AddEventHandler("inventory:client:SetCurrentStash", function(stash)
     CurrentStash = stash
     TriggerEvent("debug", 'Inventory: Current Stash (' .. stash .. ')', 'success')
+end)
+
+RegisterNetEvent('randPickupAnim')
+AddEventHandler('randPickupAnim', function()
+    LoadAnimDict('pickup_object')
+    TaskPlayAnim(PlayerPedId(),'pickup_object', 'putdown_low',5.0, 1.5, 1.0, 48, 0.0, 0, 0, 0)
+    Wait(1000)
+    ClearPedSecondaryTask(PlayerPedId())
 end)
 
 RegisterNUICallback('getCombineItem', function(data, cb)
