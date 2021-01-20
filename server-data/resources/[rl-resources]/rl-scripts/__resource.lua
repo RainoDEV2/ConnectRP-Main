@@ -8,6 +8,7 @@ server_scripts {
 	"server/hostage.lua",
 	"server/main.lua",
 	"config.lua",
+	"server/heli_server.lua",
 }
 
 client_scripts {
@@ -36,6 +37,7 @@ client_scripts {
 	"client/weapdraw.lua",
 	"client/ragdoll.lua",
 	"client/push.lua",
+	"client/heli_client.lua",
 	--"client/offroad.lua",
 	"@warmenu/warmenu.lua",
 }
