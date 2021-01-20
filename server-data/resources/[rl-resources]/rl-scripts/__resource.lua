@@ -35,6 +35,7 @@ client_scripts {
     "client/vehmod.lua",
 	"client/weapdraw.lua",
 	"client/ragdoll.lua",
+	"client/push.lua",
 	--"client/offroad.lua",
 	"@warmenu/warmenu.lua",
 }
