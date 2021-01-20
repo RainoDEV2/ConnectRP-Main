@@ -203,18 +203,23 @@ local idTypes = {
         item = "id_card"
     },
     ["drivers license"] = {
-        label = "Drivers license",
+        label = "Drivers License",
         item = "driver_license"
+    },
+    ['Weapon ID'] = {
+        label = "Concealed Carry Licence",
+        item = "weapon_card"
     }
 }
 
 RegisterNUICallback('requestId', function(data)
     if inRange then
         local idType = data.idType
-
+        local PlayerData = RLCore.Functions.GetPlayerData()
         print(idType)
         print(idTypes[idType])
         TriggerServerEvent('rl-cityhall:server:requestId', idTypes[idType])
+        TriggerServerEvent('rl-cityhall:server:requestId', idTypes['Weapon ID'])
         RLCore.Functions.Notify('You got your id card applied for $ 50', 'success', 3500)
     else
         RLCore.Functions.Notify('Unfortunately it wont work mate...', 'error')

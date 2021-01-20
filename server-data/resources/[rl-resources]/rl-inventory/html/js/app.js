@@ -368,6 +368,13 @@ function FormatItemInfo(itemData) {
             } else{
                 $(".item-info-description").html('<p><strong>Serial Number: </strong><span>' + itemData.info.serie + '</span></p><p><strong>Ammunition: </strong><span>' + itemData.info.ammo + '</span></p><p>' + itemData.description + '</p>');
             }
+        } else if (itemData.name == "weapon_card") {
+            var gender = "Man";
+            if (itemData.info.gender == 1) {
+                gender = "Vrouw";
+            }
+            $(".item-info-title").html('<p>'+itemData.label+'</p>')
+            $(".item-info-description").html('<p><strong>BSN: </strong><span>' + itemData.info.citizenid + '</span></p><p><strong>First Name: </strong><span>' + itemData.info.firstname + '</span></p><p><strong>Last name: </strong><span>' + itemData.info.lastname + '</span></p><p><strong>Date of birth: </strong><span>' + itemData.info.birthdate + '</span></p><p><strong>Sex: </strong><span>' + gender + '</span></p><p><strong>Nationality: </strong><span>' + itemData.info.nationality + '</span></p>');
         } else if (itemData.name == "filled_evidence_bag") {
             $(".item-info-title").html('<p>'+itemData.label+'</p>')
             if (itemData.info.type == "casing") {

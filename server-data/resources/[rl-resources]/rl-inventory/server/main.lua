@@ -1637,6 +1637,13 @@ RLCore.Functions.CreateUseableItem("id_card", function(source, item)
     end
 end)
 
+RLCore.Functions.CreateUseableItem("weapon_card", function(source, item)
+    local Player = RLCore.Functions.GetPlayer(source)
+	if Player.Functions.GetItemBySlot(item.slot) ~= nil then
+        TriggerClientEvent("inventory:client:ShowWeaponLicense", -1, source, Player.PlayerData.citizenid, item.info)
+    end
+end)
+
 RLCore.Functions.CreateUseableItem("snowball", function(source, item)
 	local Player = RLCore.Functions.GetPlayer(source)
 	local itemData = Player.Functions.GetItemBySlot(item.slot)

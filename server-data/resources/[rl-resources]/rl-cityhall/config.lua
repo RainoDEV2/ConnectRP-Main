@@ -1,15 +1,15 @@
 Config = Config or {}
 
 Config.Cityhall = {
-    coords = {x = 97.013473, y = -933.488, z = 29.849409},
+    coords = {x = 105.37617, y = -934.9978, z = 29.790016},
 }
 
 Config.DriverTest = {
-    coords = {x = 99.896995, y = -934.4151, z = 29.849193},
+    coords = {x = 105.95689, y = -933.273, z = 29.789674},
 }
 
 Config.DrivingSchool = {
-    coords = {x = 241.13, y = -1378.97, z = 33.74},
+    coords = {x = 106.59817, y = -931.9902, z = 29.801744},
 }
 
 Config.CompanyPrice = 25000

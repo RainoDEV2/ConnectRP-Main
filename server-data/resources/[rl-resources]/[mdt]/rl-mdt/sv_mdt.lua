@@ -127,6 +127,8 @@ AddEventHandler("mdt:getOffenderDetails", function(offender)
 									k = 'Driver'
 								elseif k == 'business' then
 									k = 'Business'
+								elseif k == 'weapon1' then
+									k = 'Concealed Carry'
 								end
 								table.insert(offender.licenses, k)
 							end

@@ -93,7 +93,8 @@ RLCore.Player.CheckPlayerData = function(source, PlayerData)
 	}	
 	PlayerData.metadata["licences"] = PlayerData.metadata["licences"] ~= nil and PlayerData.metadata["licences"] or {
 		["driver"] = true,
-		["business"] = false
+		["business"] = false,
+		["weapon1"] = false
 	}	
 	PlayerData.metadata["inside"] = PlayerData.metadata["inside"] ~= nil and PlayerData.metadata["inside"] or {
 		house = nil,

@@ -1053,6 +1053,27 @@ AddEventHandler("inventory:client:ShowDriverLicense", function(sourceId, citizen
     end
 end)
 
+RegisterNetEvent("inventory:client:ShowWeaponLicense")
+AddEventHandler("inventory:client:ShowWeaponLicense", function(sourceId, citizenid, character)
+    local targ = GetPlayerFromServerId(sourceId)
+    if targ ~= nil and targ ~= -1 then
+    local sourcePos = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(sourceId)), false)
+    local pos = GetEntityCoords(GetPlayerPed(-1), false)
+    if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, sourcePos.x, sourcePos.y, sourcePos.z, true) < 2.0) then
+        local gender = "Man"
+        if character.gender == 1 then
+            gender = "Woman"
+        end
+        TriggerEvent('chat:addMessage', {
+            template = '<div class="chat-message advert"><div class="chat-message-body"><strong>{0}:</strong><br><br> <strong>BSN:</strong> {1} <br><strong>First Name:</strong> {2} <br><strong>Last name:</strong> {3} <br><strong>Birthday:</strong> {4} <br><strong>Sex:</strong> {5} <br><strong>Nationality:</strong> {6}</div></div>',
+            args = {'Weapon License', character.citizenid, character.firstname, character.lastname, character.birthdate, gender, character.nationality}
+        })
+        
+        TriggerEvent("debug", 'Licenses: Show Weapon', 'success')
+    end
+    end
+end)
+
 RegisterNetEvent("inventory:client:SetCurrentStash")
 AddEventHandler("inventory:client:SetCurrentStash", function(stash)
     CurrentStash = stash

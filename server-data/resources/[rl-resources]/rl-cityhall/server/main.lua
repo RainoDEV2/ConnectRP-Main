@@ -7,6 +7,29 @@ local DrivingSchools = {
     "GWR60231",
 }
 
+RegisterServerEvent('rl-cityhall:server:weaponlicense:check1')
+AddEventHandler('rl-cityhall:server:weaponlicense:check1', function()
+    local src = source
+    local Player = RLCore.Functions.GetPlayer(src)
+
+    local licenses = {
+        ["driver"] = Player.PlayerData.metadata["licences"]["driver"],
+        ["business"] = Player.PlayerData.metadata["licences"]["business"],
+        ['weapon1'] = true
+    }
+    
+    local info = {}
+    info.citizenid = Player.PlayerData.citizenid
+    info.firstname = Player.PlayerData.charinfo.firstname
+    info.lastname = Player.PlayerData.charinfo.lastname
+    info.birthdate = Player.PlayerData.charinfo.birthdate
+    info.gender = Player.PlayerData.charinfo.gender
+    info.nationality = Player.PlayerData.charinfo.nationality
+
+    Player.Functions.SetMetaData('licences', licenses)
+    Player.Functions.AddItem('weapon_card', 1, nil, info)
+end)
+
 RegisterServerEvent('rl-cityhall:server:requestId')
 AddEventHandler('rl-cityhall:server:requestId', function(identityData)
     local src = source
@@ -14,7 +37,8 @@ AddEventHandler('rl-cityhall:server:requestId', function(identityData)
 
     local licenses = {
         ["driver"] = true,
-        ["business"] = false
+        ["business"] = Player.PlayerData.metadata["licences"]["business"],
+        ['weapon1'] = Player.PlayerData.metadata["licences"]["weapon1"]
     }
     
     local info = {}
@@ -30,10 +54,16 @@ AddEventHandler('rl-cityhall:server:requestId', function(identityData)
         info.lastname = Player.PlayerData.charinfo.lastname
         info.birthdate = Player.PlayerData.charinfo.birthdate
         info.type = "A1-A2-A | AM-B | C1-C-CE"
+    elseif identityData.item == 'weapon_card' then
+        info.citizenid = Player.PlayerData.citizenid
+        info.firstname = Player.PlayerData.charinfo.firstname
+        info.lastname = Player.PlayerData.charinfo.lastname
+        info.birthdate = Player.PlayerData.charinfo.birthdate
+        info.gender = Player.PlayerData.charinfo.gender
+        info.nationality = Player.PlayerData.charinfo.nationality
     end
-
+    
     Player.Functions.AddItem(identityData.item, 1, nil, info)
-
     TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items[identityData.item], 'add')
 end)
 
@@ -80,7 +110,8 @@ RLCore.Commands.Add("drivinglicense", "Give a driver's license job to someone", 
             if not driverLicense then
                 local licenses = {
                     ["driver"] = true,
-                    ["business"] = SearchedPlayer.PlayerData.metadata["licences"]["business"]
+                    ["business"] = SearchedPlayer.PlayerData.metadata["licences"]["business"],
+                    ['weapon1'] = SearchedPlayer.PlayerData.metadata["licences"]["weapon1"]
                 }
                 SearchedPlayer.Functions.SetMetaData("licences", licenses)
                 TriggerClientEvent('RLCore:Notify', SearchedPlayer.PlayerData.source, "you passed! Pick up your driver's license at the town hall", "success", 5000)
