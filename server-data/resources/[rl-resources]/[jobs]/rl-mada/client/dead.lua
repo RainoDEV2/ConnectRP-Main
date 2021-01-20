@@ -40,22 +40,46 @@ Citizen.CreateThread(function()
 	while true do
         Citizen.Wait(0)
         if isDead or InLaststand then
-            DisableAllControlActions(0)
-            EnableControlAction(0, 1, true)
-			EnableControlAction(0, 2, true)
-			EnableControlAction(0, Keys['T'], true)
-            EnableControlAction(0, Keys['E'], true)
-            EnableControlAction(0, Keys['V'], true)
-            EnableControlAction(0, Keys['ESC'], true)
-            EnableControlAction(0, Keys['F1'], true)
-            EnableControlAction(0, Keys['HOME'], true)
+            DisableInputGroup(0)
+            DisableInputGroup(1)
+            DisableInputGroup(2)
+            DisableControlAction(0, 34, true)
+            DisableControlAction(0, 9, true)
+            DisableControlAction(0, 301, true)
+            DisableControlAction(0, 32, true)
+            DisableControlAction(0, 8, true)
+            DisableControlAction(0, 289, true) 
+            DisableControlAction(2, 31, true)
+            DisableControlAction(2, 32, true)
+            DisableControlAction(1, 33, true)
+            DisableControlAction(1, 34, true)
+            DisableControlAction(1, 35, true)
+            DisableControlAction(1, 21, true)  -- space
+            DisableControlAction(1, 22, true)  -- space
+            DisableControlAction(1, 23, true)  -- F
+            DisableControlAction(1, 24, true)  -- F
+            DisableControlAction(1, 25, true)  -- F
+            DisableControlAction(1, 56, true)  -- F9
+            DisableControlAction(1, 288, true)  -- F1
+            DisableControlAction(1, 157, true) -- 1
+            DisableControlAction(1, 158, true) -- 2
+            DisableControlAction(1, 160, true) -- 3
+            DisableControlAction(1, 164, true) -- 4
+            DisableControlAction(1, 165, true) -- 5
+            DisableControlAction(1, 159, true) -- 6
+            DisableControlAction(1, 106, true) -- VehicleMouseControlOverride
+            DisableControlAction(1, 140, true) --Disables Melee Actions
+            DisableControlAction(1, 141, true) --Disables Melee Actions
+            DisableControlAction(1, 142, true) --Disables Melee Actions 
+            DisableControlAction(1, 37, true) --Disables INPUT_SELECT_WEAPON (tab) Actions
+            DisablePlayerFiring(GetPlayerPed(-1), true) -- Disable weapon firing
             
             if isDead then
                 if not isInHospitalBed then 
                     if deathTime > 0 then
-                        DrawTxt(0.93, 1.44, 1.0,1.0,0.6, "RESPAWN IN ~r~" .. math.ceil(deathTime) .. "~w~ SECONDS", 255, 255, 255, 255)
+                        DrawTxt(0.93, 1.44, 1.0,1.0,0.5, "RESPAWN IN ~r~" .. math.ceil(deathTime) .. "~w~ SECONDS", 255, 255, 255, 255)
                     else
-                        DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "HOLD ~r~E ~s~(5) TO ~r~RESPAWN ~s~OR WAIT FOR ~r~EMS (/101)", 255, 255, 255, 255)
+                        DrawTxt(0.865, 1.44, 1.0, 1.0, 0.5, "HOLD ~r~E ~s~(5) TO ~r~RESPAWN ~s~OR WAIT FOR ~r~EMS (/101)", 255, 255, 255, 255)
                     end
                 end
 
@@ -80,20 +104,44 @@ Citizen.CreateThread(function()
 
                 SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey("WEAPON_UNARMED"), true)
             elseif InLaststand then
-                DisableAllControlActions(0)
-                EnableControlAction(0, 1, true)
-                EnableControlAction(0, 2, true)
-                EnableControlAction(0, Keys['T'], true)
-                EnableControlAction(0, Keys['E'], true)
-                EnableControlAction(0, Keys['V'], true)
-                EnableControlAction(0, Keys['ESC'], true)
-                EnableControlAction(0, Keys['F1'], true)
-                EnableControlAction(0, Keys['HOME'], true)
+                DisableInputGroup(0)
+                DisableInputGroup(1)
+                DisableInputGroup(2)
+                DisableControlAction(0, 34, true)
+                DisableControlAction(0, 9, true)
+                DisableControlAction(0, 301, true)
+                DisableControlAction(0, 32, true)
+                DisableControlAction(0, 8, true)
+                DisableControlAction(0, 289, true) 
+                DisableControlAction(2, 31, true)
+                DisableControlAction(2, 32, true)
+                DisableControlAction(1, 33, true)
+                DisableControlAction(1, 34, true)
+                DisableControlAction(1, 35, true)
+                DisableControlAction(1, 21, true)  -- space
+                DisableControlAction(1, 22, true)  -- space
+                DisableControlAction(1, 23, true)  -- F
+                DisableControlAction(1, 24, true)  -- F
+                DisableControlAction(1, 25, true)  -- F
+                DisableControlAction(1, 56, true)  -- F9
+                DisableControlAction(1, 288, true)  -- F1
+                DisableControlAction(1, 157, true) -- 1
+                DisableControlAction(1, 158, true) -- 2
+                DisableControlAction(1, 160, true) -- 3
+                DisableControlAction(1, 164, true) -- 4
+                DisableControlAction(1, 165, true) -- 5
+                DisableControlAction(1, 159, true) -- 6
+                DisableControlAction(1, 106, true) -- VehicleMouseControlOverride
+                DisableControlAction(1, 140, true) --Disables Melee Actions
+                DisableControlAction(1, 141, true) --Disables Melee Actions
+                DisableControlAction(1, 142, true) --Disables Melee Actions 
+                DisableControlAction(1, 37, true) --Disables INPUT_SELECT_WEAPON (tab) Actions
+                DisablePlayerFiring(GetPlayerPed(-1), true) -- Disable weapon firing
 
                 if LaststandTime > Laststand.MinimumRevive then
-                    DrawTxt(0.94, 1.44, 1.0, 1.0, 0.6, "BLEED OUT IN ~r~" .. math.ceil(LaststandTime) .. "~w~ SECONDS", 255, 255, 255, 255)
+                    DrawTxt(0.94, 1.44, 1.0, 1.0, 0.5, "BLEED OUT IN ~r~" .. math.ceil(LaststandTime) .. "~w~ SECONDS", 255, 255, 255, 255)
                 else
-                    DrawTxt(0.845, 1.44, 1.0, 1.0, 0.6, "BLEED OUT IN ~r~" .. math.ceil(LaststandTime) .. "~w~ SECONDS, YOU CAN BE HELPED ", 255, 255, 255, 255)
+                    DrawTxt(0.845, 1.44, 1.0, 1.0, 0.5, "BLEED OUT IN ~r~" .. math.ceil(LaststandTime) .. "~w~ SECONDS, YOU CAN BE HELPED ", 255, 255, 255, 255)
                 end
 
                 if not isEscorted and not inCarry then
@@ -127,6 +175,7 @@ Citizen.CreateThread(function()
 		end
 	end
 end)
+
 
 function OnDeath(spawn)
     if not isDead then
@@ -198,10 +247,10 @@ function DrawTxt(x, y, width, height, scale, text, r, g, b, a, outline)
     SetTextProportional(0)
     SetTextScale(scale, scale)
     SetTextColour(r, g, b, a)
-    SetTextDropShadow(0, 0, 0, 0,255)
-    SetTextEdge(2, 0, 0, 0, 255)
-    SetTextDropShadow()
-    SetTextOutline()
+    --SetTextDropShadow(0, 0, 0, 0,255)
+    --SetTextEdge(2, 0, 0, 0, 255)
+    --SetTextDropShadow()
+    --SetTextOutline()
     SetTextEntry("STRING")
     AddTextComponentString(text)
     DrawText(x - width/2, y - height/2 + 0.005)
