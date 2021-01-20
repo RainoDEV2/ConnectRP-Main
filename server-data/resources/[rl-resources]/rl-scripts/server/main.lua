@@ -1,9 +1,9 @@
 RLCore = nil
 TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
 
-RegisterServerEvent('tackle:server:TacklePlayer')
-AddEventHandler('tackle:server:TacklePlayer', function(playerId)
-    TriggerClientEvent("tackle:client:GetTackled", playerId)
+RegisterServerEvent('CrashTackle')
+AddEventHandler('CrashTackle', function(target)
+	TriggerClientEvent("playerTackled", target)
 end)
 
 RLCore.Functions.CreateUseableItem("harness", function(source, item)
