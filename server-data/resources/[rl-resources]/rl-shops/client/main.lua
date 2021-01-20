@@ -55,8 +55,12 @@ Citizen.CreateThread(function()
                             if Config.Locations[shop]["type"] == 'dede' then
                                 TriggerServerEvent("inventory:server:OpenInventory", "dede", "Itemshop_"..shop, ShopItems)
                             elseif Config.Locations[shop]["type"] == 'weapon' then
-                                print("IM A WEAPON STORE")
-                                TriggerServerEvent('rlcore:checkLicence', shop, ShopItems)
+                                if RLCore.Functions.GetPlayerData().metadata["licences"]["weapon1"] then
+                                    print(RLCore.Functions.GetPlayerData().metadata["licences"]["weapon1"])
+                                    TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_"..shop, ShopItems)
+                                else
+                                    print('no licence')
+                                end
                             else
                                 TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_"..shop, ShopItems)
                             end

@@ -8,26 +8,37 @@ local DrivingSchools = {
 }
 
 RegisterServerEvent('rl-cityhall:server:weaponlicense:check1')
-AddEventHandler('rl-cityhall:server:weaponlicense:check1', function()
+AddEventHandler('rl-cityhall:server:weaponlicense:check1', function(tog)
     local src = source
     local Player = RLCore.Functions.GetPlayer(src)
+    local licenses
+    if tog then
+        licenses = {
+            ["driver"] = Player.PlayerData.metadata["licences"]["driver"],
+            ["business"] = Player.PlayerData.metadata["licences"]["business"],
+            ['weapon1'] = true
+        }
 
-    local licenses = {
-        ["driver"] = Player.PlayerData.metadata["licences"]["driver"],
-        ["business"] = Player.PlayerData.metadata["licences"]["business"],
-        ['weapon1'] = true
-    }
+        local info = {}
+        info.citizenid = Player.PlayerData.citizenid
+        info.firstname = Player.PlayerData.charinfo.firstname
+        info.lastname = Player.PlayerData.charinfo.lastname
+        info.birthdate = Player.PlayerData.charinfo.birthdate
+        info.gender = Player.PlayerData.charinfo.gender
+        info.nationality = Player.PlayerData.charinfo.nationality
+
+        Player.Functions.SetMetaData('licences', licenses)
+        Player.Functions.AddItem('weapon_card', 1, nil, info)
+        TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items['weapon_card'], 'add')
+    else
+        licenses = {
+            ["driver"] = Player.PlayerData.metadata["licences"]["driver"],
+            ["business"] = Player.PlayerData.metadata["licences"]["business"],
+            ['weapon1'] = false
+        }
     
-    local info = {}
-    info.citizenid = Player.PlayerData.citizenid
-    info.firstname = Player.PlayerData.charinfo.firstname
-    info.lastname = Player.PlayerData.charinfo.lastname
-    info.birthdate = Player.PlayerData.charinfo.birthdate
-    info.gender = Player.PlayerData.charinfo.gender
-    info.nationality = Player.PlayerData.charinfo.nationality
-
-    Player.Functions.SetMetaData('licences', licenses)
-    Player.Functions.AddItem('weapon_card', 1, nil, info)
+        Player.Functions.SetMetaData('licences', licenses)
+    end
 end)
 
 RegisterServerEvent('rl-cityhall:server:requestId')

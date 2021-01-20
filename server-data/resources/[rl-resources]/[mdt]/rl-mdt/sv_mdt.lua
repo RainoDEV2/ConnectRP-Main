@@ -163,6 +163,8 @@ AddEventHandler("mdt:getOffenderDetailsById", function(char_id)
 					k = 'Driver'
 				elseif k == 'business' then
 					k = 'Business'
+				elseif k == 'weapon1' then
+					k = 'Concealed Carry'
 				end
 
 				table.insert(offender.licenses, k)
@@ -224,15 +226,32 @@ AddEventHandler("mdt:saveOffenderChanges", function(id, changes, citizenid)
 			local xPlayer = RLCore.Functions.GetPlayerByCitizenId(citizenid)
 
 			if xPlayer then
-				local licenses = xPlayer.PlayerData['metadata']['licences']
 				for i = 1, #changes.licenses_removed do
 					local license = string.lower(changes.licenses_removed[i])
-					if licenses[license] ~= nil then
-						licenses[license] = false
+					local a;
+					local b;
+					local c;
+					print(xPlayer.PlayerData.metadata.licences['weapon1'])
+					if license == 'driver' then
+						a = false
+						b = xPlayer.PlayerData.metadata.licences["business"]
+						c = xPlayer.PlayerData.metadata.licences["weapon1"]
+					elseif license == 'business' then
+						a = xPlayer.PlayerData.metadata.licences["driver"]
+						b = false
+						c = xPlayer.PlayerData.metadata.licences["weapon1"]
+					elseif license == 'concealed carry' then
+						a = xPlayer.PlayerData.metadata.licences["driver"]
+						b = xPlayer.PlayerData.metadata.licences["business"]
+						c = false
 					end
+					local metadatas = {
+						['driver'] = a,
+						['business'] = b,
+						['weapon1'] = c,
+					}
+					xPlayer.Functions.SetMetaData('licences', metadatas)
 				end
-	
-				xPlayer.Functions.SetMetaData('licences', licenses)
 			else
 				exports['ghmattimysql']:execute("SELECT * FROM `players` WHERE `citizenid` = '" .. citizenid .. "'", {}, function(result)
 					if result[1] then
@@ -243,7 +262,7 @@ AddEventHandler("mdt:saveOffenderChanges", function(id, changes, citizenid)
 								metadata.licences[license] = false
 							end
 						end
-
+						print(metadata)
 						exports['ghmattimysql']:execute("UPDATE `players` SET `metadata` = '" .. json.encode(metadata) .. "'")
 					end
 				end)

@@ -23,6 +23,7 @@ qbCityhall.ResetPages = function() {
     $(".cityhall-option-blocks").show();
     $(".cityhall-identity-page").hide();
     $(".cityhall-job-page").hide();
+    $(".cityhall-weapon-page").hide();
 }
 
 $(document).ready(function(){
@@ -161,6 +162,26 @@ $(document).on('click', '.apply-job-button', function(e){
     }))
 
     qbCityhall.ResetPages();
+});
+
+$(document).on("click", ".weapon-page-block", function(e){
+    e.preventDefault();
+    $(".apply-weapon-button").show();
+});
+
+$(document).on('click', '.apply-weapon-button', function(e){
+    e.preventDefault();
+    $.post('http://rl-cityhall/Licence', JSON.stringify(true));
+});
+
+$(document).on('click', '.remove-weapon-button', function(e){
+    e.preventDefault();
+    $.post('http://rl-cityhall/Licence', JSON.stringify(false));
+});
+
+$(document).on('click', '.check-weapon-button', function(e){
+    e.preventDefault();
+    $.post('http://rl-cityhall/Check');
 });
 
 $(document).on('click', '.back-to-main', function(e){

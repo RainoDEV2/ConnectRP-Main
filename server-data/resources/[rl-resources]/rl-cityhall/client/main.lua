@@ -219,7 +219,6 @@ RegisterNUICallback('requestId', function(data)
         print(idType)
         print(idTypes[idType])
         TriggerServerEvent('rl-cityhall:server:requestId', idTypes[idType])
-        TriggerServerEvent('rl-cityhall:server:requestId', idTypes['Weapon ID'])
         RLCore.Functions.Notify('You got your id card applied for $ 50', 'success', 3500)
     else
         RLCore.Functions.Notify('Unfortunately it wont work mate...', 'error')
@@ -275,4 +274,12 @@ RegisterNUICallback('applyJob', function(data)
     else
         RLCore.Functions.Notify('Unfortunately it wont work mate...', 'error')
     end
+end)
+
+RegisterNUICallback('Licence', function(tog)
+    TriggerServerEvent('rl-cityhall:server:weaponlicense:check1', tog)
+end)
+
+RegisterNUICallback('Check', function()
+    print(RLCore.Functions.GetPlayerData().metadata["licences"]["weapon1"])
 end)
