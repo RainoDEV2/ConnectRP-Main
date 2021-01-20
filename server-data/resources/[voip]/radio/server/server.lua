@@ -6,7 +6,7 @@ TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
 RLCore.Functions.CreateUseableItem("radio", function(source, item)
 	local Player = RLCore.Functions.GetPlayer(source)
 	if Player.Functions.GetItemByName(item.name) ~= nil then
-		TriggerClientEvent("radioGui", source)
+		TriggerClientEvent("ls-radio:use", source)
 	end
 end)
 
