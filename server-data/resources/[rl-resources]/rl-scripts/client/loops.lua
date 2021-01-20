@@ -24,7 +24,7 @@ function RemoveWeaponDrops()
 	local PlayerPed = GetPlayerPed(-1)
 	local pedPos = GetEntityCoords(PlayerPed, false)
 
-	for a = 1, #pickupList do
+	for a = 1, #pickupList do 
 		if IsPickupWithinRadius(pickupList[a], pedPos.x, pedPos.y, pedPos.z, 200.0) then
 			RemoveAllPickupsOfType(pickupList[a])
 		end
@@ -65,6 +65,17 @@ Citizen.CreateThread( function()
 end)
 
 Citizen.CreateThread(function()
+    while true do
+        Wait(0)
+        local ped = GetPlayerPed(-1)
+        if GetPedMaxHealth(ped) ~= 200 and not IsEntityDead(ped) then
+            SetPedMaxHealth(ped, 200)
+            SetEntityHealth(ped, GetEntityHealth(ped) + 25)
+        end
+    end
+end)
+
+Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
 		-- Engine
@@ -100,14 +111,14 @@ Citizen.CreateThread(function()
 				DisableControlAction(1, 142, true)
 			end
 
-			if weapon == GetHashKey("WEAPON_FIREEXTINGUISHER") or  weapon == GetHashKey("WEAPON_PETROLCAN") then
+			--[[ if weapon == GetHashKey("WEAPON_FIREEXTINGUISHER") or  weapon == GetHashKey("WEAPON_PETROLCAN") then
 				if IsPedShooting(ped) then
 					SetPedInfiniteAmmo(ped, true, GetHashKey("WEAPON_FIREEXTINGUISHER"))
 					SetPedInfiniteAmmo(ped, true, GetHashKey("WEAPON_PETROLCAN"))
 				end
-			end
+			end ]]
 		end
-
+ 
 		
 		if GetPlayerWantedLevel(PlayerId()) ~= 0 then
 			ClearPlayerWantedLevel(PlayerId())
