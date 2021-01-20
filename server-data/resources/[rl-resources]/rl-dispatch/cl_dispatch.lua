@@ -800,7 +800,7 @@ Citizen.CreateThread(function()
       local curTime = GetGameTimer()
   
       for key, item in pairs(myBlips) do
-        if (key ~= nil and item ~= nil) and (#(vector2(pos.x, pos.y) - vector2(item.pos.x, item.pos.y)) < 50.0) or (GetTimeDifference(curTime, item.timestamp) > 600000 and not item.onRoute) then
+        if (key ~= nil and item ~= nil) --[[ and (#(vector2(pos.x, pos.y) - vector2(item.pos.x, item.pos.y)) < 50.0) ]] or (GetTimeDifference(curTime, item.timestamp) > 600000 and not item.onRoute) then
             RemoveBlip(item.blip)
         end
       end
