@@ -4,6 +4,7 @@
         body {
             display: none;
         }
+
         #content {
             position: absolute;
             border-radius: 5px;
@@ -13,6 +14,9 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            -webkit-box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.75);
+            -moz-box-shadow:    0px 0px 15px 0px rgba(50, 50, 50, 0.75);
+            box-shadow:         0px 0px 15px 0px rgba(50, 50, 50, 0.75);
         }
         #badge {
             position: fixed;
@@ -182,7 +186,7 @@
             white-space: pre-line;
             white-space: pre-wrap;
             font-family: "Courier New";
-            font-weight: bolder;
+            font-weight: bolder;            
             font-size: 14px;
             border-width:0px;
             border:none;
@@ -251,18 +255,23 @@
         <img src="badge.png" id="badge" class="noselect">
         <img src="footer.png" id="banner" class="noselect">
         
-        <p class="noselect" style="font-family: 'Georgia'; font-style: italic; font-size: 20pt; text-align: center;">National Crime Information Center</p>
-        <p class="noselect" style="position: fixed; left: 17%; top: 5.5%">Welcome, {{ officer.name }}.</p>
-        <button type="button" class="noselect" v-on:click="closeMDT()" style="position: fixed; right: 10%; top: 5.5%">LOGOUT</button>
+        <p class="noselect" style="font-family: 'Tahoma Black'; font-style: italic; font-size: 20pt; text-align: center;">Welcome {{ officer.name }} to LSPD Police Database</p>
 
         <div style="position: fixed; left: 16%; top: 12.5%;">
             <ul>
                 <li v-on:click="changePage('Home')" id="home" class="noselect">Home</li>
                 <li v-on:click="changePage('Search Offenders')" id="search-offenders" class="noselect">Search Persons</li>
-                <li v-on:click="changePage('Search Vehicles')" id="search-vehicles" class="noselect">Search Vehicles</li>
-                <li v-on:click="changePage('Submit Report')" id="submit-report" class="noselect">Create Report</li>
                 <li v-on:click="changePage('Warrants')" id="warrants" class="noselect">Warrants</li>
+                <li v-on:click="changePage('Submit Report')" id="submit-report" class="noselect">Create Report</li>
                 <li v-on:click="changePage('Search Reports')" id="search-reports" class="noselect">Search Reports</li>
+                <li v-on:click="changePage('Search Vehicles')" id="search-vehicles" class="noselect">Search Vehicles</li>
+                <li v-on:click="closeMDT()" id="close-mdt" class="noselect">Logout</li>
+                
+                
+                
+                
+                
+                
             </ul>
         </div>
 
@@ -312,10 +321,6 @@
                     </span>
                 </div>
 
-                <div style="bottom: 0%; position: absolute; margin: 0 auto; width: 100%;">
-                    <br />
-                    <button type="button" class="noselect" v-on:click="homepage.button_press = homepage.button_press + 1;">CLICK ME: {{homepage.button_press}}</button>
-                </div>
             </div>
 
             <div v-if="page == 'Search Reports'">
@@ -359,8 +364,7 @@
 
                 <div class="right-side" style="max-height: 435px;">
                     <div v-if="report_results.results">
-                        <h3>SEARCH RESULTS</h3>
-                        <h4 style="margin: 10px 1px 30px 1px;">Finding results for '{{ report_results.query }}'...</h4>
+                        <h2 style="text-align: center; margin-bottom: 10px;">SEARCH RESULT</h3>
                         <span v-if="report_results.results" v-for="result in report_results.results">
                             <h4 style="font-size: 12px; margin-bottom: 3px;"> {{ result.date }} - ID: {{ result.id }} </h4>
                             <button type="button" class="noselect" v-on:click="report_selected = result;" style="margin-bottom: 10px; width: 100%; padding: unset;"> {{ result.title }} </button>
@@ -393,11 +397,11 @@
                             </h4>
                         </span>
                         <h4 v-if="report_new.recommended_fine > 0">Fine: ${{report_new.recommended_fine}}</h4>
-                        <h4 v-if="report_new.recommended_sentence > 0">Recommended Sentence: {{report_new.recommended_sentence}} months</h4>
+                        <h4 v-if="report_new.recommended_sentence > 0">Recommended Sentence: {{report_new.recommended_sentence}} Months</h4>
                         <h3 v-if="report_new.recommended_sentence > 0">SENTENCE</h3>
                         <input v-if="report_new.recommended_sentence > 0" v-model="report_new.sentence" style="font-size: 14px; margin-bottom: 5px;" type="text" class="noselect" placeholder="Enter months" class="report-input" required>
                         <br />
-                        <button v-if="report_new.char_id && Object.keys(report_new.charges).length > 0 && report_new.incident && report_new.title && ((report_new.recommended_sentence > 0 && report_new.sentence) || report_new.recommended_sentence == 0)" v-on:click="SubmitNewReport()" type="button" class="noselect" style="margin-top: 20px">SUBMIT REPORT</button>
+                        <button v-if="report_new.char_id && report_new.incident && report_new.title && ((report_new.recommended_sentence > 0 && report_new.sentence) || report_new.recommended_sentence == 0)" v-on:click="SubmitNewReport()" type="button" class="noselect" style="margin-top: 20px">SUBMIT REPORT</button>
                         <button v-if="report_new.focus == 'charges'" v-on:click="report_new.focus = 'name'" type="button" class="noselect" style="margin-top: 20px">SEARCH OFFENDER</button>
                         <button v-if="report_new.focus == 'name'" v-on:click="report_new.focus = 'charges'" type="button" class="noselect" style="margin-top: 20px">SEARCH CHARGES</button>
                     </form>
@@ -407,13 +411,11 @@
                     <div v-if="report_new.focus == 'name'">
                         <h3 style="margin: 10px 0px">SEARCH OFFENDER</h3>
                         <form class="noselect">
-                            <input v-model="offender_search" type="text" class="noselect" placeholder="Full or partial name" required>
+                            <input v-model="offender_search" type="text" class="noselect" placeholder="Full or Partial Name" required>
                             <button v-on:click="OffenderSearch()" type="button" class="noselect">SEARCH</button>
                         </form>
 
                         <div v-if="offender_results.query" style="max-height: 400px;">
-                            <h3>SEARCH RESULTS</h3>
-                            <h4 style="margin: 10px 1px 30px 1px;">Finding results for '{{ offender_results.query }}'...</h4>
                             <span v-if="offender_results.results" v-for="offender in offender_results.results">
                                 <button type="button" class="noselect" v-on:click="report_new.char_id = offender.id; report_new.name = offender.firstname + ' ' + offender.lastname; report_new.focus='charges'" style="margin-bottom: 10px; width: 100%; padding: unset;">{{ offender.firstname }} {{ offender.lastname }}</button>
                                 <br />
@@ -452,14 +454,20 @@
                     <h3>NAME</h3>
                     <h4 v-if="offender_selected.firstname"> {{ offender_selected.firstname }} {{ offender_selected.lastname }} </h4>
                     <h4 v-else-if="offender_selected.name == null"> ... </h4>
+                    <h3>PASSPORT ID</h3>
+                    <h4 v-if="offender_selected.citizenid"> {{ offender_selected.citizenid }} </h4>
+                    <h4 v-else-if="offender_selected.citizenid == null"> ... </h4>
+                    <h3>FINGERPRINT</h3>
+                    <h4 v-if="offender_selected.fingerprint"> {{ offender_selected.fingerprint }} </h4>
+                    <h4 v-else-if="offender_selected.fingerprint == null"> ... </h4>
                     <h3>NOTES</h3>
                     <h4 v-if="offender_selected.notes"> {{ offender_selected.notes }} </h4>
-                    <h4 v-if="offender_selected.haswarrant"> {{ offender_selected.firstname}} {{offender_selected.lastname}} has an active warrant... </h4>
+                    <h4 v-if="offender_selected.haswarrant"> {{ offender_selected.firstname}} {{offender_selected.lastname}} Has An Active Warrant... </h4>
                     <h4 v-else-if="offender_selected.notes == '' && !offender_selected.haswarrant"> ... </h4>
                     <h3>LICENSES</h3>
                     <h4 v-if="offender_selected.licenses == false"> ... </h4>
                     <span v-else-if="offender_selected.licenses" v-for="license in offender_selected.licenses">
-                        <h4>{{ license.label }}</h4>
+                        <h4>{{ license }}</h4>
                     </span>
                     <h3>CONVICTIONS</h3>
                     <h4 v-if="offender_selected.convictions == null"> ... </h4>
@@ -467,8 +475,8 @@
                         <h4>{{ name }} x{{ value }}</h4>
                     </span>
                     <h3>DATE OF BIRTH</h3>
-                    <h4 v-if="offender_selected.dateofbirth"> {{ offender_selected.dateofbirth }} </h4>
-                    <h4 v-else-if="offender_selected.dateofbirth == null"> ... </h4>
+                    <h4 v-if="offender_selected.birthdate"> {{ offender_selected.birthdate }} </h4>
+                    <h4 v-else-if="offender_selected.birthdate == null"> ... </h4>
                     <br />
                     <button v-if="offender_selected.firstname" type="button" v-on:click="changePage('Edit Offender')" id="edit-offender" class="noselect">EDIT PROFILE</button>
                     <button v-if="offender_selected.firstname" type="button" v-on:click="changePage('Submit Report'); report_new.char_id = offender_selected.id; report_new.name = offender_selected.firstname + ' ' + offender_selected.lastname; report_new.focus = 'charges'" id="edit-offender" class="noselect">NEW REPORT</button>
@@ -476,8 +484,7 @@
 
                 <div class="right-side" style="max-height: 435px">
                     <div v-if="offender_results.query">
-                        <h3>SEARCH RESULTS</h3>
-                        <h4 style="margin: 10px 1px 30px 1px;">Finding results for '{{ offender_results.query }}'...</h4>
+                        <h2 style="text-align: center; margin-bottom: 10px;">SEARCH RESULTS</h3>
                         <span v-if="offender_results.results" v-for="offender in offender_results.results">
                             <button type="button" class="noselect" v-on:click="OpenOffenderDetails(offender.id)" style="margin-bottom: 10px; width: 100%; padding: unset;">{{ offender.firstname }} {{ offender.lastname }}</button>
                             <br />
@@ -509,18 +516,18 @@
                     </template>
                     <template v-else-if="report_edit.enable == true">
                         <h3>INCIDENT #{{report_selected.id}} (EDIT)</h3>
-                        <input v-model="report_edit.data.title" type="text" class="noselect" placeholder="Enter report title" class="report-input" style="font-size: 14px;" required>
+                        <input v-model="report_edit.data.title" type="text" class="noselect" placeholder="Enter Report Title" class="report-input" style="font-size: 14px;" required>
                     </template>
                     <template v-if="report_edit.enable == false">
                         <h3>DETAILS</h3>
                         <h4 v-if="report_selected.incident" style="white-space: pre-line; white-space: pre-wrap;">{{ report_selected.incident }}</h4>
                         <h4 v-else-if="report_selected.incident == null"> ... </h4>
-                        <h4 v-if="report_selected.jailtime">Sentence: {{ report_selected.jailtime }} months</h4>
+                        <h4 v-if="report_selected.jailtime">Sentence: {{ report_selected.jailtime }} Months</h4>
                     </template>
                     <template v-else-if="report_edit.enable == true">
                         <h3>DETAILS (EDIT)</h3>
                         <form>
-                            <textarea v-model="report_edit.data.incident" id="textarea" class="noselect" style="width: 95%; height: 80px; border: 2px solid #fbbe28; padding: 7px 15px 5px 15px; margin: unset; font-size: 14px;" onfocus='this.style.height = "";this.style.height = this.scrollHeight + "px"' onkeypress='this.style.height = "";this.style.height = this.scrollHeight + "px"' placeholder="Enter report description" required>
+                            <textarea v-model="report_edit.data.incident" id="textarea" class="noselect" style="width: 95%; height: 80px; border: 2px solid #fbbe28; padding: 7px 15px 5px 15px; margin: unset; font-size: 14px;" onfocus='this.style.height = "";this.style.height = this.scrollHeight + "px"' onkeypress='this.style.height = "";this.style.height = this.scrollHeight + "px"' placeholder="Enter Report Description" required>
                             </textarea>
                         </form>
                     </template>
@@ -560,7 +567,7 @@
                         <span v-else-if="offender_changes.licenses" v-for="license in offender_changes.licenses">
                             <h4>
                                 <span v-on:click="RemoveLicense(license)" style="color: red; font-weight: all;">(-)</span> 
-                                {{ license.label }}
+                                {{ license }}
                             </h4>
                         </span>
                         <br />
@@ -584,7 +591,7 @@
             <div v-if="page == 'Warrants'">
                 <h2 class="page-title">ACTIVE WARRANTS</h2>
                 <form class="noselect">
-                    <input v-model="warrant_search" type="text" class="noselect" placeholder="Filter warrants" required>
+                    <input v-model="warrant_search" type="text" class="noselect" placeholder="Filter Warrants" required>
                 </form>
                 <br />
 
@@ -603,7 +610,7 @@
                             <td style="padding: 5px;">{{warrant.expire_time}}</td>
                         </tr>
                     </table>
-                    <h4 v-else-if="filtered_warrants.length == 0" style="text-align: center; font-size: 20px; font-weight: bold;"><br />No warrants found!</h4>
+                    <h4 v-else-if="filtered_warrants.length == 0" style="text-align: center; font-size: 20px; font-weight: bold;"><br />No Warrants Found!</h4>
                     <div style="bottom: 0%">
                         <button v-on:click="changePage('Submit Warrant')" type="button" class="noselect" style="margin-top: 30px;">NEW WARRANT</button>
                     </div>
@@ -624,9 +631,7 @@
                     <h3>PLATE</h3>
                     <h4 v-if="vehicle_selected.plate"> {{vehicle_selected.plate}} </h4>
                     <h4 v-else-if="vehicle_selected.plate == null"> ... </h4>
-                    <h3>TYPE</h3>
-                    <h4 v-if="vehicle_selected.type"> {{vehicle_selected.type}} </h4>
-                    <h4 v-else-if="vehicle_selected.type == null"> ... </h4>
+                    
                     <h3>OWNER</h3>
                     <h4 v-if="vehicle_selected.owner" v-on:click="OpenOffenderDetailsById(vehicle_selected.owner_id)"> {{vehicle_selected.owner}} </h4>
                     <h4 v-else-if="vehicle_selected.owner == null"> ... </h4>
@@ -640,8 +645,7 @@
 
                 <div class="right-side" style="max-height: 435px">
                     <div v-if="vehicle_results.results">
-                        <h3>SEARCH RESULTS</h3>
-                        <h4 style="margin: 10px 1px 30px 1px;">Finding results for '{{ vehicle_results.query }}'...</h4>
+                        <h2 style="text-align: center; margin-bottom: 10px;">SEARCH RESULTS</h3>
                         <span v-if="vehicle_results.results" v-for="result in vehicle_results.results">
                             <button type="button" class="noselect" v-on:click="OpenVehicleDetails(result)" style="margin-bottom: 10px; width: 100%; padding: unset;"> {{ result.plate }} </button>
                             <br />
@@ -683,7 +687,7 @@
                         <button v-on:click="WarrantReportSearch()" type="button" class="noselect" >SEARCH</button>
                     </form>
                     <div v-if="report_results.results">
-                        <h4 style="margin: 10px 1px 30px 1px;">Finding results for '{{ warrant_new.report_search }}'...</h4>
+                        <h4 style="margin: 10px 1px 30px 1px;">Finding Results For '{{ warrant_new.report_search }}'...</h4>
                         <span v-if="report_results.results" v-for="result in report_results.results">
                             <h4 style="font-size: 12px; margin-bottom: 3px;"> {{ result.date }} - ID: {{ result.id }} </h4>
                             <button type="button" class="noselect" v-on:click="warrant_new.report_title = result.title; warrant_new.name = result.name; warrant_new.charges = result.charges; warrant_new.report_id = result.id; warrant_new.char_id = result.char_id;" style="margin-bottom: 10px; width: 100%; padding: unset;"> {{ result.title }} </button>
