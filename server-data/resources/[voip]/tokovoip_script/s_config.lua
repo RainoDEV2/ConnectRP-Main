@@ -1,15 +1,17 @@
 TokoVoipConfig = {
 	channels = {
 		{name = "PD Radio", subscribers = {}},
-		{name = "PD Radio 2", subscribers = {}},
-		{name = "PD Radio 3", subscribers = {}},
-		{name = "PD Radio 4", subscribers = {}},
-		{name = "PD Radio 5", subscribers = {}},
-		{name = "PD/SO/EMS Shared Radio 🎧 🎤", subscribers = {}},
 		{name = "EMS Radio", subscribers = {}},
-		{name = "EMS Radio 2", subscribers = {}},
-		{name = "EMS Radio 3", subscribers = {}},
-		{name = "EMS Radio 4", subscribers = {}},
-		{name = "EMS Radio 5", subscribers = {}},
+		{name = "PD Tactical", subscribers = {}},
+		{name = "PD Spare", subscribers = {}},
+		{name = "Secure PD/EMS Channel 1", subscribers = {}},
+		{name = "Private Attorneys", subscribers = {}},
+		{name = "ODA Radio", subscribers = {}},
+		{name = "Justices Radio", subscribers = {}},
+		{name = "DOJ Radio", subscribers = {}},
+		{name = "Secure PD/EMS Channel 2", subscribers = {}},
+		{name = "Racers Edge Radio", subscribers = {}},
+		{name = "Flywheels Radio", subscribers = {}},
+		{name = "Secure PD/EMS Channel 3", subscribers = {}},
 	}
 };

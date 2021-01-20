@@ -14,18 +14,26 @@
 --	Server: radio functions
 --------------------------------------------------------------------------------
 
-local channels = {};
+local channels = TokoVoipConfig.channels;
+local serverId;
 
-function addPlayerToRadio(channelId, playerServerId)
+SetConvarReplicated("gametype", GetConvar("GameName"));
+
+function addPlayerToRadio(channelId, playerServerId, radio)
 	if (not channels[channelId]) then
-		channels[channelId] = {id = channelId, name = (channelId >= 1.0 and "Frequency: "..channelId or "Call"), subscribers = {}};
+		if(radio) then
+			channels[channelId] = {id = channelId, name = channelId.. " 🎧 🎤", subscribers = {}};
+		else
+			channels[channelId] = {id = channelId, name = "Call with " .. channelId, subscribers = {}};
+		end
 	end
 	if (not channels[channelId].id) then
 		channels[channelId].id = channelId;
 	end
 
 	channels[channelId].subscribers[playerServerId] = playerServerId;
-	
+	print("Added [" .. playerServerId .. "] " .. (GetPlayerName(playerServerId) or "") .. " to channel " .. channelId);
+
 	for _, subscriberServerId in pairs(channels[channelId].subscribers) do
 		if (subscriberServerId ~= playerServerId) then
 			TriggerClientEvent("TokoVoip:onPlayerJoinChannel", subscriberServerId, channelId, playerServerId);
@@ -36,6 +44,48 @@ function addPlayerToRadio(channelId, playerServerId)
 	end
 end
 
+function PrintTableOrString(t, s)
+    if t then
+        if type(t) ~= 'table' then 
+            print("^1 [^3debug^1] ["..type(t).."] ^7", t)
+            return
+        else
+            for k, v in pairs(t) do
+                local kfmt = '["' .. tostring(k) ..'"]'
+                if type(k) ~= 'string' then
+                    kfmt = '[' .. k .. ']'
+                end
+                local vfmt = '"'.. tostring(v) ..'"'
+                if type(v) == 'table' then
+                    PrintTableOrString(v, (s or '')..kfmt)
+                else
+                    if type(v) ~= 'string' then
+                        vfmt = tostring(v)
+                    end
+                    print(" ^1[^3debug^1] ["..type(t).."]^7", (s or '')..kfmt, '=', vfmt)
+                end
+            end
+        end
+    else
+        print("^1Error Printing Request - The Passed through variable seems to be nil^7")
+    end
+end
+
+exports('getRadioChannels', function(target)
+	local thierChannels = {}
+	for k, v in pairs(channels) do
+		for k2, v2 in pairs(v.subscribers) do
+			if k2 == target then
+				table.insert(thierChannels, k)
+			end
+		end
+	end
+	if thierChannels[1] ~= nil then
+		return thierChannels
+	else
+		return nil
+	end
+end)
 RegisterServerEvent("TokoVoip:addPlayerToRadio");
 AddEventHandler("TokoVoip:addPlayerToRadio", addPlayerToRadio);
 
@@ -47,6 +97,8 @@ function removePlayerFromRadio(channelId, playerServerId)
 				channels[channelId] = nil;
 			end
 		end
+		print("Removed [" .. playerServerId .. "] " .. (GetPlayerName(playerServerId) or "") .. " from channel " .. channelId);
+
 		-- Tell unsubscribed player he's left the channel as well
 		TriggerClientEvent("TokoVoip:onPlayerLeaveChannel", playerServerId, channelId, playerServerId);
 
@@ -58,7 +110,6 @@ function removePlayerFromRadio(channelId, playerServerId)
 		end
 	end
 end
-
 RegisterServerEvent("TokoVoip:removePlayerFromRadio");
 AddEventHandler("TokoVoip:removePlayerFromRadio", removePlayerFromRadio);
 
@@ -69,7 +120,6 @@ function removePlayerFromAllRadio(playerServerId)
 		end
 	end
 end
-
 RegisterServerEvent("TokoVoip:removePlayerFromAllRadio");
 AddEventHandler("TokoVoip:removePlayerFromAllRadio", removePlayerFromAllRadio);
 
@@ -92,3 +142,13 @@ AddEventHandler('rconCommand', function(commandName, args)
 		CancelEvent();
 	end
 end)
+
+function getServerId() TriggerClientEvent("TokoVoip:onClientGetServerId", source, serverId); end
+RegisterServerEvent("TokoVoip:getServerId");
+AddEventHandler("TokoVoip:getServerId", getServerId);
+
+AddEventHandler("onResourceStart", function(resource)
+	if (resource ~= GetCurrentResourceName()) then return end;
+	serverId = randomString(32);
+	print("TokoVOIP FiveM Server ID: " .. serverId);
+end);

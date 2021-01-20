@@ -15,7 +15,6 @@
 --------------------------------------------------------------------------------
 
 local playersData = {};
-
 function setPlayerData(playerServerId, key, data, shared)
 	if (not key or data == nil) then return end
 	if (not playersData[playerServerId]) then
@@ -26,7 +25,6 @@ function setPlayerData(playerServerId, key, data, shared)
 		TriggerServerEvent("Tokovoip:setPlayerData", playerServerId, key, data, shared);
 	end
 end
-
 RegisterNetEvent("Tokovoip:setPlayerData");
 AddEventHandler("Tokovoip:setPlayerData", setPlayerData);
 
@@ -38,7 +36,6 @@ end
 function refreshAllPlayerData(toEveryone)
 	TriggerServerEvent("Tokovoip:refreshAllPlayerData", toEveryone);
 end
-
 RegisterNetEvent("onClientPlayerReady");
 AddEventHandler("onClientPlayerReady", refreshAllPlayerData);
 
@@ -61,7 +58,6 @@ function doRefreshAllPlayerData(serverData)
 		end
 	end
 end
-
 RegisterNetEvent("Tokovoip:doRefreshAllPlayerData");
 AddEventHandler("Tokovoip:doRefreshAllPlayerData", doRefreshAllPlayerData);
 
@@ -99,6 +95,7 @@ function draw3dtext(text, posX, posY, posZ, r, g, b, a)
 		end
 	end
 end
+
 
 --------------------------------------------------------------------------------
 --	Utils: Table functions
@@ -144,11 +141,13 @@ function tablelength(T)
 	return count
 end
 
+
 --------------------------------------------------------------------------------
 --	Utils: Printing functions
 --------------------------------------------------------------------------------
 
 function notification(str)
+	
 end
 
 local functionSeen={}
@@ -172,6 +171,7 @@ end
 function printAllFunctions()
 	printFunctions(_G,"")
 end
+
 
 --------------------------------------------------------------------------------
 --	Utils: Random functions
@@ -197,7 +197,3 @@ Keys = {
 exports("getPlayerData", getPlayerData);
 exports("setPlayerData", setPlayerData);
 exports("refreshAllPlayerData", refreshAllPlayerData);
-
-function getPlayerDataS(z, s)
-	return getPlayerData(z, s)
-end
