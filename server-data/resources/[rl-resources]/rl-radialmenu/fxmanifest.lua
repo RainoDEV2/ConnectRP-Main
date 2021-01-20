@@ -7,7 +7,8 @@ shared_script "@nevo-scripts/cl_errorlog.lua"
 client_script {
     "config.lua",
     "events.lua",
-    "client_menu.lua"
+	"client_menu.lua",
+	"emotes_triggers.lua"
 }
 
 server_script {

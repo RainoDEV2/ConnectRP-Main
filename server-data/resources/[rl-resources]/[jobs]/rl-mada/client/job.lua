@@ -279,7 +279,7 @@ end
 RegisterNetEvent('hospital:client:RevivePlayer')
 AddEventHandler('hospital:client:RevivePlayer', function()
     RLCore.Functions.GetPlayerData(function(PlayerData)
-        if PlayerJob.name == "ambulance" then
+        if PlayerJob.name == "ambulance" or PlayerJob.name == "police" then
             local player, distance = RLCore.Functions.GetClosestPlayer()
             if player ~= -1 and distance < 5.0 then
                 local playerId = GetPlayerServerId(player)

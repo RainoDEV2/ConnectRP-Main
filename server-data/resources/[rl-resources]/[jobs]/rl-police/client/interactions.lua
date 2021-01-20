@@ -121,7 +121,7 @@ end)
 
 RegisterNetEvent('police:client:SearchPlayer')
 AddEventHandler('police:client:SearchPlayer', function()
-    local player, distance = GetClosestPlayer()
+    local player, distance = GetClosestPlayer() 
     if player ~= -1 and distance < 2.5 then
         local playerId = GetPlayerServerId(player)
         TriggerServerEvent("inventory:server:OpenInventory", "otherplayer", playerId)

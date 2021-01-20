@@ -29,7 +29,7 @@ function WalkCommandStart(source, args)
 
   local name2 = table.unpack(DP.Walks[name])
   if name2 ~= nil then
-    WalkMenuStart(name2)
+    WalkMenuStart(name2) 
     TriggerServerEvent("dpemotes:saveWalkMode", name)
   else
     EmoteChatMessage("'"..name.."' is not a valid walk")

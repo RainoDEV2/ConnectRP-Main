@@ -56,6 +56,27 @@ rootMenuConfig =  {
     },
 
     {
+        id = "animations",
+        displayName = "Walking Style",
+        icon = "#walking",
+        enableMenu = function()
+            local Data = RLCore.Functions.GetPlayerData()
+            return not Data.metadata["isdead"] and not Data.metadata["inlaststand"]
+        end,
+        subMenus = { "animations:brave", "animations:hurry", "animations:business", "animations:tipsy", "animations:injured","animations:tough", "animations:default", "animations:hobo", "animations:money", "animations:swagger", "animations:shady", "animations:maneater", "animations:chichi", "animations:sassy", "animations:sad", "animations:posh", "animations:alien","animations:business2","animations:business3","animations:muscle", }
+    },
+    {
+        id = "expressions",
+        displayName = "Expressions",
+        icon = "#expressions",
+        enableMenu = function()
+            local Data = RLCore.Functions.GetPlayerData()
+            return not Data.metadata["isdead"] and not Data.metadata["inlaststand"]
+        end,
+        subMenus = { "expressions:normal", "expressions:drunk", "expressions:angry", "expressions:dumb", "expressions:electrocuted", "expressions:grumpy", "expressions:happy", "expressions:injured", "expressions:joyful", "expressions:mouthbreather", "expressions:oneeye", "expressions:shocked", "expressions:sleeping", "expressions:smug", "expressions:speculative", "expressions:stressed", "expressions:sulking", "expressions:weird", "expressions:weird2"}
+    },
+
+    {
         id = "house",
         displayName = "House Interaction",
         icon = "#house",
@@ -140,7 +161,7 @@ rootMenuConfig =  {
             local Data = RLCore.Functions.GetPlayerData()
             return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and (Data.job ~= nil and Data.job.name == "police" and Data.job.onduty))
         end,
-        subMenus = {"police:drag", "police:softcuff", "police:cuff", "ems:putinvehicle","ems:unseatvehicle","police:unmask"}
+        subMenus = {"police:drag", "police:softcuff", "police:cuff", "ems:putinvehicle","ems:unseatvehicle","police:unmask", "ems:revive"}
     },
 
     {
@@ -367,6 +388,263 @@ newSubMenus = {
         icon = "#house-logout",
         functionName = "rl-houses:client:setLocation",
         functionParameters =  "setlogout"
+    },
+
+    --------------------------------------
+
+    ['animations:joy'] = {
+        title = "Joy",
+        icon = "#animation-joy",
+        functionName = "AnimSet:Joy"
+    },
+    ['animations:sexy'] = {
+        title = "Sexy",
+        icon = "#animation-sexy",
+        functionName = "AnimSet:Sexy"
+    },
+    ['animations:moon'] = {
+        title = "Moon",
+        icon = "#animation-moon",
+        functionName = "AnimSet:Moon"
+    },
+    ['animations:tired'] = {
+        title = "Tired",
+        icon = "#animation-tired",
+        functionName = "AnimSet:Tired"
+    },
+    ['animations:arrogant'] = {
+        title = "Arrogant",
+        icon = "#animation-arrogant",
+        functionName = "AnimSet:Arrogant"
+    },
+    
+    ['animations:casual'] = {
+        title = "Casual",
+        icon = "#animation-casual",
+        functionName = "AnimSet:Casual"
+    },
+    ['animations:casual2'] = {
+        title = "Casual 2",
+        icon = "#animation-casual",
+        functionName = "AnimSet:Casual2"
+    },
+    ['animations:casual3'] = {
+        title = "Casual 3",
+        icon = "#animation-casual",
+        functionName = "AnimSet:Casual3"
+    },
+    ['animations:casual4'] = {
+        title = "Casual 4",
+        icon = "#animation-casual",
+        functionName = "AnimSet:Casual4"
+    },
+    ['animations:casual5'] = {
+        title = "Casual 5",
+        icon = "#animation-casual",
+        functionName = "AnimSet:Casual5"
+    },
+    ['animations:casual6'] = {
+        title = "Casual 6",
+        icon = "#animation-casual",
+        functionName = "AnimSet:Casual6"
+    },
+    ['animations:confident'] = {
+        title = "Confident",
+        icon = "#animation-confident",
+        functionName = "AnimSet:Confident"
+    },
+    
+    ['animations:business2'] = {
+        title = "Business 2",
+        icon = "#animation-business",
+        functionName = "AnimSet:Business2"
+    },
+    ['animations:business3'] = {
+        title = "Business 3",
+        icon = "#animation-business",
+        functionName = "AnimSet:Business3"
+    },
+    
+    ['animations:femme'] = {
+        title = "Femme",
+        icon = "#animation-female",
+        functionName = "AnimSet:Femme"
+    },
+    ['animations:flee'] = {
+        title = "Flee",
+        icon = "#animation-flee",
+        functionName = "AnimSet:Flee"
+    },
+    ['animations:gangster'] = {
+        title = "Gangster",
+        icon = "#animation-gangster",
+        functionName = "AnimSet:Gangster"
+    },
+    ['animations:gangster2'] = {
+        title = "Gangster 2",
+        icon = "#animation-gangster",
+        functionName = "AnimSet:Gangster2"
+    },
+    ['animations:gangster3'] = {
+        title = "Gangster 3",
+        icon = "#animation-gangster",
+        functionName = "AnimSet:Gangster3"
+    },
+    ['animations:gangster4'] = {
+        title = "Gangster 4",
+        icon = "#animation-gangster",
+        functionName = "AnimSet:Gangster4"
+    },
+    ['animations:gangster5'] = {
+        title = "Gangster 5",
+        icon = "#animation-gangster",
+        functionName = "AnimSet:Gangster5"
+    },
+    
+    ['animations:heels'] = {
+        title = "Heels",
+        icon = "#animation-female",
+        functionName = "AnimSet:Heels"
+    },
+    ['animations:heels2'] = {
+        title = "Heels 2",
+        icon = "#animation-female",
+        functionName = "AnimSet:Heels2"
+    },
+    
+    ['animations:hipster'] = {
+        title = "Hipster",
+        icon = "#animation-hipster",
+        functionName = "AnimSet:Hipster"
+    },
+    ['animations:hiking'] = {
+        title = "Hiking",
+        icon = "#animation-hiking",
+        functionName = "AnimSet:Hiking"
+    },
+    
+    ['animations:jog'] = {
+        title = "Jog",
+        icon = "#animation-jog",
+        functionName = "AnimSet:Jog"
+    },
+    
+    ['animations:muscle'] = {
+        title = "Muscle",
+        icon = "#animation-tough",
+        functionName = "AnimSet:Muscle"
+    },
+    
+    ['animations:quick'] = {
+        title = "Quick",
+        icon = "#animation-quick",
+        functionName = "AnimSet:Quick"
+    },
+    ['animations:wide'] = {
+        title = "Wide",
+        icon = "#animation-wide",
+        functionName = "AnimSet:Wide"
+    },
+    ['animations:scared'] = {
+        title = "Scared",
+        icon = "#animation-scared",
+        functionName = "AnimSet:Scared"
+    },
+    ['animations:guard'] = {
+        title = "Guard",
+        icon = "#animation-guard",
+        functionName = "AnimSet:Guard"
+    },
+    ['animations:brave'] = {
+        title = "Brave",
+        icon = "#animation-brave",
+        functionName = "AnimSet:Brave"
+    },
+    ['animations:hurry'] = {
+        title = "Hurry",
+        icon = "#animation-hurry",
+        functionName = "AnimSet:Hurry"
+    },
+    ['animations:business'] = {
+        title = "Business",
+        icon = "#animation-business",
+        functionName = "AnimSet:Business"
+    },
+    ['animations:tipsy'] = {
+        title = "Tipsy",
+        icon = "#animation-tipsy",
+        functionName = "AnimSet:Tipsy"
+    },
+    ['animations:injured'] = {
+        title = "Injured",
+        icon = "#animation-injured",
+        functionName = "AnimSet:Injured"
+    },
+    ['animations:tough'] = {
+        title = "Tough",
+        icon = "#animation-tough",
+        functionName = "AnimSet:ToughGuy"
+    },
+    ['animations:sassy'] = {
+        title = "Sassy",
+        icon = "#animation-sassy",
+        functionName = "AnimSet:Sassy"
+    },
+    ['animations:sad'] = {
+        title = "Sad",
+        icon = "#animation-sad",
+        functionName = "AnimSet:Sad"
+    },
+    ['animations:posh'] = {
+        title = "Posh",
+        icon = "#animation-posh",
+        functionName = "AnimSet:Posh"
+    },
+    ['animations:alien'] = {
+        title = "Alien",
+        icon = "#animation-alien",
+        functionName = "AnimSet:Alien"
+    },
+    ['animations:nonchalant'] =
+    {
+        title = "Nonchalant",
+        icon = "#animation-nonchalant",
+        functionName = "AnimSet:NonChalant"
+    },
+    ['animations:hobo'] = {
+        title = "Hobo",
+        icon = "#animation-hobo",
+        functionName = "AnimSet:Hobo"
+    },
+    ['animations:money'] = {
+        title = "Money",
+        icon = "#animation-money",
+        functionName = "AnimSet:Money"
+    },
+    ['animations:swagger'] = {
+        title = "Swagger",
+        icon = "#animation-swagger",
+        functionName = "AnimSet:Swagger"
+    },
+    ['animations:shady'] = {
+        title = "Shady",
+        icon = "#animation-shady",
+        functionName = "AnimSet:Shady"
+    },
+    ['animations:maneater'] = {
+        title = "Man Eater",
+        icon = "#animation-maneater",
+        functionName = "AnimSet:ManEater"
+    },
+    ['animations:chichi'] = {
+        title = "ChiChi",
+        icon = "#animation-chichi",
+        functionName = "AnimSet:ChiChi"
+    },
+    ['animations:default'] = {
+        title = "Default",
+        icon = "#animation-default",
+        functionName = "AnimSet:default"
     },
 
     --------------------------------------
@@ -678,7 +956,7 @@ newSubMenus = {
     },
 
     ['police:search'] = {
-        title = "Frisk",
+        title = "Search Player",
         icon = "#police-search",
         functionName = "police:client:SearchPlayer"
     },
