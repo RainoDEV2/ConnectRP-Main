@@ -12,7 +12,7 @@ local speedColorUnder = {255, 255, 255}     -- Color used to display speed when 
 local speedColorOver = {255, 96, 96}        -- Color used to display speed when over speedLimit
 
 -- FUEL PARAMETERS
-local fuelShowPercentage = true             -- Show fuel as a percentage (disabled shows fuel in liters)
+local fuelShowPercentage = false             -- Show fuel as a percentage (disabled shows fuel in liters)
 local fuelWarnLimit = 25.0                  -- Fuel limit for triggering warning color
 local fuelColorText = {255, 255, 255}       -- Color used to display fuel text
 local fuelColorOver = {255, 255, 255}       -- Color used to display fuel when good
