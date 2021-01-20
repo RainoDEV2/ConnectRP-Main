@@ -47,7 +47,7 @@ Citizen.CreateThread(function()
                     if dist < 1 then
 						DisplayHelpText("Press ~INPUT_CONTEXT~ to open the ~g~shop.")
                         --DrawText3Ds(loc["x"], loc["y"], loc["z"], '[E] - ' .. Config.Locations[shop]["label"])
-                        if IsControlJustPressed(0, Config.Keys["E"]) then
+                        if IsControlJustPressed(0, Config.Keys["E"]) then 
                             local ShopItems = {}
                             ShopItems.label = Config.Locations[shop]["label"]
                             ShopItems.items = Config.Locations[shop]["products"]
@@ -55,12 +55,8 @@ Citizen.CreateThread(function()
                             if Config.Locations[shop]["type"] == 'dede' then
                                 TriggerServerEvent("inventory:server:OpenInventory", "dede", "Itemshop_"..shop, ShopItems)
                             elseif Config.Locations[shop]["type"] == 'weapon' then
-                                if RLCore.Functions.GetPlayerData().metadata["licences"]["weapon1"] then
-                                    print(RLCore.Functions.GetPlayerData().metadata["licences"]["weapon1"])
-                                    TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_"..shop, ShopItems)
-                                else
-                                    print('no licence')
-                                end
+                                print("IM A WEAPON STORE")
+                                TriggerServerEvent('rlcore:checkLicence', shop, ShopItems)
                             else
                                 TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_"..shop, ShopItems)
                             end
