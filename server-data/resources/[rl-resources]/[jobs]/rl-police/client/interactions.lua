@@ -266,13 +266,13 @@ AddEventHandler('police:client:SetPlayerOutVehicle', function()
         RLCore.Functions.Notify("No one around!", "error")
     end
 end)
-
+ 
 RegisterNetEvent('police:client:EscortPlayer')
 AddEventHandler('police:client:EscortPlayer', function()
     local player, distance = GetClosestPlayer()
     if player ~= -1 and distance < 2.5 then
         local playerId = GetPlayerServerId(player)
-        if not isHandcuffed and not isEscorted then
+        if not isEscorted then 
             TriggerServerEvent("police:server:EscortPlayer", playerId)
         end
     else
@@ -350,7 +350,7 @@ end)
 RegisterNetEvent('police:client:GetEscorted')
 AddEventHandler('police:client:GetEscorted', function(playerId)
     RLCore.Functions.GetPlayerData(function(PlayerData)
-        if PlayerData.metadata["isdead"] or isHandcuffed or PlayerData.metadata["inlaststand"] then
+        --if PlayerData.metadata["isdead"] or isHandcuffed or PlayerData.metadata["inlaststand"] then
             if not isEscorted then
                 isEscorted = true
                 draggerId = playerId
@@ -363,7 +363,7 @@ AddEventHandler('police:client:GetEscorted', function(playerId)
                 DetachEntity(GetPlayerPed(-1), true, false)
             end
             TriggerEvent('hospital:client:isEscorted', isEscorted)
-        end
+        --end
     end)
 end)
 

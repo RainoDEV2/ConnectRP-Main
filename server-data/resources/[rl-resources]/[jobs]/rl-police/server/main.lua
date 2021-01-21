@@ -28,7 +28,7 @@ AddEventHandler('police:server:CuffPlayer', function(playerId, isSoftcuff)
         else
             TriggerClientEvent('RLCore:Notify', src, "You dont have handcuffs and you are not officer.", "error")
         end
-    end
+    end 
 end)
 
 RegisterServerEvent('police:server:EscortPlayer')
@@ -37,13 +37,13 @@ AddEventHandler('police:server:EscortPlayer', function(playerId)
     local Player = RLCore.Functions.GetPlayer(source)
     local EscortPlayer = RLCore.Functions.GetPlayer(playerId)
     if EscortPlayer ~= nil then
-        if (Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance" or Player.PlayerData.job.name == "doctor") or (EscortPlayer.PlayerData.metadata["ishandcuffed"] or EscortPlayer.PlayerData.metadata["isdead"] or EscortPlayer.PlayerData.metadata["inlaststand"]) then
+        --if (Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance" or Player.PlayerData.job.name == "doctor") or (EscortPlayer.PlayerData.metadata["ishandcuffed"] or EscortPlayer.PlayerData.metadata["isdead"] or EscortPlayer.PlayerData.metadata["inlaststand"]) then
             TriggerClientEvent("police:client:GetEscorted", EscortPlayer.PlayerData.source, Player.PlayerData.source)
-        else
-        TriggerClientEvent('chat:addMessage', source, {
-        template = '<div class="chat-message emergency">Person is not dead or handcuffed!  </div>',
-        })
-        end
+       -- else
+        --TriggerClientEvent('chat:addMessage', source, {
+        --template = '<div class="chat-message emergency">Person is not dead or handcuffed!  </div>',
+        --})
+        --end
     end
 end)
 
@@ -72,6 +72,8 @@ AddEventHandler('police:server:SetPlayerOutVehicle', function(playerId)
     if EscortPlayer ~= nil then
         --if EscortPlayer.PlayerData.metadata["ishandcuffed"] or EscortPlayer.PlayerData.metadata["isdead"] then
             TriggerClientEvent("police:client:SetOutVehicle", EscortPlayer.PlayerData.source)
+            TriggerClientEvent("police:client:GetEscorted", EscortPlayer.PlayerData.source, Player.PlayerData.source)
+
         --else
         --    TriggerClientEvent('chat:addMessage', source, {
         --    template = '<div class="chat-message emergency">Person is not dead or handcuffed!  </div>',

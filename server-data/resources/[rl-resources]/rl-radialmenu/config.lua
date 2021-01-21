@@ -95,7 +95,7 @@ rootMenuConfig =  {
             local Data = RLCore.Functions.GetPlayerData()
             return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and Data.job ~= nil and (Data.job.name == "tow"))
         end,
-        subMenus = {"mechanic:impound","tow:towvehicle"} --[[,"tow:checkstatus", "tow:togglenpc"]]--
+        subMenus = {"mechanic:impound","tow:towvehicle", "tow:checkstatus"} --,"tow:checkstatus", "tow:togglenpc"]]--
     },
 
     {
@@ -128,7 +128,7 @@ rootMenuConfig =  {
             local Data = RLCore.Functions.GetPlayerData()
             return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and Data.job ~= nil and Data.job.name == "mechanic")
         end,
-        subMenus = { "mechanic:impound", "mechanic:flatbed" }
+        subMenus = { "mechanic:impound", "mechanic:flatbed", "tow:checkstatus" }
     },
 
     {
@@ -1055,7 +1055,7 @@ newSubMenus = {
     ["tow:checkstatus"] = {
         title = "Check Status",
         icon = "#tow-status",
-        functionName = "rl-tow:client:status",
+        functionName = "vehiclemod:client:getVehicleStatus",
     },
 
     --------------------------------------
