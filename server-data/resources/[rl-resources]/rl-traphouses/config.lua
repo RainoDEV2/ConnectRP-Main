@@ -17,7 +17,7 @@ Config.TrapHouses = {
     [1] = {
         coords = {
             ["enter"] = {x = 143.49, y = -1656.23, z = 29.33, h =44.92, r = 1.0},
-            ["interaction"] = {x = 143.49, y = -1656.23, z = 29.33, h =44.92, r = 1.0},
+            ["interaction"] = {x = 142.69097, y = -1656.077, z = -9.661718, h =355.38665, r = 1.0},
         },
         keyholders = {},
         pincode = 8518,

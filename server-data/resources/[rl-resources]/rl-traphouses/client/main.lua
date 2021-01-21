@@ -242,14 +242,16 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-
+        
         local ped = GetPlayerPed(-1)
         local pos = GetEntityCoords(ped)
         local inRange = false
 
         if ClosestTraphouse ~= nil then
+
             local data = Config.TrapHouses[ClosestTraphouse]
             if InsideTraphouse then
+
                 local ExitDistance = GetDistanceBetweenCoords(pos, data.coords["enter"].x + POIOffsets.exit.x, data.coords["enter"].y + POIOffsets.exit.y, data.coords["enter"].z - Config.MinZOffset + POIOffsets.exit.z, true)
                 if ExitDistance < 20 then
                     inRange = true
@@ -269,7 +271,7 @@ Citizen.CreateThread(function()
                             DrawText3Ds(data.coords["interaction"].x, data.coords["interaction"].y, data.coords["interaction"].z + 0.2, '~b~H~w~ -View inventory')
                             DrawText3Ds(data.coords["interaction"].x, data.coords["interaction"].y, data.coords["interaction"].z, '~b~E~w~ - Take over the traphouse (~g~$5000~w~)')
                             if IsControlJustPressed(0, Keys["E"]) then
-                                TriggerServerEvent('rl-traphouses:server:TakeoverHouse', CurrentTraphouse)
+                                TriggerServerEvent('rl-traphouses:server:TakeoverHouse', CurrentTraphouse) 
                                 TriggerEvent("debug", 'Trap Houses: Take Over House', 'success')
                             end
                             if IsControlJustPressed(0, Keys["H"]) then
