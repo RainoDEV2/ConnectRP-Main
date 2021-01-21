@@ -182,7 +182,7 @@ end
 
 RegisterNetEvent("veh:seatbelt")
 AddEventHandler("veh:seatbelt", function(bool)
-    seatbelt = bool
+    seatbelt = bool 
 end)
 
 function toggleSeatbelt()
@@ -483,7 +483,8 @@ Citizen.CreateThread(function()
                     if currentEngineHealth > 0.0 and lastCurrentVehicleBodyHealth - currentVehicleBodyHealth > 15 then
                         if lastCurrentVehicleSpeed > 30.5 and currentVehicleSpeed < (lastCurrentVehicleSpeed * 0.75) then
                             if not IsThisModelABike(GetEntityModel(currentVehicle)) then
-                                carCrash()
+                                --carCrash()
+                                print("2") 
                                 sendServerEventForPassengers("carhud:ejection:server", veloc)
                                 if harness and harnessDurability > 0.0 then
                                     harnessDurability = harnessDurability - 0.1
@@ -514,6 +515,7 @@ Citizen.CreateThread(function()
                     else
                         if currentEngineHealth > 10.0 and (currentEngineHealth < 195.0 or currentVehicleBodyHealth < 50.0) then
                             carCrash()
+                            print("3")
                             Citizen.Wait(1000)
                         end                        
                         lastCurrentVehicleSpeed = currentVehicleSpeed
