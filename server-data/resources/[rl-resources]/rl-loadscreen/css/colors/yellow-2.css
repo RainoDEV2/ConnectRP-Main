@@ -1,0 +1,104 @@
+@charset "utf-8";
+
+a {
+color: #FF66CC ;
+}
+
+p a {
+color: #FF66CC ;
+}
+
+#main-menu {
+background: #FF66CC ;
+}
+
+.color-me {
+color: #FF66CC ;
+}
+
+.awesome {
+color: #FF66CC ;
+}
+
+@-webkit-keyframes glow {
+    0% {
+		border-color: #FF66CC ;x
+    }	
+    100% {
+		border-color: #FF66CC ;
+    }
+}
+@-moz-keyframes glow {
+    0% {
+		border-color: #FF66CC ;
+    }	
+    100% {
+		border-color: #FF66CC ;
+    }
+}
+@-o-keyframes glow {
+    0% {
+		border-color: #FF66CC ;
+    }	
+    100% {
+		border-color: #FF66CC ;
+    }
+}
+@-ms-keyframes glow {
+    0% {
+		border-color: #FF66CC ;
+    }	
+    100% {
+		border-color: #FF66CC ;
+    }
+}
+@keyframes glow {
+    0% {
+		border-color: #FF66CC ;
+    }	
+    100% {
+		border-color: #FF66CC ;
+    }
+}
+
+.submit-button {
+color: #fff;
+background: #fff;
+}
+
+.submit-button::before {
+color: #fff;
+background: #FF66CC ;
+}
+
+.submit-button:hover {
+color: #000;
+background: #fff;
+}
+
+.submit-button-2 {
+color: #fff;
+background: #fff;
+}
+
+.submit-button-2::before {
+color: #fff;
+background: #FF66CC ;
+}
+
+.submit-button-2:hover {
+color: #000;
+background: #fff;
+}
+
+.owl-page.active span {    
+background: #FF66CC ;
+}
+
+.expand { 
+background: #FF66CC ;
+}
+
+.options-head {
+background: #FF66CC ;
+}

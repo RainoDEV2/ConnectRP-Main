@@ -1,9 +1,9 @@
 
-local Ran = false
+local spawn1 = false							-- Variable pour vérifier si déjà spawn
 
-AddEventHandler("onClientMapStart", function ()
-	if not Ran then
-		ShutdownLoadingScreenNui()
-		Ran = true
+AddEventHandler("playerSpawned", function () 	-- Attendre que le joueur spawn
+	if not spawn1 then
+		ShutdownLoadingScreenNui()				-- Fermer la ressource d'écran de chargement
+		spawn1 = true
 	end
 end)
