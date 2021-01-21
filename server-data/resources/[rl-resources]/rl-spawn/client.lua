@@ -41,7 +41,10 @@ RegisterNUICallback('chooseAppa', function(data)
     SetEntityVisible(GetPlayerPed(-1), true)
     TriggerServerEvent('RLCore:Server:OnPlayerLoaded')
     TriggerEvent('RLCore:Client:OnPlayerLoaded')
-    SwitchIN()
+    DoScreenFadeOut(500)
+        Citizen.Wait(2000)
+        StopPlayerSwitch()
+        DoScreenFadeIn(500)
 end)
 
 RegisterNUICallback('spawnplayer', function(data)
@@ -75,6 +78,10 @@ RegisterNUICallback('spawnplayer', function(data)
         SetEntityVisible(GetPlayerPed(-1), true)
         TriggerServerEvent('RLCore:Server:OnPlayerLoaded')
         TriggerEvent('RLCore:Client:OnPlayerLoaded')
+        DoScreenFadeOut(500)
+        Citizen.Wait(2000)
+        StopPlayerSwitch()
+        DoScreenFadeIn(4500)
         SwitchIN()
     elseif type == "house" then
         TriggerEvent("debug", 'Spawn: Owned House', 'success')
@@ -88,6 +95,10 @@ RegisterNUICallback('spawnplayer', function(data)
         TriggerServerEvent('RLCore:Server:OnPlayerLoaded')
         TriggerEvent('RLCore:Client:OnPlayerLoaded')
         SetEntityVisible(GetPlayerPed(-1), true)
+        DoScreenFadeOut(500)
+        Citizen.Wait(2000)
+        StopPlayerSwitch()
+        DoScreenFadeIn(4500)
         SwitchIN()
     elseif type == "normal" then
         TriggerEvent("debug", 'Spawn: ' .. Config.Spawns[location].label, 'success')
@@ -105,6 +116,10 @@ RegisterNUICallback('spawnplayer', function(data)
         SetEntityVisible(GetPlayerPed(-1), true)
         TriggerServerEvent('RLCore:Server:OnPlayerLoaded')
         TriggerEvent('RLCore:Client:OnPlayerLoaded')
+        DoScreenFadeOut(500)
+        Citizen.Wait(2000)
+        StopPlayerSwitch()
+        DoScreenFadeIn(4500)
         SwitchIN()
     end
 end)
@@ -174,6 +189,10 @@ AddEventHandler('rl-spawn:client:setupSpawns', function(cData, new, apps)
                 SetEntityVisible(GetPlayerPed(-1), true)
                 TriggerServerEvent('RLCore:Server:OnPlayerLoaded')
                 TriggerEvent('RLCore:Client:OnPlayerLoaded')
+                DoScreenFadeOut(500)
+                Citizen.Wait(2000)
+                StopPlayerSwitch()
+                DoScreenFadeIn(4500)
                 SwitchIN()
                 TriggerEvent('beginJail', tt)
             end
@@ -194,7 +213,7 @@ local cloudOpacity = 0.01
 local muteSound = true
 
 function SwitchIN()
-    local timer = GetGameTimer()
+    --[[ local timer = GetGameTimer()
     while true do
         ClearScreen()
         Citizen.Wait(0)
@@ -208,7 +227,7 @@ function SwitchIN()
             
             break
         end
-    end
+    end ]]
 
     TriggerServerEvent('mumble:infinity:server:unmutePlayer')
     TriggerEvent('rl-weathersync:client:EnableSync')
@@ -244,7 +263,6 @@ AddEventHandler('rl-spawn:client:openUI', function(value)
         Citizen.Wait(0)
         ClearScreen()
     end
-
     ClearScreen()
     Citizen.Wait(0)
     
