@@ -459,6 +459,11 @@
                     <h4 v-if="offender_selected.fingerprint"> {{ offender_selected.fingerprint }} </h4>
                     <h4 v-if="offender_selected.haswarrant"> {{ offender_selected.firstname}} {{offender_selected.lastname}} has an active warrant... </h4>
                     <h4 v-else-if="offender_selected.notes == '' && !offender_selected.haswarrant"> ... </h4>
+                    <h3>LICENSES</h3>
+                    <h4 v-if="offender_selected.licenses == false"> ... </h4>
+                    <span v-else-if="offender_selected.licenses" v-for="license in offender_selected.licenses">
+                        <h4>{{ license }}</h4>
+                    </span>
                     <h3>CONVICTIONS</h3>
                     <h4 v-if="offender_selected.convictions == null"> ... </h4>
                     <span v-else-if="offender_selected.convictions" v-for="(value, name) in offender_selected.convictions">
@@ -514,6 +519,11 @@
                     <h4 v-if="offender_selected.fingerprint"> {{ offender_selected.fingerprint }} </h4>
                     <h4 v-if="offender_selected.haswarrant"> {{ offender_selected.firstname}} {{offender_selected.lastname}} has an active warrant... </h4>
                     <h4 v-else-if="offender_selected.notes == '' && !offender_selected.haswarrant"> ... </h4>
+                    <h3>LICENSES</h3>
+                    <h4 v-if="offender_selected.licenses == false"> ... </h4>
+                    <span v-else-if="offender_selected.licenses" v-for="license in offender_selected.licenses">
+                        <h4>{{ license }}</h4>
+                    </span>
                     <h3>CONVICTIONS</h3>
                     <h4 v-if="offender_selected.convictions == null"> ... </h4>
                     <span v-else-if="offender_selected.convictions" v-for="(value, name) in offender_selected.convictions">
@@ -610,6 +620,14 @@
                         <input v-model="offender_changes.fingerprint" class="noselect" type="text" v-bind:placeholder="offender_selected.fingerprint">
                         <h3 style="margin-top: 20px">MUGSHOT URL</h3>
                         <input v-model="offender_changes.mugshot_url" class="noselect" type="text" v-bind:placeholder="offender_selected.mugshot_url">
+                        <h3 style="margin-top: 20px">LICENSES</h3>
+                        <h4 v-if="offender_changes.licenses == false"> ... </h4>
+                        <span v-else-if="offender_changes.licenses" v-for="license in offender_changes.licenses">
+                            <h4>
+                                <span v-on:click="RemoveLicense(license)" style="color: red; font-weight: all;">(-)</span> 
+                                {{ license }}
+                            </h4>
+                        </span>
                         <br />
                         <button type="button" class="noselect" v-on:click="SaveOffenderChanges()" style="margin-top: 20px">SAVE CHANGES</button>
                     </form>
