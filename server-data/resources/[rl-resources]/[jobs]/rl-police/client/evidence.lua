@@ -26,6 +26,8 @@ Fingerprints = {}
 FingerprintsNear = {}
 CurrentFingerprint = 0
 
+
+
 RegisterNetEvent('evidence:client:SetStatus')
 AddEventHandler('evidence:client:SetStatus', function(statusId, time)
 	if time > 0 and StatusList[statusId] ~= nil then 
@@ -2008,19 +2010,23 @@ AddEventHandler("myboneIssuesTarget",function()
 			end
 		end	
 
-        if armsdisabled and not legsdisabled then
-            TriggerEvent("DoLongHudText","I am finding it difficult to use my arms properly.",2)
-        elseif legsdisabled and not armsdisabled then
-            TriggerEvent("DoLongHudText","I am finding it difficult to use my legs properly.",2)
-        elseif legsdisabled and armsdisabled then
-            TriggerEvent("DoLongHudText","I am finding it difficult to use my arms and legs.",2)
+		if armsdisabled and not legsdisabled then
+			RLCore.Functions.Notify("I am finding it difficult to use my arms properly.")
+            --TriggerEvent("DoLongHudText","I am finding it difficult to use my arms properly.",2)
+		elseif legsdisabled and not armsdisabled then
+			RLCore.Functions.Notify("I am finding it difficult to use my legs properly.")
+            --TriggerEvent("DoLongHudText","I am finding it difficult to use my legs properly.",2)
+		elseif legsdisabled and armsdisabled then
+			RLCore.Functions.Notify("I am finding it difficult to use my arms and legs.")
+            --TriggerEvent("DoLongHudText","I am finding it difficult to use my arms and legs.",2)
         end
 
         if effectedcount > 3 then
             damagereport = "I feel multiple pains"
         end
-        if damagereport ~= "" then
-            TriggerEvent("DoLongHudText",damagereport, 155)
+		if damagereport ~= "" then
+			RLCore.Functions.Notify(damagereport)
+            --TriggerEvent("DoLongHudText",damagereport, 155)
         end
 
 	end
