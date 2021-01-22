@@ -85,14 +85,14 @@ Config.Menu = {
             {name = "Pounder", costs = 15500, description = {}, model = "pounder"},
         }
     },
-    ["customcars"] = {
+    --[[ ["customcars"] = {
         title = "custom cars",
         name = "custom cars",
         buttons = {
             {name = "Porsche 911 Turbo S 2016", costs = 520000, description = {}, model = "911turbos"},
             {name = "Mitsubishi Lancer Evolution X MR FQ-400", costs = 450000, description = {}, model = "evo10"},
         }
-    },
+    }, ]]
     ["compacts"] = {
         title = "compacts",
         name = "compacts",
@@ -218,7 +218,7 @@ Config.Menu = {
             {name = "Pro 3", costs = 2900, description = {}, model = "tribike3"},
         }
     },
-    ["drifts"] = {
+    --[[ ["drifts"] = {
         title = "drifts",
         name = "drifts",
         buttons = {
@@ -248,5 +248,5 @@ Config.Menu = {
             {name = "Nissan 300ZX Z31", costs = 99999999, description = {}, model = "z31"},
             {name = "Nissan 300ZX Z32", costs = 99999999, description = {}, model = "z32"},
         }
-    },
+    }, ]]
 }
