@@ -462,6 +462,14 @@ Config.Items = {
             type = "item",
             slot = 23,
         },
+        [24] = {
+            name = "repairkit",
+            price = 150, 
+            amount = 100,
+            info = {},
+            type = "item",
+            slot = 24,
+        },
     }
 }
 
