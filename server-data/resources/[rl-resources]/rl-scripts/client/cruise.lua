@@ -227,7 +227,11 @@ Citizen.CreateThread(function()
                 
                 -- Draw Engine Health
                 --if ShowEngineNumbers then
-                    --drawTxt(("%.3d"):format(math.ceil(engineHealth)), 2, EngineDrawColour, 0.4, screenPosX + 0.061, screenPosY + 0.048)
+                --local bodyh = (GetVehicleBodyHealth(vehicle) / 10)
+                --    drawTxt(("%.3d"):format(math.ceil(engineHealth)), 2, EngineDrawColour, 0.4, screenPosX + 0.061, screenPosY + 0.048)
+                --    drawTxt(("%.3d"):format(math.ceil(bodyh)), 2, EngineDrawColour, 0.4, screenPosX + 0.076, screenPosY + 0.048)
+                    
+                   
                 --end
                 --drawTxt("ENGINE", 2, EngineDrawColour, 0.4, screenPosX + 0.061, screenPosY + 0.048)
                 if vehicleClass ~= 8 then

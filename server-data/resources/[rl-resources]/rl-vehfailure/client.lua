@@ -1,15 +1,3 @@
-------------------------------------------
---	iEnsomatic RealisticVehicleFailure  --
-------------------------------------------
---
---	Created by Jens Sandalgaard
---
---	This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
---
---	https://github.com/iEns/RealisticVehicleFailure
---
-
-
 local pedInSameVehicleLast=false
 local vehicle
 local lastVehicle
@@ -45,8 +33,8 @@ math.randomseed(GetGameTimer());
 local tireBurstMaxNumber = cfg.randomTireBurstInterval * 1200; 			-- 192,000							-- the tire burst lottery runs roughly 1200 times per minute
 if cfg.randomTireBurstInterval ~= 0 then tireBurstLuckyNumber = math.random(tireBurstMaxNumber) end			-- If we hit this number again randomly, a tire will burst.
 
-local fixMessagePos = math.random(repairCfg.fixMessageCount)
-local noFixMessagePos = math.random(repairCfg.noFixMessageCount)
+local fixMessagePos = ""
+local noFixMessagePos = ""
 
 
 --SetFueltank to pop and leak
@@ -61,20 +49,6 @@ Citizen.CreateThread(function()
         end
     end
 end)
-
--- Display blips on map
---[[ Citizen.CreateThread(function()
-	if (cfg.displayBlips == true) then
-		for _, item in pairs(repairCfg.mechanics) do
-			item.blip = AddBlipForCoord(item.x, item.y, item.z)
-			SetBlipSprite(item.blip, item.id)
-			SetBlipAsShortRange(item.blip, true)
-			BeginTextCommandSetBlipName("STRING")
-			AddTextComponentString(item.name)
-			EndTextCommandSetBlipName(item.blip)
-		end
-	end
-end) ]]
 
 local function notification(msg)
 	SetNotificationTextEntry("STRING")
@@ -179,51 +153,6 @@ local function tireBurstLottery()
 	end
 end
 
-
-RegisterNetEvent('iens:repair')
-AddEventHandler('iens:repair', function()
-	if isPedDrivingAVehicle() then
-		local ped = GetPlayerPed(-1)
-		vehicle = GetVehiclePedIsIn(ped, false)
-		if IsNearMechanic() then
-			SetVehicleUndriveable(vehicle,false)
-			SetVehicleFixed(vehicle)
-			healthBodyLast=1000.0
-			healthEngineLast=1000.0
-			healthPetrolTankLast=1000.0
-			SetVehicleEngineOn(vehicle, true, false )
-			notification("~g~The mechanic repaired your car!")
-			return
-		end
-		if GetVehicleEngineHealth(vehicle) < cfg.cascadingFailureThreshold + 5 then
-			if GetVehicleOilLevel(vehicle) > 0 then
-				SetVehicleUndriveable(vehicle,false)
-				SetVehicleEngineHealth(vehicle, cfg.cascadingFailureThreshold + 5)
-				SetVehiclePetrolTankHealth(vehicle, 750.0)
-				healthEngineLast=cfg.cascadingFailureThreshold +5
-				healthPetrolTankLast=750.0
-					SetVehicleEngineOn(vehicle, true, false )
-				SetVehicleOilLevel(vehicle,(GetVehicleOilLevel(vehicle)/3)-0.5)
-				notification("~g~" .. repairCfg.fixMessages[fixMessagePos] .. ", now get to a mechanic!")
-				fixMessagePos = fixMessagePos + 1
-				if fixMessagePos > repairCfg.fixMessageCount then fixMessagePos = 1 end
-			else
-				notification("~r~Your vehicle was too badly damaged. Unable to repair!")
-			end
-		else
-			notification("~y~" .. repairCfg.noFixMessages[noFixMessagePos] )
-			noFixMessagePos = noFixMessagePos + 1
-			if noFixMessagePos > repairCfg.noFixMessageCount then noFixMessagePos = 1 end
-		end
-	else
-		notification("~y~You must be in a vehicle to be able to repair it")
-	end
-end)
-
-RegisterNetEvent('iens:notAllowed')
-AddEventHandler('iens:notAllowed', function()
-	notification("~r~You don't have permission to repair vehicles")
-end)
 
 if cfg.torqueMultiplierEnabled or cfg.preventVehicleFlip or cfg.limpMode then
 	Citizen.CreateThread(function()
@@ -469,7 +398,6 @@ Citizen.CreateThread(function()
 		end
 	end
 end)
-
 
 function SelectRandomTowable()
 	local index = GetRandomIntInRange(1,  #Config.Towables)
