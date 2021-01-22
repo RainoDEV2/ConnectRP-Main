@@ -9,6 +9,13 @@ Citizen.CreateThread(function()
     while RLCore.Functions.GetPlayerData().job == nil do Wait(10) end
 end)
 
+local CurrentCops = 0
+
+RegisterNetEvent('police:SetCopCount')
+AddEventHandler('police:SetCopCount', function(amount)
+    CurrentCops = amount
+end)
+
 local zoneNames = {
     AIRP = "Los Santos International Airport",
     ALAMO = "Alamo Sea",
@@ -153,10 +160,13 @@ AddEventHandler("truckrobbery:gruppeCard", function()
         if aDist < 2.0 then
             local randomcode = math.random(1000, 9999)
             local street = GetTheStreet()
-            TriggerEvent("truckrobbery:AttemptHeist", targetVehicle)
+            if CurrentCops >= 3 then 
+                TriggerEvent("truckrobbery:AttemptHeist", targetVehicle)
+            else 
+                RLCore.Functions.Notify('The police are being lazy, Try again later.')
+            end
         else
-            RLCore.Functions.Notify(
-                'You need to do this from behind the vehicle.')
+            RLCore.Functions.Notify('You need to do this from behind the vehicle.')
         end
     end
 end)
