@@ -72,7 +72,9 @@ const mdtApp = new Vue({
         offender_changes: {
             notes: "",
             mugshot_url: "",
+            licenses: [],
             fingerprint: "",
+            licenses_removed: [],
             convictions: [],
             convictions_removed: []
         },
@@ -165,7 +167,7 @@ const mdtApp = new Vue({
         },
         OpenOffenderDetails(id) {
             for (var key in this.offender_results.results) {
-                if (id == this.offender_results.results[key].citizenid) {
+                if (id == this.offender_results.results[key].id) {
 
                     $.post('http://ax-mdt/viewOffender', JSON.stringify({
                         offender: this.offender_results.results[key]
@@ -178,13 +180,14 @@ const mdtApp = new Vue({
         SaveOffenderChanges() {
             $.post('http://ax-mdt/saveOffenderChanges', JSON.stringify({
                 changes: this.offender_changes,
-                id: this.offender_selected.char_id,
-                identifier: this.offender_selected.char_id
+                id: this.offender_selected.id,
+                citizenid: this.offender_selected.citizenid
             }));
             this.changePage("Search Offenders");
             this.offender_selected.notes = this.offender_changes.notes;
             this.offender_selected.mugshot_url = this.offender_changes.mugshot_url;
             this.offender_selected.fingerprint = this.offender_changes.fingerprint;
+            this.offender_selected.licenses = this.offender_changes.licenses;
             this.offender_selected.convictions = this.offender_changes.convictions;
             return;
         },
@@ -221,8 +224,10 @@ const mdtApp = new Vue({
                     }
 
                     this.report_new.recommended_fine = this.report_new.recommended_fine + this.offenses[key].amount
-                    if (this.offenses[key].jailtime) {
-                        this.report_new.recommended_sentence = this.report_new.recommended_sentence + this.offenses[key].jailtime
+                    console.log(this.offenses[key].jail);
+                    if (this.offenses[key].jail) {
+                        console.log(this.report_new.recommended_sentence);
+                        this.report_new.recommended_sentence = this.report_new.recommended_sentence + this.offenses[key].jail
                     }
 
                     return;
@@ -242,8 +247,8 @@ const mdtApp = new Vue({
                     for (var key in this.offenses) {
                         if (offense == this.offenses[key].label) {
                             this.report_new.recommended_fine = this.report_new.recommended_fine - this.offenses[key].amount
-                            if (this.offenses[key].jailtime) {
-                                this.report_new.recommended_sentence = this.report_new.recommended_sentence - this.offenses[key].jailtime
+                            if (this.offenses[key].jail) {
+                                this.report_new.recommended_sentence = this.report_new.recommended_sentence - this.offenses[key].jail
                             }
                         }
                     }
@@ -418,6 +423,15 @@ const mdtApp = new Vue({
                 id: id
             }));
             return;
+        },
+        RemoveLicense(license) {
+            for (var key in this.offender_selected.licenses) {
+                var license2 = this.offender_selected.licenses[key]
+                if (license.label == license2.label) {
+                    Vue.delete(this.offender_changes.licenses, key)
+                    this.offender_changes.licenses_removed.push(license)
+                }
+            }
         },
         RemoveConviction(conviction) {
             for (var offense in this.offender_selected.convictions) {
