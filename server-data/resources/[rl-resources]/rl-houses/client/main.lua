@@ -20,7 +20,7 @@ local contractOpen = false
 
 local cam = nil
 local viewCam = false
-
+local showClothing = false
 local FrontCam = false
 
 stashLocation = nil
@@ -393,12 +393,10 @@ Citizen.CreateThread(function()
                     if CurrentHouse ~= nil then
                         if outfitLocation ~= nil then
                             if(GetDistanceBetweenCoords(pos, outfitLocation.x, outfitLocation.y, outfitLocation.z, true) < 1.5)then
-                                DrawText3Ds(outfitLocation.x, outfitLocation.y, outfitLocation.z, '~g~E~w~ - Outfits')
-                                if IsControlJustPressed(0, Keys["E"]) then
-                                    TriggerServerEvent("nv-outfits:server:openUI", true)
-                                end
-                            elseif(GetDistanceBetweenCoords(pos, outfitLocation.x, outfitLocation.y, outfitLocation.z, true) < 3)then
-                                DrawText3Ds(outfitLocation.x, outfitLocation.y, outfitLocation.z, 'Outfits')
+                                DrawText3Ds(outfitLocation.x, outfitLocation.y, outfitLocation.z, '/outfits')
+                                showClothing = true
+                            else
+                                showClothing = false
                             end
                         end
                     end
@@ -414,6 +412,7 @@ Citizen.CreateThread(function()
                                     while not IsScreenFadedOut() do
                                         Citizen.Wait(10)
                                     end
+                                    showClothing = false
                                     exports['rl-interior']:DespawnInterior(houseObj, function()
                                         TriggerEvent('rl-weathersync:client:EnableSync')
                                         SetEntityCoords(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.x, Config.Houses[CurrentHouse].coords.enter.y, Config.Houses[CurrentHouse].coords.enter.z + 0.5)
@@ -659,6 +658,7 @@ function enterOwnedHouse(house)
     SetWeatherTypeNowPersist('EXTRASUNNY')
     NetworkOverrideClockTime(12, 0, 0)
     entering = false
+    showClothing = true
     setHouseLocations()
 end
 
@@ -704,6 +704,7 @@ function leaveOwnedHouse(house)
             TriggerEvent('rl-weed:client:leaveHouse')
             TriggerServerEvent('rl-houses:server:SetInsideMeta', house, false)
             CurrentHouse = nil
+            showClothing = false
         end)
     end
 end
@@ -742,6 +743,7 @@ function enterNonOwnedHouse(house)
     NetworkOverrideClockTime(12, 0, 0)
     entering = false
     inOwned = true
+    showClothing = false
     setHouseLocations()
 end
 
@@ -764,6 +766,7 @@ function leaveNonOwnedHouse(house)
             TriggerEvent('rl-weed:client:leaveHouse')
             TriggerServerEvent('rl-houses:server:SetInsideMeta', house, false)
             CurrentHouse = nil
+            showClothing = false
         end)
     end
 end
@@ -1193,3 +1196,13 @@ AddEventHandler('rl-houses:client:ResetHouse', function()
         end
     end
 end)
+
+
+imClosesToRoom2 = function()
+    local ply = PlayerPedId()
+    if showClothing then
+      return true
+    else
+      return false
+    end
+end

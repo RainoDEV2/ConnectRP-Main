@@ -12,3 +12,7 @@ client_scripts {
 	"client/gui.lua",
 	"config.lua",
 }
+
+exports {
+    'imClosesToRoom3'
+}

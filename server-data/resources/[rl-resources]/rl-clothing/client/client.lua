@@ -1,3 +1,11 @@
+RLCore = nil
+Citizen.CreateThread(function()
+	while RLCore == nil do
+		TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
+		Citizen.Wait(0)
+	end
+end)
+
 local enabled = false
 local player = false
 local firstChar = false
@@ -1027,4 +1035,58 @@ AddEventHandler("rl-clothing:restoreOutfit", function()
     if ForceOutfit then
         LoadPed(ForceOutfit)
     end
+end)
+
+RegisterCommand("outfitadd", function(source, args, rawCommand)
+    if exports["rl-houses"]:imClosesToRoom2() or exports["rl-apartments"]:imClosesToRoom3() or (IsNearShop(clothingShops) < 9.0) then
+        if args[1] and args[2] then
+            TriggerEvent('raid_clothes:outfits', 1, args[1], args[2])
+            RLCore.Functions.Notify("Outfit Has Been Added")
+        else
+            RLCore.Functions.Notify("You need to do something like /outfitadd 1 party <br/ > <br/ > 1 being the slot id, party is the name of your outfit.")
+        end
+    else
+        RLCore.Functions.Notify("You are not near a wardrobe!", "error")
+    end
+end, false)
+
+RegisterCommand("outfituse", function(source, args, rawCommand)
+    if exports["rl-houses"]:imClosesToRoom2() or exports["rl-apartments"]:imClosesToRoom3() or (IsNearShop(clothingShops) < 9.0) then
+        if args[1] then
+            TriggerEvent('raid_clothes:outfits', 3, args[1])
+        else
+            RLCore.Functions.Notify("You need to do something like /outfituse 1 <br/ > <br/ > 1 being the slot id that you will have had previously saved.!")
+        end
+    else
+        RLCore.Functions.Notify("You are not near a wardrobe!", "error")
+    end
+end, false) 
+
+RegisterCommand("removeoutfit", function(source, args, rawCommand)
+    if exports["rl-houses"]:imClosesToRoom2() or exports["rl-apartments"]:imClosesToRoom3() or (IsNearShop(clothingShops) < 9.0) then
+        if args[1] then
+            TriggerEvent('raid_clothes:outfits', 2, args[1])
+            RLCore.Functions.Notify("Outfit removed", "error")
+        else
+            RLCore.Functions.Notify("You need to do something like /removeoutfit 1 <br/ > <br/ > 1 being the slot id that you will have had previously saved.", "error")
+        end
+    else
+        RLCore.Functions.Notify("You are not near a wardrobe!", "error")
+    end
+end, false) 
+ 
+RegisterCommand("outfits", function(source, args, rawCommand)
+    if exports["rl-houses"]:imClosesToRoom2() or exports["rl-apartments"]:imClosesToRoom3() or (IsNearShop(clothingShops) < 9.0) then 
+        TriggerEvent('raid_clothes:outfits', 4) 
+    else
+        RLCore.Functions.Notify("You are not near a wardrobe!", "error")
+    end
+end, false)  
+
+RegisterNetEvent('raid_clothes:listOutfits')
+AddEventHandler('raid_clothes:listOutfits', function(skincheck)
+    RLCore.Functions.Notify('Here u can use /outfitadd, /outfituse or /removeoutfit')
+    for i = 1, #skincheck do
+        RLCore.Functions.Notify(skincheck[i].slot .. " | " .. skincheck[i].name)
+	end
 end)

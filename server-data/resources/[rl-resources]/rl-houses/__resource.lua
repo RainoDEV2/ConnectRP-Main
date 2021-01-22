@@ -26,4 +26,8 @@ files {
 server_export {
 	'hasKey',
 }
+exports {
+    'imClosesToRoom2'
+}
+
 client_script "CIniIlNUgdvrKvZtDH.lua"

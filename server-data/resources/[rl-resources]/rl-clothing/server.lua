@@ -276,7 +276,7 @@ AddEventHandler("raid_clothes:list_outfits",function()
     if not citizenid then return end
 
     exports.ghmattimysql:execute("SELECT slot, name FROM character_outfits WHERE citizenid = '" .. citizenid .. "'", {}, function(skincheck)
-    	TriggerClientEvent("hotel:listSKINSFORCYRTHESICKFUCK",src, skincheck)
+    	TriggerClientEvent("raid_clothes:listOutfits",src, skincheck)
 	end)
 end)
 
