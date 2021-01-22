@@ -1,4 +1,4 @@
-RLCore.Commands.Add('givecash', 'Give cash to player.', {{name = 'id', help = 'Player ID'}, {name = 'amount', help = 'Amount'}}, true, function(source, args)
+RLCore.Commands.Add('pay', 'Give cash to player.', {{name = 'id', help = 'Player ID'}, {name = 'amount', help = 'Amount'}}, true, function(source, args)
     local src = source
 	local id = tonumber(args[1])
 	local amount = math.ceil(tonumber(args[2]))
@@ -32,7 +32,7 @@ RLCore.Commands.Add('givecash', 'Give cash to player.', {{name = 'id', help = 'P
 			TriggerClientEvent('RLCore:Notify', src, "Wrong ID.", "error")
 		end
 	else
-		TriggerClientEvent('RLCore:Notify', src, "Usage /givecash [ID] [AMOUNT]", "error")
+		TriggerClientEvent('RLCore:Notify', src, "Usage /pay [ID] [AMOUNT]", "error")
 	end
 end)
 
