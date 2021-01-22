@@ -181,7 +181,7 @@ AddEventHandler('truckrobbery:AttemptHeist', function(veh)
         if canRob then
             TriggerEvent('dispatch:truckRobbery')
             RLCore.Functions.Progressbar("unlockdoor_action", "Unlocking Vehicle",
-            45000, false, true, {
+            60000, false, true, {
                 disableMovement = true,
                 disableCarMovement = false,
                 disableMouse = false,
@@ -349,7 +349,7 @@ function pickUpCash()
                 TaskPlayAnim(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 8.0, -8, -1, 49, 0, 0, 0, 0)
                 FreezeEntityPosition(GetPlayerPed(-1), true)
             end
-            Progressbar(25000,"Collecting Items")
+            Progressbar(50000,"Collecting Items")
 
             local chance = math.random(1, 100)
             if chance >= 50 then
@@ -357,7 +357,7 @@ function pickUpCash()
             end
 
             for i = 1, #Config.Items, 1 do
-                Wait(3000)
+                Wait(1000)
                 TriggerServerEvent('truckrobbery:addItem', Config.Items[i].name, Config.Items[i].count)
             end
             TriggerServerEvent('truckrobbery:addMoney', Config.Money)
