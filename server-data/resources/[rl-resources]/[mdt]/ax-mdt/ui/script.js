@@ -224,10 +224,10 @@ const mdtApp = new Vue({
                     }
 
                     this.report_new.recommended_fine = this.report_new.recommended_fine + this.offenses[key].amount
-                    console.log(this.offenses[key].jail);
-                    if (this.offenses[key].jail) {
+                    console.log(this.offenses[key].jailtime);
+                    if (this.offenses[key].jailtime) {
                         console.log(this.report_new.recommended_sentence);
-                        this.report_new.recommended_sentence = this.report_new.recommended_sentence + this.offenses[key].jail
+                        this.report_new.recommended_sentence = this.report_new.recommended_sentence + this.offenses[key].jailtime
                     }
 
                     return;
@@ -247,8 +247,8 @@ const mdtApp = new Vue({
                     for (var key in this.offenses) {
                         if (offense == this.offenses[key].label) {
                             this.report_new.recommended_fine = this.report_new.recommended_fine - this.offenses[key].amount
-                            if (this.offenses[key].jail) {
-                                this.report_new.recommended_sentence = this.report_new.recommended_sentence - this.offenses[key].jail
+                            if (this.offenses[key].jailtime) {
+                                this.report_new.recommended_sentence = this.report_new.recommended_sentence - this.offenses[key].jailtime
                             }
                         }
                     }

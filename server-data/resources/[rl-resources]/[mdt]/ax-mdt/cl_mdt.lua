@@ -238,6 +238,7 @@ RegisterNUICallback("sentencePlayer", function(data, cb)
     end
     TriggerServerEvent("mdt:sentencePlayer", data.jailtime, data.charges, data.char_id, data.fine, players)
     cb('ok')
+    PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 end)
 
 RegisterNetEvent('mdt:client:JailCommand')
