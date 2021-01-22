@@ -1,4 +1,4 @@
---[[ CreateThread(function()
+CreateThread(function()
 	SetWeaponDamageModifier(`WEAPON_UNARMED`, 0.2) -- Melee
 	SetWeaponDamageModifier(`WEAPON_BOTTLE`, 0.45) -- Melee
 	SetWeaponDamageModifier(`WEAPON_FLASHLIGHT`, 0.45) -- Melee
@@ -42,9 +42,9 @@
 		SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
 		SetPedSuffersCriticalHits(PlayerPedId(), false)
 	end
-end) ]]
+end)
 
-local weapons = {
+--[[ local weapons = {
     ['WEAPON_UNARMED'] = 0.3, 
     ['WEAPON_ADVANCEDRIFLE'] = 0.45,
     ['WEAPON_APPISTOL'] = 0.4,
@@ -55,7 +55,7 @@ local weapons = {
     ['WEAPON_BULLPUPRIFLE'] = 0.65,
     ['WEAPON_BULLPUPSHOTGUN'] = 0.65,
     ['WEAPON_CARBINERIFLE'] = 0.65,
-    ['WEAPON_CARBINERIFLE_MK2'] = 0.60,
+    ['WEAPON_CARBINERIFLE_MK2'] = 0.65,
     ['WEAPON_COMBATMG'] = 0.65,
     ['WEAPON_COMBATPDW'] = 0.65, 
     ['WEAPON_COMBATPISTOL'] = 0.75,
@@ -78,7 +78,7 @@ local weapons = {
     ['WEAPON_HEAVYSNIPER'] = 0.65,
     ['WEAPON_HOMINGLAUNCHER'] = 0.65,
     ['WEAPON_KNIFE'] = 0.65,
-    ['WEAPON_KNUCKLE'] = 0.4,
+    ['WEAPON_KNUCKLE'] = 0.5,
     ['WEAPON_MACHETE'] = 0.65,
     ['WEAPON_MACHINEPISTOL'] = 0.65,
     ['WEAPON_MARKSMANPISTOL'] = 0.65,
@@ -117,4 +117,4 @@ Citizen.CreateThread(function()
         Wait(0)
         end
     end
-end)
+end) ]]
