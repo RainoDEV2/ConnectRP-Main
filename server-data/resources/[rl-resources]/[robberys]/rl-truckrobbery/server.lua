@@ -1,5 +1,5 @@
 RLCore = nil
-
+Trucks = {}
 TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
 
 RLCore.Functions.CreateUseableItem("security_card_03", function(source, item)
@@ -75,5 +75,22 @@ function System(str)
         :gsub('[&<>\n]', replacements)
         :gsub(' +', function(s)
             return ' '..('&nbsp;'):rep(#s-1)
-    end)
+    end) 
 end
+
+RegisterServerEvent('tp:gruppe:addPlate')
+AddEventHandler('tp:gruppe:addPlate', function(truckPlate)
+	table.insert(Trucks, tostring(truckPlate))
+end)
+ 
+RLCore.Functions.CreateCallback('tp:gruppe:checkPlate', function(source, cb, plate)
+  if #Trucks ~= 0 then
+		for k, v in pairs(Trucks) do
+      if v == plate then
+				cb(false) -- truck already robbed before
+				break
+			end
+		end
+  end
+	cb(true)
+end)

@@ -1,2 +1,1 @@
 [ERROR] connect ETIMEDOUT
-[ERROR] [MySQL] [ax-mdt] An error happens on MySQL for query "SELECT players.cid, players.citizenid, players.charinfo, user_mdt.fingerprint, user_mdt.notes FROM players INNER JOIN user_mdt ON players.citizenid = user_mdt.char_id : []": ER_BAD_FIELD_ERROR: Unknown column 'user_mdt.fingerprint' in 'field list'

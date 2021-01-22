@@ -167,24 +167,32 @@ AddEventHandler('truckrobbery:AttemptHeist', function(veh)
     SetEntityAsMissionEntity(attempted, true, true)
     local plate = GetVehicleNumberPlateText(veh)
     local pedCo = GetEntityCoords(PlayerPedId())
-    RLCore.Functions.Progressbar("unlockdoor_action", "Unlocking Vehicle",
-                                 45000, false, true, {
-        disableMovement = true,
-        disableCarMovement = false,
-        disableMouse = false,
-        disableCombat = true
-    }, {
-        animDict = "anim@amb@clubhouse@tutorial@bkr_tut_ig3@",
-        anim = "machinic_loop_mechandplayer",
-        flags = 49
-    }, {}, {}, function(status)
-        if not status then
-            TriggerEvent("truckrobbery:AllowHeist", veh)
-            TriggerServerEvent("truckrobbery:removeItem", "security_card_03", 1)
+    RLCore.Functions.TriggerCallback('tp:gruppe:checkPlate', function(canRob)
+        if canRob then
             TriggerEvent('dispatch:truckRobbery')
-            TriggerServerEvent("truckrobbery:PlateLog", plate)
+            RLCore.Functions.Progressbar("unlockdoor_action", "Unlocking Vehicle",
+            45000, false, true, {
+                disableMovement = true,
+                disableCarMovement = false,
+                disableMouse = false,
+                disableCombat = true
+            }, {
+                animDict = "anim@amb@clubhouse@tutorial@bkr_tut_ig3@",
+                anim = "machinic_loop_mechandplayer",
+                flags = 49
+            }, {}, {}, function(status)
+                if not status then
+                    TriggerEvent("truckrobbery:AllowHeist", veh)
+                    TriggerServerEvent("truckrobbery:removeItem", "security_card_03", 1)
+                    TriggerServerEvent("truckrobbery:PlateLog", plate)
+                    TriggerServerEvent('tp:gruppe:addPlate', plate) 
+                end
+            end)
+        else 
+            RLCore.Functions.Notify('This truck is empty and the security system has been triggered.')
+            TriggerEvent('dispatch:truckRobbery')
         end
-    end)
+    end, plate)
 end)
 
 RegisterNetEvent('truckrobbery:AllowHeist')
