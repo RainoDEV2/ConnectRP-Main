@@ -22,9 +22,9 @@ AddEventHandler('hospital:server:RespawnAtHospital', function()
     for k, v in pairs(Config.Locations["beds"]) do
         TriggerClientEvent('hospital:client:SendToBed', src, k, v, true)
         TriggerClientEvent('hospital:client:SetBed', -1, k, true)
-        Player.Functions.ClearInventory()
-        RLCore.Functions.ExecuteSql(true, "UPDATE `players` SET `inventory` = '"..RLCore.EscapeSqli(json.encode({})).."' WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'")
-        TriggerClientEvent('RLCore:Notify', src, 'All your belongings have been taken..', 'error')
+        --Player.Functions.ClearInventory()
+        --RLCore.Functions.ExecuteSql(true, "UPDATE `players` SET `inventory` = '"..RLCore.EscapeSqli(json.encode({})).."' WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'")
+        --TriggerClientEvent('RLCore:Notify', src, 'All your belongings have been taken..', 'error')
         return
     end
 end)
