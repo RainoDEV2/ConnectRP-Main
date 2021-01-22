@@ -1165,10 +1165,10 @@ AddEventHandler('rl-phone:client:TransferMoney', function(amount, newmoney)
 
     PhoneData.PlayerData.money.bank = newmoney
     if PhoneData.isOpen then
-        SendNUIMessage({ action = "PhoneNotification", PhoneNotify = { title = "RLBanking", text = "There is &euro;"..amount.." credited!", icon = "fas fa-university", color = "#8c7ae6", }, })
+        SendNUIMessage({ action = "PhoneNotification", PhoneNotify = { title = "RLBanking", text = "There is &dollar;"..amount.." credited!", icon = "fas fa-university", color = "#8c7ae6", }, })
         SendNUIMessage({ action = "UpdateBank", NewBalance = PhoneData.PlayerData.money.bank })
     else
-        SendNUIMessage({ action = "Notification", NotifyData = { title = "RLBanking", content = "There is &euro;"..amount.." credited!", icon = "fas fa-university", timeout = 2500, color = nil, }, })
+        SendNUIMessage({ action = "Notification", NotifyData = { title = "RLBanking", content = "There is &dollar;"..amount.." credited!", icon = "fas fa-university", timeout = 2500, color = nil, }, })
     end
 end)
 
