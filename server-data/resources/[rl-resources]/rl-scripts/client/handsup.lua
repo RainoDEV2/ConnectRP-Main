@@ -1,9 +1,9 @@
 CreateThread(function()
 	local handsup = false
 	while true do
-		Wait(1)
+		Wait(5)
 		local playerPed = PlayerPedId()
-		if IsControlJustReleased(0, 73) then
+		if IsControlJustPressed(0, 73) then
 			RequestAnimDict('missminuteman_1ig_2')
 			while not HasAnimDictLoaded('missminuteman_1ig_2') do
 				Wait(100)
@@ -17,6 +17,35 @@ CreateThread(function()
 			end
 
 			TriggerEvent("debug", 'Handsup: ' .. (handsup and 'Enabled' or 'Disabled'), (handsup and 'success' or 'error'))
+		end
+	end
+end)
+local ragdoll = false
+
+CreateThread(function()
+	while true do
+		Wait(5)
+		local playerPed = PlayerPedId()
+		if IsControlJustReleased(2, 82) then
+			RequestAnimDict('missminuteman_1ig_2')
+			while not HasAnimDictLoaded('missminuteman_1ig_2') do
+				Wait(100)
+			end
+			if ragdoll then
+				ragdoll = false
+				ClearPedSecondaryTask(playerPed)
+			else
+				ragdoll = true
+			end
+		end
+	end
+end)
+
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(5)
+		if ragdoll then
+			SetPedToRagdoll(GetPlayerPed(-1), 1000, 1000, 0, 0, 0, 0)
 		end
 	end
 end)
