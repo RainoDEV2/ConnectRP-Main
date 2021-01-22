@@ -4,11 +4,11 @@ Citizen.CreateThread(function()
     while RLCore == nil do
         TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
         Citizen.Wait(200)
-    end
+    end 
 end)
 
 Citizen.CreateThread(function()
-    local blip = AddBlipForCoord(103.55978, -932.6402, 29.848754)
+    local blip = AddBlipForCoord(245.05134, -387.3223, 44.866054)
 	SetBlipSprite(blip, 58)
 	SetBlipDisplay(blip, 4)
 	SetBlipScale(blip, 0.7)
