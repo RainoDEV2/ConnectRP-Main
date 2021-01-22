@@ -55,8 +55,7 @@ Citizen.CreateThread(function()
                             if Config.Locations[shop]["type"] == 'dede' then
                                 TriggerServerEvent("inventory:server:OpenInventory", "dede", "Itemshop_"..shop, ShopItems)
                             elseif Config.Locations[shop]["type"] == 'weapon' then
-                                print("IM A WEAPON STORE")
-                                TriggerServerEvent('rlcore:checkLicence', shop, ShopItems)
+                                TriggerServerEvent('rl-shops:server:CheckGunLicence1')
                             else
                                 TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_"..shop, ShopItems)
                             end
@@ -101,6 +100,27 @@ AddEventHandler('rl-shops:client:RestockShopItems', function(shop, amount)
     if Config.Locations[shop]["products"] ~= nil then 
         for k, v in pairs(Config.Locations[shop]["products"]) do 
             Config.Locations[shop]["products"][k].amount = Config.Locations[shop]["products"][k].amount + amount
+        end
+    end
+end)
+
+RegisterNetEvent('rl-shops:client:callbackerino')
+AddEventHandler('rl-shops:client:callbackerino', function(check)
+    for shop, _ in pairs(Config.Locations) do
+        local ShopItems = {}
+        ShopItems.label = Config.Locations[shop]["label"]
+        ShopItems.items = Config.Locations[shop]["products"]
+        ShopItems.slots = 30
+        if Config.Locations[shop]["type"] == 'weapon' then
+            if check then
+                TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_weapon", ShopItems)
+                return
+            else
+                RLCore.Functions.Notify("You Dont Have A Weapons Licence!", "error")
+                Citizen.Wait(1500)
+                RLCore.Functions.Notify("FOR NOW! go to city hall and click test, then add and come back", "error")
+                return
+            end
         end
     end
 end)

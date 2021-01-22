@@ -20,3 +20,13 @@ AddEventHandler('rl-shops:server:RestockShopItems', function(shop)
         TriggerClientEvent('rl-shops:client:RestockShopItems', -1, shop, randAmount)
     end
 end)
+
+RegisterServerEvent('rl-shops:server:CheckGunLicence1')
+AddEventHandler('rl-shops:server:CheckGunLicence1', function()
+    local xPlayer = RLCore.Functions.GetPlayer(source)
+    if xPlayer.PlayerData.metadata.licences['weapon1'] then
+        TriggerClientEvent('rl-shops:client:callbackerino', source, true)
+    else
+        TriggerClientEvent('rl-shops:client:callbackerino', source, false)
+    end
+end)

@@ -113,30 +113,28 @@ AddEventHandler("mdt:getOffenderDetails", function(offender)
 				if warrants[1] then
 					offender.haswarrant = true
 				end
+				
+				local lic = {
+					"driver",
+					'business',
+					'weapon1',
+				}
 
-				exports['ghmattimysql']:execute('SELECT * FROM `players` WHERE `id` = @id', {
-					['@id'] = offender.id
-				}, function(player)
-					player = player[1]
-					if player and player.metadata then
-						local metadata = json.decode(player.metadata)
-						offender.fingerprint = metadata.fingerprint
-						for k,v in pairs(metadata['licences']) do
-							if k and v then
-								if k == 'driver' then
-									k = 'Driver'
-								elseif k == 'business' then
-									k = 'Business'
-								elseif k == 'weapon1' then
-									k = 'Concealed Carry'
-								end
-								table.insert(offender.licenses, k)
-							end
+				local k;
+
+				for i = 1, 3 do
+					if Player.PlayerData.metadata.licences[lic[i]] then
+						if lic[i] == 'driver' then
+							k = 'Driver'
+						elseif lic[i] == 'business' then
+							k = 'Business'
+						elseif lic[i] == 'weapon1' then
+							k = 'Concealed Carry'
 						end
+						table.insert(offender.licenses, k)
 					end
-	
-					TriggerClientEvent("mdt:returnOffenderDetails", src, offender)
-				end)
+				end
+				TriggerClientEvent("mdt:returnOffenderDetails", src, offender)
 			end)
 		end)
 	end)
@@ -146,30 +144,28 @@ RegisterServerEvent("mdt:getOffenderDetailsById")
 AddEventHandler("mdt:getOffenderDetailsById", function(char_id)
 	local src = source
 	local Player = RLCore.Functions.GetPlayer(src)
+	local xPlayer = RLCore.Functions.GetPlayerByCitizenId(char_id)
+	
+	local lic = {
+		"driver",
+		'business',
+		'weapon1',
+	}
 
-	exports['ghmattimysql']:execute('SELECT * FROM `players` WHERE `id` = @id', {
-		['@id'] = char_id
-	}, function(result)
-		local offender = json.decode(result[1].charinfo)
-		local metadata = json.decode(result[1].metadata)
-		offender.licenses = {}
-		offender.id = result[1].id
-		offender.citizenid = result[1].citizenid
-		offender.fingerprint = metadata.fingerprint
+	local k;
 
-		for k,v in pairs(metadata['licences']) do
-			if k and v then
-				if k == 'driver' then
-					k = 'Driver'
-				elseif k == 'business' then
-					k = 'Business'
-				elseif k == 'weapon1' then
-					k = 'Concealed Carry'
-				end
-
-				table.insert(offender.licenses, k)
+	for i = 1, 3 do
+		if xPlayer.PlayerData.metadata.licences[lic[i]] then
+			if lic[i] == 'driver' then
+				k = 'Driver'
+			elseif lic[i] == 'business' then
+				k = 'Business'
+			elseif lic[i] == 'weapon1' then
+				k = 'Concealed Carry'
 			end
+			table.insert(offender.licenses, k)
 		end
+	end
 		
 		exports['ghmattimysql']:execute('SELECT * FROM `user_mdt` WHERE `char_id` = @id', {
 			['@id'] = offender.id
@@ -194,8 +190,6 @@ AddEventHandler("mdt:getOffenderDetailsById", function(char_id)
 				TriggerClientEvent("mdt:returnOffenderDetails", src, offender)
 			end)
 		end)
-
-	end)
 end)
 
 RegisterServerEvent("mdt:saveOffenderChanges")
