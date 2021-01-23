@@ -197,3 +197,23 @@ end
 Citizen.CreateThread(function()
   AddTextEntry('FE_THDR_GTAO', 'TwitchCityRP')
 end)
+
+Citizen.CreateThread(function()
+	while true do
+        Wait(5)
+        SetCreateRandomCops(false)
+        SetCreateRandomCopsNotOnScenarios(false)
+        SetCreateRandomCopsOnScenarios(false)
+        
+        --[[ SetVehicleModelIsSuppressed(GetHashKey("rubble"), true)
+        SetVehicleModelIsSuppressed(GetHashKey("dump"), true)
+        SetVehicleModelIsSuppressed(GetHashKey("taco"), true)
+        SetVehicleModelIsSuppressed(GetHashKey("biff"), true)
+        SetVehicleModelIsSuppressed(GetHashKey("hydra"), true)
+        SetVehicleModelIsSuppressed(GetHashKey("rhino"), true)
+        SetVehicleModelIsSuppressed(GetHashKey("polmav"), true)
+        SetVehicleModelIsSuppressed(GetHashKey("lazer"), true)
+		SetVehicleModelIsSuppressed(GetHashKey("policeb"), true) ]]
+		SetVehicleModelIsSuppressed(GetHashKey("sentinel"), true)
+    end
+end)
