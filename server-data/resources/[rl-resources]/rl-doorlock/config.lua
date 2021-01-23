@@ -1490,8 +1490,8 @@ RLConfig.Doors = {
 	{
 		objName = 'v_ilev_fib_door1',
 		objYaw = 68.0,
-		objCoords  = vector3(-32.16, -1102.72, 26.42),
-		textCoords = vector3(-32.16, -1102.72, 26.42),
+		objCoords  = vector3(-32.16, -1102.72, -26.42),
+		textCoords = vector3(-32.16, -1102.72, -26.42),
 		authorizedJobs = { 'cardealer', 'police' },
 		locking = false,
 		locked = true,
@@ -1502,8 +1502,8 @@ RLConfig.Doors = {
 	{
 		objName = 'v_ilev_fib_door1',
 		objYaw = 68.0,
-		objCoords  = vector3(-34.05, -1108.54, 26.42),
-		textCoords = vector3(-34.05, -1108.54, 26.42),
+		objCoords  = vector3(-34.05, -1108.54, -26.42),
+		textCoords = vector3(-34.05, -1108.54, -26.42),
 		authorizedJobs = { 'cardealer', 'police' },
 		locking = false,
 		locked = true,
@@ -1512,7 +1512,7 @@ RLConfig.Doors = {
 		size = 2
 	},
 		{
-		textCoords = vector3(-38.20, -1108.75, 26.46),
+		textCoords = vector3(-38.20, -1108.75, -26.46),
 		authorizedJobs = { 'cardealer', 'police'},
 		locking = false,
 		locked = true,
@@ -1523,13 +1523,13 @@ RLConfig.Doors = {
 			{
 				objName = 'v_ilev_csr_door_l',
 				objYaw = -20.0,
-				objCoords  = vector3(-38.52, -1108.20, 26.46)
+				objCoords  = vector3(-38.52, -1108.20, -26.46)
 			},
 
 			{
 				objName = 'v_ilev_csr_door_r',
 				objYaw = -20.0,
-				objCoords  = vector3(-37.85, -1108.60, 26.46)
+				objCoords  = vector3(-37.85, -1108.60, -26.46)
 			}
 		}
 	},
