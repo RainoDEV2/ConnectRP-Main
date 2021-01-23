@@ -90,7 +90,7 @@ AddEventHandler('BuyForVeh', function(vehicleProps,name, vehicle, price, finance
         local downPay = math.ceil(price / 4)
         local data = RLCore.Functions.ExecuteSql(false,"SELECT money FROM addon_account_data WHERE account_name=@account_name",{['@account_name'] = 'pdm'})
         local curSociety = data[1].money
-        MySQL.Async.execute('INSERT INTO owned_vehicles ( '..cols..' ) VALUES ( '..val..' )',{
+        RLCore.Functions.ExecuteSql(false,'INSERT INTO owned_vehicles ( '..cols..' ) VALUES ( '..val..' )',{
             ['@owner']   = user.identifier,
             ['@plate']   = vehicleProps.plate,
             ['@vehicle'] = json.encode(vehicleProps),
@@ -100,11 +100,11 @@ AddEventHandler('BuyForVeh', function(vehicleProps,name, vehicle, price, finance
             ['@financetimer'] = repayTime,
             ['@shop'] = 'pdm'
         })
-        RLCore.Functions.ExecuteSql(false,'UPDATE addon_account_data SET money=@money WHERE account_name=@account_name',{['@money'] = curSociety + downPay,['@account_name'] = 'pdm'})
+        --RLCore.Functions.ExecuteSql(false,'UPDATE addon_account_data SET money=@money WHERE account_name=@account_name',{['@money'] = curSociety + downPay,['@account_name'] = 'pdm'})
     else
         local data = RLCore.Functions.ExecuteSql(false,"SELECT money FROM addon_account_data WHERE account_name=@account_name",{['@account_name'] = 'pdm'})
         local curSociety = data[1].money
-        MySQL.Async.execute('INSERT INTO owned_vehicles (owner, plate, vehicle, vehiclename, shop) VALUES (@owner, @plate, @vehicle, @vehiclename, @shop)',{
+        RLCore.Functions.ExecuteSql(false,'INSERT INTO owned_vehicles (owner, plate, vehicle, vehiclename, shop) VALUES (@owner, @plate, @vehicle, @vehiclename, @shop)',{
             ['@owner']   = user.identifier,
             ['@plate']   = vehicleProps.plate,
             ['@vehicle'] = json.encode(vehicleProps),
@@ -112,7 +112,7 @@ AddEventHandler('BuyForVeh', function(vehicleProps,name, vehicle, price, finance
             ['@buy_price'] = price,
             ['@shop'] = 'pdm'
         })
-        RLCore.Functions.ExecuteSql(false,'UPDATE addon_account_data SET money=@money WHERE account_name=@account_name',{['@money'] = curSociety + price,['@account_name'] = 'pdm'})
+        --RLCore.Functions.ExecuteSql(false,'UPDATE addon_account_data SET money=@money WHERE account_name=@account_name',{['@money'] = curSociety + price,['@account_name'] = 'pdm'})
     end
 end)
 
