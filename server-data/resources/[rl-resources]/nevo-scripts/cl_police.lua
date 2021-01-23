@@ -374,17 +374,17 @@ end
 
 Vehicles = {
     { model = "POLVIC", label = "LSPD Vic"},
-    { model = "POLVIC2", label = "BCSO/SASP Vic"},
-    { model = "POLTAURUS", label = "Taurus"},
-    { model = "POLTAH", label = "Tahoe"},
+    --{ model = "POLVIC2", label = "BCSO/SASP Vic"},
+    --{ model = "POLTAURUS", label = "Taurus"},
+    --{ model = "POLTAH", label = "Tahoe"},
     { model = "pol8", label = "Motorbike"},
     { model = "POLRAPTOR", label = "Raptor"},
-    { model = "POLCHAR", label = "Charger"},
+    --{ model = "POLCHAR", label = "Charger"},
     { model = "POL10", label = "SWAT Suburban"},
     { model = "pbus2", label = "Prison Bus"},
     { model = "policet", label = "Armored Van"},
     { model = "polschafter3", label = "UC Schafter"},
-    { model = "2015POLSTANG", label = "Mustang"},
+    --{ model = "2015POLSTANG", label = "Mustang"},
     { model = "fbi", label = "FBI Buffalo"},
     { model = "fbi2", label = "TFBI Granger"},
     { model = "ucwashington", label = "UC Washington"},
@@ -451,7 +451,7 @@ AddEventHandler('police:sv', function(index)
 		SetVehicleExtra(veh, 12, true)
 		SetVehicleDirtLevel(veh, 0.0)
 		WashDecalsFromVehicle(veh, 1.0)
-		exports['rl-hud']:SetFuel(veh, 99)
+		exports['LegacyFuel']:SetFuel(veh, 99)
         SetVehicleEngineOn(veh, true, true)
     end
 end)
