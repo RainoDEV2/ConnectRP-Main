@@ -24,7 +24,7 @@ RLConfig.Doors = {
 	},
 
 	{
-		textCoords = vector3(434.81, -981.93, 30.89),
+		textCoords = vector3(434.81, -981.93, -30.89),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = false,
@@ -46,7 +46,7 @@ RLConfig.Doors = {
 	},
 
 	{
-		textCoords = vector3(468.67, -1014.43, 26.48),
+		textCoords = vector3(468.67, -1014.43, -26.48),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -68,7 +68,7 @@ RLConfig.Doors = {
 	},
 	
 	{
-		textCoords = vector3(440.12734, -998.6658, 30.725053),
+		textCoords = vector3(440.12734, -998.6658, -30.725053),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -78,19 +78,19 @@ RLConfig.Doors = {
 			{
 				objName = -165604314,
 				objYaw = 179.88,
-				objCoords = vector3(440.66079, -998.7464, 30.726263)
+				objCoords = vector3(440.66079, -998.7464, -30.726263)
 			},
 
 			{
 				objName = 1388858739,
 				objYaw = 179.87,
-				objCoords = vector3(439.67514, -998.6728, 30.726697)
+				objCoords = vector3(439.67514, -998.6728, -30.726697)
 			}
 		}
 	},
 
 	{
-		textCoords = vector3(442.70581, -998.7822, 30.725538),
+		textCoords = vector3(442.70581, -998.7822, -30.725538),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -100,13 +100,13 @@ RLConfig.Doors = {
 			{
 				objName = -165604314,
 				objYaw = 179.96,
-				objCoords = vector3(443.35925, -998.7187, 30.725431)
+				objCoords = vector3(443.35925, -998.7187, -30.725431)
 			},
 
 			{
 				objName = 1388858739,
 				objYaw = 179.92,
-				objCoords = vector3(443.35925, -998.7187, 30.725431)
+				objCoords = vector3(443.35925, -998.7187, -30.725431)
 			}
 		}
 	},
@@ -114,8 +114,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 179.57,
-		objCoords = vector3(441.1155, -994.2369, 30.689327),
-		textCoords = vector3(441.1155, -994.2369, 30.689327),
+		objCoords = vector3(441.1155, -994.2369, -30.689327),
+		textCoords = vector3(441.1155, -994.2369, -30.689327),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -127,8 +127,8 @@ RLConfig.Doors = {
 	{
 		objName = -1543859032,
 		objYaw = 0,
-		objCoords = vector3(443.31164, -994.2965, 30.689319),
-		textCoords = vector3(443.31164, -994.2965, 30.689319),
+		objCoords = vector3(443.31164, -994.2965, -30.689319),
+		textCoords = vector3(443.31164, -994.2965, -30.689319),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -140,8 +140,8 @@ RLConfig.Doors = {
 	{
 		objName = -1543859032,
 		objYaw = 0,
-		objCoords = vector3(438.37573, -995.3566, 30.689319),
-		textCoords = vector3(438.37573, -995.3566, 30.689319),
+		objCoords = vector3(438.37573, -995.3566, -30.689319),
+		textCoords = vector3(438.37573, -995.3566, -30.689319),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -153,8 +153,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 0.15,
-		objCoords = vector3(462.76654, -984.9898, 30.689348),
-		textCoords = vector3(462.76654, -984.9898, 30.689348),
+		objCoords = vector3(462.76654, -984.9898, -30.689348),
+		textCoords = vector3(462.76654, -984.9898, -30.689348),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -166,8 +166,8 @@ RLConfig.Doors = {
 	{
 		objName = -1543859032,
 		objYaw = 0.072,
-		objCoords = vector3(468.80099, -985.0518, 30.689359),
-		textCoords = vector3(468.80099, -985.0518, 30.689359),
+		objCoords = vector3(468.80099, -985.0518, -30.689359),
+		textCoords = vector3(468.80099, -985.0518, -30.689359),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -179,8 +179,8 @@ RLConfig.Doors = {
 	{
 		objName = -1543859032,
 		objYaw = 359.94,
-		objCoords = vector3(472.23971, -985.1279, 30.689357),
-		textCoords = vector3(472.23971, -985.1279, 30.689357),
+		objCoords = vector3(472.23971, -985.1279, -30.689357),
+		textCoords = vector3(472.23971, -985.1279, -30.689357),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -192,8 +192,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 180.0,
-		objCoords = vector3(467.50863, -991.8703, 30.689346),
-		textCoords = vector3(467.50863, -991.8703, 30.689346),
+		objCoords = vector3(467.50863, -991.8703, -30.689346),
+		textCoords = vector3(467.50863, -991.8703, -30.689346),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -205,8 +205,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 269.89,
-		objCoords = vector3(477.6697, -991.0794, 30.689346),
-		textCoords = vector3(477.6697, -991.0794, 30.689346),
+		objCoords = vector3(477.6697, -991.0794, -30.689346),
+		textCoords = vector3(477.6697, -991.0794, -30.689346),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -218,8 +218,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 179.91,
-		objCoords = vector3(471.4985, -999.5729, 30.689338),
-		textCoords = vector3(471.4985, -999.5729, 30.689338),
+		objCoords = vector3(471.4985, -999.5729, -30.689338),
+		textCoords = vector3(471.4985, -999.5729, -30.689338),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -229,7 +229,7 @@ RLConfig.Doors = {
 	},
 
 	{
-		textCoords = vector3(481.00598, -999.4772, 30.690782),
+		textCoords = vector3(481.00598, -999.4772, -30.690782),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -239,13 +239,13 @@ RLConfig.Doors = {
 			{
 				objName = 165994623,
 				objYaw = 100,
-				objCoords = vector3(480.39, -999.44, 30.69)
+				objCoords = vector3(480.39, -999.44, -30.69)
 			},
 
 			{
 				objName = 165994623,
 				objYaw = -100,
-				objCoords = vector3(481.96, -999.64, 30.69)
+				objCoords = vector3(481.96, -999.64, -30.69)
 			},
 		}
 	},
@@ -253,8 +253,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 180.0,
-		objCoords = vector3(467.44918, -991.6618, 34.217166),
-		textCoords = vector3(467.44918, -991.6618, 34.217166),
+		objCoords = vector3(467.44918, -991.6618, -34.217166),
+		textCoords = vector3(467.44918, -991.6618, -34.217166),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -266,8 +266,8 @@ RLConfig.Doors = {
 	{
 		objName = -1988553564,
 		objYaw = 180.0,
-		objCoords = vector3(461.57998, -984.6641, 34.214908),
-		textCoords = vector3(461.57998, -984.6641, 34.214908),
+		objCoords = vector3(461.57998, -984.6641, -34.214908),
+		textCoords = vector3(461.57998, -984.6641, -34.214908),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -279,8 +279,8 @@ RLConfig.Doors = {
 	{
 		objName = -884718443,
 		objYaw = 180.0,
-		objCoords = vector3(455.61926, -984.6449, 34.216957),
-		textCoords = vector3(455.61926, -984.6449, 34.216957),
+		objCoords = vector3(455.61926, -984.6449, -34.216957),
+		textCoords = vector3(455.61926, -984.6449, -34.216957),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -292,8 +292,8 @@ RLConfig.Doors = {
 	{
 		objName = -884718443,
 		objYaw = 180.0,
-		objCoords = vector3(449.83273, -984.685, 34.209434),
-		textCoords = vector3(449.83273, -984.685, 34.209434),
+		objCoords = vector3(449.83273, -984.685, -34.209434),
+		textCoords = vector3(449.83273, -984.685, -34.209434),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -305,8 +305,8 @@ RLConfig.Doors = {
 	{
 		objName = -1988553564,
 		objYaw = 0.0,
-		objCoords = vector3(449.59475, -989.0718, 34.187122),
-		textCoords = vector3(449.59475, -989.0718, 34.187122),
+		objCoords = vector3(449.59475, -989.0718, -34.187122),
+		textCoords = vector3(449.59475, -989.0718, -34.187122),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -318,8 +318,8 @@ RLConfig.Doors = {
 	{
 		objName = -1988553564,
 		objYaw = 0.0,
-		objCoords = vector3(455.5086, -989.1, 34.187149),
-		textCoords = vector3(455.5086, -989.1, 34.187149),
+		objCoords = vector3(455.5086, -989.1, -34.187149),
+		textCoords = vector3(455.5086, -989.1, -34.187149),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -331,8 +331,8 @@ RLConfig.Doors = {
 	{
 		objName = -1988553564,
 		objYaw = 0.0,
-		objCoords = vector3(461.33828, -989.1298, 34.187149),
-		textCoords = vector3(461.33828, -989.1298, 34.187149),
+		objCoords = vector3(461.33828, -989.1298, -34.187149),
+		textCoords = vector3(461.33828, -989.1298, -34.187149),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -344,8 +344,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 270.0,
-		objCoords = vector3(445.35443, -986.8897, 34.187217),
-		textCoords = vector3(445.35443, -986.8897, 34.187217),
+		objCoords = vector3(445.35443, -986.8897, -34.187217),
+		textCoords = vector3(445.35443, -986.8897, -34.187217),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -357,8 +357,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 0.0,
-		objCoords = vector3(440.66751, -984.9075, 34.187183),
-		textCoords = vector3(440.66751, -984.9075, 34.187183),
+		objCoords = vector3(440.66751, -984.9075, -34.187183),
+		textCoords = vector3(440.66751, -984.9075, -34.187183),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -370,8 +370,8 @@ RLConfig.Doors = {
 	{
 		objName = -1543859032,
 		objYaw = 0.0,
-		objCoords = vector3(436.4989, -984.8956, 34.187133),
-		textCoords = vector3(436.4989, -984.8956, 34.187133),
+		objCoords = vector3(436.4989, -984.8956, -34.187133),
+		textCoords = vector3(436.4989, -984.8956, -34.187133),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -383,8 +383,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 0.0,
-		objCoords = vector3(443.68276, -978.1128, 34.187057),
-		textCoords = vector3(443.68276, -978.1128, 34.187057),
+		objCoords = vector3(443.68276, -978.1128, -34.187057),
+		textCoords = vector3(443.68276, -978.1128, -34.187057),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -396,8 +396,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 90.0,
-		objCoords = vector3(441.37234, -990.2904, 34.187114),
-		textCoords = vector3(441.37234, -990.2904, 34.187114),
+		objCoords = vector3(441.37234, -990.2904, -34.187114),
+		textCoords = vector3(441.37234, -990.2904, -34.187114),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -409,8 +409,8 @@ RLConfig.Doors = {
 	{
 		objName = -1543859032,
 		objYaw = 90.0,
-		objCoords = vector3(441.39938, -994.6192, 34.187141),
-		textCoords = vector3(441.39938, -994.6192, 34.187141),
+		objCoords = vector3(441.39938, -994.6192, -34.187141),
+		textCoords = vector3(441.39938, -994.6192, -34.187141),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -422,8 +422,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 270.0,
-		objCoords = vector3(476.60806, -996.5489, 34.217067),
-		textCoords = vector3(476.60806, -996.5489, 34.217067),
+		objCoords = vector3(476.60806, -996.5489, -34.217067),
+		textCoords = vector3(476.60806, -996.5489, -34.217067),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -435,8 +435,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 280.0,
-		objCoords = vector3(479.54156, -1000.631, 34.217056),
-		textCoords = vector3(479.54156, -1000.631, 34.217056),
+		objCoords = vector3(479.54156, -1000.631, -34.217056),
+		textCoords = vector3(479.54156, -1000.631, -34.217056),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -448,8 +448,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 270.0,
-		objCoords = vector3(479.41207, -992.9139, 34.217063),
-		textCoords = vector3(479.41207, -992.9139, 34.217063),
+		objCoords = vector3(479.41207, -992.9139, -34.217063),
+		textCoords = vector3(479.41207, -992.9139, -34.217063),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -461,8 +461,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 270.0,
-		objCoords = vector3(479.40078, -996.668, 34.217056),
-		textCoords = vector3(479.40078, -996.668, 34.217056),
+		objCoords = vector3(479.40078, -996.668, -34.217056),
+		textCoords = vector3(479.40078, -996.668, -34.217056),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -474,8 +474,8 @@ RLConfig.Doors = {
 	{
 		objName = -1543859032,
 		objYaw = 180.0,
-		objCoords = vector3(471.46807, -1002.568, 34.217075),
-		textCoords = vector3(471.46807, -1002.568, 34.217075),
+		objCoords = vector3(471.46807, -1002.568, -34.217075),
+		textCoords = vector3(471.46807, -1002.568, -34.217075),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -487,8 +487,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 180.0,
-		objCoords = vector3(481.3912, -1007.709, 34.228847),
-		textCoords = vector3(481.3912, -1007.709, 34.228847),
+		objCoords = vector3(481.3912, -1007.709, -34.228847),
+		textCoords = vector3(481.3912, -1007.709, -34.228847),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -500,8 +500,8 @@ RLConfig.Doors = {
 	{
 		objName = -340230128,
 		objYaw = 270.0,
-		objCoords = vector3(464.23782, -984.0758, 43.699741),
-		textCoords = vector3(464.23782, -984.0758, 43.699741),
+		objCoords = vector3(464.23782, -984.0758, -43.699741),
+		textCoords = vector3(464.23782, -984.0758, -43.699741),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -513,8 +513,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 180.0,
-		objCoords = vector3(467.47409, -991.8376, 25.734708),
-		textCoords = vector3(467.47409, -991.8376, 25.734708),
+		objCoords = vector3(467.47409, -991.8376, -25.734708),
+		textCoords = vector3(467.47409, -991.8376, -25.734708),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -526,8 +526,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 90.0,
-		objCoords = vector3(464.89071, -988.587, 25.78845),
-		textCoords = vector3(464.89071, -988.587, 25.78845),
+		objCoords = vector3(464.89071, -988.587, -25.78845),
+		textCoords = vector3(464.89071, -988.587, -25.78845),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -539,8 +539,8 @@ RLConfig.Doors = {
 	{
 		objName = -1543859032,
 		objYaw = 180.0,
-		objCoords = vector3(472.26669, -983.1951, 25.734638),
-		textCoords = vector3(472.26669, -983.1951, 25.734638),
+		objCoords = vector3(472.26669, -983.1951, -25.734638),
+		textCoords = vector3(472.26669, -983.1951, -25.734638),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -552,8 +552,8 @@ RLConfig.Doors = {
 	{
 		objName = 165994623,
 		objYaw = 270.0,
-		objCoords = vector3(478.46444, -985.4791, 25.729679),
-		textCoords = vector3(478.46444, -985.4791, 25.729679),
+		objCoords = vector3(478.46444, -985.4791, -25.729679),
+		textCoords = vector3(478.46444, -985.4791, -25.729679),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -565,8 +565,8 @@ RLConfig.Doors = {
 	{
 		objName = -1543859032,
 		objYaw = 180.0,
-		objCoords = vector3(486.77001, -997.183, 25.734632),
-		textCoords = vector3(486.77001, -997.183, 25.734632),
+		objCoords = vector3(486.77001, -997.183, -25.734632),
+		textCoords = vector3(486.77001, -997.183, -25.734632),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -578,8 +578,8 @@ RLConfig.Doors = {
 	{
 		objName = -1543859032,
 		objYaw = 180.0,
-		objCoords = vector3(486.74389, -1002.645, 25.734704),
-		textCoords = vector3(486.74389, -1002.645, 25.734704),
+		objCoords = vector3(486.74389, -1002.645, -25.734704),
+		textCoords = vector3(486.74389, -1002.645, -25.734704),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -591,8 +591,8 @@ RLConfig.Doors = {
 	{
 		objName = -1543859032,
 		objYaw = 90.0,
-		objCoords = vector3(482.69061, -1005.467, 25.734552),
-		textCoords = vector3(482.69061, -1005.467, 25.734552),
+		objCoords = vector3(482.69061, -1005.467, -25.734552),
+		textCoords = vector3(482.69061, -1005.467, -25.734552),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -604,8 +604,8 @@ RLConfig.Doors = {
 	{
 		objName = -1543859032,
 		objYaw = 90.0,
-		objCoords = vector3(474.98321, -996.8876, 25.729696),
-		textCoords = vector3(474.98321, -996.8876, 25.729696),
+		objCoords = vector3(474.98321, -996.8876, -25.729696),
+		textCoords = vector3(474.98321, -996.8876, -25.729696),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -1083,7 +1083,7 @@ RLConfig.Doors = {
 	-- Pillbox Medical Center
 
 	{
-		textCoords = vector3(348.56, -587.38, 44.28),
+		textCoords = vector3(348.56, -587.38, -44.28),
 		authorizedJobs = { 'police', 'ambulance'},
 		locking = false,
 		locked = true,
@@ -1094,21 +1094,21 @@ RLConfig.Doors = {
 			{
 				objName = 'gabz_pillbox_doubledoor_l',
 				objYaw = 250.0,
-				objCoords  = vector3(349.134, -586.8831, 43.28402)
+				objCoords  = vector3(349.134, -586.8831, -43.28402)
 			},
 
 			{
 				objName = 'gabz_pillbox_doubledoor_r',
 				objYaw = -110.0,
-				objCoords  = vector3(348.6142, -588.1655, 43.28402)
+				objCoords  = vector3(348.6142, -588.1655, -43.28402)
 			}
 		}
 	},
 
 	{
 		objName = 'gabz_pillbox_singledoor',
-		objCoords = vector3(308.5733, -597.5756, 43.28403),
-		textCoords = vector3(308.5733, -597.5756, 43.28403),
+		objCoords = vector3(308.5733, -597.5756, -43.28403),
+		textCoords = vector3(308.5733, -597.5756, -43.28403),
 		authorizedJobs = { 'police', 'ambulance'},
 		locking = false,
 		locked = true,
@@ -1119,8 +1119,8 @@ RLConfig.Doors = {
 
 	{
 		objName = 'gabz_pillbox_singledoor',
-		objCoords = vector3(340.1134, -586.6057, 44.28398),
-		textCoords = vector3(340.1134, -586.6057, 44.28398),
+		objCoords = vector3(340.1134, -586.6057, -44.28398),
+		textCoords = vector3(340.1134, -586.6057, -44.28398),
 		authorizedJobs = { 'police', 'ambulance'},
 		locking = false,
 		locked = true,
@@ -1131,8 +1131,8 @@ RLConfig.Doors = {
 	
 	{
 		objName = 'gabz_pillbox_singledoor',
-		objCoords = vector3(347.45, -584.61, 43.28),
-		textCoords = vector3(347.45, -584.61, 43.28),
+		objCoords = vector3(347.45, -584.61, -43.28),
+		textCoords = vector3(347.45, -584.61, -43.28),
 		authorizedJobs = { 'police', 'ambulance'},
 		locking = false,
 		locked = true,
@@ -1143,8 +1143,8 @@ RLConfig.Doors = {
 	
 	{
 		objName = 'gabz_pillbox_singledoor',
-		objCoords = vector3(341.49, -582.27, 43.28),
-		textCoords = vector3(341.49, -582.27, 43.28),
+		objCoords = vector3(341.49, -582.27, -43.28),
+		textCoords = vector3(341.49, -582.27, -43.28),
 		authorizedJobs = { 'police', 'ambulance'},
 		locking = false,
 		locked = true,
@@ -1155,8 +1155,8 @@ RLConfig.Doors = {
 	
 	{
 		objName = 'gabz_pillbox_singledoor',
-		objCoords = vector3(336.85, -580.26, 43.28),
-		textCoords = vector3(336.85, -580.26, 43.28),
+		objCoords = vector3(336.85, -580.26, -43.28),
+		textCoords = vector3(336.85, -580.26, -43.28),
 		authorizedJobs = { 'police', 'ambulance'},
 		locking = false,
 		locked = true,
@@ -1191,7 +1191,7 @@ RLConfig.Doors = {
 
 	-- Pillbox Surgery #1
 	{
-		textCoords = vector3(313.35, -571.63, 44.29),
+		textCoords = vector3(313.35, -571.63, -44.29),
 		authorizedJobs = { 'police', 'ambulance'},
 		locking = false,
 		locked = true,
@@ -1202,19 +1202,19 @@ RLConfig.Doors = {
 			{
 				objName = 'gabz_pillbox_doubledoor_l',
 				objYaw = -20.0,
-				objCoords  = vector3(312.7201, -571.6296, 43.28402)
+				objCoords  = vector3(312.7201, -571.6296, -43.28402)
 			},
 
 			{
 				objName = 'gabz_pillbox_doubledoor_r',
 				objYaw = -20.0,
-				objCoords  = vector3(313.8816, -571.9534, 43.28402)
+				objCoords  = vector3(313.8816, -571.9534, -43.28402)
 			}
 		}
 	},
 
 	{
-		textCoords = vector3(326.55, -579.42, 43.28),
+		textCoords = vector3(326.55, -579.42, -43.28),
 		authorizedJobs = { 'police', 'ambulance'},
 		locking = false,
 		locked = true,
@@ -1225,19 +1225,19 @@ RLConfig.Doors = {
 			{
 				objName = 'gabz_pillbox_doubledoor_l',
 				objYaw = 250.0,
-				objCoords  = vector3(326.54, -578.91, 43.28402)
+				objCoords  = vector3(326.54, -578.91, -43.28402)
 			},
 
 			{
 				objName = 'gabz_pillbox_doubledoor_r',
 				objYaw = 250.0,
-				objCoords  = vector3(326.54, -580.04, 43.28402)
+				objCoords  = vector3(326.54, -580.04, -43.28402)
 			}
 		}
 	},
 
 	{
-		textCoords = vector3(325.55, -589.02, 43.28),
+		textCoords = vector3(325.55, -589.02, -43.28),
 		authorizedJobs = { 'police', 'ambulance'},
 		locking = false,
 		locked = true,
@@ -1248,13 +1248,13 @@ RLConfig.Doors = {
 			{
 				objName = 'gabz_pillbox_doubledoor_l',
 				objYaw = -20.0,
-				objCoords  = vector3(324.91, -589.02, 43.28)
+				objCoords  = vector3(324.91, -589.02, -43.28)
 			},
 
 			{
 				objName = 'gabz_pillbox_doubledoor_r',
 				objYaw = -20.0,
-				objCoords  = vector3(326.16, -589.02, 43.28)
+				objCoords  = vector3(326.16, -589.02, -43.28)
 			}
 		}
 	},
@@ -1262,7 +1262,7 @@ RLConfig.Doors = {
 	-- Pillbox Surgery #2
 
 	{
-		textCoords = vector3(319.2, -573.24, 44.29),
+		textCoords = vector3(319.2, -573.24, -44.29),
 		authorizedJobs = { 'police', 'ambulance'},
 		locking = false,
 		locked = true,
@@ -1273,19 +1273,19 @@ RLConfig.Doors = {
 			{
 				objName = 'gabz_pillbox_doubledoor_l',
 				objYaw = -20.0,
-				objCoords  = vector3(318.4946, -573.7322, 43.28399)
+				objCoords  = vector3(318.4946, -573.7322, -43.28399)
 			},
 
 			{
 				objName = 'gabz_pillbox_doubledoor_r',
 				objYaw = -20.0,
-				objCoords  = vector3(319.6151, -574.2166, 43.28405)
+				objCoords  = vector3(319.6151, -574.2166, -43.28405)
 			}
 		}
 	},
 
 	{
-		textCoords = vector3(324.44, -575.64, 44.29),
+		textCoords = vector3(324.44, -575.64, -44.29),
 		authorizedJobs = { 'police', 'ambulance'},
 		locking = false,
 		locked = true,
@@ -1296,13 +1296,13 @@ RLConfig.Doors = {
 			{
 				objName = 'gabz_pillbox_doubledoor_l',
 				objYaw = -20.0,
-				objCoords  = vector3(323.8446, -575.741, 43.284)
+				objCoords  = vector3(323.8446, -575.741, -43.284)
 			},
 
 			{
 				objName = 'gabz_pillbox_doubledoor_r',
 				objYaw = -20.0,
-				objCoords  = vector3(325.0642, -576.1204, 43.284)
+				objCoords  = vector3(325.0642, -576.1204, -43.284)
 			}
 		}
 	},
