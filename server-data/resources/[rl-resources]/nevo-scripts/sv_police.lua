@@ -61,7 +61,7 @@ AddEventHandler("nevo:ready", function()
         
     end)
 
-    RLCore.Commands.Add('ptint', 'Set Tint (Emergency Only)', {}, false, function(source, args)
+    RLCore.Commands.Add('tint', 'Set Tint (Emergency Only)', {}, false, function(source, args)
         local src = source
         local Player = RLCore.Functions.GetPlayer(src)
         if Player and (Player.PlayerData.job.name == 'police') then
