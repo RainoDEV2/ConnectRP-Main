@@ -5,6 +5,7 @@ local DrivingSchools = {
     "CKF79642",
     "QGM32551",
     "GWR60231",
+    "VVG19503",
 }
 
 RegisterServerEvent('rl-cityhall:server:weaponlicense:check1')
@@ -115,6 +116,7 @@ end)
 RLCore.Commands.Add("drivinglicense", "Give a driver's license job to someone", {{"id", "ID of a person"}}, true, function(source, args)
     local Player = RLCore.Functions.GetPlayer(source)
     if IsWhitelistedSchool(Player.PlayerData.citizenid) then
+        print('sad')
         local SearchedPlayer = RLCore.Functions.GetPlayer(tonumber(args[1]))
         if SearchedPlayer ~= nil then
             local driverLicense = SearchedPlayer.PlayerData.metadata["licences"]["driver"]

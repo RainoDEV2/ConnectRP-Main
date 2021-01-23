@@ -157,7 +157,7 @@ RegisterNUICallback("viewOffender", function(data, cb)
     cb('ok')
 end)
 
-RegisterNUICallback("saveOffenderChanges", function(data, cb)
+--[[RegisterNUICallback("saveOffenderChanges", function(data, cb)
     
     fingerprint = data.changes.fingerprint
 
@@ -165,7 +165,13 @@ RegisterNUICallback("saveOffenderChanges", function(data, cb)
         data.changes.convictions = 'No Priors'
     end
 
-    TriggerServerEvent("mdt:saveOffenderChanges", data.id, data.changes.notes, data.changes.mugshot_url, data.changes.convictions, data.changes.convictions_removed, data.identifier, fingerprint)
+    TriggerServerEvent("mdt:saveOffenderChanges", data.id, data.changes.notes, data.changes.mugshot_url, data.changes.convictions, data.changes.convictions_removed, data.identifier, fingerprint, data.changes)
+    cb('ok')
+end)]]
+
+RegisterNUICallback("saveOffenderChanges", function(data, cb)
+    TriggerServerEvent("mdt:saveOffenderChanges", data.id, data.changes, data.citizenid)
+    print(json.encode(data.changes))
     cb('ok')
 end)
 

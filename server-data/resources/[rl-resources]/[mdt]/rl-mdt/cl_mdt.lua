@@ -83,6 +83,7 @@ end)
 
 RegisterNUICallback("saveOffenderChanges", function(data, cb)
     TriggerServerEvent("mdt:saveOffenderChanges", data.id, data.changes, data.citizenid)
+    print(json.encode(data.changes))
     cb('ok')
 end)
 

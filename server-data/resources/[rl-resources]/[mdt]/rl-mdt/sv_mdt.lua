@@ -225,26 +225,30 @@ AddEventHandler("mdt:saveOffenderChanges", function(id, changes, citizenid)
 					local a;
 					local b;
 					local c;
-					print(xPlayer.PlayerData.metadata.licences['weapon1'])
+
 					if license == 'driver' then
 						a = false
 						b = xPlayer.PlayerData.metadata.licences["business"]
 						c = xPlayer.PlayerData.metadata.licences["weapon1"]
+						print('no driver')
 					elseif license == 'business' then
 						a = xPlayer.PlayerData.metadata.licences["driver"]
 						b = false
 						c = xPlayer.PlayerData.metadata.licences["weapon1"]
+						print('no business')
 					elseif license == 'concealed carry' then
 						a = xPlayer.PlayerData.metadata.licences["driver"]
 						b = xPlayer.PlayerData.metadata.licences["business"]
 						c = false
+						print('no wep')
 					end
 					local metadatas = {
 						['driver'] = a,
 						['business'] = b,
 						['weapon1'] = c,
 					}
-					xPlayer.Functions.SetMetaData('licences', metadatas)
+
+					xPlayer.Functions.SetMetaData("licences", false)
 				end
 			else
 				exports['ghmattimysql']:execute("SELECT * FROM `players` WHERE `citizenid` = '" .. citizenid .. "'", {}, function(result)
@@ -277,7 +281,7 @@ AddEventHandler("mdt:saveOffenderChanges", function(id, changes, citizenid)
 			for i = 1, #changes.convictions_removed do
 				exports['ghmattimysql']:execute('DELETE FROM `user_convictions` WHERE `char_id` = @id AND `offense` = @offense', {
 					['@id'] = id,
-					['offense'] = changes.convictions_removed[i]
+					['@offense'] = changes.convictions_removed[i]
 				})
 			end
 		end

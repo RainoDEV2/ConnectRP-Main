@@ -116,29 +116,28 @@ AddEventHandler("mdt:getOffenderDetails", function(offender)
 					offender.haswarrant = true
 				end
 
-				exports['ghmattimysql']:execute('SELECT * FROM `players` WHERE `id` = @id', {
-					['@id'] = offender.id
-				}, function(player)
-					player = player[1]
-					if player and player.metadata then
-						local metadata = json.decode(player.metadata)
-						offender.fingerprint = metadata.fingerprint
-						for k,v in pairs(metadata['licences']) do
-							if k and v then
-								if k == 'driver' then
-									k = 'Driver'
-								elseif k == 'business' then
-									k = 'Business'
-								elseif k == 'weapon1' then
-									k = 'Concealed Carry'
-								end
-								table.insert(offender.licenses, k)
-							end
+				local lic = {
+					"driver",
+					'business',
+					'weapon1',
+				}
+
+				local k;
+
+				for i = 1, 3 do
+					if Player.PlayerData.metadata.licences[lic[i]] then
+						if lic[i] == 'driver' then
+							k = 'Driver'
+						elseif lic[i] == 'business' then
+							k = 'Business'
+						elseif lic[i] == 'weapon1' then
+							k = 'Concealed Carry'
 						end
+						table.insert(offender.licenses, k)
 					end
-	
-					TriggerClientEvent("mdt:returnOffenderDetails", src, offender)
-				end)
+				end
+
+				TriggerClientEvent("mdt:returnOffenderDetails", src, offender)
 			end)
 		end)
 	end)
@@ -147,31 +146,16 @@ end)
 RegisterServerEvent("mdt:getOffenderDetailsById")
 AddEventHandler("mdt:getOffenderDetailsById", function(char_id)
 	local src = source
-	local Player = RLCore.Functions.GetPlayer(src)
+	offender.licenses = {}
 
 	exports['ghmattimysql']:execute('SELECT * FROM `players` WHERE `id` = @id', {
 		['@id'] = char_id
 	}, function(result)
 		local offender = json.decode(result[1].charinfo)
 		local metadata = json.decode(result[1].metadata)
-		offender.licenses = {}
 		offender.id = result[1].id
 		offender.citizenid = result[1].citizenid
 		offender.fingerprint = metadata.fingerprint
-
-		for k,v in pairs(metadata['licences']) do
-			if k and v then
-				if k == 'driver' then
-					k = 'Driver'
-				elseif k == 'business' then
-					k = 'Business'
-				elseif k == 'weapon1' then
-					k = 'Concealed Carry'
-				end
-
-				table.insert(offender.licenses, k)
-			end
-		end
 		
 		exports['ghmattimysql']:execute('SELECT * FROM `user_mdt` WHERE `char_id` = @id', {
 			['@id'] = offender.id
@@ -195,15 +179,38 @@ AddEventHandler("mdt:getOffenderDetailsById", function(char_id)
 					end
 				end
 
+				local Player = RLCore.Functions.GetPlayerByCitizenId(char_id)
+
+				local lic = {
+					"driver",
+					'business',
+					'weapon1',
+				}
+
+				local k;
+
+				for i = 1, 3 do
+					if Player.PlayerData.metadata.licences[lic[i]] then
+						if lic[i] == 'driver' then
+							k = 'Driver'
+						elseif lic[i] == 'business' then
+							k = 'Business'
+						elseif lic[i] == 'weapon1' then
+							k = 'Concealed Carry'
+						end
+						table.insert(offender.licenses, k)
+					end
+				end
+
 				TriggerClientEvent("mdt:returnOffenderDetails", src, offender)
 			end)
 		end)
-
 	end)
 end)
 
-RegisterServerEvent("mdt:saveOffenderChanges")
-AddEventHandler("mdt:saveOffenderChanges", function(id, notes, mugshot, convictions, convictions_removed, identifier, fingerprint)
+--[[RegisterServerEvent("mdt:saveOffenderChanges")
+AddEventHandler("mdt:saveOffenderChanges", function(id, notes, mugshot, convictions, convictions_removed, identifier, fingerprint, changes)
+	print(json.encode(changes))
 	if not changes then
 		return
 	end
@@ -225,6 +232,99 @@ AddEventHandler("mdt:saveOffenderChanges", function(id, notes, mugshot, convicti
 				['@notes'] = notes,
 				['@mugshot_url'] = mugshot,
 				['@fingerprint'] = fingerprint
+			})
+		end
+
+		if changes.licenses_removed then
+			print('Working!')
+			local xPlayer = RLCore.Functions.GetPlayerByCitizenId(citizenid)
+
+			if xPlayer then
+				for i = 1, #changes.licenses_removed do
+					local license = string.lower(changes.licenses_removed[i])
+					local a;
+					local b;
+					local c;
+					print(xPlayer.PlayerData.metadata.licences['weapon1'])
+					if license == 'driver' then
+						a = false
+						b = xPlayer.PlayerData.metadata.licences["business"]
+						c = xPlayer.PlayerData.metadata.licences["weapon1"]
+					elseif license == 'business' then
+						a = xPlayer.PlayerData.metadata.licences["driver"]
+						b = false
+						c = xPlayer.PlayerData.metadata.licences["weapon1"]
+					elseif license == 'concealed carry' then
+						a = xPlayer.PlayerData.metadata.licences["driver"]
+						b = xPlayer.PlayerData.metadata.licences["business"]
+						c = false
+					end
+					local metadatas = {
+						['driver'] = a,
+						['business'] = b,
+						['weapon1'] = c,
+					}
+					xPlayer.Functions.SetMetaData('licences', metadatas)
+				end
+			else
+				exports['ghmattimysql']:execute("SELECT * FROM `players` WHERE `citizenid` = '" .. citizenid .. "'", {}, function(result)
+					if result[1] then
+						local metadata = json.decode(result[1].metadata)
+						for i = 1, #changes.licenses_removed do
+							local license = string.lower(changes.licenses_removed[i])
+							if metadata.licences[license] ~= nil then
+								metadata.licences[license] = false
+							end
+						end
+						print(metadata)
+						exports['ghmattimysql']:execute("UPDATE `players` SET `metadata` = '" .. json.encode(metadata) .. "'")
+					end
+				end)
+			end
+		end
+
+		if changes.convictions then
+			for conviction, amount in pairs(changes.convictions) do	
+				exports['ghmattimysql']:execute('UPDATE `user_convictions` SET `count` = @count WHERE `char_id` = @id AND `offense` = @offense', {
+					['@id'] = id,
+					['@count'] = amount,
+					['@offense'] = conviction
+				})
+			end
+		end
+
+		if changes.convictions_removed then
+			for i = 1, #changes.convictions_removed do
+				exports['ghmattimysql']:execute('DELETE FROM `user_convictions` WHERE `char_id` = @id AND `offense` = @offense', {
+					['@id'] = id,
+					['offense'] = changes.convictions_removed[i]
+				})
+			end
+		end
+	end)
+end)]]
+
+RegisterServerEvent("mdt:saveOffenderChanges")
+AddEventHandler("mdt:saveOffenderChanges", function(id, changes, citizenid)
+	if not changes then
+		return
+	end
+
+	local id, changes, citizenid = id, changes, citizenid
+	exports['ghmattimysql']:execute('SELECT * FROM `user_mdt` WHERE `char_id` = @id', {
+		['@id']  = id
+	}, function(result)
+		if result[1] then
+			exports['ghmattimysql']:execute('UPDATE `user_mdt` SET `notes` = @notes, `mugshot_url` = @mugshot_url WHERE `char_id` = @id', {
+				['@id'] = id,
+				['@notes'] = changes.notes,
+				['@mugshot_url'] = changes.mugshot_url
+			})
+		else
+			exports['ghmattimysql']:execute('INSERT INTO `user_mdt` (`char_id`, `notes`, `mugshot_url`) VALUES (@id, @notes, @mugshot_url)', {
+				['@id'] = id,
+				['@notes'] = changes.notes,
+				['@mugshot_url'] = changes.mugshot_url
 			})
 		end
 
