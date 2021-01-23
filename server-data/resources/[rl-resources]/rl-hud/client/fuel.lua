@@ -435,4 +435,4 @@ function SetFuel(vehicle, fuel)
         DecorSetInt(vehicle, "CurrentFuel", fuel)
         Fuel = 100
 	end
-end ]]
+end 

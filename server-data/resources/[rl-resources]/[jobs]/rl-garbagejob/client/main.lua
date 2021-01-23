@@ -217,7 +217,7 @@ Citizen.CreateThread(function()
                                             GarbageVehicle = veh
                                             SetVehicleNumberPlateText(veh, "GARB"..tostring(math.random(1000, 9999)))
                                             SetEntityHeading(veh, coords.h)
-                                            exports['rl-hud']:SetFuel(veh, 100)
+                                            exports['LegacyFuel']:SetFuel(veh, 100)
                                             TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
                                             SetEntityAsMissionEntity(veh, true, true)
                                             TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)

@@ -193,7 +193,7 @@ AddEventHandler('rl-vehiclerental:server:SpawnRentedVehicle', function(vehiclePl
 
     SetVehicleNumberPlateText(veh, vehiclePlate)
     TaskWarpPedIntoVehicle(ped, veh, -1)
-    exports['rl-hud']:SetFuel(veh, 100)
+    exports['LegacyFuel']:SetFuel(veh, 100)
     SetVehicleEngineOn(veh, true, true)
     RentedVehiclePlate = vehiclePlate
     TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
