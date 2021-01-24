@@ -43,55 +43,53 @@ end)
 -- TODO (return db table)
 RegisterServerEvent('carshop:requesttable')
 AddEventHandler('carshop:requesttable', function()
-    local user = RLCore.Functions.GetPlayer(source)
+    local xPlayer = RLCore.Functions.GetPlayer(source)
     local display = RLCore.Functions.ExecuteSql(false,'SELECT * FROM vehicles_display')
     for k,v in pairs(display) do
         carTable[v.ID] = v
         v.price = carTable[v.ID].baseprice
     end
-    TriggerClientEvent('veh_shop:returnTable', user.source, carTable)
+    TriggerClientEvent('veh_shop:returnTable', xPlayer.source, carTable)
 end)
 
 -- Check if player has enough money
 RegisterServerEvent('CheckMoneyForVeh')
 AddEventHandler('CheckMoneyForVeh', function(name, model,price,financed)
-	local user = RLCore.Functions.GetPlayer(source)
-    local money = user.PlayerData.money['cash']  
+	local xPlayer = RLCore.Functions.GetPlayer(source)
+    local money = xPlayer.PlayerData.money['cash']  
     if financed then
         local financedPrice = math.ceil(price / 4)
         if money >= financedPrice then
-            user.Functions.RemoveMoney('cash',financedPrice)
-            print("About to trigger")
+            xPlayer.Functions.RemoveMoney('cash',financedPrice)
             TriggerClientEvent('FinishMoneyCheckForVeh', source, name, model, price, financed)
-            print("trigered")
         else
-            TriggerClientEvent('DoLongHudText', user.source, 'You dont have enough money on you!', 2)
-            TriggerClientEvent('carshop:failedpurchase', user.source)
+            TriggerClientEvent("RLCore:Notify", xPlayer.source, "You dont have enough money on you!")
+            TriggerClientEvent('carshop:failedpurchase', xPlayer.source)
         end
     else
         if money >= price then
-            user.Functions.RemoveMoney('cash',price)
-            TriggerClientEvent('FinishMoneyCheckForVeh', user.source, name, model, price, financed)
+            xPlayer.Functions.RemoveMoney('cash',price)
+            TriggerClientEvent('FinishMoneyCheckForVeh', xPlayer.source, name, model, price, financed)
         else
-            TriggerClientEvent('DoLongHudText', user.source, 'You dont have enough money on you!', 2)
-            TriggerClientEvent('carshop:failedpurchase', user.source)
-        end
+            TriggerClientEvent("RLCore:Notify", xPlayer.source, "You dont have enough money on you!")
+            TriggerClientEvent('carshop:failedpurchase', xPlayer.source)
+        end 
     end
 end)
-
 
 -- Add the car to database when completed purchase
 RegisterServerEvent('BuyForVeh')
 AddEventHandler('BuyForVeh', function(vehicleProps,name, vehicle, price, financed)
-    local user = RLCore.Functions.GetPlayer(source)
+    local xPlayer = RLCore.Functions.GetPlayer(source)
     if financed then
-        local cols = 'owner, plate, vehicle, buy_price, finance, financetimer, vehiclename, shop'
-        local val = '@owner, @plate, @vehicle, @buy_price, @finance, @financetimer, @vehiclename, @shop'
+        --local cols = 'citizenid, plate, vehicle, buy_price, finance, financetimer, vehiclename, shop'
+        --local val = '@citizenid, @plate, @vehicle, @buy_price, @finance, @financetimer, @vehiclename, @shop'
         local downPay = math.ceil(price / 4)
-        local data = RLCore.Functions.ExecuteSql(false,"SELECT money FROM addon_account_data WHERE account_name=@account_name",{['@account_name'] = 'pdm'})
-        local curSociety = data[1].money
-        RLCore.Functions.ExecuteSql(false,'INSERT INTO owned_vehicles ( '..cols..' ) VALUES ( '..val..' )',{
-            ['@owner']   = user.identifier,
+        --local data = RLCore.Functions.ExecuteSql(false,"SELECT money FROM addon_account_data WHERE account_name=@account_name",{['@account_name'] = 'pdm'})
+        --local curSociety = data[1].money
+       -- MySQL.Async.execute('INSERT INTO bbvehicles (citizenid, plate, vehicle, buy_price, finance, financetimer, vehiclename, shop) VALUES (@citizenid, @plate, @vehicle, @buy_price, @finance, @financetimer, @vehiclename, @shop)',
+        RLCore.Functions.ExecuteSql(false,'INSERT INTO bbvehicles (citizenid, plate, vehicle, buy_price, finance, financetimer, vehiclename, shop) VALUES (@citizenid, @plate, @vehicle, @buy_price, @finance, @financetimer, @vehiclename, @shop)',{
+            ['@citizenid']   = xPlayer.PlayerData.citizenid,
             ['@plate']   = vehicleProps.plate,
             ['@vehicle'] = json.encode(vehicleProps),
             ['@vehiclename'] = vehicle,
@@ -102,10 +100,10 @@ AddEventHandler('BuyForVeh', function(vehicleProps,name, vehicle, price, finance
         })
         --RLCore.Functions.ExecuteSql(false,'UPDATE addon_account_data SET money=@money WHERE account_name=@account_name',{['@money'] = curSociety + downPay,['@account_name'] = 'pdm'})
     else
-        local data = RLCore.Functions.ExecuteSql(false,"SELECT money FROM addon_account_data WHERE account_name=@account_name",{['@account_name'] = 'pdm'})
-        local curSociety = data[1].money
-        RLCore.Functions.ExecuteSql(false,'INSERT INTO owned_vehicles (owner, plate, vehicle, vehiclename, shop) VALUES (@owner, @plate, @vehicle, @vehiclename, @shop)',{
-            ['@owner']   = user.identifier,
+        --local data = RLCore.Functions.ExecuteSql(false,"SELECT money FROM addon_account_data WHERE account_name=@account_name",{['@account_name'] = 'pdm'})
+        --local curSociety = data[1].money
+        RLCore.Functions.ExecuteSql(false,'INSERT INTO bbvehicles (citizenid, plate, vehicle, vehiclename, shop) VALUES (@citizenid, @plate, @vehicle, @vehiclename, @shop)',{
+            ['@citizenid']   = xPlayer.PlayerData.citizenid,
             ['@plate']   = vehicleProps.plate,
             ['@vehicle'] = json.encode(vehicleProps),
             ['@vehiclename'] = vehicle,
@@ -119,7 +117,7 @@ end)
 -- Get All finance > 0 then take 10min off
 -- Every 10 Min
 function updateFinance()
-    MySQL.Async.fetchAll('SELECT financetimer, plate FROM owned_vehicles WHERE financetimer > @financetimer', {
+    MySQL.Async.fetchAll('SELECT financetimer, plate FROM bbvehicles WHERE financetimer > @financetimer', {
         ["@financetimer"] = 0
     }, function(result)
         for i=1, #result do
@@ -127,7 +125,7 @@ function updateFinance()
             local plate = result[i].plate
             local newTimer = financeTimer - 10
             if financeTimer ~= nil then
-                RLCore.Functions.ExecuteSql(false,'UPDATE owned_vehicles SET financetimer=@financetimer WHERE plate=@plate', {
+                RLCore.Functions.ExecuteSql(false,'UPDATE bbvehicles SET financetimer=@financetimer WHERE plate=@plate', {
                     ['@plate'] = plate,
                     ['@financetimer'] = newTimer
                 })
@@ -143,12 +141,12 @@ AddEventHandler('RS7x:phonePayment', function(plate)
     local src = source
     local pPlate = plate
     local xPlayer = RLCore.Functions.GetPlayer(src)
-    local group = RLCore.Functions.ExecuteSql(false,"SELECT shop FROM owned_vehicles WHERE plate=@plate", {['@plate'] = plate})
+    local group = RLCore.Functions.ExecuteSql(false,"SELECT shop FROM bbvehicles WHERE plate=@plate", {['@plate'] = plate})
     print(group[1].shop)
     if pPlate ~= nil then
-        local pData = RLCore.Functions.ExecuteSql(false,"SELECT buy_price, plate FROM owned_vehicles WHERE plate=@plate", {['@plate'] = pPlate})
+        local pData = RLCore.Functions.ExecuteSql(false,"SELECT buy_price, plate FROM bbvehicles WHERE plate=@plate", {['@plate'] = pPlate})
         for k,v in pairs(pData) do
-            if pData ~= nil then
+            if pData ~= nil then 
                 if pPlate == v.plate then
                     local price = (v.buy_price / 10)
                     if xPlayer.PlayerData.money['cash'] >= price then
@@ -163,7 +161,7 @@ AddEventHandler('RS7x:phonePayment', function(plate)
                     end
 
                     if fuck then
-                        local data = RLCore.Functions.ExecuteSql(false,"SELECT finance FROM owned_vehicles WHERE plate=@plate",{['@plate'] = plate})
+                        local data = RLCore.Functions.ExecuteSql(false,"SELECT finance FROM bbvehicles WHERE plate=@plate",{['@plate'] = plate})
                         if not data or not data[1] then return; end
                         local prevAmount = data[1].finance
                         if prevAmount - price <= 0 or prevAmount - price <= 0.0 then
@@ -172,18 +170,18 @@ AddEventHandler('RS7x:phonePayment', function(plate)
                             settimer = repayTime
                         end
                         if prevAmount < price then
-                            RLCore.Functions.ExecuteSql(false,'UPDATE owned_vehicles SET finance=@finance WHERE plate=@plate',{['@finance'] = 0, ['@plate'] = plate})
-                            RLCore.Functions.ExecuteSql(false,'UPDATE owned_vehicles SET financetimer=@financetimer WHERE plate=@plate',{['@financetimer'] = 0, ['@plate'] = plate})
+                            RLCore.Functions.ExecuteSql(false,'UPDATE bbvehicles SET finance=@finance WHERE plate=@plate',{['@finance'] = 0, ['@plate'] = plate})
+                            RLCore.Functions.ExecuteSql(false,'UPDATE bbvehicles SET financetimer=@financetimer WHERE plate=@plate',{['@financetimer'] = 0, ['@plate'] = plate})
                         else
-                            RLCore.Functions.ExecuteSql(false,'UPDATE owned_vehicles SET finance=@finance WHERE plate=@plate',{['@finance'] = prevAmount - price, ['@plate'] = plate})
-                            RLCore.Functions.ExecuteSql(false,'UPDATE owned_vehicles SET financetimer=@financetimer WHERE plate=@plate',{['@financetimer'] = settimer, ['@plate'] = plate})
+                            RLCore.Functions.ExecuteSql(false,'UPDATE bbvehicles SET finance=@finance WHERE plate=@plate',{['@finance'] = prevAmount - price, ['@plate'] = plate})
+                            RLCore.Functions.ExecuteSql(false,'UPDATE bbvehicles SET financetimer=@financetimer WHERE plate=@plate',{['@financetimer'] = settimer, ['@plate'] = plate})
                         end
                     end
 
-                    local data = RLCore.Functions.ExecuteSql(false,"SELECT money FROM addon_account_data WHERE account_name=@account_name",{['@account_name'] = 'society_cardealer'})
+                    --[[ local data = RLCore.Functions.ExecuteSql(false,"SELECT money FROM addon_account_data WHERE account_name=@account_name",{['@account_name'] = 'society_cardealer'})
                     if not data then return; end
                     local curSociety = data[1].money
-                    RLCore.Functions.ExecuteSql(false,'UPDATE addon_account_data SET money=@money WHERE account_name=@account_name',{['@money'] = curSociety + price,['@account_name'] = 'society_cardealer'})
+                    RLCore.Functions.ExecuteSql(false,'UPDATE addon_account_data SET money=@money WHERE account_name=@account_name',{['@money'] = curSociety + price,['@account_name'] = 'society_cardealer'}) ]]
                 end
                 return
             end
@@ -213,7 +211,7 @@ end)
 --end)
 
 --[[
-        MySQL.Async.fetchAll('SELECT finance, plate FROM owned_vehicles WHERE finance < @finance', {
+        MySQL.Async.fetchAll('SELECT finance, plate FROM bbvehicles WHERE finance < @finance', {
         ["@finance"] = os.date('%Y-%m-%d %H:%M:%S', os.time())
     }, function(result)
         local finance = result[1].finance
@@ -223,12 +221,12 @@ end)
             local daysfrom = os.difftime(os.time(), reference) / (24 * 60 * 60)
             local wholedays = math.floor(daysfrom)
             if wholedays < 0 then
-                MySQL.Async.execute('UPDATE owned_vehicles SET finance = @finance WHERE plate=@plate', {
+                MySQL.Async.execute('UPDATE bbvehicles SET finance = @finance WHERE plate=@plate', {
                     ['plate'] = e
                     ['@finance'] = fi
                 })
             end
         end
     end)
-    --RLCore.Functions.ExecuteSql(false,'UPDATE finance FROM owned_vehicles WHERE ')
+    --RLCore.Functions.ExecuteSql(false,'UPDATE finance FROM bbvehicles WHERE ')
 ]]

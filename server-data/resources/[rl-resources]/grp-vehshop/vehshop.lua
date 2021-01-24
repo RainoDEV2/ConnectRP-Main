@@ -573,7 +573,7 @@ AddEventHandler("car:testdrive", function()
 
 	local veh = GetClosestVehicle(GetEntityCoords(PlayerPedId()), 3.000, 0, 70)
 	if not DoesEntityExist(veh) then
-		TriggerEvent('DoLongHudText', 'Could not locate vehicle!', 2)
+		RLCore.Functions.Notify("Could not locate vehicle!",'error')
 		return
 	end
 
@@ -599,7 +599,7 @@ AddEventHandler("car:testdrive", function()
 		TaskWarpPedIntoVehicle(PlayerPedId(),veh,-1)
 		myspawnedvehs[veh] = true
 	else
-		TriggerEvent('DoLongHudText', 'A car is on the spawn point.', 2)
+		RLCore.Functions.Notify("A car is on the spawn point.",'error')
 	end
 end)
 
@@ -611,7 +611,7 @@ AddEventHandler("finance", function()
 
 	local veh = GetClosestVehicle(GetEntityCoords(PlayerPedId()), 3.000, 0, 70)
 	if not DoesEntityExist(veh) then
-		TriggerEvent('DoLongHudText', 'Could not locate vehicle!', 2)
+		RLCore.Functions.Notify("Could not locate vehicle",'error')
 		return
 	end
 	local vehplate = GetVehicleNumberPlateText(veh)
@@ -627,7 +627,7 @@ AddEventHandler("buyEnable", function()
 
 	local veh = GetClosestVehicle(GetEntityCoords(PlayerPedId()), 3.000, 0, 70)
 	if not DoesEntityExist(veh) then
-		TriggerEvent('DoLongHudText', 'Could not locate vehicle!', 2)
+		RLCore.Functions.Notify("Could not locate vehicle",'error')
 		return
 	end
 	local vehplate = GetVehicleNumberPlateText(veh)
@@ -686,13 +686,13 @@ function BuyMenu()
 			end
 			DisableControlAction(0,23)
 			if IsControlJustReleased(0,47) and buyPlate[addplate] ~= nil then
-				TriggerEvent('DoLongHudText', 'Attempting Purchase', 1)
+				RLCore.Functions.Notify("Attempting purchase",'inform')
 				AttemptBuy(i,false)
 			end
 
 			if IsControlJustReleased(0,23) or IsDisabledControlJustReleased(0,23) then
 				if financedPlates[addplate] ~= nil then
-					TriggerEvent('DoLongHudText', 'Attempting Purchase', 1)
+					RLCore.Functions.Notify("Attempting purchase",'inform')
 					AttemptBuy(i,true)
 				end
 			end
@@ -704,7 +704,7 @@ function AttemptBuy(tableid,financed)
 
 	local veh = GetClosestVehicle(carspawns[tableid]["x"],carspawns[tableid]["y"],carspawns[tableid]["z"], 3.000, 0, 70)
 	if not DoesEntityExist(veh) then
-		TriggerEvent('DoLongHudText', 'Could not locate vehicle!', 2)
+		RLCore.Functions.Notify("Could not locate vehicle",'error')
 		return
 	end
 
@@ -734,7 +734,7 @@ function OwnerMenu()
 			ownerMenu = true
 			currentCarSpawnLocation = i
 			if IsControlJustReleased(0,38) then
-				TriggerEvent('DoLongHudText', 'We Opened', 1)
+				RLCore.Functions.Notify("We Opened",'inform')
 				if vehshop.opened then
 					CloseCreator()
 				else
