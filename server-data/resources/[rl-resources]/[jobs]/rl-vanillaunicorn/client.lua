@@ -26,12 +26,12 @@ end)
 local canThrowMoney = false
 local isInEntryBox = false
 local pedSpawn = false
-local vehicleSpawn = false 
+local vehSpawn = false 
 local sTease = false
 
 CreateThread(function()
     while true do
-        if pedSpawn then
+        if vehSpawn then
             local plyPed = PlayerPedId()
             local plyCoords = GetEntityCoords(plyPed)
             local letSleep = true
@@ -187,7 +187,7 @@ local entryFeeZone = BoxZone:Create(vector3(126.29, -1297.86, 29.26), 1.6, 1.8, 
     debugPoly=false
 })
 
-local despawnZone = BoxZone:Create(vector3(115.12, -1285.75, 28.26), 50.0, 40.0, {
+local despawnZone = BoxZone:Create(vector3(115.12, -1285.75, 28.26), 140.0, 140.0, {
     name="pedDespawn",
     heading=29,
     minZ=26.26,
