@@ -135,7 +135,7 @@ Citizen.CreateThread(function()
                                 end)
                                 TriggerServerEvent("rl-cityhall:server:sendDriverTest")
                             else
-                                RLCore.Functions.Notify("You request them that fast, Please wait.", 'error')
+                                RLCore.Functions.Notify("Please wait a While Before Requesting Again.", 'error')
                             end
                         end
 
@@ -169,7 +169,7 @@ Citizen.CreateThread(function()
                         end)
                         TriggerServerEvent("rl-cityhall:server:sendDriverTest")
                     else
-                        RLCore.Functions.Notify("You request them that fast, Please wait.", 'error')
+                        RLCore.Functions.Notify("Please wait a While Before Requesting Again.", 'error')
                     end
                 end
             end
@@ -191,7 +191,7 @@ AddEventHandler('rl-cityhall:client:sendDriverEmail', function(charinfo)
         TriggerServerEvent('rl-phone:server:sendNewMail', {
             sender = "Township",
             subject = "Request driving lessons",
-            message = "Hi, " .. zcharinfo.firstname .. ' ' .. zcharinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take driving lessons. <br /> If you are willing to teach, please contact:<br />Name: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Phone Number: <strong>"..charinfo.phone.."</strong><br/><br/>Sincerely,<br />Realistic Cityhall",
+            message = "Hi, " .. zcharinfo.firstname .. ' ' .. zcharinfo.lastname .. ",<br /><br />We have just received a message that someone wants to get driving lessons/Drivers license. <br /> If you are willing to teach, please contact:<br />Name: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Phone Number: <strong>"..charinfo.phone.."</strong><br/><br/>Sincerely,<br />Cityhall",
             button = {}
         })
     end)

@@ -39,7 +39,7 @@ CreateThread(function()
 				letSleep = false
 				DrawMarker(2, shop.x, shop.y, shop.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
 				 if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, shop.x, shop.y, shop.z, true) < 1.5) then
-					DrawText3D(shop.x, shop.y, shop.z, "~p~E~w~ - Shop")
+					DrawText3D(shop.x, shop.y, shop.z, "[E] Shop")
 					if IsControlJustReleased(0, 38) then
 						TriggerServerEvent("inventory:server:OpenInventory", "shop", "vanilla", Config.Items)
 					end
@@ -50,7 +50,7 @@ CreateThread(function()
 				letSleep = false
 				DrawMarker(2, vip.x, vip.y, vip.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
 				 if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, vip.x, vip.y, vip.z, true) < 1.5) then
-					DrawText3D(vip.x, vip.y, vip.z, "~p~E~w~ - VIP Shop")
+					DrawText3D(vip.x, vip.y, vip.z, "[E] VIP Shop")
 					if IsControlJustReleased(0, 38) then
 						TriggerServerEvent("inventory:server:OpenInventory", "shop", "vanillaboss", Config.BossItems)
 					end
@@ -61,7 +61,7 @@ CreateThread(function()
                 letSleep = false
                 DrawMarker(2, boss.x, boss.y, boss.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
                 if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, boss.x, boss.y, boss.z, true) < 1.5) then
-                    DrawText3D(boss.x, boss.y, boss.z, "~p~E~w~ - Boss Menu")
+                    DrawText3D(boss.x, boss.y, boss.z, "[E] Boss Menu")
                     if IsControlJustReleased(0, 38) then
                         TriggerServerEvent("bb-bossmenu:server:openMenu")
                     end
@@ -72,7 +72,7 @@ CreateThread(function()
                 letSleep = false
                 DrawMarker(2, stripper.x, stripper.y, stripper.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
                 if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, stripper.x, stripper.y, stripper.z, true) < 1.5) then
-                    DrawText3D(stripper.x, stripper.y, stripper.z, "~p~E~w~ - Stripper Bitches")
+                    DrawText3D(stripper.x, stripper.y, stripper.z, "[E] Stripper Bitches")
                     if IsControlJustReleased(0, 38) then
 						Progressbar(5000,"Calling In Strippers")
 						TriggerEvent("strippers:spawn")
@@ -122,7 +122,7 @@ local stripperbitchhh = {
 RegisterNetEvent('strippers:spawn')
 AddEventHandler('strippers:spawn', function(spawned)
 	if not spawned then
-			for k,v in ipairs(stripperbitchhh) do
+		for k,v in ipairs(stripperbitchhh) do
 			RequestModel(GetHashKey(v.model))
 			while not HasModelLoaded(GetHashKey(v.model)) do
 				Wait(0)
@@ -148,26 +148,30 @@ AddEventHandler('strippers:spawn', function(spawned)
 	end
 end)
 
+local throwmoney = {
+    { x=114.78, y=-1285.88, z=28.26},
+    { x=114.25105, y=-1289.983, z=28.260948},
+    { x=111.07131, y=-1284.23, z=28.260948}
+  }
+
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(1)
-        local plyCoords = GetEntityCoords(PlayerPedId(), 0)
-        local distance = #(vector3(114.78, -1285.88, 28.26) - plyCoords)
-        if distance < 2 then
-            if not IsPedInAnyVehicle(PlayerPedId(), true) then
-                if distance < 2 then
-                    DrawText3D(114.78, -1285.88, 28.26, '~p~[E]~w~ Make It Rain (200$)')
-					if IsControlJustReleased(0, 38) then 
-						loadAnimDict("anim@mp_player_intcelebrationfemale@raining_cash") 
-						TaskPlayAnim( GetPlayerPed(-1), "anim@mp_player_intcelebrationfemale@raining_cash", "raining_cash", 8.0 , -1 , -1 , 0 , 0 , false , false , false)
-						Citizen.Wait(2000)
-						TriggerServerEvent('stripclubstack:pay')     
-						DeleteEntity(cash)
+        Citizen.Wait(10)
+        for k,v in pairs(throwmoney) do
+            local plyCoords = GetEntityCoords(PlayerPedId(), 0)
+            local distance = #(vector3(v.x, v.y, v.z) - plyCoords)
+            if distance < 2 then 
+                if not IsPedInAnyVehicle(PlayerPedId(), true) then
+                    DrawText3D(v.x, v.y, v.z, '[E] Make It Rain ($200)')
+                    if IsControlJustReleased(0, 38) then 
+                        loadAnimDict("anim@mp_player_intcelebrationfemale@raining_cash") 
+                        TaskPlayAnim( GetPlayerPed(-1), "anim@mp_player_intcelebrationfemale@raining_cash", "raining_cash", 8.0 , -1 , -1 , 0 , 0 , false , false , false)
+                        Citizen.Wait(2000)
+                        TriggerServerEvent('stripclubstack:pay')     
+                        DeleteEntity(cash)
                     end
                 end
             end
-        else
-            Wait(500)
         end
     end
 end)
@@ -187,7 +191,7 @@ Citizen.CreateThread(function()
         if distance < 1 then
             if not IsPedInAnyVehicle(PlayerPedId(), true) then
                 if distance < 1 then
-                    DrawText3D(126.29, -1297.86, 29.26, '~p~[E]~w~ Entry Fee (150$)')
+                    DrawText3D(126.29, -1297.86, 29.26, '[E] Entry Fee (150$)')
 					if IsControlJustReleased(0, 38) then 
                         TriggerServerEvent('paystripclub:pay')
                         TriggerEvent('animations:client:EmoteCommandStart', {"id"})

@@ -91,13 +91,13 @@ AddEventHandler('rl-cityhall:server:sendDriverTest', function()
             local mailData = {
                 sender = "Township",
                 subject = "Request driving lessons",
-                message = "Beste,<br /><br />We have just received a message that someone wants to take driving lessons. <br /> If you are willing to teach, please contact:<br />Naam: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Telefoonnummer: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br/><br/>Met vriendelijke groet,<br />Gemeente Los Santos",
+                message = "Beste,<br /><br />We have just received a message that someone wants to get driving lessons/Drivers license. <br /> If you are willing to teach, please contact:<br />Name: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Telephone: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br/><br/>Sincerely,<br />City Hall",
                 button = {}
             }
             TriggerEvent("rl-phone:server:sendNewEventMail", v, mailData)
         end
     end
-    TriggerClientEvent('RLCore:Notify', src, 'An email has been sent to driving schools, you will be contacted automatically', "success", 5000)
+    TriggerClientEvent('RLCore:Notify', src, 'An email has been sent to driving instructors, you will be contacted automatically', "success", 5000)
 end)
 
 RegisterServerEvent('rl-cityhall:server:ApplyJob')
@@ -147,7 +147,7 @@ RLCore.Commands.Add("weaponlicense", "Give a weapon's license to someone", {{"id
                     ['weapon1'] = true
                 }
                 SearchedPlayer.Functions.SetMetaData("licences", licenses)
-                TriggerClientEvent('RLCore:Notify', SearchedPlayer.PlayerData.source, "you have been granted a concealed carry license! Pick up your weapon's license at the town hall", "success", 5000)
+                TriggerClientEvent('RLCore:Notify', SearchedPlayer.PlayerData.source, "you have been granted a concealed carry license! Pick up your license at the town hall", "success", 5000)
             else
                 TriggerClientEvent('RLCore:Notify', source, "Can't issue weapon's license..", "error")
             end
