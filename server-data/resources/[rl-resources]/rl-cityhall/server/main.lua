@@ -113,10 +113,9 @@ AddEventHandler('rl-cityhall:server:ApplyJob', function(job)
     end
 end)
 
-RLCore.Commands.Add("drivinglicense", "Give a driver's license job to someone", {{"id", "ID of a person"}}, true, function(source, args)
+RLCore.Commands.Add("drivinglicense", "Give a driver's license to someone", {{"id", "ID of a person"}}, true, function(source, args)
     local Player = RLCore.Functions.GetPlayer(source)
-    if IsWhitelistedSchool(Player.PlayerData.citizenid) then
-        print('sad')
+    if (Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "lawyer" or Player.PlayerData.job.name == "judge" or Player.PlayerData.job.name == "drivingschool" and Player.PlayerData.job.onduty) then
         local SearchedPlayer = RLCore.Functions.GetPlayer(tonumber(args[1]))
         if SearchedPlayer ~= nil then
             local driverLicense = SearchedPlayer.PlayerData.metadata["licences"]["driver"]
@@ -130,6 +129,27 @@ RLCore.Commands.Add("drivinglicense", "Give a driver's license job to someone", 
                 TriggerClientEvent('RLCore:Notify', SearchedPlayer.PlayerData.source, "you passed! Pick up your driver's license at the town hall", "success", 5000)
             else
                 TriggerClientEvent('RLCore:Notify', source, "Can't issue driver's license..", "error")
+            end
+        end
+    end
+end)
+
+RLCore.Commands.Add("weaponlicense", "Give a weapon's license to someone", {{"id", "ID of a person"}}, true, function(source, args)
+    local Player = RLCore.Functions.GetPlayer(source)
+    if (Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "lawyer" or Player.PlayerData.job.name == "judge" and Player.PlayerData.job.onduty) then 
+        local SearchedPlayer = RLCore.Functions.GetPlayer(tonumber(args[1]))
+        if SearchedPlayer ~= nil then
+            local driverLicense = SearchedPlayer.PlayerData.metadata["licences"]["weapon1"]
+            if not driverLicense then
+                local licenses = {
+                    ["driver"] = SearchedPlayer.PlayerData.metadata["licences"]["driver"],
+                    ["business"] = SearchedPlayer.PlayerData.metadata["licences"]["business"],
+                    ['weapon1'] = true
+                }
+                SearchedPlayer.Functions.SetMetaData("licences", licenses)
+                TriggerClientEvent('RLCore:Notify', SearchedPlayer.PlayerData.source, "you have been granted a concealed carry license! Pick up your weapon's license at the town hall", "success", 5000)
+            else
+                TriggerClientEvent('RLCore:Notify', source, "Can't issue weapon's license..", "error")
             end
         end
     end
