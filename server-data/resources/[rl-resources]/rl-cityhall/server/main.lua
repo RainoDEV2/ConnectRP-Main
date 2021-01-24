@@ -115,7 +115,7 @@ end)
 
 RLCore.Commands.Add("drivinglicense", "Give a driver's license to someone", {{"id", "ID of a person"}}, true, function(source, args)
     local Player = RLCore.Functions.GetPlayer(source)
-    if (Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "lawyer" or Player.PlayerData.job.name == "judge" or Player.PlayerData.job.name == "drivingschool" and Player.PlayerData.job.onduty) then
+    if (Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "lawyer" or Player.PlayerData.job.name == "judge" or Player.PlayerData.job.name == "judge" and Player.PlayerData.job.onduty) then
         local SearchedPlayer = RLCore.Functions.GetPlayer(tonumber(args[1]))
         if SearchedPlayer ~= nil then
             local driverLicense = SearchedPlayer.PlayerData.metadata["licences"]["driver"]
