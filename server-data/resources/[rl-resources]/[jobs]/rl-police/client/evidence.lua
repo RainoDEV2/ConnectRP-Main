@@ -550,7 +550,7 @@ Currentstates = {
     [27] = { ["text"] = "Looks Alert.", ["status"] = false, ["timer"] = 0 }, 
 }
 
-BAL = 0
+BAL = 0 
 METHL = 0
 WEEDL = 0
 
@@ -559,7 +559,12 @@ WEEDL = 0
 RegisterNetEvent("Evidence:StateSet")
 AddEventHandler("Evidence:StateSet",function(stateId,stateLength)
 	if Currentstates[stateId]["timer"] < 10 and stateLength ~= 0 then
-		TriggerEvent('chatMessage', 'STATUS: ', 1, Currentstates[stateId]["text"])
+
+		TriggerEvent('chat:addMessage', {
+			template = '<div class="chat-message server">STATUS: {0}</div>',
+			args = { Currentstates[stateId]["text"] }
+		})
+
 	end
 	Currentstates[stateId]["timer"] = stateLength
 end)
@@ -1134,12 +1139,20 @@ RegisterNetEvent("Evidence:CurrentDamageList")
 AddEventHandler("Evidence:CurrentDamageList",function()
 	updateStates()
 	for i = 1, #CurrentDamageList do
-		TriggerEvent('chatMessage', 'STATUS: ', 1, CurrentDamageList[i] )
+		TriggerEvent('chat:addMessage', {
+			template = '<div class="chat-message server">STATUS: {0}</div>',
+			args = { CurrentDamageList[i] }
+		})
+		--TriggerEvent('chatMessage', 'STATUS: ', 1, CurrentDamageList[i] )
 	end
 	
 	for i = 1, #bones do
 		if bones[i]["timer"] > 0 then
-			TriggerEvent('chatMessage', 'STATUS: ', 1, bones[i]["part"] .. " Injury" )
+			TriggerEvent('chat:addMessage', {
+				template = '<div class="chat-message server">STATUS: {0}</div>',
+				args = { bones[i]["part"] .. " Injury" }
+			})
+			--TriggerEvent('chatMessage', 'STATUS: ', 1, bones[i]["part"] .. " Injury" )
 		end
 		
 	end
@@ -1151,7 +1164,11 @@ RegisterNetEvent("Evidence:CurrentPainList")
 AddEventHandler("Evidence:CurrentPainList",function()
 	myPains()
 	for i = 1, #CurrentLocationList do
-		TriggerEvent('chatMessage', 'STATUS: ', 1, CurrentLocationList[i] )
+		TriggerEvent('chat:addMessage', {
+			template = '<div class="chat-message server">STATUS: {0}</div>',
+			args = { CurrentLocationList[i] }
+		})
+		--TriggerEvent('chatMessage', 'STATUS: ', 1, CurrentLocationList[i] )
 	end
 end)
 
