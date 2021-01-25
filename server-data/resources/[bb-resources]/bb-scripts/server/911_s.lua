@@ -3,7 +3,7 @@ local emsTimeouts = {}
 local policeCalls = {}
 local emsCalls = {}
 
-RLCore.Commands.Add('100', 'Send emergancy signal to Police.', {{name = 'firstname', help = 'First Name'}, {name = 'lastname', help = 'Last Name'}, {name = 'content', help = 'Message Content'}}, true, function(source, args)
+RLCore.Commands.Add('911', 'Send emergancy signal to Police.', {{name = 'firstname', help = 'First Name'}, {name = 'lastname', help = 'Last Name'}, {name = 'content', help = 'Message Content'}}, true, function(source, args)
     local src = source
     local xPlayer = RLCore.Functions.GetPlayer(src)
 	if not xPlayer.PlayerData.metadata["ishandcuffed"] then
@@ -42,7 +42,7 @@ RLCore.Commands.Add('100', 'Send emergancy signal to Police.', {{name = 'firstna
 	end
 end)
 
-RLCore.Commands.Add('100r', 'Reply to 100 call. (Police Only)', {{name = 'id', help = 'Call #ID'}, {name = 'content', help = 'Message Content'}}, true, function(source, args)
+RLCore.Commands.Add('911r', 'Reply to 100 call. (Police Only)', {{name = 'id', help = 'Call #ID'}, {name = 'content', help = 'Message Content'}}, true, function(source, args)
     local src = source
     local xPlayer = RLCore.Functions.GetPlayer(src)
 
@@ -69,7 +69,7 @@ RLCore.Commands.Add('100r', 'Reply to 100 call. (Police Only)', {{name = 'id', h
     end
 end)
 
-RLCore.Commands.Add('101', 'Send emergancy signal to EMS.', {{name = 'firstname', help = 'First Name'}, {name = 'lastname', help = 'Last Name'}, {name = 'content', help = 'Message Content'}}, true, function(source, args)
+RLCore.Commands.Add('311', 'Send emergancy signal to EMS.', {{name = 'firstname', help = 'First Name'}, {name = 'lastname', help = 'Last Name'}, {name = 'content', help = 'Message Content'}}, true, function(source, args)
     local src = source
     local xPlayer = RLCore.Functions.GetPlayer(src)
 
@@ -105,7 +105,7 @@ RLCore.Commands.Add('101', 'Send emergancy signal to EMS.', {{name = 'firstname'
     end
 end)
 
-RLCore.Commands.Add('101r', 'Reply to 100 call. (Police Only)', {{name = 'id', help = 'Call #ID'}, {name = 'content', help = 'Message Content'}}, true, function(source, args)
+RLCore.Commands.Add('311r', 'Reply to 100 call. (Police Only)', {{name = 'id', help = 'Call #ID'}, {name = 'content', help = 'Message Content'}}, true, function(source, args)
     local src = source
     local xPlayer = RLCore.Functions.GetPlayer(src)
 
