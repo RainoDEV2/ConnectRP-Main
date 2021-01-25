@@ -7180,45 +7180,139 @@ RLShared.Jobs = {
 		defaultDuty = true,
 	},
 	["police"] = {
-        label = "Police",
+        label = "Los Santos Police Department",
         grades = {
-            ['0'] = {
-                name = "Academic",
-                payment = 100
+			['0'] = {
+                name = "LSPD Cadet",
+                payment = 250
             },
             ['1'] = {
-                name = "Cop",
-                payment = 120
+                name = "Officer",
+                payment = 400
             },
             ['2'] = {
-                name = "Officer",
-                payment = 140
+                name = "Senior Officer",
+                payment = 475
             },
             ['3'] = {
-                name = "Commander",
-                payment = 160
+                name = "Corporal",
+                payment = 500
             },
             ['4'] = {
-                name = "Commander-in-Chief",
-                payment = 180
+                name = "Sergeant",
+                payment = 700
             },
             ['5'] = {
-                name = "Supervisor",
-                payment = 200
+                name = "Lieutenant",
+                payment = 850
             },
             ['6'] = {
-				name = "Deputy Station Commander",
-				isboss = true,
-                payment = 220
+                name = "Captian",
+                payment = 900
             },
             ['7'] = {
-				name = "Station Commander",
+				name = "Assistant Chief of Police",
 				isboss = true,
-                payment = 250
+                payment = 1000
+            },
+            ['8'] = {
+				name = "Chief of Police",
+				isboss = true,
+                payment = 1000
             },
         },
         defaultDuty = true,
 	},
+
+    ["BCSO"] = {
+	    label = "Blaine County Sheriff's Office",
+	    grades = {
+		    ['0'] = {
+		    	name = "BCSO Cadet",
+		 	    payment = 250
+		    },
+		    ['1'] = {
+				name = "Deputy",
+				payment = 400
+			},
+		    ['2'] = {
+				name = "Senior Deputy",
+				payment = 475
+			},
+		    ['3'] = {
+				name = "Corporal",
+				payment = 500
+			},
+		    ['4'] = {
+				name = "Sergeant",
+				payment = 700
+			},
+		    ['5'] = {
+				name = "Lieutenant",
+				payment = 850
+			},
+		    ['6'] = {
+				name = "Captian",
+				payment = 900
+			},
+		    ['7'] = {
+				name = "Under Sheriff",
+				isboss = true,
+				payment = 1000
+			},
+		    ['8'] = {
+				name = "Sheriff",
+				isboss = true,
+				payment = 1000
+			},
+		},
+		defaultDuty = true,
+	},
+
+["SASP"] = {
+	label = "San Andreas State Police",
+	grades = {
+		['0'] = {
+			name = "SASP Cadet",
+			payment = 250
+		},
+		['1'] = {
+			name = "Trooper",
+			payment = 400
+		},
+		['2'] = {
+			name = "Senior Trooper",
+			payment = 475
+		},
+		['3'] = {
+			name = "Corporal",
+			payment = 500
+		},
+		['4'] = {
+			name = "Sergeant",
+			payment = 700
+		},
+		['5'] = {
+			name = "Lieutenant",
+			payment = 850
+		},
+		['6'] = {
+			name = "Captian",
+			payment = 900
+		},
+		['7'] = {
+			name = "Lieutenant Colonel",
+			isboss = true,
+			payment = 1000
+		},
+		['8'] = {
+			name = "Colonel",
+			isboss = true,
+			payment = 1000
+		},
+	},
+	defaultDuty = true,
+},
 	
 	["ambulance"] = {
 		label = "Ambulance",
