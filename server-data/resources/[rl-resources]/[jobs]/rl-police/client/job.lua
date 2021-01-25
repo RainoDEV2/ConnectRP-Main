@@ -832,3 +832,25 @@ end
 function round(num, numDecimalPlaces)
     return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
 end
+
+RegisterCommand( "unseat_nearest_player", function()
+    if PlayerJob.name == "police" or PlayerJob.name == "ambulance" then
+        TriggerEvent("police:client:SetPlayerOutVehicle")
+    end
+end ) 
+
+RegisterCommand( "seat_nearest_player", function()
+    if PlayerJob.name == "police" or PlayerJob.name == "ambulance" then
+        TriggerEvent("police:client:PutPlayerInVehicle")
+    end
+end ) 
+
+RegisterCommand( "escort_nearest_player", function()
+    if PlayerJob.name == "police" or PlayerJob.name == "ambulance" then
+        TriggerEvent("police:client:EscortPlayer")
+    end
+end ) 
+
+RegisterKeyMapping( "unseat_nearest_player", "Unseat nearest (EMERGENCY)", "keyboard", "up")
+RegisterKeyMapping( "seat_nearest_player", "Seat nearest (EMERGENCY)", "keyboard", "down")
+RegisterKeyMapping( "escort_nearest_player", "Seat nearest (EMERGENCY)", "keyboard", "left")
