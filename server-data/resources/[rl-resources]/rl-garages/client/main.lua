@@ -45,10 +45,11 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
             local VehExists = DoesEntityExist(OutsideVehicles[vehicle.plate])
             if not VehExists then
                 RLCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
-                    RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
+                    RLCore.Functions.SetVehicleProperties(veh, vehicle.props)
+                    --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                         RLCore.Functions.SetVehicleProperties(veh, properties)
-                        enginePercent = round(vehicle.engine / 10, 0)
-                        bodyPercent = round(vehicle.body / 10, 0)
+                        enginePercent = round(vehicle.engine_damage / 10, 0)
+                        bodyPercent = round(vehicle.body_damage / 10, 0)
                         currentFuel = vehicle.fuel
 
                         if vehicle.plate ~= nil then
@@ -75,24 +76,25 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                         SetVehicleNumberPlateText(veh, vehicle.plate)
                         SetEntityHeading(veh, Depots[currentGarage].takeVehicle.h)
                         TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
-                        exports['rl-hud']:SetFuel(veh, vehicle.fuel)
+                        exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                         SetEntityAsMissionEntity(veh, true, true)
                         doCarDamage(veh, vehicle)
                         TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                         RLCore.Functions.Notify("Vehicle Off: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "%", "primary", 4500)
                         closeMenuFull()
                         SetVehicleEngineOn(veh, true, true)
-                    end, vehicle.plate)
+                    --end, vehicle.plate)
                     TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate, veh)
                 end, Depots[currentGarage].spawnPoint, true)
             else
                 local Engine = GetVehicleEngineHealth(OutsideVehicles[vehicle.plate])
                 if Engine < 40.0 then
                     RLCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
-                        RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
+                        RLCore.Functions.SetVehicleProperties(veh, vehicle.props)
+                        --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                             RLCore.Functions.SetVehicleProperties(veh, properties)
-                            enginePercent = round(vehicle.engine / 10, 0)
-                            bodyPercent = round(vehicle.body / 10, 0)
+                            enginePercent = round(vehicle.engine_damage / 10, 0)
+                            bodyPercent = round(vehicle.body_damage / 10, 0)
                             currentFuel = vehicle.fuel
     
                             if vehicle.plate ~= nil then
@@ -114,14 +116,14 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                             SetVehicleNumberPlateText(veh, vehicle.plate)
                             SetEntityHeading(veh, Depots[currentGarage].takeVehicle.h)
                             TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
-                            exports['rl-hud']:SetFuel(veh, vehicle.fuel)
+                            exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                             SetEntityAsMissionEntity(veh, true, true)
                             doCarDamage(veh, vehicle)
                             TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                             RLCore.Functions.Notify("Vehicle Off: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "%", "primary", 4500)
                             closeMenuFull()
                             SetVehicleEngineOn(veh, true, true)
-                        end, vehicle.plate)
+                        --end, vehicle.plate)
                         TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plat, vehe)
                     end, Depots[currentGarage].spawnPoint, true)
                 else
@@ -131,10 +133,11 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
             end
         else
             RLCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
-                RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
+                RLCore.Functions.SetVehicleProperties(veh, vehicle.props)
+                --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                     RLCore.Functions.SetVehicleProperties(veh, properties)
-                    enginePercent = round(vehicle.engine / 10, 0)
-                    bodyPercent = round(vehicle.body / 10, 0)
+                    enginePercent = round(vehicle.engine_damage / 10, 0)
+                    bodyPercent = round(vehicle.body_damage / 10, 0)
                     currentFuel = vehicle.fuel
 
                     if vehicle.plate ~= nil then
@@ -149,23 +152,24 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                     SetVehicleNumberPlateText(veh, vehicle.plate)
                     SetEntityHeading(veh, Depots[currentGarage].takeVehicle.h)
                     TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
-                    exports['rl-hud']:SetFuel(veh, vehicle.fuel)
+                    exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                     SetEntityAsMissionEntity(veh, true, true)
                     doCarDamage(veh, vehicle)
                     TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                     RLCore.Functions.Notify("Vehicle Off: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "%", "primary", 4500)
                     closeMenuFull()
                     SetVehicleEngineOn(veh, true, true)
-                end, vehicle.plate)
+                --end, vehicle.plate)
                 TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate)
             end, Depots[currentGarage].spawnPoint, true)
         end
     else
         RLCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
-            RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
+            RLCore.Functions.SetVehicleProperties(veh, vehicle.props)
+            --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                 RLCore.Functions.SetVehicleProperties(veh, properties)
-                enginePercent = round(vehicle.engine / 10, 0)
-                bodyPercent = round(vehicle.body / 10, 0)
+                enginePercent = round(vehicle.engine_damage / 10, 0)
+                bodyPercent = round(vehicle.body_damage / 10, 0)
                 currentFuel = vehicle.fuel
 
                 if vehicle.plate ~= nil then
@@ -186,14 +190,14 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                 SetVehicleNumberPlateText(veh, vehicle.plate)
                 SetEntityHeading(veh, Depots[currentGarage].takeVehicle.h)
                 TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
-                exports['rl-hud']:SetFuel(veh, vehicle.fuel)
+                exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                 SetEntityAsMissionEntity(veh, true, true)
                 doCarDamage(veh, vehicle)
                 TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                 RLCore.Functions.Notify("Vehicle Off: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "%", "primary", 4500)
                 closeMenuFull()
                 SetVehicleEngineOn(veh, true, true)
-            end, vehicle.plate)
+            --end, vehicle.plate)
             TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate)
         end, Depots[currentGarage].spawnPoint, true)
     end
@@ -311,8 +315,8 @@ function HouseGarage(house)
             Menu.addButton(HouseGarages[house].label, "yeet", HouseGarages[house].label)
 
             for k, v in pairs(result) do
-                enginePercent = round(v.engine / 10, 0)
-                bodyPercent = round(v.body / 10, 0)
+                enginePercent = round(v.engine_damage / 10, 0)
+                bodyPercent = round(v.body_damage / 10, 0)
                 currentFuel = v.fuel
                 curGarage = HouseGarages[house].label
 
@@ -356,8 +360,8 @@ function DepotList()
             Menu.addButton(Depots[currentGarage].label, "yeet", Depots[currentGarage].label)
 
             for k, v in pairs(result) do
-                enginePercent = round(v.engine / 10, 0)
-                bodyPercent = round(v.body / 10, 0)
+                enginePercent = round(v.engine_damage / 10, 0)
+                bodyPercent = round(v.body_damage / 10, 0)
                 currentFuel = v.fuel
 
 
@@ -392,23 +396,23 @@ function VehicleList()
             Menu.addButton(Garages[currentGarage].label, "yeet", Garages[currentGarage].label)
 
             for k, v in pairs(result) do
-                enginePercent = round(v.engine / 10, 0)
-                bodyPercent = round(v.body / 10, 0)
+                enginePercent = round(v.engine_damage / 10, 0)
+                bodyPercent = round(v.body_damage / 10, 0)
                 currentFuel = v.fuel
                 curGarage = Garages[v.garage].label
 
 
                 if v.state == 0 then
-                    v.state = "Uit"
+                    v.state = "Out"
                 elseif v.state == 1 then
                     v.state = "Garage"
                 elseif v.state == 2 then
-                    v.state = "In Beslag"
+                    v.state = "In"
                 end
 
-                local label = RLCore.Shared.Vehicles[v.vehicle]["name"]
-                if RLCore.Shared.Vehicles[v.vehicle]["brand"] ~= nil then
-                    label = RLCore.Shared.Vehicles[v.vehicle]["brand"].." "..RLCore.Shared.Vehicles[v.vehicle]["name"]
+                local label = RLCore.Shared.Vehicles[v.model]["name"]
+                if RLCore.Shared.Vehicles[v.model]["brand"] ~= nil then
+                    label = RLCore.Shared.Vehicles[v.model]["brand"].." "..RLCore.Shared.Vehicles[v.model]["name"]
                 end
 
                 Menu.addButton(label, "TakeOutVehicle", v, v.state, " Motor: " .. enginePercent .. "%", " Body: " .. bodyPercent.. "%")
@@ -421,14 +425,16 @@ end
 
 function TakeOutVehicle(vehicle)
     if vehicle.state == "Garage" then
-        enginePercent = round(vehicle.engine / 10, 1)
-        bodyPercent = round(vehicle.body / 10, 1)
+        enginePercent = round(vehicle.engine_damage / 10, 1)
+        bodyPercent = round(vehicle.body_damage / 10, 1)
         currentFuel = vehicle.fuel
 
         TriggerEvent("debug", 'Garages: Spawn ' .. vehicle.vehicle, 'success')
+        print(json.encode(vehicle.plate))
 
-        RLCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
-            RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
+        RLCore.Functions.SpawnVehicle(vehicle.model, function(veh)
+            RLCore.Functions.SetVehicleProperties(veh, vehicle.props)
+            --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
 
                 if vehicle.plate ~= nil then
                     OutsideVehicles[vehicle.plate] = veh
@@ -439,7 +445,7 @@ function TakeOutVehicle(vehicle)
                     TriggerServerEvent('rl-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
                 end
 
-                if vehicle.vehicle == "urus" then
+                if vehicle.model == "urus" then
                     SetVehicleExtra(veh, 1, false)
                     SetVehicleExtra(veh, 2, true)
                 end
@@ -450,10 +456,10 @@ function TakeOutVehicle(vehicle)
                     TriggerServerEvent('rl-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
                 end
 
-                RLCore.Functions.SetVehicleProperties(veh, properties)
+                --RLCore.Functions.SetVehicleProperties(veh, properties)
                 SetVehicleNumberPlateText(veh, vehicle.plate)
                 SetEntityHeading(veh, Garages[currentGarage].spawnPoint.h)
-                exports['rl-hud']:SetFuel(veh, vehicle.fuel)
+                exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                 doCarDamage(veh, vehicle)
                 SetEntityAsMissionEntity(veh, true, true)
                 TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
@@ -462,7 +468,7 @@ function TakeOutVehicle(vehicle)
                 TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
                 TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
                 SetVehicleEngineOn(veh, true, true)
-            end, vehicle.plate)
+            --end, vehicle.plate)
             
         end, Garages[currentGarage].spawnPoint, true)
     elseif vehicle.state == "Uit" then
@@ -482,10 +488,11 @@ function TakeOutGarageVehicle(vehicle)
     if vehicle.state == "Garage" then
         TriggerEvent("debug", 'Garages: Spawn ' .. vehicle.vehicle, 'success')
         RLCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
-            RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
+            RLCore.Functions.SetVehicleProperties(veh, vehicle.props)
+            --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                 RLCore.Functions.SetVehicleProperties(veh, properties)
-                enginePercent = round(vehicle.engine / 10, 1)
-                bodyPercent = round(vehicle.body / 10, 1)
+                enginePercent = round(vehicle.engine_damage / 10, 1)
+                bodyPercent = round(vehicle.body_damage / 10, 1)
 
                 if vehicle.plate ~= nil then
                     OutsideVehicles[vehicle.plate] = veh
@@ -499,7 +506,7 @@ function TakeOutGarageVehicle(vehicle)
                     TriggerServerEvent('rl-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
                 end
 
-                if vehicle.vehicle == "urus" then
+                if vehicle.vehicle == "urus" then 
                     SetVehicleExtra(veh, 1, false)
                     SetVehicleExtra(veh, 2, true)
                 end
@@ -511,15 +518,15 @@ function TakeOutGarageVehicle(vehicle)
                 SetVehicleNumberPlateText(veh, vehicle.plate)
                 SetEntityHeading(veh, HouseGarages[currentHouseGarage].takeVehicle.h)
                 TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
-                exports['rl-hud']:SetFuel(veh, vehicle.fuel)
-                SetEntityAsMissionEntity(veh, true, true)
+                exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
+                SetEntityAsMissionEntity(veh, true, true) 
                 doCarDamage(veh, vehicle)
                 TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                 RLCore.Functions.Notify("Vehicle Off: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "%", "primary", 4500)
                 closeMenuFull()
                 TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
                 SetVehicleEngineOn(veh, true, true)
-            end, vehicle.plate)
+            --end, vehicle.plate)
         end, HouseGarages[currentHouseGarage].takeVehicle, true)
     end
 end
@@ -528,8 +535,8 @@ function doCarDamage(currentVehicle, veh)
 	smash = false
 	damageOutside = false
 	damageOutside2 = false 
-	local engine = veh.engine + 0.0
-	local body = veh.body + 0.0
+	local engine = veh.engine_damage + 0.0
+	local body = veh.body_damage + 0.0
 	if engine < 200.0 then
 		engine = 200.0
     end
@@ -646,7 +653,7 @@ Citizen.CreateThread(function()
                             if owned then
                                 local bodyDamage = math.ceil(GetVehicleBodyHealth(curVeh))
                                 local engineDamage = math.ceil(GetVehicleEngineHealth(curVeh))
-                                local totalFuel = exports['rl-hud']:GetFuel(curVeh)
+                                local totalFuel = exports['LegacyFuel']:GetFuel(curVeh)
         
                                 TriggerServerEvent('rl-garage:server:updateVehicleStatus', totalFuel, engineDamage, bodyDamage, plate, k)
                                 TriggerServerEvent('rl-garage:server:updateVehicleState', 1, plate, k)
@@ -706,7 +713,7 @@ Citizen.CreateThread(function()
                                     if owned then
                                         local bodyDamage = round(GetVehicleBodyHealth(curVeh), 1)
                                         local engineDamage = round(GetVehicleEngineHealth(curVeh), 1)
-                                        local totalFuel = exports['rl-hud']:GetFuel(curVeh)
+                                        local totalFuel = exports['LegacyFuel']:GetFuel(curVeh)
                 
                                         TriggerServerEvent('rl-garage:server:updateVehicleStatus', totalFuel, engineDamage, bodyDamage, plate, currentHouseGarage)
                                         TriggerServerEvent('rl-garage:server:updateVehicleState', 1, plate, currentHouseGarage)

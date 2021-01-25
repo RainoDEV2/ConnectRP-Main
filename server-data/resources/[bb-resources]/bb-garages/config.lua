@@ -62,8 +62,8 @@ GaragesConfig = {
         },
 
         ['interactions'] = {
-            ['interact'] = 'To interact',
-            ['to_interact'] = '~r~E~w~ To interact',
+            ['interact'] = 'Garage',
+            ['to_interact'] = '[E] To Open Garage',
         },
 
         ['housing'] = {

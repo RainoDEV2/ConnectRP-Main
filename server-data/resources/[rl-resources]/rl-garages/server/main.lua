@@ -19,6 +19,14 @@ AddEventHandler('rl-garages:server:UpdateOutsideVehicles', function(Vehicles)
     OutsideVehicles[CitizenId] = Vehicles
 end)
 
+RegisterServerEvent('bb-garages:server:updateProps')
+AddEventHandler('bb-garages:server:updateProps', function(props)
+    local src = source
+    local xPlayer = RLCore.Functions.GetPlayer(src)
+    RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `stats` = '" .. json.encode(stats) .. "', `state` = 'garage', `parking` = '" .. json.encode(jsonz) .. "' WHERE `citizenid` = '" .. xPlayer.PlayerData.citizenid .. "' AND `plate` = '" .. plate .. "'")
+    RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` (`props`) VALUES ('" .. xPlayer.PlayerData.citizenid .. "', '" .. props.plate .. "', '" .. model .. "', '" .. json.encode(props) .. "', '" .. json.encode(stats) .. "', 'unknown')")
+end)
+
 RLCore.Functions.CreateCallback("rl-garage:server:GetOutsideVehicles", function(source, cb)
     local Ply = RLCore.Functions.GetPlayer(source)
     local CitizenId = Ply.PlayerData.citizenid
@@ -34,7 +42,7 @@ RLCore.Functions.CreateCallback("rl-garage:server:GetUserVehicles", function(sou
     local src = source
     local pData = RLCore.Functions.GetPlayer(src)
 
-    exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE citizenid = @citizenid AND garage = @garage', {['@citizenid'] = pData.PlayerData.citizenid, ['@garage'] = garage}, function(result)
+    exports['ghmattimysql']:execute('SELECT * FROM bbvehicles WHERE citizenid = @citizenid AND garage = @garage', {['@citizenid'] = pData.PlayerData.citizenid, ['@garage'] = garage}, function(result)
         if result[1] ~= nil then
             for k, v in pairs(result) do
                 if v.status ~= nil then
@@ -51,7 +59,7 @@ end)
 RLCore.Functions.CreateCallback("rl-garage:server:GetVehicleProperties", function(source, cb, plate)
     local src = source
     local properties = {}
-    RLCore.Functions.ExecuteSql(false, "SELECT `mods` FROM `player_vehicles` WHERE `plate` = '"..plate.."'", function(result)
+    RLCore.Functions.ExecuteSql(false, "SELECT `mods` FROM `bbvehicles` WHERE `plate` = '"..plate.."'", function(result)
         if result[1] ~= nil then
             properties = json.decode(result[1].mods)
         end
@@ -63,7 +71,7 @@ RLCore.Functions.CreateCallback("rl-garage:server:GetDepotVehicles", function(so
     local src = source
     local pData = RLCore.Functions.GetPlayer(src)
 
-    exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE citizenid = @citizenid AND state = @state', {['@citizenid'] = pData.PlayerData.citizenid, ['@state'] = 0}, function(result)
+    exports['ghmattimysql']:execute('SELECT * FROM bbvehicles WHERE citizenid = @citizenid AND state = @state', {['@citizenid'] = pData.PlayerData.citizenid, ['@state'] = 0}, function(result)
         if result[1] ~= nil then
             for k, v in pairs(result) do
                 if v.status ~= nil then
@@ -81,7 +89,7 @@ RLCore.Functions.CreateCallback("rl-garage:server:GetHouseVehicles", function(so
     local src = source
     local pData = RLCore.Functions.GetPlayer(src)
 
-    exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE garage = @garage', {['@garage'] = house}, function(result)
+    exports['ghmattimysql']:execute('SELECT * FROM bbvehicles WHERE garage = @garage', {['@garage'] = house}, function(result)
         if result[1] ~= nil then
             for k, v in pairs(result) do
                 if v.status ~= nil then
@@ -98,7 +106,7 @@ end)
 RLCore.Functions.CreateCallback("rl-garage:server:checkVehicleHouseOwner", function(source, cb, plate, house)
     local src = source
     local pData = RLCore.Functions.GetPlayer(src)
-    exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE plate = @plate', {['@plate'] = plate}, function(result)
+    exports['ghmattimysql']:execute('SELECT * FROM bbvehicles WHERE plate = @plate', {['@plate'] = plate}, function(result)
         if result[1] ~= nil then
             local hasHouseKey = exports['rl-houses']:hasKey(result[1].steam, result[1].citizenid, house)
             if hasHouseKey then
@@ -115,7 +123,7 @@ end)
 RLCore.Functions.CreateCallback("rl-garage:server:checkVehicleOwner", function(source, cb, plate)
     local src = source
     local pData = RLCore.Functions.GetPlayer(src)
-    exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE plate = @plate', {['@plate'] = plate}, function(result)
+    exports['ghmattimysql']:execute('SELECT * FROM bbvehicles WHERE plate = @plate', {['@plate'] = plate}, function(result)
         if result[1] ~= nil then
             if result then
                 cb(true)
@@ -133,7 +141,7 @@ AddEventHandler('rl-garage:server:PayDepotPrice', function(vehicle, garage)
     local src = source
     local Player = RLCore.Functions.GetPlayer(src)
     local bankBalance = Player.PlayerData.money["bank"]
-    exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE plate = @plate', {['@plate'] = vehicle.plate}, function(result)
+    exports['ghmattimysql']:execute('SELECT * FROM bbvehicles WHERE plate = @plate', {['@plate'] = vehicle.plate}, function(result)
         if result[1] ~= nil then
             if Player.Functions.RemoveMoney("cash", result[1].depotprice, "paid-depot") then
                 TriggerClientEvent("rl-garages:client:takeOutDepot", src, vehicle, garage)
@@ -150,7 +158,7 @@ AddEventHandler('rl-garage:server:updateVehicleState', function(state, plate, ga
     local src = source
     local pData = RLCore.Functions.GetPlayer(src)
 
-    exports['ghmattimysql']:execute('UPDATE player_vehicles SET state = @state, garage = @garage, depotprice = @depotprice WHERE plate = @plate', {['@state'] = state, ['@plate'] = plate, ['@depotprice'] = 0, ['@citizenid'] = pData.PlayerData.citizenid, ['@garage'] = garage})
+    exports['ghmattimysql']:execute('UPDATE bbvehicles SET state = @state, garage = @garage, depotprice = @depotprice WHERE plate = @plate', {['@state'] = state, ['@plate'] = plate, ['@depotprice'] = 0, ['@citizenid'] = pData.PlayerData.citizenid, ['@garage'] = garage})
 end)
 
 RegisterServerEvent('rl-garage:server:updateVehicleStatus')
@@ -166,10 +174,10 @@ AddEventHandler('rl-garage:server:updateVehicleStatus', function(fuel, engine, b
         body = body / 1000
     end
 
-    exports['ghmattimysql']:execute('UPDATE player_vehicles SET fuel = @fuel, engine = @engine, body = @body WHERE plate = @plate AND citizenid = @citizenid AND garage = @garage', {
+    exports['ghmattimysql']:execute('UPDATE bbvehicles SET fuel = @fuel, engine_damage = @engine_damage, body_damage = @body_damage WHERE plate = @plate AND citizenid = @citizenid AND garage = @garage', {
         ['@fuel'] = fuel, 
-        ['@engine'] = engine, 
-        ['@body'] = body,
+        ['@engine_damage'] = engine, 
+        ['@body_damage'] = body,
         ['@plate'] = plate,
         ['@garage'] = garage,
         ['@citizenid'] = pData.PlayerData.citizenid

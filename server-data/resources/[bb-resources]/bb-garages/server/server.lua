@@ -174,7 +174,7 @@ AddEventHandler('bb-garages:server:parkVehicle', function(garage, typ, slots, pl
 
                 RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `stats` = '" .. json.encode(stats) .. "', `state` = 'garage', `parking` = '" .. json.encode(jsonz) .. "' WHERE `citizenid` = '" .. xPlayer.PlayerData.citizenid .. "' AND `plate` = '" .. plate .. "'")
                 TriggerClientEvent('bb-garages:client:syncConfig', -1, 2, 'garages', garage, 'slots', serverConfig['garages'][garage]['slots'])
-                TriggerClientEvent('bb-garages:client:createParkingVehicle', src, false, serverConfig['garages'][garage]['slots'][slots[1]])
+                --TriggerClientEvent('bb-garages:client:createParkingVehicle', src, false, serverConfig['garages'][garage]['slots'][slots[1]])
             else
                 print('^1[bb-garages] ^7' .. GetPlayerName(src) .. ' just tried to expoilt the garages.')
             end

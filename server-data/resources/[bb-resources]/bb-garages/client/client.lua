@@ -95,8 +95,8 @@ CreateThread(function()
                                                 Wait(100)
                                             end
                                         
-                                            local createdPed = CreatePed(5, pedModel, data['ped']['coords'].x, data['ped']['coords'].y, data['ped']['coords'].z - 1.0, data['ped']['heading'], false, false)
-                                            ClearPedTasks(createdPed)
+                                            --local createdPed = CreatePed(5, pedModel, data['ped']['coords'].x, data['ped']['coords'].y, data['ped']['coords'].z - 1.0, data['ped']['heading'], false, false)
+                                            --[[ ClearPedTasks(createdPed)
                                             ClearPedSecondaryTask(createdPed)
                                             TaskSetBlockingOfNonTemporaryEvents(createdPed, true)
                                             SetPedFleeAttributes(createdPed, 0, 0)
@@ -111,10 +111,9 @@ CreateThread(function()
                                         
                                             --Wait(750) -- for better freeze (not in air)
                                             FreezeEntityPosition(createdPed, true)
-                                            SetEntityInvincible(createdPed, true)
+                                            SetEntityInvincible(createdPed, true) ]]
                                         end)
-                                    elseif dst > 250.0 and data['ped']['created'] == true then
-                                        data['ped']['created'] = false
+                                    elseif dst > 250.0 then
                                         CreateThread(function() -- delete ped
                                             if DoesEntityExist(createdPeds[name]) then 
                                                 local ped = createdPeds[name]
@@ -130,24 +129,28 @@ CreateThread(function()
                                     end
                                 
                                     -- text
-                                    if data['ped']['created'] == true then              
+                                    if true then              
                                         if not IsPedInAnyVehicle(playerPed, false) then
                                             if dst < 3.0 then
-                                                BBGarages.Functions.DrawText3D({x = data['ped']['coords'].x, y = data['ped']['coords'].y, z = data['ped']['coords'].z + 0.9}, BBGarages.Config['settings']['interactions']['to_interact'])
+                                                DrawMarker(2, data['ped']['coords'].x, data['ped']['coords'].y, data['ped']['coords'].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
+                                                --BBGarages.Functions.DrawText3D({x = data['ped']['coords'].x, y = data['ped']['coords'].y, z = data['ped']['coords'].z + 0.9}, BBGarages.Config['settings']['interactions']['to_interact'])
                                                 if IsControlJustPressed(0, 38) then
                                                     BBGarages.Functions.TriggerNUI(false, name, data, key)
                                                 end
                                             elseif dst < 7.0 then
-                                                BBGarages.Functions.DrawText3D({x = data['ped']['coords'].x, y = data['ped']['coords'].y, z = data['ped']['coords'].z + 0.9}, BBGarages.Config['settings']['interactions']['interact'])
+                                                DrawMarker(2, data['ped']['coords'].x, data['ped']['coords'].y, data['ped']['coords'].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
+                                                --BBGarages.Functions.DrawText3D({x = data['ped']['coords'].x, y = data['ped']['coords'].y, z = data['ped']['coords'].z + 0.9}, BBGarages.Config['settings']['interactions']['interact'])
                                             end
                                         else
                                             if dst < 5.0 then
-                                                BBGarages.Functions.DrawText3D({x = data['ped']['coords'].x, y = data['ped']['coords'].y, z = data['ped']['coords'].z + 0.9}, BBGarages.Config['settings']['interactions']['to_interact'])
+                                                DrawMarker(2, data['ped']['coords'].x, data['ped']['coords'].y, data['ped']['coords'].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
+                                                --BBGarages.Functions.DrawText3D({x = data['ped']['coords'].x, y = data['ped']['coords'].y, z = data['ped']['coords'].z + 0.9}, BBGarages.Config['settings']['interactions']['to_interact'])
                                                 if IsControlJustPressed(0, 38) then
                                                     BBGarages.Functions.TriggerNUI(true, name, data, key)
                                                 end
                                             elseif dst < 7.0 then
-                                                BBGarages.Functions.DrawText3D({x = data['ped']['coords'].x, y = data['ped']['coords'].y, z = data['ped']['coords'].z + 0.9}, BBGarages.Config['settings']['interactions']['interact'])
+                                                DrawMarker(2, data['ped']['coords'].x, data['ped']['coords'].y, data['ped']['coords'].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
+                                                --BBGarages.Functions.DrawText3D({x = data['ped']['coords'].x, y = data['ped']['coords'].y, z = data['ped']['coords'].z + 0.9}, BBGarages.Config['settings']['interactions']['interact'])
                                             end
                                         end
                                     end
