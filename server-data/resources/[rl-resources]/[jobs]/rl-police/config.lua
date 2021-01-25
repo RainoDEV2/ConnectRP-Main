@@ -470,6 +470,14 @@ Config.Items = {
             type = "item",
             slot = 24,
         },
+        [25] = {
+            name = "weapon_doubleaction",
+            price = 0,
+            amount = 2,
+            info = {},
+            type = "weapon",
+            slot = 25,
+        },
     }
 }
 
