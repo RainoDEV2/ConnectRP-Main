@@ -30,7 +30,7 @@ RLCore.Commands.Add('911', 'Send emergancy signal to Police.', {{name = 'firstna
             TriggerClientEvent('bb-911:client:createBlip', -1, 'police', coords, name, message, id, src)
             TriggerClientEvent('bb-911:client:justcalled', src)
 
-            TriggerEvent('bb-logs:server:createLog', 'emergency', 'Command "100"', "Used the command **100**\n**Name:** " .. name .."\n**Message:** " .. message, src)
+            TriggerEvent('bb-logs:server:createLog', 'emergency', 'Command "911"', "Used the command **911**\n**Name:** " .. name .."\n**Message:** " .. message, src)
         else
             TriggerClientEvent('RLCore:Notify', src, "You dont have phone.", "error")
         end
@@ -96,7 +96,7 @@ RLCore.Commands.Add('311', 'Send emergancy signal to EMS.', {{name = 'firstname'
             TriggerClientEvent('bb-911:client:createBlip', -1, 'ems', coords, name, message, id, src)
             TriggerClientEvent('bb-911:client:justcalled', src)
 
-            TriggerEvent('bb-logs:server:createLog', 'emergency', 'Command "101"', "Used the command **101**\n**Name:** " .. name .."\n**Message:** " .. message, src)
+            TriggerEvent('bb-logs:server:createLog', 'emergency', 'Command "311"', "Used the command **311**\n**Name:** " .. name .."\n**Message:** " .. message, src)
         else
             TriggerClientEvent('RLCore:Notify', src, "You dont have phone.", "error")
         end

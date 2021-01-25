@@ -14,14 +14,14 @@ AddEventHandler('bb-911:client:createBlip', function(type, coords, name, message
 		EndTextCommandSetBlipName(blip)
 
 		if type == "police" then
-            TriggerEvent('chat:addMessage', {template = '<div class="chat-message" style="background-color: rgba(59, 160, 255, 0.75);"><b>Emergency Call 100 #' .. id .. ' | ' .. name .. '</b> ' .. message .. '</div>'})
+            TriggerEvent('chat:addMessage', {template = '<div class="chat-message" style="background-color: rgba(163, 62, 48, 0.85);"><b>Police 911 #' .. id .. ' | ' .. name .. '</b> ' .. message .. '</div>'})
 		elseif type == "ems" then
-			TriggerEvent('chat:addMessage', {template = '<div class="chat-message" style="background-color: rgba(255, 59, 62, 0.75);"><b>Emergency Call 101 #' .. id .. ' | ' .. name .. '</b> ' .. message .. '</div>'})
+			TriggerEvent('chat:addMessage', {template = '<div class="chat-message" style="background-color: rgba(163, 62, 48, 0.85);"><b>Paramedic 311 #' .. id .. ' | ' .. name .. '</b> ' .. message .. '</div>'})
 		end
 
-		TriggerEvent("InteractSound_CL:PlayOnOne", "demo", 0.4)
+		TriggerEvent("InteractSound_CL:PlayOnOne", "demo", 0.4) 
 
-		Citizen.Wait(60000)
+		Citizen.Wait(60000) 
 		RemoveBlip(blip)
 	end
 end)
@@ -29,7 +29,7 @@ end)
 RegisterNetEvent('bb-911:client:reply')
 AddEventHandler('bb-911:client:reply', function(type, id, message,officer, source)
 	if ((PlayerJob.name == "police" or PlayerJob.name == "ambulance") and PlayerJob.onduty) or (source == GetPlayerServerId(PlayerId())) then
-		TriggerEvent('chat:addMessage', {template = '<div class="chat-message server"><b>Emergency Call ' .. (type == 'police' and '100' or '101') .. 'r #' .. id .. ' | ' .. officer .. '</b> ' .. message .. '</div>'})
+		TriggerEvent('chat:addMessage', {template = '<div class="chat-message server"><b>Emergency Call ' .. (type == 'police' and '911' or '311') .. 'r #' .. id .. ' | ' .. officer .. '</b> ' .. message .. '</div>'})
 		TriggerEvent("InteractSound_CL:PlayOnOne", "demo", 0.4)
 	end
 end)
