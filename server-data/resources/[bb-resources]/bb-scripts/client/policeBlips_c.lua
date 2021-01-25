@@ -24,7 +24,7 @@ AddEventHandler('bb-blips:client:updateBlips', function(data)
         SetBlipScale(blip, 0.8)
         if player[2] == 'police' then
             SetBlipColour(blip, 3)
-            SetBlipShowCone(blip, true)
+            --SetBlipShowCone(blip, true)
         else
             SetBlipColour(blip, 23)
         end
