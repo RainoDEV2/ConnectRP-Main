@@ -46,7 +46,7 @@ Citizen.CreateThread(function()
 					sellPrice = GetSellingPrice()
 					sellItemsSet = true
 				elseif sellItemsSet and sellPrice ~= 0 then
-					DrawText3D(Config.PawnLocation.x, Config.PawnLocation.y, Config.PawnLocation.z, "~g~E~w~ - Sell ​​watches necklaces and rings ($"..sellPrice..")")
+					DrawText3D(Config.PawnLocation.x, Config.PawnLocation.y, Config.PawnLocation.z, "[E] Pawn items ($"..sellPrice..")")
 					if IsControlJustReleased(0, Keys["E"]) then
 						TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_STAND_IMPATIENT", 0, true)
 						RLCore.Functions.Progressbar("sell_pawn_items", "Selling ​​Items ..", math.random(10000, 20000), false, true, {}, {}, {}, {}, function() -- Done
@@ -95,7 +95,7 @@ Citizen.CreateThread(function()
 					sellHardwarePrice = GetSellingHardwarePrice()
 					sellHardwareItemsSet = true
 				elseif sellHardwareItemsSet and sellHardwarePrice ~= 0 then
-					DrawText3D(Config.PawnHardwareLocation.x, Config.PawnHardwareLocation.y, Config.PawnHardwareLocation.z, "~g~E~w~ - Sell Electronic Items ($"..sellHardwarePrice..")")
+					DrawText3D(Config.PawnHardwareLocation.x, Config.PawnHardwareLocation.y, Config.PawnHardwareLocation.z, "[E] Sell Electronic Items ($"..sellHardwarePrice..")")
 					if IsControlJustReleased(0, Keys["E"]) then
 						TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_STAND_IMPATIENT", 0, true)
 						RLCore.Functions.Progressbar("sell_pawn_items", "Selling ​​Items ..", math.random(10000, 20000), false, true, {}, {}, {}, {}, function() -- Done

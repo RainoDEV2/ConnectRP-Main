@@ -45,12 +45,12 @@ Citizen.CreateThread(function()
 			if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, true) < 1.5 then
                 if not Config.IsMelting then
                     if Config.CanTake then
-                        DrawText3D(Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, "~g~E~w~ - Grab gold bars")
+                        DrawText3D(Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, "[E] Grab gold bars")
                         if IsControlJustReleased(0, Keys["E"]) then
                             TriggerServerEvent("rl-pawnshop:server:getGoldBars")
                         end
                     else
-                        DrawText3D(Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, "~g~E~w~ - Melt gold items")
+                        DrawText3D(Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, "[E] Melt gold items")
                         if IsControlJustReleased(0, Keys["E"]) then 
                             local waitTime = math.random(10000, 15000)
                             ScrapAnim(1000)

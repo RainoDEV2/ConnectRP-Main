@@ -1,6 +1,6 @@
 Config = {}
 
-Config.MinCops = 1
+Config.MinCops = 3
 
 Config.RobbableItems = {
     [1] =  {chance = 8, id = 0, name = 'Cash', quantity = math.random(1, 1200)}, 
@@ -11,9 +11,10 @@ Config.RobbableItems = {
     [6] =  {chance = 3, id = 'diamond_ring', name = 'Diamond Ring', quantity = 1}, 
     [7] =  {chance = 3, id = 'watch', name = 'Watch', quantity = 1}, 
     [8] =  {chance = 4, id = '10kgoldchain', name = '10K Gold Chain', quantity = 1},
-    [9] = {chance = 15, id = 'electronickit', name = 'Electronic Kit', quantity = 1},
+    [9] =  {chance = 15, id = 'electronickit', name = 'Electronic Kit', quantity = 1},
     [10] = {chance = 3, id = 'joint', name = 'Joint', quantity = 1},
-	[11] = {chance = 3, id = 'oxy', name = 'Oxy 100MG', quantity = 1},
+    [11] = {chance = 3, id = 'oxy', name = 'Oxy 100MG', quantity = 1},
+    [12] = {chance = 2, id = 'certificate', name = 'Certificate', quantity = 1},
 }
 
 Config.RobbableLocations = {
