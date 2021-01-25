@@ -27,7 +27,7 @@ Config.Objects = {
     ["cone"] = {model = `prop_roadcone02a`, freeze = false},
     ["barier"] = {model = `prop_barrier_work06a`, freeze = true},
     ["schotten"] = {model = `prop_snow_sign_road_06g`, freeze = true},
-    ["tent"] = {model = `prop_gazebo_03`, freeze = true},
+    ["tent"] = {model = `prop_gazebo_03`, freeze = true}, 
     ["light"] = {model = `prop_worklight_03b`, freeze = true},
     ["chair"] = {model = `prop_chair_08`, freeze = true},
     ["chairs"] = {model = `prop_chair_pile_01`, freeze = true},
