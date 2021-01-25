@@ -720,7 +720,7 @@ AddEventHandler('attach:blackDuffelBag', function()
 	TriggerEvent("attachItemPerm","blackduffelbag")
 end)
 
-RegisterNetEvent('attach:medicalBag')
+RegisterNetEvent('attach:medicalBag') 
 AddEventHandler('attach:medicalBag', function()
 	TriggerEvent("attachItemPerm","medicalBag")
 end)
