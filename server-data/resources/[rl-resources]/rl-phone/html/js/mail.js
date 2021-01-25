@@ -72,7 +72,7 @@ RL.Phone.Functions.SetupMails = function(Mails) {
     }
     var MessageTime = Hourssssss + ":" + Minutessss;
 
-    $("#mail-header-mail").html(RL.Phone.Data.PlayerData.charinfo.firstname+"."+RL.Phone.Data.PlayerData.charinfo.lastname+"@realisticlife.co.il");
+    $("#mail-header-mail").html(RL.Phone.Data.PlayerData.charinfo.firstname+"."+RL.Phone.Data.PlayerData.charinfo.lastname+"@twitchcity.com");
     $("#mail-header-lastsync").html("Laatste synchronisatie "+MessageTime);
     if (Mails !== null && Mails !== undefined) {
         if (Mails.length > 0) {
