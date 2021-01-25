@@ -8,6 +8,7 @@ AddEventHandler('houseRobberies:removeLockpick', function()
  local source = tonumber(source)
  local xPlayer = RLCore.Functions.GetPlayer(source)
  xPlayer.Functions.RemoveItem('advancedlockpick', 1)
+ TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items['advancedlockpick'], "remove")
  TriggerClientEvent('RLCore:Notify', source, 'The lockpick bent out of shape.', "error")
 end)
 
@@ -25,7 +26,7 @@ RegisterServerEvent('houseRobberies:searchItem')
 AddEventHandler('houseRobberies:searchItem', function()
  local source = tonumber(source)
  local item = {}
- local xPlayer = RLCore.Functions.GetPlayer(source)
+ local xPlayer = RLCore.Functions.GetPlayer(source) 
  local gotID = {}
 
  for i=1, math.random(1, 2) do
@@ -38,10 +39,12 @@ AddEventHandler('houseRobberies:searchItem', function()
     TriggerClientEvent('RLCore:Notify', source, 'You found $'..item.quantity)
    elseif not gotID[item.id] then
     gotID[item.id] = true
-    xPlayer.Functions.AddItem(item.id, item.quantity)
+
+    xPlayer.Functions.AddItem(item.id, item.quantity) 
+    TriggerClientEvent('inventory:client:ItemBox', source, RLCore.Shared.Items[item.id], "add")
     PerformHttpRequest('https://discord.com/api/webhooks/766818449112039425/0d7eLlGHSmIa5fcV3EYQW1BJPgN2PvUcjoN9JBm6PsDV-StK-Ph-DlbkavS4g0kmMJf4', function(err, text, headers) end, 'POST', json.encode({username = "House Robberies Log", content = "__**" .. GetPlayerName(source) .. "**__ Found: **" .. item.id .. "** **.** "}), { ['Content-Type'] = 'application/json' })
     TriggerClientEvent('RLCore:Notify', source, 'Item Added!')
-   end
+   end 
   end
  end
 end)

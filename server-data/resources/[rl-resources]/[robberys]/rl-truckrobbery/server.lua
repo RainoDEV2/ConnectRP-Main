@@ -13,7 +13,8 @@ RegisterServerEvent('truckrobbery:addItem')
 AddEventHandler('truckrobbery:addItem', function(item, count)
 	local src = source
     local Player = RLCore.Functions.GetPlayer(src)
-    Player.Functions.AddItem(item, count)  
+    Player.Functions.AddItem(item, count)
+    TriggerClientEvent("inventory:client:ItemBox", source, RLCore.Shared.Items["item"], "add")  
     dclog(Player, 'Received the following from the bank truck. **Gain**: '..item.. ' x'.. count)
 end)
 
@@ -21,7 +22,8 @@ RegisterServerEvent("truckrobbery:removeItem")
 AddEventHandler("truckrobbery:removeItem", function(item, count) 
 	local src = source
     local Player = RLCore.Functions.GetPlayer(src)
-    Player.Functions.RemoveItem(item, count) 
+    Player.Functions.RemoveItem(item, count)
+    TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items[item], "remove") 
 end)
 
 RegisterServerEvent('truckrobbery:addMoney')
