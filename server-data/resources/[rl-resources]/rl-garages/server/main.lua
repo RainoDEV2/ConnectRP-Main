@@ -112,6 +112,22 @@ RLCore.Functions.CreateCallback("rl-garage:server:checkVehicleHouseOwner", funct
     end)
 end)
 
+RLCore.Functions.CreateCallback("rl-garage:server:checkVehicleOwner", function(source, cb, plate)
+    local src = source
+    local pData = RLCore.Functions.GetPlayer(src)
+    exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE plate = @plate', {['@plate'] = plate}, function(result)
+        if result[1] ~= nil then
+            if result then
+                cb(true)
+            else
+                cb(false)
+            end
+        else
+            cb(false)
+        end
+    end)
+end)
+
 RegisterServerEvent('rl-garage:server:PayDepotPrice')
 AddEventHandler('rl-garage:server:PayDepotPrice', function(vehicle, garage)
     local src = source
