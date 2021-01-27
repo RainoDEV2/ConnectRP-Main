@@ -597,6 +597,7 @@ AddEventHandler("car:testdrive", function()
 		SetVehicleOnGroundProperly(veh)
 
 		TaskWarpPedIntoVehicle(PlayerPedId(),veh,-1)
+		TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId())), GetVehiclePedIsIn(PlayerPedId()))
 		myspawnedvehs[veh] = true
 	else
 		RLCore.Functions.Notify("A car is on the spawn point.",'error')
@@ -720,6 +721,7 @@ function AttemptBuy(tableid,financed)
 
 	currentlocation = vehshop_blips[1]
 	TaskWarpPedIntoVehicle(PlayerPedId(),veh,-1)
+	TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId())), GetVehiclePedIsIn(PlayerPedId()))
 	TriggerServerEvent('CheckMoneyForVeh',name, model, price, financed)
 	commissionbuy = (baseprice * commission / 200)
 end
@@ -1015,23 +1017,23 @@ function CloseCreator(name, veh, price, financed)
 			end
 
 			SetVehicleOnGroundProperly(personalvehicle)
-
-			local plate = GetVehicleNumberPlateText(personalvehicle)
-			TriggerServerEvent('garage:addKeys', plate)
-
-			SetVehicleHasBeenOwnedByPlayer(personalvehicle,true)
+			--SetVehicleHasBeenOwnedByPlayer(personalvehicle,true)
 			local id = NetworkGetNetworkIdFromEntity(personalvehicle)
 			SetNetworkIdCanMigrate(id, true)
-			Citizen.InvokeNative(0x629BFA74418D6239,Citizen.PointerValueIntInitialized(personalvehicle))
+			--Citizen.InvokeNative(0x629BFA74418D6239,Citizen.PointerValueIntInitialized(personalvehicle))
 			SetVehicleColours(personalvehicle,colors[1],colors[2])
 			SetVehicleExtraColours(personalvehicle,extra_colors[1],extra_colors[2])
 			TaskWarpPedIntoVehicle(PlayerPedId(),personalvehicle,-1)
+			TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId())), GetVehiclePedIsIn(PlayerPedId()))
 			SetEntityVisible(ped,true)
 			local vehProps = RLCore.Functions.GetVehicleProperties(personalvehicle)
 			TriggerServerEvent('BuyForVeh', vehProps, name, vehicle, pPrice, financed)
-			TriggerServerEvent("garages:CheckGarageForVeh")
+			TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId())), GetVehiclePedIsIn(PlayerPedId()))
 			DespawnSaleVehicles()
 			SpawnSaleVehicles()
+
+			Wait(250)
+			TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId())), GetVehiclePedIsIn(PlayerPedId()))
 		end
 		vehshop.opened = false
 		vehshop.menu.from = 1
@@ -1287,6 +1289,7 @@ Citizen.CreateThread(function()
 								SetVehicleDoorsLocked(veh,4)
 								--SetEntityCollision(veh,false,false)
 								TaskWarpPedIntoVehicle(LocalPed(),veh,-1)
+								TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId())), GetVehiclePedIsIn(PlayerPedId()))
 								for i = 0,24 do
 									SetVehicleModKit(veh,0)
 									RemoveVehicleMod(veh,i)
@@ -1333,6 +1336,7 @@ Citizen.CreateThread(function()
 		       		Citizen.InvokeNative(0x87D51D72255D4E78,scaleform, x,y,z, 0.0, 180.0, 100.0, 1.0, 1.0, 1.0, 10.0, 10.0, 10.0, 0)		
 				end
 				TaskWarpPedIntoVehicle(LocalPed(),fakecar.car,-1)
+				TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId())), GetVehiclePedIsIn(PlayerPedId()))
 		    end
 
 		end
@@ -1396,6 +1400,7 @@ AddEventHandler('vehshop:spawnVehicle', function(v)
 		veh = CreateVehicle(car, playerCoords, 0.0, true, false)
 		SetModelAsNoLongerNeeded(car)
 		TaskWarpPedIntoVehicle(playerPed, veh, -1)
+		TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId())), GetVehiclePedIsIn(PlayerPedId()))
 		SetEntityInvincible(veh, true)
 	end
 end)

@@ -49,7 +49,7 @@ AddEventHandler('carshop:requesttable', function()
         carTable[v.ID] = v
         v.price = carTable[v.ID].baseprice
     end
-    TriggerClientEvent('veh_shop:returnTable', xPlayer.source, carTable)
+    TriggerClientEvent('veh_shop:returnTable',source, carTable)
 end)
 
 -- Check if player has enough money
@@ -63,16 +63,17 @@ AddEventHandler('CheckMoneyForVeh', function(name, model,price,financed)
             xPlayer.Functions.RemoveMoney('cash',financedPrice)
             TriggerClientEvent('FinishMoneyCheckForVeh', source, name, model, price, financed)
         else
-            TriggerClientEvent("RLCore:Notify", xPlayer.source, "You dont have enough money on you!")
-            TriggerClientEvent('carshop:failedpurchase', xPlayer.source)
+            TriggerClientEvent("RLCore:Notify",source, "You dont have enough money on you!")
+            TriggerClientEvent('carshop:failedpurchase',source)
         end
     else
         if money >= price then
             xPlayer.Functions.RemoveMoney('cash',price)
-            TriggerClientEvent('FinishMoneyCheckForVeh', xPlayer.source, name, model, price, financed)
+            TriggerClientEvent('FinishMoneyCheckForVeh', source, name, model, price, financed)
+            print('finish money check')
         else
-            TriggerClientEvent("RLCore:Notify", xPlayer.source, "You dont have enough money on you!")
-            TriggerClientEvent('carshop:failedpurchase', xPlayer.source)
+            TriggerClientEvent("RLCore:Notify", source, "You dont have enough money on you!")
+            TriggerClientEvent('carshop:failedpurchase', source)
         end 
     end
 end)
@@ -82,7 +83,7 @@ RegisterServerEvent('BuyForVeh')
 AddEventHandler('BuyForVeh', function(vehicleProps,name, vehicle, price, financed)
     local xPlayer = RLCore.Functions.GetPlayer(source)
     if financed then
-        print(json.encode(vehicleProps.plate))
+        print(vehicleProps.plate)
         print(json.encode(price))
         --local cols = 'citizenid, plate, vehicle, buy_price, finance, financetimer, vehiclename, shop'
         --local val = '@citizenid, @plate, @vehicle, @buy_price, @finance, @financetimer, @vehiclename, @shop'
@@ -90,26 +91,20 @@ AddEventHandler('BuyForVeh', function(vehicleProps,name, vehicle, price, finance
         --local data = RLCore.Functions.ExecuteSql(false,"SELECT money FROM addon_account_data WHERE account_name=@account_name",{['@account_name'] = 'pdm'})
         --local curSociety = data[1].money
        -- MySQL.Async.execute('INSERT INTO bbvehicles (citizenid, plate, vehicle, buy_price, finance, financetimer, vehiclename, shop) VALUES (@citizenid, @plate, @vehicle, @buy_price, @finance, @financetimer, @vehiclename, @shop)',
-        RLCore.Functions.ExecuteSql(false,'INSERT INTO bbvehicles (citizenid, plate, props, buy_price, finance, financetimer, vehiclename) VALUES (@citizenid, @plate, @props, @buy_price, @finance, @financetimer, @vehiclename)',{
-            ['@citizenid']   = xPlayer.PlayerData.citizenid,
-            ['@plate']   = vehicleProps.plate,
-            ['@props'] = json.encode(vehicleProps),
-            ['@vehiclename'] = vehicle,
-            ['@buy_price'] = price,
-            ['@finance'] = price - downPay,
-            ['@financetimer'] = repayTime
-        })
+       local plate = vehicleProps.plate
+        RLCore.Functions.ExecuteSql(false,"INSERT INTO `bbvehicles` (`citizenid`, `plate`, `props`, `buy_price`, `finance`, `financetimer`, `vehiclename`) VALUES ('"..xPlayer.PlayerData.citizenid.."', '"..plate.."', '"..json.encode(vehicleProps).."', '"..price.."', '"..price - downPay.."', '"..repayTime.."', '"..vehicle.."')")
         --RLCore.Functions.ExecuteSql(false,'UPDATE addon_account_data SET money=@money WHERE account_name=@account_name',{['@money'] = curSociety + downPay,['@account_name'] = 'pdm'})
     else
         --local data = RLCore.Functions.ExecuteSql(false,"SELECT money FROM addon_account_data WHERE account_name=@account_name",{['@account_name'] = 'pdm'})
         --local curSociety = data[1].money
-        RLCore.Functions.ExecuteSql(false,'INSERT INTO bbvehicles (citizenid, plate, props, vehiclename) VALUES (@citizenid, @plate, @props, @vehiclename)',{
+        local nig = {damage = 10, fuel = 98}
+        RLCore.Functions.ExecuteSql(false,"INSERT INTO `bbvehicles` (`citizenid`, `plate`, `model`, `props`, `stats`, `state`) VALUES ('"..xPlayer.PlayerData.citizenid.."', '"..vehicleProps.plate.."', '"..vehicle.."', '"..json.encode(vehicleProps).."', '"..json.encode(nig).."', 'unknown')"--[[,{
             ['@citizenid']   = xPlayer.PlayerData.citizenid,
             ['@plate']   = vehicleProps.plate,
             ['@props'] = json.encode(vehicleProps),
             ['@vehiclename'] = vehicle,
             ['@buy_price'] = price
-        })
+        }]])
         --RLCore.Functions.ExecuteSql(false,'UPDATE addon_account_data SET money=@money WHERE account_name=@account_name',{['@money'] = curSociety + price,['@account_name'] = 'pdm'})
     end
 end)
@@ -117,7 +112,7 @@ end)
 -- Get All finance > 0 then take 10min off
 -- Every 10 Min
 function updateFinance()
-    MySQL.Async.fetchAll('SELECT financetimer, plate FROM bbvehicles WHERE financetimer > @financetimer', {
+    RLCore.Functions.ExecuteSql(false,'SELECT financetimer, plate FROM bbvehicles WHERE financetimer > @financetimer', {
         ["@financetimer"] = 0
     }, function(result)
         for i=1, #result do
@@ -191,12 +186,7 @@ end)
 
 function updateDisplayVehicles()
     for i=1, #carTable do
-        RLCore.Functions.ExecuteSql(false,"UPDATE vehicles_display SET model=@model, commission=@commission, baseprice=@baseprice WHERE ID=@ID",{
-            ['@ID'] = i,
-            ['@model'] = carTable[i]["model"],
-            ['@commission'] = carTable[i]["commission"],
-            ['@baseprice'] = carTable[i]["baseprice"]
-        })
+        RLCore.Functions.ExecuteSql(false,"UPDATE vehicles_display SET model='"..carTable[i]["model"].."', commission='"..carTable[i]["commission"].."', baseprice='"..carTable[i]["baseprice"].."' WHERE ID='"..i.."'")
     end
 end
 
@@ -206,9 +196,9 @@ AddEventHandler('onResourceStop', function(resource)
     end
 end)
 
---Citizen.CreateThread(function()
---    updateFinance()
---end)
+Citizen.CreateThread(function()
+    updateFinance()
+end)
 
 --[[
         MySQL.Async.fetchAll('SELECT finance, plate FROM bbvehicles WHERE finance < @finance', {
