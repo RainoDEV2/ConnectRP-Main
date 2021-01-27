@@ -46,7 +46,6 @@ Citizen.CreateThread(function()
 					DrawMarker(27, loc["x"], loc["y"], loc["z"] -0.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.001, 1.0001, 0.5001, 0, 25, 165, 100, false, true, 2, false , false, false, false)
                     if dist < 1 then
 						DisplayHelpText("Press ~INPUT_CONTEXT~ to open the ~g~shop.")
-                        --DrawText3Ds(loc["x"], loc["y"], loc["z"], '[E] - ' .. Config.Locations[shop]["label"])
                         if IsControlJustPressed(0, Config.Keys["E"]) then 
                             local ShopItems = {}
                             ShopItems.label = Config.Locations[shop]["label"]
@@ -55,7 +54,7 @@ Citizen.CreateThread(function()
                             if Config.Locations[shop]["type"] == 'dede' then
                                 TriggerServerEvent("inventory:server:OpenInventory", "dede", "Itemshop_"..shop, ShopItems)
                             elseif Config.Locations[shop]["type"] == 'weapon' then
-                                TriggerServerEvent('rl-shops:server:CheckGunLicence1')
+                                TriggerServerEvent("rlcore:checkLicence", "weapon", ShopItems)
                             else
                                 TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_"..shop, ShopItems)
                             end
@@ -75,9 +74,8 @@ end)
 
 
 RegisterCommand('fuk', function(source, args, rawCommand)
-	TriggerServerEvent('tp_gunschool:addLicense', 'weapon')
+	TriggerServerEvent('tp_gunschool:addLicense', 'weapon') 
 end, false)
-
 
 RegisterNetEvent('rlshopsclient:inv')
 AddEventHandler('rlshopsclient:inv', function(x, y)
@@ -100,27 +98,6 @@ AddEventHandler('rl-shops:client:RestockShopItems', function(shop, amount)
     if Config.Locations[shop]["products"] ~= nil then 
         for k, v in pairs(Config.Locations[shop]["products"]) do 
             Config.Locations[shop]["products"][k].amount = Config.Locations[shop]["products"][k].amount + amount
-        end
-    end
-end)
-
-RegisterNetEvent('rl-shops:client:callbackerino')
-AddEventHandler('rl-shops:client:callbackerino', function(check)
-    for shop, _ in pairs(Config.Locations) do
-        local ShopItems = {}
-        ShopItems.label = Config.Locations[shop]["label"]
-        ShopItems.items = Config.Locations[shop]["products"]
-        ShopItems.slots = 30
-        if Config.Locations[shop]["type"] == 'weapon' then
-            if check then
-                TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_weapon", ShopItems)
-                return
-            else
-                RLCore.Functions.Notify("You Dont Have A Weapons Licence!", "error")
-                Citizen.Wait(1500)
-                RLCore.Functions.Notify("FOR NOW! go to city hall and click test, then add and come back", "error")
-                return
-            end
         end
     end
 end)

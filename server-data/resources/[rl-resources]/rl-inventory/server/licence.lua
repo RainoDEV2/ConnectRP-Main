@@ -12,7 +12,6 @@ AddEventHandler('tp_gunschool:addLicense', function(type)
 end)
 
 function AddLicense(target, type, cb) -- source, weapon, callback (MAYBE IM MISSING SOMETHING HERE AND ITS GETTING CONFUSSED?)
-	print("YEET")
 	local xPlayer = RLCore.Functions.GetPlayer(target) 
 	local identifier = GetPlayerIdentifier(target, 0) 
 
@@ -26,6 +25,7 @@ function AddLicense(target, type, cb) -- source, weapon, callback (MAYBE IM MISS
 		end 
 	end)
 end
+
 
 function RemoveLicense(target, type, cb)
 	local identifier = GetPlayerIdentifier(target, 0)
@@ -170,10 +170,10 @@ AddEventHandler("rlcore:checkLicence", function(shop, shopitems)
 	function(result)
 		--print(json.encode(result[1]))
 		if(result[1] == nil) then
-			TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'You do not have a license!' })
+			TriggerClientEvent('RLCore:Notify', source, 'You dont have a licence, Get one from #CHANGE ME', 'error', 3500)
 		else
 			TriggerClientEvent('rlshopsclient:inv', source, shop, shopitems)
-			print("Sent to client")
+			print("Sent to client") 
 		end
 	end)
 end)
