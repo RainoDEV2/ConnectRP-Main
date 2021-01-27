@@ -88,6 +88,16 @@ body {
     background: rgba(37, 37, 37, 0.418)
 }
 
+.cityhall-weapon-page {
+    display: none;
+    position: relative;
+    height: 40vh;
+    width: 80vh;
+    margin: 0 auto;
+    top: 5vh;
+    background: rgba(37, 37, 37, 0.418)
+}
+
 .cityhall-option-block {
     position: relative;
     width: 18vh;
@@ -223,6 +233,96 @@ body {
     letter-spacing: 0.1vh;
     color: white;
     font-size: 1.3vh;
+}
+
+.weapon-page-block {
+    width: 100%;
+    height: 15%;
+    background: rgb(212, 53, 53);
+    transition: all 0.1s ease-in-out;
+    border-bottom: 2px solid rgba(255, 255, 255, 0);
+}
+
+.weapon-page-block:hover {
+    background: rgb(255, 58, 58);
+}
+
+.weapon-page-block > p {
+    position: relative;
+    text-align: center;
+    line-height: 6vh;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.1vh;
+    color: white;
+    font-size: 1.3vh;
+}
+
+.apply-weapon-button {
+    position: relative;
+    top: 1vh;
+    right: 0;
+    margin: 1vh;
+    width: 20vh;
+    height: 5vh;
+    background: rgb(235, 50, 50);
+    transition: all 0.1s linear;
+}
+
+.apply-weapon-button > p {
+    color: white;
+    text-align: center;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-size: 1.1vh;
+    font-weight: bold;
+    line-height: 5vh;
+    letter-spacing: 0.05vh;
+}
+
+.remove-weapon-button {
+    position: relative;
+    top: 1vh;
+    right: 0;
+    margin: 1vh;
+    width: 20vh;
+    height: 5vh;
+    background: rgb(235, 50, 50);
+    transition: all 0.1s linear;
+}
+
+.remove-weapon-button > p {
+    color: white;
+    text-align: center;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-size: 1.1vh;
+    font-weight: bold;
+    line-height: 5vh;
+    letter-spacing: 0.05vh;
+}
+
+.check-weapon-button {
+    position: relative;
+    top: 1vh;
+    right: 0;
+    margin: 1vh;
+    width: 20vh;
+    height: 5vh;
+    background: rgb(235, 50, 50);
+    transition: all 0.1s linear;
+}
+
+.check-weapon-button > p {
+    color: white;
+    text-align: center;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-size: 1.1vh;
+    font-weight: bold;
+    line-height: 5vh;
+    letter-spacing: 0.05vh;
 }
 
 .apply-job-button {
