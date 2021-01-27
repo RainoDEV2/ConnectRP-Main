@@ -104,17 +104,17 @@ Citizen.CreateThread(function()
 
         if dist < 20 then
             inRange = true
-            --DrawMarker(2, Config.Cityhall.coords.x, Config.Cityhall.coords.y, Config.Cityhall.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.2, 155, 152, 234, 155, false, false, false, true, false, false, false)
+            DrawMarker(2, Config.Cityhall.coords.x, Config.Cityhall.coords.y, Config.Cityhall.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.2, 155, 152, 234, 155, false, false, false, true, false, false, false)
             if GetDistanceBetweenCoords(pos, Config.Cityhall.coords.x, Config.Cityhall.coords.y, Config.Cityhall.coords.z, true) < 1.5 then
-                qbCityhall.DrawText3Ds(Config.Cityhall.coords, '[E] City Hall')
+                qbCityhall.DrawText3Ds(Config.Cityhall.coords, '~g~E~w~ - City Hall')
                 if IsControlJustPressed(0, Keys["E"]) then
                     qbCityhall.Open()
                 end
             end
-            --DrawMarker(2, Config.DriverTest.coords.x, Config.DriverTest.coords.y, Config.DriverTest.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.2, 155, 152, 234, 155, false, false, false, true, false, false, false)
+            DrawMarker(2, Config.DriverTest.coords.x, Config.DriverTest.coords.y, Config.DriverTest.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.2, 155, 152, 234, 155, false, false, false, true, false, false, false)
                 if GetDistanceBetweenCoords(pos, Config.DriverTest.coords.x, Config.DriverTest.coords.y, Config.DriverTest.coords.z, true) < 1.5 then
                     --[[if creatingCompany then
-                        qbCityhall.DrawText3Ds(Config.DriverTest.coords, '~g~E~w~ - Create company ($ '.. Config.CompanyPrice ..') | ~r~ G ~w~ - Stop')
+                        qbCityhall.DrawText3Ds(Config.DriverTest.coords, '~g~E~w~ - Create company (€ '.. Config.CompanyPrice ..') | ~r~ G ~w~ - Stop')
                         if IsControlJustPressed(0, Keys["E"]) then
                             TriggerServerEvent("rl-companies:server:createCompany", currentName)
                             creatingCompany = false
@@ -123,7 +123,7 @@ Citizen.CreateThread(function()
                             creatingCompany = false
                         end
                     else]]
-                        qbCityhall.DrawText3Ds(Config.DriverTest.coords, '[E] Request Driving Test')
+                        qbCityhall.DrawText3Ds(Config.DriverTest.coords, '~g~E~w~ - Request Driving Lessons')
                         if IsControlJustPressed(0, Keys["E"]) then
                             if RLCore.Functions.GetPlayerData().metadata["licences"]["driver"] then
                                 RLCore.Functions.Notify("You have already obtained your driving license, request it alongside")
@@ -135,7 +135,7 @@ Citizen.CreateThread(function()
                                 end)
                                 TriggerServerEvent("rl-cityhall:server:sendDriverTest")
                             else
-                                RLCore.Functions.Notify("Please wait a While Before Requesting Again.", 'error')
+                                RLCore.Functions.Notify("You request them that fast, Please wait.", 'error')
                             end
                         end
 
@@ -155,9 +155,9 @@ Citizen.CreateThread(function()
 
         if dist2 < 20 then
             inRange = true
-            --DrawMarker(2, Config.DrivingSchool.coords.x, Config.DrivingSchool.coords.y, Config.DrivingSchool.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.2, 155, 152, 234, 155, false, false, false, true, false, false, false)
+            DrawMarker(2, Config.DrivingSchool.coords.x, Config.DrivingSchool.coords.y, Config.DrivingSchool.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.2, 155, 152, 234, 155, false, false, false, true, false, false, false)
             if GetDistanceBetweenCoords(pos, Config.DrivingSchool.coords.x, Config.DrivingSchool.coords.y, Config.DrivingSchool.coords.z, true) < 1.5 then
-                qbCityhall.DrawText3Ds(Config.DrivingSchool.coords, '[E] Request driving lessons')
+                qbCityhall.DrawText3Ds(Config.DrivingSchool.coords, '~g~E~w~ - Request driving lessons')
                 if IsControlJustPressed(0, Keys["E"]) then
                     if RLCore.Functions.GetPlayerData().metadata["licences"]["driver"] then
                         RLCore.Functions.Notify("You have already obtained your driving license, pick it up at the town hall!")
@@ -169,7 +169,7 @@ Citizen.CreateThread(function()
                         end)
                         TriggerServerEvent("rl-cityhall:server:sendDriverTest")
                     else
-                        RLCore.Functions.Notify("Please wait a While Before Requesting Again.", 'error')
+                        RLCore.Functions.Notify("You request them that fast, Please wait.", 'error')
                     end
                 end
             end
@@ -191,7 +191,7 @@ AddEventHandler('rl-cityhall:client:sendDriverEmail', function(charinfo)
         TriggerServerEvent('rl-phone:server:sendNewMail', {
             sender = "Township",
             subject = "Request driving lessons",
-            message = "Hi, " .. zcharinfo.firstname .. ' ' .. zcharinfo.lastname .. ",<br /><br />We have just received a message that someone wants to get driving lessons/Drivers license. <br /> If you are willing to teach, please contact:<br />Name: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Phone Number: <strong>"..charinfo.phone.."</strong><br/><br/>Sincerely,<br />Cityhall",
+            message = "Hi, " .. zcharinfo.firstname .. ' ' .. zcharinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take driving lessons. <br /> If you are willing to teach, please contact:<br />Name: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Phone Number: <strong>"..charinfo.phone.."</strong><br/><br/>Sincerely,<br />Realistic Cityhall",
             button = {}
         })
     end)
@@ -203,23 +203,19 @@ local idTypes = {
         item = "id_card"
     },
     ["drivers license"] = {
-        label = "Drivers License",
+        label = "Drivers license",
         item = "driver_license"
-    },
-    ['Weapon ID'] = {
-        label = "Concealed Carry Licence",
-        item = "weapon_card"
     }
 }
 
 RegisterNUICallback('requestId', function(data)
     if inRange then
         local idType = data.idType
-        local PlayerData = RLCore.Functions.GetPlayerData()
+
         print(idType)
         print(idTypes[idType])
         TriggerServerEvent('rl-cityhall:server:requestId', idTypes[idType])
-        RLCore.Functions.Notify('You got your id card applied for $ 50', 'success', 3500)
+        RLCore.Functions.Notify('You got your id card applied for € 50', 'success', 3500)
     else
         RLCore.Functions.Notify('Unfortunately it wont work mate...', 'error')
     end
@@ -274,12 +270,4 @@ RegisterNUICallback('applyJob', function(data)
     else
         RLCore.Functions.Notify('Unfortunately it wont work mate...', 'error')
     end
-end)
-
-RegisterNUICallback('Licence', function(tog)
-    TriggerServerEvent('rl-cityhall:server:weaponlicense:check1', tog)
-end)
-
-RegisterNUICallback('Check', function()
-    print(RLCore.Functions.GetPlayerData().metadata["licences"]["weapon1"])
 end)

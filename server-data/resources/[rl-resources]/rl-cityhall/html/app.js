@@ -23,7 +23,6 @@ qbCityhall.ResetPages = function() {
     $(".cityhall-option-blocks").show();
     $(".cityhall-identity-page").hide();
     $(".cityhall-job-page").hide();
-    $(".cityhall-weapon-page").hide();
 }
 
 $(document).ready(function(){
@@ -101,10 +100,10 @@ $(document).on("click", ".identity-page-block", function(e){
         selectedIdentity = this;
         if (idType== "id-kaart") {
             $(".request-identity-button").fadeIn(100);
-            $(".request-identity-button").html("<p>Request ID card ($50,-)</p>")
+            $(".request-identity-button").html("<p>Request ID card (€50,-)</p>")
         } else {
             $(".request-identity-button").fadeIn(100);
-            $(".request-identity-button").html("<p>Apply for a driver's license ($50,-)</p>")
+            $(".request-identity-button").html("<p>Apply for a driver's license (€50,-)</p>")
         }
     } else if (selectedIdentity == this) {
         $(this).removeClass("identity-selected");
@@ -115,9 +114,9 @@ $(document).on("click", ".identity-page-block", function(e){
         $(this).addClass("identity-selected");
         selectedIdentity = this;
         if($(this).data('type') == "id-kaart") {
-            $(".request-identity-button").html("<p>Request ID card ($50,-)</p>")
+            $(".request-identity-button").html("<p>Request ID card (€50,-)</p>")
         } else {
-            $(".request-identity-button").html("<p>Apply for a driver's license ($50,-)</p>")
+            $(".request-identity-button").html("<p>Apply for a driver's license (€50,-)</p>")
         }
     }
 });
@@ -162,26 +161,6 @@ $(document).on('click', '.apply-job-button', function(e){
     }))
 
     qbCityhall.ResetPages();
-});
-
-$(document).on("click", ".weapon-page-block", function(e){
-    e.preventDefault();
-    $(".apply-weapon-button").show();
-});
-
-$(document).on('click', '.apply-weapon-button', function(e){
-    e.preventDefault();
-    $.post('http://rl-cityhall/Licence', JSON.stringify(true));
-});
-
-$(document).on('click', '.remove-weapon-button', function(e){
-    e.preventDefault();
-    $.post('http://rl-cityhall/Licence', JSON.stringify(false));
-});
-
-$(document).on('click', '.check-weapon-button', function(e){
-    e.preventDefault();
-    $.post('http://rl-cityhall/Check');
 });
 
 $(document).on('click', '.back-to-main', function(e){
