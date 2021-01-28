@@ -30,11 +30,15 @@ function GenerateUniquePlate()
     local upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     local numbers = "0123456789"
     local characterSet = numbers .. upperCase
-    local keyLength = 7
+    local keyLength = 8
     local output = ""
-    for	i = 1, keyLength do
-        local rand = math.random(#characterSet)
-        output = output .. string.sub(characterSet, rand, rand)
+    for    i = 1, keyLength do
+        if i == 4 then -- coded by RooRoo <3
+          output = output .. " "
+        else
+          local rand = math.random(#characterSet)
+          output = output .. string.sub(characterSet, rand, rand)
+        end
     end
     print(output)
     return output
