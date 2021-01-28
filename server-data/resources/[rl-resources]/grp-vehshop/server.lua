@@ -85,27 +85,13 @@ AddEventHandler('BuyForVeh', function(vehicleProps,name, vehicle, price, finance
     if financed then
         print(vehicleProps.plate)
         print(json.encode(price))
-        --local cols = 'citizenid, plate, vehicle, buy_price, finance, financetimer, vehiclename, shop'
-        --local val = '@citizenid, @plate, @vehicle, @buy_price, @finance, @financetimer, @vehiclename, @shop'
         local downPay = math.ceil(price / 4)
-        --local data = RLCore.Functions.ExecuteSql(false,"SELECT money FROM addon_account_data WHERE account_name=@account_name",{['@account_name'] = 'pdm'})
-        --local curSociety = data[1].money
-       -- MySQL.Async.execute('INSERT INTO bbvehicles (citizenid, plate, vehicle, buy_price, finance, financetimer, vehiclename, shop) VALUES (@citizenid, @plate, @vehicle, @buy_price, @finance, @financetimer, @vehiclename, @shop)',
-       local plate = vehicleProps.plate
-        RLCore.Functions.ExecuteSql(false,"INSERT INTO `bbvehicles` (`citizenid`, `plate`, `props`, `buy_price`, `finance`, `financetimer`, `vehiclename`) VALUES ('"..xPlayer.PlayerData.citizenid.."', '"..plate.."', '"..json.encode(vehicleProps).."', '"..price.."', '"..price - downPay.."', '"..repayTime.."', '"..vehicle.."')")
-        --RLCore.Functions.ExecuteSql(false,'UPDATE addon_account_data SET money=@money WHERE account_name=@account_name',{['@money'] = curSociety + downPay,['@account_name'] = 'pdm'})
-    else
-        --local data = RLCore.Functions.ExecuteSql(false,"SELECT money FROM addon_account_data WHERE account_name=@account_name",{['@account_name'] = 'pdm'})
-        --local curSociety = data[1].money
         local nig = {damage = 10, fuel = 98}
-        RLCore.Functions.ExecuteSql(false,"INSERT INTO `bbvehicles` (`citizenid`, `plate`, `model`, `props`, `stats`, `state`) VALUES ('"..xPlayer.PlayerData.citizenid.."', '"..vehicleProps.plate.."', '"..vehicle.."', '"..json.encode(vehicleProps).."', '"..json.encode(nig).."', 'unknown')"--[[,{
-            ['@citizenid']   = xPlayer.PlayerData.citizenid,
-            ['@plate']   = vehicleProps.plate,
-            ['@props'] = json.encode(vehicleProps),
-            ['@vehiclename'] = vehicle,
-            ['@buy_price'] = price
-        }]])
-        --RLCore.Functions.ExecuteSql(false,'UPDATE addon_account_data SET money=@money WHERE account_name=@account_name',{['@money'] = curSociety + price,['@account_name'] = 'pdm'})
+       local plate = vehicleProps.plate
+        RLCore.Functions.ExecuteSql(false,"INSERT INTO `bbvehicles` (`citizenid`, `plate`, `props`, `model`, `buy_price`, `finance`, `financetimer`, `vehiclename`, `stats`, `state`) VALUES ('"..xPlayer.PlayerData.citizenid.."', '"..plate.."', '"..json.encode(vehicleProps).."', '"..vehicle.."', '"..price.."', '"..price - downPay.."', '"..repayTime.."', '"..vehicle.."', '"..json.encode(nig).."', 'unknown')")
+    else
+        local nig = {damage = 10, fuel = 98}
+        RLCore.Functions.ExecuteSql(false,"INSERT INTO `bbvehicles` (`citizenid`, `plate`, `model`, `props`, `stats`, `state`) VALUES ('"..xPlayer.PlayerData.citizenid.."', '"..vehicleProps.plate.."', '"..vehicle.."', '"..json.encode(vehicleProps).."', '"..json.encode(nig).."', 'unknown')")
     end
 end)
 

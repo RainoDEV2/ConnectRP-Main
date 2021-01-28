@@ -1,0 +1,225 @@
+local JVF = JAM.VehicleFinance
+local JVS = JAM.VehicleShop
+
+-- Start Thread
+
+function JVF:Start()
+	if not self then 
+		return
+	end
+	while not JUtils do
+		Citizen.Wait(0)
+	end
+	while not JVS do 
+		Citizen.Wait(0)
+	end
+
+	--self:FinanceCheck()
+	Citizen.CreateThread(function(...) 
+		self:PlayerUpdate(...)
+	end)
+end
+
+RLCore = nil
+Citizen.CreateThread(function() 
+    while RLCore == nil do
+        Citizen.Wait(10)
+        TriggerEvent("RLCore:GetObject", function(obj) RLCore = obj end)    
+    end
+
+    while not RLCore.Functions.GetPlayerData() do
+        Wait(1)
+    end
+
+    while not RLCore.Functions.GetPlayerData().job do
+        Wait(1)
+    end
+
+    PlayerData = RLCore.Functions.GetPlayerData()
+
+	self:FinanceCheck()
+end)
+
+-- Player Functions
+
+function JVF:FinanceCheck()
+	ESX.TriggerServerCallback('JAM_VehicleFinance:PlayerLogin', function(repo)
+		if repo then 
+			exports['mythic_notify']:SendAlert('error', 'One of your vehicles has been marked for reposession. <br/>Make a payment now by visiting the dealership and using the computer at the front desk.', 30000)
+			--ESX.ShowNotification("One of your vehicles has been marked for reposession. Make a repayment now (with /doRepay amount).") 
+			TriggerServerEvent('JAM_VehicleFinance:MarkVehicles', repo)
+		end
+	end)
+end
+
+local gotem = false
+local allreadyDone = false
+local removeBlipu = false
+
+function JVF:MechanicUpdate()
+	while not self.Towables do Citizen.Wait(0); end	
+	local closestVeh,closestDist,closestRepo
+	local tick = 0
+	local timer = GetGameTimer()
+
+	while true do
+		Citizen.Wait(0)	
+		tick = tick + 1
+		if tick % 100 == 1 then
+			closestVeh = false
+			closestDist = false
+			closestRepo = false
+
+			local plyPos = GetEntityCoords(GetPlayerPed(-1))
+			local allVehicles = RLCore.Functions.GetVehiclesInArea(plyPos, 800000.0) 
+
+			for k,v in pairs(allVehicles) do
+				local vehProps = RLCore.Functions.GetVehicleProperties(v)
+				local vehPos = GetEntityCoords(v)
+				local dist = JUtils:GetVecDist(plyPos, vehPos)
+				if not closestDist or closestDist > dist then
+					for key,val in pairs(self.Towables) do
+						if val.plate == vehProps.plate then
+							closestDist = dist
+							closestRepo = v
+						end
+					end
+				end
+			end
+		end
+
+		if closestRepo and closestDist then
+			
+				if closestDist < 500000.0 then
+					local closestPos = GetEntityCoords(closestRepo)
+					createBlip(closestRepo)
+					local plate = GetVehicleNumberPlateText(closestRepo)
+					local vehicleLabel = GetLabelText(GetDisplayNameFromVehicleModel(GetEntityModel(closestRepo)))
+					local streetName = GetStreetNameAtCoord(closestPos.x, closestPos.y, closestPos.z)
+					local readableStreetname = GetStreetNameFromHashKey(streetName)
+					allreadyDone = true
+					
+					--DrawMarker(27, closestPos.x, closestPos.y, closestPos.z - 0.4, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 5.0, 5.0, 255, 45, 45, 100, false, true, 2, false, false, false, false)
+					--DrawMarker(29, closestPos.x, closestPos.y, closestPos.z + 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 2.0, 255, 45, 45, 100, false, true, 2, false, false, false, false)
+					--createBlip()
+					if gotem then
+						-- do nothing
+					else
+							--[[ createBlip(closestRepo)
+							local plate = GetVehicleNumberPlateText(closestRepo)
+							local vehicleLabel = GetLabelText(GetDisplayNameFromVehicleModel(GetEntityModel(closestRepo)))
+							local streetName = GetStreetNameAtCoord(closestPos.x, closestPos.y, closestPos.z)
+							local readableStreetname = GetStreetNameFromHashKey(streetName)
+							exports['mythic_notify']:SendAlert('inform', 'You are looking for;<br />Model: <span style="font-weight:bold;color:red;">' .. vehicleLabel .. '</span> <br />Plate: <span style="font-weight:bold;color:red;">' .. plate .. '</span><br/> Last seen on ' .. readableStreetname, 45000, { ['background-color'] = '#fcc200', ['color'] = '#000000' })
+							gotem = true ]]
+						end
+					end
+					--createBlip(closestRepo)
+
+					self:DrawRepoMarker(closestRepo, timer)
+				elseif closestDist > 50.0 then
+					closestDist = false
+					closestRepo = false
+				
+				end
+			
+	end
+
+end
+
+
+function createBlip(closestRepo)
+    --local ped = GetPlayerPed(-1)
+    --local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+	--local blip = GetBlipFromEntity(vehicle)
+	if allreadyDone == false then
+		local closestPos = GetEntityCoords(closestRepo)
+		local plate = GetVehicleNumberPlateText(closestRepo)
+		local vehicleLabel = GetLabelText(GetDisplayNameFromVehicleModel(GetEntityModel(closestRepo)))
+		local streetName = GetStreetNameAtCoord(closestPos.x, closestPos.y, closestPos.z)
+		local readableStreetname = GetStreetNameFromHashKey(streetName)
+
+		exports['mythic_notify']:SendAlert('inform', 'You are looking for;<br />Model: <span style="font-weight:bold;color:red;">' .. vehicleLabel .. '</span> <br />Plate: <span style="font-weight:bold;color:red;">' .. plate .. '</span><br/> Last seen on ' .. readableStreetname, 45000, { ['background-color'] = '#fcc200', ['color'] = '#000000' })
+
+
+		blip = AddBlipForEntity(closestRepo)
+		SetBlipSprite(blip, 1)
+		SetBlipColour(blip, 5)
+		SetBlipFlashes(blip, true)
+		ShowHeadingIndicatorOnBlip(blip, true) -- Player Blip indicator
+		SetBlipRotation(blip, math.ceil(GetEntityHeading(ped))) -- update rotation
+		BeginTextCommandSetBlipName("STRING")
+		AddTextComponentString('Car for repo')
+		EndTextCommandSetBlipName(blip)
+		SetBlipScale(blip, 0.8) -- set scale
+		SetBlipAsShortRange(blip, true)
+		--SetBlipColour(blip, 42)
+	end
+end
+
+function JVF:DrawRepoMarker(closestRepo, timer)
+	local plyPos = GetEntityCoords(GetPlayerPed(-1))
+	local dist = JUtils:GetVecDist(self.RepoPoint, plyPos)
+	if dist < 50.0 then
+		DrawMarker(1, self.RepoPoint.x, self.RepoPoint.y, self.RepoPoint.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 2.0, 255, 45, 45, 100, false, true, 2, false, false, false, false)
+		if dist < 5.0 then
+			ESX.ShowHelpNotification("Press ~INPUT_PICKUP~ to repossess the nearest vehicle.")
+			if (IsControlJustPressed(0, 86) or IsDisabledControlJustPressed(0, 86)) and (GetGameTimer() - timer > 200) then
+				timer = GetGameTimer()
+				local vehProps = RLCore.Functions.GetVehicleProperties(closestRepo)
+				ESX.TriggerServerCallback('JAM_VehicleFinance:RepoVehicleEnd', function(valid, val)
+					if valid then 
+						local maxPassengers = GetVehicleMaxNumberOfPassengers(closestRepo)
+				    for seat = -1,maxPassengers-1,1 do
+				      local ped = GetPedInVehicleSeat(closestRepo,seat)
+				    if ped and ped ~= 0 then TaskLeaveVehicle(ped,closestRepo,16); end
+				    end 
+					RLCore.Functions.DeleteVehicle(closestRepo)
+						ESX.ShowNotification('You earnt $~g~'..val..'~s~ for the repossession.')
+						table.remove(self.Towables,k)
+					else
+						ESX.ShowNotification("You can't repossess this vehicle.")
+					end
+				end, vehProps)
+			end
+		end
+	end
+end
+
+-- Repo Events
+
+RegisterNetEvent('JAM_VehicleFinance:RemoveRepo')
+AddEventHandler('JAM_VehicleFinance:RemoveRepo', function(vehicle)
+	--if not JVF or not JVF.Towables or not JVF.Towables[1] then return; end
+	for k,v in pairs(JVF.Towables) do
+		if v.plate == vehicle then
+			table.remove(JVF.Towables,k)
+		end	
+	end
+end)
+
+RegisterNetEvent('JAM_VehicleFinance:MarkForRepo')
+AddEventHandler('JAM_VehicleFinance:MarkForRepo', function(vehicles)
+	while not RLCore do Citizen.Wait(0); end
+	local plyData = RLCore.Functions.GetPlayerData()
+	if plyData.job.name ~= JVF.TowDriverJob then return; end
+	JVF.Towables = JVF.Towables or {}
+	for k,v in pairs(vehicles) do table.insert(JVF.Towables, v); end
+end)
+
+RegisterCommand('checkRepos', function(...) 
+	local plyData = RLCore.Functions.GetPlayerData()
+	allreadyDone = false
+	exports['mythic_notify']:SendAlert('error', 'If you dont see a message after this, That means there are currently no repos on the streets <br/ > <br/ >Try again in a short while.', 10000)
+	if plyData.job.name == JVF.TowDriverJob then
+		if not JVF.Towables then exports['mythic_notify']:SendAlert('error', 'There are no vehicles marked for reposession at the moment.', 10000); return; end
+		local compString = ''
+		for k,v in pairs(JVF.Towables) do
+			local str = 'Plate : '..v.plate..'\nOwed : '..v.finance..'\n'
+			print(str)
+			JVF:MechanicUpdate()
+		end
+	end
+end)
+
+Citizen.CreateThread(function(...) JVF:Start(); end)
