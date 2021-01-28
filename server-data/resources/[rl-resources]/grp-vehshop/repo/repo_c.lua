@@ -138,7 +138,7 @@ function createBlip(closestRepo)
 		local streetName = GetStreetNameAtCoord(closestPos.x, closestPos.y, closestPos.z)
 		local readableStreetname = GetStreetNameFromHashKey(streetName)
 
-		RLCore.Functions.Notify('You are looking for;<br />Model: <span style="font-weight:bold;color:red;">' .. vehicleLabel .. '</span> <br />Plate: <span style="font-weight:bold;color:red;">' .. plate .. '</span><br/> Last seen on ' .. readableStreetname,'inform')
+		RLCore.Functions.Notify('You are looking for:<br />Model: <span style="font-weight:bold;color:red;">' .. vehicleLabel .. '</span> <br />Plate: <span style="font-weight:bold;color:red;">' .. plate .. '</span><br/> Last seen on ' .. readableStreetname,'repo', 25000) 
 
 		blip = AddBlipForEntity(closestRepo)
 		SetBlipSprite(blip, 1)
@@ -159,16 +159,15 @@ local RepoPoint = vector3(421.850, -1149.630, 28)
 function DrawRepoMarker(closestRepo, timer)
 	local plyPos = GetEntityCoords(GetPlayerPed(-1))
 	local dist = GetVecDist(RepoPoint, plyPos)
-	if dist < 50.0 then
-		DrawMarker(1, RepoPoint.x, RepoPoint.y, RepoPoint.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 2.0, 255, 45, 45, 100, false, true, 2, false, false, false, false)
-		if dist < 5.0 then
-			RLCore.Functions.Notify("Press ~INPUT_PICKUP~ to repossess the nearest vehicle.",'error')
-			--ESX.ShowHelpNotification("Press ~INPUT_PICKUP~ to repossess the nearest vehicle.")
+	if dist < 30.0 then
+		DrawMarker(2, RepoPoint.x, RepoPoint.y, RepoPoint.z+1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
+		if dist < 3.0 then
+			DrawText3D(RepoPoint.x, RepoPoint.y, RepoPoint.z +1.2,"[E] To Repo") 
+			--ESX.ShowHelpNotification("Press ~INPUT_PICKUP~ to repossess the nearest vehicle.") 
 			if (IsControlJustPressed(0, 86) or IsDisabledControlJustPressed(0, 86)) and (GetGameTimer() - timer > 200) then
 				timer = GetGameTimer()
 				local vehProps = RLCore.Functions.GetVehicleProperties(closestRepo)
 				RLCore.Functions.TriggerCallback('JAM_VehicleFinance:RepoVehicleEnd', function(valid, val)
-					print("I DI DIT")
 					if valid then 
 						local maxPassengers = GetVehicleMaxNumberOfPassengers(closestRepo)
 				    for seat = -1,maxPassengers-1,1 do
@@ -187,6 +186,24 @@ function DrawRepoMarker(closestRepo, timer)
 			end
 		end
 	end
+end
+
+
+
+function DrawText3D(x,y,z, text)
+	local onScreen,_x,_y=World3dToScreen2d(x,y,z)
+	local px,py,pz=table.unpack(GetGameplayCamCoords())
+	SetTextScale(0.35, 0.35)
+	SetTextFont(4)
+	SetTextProportional(1)
+	SetTextColour(255, 255, 255, 215)
+
+	SetTextEntry("STRING")
+	SetTextCentre(1)
+	AddTextComponentString(text)
+	DrawText(_x,_y)
+	local factor = (string.len(text)) / 370
+	DrawRect(_x,_y+0.0125, 0.015+ factor, 0.03, 41, 11, 41, 68)
 end
 
 -- Repo Events
