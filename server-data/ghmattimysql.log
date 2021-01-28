@@ -1,2 +1,2 @@
-[32m[ghmattimysql][0m Database server connection established.
-[ERROR] [MariaDB:10.4.13-MariaDB] [rl-core] An error happens on MySQL for query "SELECT * FROM bbvehicles WHERE owner=@identifier : []": ER_BAD_FIELD_ERROR: Unknown column 'owner' in 'where clause'
+[ERROR] connect ETIMEDOUT
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query "SELECT * FROM bbvehicles WHERE owner=@identifier : []": ER_BAD_FIELD_ERROR: Unknown column 'owner' in 'where clause'
