@@ -1,68 +1,19 @@
 local JVF = JAM.VehicleFinance
 local JVS = JAM.VehicleShop
 
+RLCore = nil
+TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
+
 JVF.PlayerTable = {}
-
-ESX.RegisterServerCallback('JAM_VehicleFinance:CheckFunds', function(source, cb, financeAmount, lastVeh)	
-	local xPlayer = ESX.GetPlayerFromId(source)
-	while not xPlayer do Citizen.Wait(0); ESX.GetPlayerFromId(source); end
-	if not JVS or not JVS.ShopData then return; end
-	local model = lastVeh.veh
-	local newPrice, profit
-	for k,v in pairs(JVS.ShopData) do
-		for k,v in pairs(v) do
-			if model == v.model then
-				newPrice = v.price
-				if v.profit then profit = v.profit; end
-			end
-		end
-	end
-	if profit then 
-		newVal = (newPrice + (newPrice * (profit / 100))) * (financeAmount / 100)
-		newPrice = newPrice + (newPrice * (profit / 100))
-	else
-		newVal = (newPrice) * (financeAmount / 100)
-	end
-	if xPlayer.getMoney() >= newVal then cbData = true;
-	else cbData = false
-	end
-	cb(cbData, newVal, newPrice)
-end)
-
-RegisterNetEvent('JAM_VehicleFinance:CompletePurchase')
-AddEventHandler('JAM_VehicleFinance:CompletePurchase', function(vehicleProps, downpay, price)
-	local xPlayer = ESX.GetPlayerFromId(source)
-	while not xPlayer do Citizen.Wait(0); ESX.GetPlayerFromId(source); end
-	xPlayer.removeMoney(downpay)
-	TriggerClientEvent("banking:removeBalance", source, downpay)
-	local repayTime = JVF.MaxRepayTime * 60
-	MySQL.Async.execute('INSERT INTO owned_vehicles (owner, plate, finance, financetimer, vehicle, retailprice) VALUES (@owner, @plate, @finance, @financetimer, @vehicle, @retailprice)',
-	{
-		['@owner']   = xPlayer.identifier,
-		['@plate']   = vehicleProps.plate,
-		['@finance'] = price - downpay,
-		['@financetimer'] = repayTime,
-		['@vehicle'] = json.encode(vehicleProps),
-		['@retailprice'] = price
-	})
-	local name = "PIG"
-	local car = vehicleProps.name
-
-	local message = "You just financed a " .. car .." with the plate " ..vehicleProps.plate .. ". You should store this car in a garage immediately."
-
-	TriggerClientEvent('phone:addnotification', source, name, message)
-end)
-
-
 
 RegisterNetEvent('JAM_VehicleFinance:PlayerDropped')
 AddEventHandler('JAM_VehicleFinance:PlayerDropped', function(startTime)
-	local xPlayer = ESX.GetPlayerFromId(source)
+	local xPlayer = RLCore.Functions.GetPlayerData(source)
 	local tick = 0
 	while not xPlayer and tick < 100 do
 		Citizen.Wait(0)
 		tick = tick + 1
-		xPlayer = ESX.GetPlayerFromId(source)
+		xPlayer = RLCore.Functions.GetPlayerData(source)
 	end
 
 	local data = MySQL.Sync.fetchAll('SELECT * FROM owned_vehicles WHERE owner=@owner',{['@owner'] = xPlayer.getIdentifier()})
@@ -92,7 +43,7 @@ ESX.RegisterServerCallback('JAM_VehicleFinance:RepoVehicle', function(source,cb,
 end)
 
 ESX.RegisterServerCallback('JAM_VehicleFinance:RepoVehicleEnd', function(source, cb, vehicle)
-	while not xPlayer do Citizen.Wait(10); xPlayer = ESX.GetPlayerFromId(source); end
+	while not xPlayer do Citizen.Wait(10); xPlayer = RLCore.Functions.GetPlayerData(source); end
 	local canDel = true
 	local val = 0
 	local data = MySQL.Sync.fetchAll("SELECT * FROM owned_vehicles WHERE plate=@plate",{['@plate'] = vehicle.plate})	
@@ -126,13 +77,13 @@ ESX.RegisterServerCallback('JAM_VehicleFinance:RepoVehicleEnd', function(source,
 end)
 
 ESX.RegisterServerCallback('JAM_VehicleFinance:GetOwnedVehicles',function(source, cb)
-	local xPlayer = ESX.GetPlayerFromId(source)
-	while not xPlayer do xPlayer = ESX.GetPlayerFromId(source); Citizen.Wait(0);end
+	local xPlayer = RLCore.Functions.GetPlayerData(source)
+	while not xPlayer do xPlayer = RLCore.Functions.GetPlayerData(source); Citizen.Wait(0);end
 	local data = MySQL.Sync.fetchAll("SELECT * FROM owned_vehicles WHERE owner=@identifier",{['@identifier'] = xPlayer.identifier})		
 	cb(data)
 end)
 
-ESX.RegisterServerCallback('JAM_VehicleFinance:RepayLoan', function(source, cb, plate, price)
+--[[ ESX.RegisterServerCallback('JAM_VehicleFinance:RepayLoan', function(source, cb, plate, price)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	while not xPlayer do
 		xPlayer = ESX.GetPlayerFromId(source)
@@ -154,7 +105,7 @@ ESX.RegisterServerCallback('JAM_VehicleFinance:RepayLoan', function(source, cb, 
 	local datMon = data[1].money
 	MySQL.Sync.execute('UPDATE addon_account_data SET money=@money WHERE account_name=@account_name',{['@money'] = datMon + price,['@account_name'] = 'society_cardealer'})
 	cb(cbData)
-end)
+end) ]]
 
 RegisterNetEvent('JAM_VehicleFinance:RemoveFromRepoList')
 AddEventHandler('JAM_VehicleFinance:RemoveFromRepoList', function(vehicle)

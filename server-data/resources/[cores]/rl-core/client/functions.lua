@@ -128,6 +128,22 @@ RLCore.Functions.GetVehicles = function()
 	return vehicles
 end
 
+RLCore.Functions.GetVehiclesInArea = function(coords, area)
+	local vehicles       = RLCore.Functions.GetVehicles()
+	local vehiclesInArea = {}
+
+	for i=1, #vehicles, 1 do
+		local vehicleCoords = GetEntityCoords(vehicles[i])
+		local distance      = GetDistanceBetweenCoords(vehicleCoords, coords.x, coords.y, coords.z, true)
+
+		if distance <= area then
+			table.insert(vehiclesInArea, vehicles[i])
+		end
+	end
+
+	return vehiclesInArea
+end
+
 RLCore.Functions.GetPeds = function(ignoreList)
     local ignoreList = ignoreList or {}
 	local peds       = {}
