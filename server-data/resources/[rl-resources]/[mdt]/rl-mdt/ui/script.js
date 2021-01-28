@@ -412,8 +412,9 @@ const mdtApp = new Vue({
         RemoveLicense(license) {
             for (var key in this.offender_selected.licenses) {
                 var license2 = this.offender_selected.licenses[key]
-                if (license.label == license2.label) {
+                if (license == license2) {
                     Vue.delete(this.offender_changes.licenses, key)
+                    console.log(this.offender_changes.licenses)
                     this.offender_changes.licenses_removed.push(license)
                 }
             }

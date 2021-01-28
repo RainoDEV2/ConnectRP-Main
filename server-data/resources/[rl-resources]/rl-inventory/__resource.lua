@@ -11,6 +11,7 @@ server_scripts {
 client_scripts {
 	"config.lua",
 	"client/main.lua",
+	"client/licencetest.lua",
 }
 
 ui_page {

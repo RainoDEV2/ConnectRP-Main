@@ -84,7 +84,6 @@ end)
 RegisterServerEvent("mdt:getOffenderDetails")
 AddEventHandler("mdt:getOffenderDetails", function(offender)
 	local src = source
-	local Player = RLCore.Functions.GetPlayer(src)
 	offender.licenses = {}
 
 	exports['ghmattimysql']:execute('SELECT * FROM `user_mdt` WHERE `char_id` = @id', {
@@ -114,27 +113,21 @@ AddEventHandler("mdt:getOffenderDetails", function(offender)
 					offender.haswarrant = true
 				end
 				
-				local lic = {
-					"driver",
-					'business',
-					'weapon1',
-				}
-
-				local k;
-
-				for i = 1, 3 do
-					if Player.PlayerData.metadata.licences[lic[i]] then
-						if lic[i] == 'driver' then
-							k = 'Driver'
-						elseif lic[i] == 'business' then
-							k = 'Business'
-						elseif lic[i] == 'weapon1' then
-							k = 'Concealed Carry'
+				exports['ghmattimysql']:execute("SELECT `driver`, `weapon1`, `weapon2` FROM `user_licenses` WHERE `citizenid` = @CID", {['@CID'] = 'VVG19503'}, function(result)
+					local names = {'driver', 'weapon1', 'weapon2'}
+					for i = 1, 3 do
+						if result[1][names[i]] == 1 then
+							if names[i] == 'driver' then
+								table.insert(offender.licenses, 'Drivers License')
+							elseif names[i] == 'weapon1' then
+								table.insert(offender.licenses, 'Concealed Carry License')
+							elseif names[i] == 'weapon2' then
+								table.insert(offender.licenses, 'Military License')
+							end
 						end
-						table.insert(offender.licenses, k)
 					end
-				end
-				TriggerClientEvent("mdt:returnOffenderDetails", src, offender)
+					TriggerClientEvent("mdt:returnOffenderDetails", src, offender)
+				end)
 			end)
 		end)
 	end)
@@ -146,27 +139,6 @@ AddEventHandler("mdt:getOffenderDetailsById", function(char_id)
 	local Player = RLCore.Functions.GetPlayer(src)
 	local xPlayer = RLCore.Functions.GetPlayerByCitizenId(char_id)
 	
-	local lic = {
-		"driver",
-		'business',
-		'weapon1',
-	}
-
-	local k;
-
-	for i = 1, 3 do
-		if xPlayer.PlayerData.metadata.licences[lic[i]] then
-			if lic[i] == 'driver' then
-				k = 'Driver'
-			elseif lic[i] == 'business' then
-				k = 'Business'
-			elseif lic[i] == 'weapon1' then
-				k = 'Concealed Carry'
-			end
-			table.insert(offender.licenses, k)
-		end
-	end
-		
 		exports['ghmattimysql']:execute('SELECT * FROM `user_mdt` WHERE `char_id` = @id', {
 			['@id'] = offender.id
 		}, function(result)
@@ -187,7 +159,22 @@ AddEventHandler("mdt:getOffenderDetailsById", function(char_id)
 					end
 				end
 
-				TriggerClientEvent("mdt:returnOffenderDetails", src, offender)
+				exports['ghmattimysql']:execute("SELECT `driver`, `weapon1`, `weapon2` FROM `user_licenses` WHERE `citizenid` = @CID", {['@CID'] = 'VVG19503'}, function(result)
+					local names = {'driver', 'weapon1', 'weapon2'}
+					for i = 1, 3 do
+						if result[1][names[i]] == 1 then
+							if names[i] == 'driver' then
+								table.insert(offender.licenses, 'Drivers License')
+							elseif names[i] == 'weapon1' then
+								table.insert(offender.licenses, 'Concealed Carry License')
+							elseif names[i] == 'weapon2' then
+								table.insert(offender.licenses, 'Military License')
+							end
+						end
+					end
+
+					TriggerClientEvent("mdt:returnOffenderDetails", src, offender)
+				end)
 			end)
 		end)
 end)
@@ -217,53 +204,22 @@ AddEventHandler("mdt:saveOffenderChanges", function(id, changes, citizenid)
 		end
 
 		if changes.licenses_removed then
-			local xPlayer = RLCore.Functions.GetPlayerByCitizenId(citizenid)
+			for i = 1, #changes.licenses_removed do
+				local OldNames = {'driver', 'weapon1', 'weapon2'}
+				local NewNames = {'Drivers License', 'Concealed Carry License', 'Military License'}	
+				local GoFetch;
 
-			if xPlayer then
-				for i = 1, #changes.licenses_removed do
-					local license = string.lower(changes.licenses_removed[i])
-					local a;
-					local b;
-					local c;
-
-					if license == 'driver' then
-						a = false
-						b = xPlayer.PlayerData.metadata.licences["business"]
-						c = xPlayer.PlayerData.metadata.licences["weapon1"]
-						print('no driver')
-					elseif license == 'business' then
-						a = xPlayer.PlayerData.metadata.licences["driver"]
-						b = false
-						c = xPlayer.PlayerData.metadata.licences["weapon1"]
-						print('no business')
-					elseif license == 'concealed carry' then
-						a = xPlayer.PlayerData.metadata.licences["driver"]
-						b = xPlayer.PlayerData.metadata.licences["business"]
-						c = false
-						print('no wep')
-					end
-					local metadatas = {
-						['driver'] = a,
-						['business'] = b,
-						['weapon1'] = c,
-					}
-
-					xPlayer.Functions.SetMetaData("licences", false)
+				if changes.licenses_removed[i] == NewNames[1] then
+					GoFetch = OldNames[1]
+				elseif changes.licenses_removed[i] == NewNames[2] then
+					GoFetch = OldNames[2]
+				elseif changes.licenses_removed[i] == NewNames[3] then
+					GoFetch = OldNames[3]
 				end
-			else
-				exports['ghmattimysql']:execute("SELECT * FROM `players` WHERE `citizenid` = '" .. citizenid .. "'", {}, function(result)
-					if result[1] then
-						local metadata = json.decode(result[1].metadata)
-						for i = 1, #changes.licenses_removed do
-							local license = string.lower(changes.licenses_removed[i])
-							if metadata.licences[license] ~= nil then
-								metadata.licences[license] = false
-							end
-						end
-						print(metadata)
-						exports['ghmattimysql']:execute("UPDATE `players` SET `metadata` = '" .. json.encode(metadata) .. "'")
-					end
-				end)
+
+				exports['ghmattimysql']:execute("UPDATE `user_licenses` SET "..GoFetch.." = '2' WHERE `citizenid` = @CID", {
+					['@CID'] = citizenid
+				})
 			end
 		end
 
