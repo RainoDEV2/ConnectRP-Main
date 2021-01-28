@@ -477,6 +477,7 @@ end
 
 RLCore.Player.DeleteCharacter = function(source, citizenid)
 	RLCore.Functions.ExecuteSql(true, "DELETE FROM `players` WHERE `citizenid` = '"..citizenid.."'")
+	RLCore.Functions.ExecuteSql(true, "DELETE FROM `user_licenses` WHERE `citizenid` = '"..citizenid.."'")
 	TriggerEvent("RL-log:server:sendLog", citizenid, "characterdeleted", {})
 	TriggerEvent("RL-log:server:CreateLog", "joinleave", "Character Deleted", "red", "**".. GetPlayerName(source) .. "** ("..GetPlayerIdentifiers(source)[1]..") deleted **"..citizenid.."**..")
 end
@@ -596,6 +597,7 @@ RLCore.Player.CreateCitizenId = function()
 			end
 		end)
 	end
+	RLCore.Functions.ExecuteSql(false, "INSERT INTO `user_licenses` (`citizenid`, `driver`, `weapon1`, `weapon2`) VALUES ('"..CitizenId.."', '1', '0', '0')")
 	return CitizenId
 end
 

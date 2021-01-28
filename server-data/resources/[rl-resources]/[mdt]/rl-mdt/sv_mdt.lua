@@ -113,7 +113,7 @@ AddEventHandler("mdt:getOffenderDetails", function(offender)
 					offender.haswarrant = true
 				end
 				
-				exports['ghmattimysql']:execute("SELECT `driver`, `weapon1`, `weapon2` FROM `user_licenses` WHERE `citizenid` = @CID", {['@CID'] = 'VVG19503'}, function(result)
+				exports['ghmattimysql']:execute("SELECT `driver`, `weapon1`, `weapon2` FROM `user_licenses` WHERE `citizenid` = @CID", {['@CID'] = offender.citizenid}, function(result)
 					local names = {'driver', 'weapon1', 'weapon2'}
 					for i = 1, 3 do
 						if result[1][names[i]] == 1 then
@@ -159,7 +159,7 @@ AddEventHandler("mdt:getOffenderDetailsById", function(char_id)
 					end
 				end
 
-				exports['ghmattimysql']:execute("SELECT `driver`, `weapon1`, `weapon2` FROM `user_licenses` WHERE `citizenid` = @CID", {['@CID'] = 'VVG19503'}, function(result)
+				exports['ghmattimysql']:execute("SELECT `driver`, `weapon1`, `weapon2` FROM `user_licenses` WHERE `citizenid` = @CID", {['@CID'] = char_id}, function(result)
 					local names = {'driver', 'weapon1', 'weapon2'}
 					for i = 1, 3 do
 						if result[1][names[i]] == 1 then
