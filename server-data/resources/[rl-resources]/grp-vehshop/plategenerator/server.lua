@@ -1,9 +1,9 @@
-ESX = nil
+
+RLCore = nil
+TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
+
 seeded = false
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-while not ESX do
-    Citizen.Wait(0)
-end
+
 
 Citizen.CreateThread(function()
     while not seeded do
@@ -20,17 +20,17 @@ RegisterCommand("newplate", function(source, args, raw)
 end, false)
 
 
-ESX.RegisterServerCallback('tp-generateplate', function(source, cb)
+RLCore.Functions.CreateCallback('tp-generateplate', function(source, cb)
     local newPlate = UniquePlateCheck()
     print(newPlate)
 	cb(newPlate)
-end)
+end) 
 
 function GenerateUniquePlate()
     local upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     local numbers = "0123456789"
     local characterSet = numbers .. upperCase
-    local keyLength = 8
+    local keyLength = 7
     local output = ""
     for	i = 1, keyLength do
         local rand = math.random(#characterSet)
@@ -42,8 +42,8 @@ end
 
 function UniquePlateCheck()
     local plate = GenerateUniquePlate()
-
-    local result = MySQL.Sync.fetchAll("SELECT * FROM owned_vehicles WHERE plate = @plate", {['@plate'] = plate})
+ 
+    local result = RLCore.Functions.ExecuteSql(false,"SELECT * FROM bbvehicles WHERE plate = @plate", {['@plate'] = plate})
     if result[1] then    -- Bad condition (Duplicate)
         print("Failure - Duplicate Plate!")
         Citizen.Wait(50)
