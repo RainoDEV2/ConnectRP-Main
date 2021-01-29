@@ -41,13 +41,6 @@ end)
 
 RLCore.Functions.CreateCallback('JAM_VehicleFinance:RepoVehicleEnd', function(source, cb, vehicle)
 
-	--[[ local xPlayer = RLCore.Functions.GetPlayerData(source)
-	while not xPlayer do 
-		xPlayer = RLCore.Functions.GetPlayerData(source) 
-		Citizen.Wait(0)
-	end ]]
-
-	print("FUCK YOU ")
 	local canDel = true
 	local val = 0
 
