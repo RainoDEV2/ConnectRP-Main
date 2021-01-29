@@ -5,15 +5,6 @@ Citizen.CreateThread(function()
         if RLCore == nil then
             TriggerEvent("RLCore:GetObject", function(obj) RLCore = obj end)    
             Citizen.Wait(200)
-        else
-            print('---- Licence Test ----')
-            CheckForLicence1()
-            Citizen.Wait(200)
-            CheckForLicence2()
-            Citizen.Wait(200)
-            CheckForLicence3()
-            --CheckForAllLicences()
-            Citizen.Wait(2000)
         end
     end
 end)
