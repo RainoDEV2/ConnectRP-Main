@@ -153,8 +153,10 @@ AddEventHandler('playerDropped', function()
 	if not timeJoined then return; end
 
 	local identifier = steamIdentifier
-	local data = RLCore.Functions.ExecuteSql(false,"SELECT * FROM bbvehicles WHERE owner=@identifier",{['@identifier'] = identifier})	
-	if not data then return; end
+	local data = RLCore.Functions.ExecuteSql(false,"SELECT * FROM bbvehicles WHERE citizenid='"..xPlayer.PlayerData.citizenid.."'")	
+	if not data then 
+		return 
+	end
 
 	for k,v in pairs(data) do
 		if v.finance and v.finance > 0 then
