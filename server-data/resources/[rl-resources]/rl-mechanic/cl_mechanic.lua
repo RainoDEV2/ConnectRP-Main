@@ -9,10 +9,8 @@ local nearDefault = false
 local nearImport = false
 local nearTuner = false
 
-local mechanicLocation = vector3(937.48, -970.83, 39.54)
-
-local mechanicHeading = 277.44
-
+local mechanicLocation = vector3(937.15563, -962.8319, 38.873142)
+local mechanicHeading = 183.04397
 local originalCategory = nil
 local originalMod = nil
 local originalPrimaryColour = nil
@@ -224,7 +222,7 @@ function SpawnListVehicle(model)
     RLCore.Functions.SpawnVehicle(model, function(veh)
         SetVehicleNumberPlateText(veh, "Mech-"..tostring(math.random(1, 30)))
         SetEntityHeading(veh, coords.h)
-        exports['rl-hud']:SetFuel(veh, 100.0)
+        exports['LegacyFuel']:SetFuel(veh, 100.0)
         Menu.hidden = true
         TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
@@ -1013,17 +1011,19 @@ Citizen.CreateThread(function()
             local plyPos = GetEntityCoords(plyPed)
 
 
-            nearDefault = isNear(plyPos, mechanicLocation, 10) 
+            nearDefault = isNear(plyPos, mechanicLocation, 7) 
 
             if nearDefault or nearImport or nearTuner or nearBridge then
 
-                if not isPlyInMenu and nearDefault then
-                    DrawMarker(21, mechanicLocation.x, mechanicLocation.y, mechanicLocation.z + 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 148, 0, 211, 255, true, false, 2, true, nil, nil, false)
+                if not isPlyInMenu and nearDefault then 
+                    DrawMarker(2, mechanicLocation.x, mechanicLocation.y, mechanicLocation.z + 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 210, 50, 9, 255, false, false, false, true, false, false, false)
+                    --DrawMarker(21, mechanicLocation.x, mechanicLocation.y, mechanicLocation.z + 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 148, 0, 211, 255, true, false, 2, true, nil, nil, false)
                 end
 
                 if nearDefault then
                     if not isPlyInMenu then
-                        Draw3DText(mechanicLocation.x, mechanicLocation.y, mechanicLocation.z + 0.5, "[~p~E~w~ - Enter LS Customs Auto Shop]", 255, 255, 255, 255, 4, 0.45, true, true, true, true, 0, 0, 0, 0, 55)
+                        DrawText3Ds(mechanicLocation.x, mechanicLocation.y, mechanicLocation.z +0.8, '[E] Enter LS Customs Auto Shop')
+                        --Draw3DText(mechanicLocation.x, mechanicLocation.y, mechanicLocation.z + 0.5, "[~p~E~w~ - Enter LS Customs Auto Shop]", 255, 255, 255, 255, 4, 0.45, true, true, true, true, 0, 0, 0, 0, 55)
                         if IsControlJustReleased(0,38) then
                             forced = false
                             enterLocation(mechanicLocation)

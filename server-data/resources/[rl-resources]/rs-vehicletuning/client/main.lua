@@ -188,7 +188,7 @@ Citizen.CreateThread(function()
                                     local veh = GetVehiclePedIsIn(GetPlayerPed(-1))
                                     if IsPedInAnyVehicle(GetPlayerPed(-1)) then
                                         if not IsThisModelABicycle(GetEntityModel(veh)) then
-                                            DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.3, "[E] Place cehicle on ramp for inspection")
+                                            DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.3, "[E] Place vehicle on ramp for inspection")
                                             if IsControlJustPressed(0, Config.Keys["E"]) then
                                                 DoScreenFadeOut(150)
                                                 Wait(150)
@@ -276,7 +276,7 @@ end
 
 function VehicleOptions()
     ClearMenu()
-    Menu.addButton("Uncoupling the vehicle", "UnattachVehicle", nil)
+    Menu.addButton("Remove Vehicle From Ramp", "UnattachVehicle", nil)
     Menu.addButton("Check Status", "CheckStatus", nil) --REMOVE
     Menu.addButton("Components", "PartsMenu", nil)
     Menu.addButton("Close menu", "CloseMenu", nil)
