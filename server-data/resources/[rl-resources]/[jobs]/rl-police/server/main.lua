@@ -336,17 +336,16 @@ AddEventHandler('police:server:SeizeDriverLicense', function(playerId)
     local Player = RLCore.Functions.GetPlayer(src)
     local SearchedPlayer = RLCore.Functions.GetPlayer(playerId)
     if SearchedPlayer ~= nil then
-        local driverLicense = SearchedPlayer.PlayerData.metadata["licences"]["driver"]
-        if driverLicense then
-            local licenses = {
-                ["driver"] = false,
-                ["business"] = SearchedPlayer.PlayerData.metadata["licences"]["business"]
-            }
-            SearchedPlayer.Functions.SetMetaData("licences", licenses)
-            TriggerClientEvent('RLCore:Notify', SearchedPlayer.PlayerData.source, "Your driving license confiscated..")
-        else
-            TriggerClientEvent('RLCore:Notify', src, "Can't take driving license..", "error")
-        end
+        exports['ghmattimysql']:execute("SELECT `driver` FROM `user_licenses` WHERE `citizenid` = @CID", {['@CID'] = SearchedPlayer.PlayerData.citizenid}, function(result)
+            if result[1][type] == 0 then
+                TriggerClientEvent('RLCore:Notify', src, "Can't take driving license..", "error")
+            elseif result[1][type] == 1 then
+                exports['ghmattimysql']:execute("UPDATE `user_licenses` SET `driver` = '2' WHERE `citizenid` = @CID", {['@CID'] = SearchedPlayer.PlayerData.citizenid})
+                TriggerClientEvent('RLCore:Notify', SearchedPlayer.PlayerData.source, "Your driving license confiscated..")
+            elseif result[1][type] == 2 then
+                TriggerClientEvent('RLCore:Notify', src, "Can't take driving license..", "error")
+            end
+        end)
     end
 end)
 

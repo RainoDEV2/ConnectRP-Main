@@ -125,18 +125,20 @@ Citizen.CreateThread(function()
                     else]]
                         qbCityhall.DrawText3Ds(Config.DriverTest.coords, '[E] Request Driving Test')
                         if IsControlJustPressed(0, Keys["E"]) then
-                            if RLCore.Functions.GetPlayerData().metadata["licences"]["driver"] then
-                                RLCore.Functions.Notify("You have already obtained your driving license, request it alongside")
-                            elseif timeout == false then
-                                CreateThread(function()
-                                    timeout = true
-                                    Wait(300000)
-                                    timeout = false
-                                end)
-                                TriggerServerEvent("rl-cityhall:server:sendDriverTest")
-                            else
-                                RLCore.Functions.Notify("Please wait a While Before Requesting Again.", 'error')
-                            end
+                            RLCore.Functions.TriggerCallback('RLCore:server:checklicence', function(result, type)
+                                if result == 'has licence' then
+                                    RLCore.Functions.Notify("You have already obtained your driving license, request it alongside")
+                                elseif timeout == false then
+                                    CreateThread(function()
+                                        timeout = true
+                                        Wait(300000)
+                                        timeout = false
+                                    end)
+                                    TriggerServerEvent("rl-cityhall:server:sendDriverTest")
+                                else
+                                    RLCore.Functions.Notify("Please wait a While Before Requesting Again.", 'error')
+                                end
+                            end, 'driver')
                         end
 
                 
@@ -159,18 +161,20 @@ Citizen.CreateThread(function()
             if GetDistanceBetweenCoords(pos, Config.DrivingSchool.coords.x, Config.DrivingSchool.coords.y, Config.DrivingSchool.coords.z, true) < 1.5 then
                 qbCityhall.DrawText3Ds(Config.DrivingSchool.coords, '[E] Request driving lessons')
                 if IsControlJustPressed(0, Keys["E"]) then
-                    if RLCore.Functions.GetPlayerData().metadata["licences"]["driver"] then
-                        RLCore.Functions.Notify("You have already obtained your driving license, pick it up at the town hall!")
-                    elseif timeout == false then
-                        CreateThread(function()
-                            timeout = true
-                            Wait(300000)
-                            timeout = false
-                        end)
-                        TriggerServerEvent("rl-cityhall:server:sendDriverTest")
-                    else
-                        RLCore.Functions.Notify("Please wait a While Before Requesting Again.", 'error')
-                    end
+                    RLCore.Functions.TriggerCallback('RLCore:server:checklicence', function(result)
+                        if result == 'has licence' then
+                            RLCore.Functions.Notify("You have already obtained your driving license, pick it up at the town hall!")
+                        elseif timeout == false then
+                            CreateThread(function()
+                                timeout = true
+                                Wait(300000)
+                                timeout = false
+                            end)
+                            TriggerServerEvent("rl-cityhall:server:sendDriverTest")
+                        else
+                            RLCore.Functions.Notify("Please wait a While Before Requesting Again.", 'error')
+                        end
+                    end, 'driver')
                 end
             end
         end
@@ -216,8 +220,8 @@ RegisterNUICallback('requestId', function(data)
     if inRange then
         local idType = data.idType
         local PlayerData = RLCore.Functions.GetPlayerData()
-        print(idType)
-        print(idTypes[idType])
+        --print(idType)
+        --print(idTypes[idType])
         TriggerServerEvent('rl-cityhall:server:requestId', idTypes[idType])
         RLCore.Functions.Notify('You got your id card applied for $ 50', 'success', 3500)
     else
@@ -226,24 +230,15 @@ RegisterNUICallback('requestId', function(data)
 end)
 
 RegisterNUICallback('requestLicenses', function(data, cb)
-    local PlayerData = RLCore.Functions.GetPlayerData()
-    local licensesMeta = PlayerData.metadata["licences"]
     local availableLicenses = {}
-
-    for type,_ in pairs(licensesMeta) do
-        if licensesMeta[type] then
-            local licenseType = nil
-            local label = nil
-
-            if type == "driver" then licenseType = "drivers license" label = "Drivers license" end
-
-            table.insert(availableLicenses, {
-                idType = licenseType,
-                label = label
-            })
-        end
-    end
-    cb(availableLicenses)
+    RLCore.Functions.TriggerCallback('RLCore:server:checklicence', function(result)    
+        if result == "has licence" then licenseType = "drivers license" label = "Drivers license" end
+        table.insert(availableLicenses, {
+            idType = licenseType,
+            label = label
+        })
+        cb(availableLicenses)
+    end, 'driver')
 end)
 
 local AvailableJobs = {

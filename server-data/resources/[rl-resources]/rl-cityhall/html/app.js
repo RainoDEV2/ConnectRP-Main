@@ -61,7 +61,6 @@ $('.cityhall-option-block').click(function(e){
         $(".identity-page-blocks").html('<div class="identity-page-block" data-type="id-kaart" onmouseover="'+hoverDescription("id-kaart")+'" onmouseout="'+hoverDescription("id-kaart")+'"><p>ID card</p></div>');
         $.post('http://rl-cityhall/requestLicenses', JSON.stringify({}), function(licenses){
             $.each(licenses, function(i, license){
-                console.log(license.licenseType)
                 var elem = '<div class="identity-page-block" data-type="'+license.idType+'" onmouseover="hoverDescription("'+license.idType+'")" onmouseout="hoverDescription("'+license.idType+'")"><p>'+license.label+'</p></div>';
                 $(".identity-page-blocks").append(elem);
             });
@@ -101,10 +100,10 @@ $(document).on("click", ".identity-page-block", function(e){
         selectedIdentity = this;
         if (idType== "id-kaart") {
             $(".request-identity-button").fadeIn(100);
-            $(".request-identity-button").html("<p>Request ID card ($50,-)</p>")
+            $(".request-identity-button").html("<p>Request ID card ($50)</p>")
         } else {
             $(".request-identity-button").fadeIn(100);
-            $(".request-identity-button").html("<p>Apply for a driver's license ($50,-)</p>")
+            $(".request-identity-button").html("<p>Request Driver's License Copy($50)</p>")
         }
     } else if (selectedIdentity == this) {
         $(this).removeClass("identity-selected");

@@ -90,12 +90,7 @@ RLCore.Player.CheckPlayerData = function(source, PlayerData)
 	PlayerData.metadata["criminalrecord"] = PlayerData.metadata["criminalrecord"] ~= nil and PlayerData.metadata["criminalrecord"] or {
 		["hasRecord"] = false,
 		["date"] = nil
-	}	
-	PlayerData.metadata["licences"] = PlayerData.metadata["licences"] ~= nil and PlayerData.metadata["licences"] or {
-		["driver"] = true,
-		["business"] = false,
-		["weapon1"] = false
-	}	
+	}
 	PlayerData.metadata["inside"] = PlayerData.metadata["inside"] ~= nil and PlayerData.metadata["inside"] or {
 		house = nil,
 		apartment = {
@@ -633,3 +628,31 @@ RLCore.EscapeSqli = function(str)
     local replacements = { ['"'] = '\\"', ["'"] = "\\'" }
     return str:gsub( "['\"]", replacements ) -- or string.gsub( source, "['\"]", replacements )
 end
+
+RLCore.AddLicence = function(src, type)
+	local cid = RLCore.Functions.GetPlayer(src)
+	exports['ghmattimysql']:execute("UPDATE `user_licenses` SET "..type.." = '1' WHERE `citizenid` = @CID", {
+		['@CID'] = cid.PlayerData.citizenid
+	})
+end
+
+RLCore.RevokeLicence = function(src, type)
+	local cid = RLCore.Functions.GetPlayer(src)
+	exports['ghmattimysql']:execute("UPDATE `user_licenses` SET "..type.." = '2' WHERE `citizenid` = @CID", {
+		['@CID'] = cid.PlayerData.citizenid
+	})
+end
+
+RLCore.Functions.CreateCallback('RLCore:server:checklicence', function(source, cb, type)
+	local cid = RLCore.Functions.GetPlayer(source)
+	exports['ghmattimysql']:execute("SELECT "..type.." FROM `user_licenses` WHERE `citizenid` = @CID", {['@CID'] = cid.PlayerData.citizenid}, function(result)
+		if result[1][type] == 0 then
+            k = 'no licence'
+        elseif result[1][type] == 1 then
+            k = 'has licence'
+        elseif result[1][type] == 2 then
+            k = 'revoked'
+        end
+		cb(k)
+	end)
+end)
