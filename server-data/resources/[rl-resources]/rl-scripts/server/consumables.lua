@@ -222,5 +222,5 @@ RLCore.Functions.CreateUseableItem('orangebandana', function(source)
 end)
 
 RLCore.Functions.CreateUseableItem('watch', function(source)
-    TriggerClientEvent("carHud:compass")
+    TriggerClientEvent("carHud:compass", source)
 end)
