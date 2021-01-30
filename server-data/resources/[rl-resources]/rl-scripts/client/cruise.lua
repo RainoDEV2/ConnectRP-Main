@@ -79,6 +79,7 @@ Citizen.CreateThread(function()
     local prevVelocity = {x = 0.0, y = 0.0, z = 0.0}
     local cruiseIsOn = false
     local seatbeltIsOn = false
+    local waitDelay = 500
 
     while true do
         -- Loop forever and update HUD every frame
@@ -88,7 +89,7 @@ Citizen.CreateThread(function()
         local vehicle = GetVehiclePedIsIn(player, false)
         local engineHealth = (GetVehicleEngineHealth(vehicle) / 10)
 
-        Citizen.Wait(5)     
+        Citizen.Wait(waitDelay)     
 
         -- Set vehicle states
         if IsPedInAnyVehicle(player, false) then
@@ -103,6 +104,7 @@ Citizen.CreateThread(function()
         
         -- Display Location and time when in any vehicle or on foot (if enabled)
         if pedInVeh or locationAlwaysOn then
+            waitDelay = 5
             -- Get time and display
             drawTxt(timeText, 4, locationColorText, 0.4, screenPosX, screenPosY + 0.033)
             
@@ -111,134 +113,140 @@ Citizen.CreateThread(function()
         
             -- Display remainder of HUD when engine is on and vehicle is not a bicycle
             local vehicleClass = GetVehicleClass(vehicle)
-            if pedInVeh and GetIsVehicleEngineRunning(vehicle) and vehicleClass ~= 13 then
-                -- Save previous speed and get current speed
-                local prevSpeed = currSpeed
-                currSpeed = GetEntitySpeed(vehicle)
+            if pedInVeh and GetIsVehicleEngineRunning(vehicle) then
+                if vehicleClass ~= 13 then
+                    DisplayRadar(true)
+                    -- Save previous speed and get current speed
+                    local prevSpeed = currSpeed
+                    currSpeed = GetEntitySpeed(vehicle)
 
-                -- Set PED flags
-                SetPedConfigFlag(PlayerPedId(), 32, true)
+                    -- Set PED flags
+                    SetPedConfigFlag(PlayerPedId(), 32, true)
 
-                -- Check if seatbelt button pressed, toggle state and handle seatbelt logic
-                if IsControlJustReleased(0, seatbeltInput) and (enableController or GetLastInputMethod(0)) and vehicleClass ~= 8 then
-                    -- Toggle seatbelt status and play sound when enabled
-                    seatbeltIsOn = not seatbeltIsOn
-                    if seatbeltIsOn then
-                        TriggerEvent('InteractSound_CL:PlayOnOne','carbuckle',0.2)
-                        TriggerEvent("veh:seatbelt", true)
-                    else
-                        TriggerEvent('InteractSound_CL:PlayOnOne','carunbuckle',0.2)
-                        TriggerEvent("veh:seatbelt", false)
-                    
-                    end
-                end
-                --[[ if not seatbeltIsOn then
-                    -- Eject PED when moving forward, vehicle was going over 45 MPH and acceleration over 100 G's
-                    local vehIsMovingFwd = GetEntitySpeedVector(vehicle, true).y > 1.0
-                    local vehAcc = (prevSpeed - currSpeed) / GetFrameTime()
-                    if (vehIsMovingFwd and (prevSpeed > (seatbeltEjectSpeed/2.237)) and (vehAcc > (seatbeltEjectAccel*9.81))) then
-                        ejectionLUL()
-                    else
-                        -- Update previous velocity for ejecting player
-                       prevVelocity = GetEntityVelocity(vehicle)
-                    end
-                elseif seatbeltDisableExit then
-                    -- Disable vehicle exit when seatbelt is on
-                    DisableControlAction(0, 75)
-                end ]]
-
-                if poptires then
-                    local vehIsMovingFwd = GetEntitySpeedVector(vehicle, true).y > 1.0
-                    local vehAcc = (prevSpeed - currSpeed) / GetFrameTime()
-                    if (vehIsMovingFwd and (prevSpeed > (seatbeltEjectSpeed/2.237)) and (vehAcc > (seatbeltEjectAccel*9.81))) then
-                        PopTires()
-                    end
-                end
-
-                -- When player in driver seat, handle cruise control
-                if (GetPedInVehicleSeat(vehicle, -1) == player) then
-                    if IsControlJustReleased(0, cruiseInput) and (enableController or GetLastInputMethod(0)) then
-                        cruiseIsOn = not cruiseIsOn
-                        cruiseSpeed = currSpeed
-                        PlaySoundFrontend(-1, "Faster_Click", "RESPAWN_ONLINE_SOUNDSET", 1)
-                    end
-                    local maxSpeed = cruiseIsOn and cruiseSpeed or GetVehicleHandlingFloat(vehicle,"CHandlingData","fInitialDriveMaxFlatVel")
-                    SetEntityMaxSpeed(vehicle, maxSpeed)
-                        if IsControlJustPressed(1, 27) then
-                            if cruiseIsOn then
-                                cruiseSpeed = cruiseSpeed + 2.10
-                                SetEntityMaxSpeed(vehicle, maxSpeed)
-                            end
-                        elseif IsControlJustPressed(1, 173) then
-                            if cruiseIsOn then
-                                cruiseSpeed = cruiseSpeed - 2.10
-                                SetEntityMaxSpeed(vehicle, maxSpeed)
-                            end
+                    -- Check if seatbelt button pressed, toggle state and handle seatbelt logic
+                    if IsControlJustReleased(0, seatbeltInput) and (enableController or GetLastInputMethod(0)) and vehicleClass ~= 8 then
+                        -- Toggle seatbelt status and play sound when enabled
+                        seatbeltIsOn = not seatbeltIsOn
+                        if seatbeltIsOn then
+                            TriggerEvent('InteractSound_CL:PlayOnOne','carbuckle',0.2)
+                            TriggerEvent("veh:seatbelt", true)
+                        else
+                            TriggerEvent('InteractSound_CL:PlayOnOne','carunbuckle',0.2)
+                            TriggerEvent("veh:seatbelt", false)
+                        
                         end
-                else
-                    -- Reset cruise control
-                    cruiseIsOn = false
-                end
+                    end
+                    --[[ if not seatbeltIsOn then
+                        -- Eject PED when moving forward, vehicle was going over 45 MPH and acceleration over 100 G's
+                        local vehIsMovingFwd = GetEntitySpeedVector(vehicle, true).y > 1.0
+                        local vehAcc = (prevSpeed - currSpeed) / GetFrameTime()
+                        if (vehIsMovingFwd and (prevSpeed > (seatbeltEjectSpeed/2.237)) and (vehAcc > (seatbeltEjectAccel*9.81))) then
+                            ejectionLUL()
+                        else
+                            -- Update previous velocity for ejecting player
+                        prevVelocity = GetEntityVelocity(vehicle)
+                        end
+                    elseif seatbeltDisableExit then
+                        -- Disable vehicle exit when seatbelt is on
+                        DisableControlAction(0, 75)
+                    end ]]
 
-                -- Check what units should be used for speed
-                if not mph then
-                    -- Get vehicle speed in KPH and draw speedometer
-                    local speed = currSpeed*3.6
-                    local speedColor = (speed >= speedLimit) and speedColorOver or speedColorUnder
-                    drawTxt(("%.3d"):format(math.ceil(speed)), 2, speedColor, 0.8, screenPosX + 0.000, screenPosY + 0.063)
-                    drawTxt("KPH", 2, speedColorText, 0.4, screenPosX + 0.011, screenPosY + 0.063)
-                else
-                    -- Get vehicle speed in MPH and draw speedometer
-                    local speed = currSpeed*2.23694
-                    local speedColor = (speed >= speedLimit) and speedColorOver or speedColorUnder
-                    drawTxt(("%.3d"):format(math.ceil(speed)), 2, speedColor, 0.8, screenPosX + 0.000, screenPosY + 0.063)
-                    drawTxt("MPH", 2, speedColorText, 0.4, screenPosX + 0.011, screenPosY + 0.063)
-                end
-                
-                -- Draw fuel gauge
-                local fuelColor = (currentFuel >= fuelWarnLimit) and fuelColorOver or fuelColorUnder
-                drawTxt(("%.3d"):format(math.ceil(currentFuel)), 2, fuelColor, 0.8, screenPosX + 0.030, screenPosY + 0.063)
-                drawTxt("FUEL", 2, fuelColorText, 0.4, screenPosX + 0.041, screenPosY + 0.063)
+                    if poptires then
+                        local vehIsMovingFwd = GetEntitySpeedVector(vehicle, true).y > 1.0
+                        local vehAcc = (prevSpeed - currSpeed) / GetFrameTime()
+                        if (vehIsMovingFwd and (prevSpeed > (seatbeltEjectSpeed/2.237)) and (vehAcc > (seatbeltEjectAccel*9.81))) then
+                            PopTires()
+                        end
+                    end
 
-                -- Draw cruise control status
-                local cruiseColor = cruiseIsOn and cruiseColorOn or cruiseColorOff
-                drawTxt("CRUISE", 2, cruiseColor, 0.4, screenPosX + 0.030, screenPosY + 0.033)
+                    -- When player in driver seat, handle cruise control
+                    if (GetPedInVehicleSeat(vehicle, -1) == player) then
+                        if IsControlJustReleased(0, cruiseInput) and (enableController or GetLastInputMethod(0)) then
+                            cruiseIsOn = not cruiseIsOn
+                            cruiseSpeed = currSpeed
+                            PlaySoundFrontend(-1, "Faster_Click", "RESPAWN_ONLINE_SOUNDSET", 1)
+                        end
+                        local maxSpeed = cruiseIsOn and cruiseSpeed or GetVehicleHandlingFloat(vehicle,"CHandlingData","fInitialDriveMaxFlatVel")
+                        SetEntityMaxSpeed(vehicle, maxSpeed)
+                            if IsControlJustPressed(1, 27) then
+                                if cruiseIsOn then
+                                    cruiseSpeed = cruiseSpeed + 2.10
+                                    SetEntityMaxSpeed(vehicle, maxSpeed)
+                                end
+                            elseif IsControlJustPressed(1, 173) then
+                                if cruiseIsOn then
+                                    cruiseSpeed = cruiseSpeed - 2.10
+                                    SetEntityMaxSpeed(vehicle, maxSpeed)
+                                end
+                            end
+                    else
+                        -- Reset cruise control
+                        cruiseIsOn = false
+                    end
 
-                --local nitroColorText = {255, 255, 255}       -- Color used to display fuel text
-                --local nitroColor = {255, 255, 255} 
-
-                --local nitroColor = nitro 
-                if nitro > 0 then
-                    drawTxt(("%.3d"):format(math.ceil(nitro)), 2, cruiseColor, 0.8, screenPosX + 0.0700, screenPosY + 0.033)
-                    drawTxt("NOS", 2, {240,230,140}, 0.4, screenPosX + 0.058, screenPosY + 0.033)
-                end
-
-
-                      -- Color used to display fuel when good
-
-                -- Logic for engine health colour
-                if engineHealth <= engineHealthAmountBad then
-                    EngineDrawColour = engineHealthColourBad -- RED
-                elseif engineHealth > engineHealthAmountBad and engineHealth <= engineHealthAmountMedium then
-                    EngineDrawColour = engineHealthColourMedium
-                elseif engineHealth >= engineHealthAmountGood then
-                    EngineDrawColour = engineHealthColourGood
-                end
-                
-                -- Draw Engine Health
-                --if ShowEngineNumbers then
-                --local bodyh = (GetVehicleBodyHealth(vehicle) / 10)
-                --    drawTxt(("%.3d"):format(math.ceil(engineHealth)), 2, EngineDrawColour, 0.4, screenPosX + 0.061, screenPosY + 0.048)
-                --    drawTxt(("%.3d"):format(math.ceil(bodyh)), 2, EngineDrawColour, 0.4, screenPosX + 0.076, screenPosY + 0.048)
+                    -- Check what units should be used for speed
+                    if not mph then
+                        -- Get vehicle speed in KPH and draw speedometer
+                        local speed = currSpeed*3.6
+                        local speedColor = (speed >= speedLimit) and speedColorOver or speedColorUnder
+                        drawTxt(("%.3d"):format(math.ceil(speed)), 2, speedColor, 0.8, screenPosX + 0.000, screenPosY + 0.063)
+                        drawTxt("KPH", 2, speedColorText, 0.4, screenPosX + 0.011, screenPosY + 0.063)
+                    else
+                        -- Get vehicle speed in MPH and draw speedometer
+                        local speed = currSpeed*2.23694
+                        local speedColor = (speed >= speedLimit) and speedColorOver or speedColorUnder
+                        drawTxt(("%.3d"):format(math.ceil(speed)), 2, speedColor, 0.8, screenPosX + 0.000, screenPosY + 0.063)
+                        drawTxt("MPH", 2, speedColorText, 0.4, screenPosX + 0.011, screenPosY + 0.063)
+                    end
                     
-                   
-                --end
-                --drawTxt("ENGINE", 2, EngineDrawColour, 0.4, screenPosX + 0.061, screenPosY + 0.048)
-                if vehicleClass ~= 8 then
-                    local seatbeltColor = seatbeltIsOn and seatbeltColorOn or seatbeltColorOff
-                    drawTxt("SEATBELT", 2, seatbeltColor, 0.4, screenPosX + 0.061, screenPosY + 0.063)
+                    -- Draw fuel gauge
+                    local fuelColor = (currentFuel >= fuelWarnLimit) and fuelColorOver or fuelColorUnder
+                    drawTxt(("%.3d"):format(math.ceil(currentFuel)), 2, fuelColor, 0.8, screenPosX + 0.030, screenPosY + 0.063)
+                    drawTxt("FUEL", 2, fuelColorText, 0.4, screenPosX + 0.041, screenPosY + 0.063)
+
+                    -- Draw cruise control status
+                    local cruiseColor = cruiseIsOn and cruiseColorOn or cruiseColorOff
+                    drawTxt("CRUISE", 2, cruiseColor, 0.4, screenPosX + 0.030, screenPosY + 0.033)
+
+                    --local nitroColorText = {255, 255, 255}       -- Color used to display fuel text
+                    --local nitroColor = {255, 255, 255} 
+
+                    --local nitroColor = nitro 
+                    if nitro > 0 then
+                        drawTxt(("%.3d"):format(math.ceil(nitro)), 2, cruiseColor, 0.8, screenPosX + 0.0700, screenPosY + 0.033)
+                        drawTxt("NOS", 2, {240,230,140}, 0.4, screenPosX + 0.058, screenPosY + 0.033)
+                    end
+
+
+                        -- Color used to display fuel when good
+
+                    -- Logic for engine health colour
+                    if engineHealth <= engineHealthAmountBad then
+                        EngineDrawColour = engineHealthColourBad -- RED
+                    elseif engineHealth > engineHealthAmountBad and engineHealth <= engineHealthAmountMedium then
+                        EngineDrawColour = engineHealthColourMedium
+                    elseif engineHealth >= engineHealthAmountGood then
+                        EngineDrawColour = engineHealthColourGood
+                    end
+                    
+                    -- Draw Engine Health
+                    --if ShowEngineNumbers then
+                    --local bodyh = (GetVehicleBodyHealth(vehicle) / 10)
+                    --    drawTxt(("%.3d"):format(math.ceil(engineHealth)), 2, EngineDrawColour, 0.4, screenPosX + 0.061, screenPosY + 0.048)
+                    --    drawTxt(("%.3d"):format(math.ceil(bodyh)), 2, EngineDrawColour, 0.4, screenPosX + 0.076, screenPosY + 0.048)
+                        
+                    
+                    --end
+                    --drawTxt("ENGINE", 2, EngineDrawColour, 0.4, screenPosX + 0.061, screenPosY + 0.048)
+                    if vehicleClass ~= 8 then
+                        local seatbeltColor = seatbeltIsOn and seatbeltColorOn or seatbeltColorOff
+                        drawTxt("SEATBELT", 2, seatbeltColor, 0.4, screenPosX + 0.061, screenPosY + 0.063)
+                    end
                 end
             end
+        else
+            DisplayRadar(false)
+            waitDelay = 500
         end
     end
 end)
