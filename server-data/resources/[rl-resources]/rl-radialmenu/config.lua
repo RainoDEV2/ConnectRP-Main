@@ -52,7 +52,7 @@ rootMenuConfig =  {
             local Data = RLCore.Functions.GetPlayerData()
             return not Data.metadata["isdead"] and not Data.metadata["inlaststand"]
         end,
-        subMenus = {"vehicle:giveKeys", "general:flipveh", "general:hotdog", "general:givenum", "general:getintrunk", "general:cornerselling"}
+        subMenus = {"vehicle:giveKeys", "general:flipveh", "general:hotdog", "general:givenum", "general:getintrunk", "general:cornerselling", "general:train"}
     },
 
     {
@@ -285,10 +285,16 @@ newSubMenus = {
         functionName = "rl-drugs:client:cornerselling"
     },
 
+    ['general:train'] = {
+        title = "Request Train",
+        icon = "#general-ask-for-train",
+        functionName = "AskForTrainConfirmed"
+    },
+
     ['deadblip:sendBlip'] = {
         title = "10-11 Distress Call",
         icon = "#police-dead",
-        functionName = "rl-menu:senddeadblip"
+        functionName = "rl-menu:senddeadblip" 
     },
     --------------------------------------
     
