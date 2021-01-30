@@ -4,7 +4,9 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(10)
         if RLCore == nil then
-            TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
+            TriggerEvent('RLCore:GetObject', function(obj) 
+                RLCore = obj 
+            end)
             Citizen.Wait(200)
         end
     end
@@ -42,51 +44,22 @@ AddEventHandler('RLCore:Client:OnPlayerLoaded', function()
     GarbageObject = nil
     EndBlip = nil
 
-    if PlayerJob.name == "garbage" then
-        GarbageBlip = AddBlipForCoord(Config.Locations["main"].coords.x, Config.Locations["main"].coords.y, Config.Locations["main"].coords.z)
-        SetBlipSprite(GarbageBlip, 318)
-        SetBlipDisplay(GarbageBlip, 4)
-        SetBlipScale(GarbageBlip, 0.6)
-        SetBlipAsShortRange(GarbageBlip, true)
-        SetBlipColour(GarbageBlip, 39)
-        BeginTextCommandSetBlipName("STRING")
-        AddTextComponentSubstringPlayerName(Config.Locations["main"].label)
-        EndTextCommandSetBlipName(GarbageBlip)
-    end
+    --if PlayerJob.name == "garbage" then
+    GarbageBlip = AddBlipForCoord(Config.Locations["main"].coords.x, Config.Locations["main"].coords.y, Config.Locations["main"].coords.z)
+    SetBlipSprite(GarbageBlip, 318)
+    SetBlipDisplay(GarbageBlip, 4)
+    SetBlipScale(GarbageBlip, 0.6)
+    SetBlipAsShortRange(GarbageBlip, true)
+    SetBlipColour(GarbageBlip, 39)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentSubstringPlayerName(Config.Locations["main"].label)
+    EndTextCommandSetBlipName(GarbageBlip)
+    --end
 end)
 
-RegisterNetEvent('RLCore:Client:OnJobUpdate')
-AddEventHandler('RLCore:Client:OnJobUpdate', function(JobInfo)
-    isLoggedIn = true
-    GarbageVehicle = nil
-    hasVuilniswagen = false
-    hasZak = false
-    GarbageLocation = 0
-    DeliveryBlip = nil
-    IsWorking = false
-    AmountOfBags = 0
-    GarbageObject = nil
-    EndBlip = nil
-
-    if PlayerJob.name == "garbage" then
-        if GarbageBlip ~= nil then
-            RemoveBlip(GarbageBlip)
-        end
-    end
-
-    if JobInfo.name == "garbage" then
-        GarbageBlip = AddBlipForCoord(Config.Locations["main"].coords.x, Config.Locations["main"].coords.y, Config.Locations["main"].coords.z)
-        SetBlipSprite(GarbageBlip, 318)
-        SetBlipDisplay(GarbageBlip, 4)
-        SetBlipScale(GarbageBlip, 0.6)
-        SetBlipAsShortRange(GarbageBlip, true)
-        SetBlipColour(GarbageBlip, 39)
-        BeginTextCommandSetBlipName("STRING")
-        AddTextComponentSubstringPlayerName(Config.Locations["main"].label)
-        EndTextCommandSetBlipName(GarbageBlip)
-    end
-
-    PlayerJob = JobInfo
+RegisterNetEvent("RLCore:Client:OnJobUpdate")
+AddEventHandler("RLCore:Client:OnJobUpdate", function(JobInfo)
+	PlayerJob = JobInfo
 end)
 
 function DrawText3D(x, y, z, text)
@@ -167,7 +140,7 @@ function PayCheckLoop(location)
             if distance < 20 then
                 DrawMarker(2, coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 233, 55, 22, 222, false, false, false, true, false, false, false)
                 if distance < 1.5 then
-                    DrawText3D(coords.x, coords.y, coords.z, "~g~E~w~ - Payslip")
+                    DrawText3D(coords.x, coords.y, coords.z, "[E] - Payslip")
                     if IsControlJustPressed(0, Keys["E"]) then
                         TriggerServerEvent('rl-garbagejob:server:Pay', Earnings, location)
                         Earnings = 0
@@ -191,12 +164,12 @@ Citizen.CreateThread(function()
         local distance = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, true)
         
         if isLoggedIn then
-            if PlayerJob.name == "garbage" then
+            --if PlayerJob.name == "garbage" then
                 if distance < 10.0 then
                     DrawMarker(2, Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 233, 55, 22, 222, false, false, false, true, false, false, false)
                     if distance < 1.5 then
                         if InVehicle then
-                            DrawText3D(Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, "~g~E~w~ - Store garbage truck")
+                            DrawText3D(Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, "[E] - Store garbage truck")
                             if IsControlJustReleased(0, Keys["E"]) then
                                 RLCore.Functions.TriggerCallback('rl-garbagejob:server:CheckBail', function(DidBail)
                                     if DidBail then
@@ -208,7 +181,7 @@ Citizen.CreateThread(function()
                                 end)
                             end
                         else
-                            DrawText3D(Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, "~g~E~w~ - Garbage truck")
+                            DrawText3D(Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, "[E] - Garbage truck")
                             if IsControlJustReleased(0, Keys["E"]) then
                                 RLCore.Functions.TriggerCallback('rl-garbagejob:server:HasMoney', function(HasMoney)
                                     if HasMoney then
@@ -237,7 +210,7 @@ Citizen.CreateThread(function()
                         end
                     end
                 end
-            end
+            --end
         end
 
         Citizen.Wait(1)
@@ -252,7 +225,7 @@ Citizen.CreateThread(function()
         local inRange = false
 
         if isLoggedIn then
-            if PlayerJob.name == "garbage" then
+            --if PlayerJob.name == "garbage" then
                 if IsWorking then
                     if GarbageLocation ~= 0 then
                         if DeliveryBlip ~= nil then
@@ -265,7 +238,7 @@ Citizen.CreateThread(function()
                                 if not hasZak then
                                     if CanTakeBag then
                                         if Distance < 1.5 then
-                                            DrawText3D2(DeliveryData.coords, "~g~E~w~ - Grab a garbage bag")
+                                            DrawText3D2(DeliveryData.coords, "[E] - Grab a garbage bag")
                                             if IsControlJustPressed(0, 51) then
                                                 if AmountOfBags == 0 then
                                                     AmountOfBags = math.random(2, 4)
@@ -287,7 +260,7 @@ Citizen.CreateThread(function()
                                         local TruckDist = GetDistanceBetweenCoords(pos, Coords.x, Coords.y, Coords.z, true)
 
                                         if TruckDist < 2 then
-                                            DrawText3D(Coords.x, Coords.y, Coords.z, "~g~E~w~ - Throw away the trash bag")
+                                            DrawText3D(Coords.x, Coords.y, Coords.z, "[E] - Throw away the trash bag")
                                             if IsControlJustPressed(0, 51) then
                                                 hasZak = false
                                                 local AmountOfLocations = #Config.Locations["vuilnisbakken"]
@@ -346,7 +319,7 @@ Citizen.CreateThread(function()
                         end
                     end
                 end
-            end
+            --end
         end
 
         if not IsWorking then
