@@ -780,7 +780,7 @@ function WarMenu.Display()
 
 
 
-            if IsControlJustPressed(0, keys.down) then
+            if IsControlJustPressed(0, keys.down) or IsDisabledControlJustPressed(0, keys.down) then
 
                 PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
 
@@ -796,7 +796,7 @@ function WarMenu.Display()
 
                 end
 
-            elseif IsControlJustPressed(0, keys.up) then
+            elseif IsControlJustPressed(0, keys.up) or IsDisabledControlJustPressed(0, keys.up) then
 
                 PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
 
