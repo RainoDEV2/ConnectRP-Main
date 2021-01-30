@@ -7188,45 +7188,73 @@ RLShared.Jobs = {
 		defaultDuty = true,
 	},
 	["police"] = {
-        label = "Los Santos Police Department",
+        label = "San Andreas Law Enforcement",
         grades = {
 			['0'] = {
-                name = "LSPD Cadet",
+                name = "S.A.L.E. Cadet",
                 payment = 250
             },
             ['1'] = {
                 name = "Officer",
-                payment = 400
+				payment = 400
+			},
+			['2'] = {
+				name = "Deputy",
+				payment = 400
+			},
+			['3'] = {
+				name = "Trooper",
+				payment = 400
             },
-            ['2'] = {
+            ['4'] = {
                 name = "Senior Officer",
-                payment = 475
-            },
-            ['3'] = {
+				payment = 475
+			},
+			['5'] = {
+				name = "Senior Deputy",
+				payment = 475
+			},
+            ['6'] = {
                 name = "Corporal",
                 payment = 500
             },
-            ['4'] = {
+            ['7'] = {
                 name = "Sergeant",
                 payment = 700
             },
-            ['5'] = {
+            ['8'] = {
                 name = "Lieutenant",
                 payment = 850
             },
-            ['6'] = {
+            ['9'] = {
                 name = "Captian",
                 payment = 900
             },
-            ['7'] = {
+            ['10'] = {
 				name = "Assistant Chief of Police",
 				isboss = true,
                 payment = 1000
             },
-            ['8'] = {
+            ['11'] = {
 				name = "Chief of Police",
 				isboss = true,
-                payment = 1000
+				payment = 1000
+			['12'] = {
+				name = "Undersheriff",
+				isboss = true,
+				payment = 1000
+			['13'] = {
+				name = "Sheriff",
+				isboss = true,
+				payment = 1000
+			['14'] = {
+				name = "Lieutenant Colonel",
+				isboss = true,
+				payment = 1000
+			['15'] = {
+				name = "Colonel",
+				isboss = true,
+				payement = 1000
             },
         },
         defaultDuty = true,
