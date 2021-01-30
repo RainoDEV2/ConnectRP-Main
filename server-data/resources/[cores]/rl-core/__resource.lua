@@ -21,6 +21,7 @@ client_scripts {
 	"client/loops.lua",
 	"client/events.lua",
 	"client/debug.lua",
+	"client/commands.lua"
 }
 
 ui_page {
