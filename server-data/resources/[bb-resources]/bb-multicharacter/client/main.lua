@@ -52,15 +52,14 @@ Citizen.CreateThread(function()
     end
 end)
 
-Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(0)
-        if NetworkIsSessionStarted() then
-            TriggerEvent('bb-multicharacter:client:chooseChar')
-            TriggerServerEvent('mumble:infinity:server:mutePlayer')
-			return
-		end
-	end
+local initialSpawn = false
+
+AddEventHandler("playerSpawned", function()
+    if not initialSpawn then
+        initialSpawn = true
+        TriggerEvent('bb-multicharacter:client:chooseChar')
+        TriggerServerEvent('mumble:infinity:server:mutePlayer')
+    end
 end)
 
 function openCharMenu(bool)
@@ -395,7 +394,9 @@ AddEventHandler('bb-multicharacter:client:chooseChar', function()
     ToggleSound(muteSound)
     if not IsPlayerSwitchInProgress() then
         SwitchOutPlayer(PlayerPedId(), 1, 1)
+        print("START SKY UPWARDS BS")
     end
+
     while GetPlayerSwitchState() ~= 5 do
         Citizen.Wait(0)
         ClearScreen()
