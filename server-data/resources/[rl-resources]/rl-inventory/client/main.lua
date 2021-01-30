@@ -1020,9 +1020,9 @@ end)
 
 RegisterNetEvent("inventory:client:DropItemAnim")
 AddEventHandler("inventory:client:DropItemAnim", function()
-    SendNUIMessage({
+    --[[ SendNUIMessage({
         action = "close",
-    })
+    }) ]]
     RequestAnimDict("pickup_object")
     while not HasAnimDictLoaded("pickup_object") do
         Citizen.Wait(7)
