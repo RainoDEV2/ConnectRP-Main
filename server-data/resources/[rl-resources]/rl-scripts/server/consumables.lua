@@ -220,3 +220,7 @@ RLCore.Functions.CreateUseableItem('orangebandana', function(source)
 	local Player = RLCore.Functions.GetPlayer(source)
 	TriggerClientEvent('qb_bandana:orangebandana', source)
 end)
+
+RLCore.Functions.CreateUseableItem('watch', function(source)
+    TriggerClientEvent("carHud:compass")
+end)
