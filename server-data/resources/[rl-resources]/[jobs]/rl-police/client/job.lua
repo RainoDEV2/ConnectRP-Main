@@ -834,20 +834,26 @@ function round(num, numDecimalPlaces)
 end
 
 RegisterCommand( "unseat_nearest_player", function()
-    if PlayerJob.name == "police" or PlayerJob.name == "ambulance" then
-        TriggerEvent("police:client:SetPlayerOutVehicle")
+    if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+        if PlayerJob.name == "police" or PlayerJob.name == "ambulance" then
+            TriggerEvent("police:client:SetPlayerOutVehicle")
+        end
     end
 end ) 
 
 RegisterCommand( "seat_nearest_player", function()
-    if PlayerJob.name == "police" or PlayerJob.name == "ambulance" then
-        TriggerEvent("police:client:PutPlayerInVehicle")
+    if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+        if PlayerJob.name == "police" or PlayerJob.name == "ambulance" then
+            TriggerEvent("police:client:PutPlayerInVehicle")
+        end
     end
 end ) 
 
 RegisterCommand( "escort_nearest_player", function()
-    if PlayerJob.name == "police" or PlayerJob.name == "ambulance" then
-        TriggerEvent("police:client:EscortPlayer")
+    if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+        if PlayerJob.name == "police" or PlayerJob.name == "ambulance" then
+            TriggerEvent("police:client:EscortPlayer")
+        end
     end
 end ) 
 
