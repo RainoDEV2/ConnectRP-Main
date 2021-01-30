@@ -374,6 +374,18 @@ RLShared.Items = {
 	["securitycase"]                 = {["name"] = "securitycase",                  ["label"] = "Security Case", 	["weight"] = 1500, ["type"] = "item", ["image"] = "green-slushy.png", ["unique"] = true, ["useable"] = true, ["shouldClose"] = false, ["combinable"] = nil, ["description"] = "The best fucking slushy ever, cmon there is no doubt"},
     ["toolbox"]                      = {["name"] = "toolbox",                       ["label"] = "Toolox", 			["weight"] = 1500, ["type"] = "item", ["image"] = "yellow-slushy.png", ["unique"] = false, ["useable"] = true, ["shouldClose"] = true, ["combinable"] = nil, ["description"] = "The best fucking slushy ever, cmon there is no doubt"},
 	  
+	--BANDANAS
+	["bloodsbandana"]                = {["name"] = "bloodsbandana",                 ["label"] = "Bloods Bandana", 	["weight"] = 1500, ["type"] = "item", ["image"] = "bloodsbandana.png", ["unique"] = false, ["useable"] = true, ["shouldClose"] = true, ["combinable"] = nil, ["description"] = "Bandana"},
+    ["greenbandana"]                 = {["name"] = "greenbandana",                  ["label"] = "Green Bandana", 	["weight"] = 1500, ["type"] = "item", ["image"] = "greenbandana.png", ["unique"] = false, ["useable"] = true, ["shouldClose"] = true, ["combinable"] = nil,  ["description"] = "Bandana"},
+    ["ballasbandana"]                = {["name"] = "ballasbandana",                 ["label"] = "Ballas Bandana",   ["weight"] = 1500, ["type"] = "item", ["image"] = "ballasbandana.png", ["unique"] = false, ["useable"] = true, ["shouldClose"] = true, ["combinable"] = nil, ["description"] = "Bandana"},
+	["vagosbandana"]                 = {["name"] = "vagosbandana",                  ["label"] = "Vagos Bandana",    ["weight"] = 1500, ["type"] = "item", ["image"] = "vagosbandana.png", ["unique"] = false, ["useable"] = true, ["shouldClose"] = true, ["combinable"] = nil,  ["description"] = "Bandana"},
+	["cripsbandana"]                 = {["name"] = "cripsbandana",                  ["label"] = "Crips Bandana", 	["weight"] = 1500, ["type"] = "item", ["image"] = "cripsbandana.png", ["unique"] = false, ["useable"] = true, ["shouldClose"] = true, ["combinable"] = nil,  ["description"] = "Bandana"},
+    ["whitebandana"]                 = {["name"] = "whitebandana",                  ["label"] = "White Bandana", 	["weight"] = 1500, ["type"] = "item", ["image"] = "whitebandana.png", ["unique"] = false, ["useable"] = true, ["shouldClose"] = true, ["combinable"] = nil,  ["description"] = "Bandana"},
+	["blackbandana"]                 = {["name"] = "blackbandana",                  ["label"] = "Black Bandana",    ["weight"] = 1500, ["type"] = "item", ["image"] = "blackbandana.png", ["unique"] = false, ["useable"] = true, ["shouldClose"] = true, ["combinable"] = nil,  ["description"] = "Bandana"}, 
+	["orangebandana"]                = {["name"] = "orangebandana",                 ["label"] = "Orange Bandana", 	["weight"] = 1500, ["type"] = "item", ["image"] = "orangebandana.png", ["unique"] = false, ["useable"] = true, ["shouldClose"] = true, ["combinable"] = nil, ["description"] = "Bandana"},
+	 
+
+
 	["spirte"] = {
         ["name"] = "spirte",
         ["label"] = "Spirte",
@@ -7188,73 +7200,45 @@ RLShared.Jobs = {
 		defaultDuty = true,
 	},
 	["police"] = {
-        label = "San Andreas Law Enforcement",
+        label = "Los Santos Police Department",
         grades = {
 			['0'] = {
-                name = "S.A.L.E. Cadet",
+                name = "LSPD Cadet",
                 payment = 250
             },
             ['1'] = {
                 name = "Officer",
-				payment = 400
-			},
-			['2'] = {
-				name = "Deputy",
-				payment = 400
-			},
-			['3'] = {
-				name = "Trooper",
-				payment = 400
+                payment = 400
             },
-            ['4'] = {
+            ['2'] = {
                 name = "Senior Officer",
-				payment = 475
-			},
-			['5'] = {
-				name = "Senior Deputy",
-				payment = 475
-			},
-            ['6'] = {
+                payment = 475
+            },
+            ['3'] = {
                 name = "Corporal",
                 payment = 500
             },
-            ['7'] = {
+            ['4'] = {
                 name = "Sergeant",
                 payment = 700
             },
-            ['8'] = {
+            ['5'] = {
                 name = "Lieutenant",
                 payment = 850
             },
-            ['9'] = {
+            ['6'] = {
                 name = "Captian",
                 payment = 900
             },
-            ['10'] = {
+            ['7'] = {
 				name = "Assistant Chief of Police",
 				isboss = true,
                 payment = 1000
             },
-            ['11'] = {
+            ['8'] = {
 				name = "Chief of Police",
 				isboss = true,
-				payment = 1000
-			['12'] = {
-				name = "Undersheriff",
-				isboss = true,
-				payment = 1000
-			['13'] = {
-				name = "Sheriff",
-				isboss = true,
-				payment = 1000
-			['14'] = {
-				name = "Lieutenant Colonel",
-				isboss = true,
-				payment = 1000
-			['15'] = {
-				name = "Colonel",
-				isboss = true,
-				payement = 1000
+                payment = 1000
             },
         },
         defaultDuty = true,

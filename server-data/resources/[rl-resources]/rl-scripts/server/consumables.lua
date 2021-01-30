@@ -179,3 +179,44 @@ RLCore.Functions.CreateUseableItem("toolbox", function(source, item)
     local Player = RLCore.Functions.GetPlayer(source)
     TriggerClientEvent('attach:toolbox', source)
 end)
+
+--Bandanas
+RLCore.Functions.CreateUseableItem('bloodsbandana', function(source)
+	local Player = RLCore.Functions.GetPlayer(source)
+	TriggerClientEvent('qb_bandana:bloodsbandana', source)
+end)
+
+RLCore.Functions.CreateUseableItem('greenbandana', function(source)
+	local Player = RLCore.Functions.GetPlayer(source)
+	TriggerClientEvent('qb_bandana:greenbandana', source)
+end)
+
+RLCore.Functions.CreateUseableItem('ballasbandana', function(source)
+	local Player = RLCore.Functions.GetPlayer(source)
+	TriggerClientEvent('qb_bandana:ballasbandana', source)
+end)
+
+RLCore.Functions.CreateUseableItem('vagosbandana', function(source)
+	local Player = RLCore.Functions.GetPlayer(source)
+	TriggerClientEvent('qb_bandana:vagosbandana', source)
+end)
+
+RLCore.Functions.CreateUseableItem('cripsbandana', function(source)
+	local Player = RLCore.Functions.GetPlayer(source)
+	TriggerClientEvent('qb_bandana:cripsbandana', source)
+end)
+
+RLCore.Functions.CreateUseableItem('whitebandana', function(source)
+	local Player = RLCore.Functions.GetPlayer(source)
+	TriggerClientEvent('qb_bandana:whitebandana', source)
+end)
+
+RLCore.Functions.CreateUseableItem('blackbandana', function(source)
+	local Player = RLCore.Functions.GetPlayer(source)
+	TriggerClientEvent('qb_bandana:blackbandana', source)
+end)
+
+RLCore.Functions.CreateUseableItem('orangebandana', function(source)
+	local Player = RLCore.Functions.GetPlayer(source)
+	TriggerClientEvent('qb_bandana:orangebandana', source)
+end)
