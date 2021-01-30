@@ -1007,7 +1007,6 @@ AddEventHandler("inventory:client:AddDropItem", function(dropId, player)
             z = z - 0.3,
         },
     }
-
     TriggerEvent("debug", 'Inventory: Received Drops', 'success')
 end)
 
@@ -1019,10 +1018,12 @@ AddEventHandler("inventory:client:RemoveDropItem", function(dropId)
 end)
 
 RegisterNetEvent("inventory:client:DropItemAnim")
-AddEventHandler("inventory:client:DropItemAnim", function()
-    --[[ SendNUIMessage({
-        action = "close",
-    }) ]]
+AddEventHandler("inventory:client:DropItemAnim", function(droppingItem)
+    if droppingItem then
+        SendNUIMessage({
+            action = "close",
+        })
+    end
     RequestAnimDict("pickup_object")
     while not HasAnimDictLoaded("pickup_object") do
         Citizen.Wait(7)
