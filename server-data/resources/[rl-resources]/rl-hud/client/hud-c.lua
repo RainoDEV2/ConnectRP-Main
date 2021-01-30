@@ -26,7 +26,7 @@ end)
 
 RegisterNetEvent('hud:toggleui')
 AddEventHandler('hud:toggleui', function(show)
-	if show then toghud = true; else toghud = false; end
+    toghud = show
 end)
 
 RegisterNetEvent('mumble:updateMumbleInfo')
