@@ -109,21 +109,6 @@ $(document).on('mousedown', '.item-slot', function(event){
             }
             
             break;
-        case 2: 
-            fromSlot = $(this).attr("data-slot");
-            fromInventory = $(this).parent();
-            fromData = fromInventory.find("[data-slot=" + fromSlot + "]").data("item");
-
-            if(fromData.useable) {
-                if (fromData.shouldClose) {
-                    Inventory.Close();
-                }
-                $.post("http://rl-inventory/UseItem", JSON.stringify({
-                    inventory: (fromInventory.attr("data-inventory")),
-                    item: fromData,
-                }));
-            }
-            return; // Otherwise it drops the item too.
         case 3:
             fromSlot = $(this).attr("data-slot");
             fromInventory = $(this).parent();
