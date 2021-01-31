@@ -135,7 +135,7 @@ local vehshopOwner = {
 				{name = "Sedans", description = ''},
 				{name = "Sports", description = ''},
 				{name = "Sports Classics", description = ''},
-				{name = "Imports", description = ''},
+				--{name = "Imports", description = ''},
 				{name = "Muscle", description = ''},
 				{name = "Off-Road", description = ''},
 				{name = "SUVs", description = ''},
