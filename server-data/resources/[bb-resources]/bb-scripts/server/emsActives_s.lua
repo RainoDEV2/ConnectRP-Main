@@ -48,6 +48,6 @@ RLCore.Commands.Add('mlist', 'Check the active paramedics', {{name = '1 - Dragga
             end
         end
         TriggerClientEvent('bb-emsActives:client:createNUI', src, CopsInfo, draggable)
-        TriggerEvent('bb-logs:server:createLog', GetCurrentResourceName(), 'Command "plist"', "Used the command **plist** type " .. tostring(draggable), src)
+        TriggerEvent('bb-logs:server:createLog', GetCurrentResourceName(), 'Command "mlist"', "Used the command **mlist** type " .. tostring(draggable), src)
     end
 end)
