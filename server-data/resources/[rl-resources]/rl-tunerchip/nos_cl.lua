@@ -75,61 +75,49 @@ Citizen.CreateThread(function()
             if VehicleNitrous[Plate] ~= nil then
                 if VehicleNitrous[Plate].hasnitro then
                     if IsControlJustPressed(0, Keys["LEFTSHIFT"]) and NitrousActivated == false then
-                        if GetGameTimer() > useTimeout then
-                            local speed = GetEntitySpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false)) * 3.6
-                            SetVehicleEnginePowerMultiplier(CurrentVehicle, NitrousBoost)
-                            SetVehicleEngineTorqueMultiplier(CurrentVehicle, NitrousBoost)
-                            NitrousActivated = true
-                            if VehicleNitrous[Plate].level > 12 then
-                                count = 0
-                                while count < 90 do
-                                    StartScreenEffect("ExplosionJosh3", 30.0, 0) 
-                                    VehicleNitrous[Plate].level = VehicleNitrous[Plate].level - 3
-                                    TriggerServerEvent('nitrous:server:UpdateNitroLevel', Plate, (VehicleNitrous[Plate].level))
-                                    TriggerEvent('rl-hud:nitro', VehicleNitrous[Plate].level)
-                                    Citizen.Wait(1000)
-                                    count = count + 30
-                                end
-                            else
-                                StartScreenEffect("ExplosionJosh3", 30.0, 0) 
-                                VehicleNitrous[Plate].level = VehicleNitrous[Plate].level - 3
-                                TriggerServerEvent('nitrous:server:UpdateNitroLevel', Plate, (VehicleNitrous[Plate].level))
-                                TriggerEvent('rl-hud:nitro', VehicleNitrous[Plate].level)
-                            end
-                            
-                            StartScreenEffect("ExplosionJosh3", 0, 0)
+                        local speed = GetEntitySpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false)) * 3.6
+                        SetVehicleEnginePowerMultiplier(CurrentVehicle, NitrousBoost)
+                        SetVehicleEngineTorqueMultiplier(CurrentVehicle, NitrousBoost)
+                        --SetEntityMaxSpeed(vehicle, 999.0)
+                        NitrousActivated = true
 
-                            if VehicleNitrous[Plate].level - 12 >= 0 then
-                                VehicleNitrous[Plate].level = VehicleNitrous[Plate].level - 12
-                                TriggerServerEvent('nitrous:server:UpdateNitroLevel', Plate, (VehicleNitrous[Plate].level))
-                                TriggerEvent('rl-hud:nitro', VehicleNitrous[Plate].level)
-                                NitrousActivated = false
-
-                                for index,_ in pairs(Fxs) do
-                                    StopParticleFxLooped(Fxs[index], 1)
-                                    TriggerServerEvent('nitrous:server:StopSync', GetVehicleNumberPlateText(CurrentVehicle))
-                                    Fxs[index] = nil
-                                end
-                            else
-                                Wait(250) -- Otherwise it depletes instantly, as line 107, has no wait, so this is stopped, as soon as it is started.
-                                TriggerServerEvent('nitrous:server:UnloadNitrous', Plate)
-                                NitrousActivated = false
-                                TriggerEvent('rl-hud:nitro', 0)
-                                SetVehicleBoostActive(CurrentVehicle, 0)
-                                SetVehicleEnginePowerMultiplier(CurrentVehicle, LastEngineMultiplier)
-                                SetVehicleEngineTorqueMultiplier(CurrentVehicle, 1.0)
-                                StopScreenEffect("RaceTurbo")
-                                ScreenEffect = false
-                                for index,_ in pairs(Fxs) do
-                                    StopParticleFxLooped(Fxs[index], 1)
-                                    TriggerServerEvent('nitrous:server:StopSync', GetVehicleNumberPlateText(CurrentVehicle))
-                                    Fxs[index] = nil
-                                end
-                            end
-                            useTimeout = GetGameTimer() + 3000
-                        else
-                            RLCore.Functions.Notify("Please wait 3 seconds")
+                        count = 0
+                        while count < 100 do
+                            Citizen.Wait(0)
+                            -- StartScreenEffect("RaceTurbo", 30.0, 0)
+                            StartScreenEffect("ExplosionJosh3", 30.0, 0) 
+                            count = count + 1
                         end
+                        -- StartScreenEffect("RaceTurbo", 0, 0)
+                        StartScreenEffect("ExplosionJosh3", 0, 0)
+
+                        if VehicleNitrous[Plate].level - 12 >= 0 then
+                            VehicleNitrous[Plate].level = VehicleNitrous[Plate].level - 12
+                            TriggerServerEvent('nitrous:server:UpdateNitroLevel', Plate, (VehicleNitrous[Plate].level))
+                            TriggerEvent('rl-hud:nitro', VehicleNitrous[Plate].level)
+                            NitrousActivated = false
+
+                            for index,_ in pairs(Fxs) do
+                                StopParticleFxLooped(Fxs[index], 1)
+                                TriggerServerEvent('nitrous:server:StopSync', GetVehicleNumberPlateText(CurrentVehicle))
+                                Fxs[index] = nil
+                            end
+                        else
+                            TriggerServerEvent('nitrous:server:UnloadNitrous', Plate)
+                            NitrousActivated = false
+                            TriggerEvent('rl-hud:nitro', 0)
+                            SetVehicleBoostActive(CurrentVehicle, 0)
+                            SetVehicleEnginePowerMultiplier(CurrentVehicle, LastEngineMultiplier)
+                            SetVehicleEngineTorqueMultiplier(CurrentVehicle, 1.0)
+                            StopScreenEffect("RaceTurbo")
+                            ScreenEffect = false
+                            for index,_ in pairs(Fxs) do
+                                StopParticleFxLooped(Fxs[index], 1)
+                                TriggerServerEvent('nitrous:server:StopSync', GetVehicleNumberPlateText(CurrentVehicle))
+                                Fxs[index] = nil
+                            end
+                        end
+                        Citizen.Wait(100)
                     end
                 end
             else
