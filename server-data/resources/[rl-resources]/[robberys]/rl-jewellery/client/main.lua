@@ -47,54 +47,50 @@ Citizen.CreateThread(function()
         local pos = GetEntityCoords(ped)
         inRange = false
 
-        if RLCore ~= nil then
-            if isLoggedIn then
-                for case,_ in pairs(Config.Locations) do
-                    -- if PlayerData.job.name ~= "police" then
-                        local dist = GetDistanceBetweenCoords(pos, Config.Locations[case]["coords"]["x"], Config.Locations[case]["coords"]["y"], Config.Locations[case]["coords"]["z"])
-                        local storeDist = GetDistanceBetweenCoords(pos, Config.JewelleryLocation["coords"]["x"], Config.JewelleryLocation["coords"]["y"], Config.JewelleryLocation["coords"]["z"])
-                        if dist < 30 then
-                            inRange = true
+        for case,_ in pairs(Config.Locations) do
+            -- if PlayerData.job.name ~= "police" then
+                local dist = GetDistanceBetweenCoords(pos, Config.Locations[case]["coords"]["x"], Config.Locations[case]["coords"]["y"], Config.Locations[case]["coords"]["z"])
+                local storeDist = GetDistanceBetweenCoords(pos, Config.JewelleryLocation["coords"]["x"], Config.JewelleryLocation["coords"]["y"], Config.JewelleryLocation["coords"]["z"])
+                if dist < 30 then
+                    inRange = true
 
-                            if dist < 0.6 then
-                                if not Config.Locations[case]["isBusy"] and not Config.Locations[case]["isOpened"] then
-                                    DrawText3Ds(Config.Locations[case]["coords"]["x"], Config.Locations[case]["coords"]["y"], Config.Locations[case]["coords"]["z"], '[E] Break')
-                                    if IsControlJustPressed(0, Keys["E"]) then
-                                        if isInTimeout == false then
-                                        TriggerServerEvent('rl-jewellery:server:startglobaltimeout')
-                                        RLCore.Functions.TriggerCallback('rl-jewellery:server:getCops', function(cops)
-                                            if cops >= Config.RequiredCops then
-                                                if validWeapon() then
-                                                    smashVitrine(case)
-                                                else
-                                                    RLCore.Functions.Notify('Your weapon doesn\'t seem strong enough ..', 'error')
-                                                end
-                                            else
-                                                RLCore.Functions.Notify('Not enough police', 'error')
-                                            end                
-                                        end)
-                                    end
-                                    end
-                                end
-                            end
-
-                            if storeDist < 2 then
-                                if not firstAlarm then
-                                    if validWeapon() then
-                                        TriggerEvent('dispatch:jewelryRobbery')
-                                        local cameraID = math.random(31,34)
-                                        if not usedCameras[cameraID] then
-                                            usedCameras[cameraID] = true
-                                            TriggerServerEvent("police:camera", cameraID)
+                    if dist < 0.6 then
+                        if not Config.Locations[case]["isBusy"] and not Config.Locations[case]["isOpened"] then
+                            DrawText3Ds(Config.Locations[case]["coords"]["x"], Config.Locations[case]["coords"]["y"], Config.Locations[case]["coords"]["z"], '[E] Break')
+                            if IsControlJustPressed(0, Keys["E"]) then
+                                if isInTimeout == false then
+                                TriggerServerEvent('rl-jewellery:server:startglobaltimeout')
+                                RLCore.Functions.TriggerCallback('rl-jewellery:server:getCops', function(cops)
+                                    if cops >= Config.RequiredCops then
+                                        if validWeapon() then
+                                            smashVitrine(case)
+                                        else
+                                            RLCore.Functions.Notify('Your weapon doesn\'t seem strong enough ..', 'error')
                                         end
-                                        firstAlarm = true
-                                    end
-                                end
+                                    else
+                                        RLCore.Functions.Notify('Not enough police', 'error')
+                                    end                
+                                end)
+                            end
                             end
                         end
-                    -- end
+                    end
+
+                    if storeDist < 2 then
+                        if not firstAlarm then
+                            if validWeapon() then
+                                TriggerEvent('dispatch:jewelryRobbery')
+                                local cameraID = math.random(31,34)
+                                if not usedCameras[cameraID] then
+                                    usedCameras[cameraID] = true
+                                    TriggerServerEvent("police:camera", cameraID)
+                                end
+                                firstAlarm = true
+                            end
+                        end
+                    end
                 end
-            end
+            -- end
         end
 
         if not inRange then
