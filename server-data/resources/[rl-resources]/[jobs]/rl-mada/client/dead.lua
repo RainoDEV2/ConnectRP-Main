@@ -101,8 +101,6 @@ Citizen.CreateThread(function()
                         end
                     end
                 end
-
-                SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey("WEAPON_UNARMED"), true)
             elseif InLaststand then
                 DisableInputGroup(0)
                 DisableInputGroup(1)
