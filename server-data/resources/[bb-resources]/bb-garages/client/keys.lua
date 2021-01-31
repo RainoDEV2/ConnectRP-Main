@@ -64,7 +64,7 @@ Citizen.CreateThread(function()
             end
         end
 
-        if IsControlJustPressed(1, Keys["L"]) then
+        if IsControlJustPressed(1, Keys["L"]) and IsInputDisabled(2) then
             LockVehicle()
         end
     end
