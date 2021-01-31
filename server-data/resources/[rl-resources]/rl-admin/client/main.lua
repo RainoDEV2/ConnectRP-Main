@@ -774,6 +774,10 @@ Citizen.CreateThread(function()
                 local time = ServerTimes[currentBanIndex]
                 TriggerServerEvent("rl-weathersync:server:setTime", time.hour, time.minute)
             end
+
+            if WarMenu.MenuButton('Freeze Time', 'serverMan') then
+                TriggerServerEvent("rl-weathersync:server:freezeTime")
+            end
             
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened(currentPlayer) then

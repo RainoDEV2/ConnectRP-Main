@@ -68,6 +68,11 @@ AddEventHandler('rl-weathersync:server:setTime', function(hour, minute)
     SetExactTime(hour, minute)
 end)
 
+RegisterServerEvent('rl-weathersync:server:freezeTime')
+AddEventHandler('rl-weathersync:server:freezeTime', function()
+    FreezeElement("time")
+end)
+
 function SetWeather(type)
     CurrentWeather = string.upper(type)
     TriggerEvent('rl-weathersync:server:RequestStateSync')
