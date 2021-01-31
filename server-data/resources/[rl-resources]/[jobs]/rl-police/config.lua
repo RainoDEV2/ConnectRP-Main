@@ -232,8 +232,8 @@ Config.Items = {
     items = {
         [1] = {
             name = "weapon_pistol_mk2",
-            price = 0,
-            amount = 3,
+            price = 75,
+            amount = 1,
             info = {
                 serie = "",                
                 attachments = {
@@ -248,8 +248,8 @@ Config.Items = {
         },
         [2] = {
             name = "weapon_combatpdw",
-            price = 0,
-            amount = 2,
+            price = 300,
+            amount = 1,
             info = {
                 serie = "",                
                 attachments = {
@@ -264,8 +264,8 @@ Config.Items = {
         },
         [3] = {
             name = "weapon_smg",
-            price = 0,
-            amount = 2,
+            price = 200,
+            amount = 1,
             info = {
                 serie = "",                
                 attachments = {
@@ -279,8 +279,8 @@ Config.Items = {
         },
         [4] = {
             name = "weapon_smg_mk2",
-            price = 0,
-            amount = 2,
+            price = 250,
+            amount = 1,
             info = {
                 serie = "",                
                 attachments = {
@@ -294,7 +294,7 @@ Config.Items = {
         },
         [5] = {
             name = "weapon_carbinerifle",
-            price = 0,
+            price = 300,
             amount = 1,
             info = {
                 serie = "",                
@@ -310,7 +310,7 @@ Config.Items = {
         }, 
         [6] = {
             name = "weapon_carbinerifle_mk2",
-            price = 0,
+            price = 600,
             amount = 1,
             info = {
                 serie = "",                
@@ -327,54 +327,62 @@ Config.Items = {
             slot = 6,
         }, 
         [7] = {
-            name = "weapon_stungun",
+            name = "weapon_doubleaction",
             price = 150,
-            amount = 3,
+            amount = 1,
+            info = {},
+            type = "weapon",
+            slot = 25,
+        },
+        [8] = {
+            name = "weapon_stungun",
+            price = 25,
+            amount = 1,
             info = {},
             type = "weapon",
             slot = 7,
         },
-        [8] = {
+        [9] = {
             name = "weapon_nightstick",
-            price = 0,
-            amount = 3,
+            price = 10,
+            amount = 1,
             info = {},
             type = "weapon",
             slot = 8,
         },
-        [9] = {
+        [10] = {
             name = "weapon_flashlight",
-            price = 150,
-            amount = 3,
+            price = 20,
+            amount = 2,
             info = {},
             type = "weapon",
             slot = 9,
         },
-        [10] = {
+        [11] = {
             name = "weapon_fireextinguisher",
-            price = 150,
+            price = 50,
             amount = 1,
             info = {},
             type = "weapon",
             slot = 10,
         },
-        [11] = {
+        [12] = {
             name = "handcuffs",
-            price = 0,
-            amount = 10,
+            price = 10,
+            amount = 5,
             info = {},
             type = "item",
             slot = 11,
         },
-        [12] = {
+        [13] = {
             name = "binoculars",
-            price = 300,
+            price = 20,
             amount = 5,
             info = {},
             type = "item",
             slot = 12,
         },
-        [13] = {
+        [14] = {
             name = "diving_gear",
             price = 1000,
             amount = 2,
@@ -382,7 +390,7 @@ Config.Items = {
             type = "item",
             slot = 13,
         }, 
-        [14] = {
+        [15] = {
             name = "parachute",
             price = 250,
             amount = 2,
@@ -390,31 +398,31 @@ Config.Items = {
             type = "item",
             slot = 14,
         }, 
-        [15] = {
+        [16] = {
             name = "heavyarmor",
             price = 100,
-            amount = 50,
+            amount = 10,
             info = {},
             type = "item",
             slot = 15,
         },
-        [16] = {
+        [17] = {
             name = "radio",
-            price = 350,
-            amount = 50,
+            price = 150,
+            amount = 10,
             info = {},
             type = "item",
             slot = 16,
         },
-        [17] = {
+        [18] = {
             name = "empty_evidence_bag",
             price = 2,
-            amount = 25,
+            amount = 50,
             info = {},
             type = "item",
             slot = 17,
         },
-        [18] = {
+        [19] = {
             name = "police_stormram",
             price = 100,
             amount = 10,
@@ -422,61 +430,53 @@ Config.Items = {
             type = "item",
             slot = 18,
         },
-        [19] = {
+        [20] = {
             name = "pistol_ammo",
-            price = 0,
-            amount = 100,
+            price = 20,
+            amount = 15,
             info = {},
             type = "item",
            slot = 19,
         },    
-        [20] = {
+        [21] = {
             name = "smg_ammo",
-            price = 10,
-            amount = 100,
+            price = 20,
+            amount = 15,
             info = {},
             type = "item",
            	slot = 20,
         },
-        [21] = {
+        [22] = {
             name = "rifle_ammo",
-            price = 10,
-            amount = 100,
+            price = 20,
+            amount = 15,
             info = {},
             type = "item",
             slot = 21,
         },
-        [22] = {
+        [23] = {
             name = "signalradar",
-            price = 0,
-            amount = 500,
+            price = 5,
+            amount = 10,
             info = {},
             type = "item",
             slot = 22,
         },
-        [23] = {
+        [24] = {
             name = "ifak",
-            price = 150,
-            amount = 100,
+            price = 50,
+            amount = 25,
             info = {},
             type = "item",
             slot = 23,
         },
-        [24] = {
+        [25] = {
             name = "repairkit",
             price = 150, 
-            amount = 100,
+            amount = 5,
             info = {},
             type = "item",
             slot = 24,
-        },
-        [25] = {
-            name = "weapon_doubleaction",
-            price = 0,
-            amount = 2,
-            info = {},
-            type = "weapon",
-            slot = 25,
         },
     }
 }
@@ -487,39 +487,39 @@ Config.JailItems = {
     items = {
         [1] = {
             name = "weapon_stungun",
-            price = 150,
-            amount = 3,
+            price = 25,
+            amount = 1,
             info = {},
             type = "weapon",
             slot = 1,
         },
         [2] = {
             name = "weapon_nightstick",
-            price = 0,
-            amount = 3,
+            price = 10,
+            amount = 1,
             info = {},
             type = "weapon",
             slot = 2,
         },
         [3] = {
             name = "weapon_flashlight",
-            price = 150,
-            amount = 3,
+            price = 20,
+            amount = 1,
             info = {},
             type = "weapon",
             slot = 3,
         },
         [4] = {
             name = "handcuffs",
-            price = 0,
-            amount = 10,
+            price = 10,
+            amount = 5,
             info = {},
             type = "item",
             slot = 4,
         },
         [5] = {
             name = "binoculars",
-            price = 300,
+            price = 20,
             amount = 5,
             info = {},
             type = "item",
@@ -528,23 +528,23 @@ Config.JailItems = {
         [6] = {
             name = "heavyarmor",
             price = 100,
-            amount = 50,
+            amount = 10,
             info = {},
             type = "item",
             slot = 6,
         },
         [7] = {
             name = "radio",
-            price = 350,
-            amount = 50,
+            price = 150,
+            amount = 10,
             info = {},
             type = "item",
             slot = 7,
 		},
         [8] = {
             name = "ifak",
-            price = 150,
-            amount = 100,
+            price = 50,
+            amount = 25,
             info = {},
             type = "item",
             slot = 8,
