@@ -65,6 +65,7 @@ AddEventHandler('smallresource:client:LoadNitrous', function()
 end)
 
 local nosupdated = false
+local useTimeout = 0
 
 Citizen.CreateThread(function()
     while true do

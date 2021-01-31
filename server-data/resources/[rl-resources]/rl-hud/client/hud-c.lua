@@ -3,7 +3,7 @@ local oxyOn = false
 local attachedProp = 0
 local attachedProp2 = 0
 local lownotify = 0
-local toghud = true
+local toghud = false
 local mumbleInfo = 2
 local svrId = GetPlayerServerId(PlayerId())
 
@@ -15,6 +15,11 @@ local hunger = 100
 local thirst = 100
 Fuel = 0
 stress = 0
+
+RegisterNetEvent("rl-hud-player:client:SpawnedIn")
+AddEventHandler("rl-hud-player:client:SpawnedIn", function(bool) -- Handles setting hud once you have spawned in, instead of always 
+    toghud = bool
+end)
 
 RegisterCommand('hud', function()
 	if toghud then 
