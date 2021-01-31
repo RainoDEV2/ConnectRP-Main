@@ -122,8 +122,8 @@ $(document).on('mousedown', '.item-slot', function(event){
                     inventory: (fromInventory.attr("data-inventory")),
                     item: fromData,
                 }));
-                return; // Otherwise it drops the item too.
             }
+            return; // Otherwise it drops the item too.
         case 3:
             fromSlot = $(this).attr("data-slot");
             fromInventory = $(this).parent();
