@@ -310,6 +310,13 @@ RLCore.Functions.Progressbar = function(name, label, duration, useWhileDead, can
     end)
 end
 
+RLCore.Functions.IsSpawnPointClear = function(coords, radius)
+	local vehicles = RLCore.Functions.GetVehiclesInArea(coords, radius)
+
+	return #vehicles == 0
+end
+
+
 RLCore.Functions.GetVehicleProperties = function(vehicle)
 	local color1, color2 = GetVehicleColours(vehicle)
 	local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
