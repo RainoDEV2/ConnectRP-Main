@@ -189,7 +189,7 @@ function StartWorking()
             HotdogLoop()
             UpdateUI()
             CheckLoop()
-            RLCore.Functions.Notify('You paid $1000.', 'success')
+            RLCore.Functions.Notify('You paid $200.', 'success')
         else
             RLCore.Functions.Notify('You have no money for the deposit ..', 'error')
         end
