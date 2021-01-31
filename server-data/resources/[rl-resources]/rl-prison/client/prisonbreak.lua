@@ -135,7 +135,7 @@ end)
 function DisplayHelpText(str)
 	SetTextComponentFormat("STRING")
 	AddTextComponentString(str)
-	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+	DisplayHelpTextFromStringLabel(0, 0, 0, -1)
 end
 
 Citizen.CreateThread(function()
