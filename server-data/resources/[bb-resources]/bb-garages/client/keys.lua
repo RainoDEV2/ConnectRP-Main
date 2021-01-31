@@ -551,7 +551,7 @@ Citizen.CreateThread(function()
                     local vehicle = GetVehiclePedIsIn(targetPed, false)
                     local plate = GetVehicleNumberPlateText(vehicle)
                     local distance = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId(), true), GetEntityCoords(vehicle, true), false)
-                    
+                   
                     if distance < 5 and IsPedFacingPed(targetPed, PlayerPedId(), 60.0) then
                         SetVehicleForwardSpeed(vehicle, 0)
                         SetVehicleForwardSpeed(vehicle, 0)
@@ -559,45 +559,45 @@ Citizen.CreateThread(function()
                         while IsPedInAnyVehicle(targetPed, false) do
                             Citizen.Wait(5)
                         end
-                    end
    
-                    RequestAnimDict('missfbi5ig_22')
-                    RequestAnimDict('mp_common')
-   
-                    SetPedDropsWeaponsWhenDead(targetPed,false)
-                    ClearPedTasks(targetPed)
-                    TaskTurnPedToFaceEntity(targetPed, GetPlayerPed(-1), 3.0)
-                    TaskSetBlockingOfNonTemporaryEvents(targetPed, true)
-                    SetPedFleeAttributes(targetPed, 0, 0)
-                    SetPedCombatAttributes(targetPed, 17, 1)
-                    SetPedSeeingRange(targetPed, 0.0)
-                    SetPedHearingRange(targetPed, 0.0)
-                    SetPedAlertness(targetPed, 0)
-                    SetPedKeepTask(targetPed, true)
-                            
-                    TaskPlayAnim(targetPed, "missfbi5ig_22", "hands_up_anxious_scientist", 8.0, -8, -1, 12, 1, 0, 0, 0)
-                    Wait(1500)
-                    TaskPlayAnim(targetPed, "missfbi5ig_22", "hands_up_anxious_scientist", 8.0, -8, -1, 12, 1, 0, 0, 0)
-                    Wait(2500)
-   
-                    local distance = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId(), true), GetEntityCoords(vehicle, true), false)
-                    if not IsEntityDead(targetPed) and distance < 5 then
-                        TaskPlayAnim(targetPed, "mp_common", "givetake1_a", 8.0, -8, -1, 12, 1, 0, 0, 0)
-                        Wait(750)
-                        RLCore.Functions.Notify('You just recieved keys to a vehicle!')
-                        TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle), vehicle)
-                        Citizen.Wait(500)
-                        TaskReactAndFleePed(targetPed, GetPlayerPed(-1))
+                        RequestAnimDict('missfbi5ig_22')
+                        RequestAnimDict('mp_common')
+    
+                        SetPedDropsWeaponsWhenDead(targetPed,false)
+                        ClearPedTasks(targetPed)
+                        TaskTurnPedToFaceEntity(targetPed, GetPlayerPed(-1), 3.0)
+                        TaskSetBlockingOfNonTemporaryEvents(targetPed, true)
+                        SetPedFleeAttributes(targetPed, 0, 0)
+                        SetPedCombatAttributes(targetPed, 17, 1)
+                        SetPedSeeingRange(targetPed, 0.0)
+                        SetPedHearingRange(targetPed, 0.0)
+                        SetPedAlertness(targetPed, 0)
                         SetPedKeepTask(targetPed, true)
+                                
+                        TaskPlayAnim(targetPed, "missfbi5ig_22", "hands_up_anxious_scientist", 8.0, -8, -1, 12, 1, 0, 0, 0)
+                        Wait(1500)
+                        TaskPlayAnim(targetPed, "missfbi5ig_22", "hands_up_anxious_scientist", 8.0, -8, -1, 12, 1, 0, 0, 0)
                         Wait(2500)
-                        TaskReactAndFleePed(targetPed, GetPlayerPed(-1))
-                        SetPedKeepTask(targetPed, true)
-                        Wait(2500)
-                        TaskReactAndFleePed(targetPed, GetPlayerPed(-1))
-                        SetPedKeepTask(targetPed, true)
-                        Wait(2500)
-                        TaskReactAndFleePed(targetPed, GetPlayerPed(-1))
-                        SetPedKeepTask(targetPed, true)
+    
+                        local distance = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId(), true), GetEntityCoords(vehicle, true), false)
+                        if not IsEntityDead(targetPed) and distance < 5 then
+                            TaskPlayAnim(targetPed, "mp_common", "givetake1_a", 8.0, -8, -1, 12, 1, 0, 0, 0)
+                            Wait(750)
+                            RLCore.Functions.Notify('You just recieved keys to a vehicle!')
+                            TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle), vehicle)
+                            Citizen.Wait(500)
+                            TaskReactAndFleePed(targetPed, GetPlayerPed(-1))
+                            SetPedKeepTask(targetPed, true)
+                            Wait(2500)
+                            TaskReactAndFleePed(targetPed, GetPlayerPed(-1))
+                            SetPedKeepTask(targetPed, true)
+                            Wait(2500)
+                            TaskReactAndFleePed(targetPed, GetPlayerPed(-1))
+                            SetPedKeepTask(targetPed, true)
+                            Wait(2500)
+                            TaskReactAndFleePed(targetPed, GetPlayerPed(-1))
+                            SetPedKeepTask(targetPed, true)
+                        end
                     end
                 end
             end
