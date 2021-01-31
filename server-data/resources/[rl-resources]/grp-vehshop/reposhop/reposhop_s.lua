@@ -1,23 +1,22 @@
-ESX = nil
-
-TriggerEvent("esx:getSharedObject", function(response)
-    ESX = response
-end)
+RLCore = nil
+TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
 
 local VehiclesForSale = 0
 
-ESX.RegisterServerCallback("tp_repocarsales:retrieveVehicles", function(source, cb)
-	local src = source
-	local identifier = ESX.GetPlayerFromId(src)["identifier"]
-
-    MySQL.Async.fetchAll("SELECT vehicleProps, price FROM repos_for_sale", {}, function(result)
-        local vehicleTable = {}
+RLCore.Functions.CreateCallback("tp_repocarsales:retrieveVehicles", function(source, cb)
+	--[[ local identifier = RLCore.Functions.GetPlayer(source) ]]
+	print("TRYING")
+	--RLCore.Functions.ExecuteSql(false,"SELECT * FROM bbvehicles WHERE plate='"..vehicle.plate.."'",  function(data)
+    RLCore.Functions.ExecuteSql(false,"SELECT * FROM repos_for_sale", function(result)
+		local vehicleTable = {}
+		
 
         VehiclesForSale = 0
 
-        if result[1] ~= nil then
+		if result[1] ~= nil then
             for i = 1, #result, 1 do
-                VehiclesForSale = VehiclesForSale + 1
+				VehiclesForSale = VehiclesForSale + 1
+				print(json.encode(result[i]["price"]))
 
 				local seller = false
 
@@ -25,19 +24,18 @@ ESX.RegisterServerCallback("tp_repocarsales:retrieveVehicles", function(source, 
 					seller = true
 				end
 
-                table.insert(vehicleTable, { ["price"] = result[i]["price"], ["vehProps"] = json.decode(result[i]["vehicleProps"]), ["owner"] = seller })
+                table.insert(vehicleTable, { ["price"] = result[i]["price"], ["props"] = json.decode(result[i]["props"]), ["owner"] = seller })
             end
-        end
-
+		end
+		print(json.encode(vehicleTable))
         cb(vehicleTable)
     end)
 end)
 
-ESX.RegisterServerCallback("tp_repocarsales:isVehicleValid", function(source, cb, vehicleProps, price)
-	local src = source
-	local xPlayer = ESX.GetPlayerFromId(src)
+RLCore.Functions.CreateCallback("tp_repocarsales:isVehicleValid", function(source, cb, props, price)
+	local xPlayer = RLCore.Functions.GetPlayer(source)
     
-    local plate = vehicleProps["plate"]
+    local plate = props["plate"]
 
 	local isFound = false
 
@@ -47,15 +45,15 @@ ESX.RegisterServerCallback("tp_repocarsales:isVehicleValid", function(source, cb
 
 			if Trim(plate) == Trim(v.plate) and #Config.VehiclePositions ~= VehiclesForSale then
                 
-                MySQL.Async.execute("INSERT INTO repos_for_sale (seller, vehicleProps, price) VALUES (@sellerIdentifier, @vehProps, @vehPrice)",
+                RLCore.Functions.ExecuteSql(false,"INSERT INTO repos_for_sale (seller, props, price) VALUES (@sellerIdentifier, @vehProps, @vehPrice)",
                     {
 						["@sellerIdentifier"] = xPlayer["identifier"],
-                        ["@vehProps"] = json.encode(vehicleProps),
+                        ["@vehProps"] = json.encode(props),
                         ["@vehPrice"] = price
                     }
                 )
 
-				MySQL.Async.execute('DELETE FROM owned_vehicles WHERE plate = @plate', { ["@plate"] = plate})
+				RLCore.Functions.ExecuteSql(false,'DELETE FROM bbvehicles WHERE plate = @plate', { ["@plate"] = plate})
 
                 TriggerClientEvent("tp_repocarsales:refreshVehicles", -1)
 
@@ -71,15 +69,17 @@ ESX.RegisterServerCallback("tp_repocarsales:isVehicleValid", function(source, cb
 	end)
 end)
 
-ESX.RegisterServerCallback("tp_repocarsales:buyVehicle", function(source, cb, vehProps, price)
-	local src = source
-	local xPlayer = ESX.GetPlayerFromId(src)
+RLCore.Functions.CreateCallback("tp_repocarsales:buyVehicle", function(source, cb, vehProps, price)
+	local xPlayer = RLCore.Functions.GetPlayer(source)
+	
     
 	local price = price
 	local plate = vehProps["plate"]
-	if xPlayer.getAccount("bank")["money"] >= price or price == 0 then
+	local money = xPlayer.PlayerData.money['cash']
+	print(json.encode(price))
+	if money >= price or price == 0 then
 
-		MySQL.Async.fetchAll('SELECT price FROM repos_for_sale WHERE vehicleProps LIKE "%' .. plate .. '%"', {}, function(result)
+		RLCore.Functions.ExecuteSql(false,'SELECT price FROM repos_for_sale WHERE props LIKE "%' .. plate .. '%"', {}, function(result)
 			if result[1] ~= nil then
 				if result[1]["price"] ~= price then
 					TriggerEvent('banCheater', source, "Well what a fuckwit you are..... 😈")
@@ -87,8 +87,8 @@ ESX.RegisterServerCallback("tp_repocarsales:buyVehicle", function(source, cb, ve
 					TriggerEvent('DiscordBot:ToDiscord', DiscordWebhookSystemInfos, SystemName, '```css\n' .. GetPlayerName(source) .. '\n```', SystemAvatar, false)
 					TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'error', text = 'I would appriciate it if you wouldnt cheat....'})
 				else
-					xPlayer.removeAccountMoney("bank", price)
-					MySQL.Async.execute("INSERT INTO owned_vehicles (plate, owner, vehicle, state, stored, garage) VALUES (@plate, @identifier, @vehProps, @state, @stored, @garage)",
+					--xPlayer.removeAccountMoney("bank", price)
+					RLCore.Functions.ExecuteSql(false,"INSERT INTO bbvehicles (plate, owner, vehicle, state, stored, garage) VALUES (@plate, @identifier, @vehProps, @state, @stored, @garage)",
 						{
 							["@plate"] = plate,
 							["@identifier"] = xPlayer["identifier"],
@@ -100,8 +100,7 @@ ESX.RegisterServerCallback("tp_repocarsales:buyVehicle", function(source, cb, ve
 					)
 					TriggerClientEvent('reposales_DeleteVehicle', source, result[1]["price"])
 					TriggerClientEvent("tp_repocarsales:refreshVehicles", -1)
-					--UpdateCash(result[1]["seller"], result[1]["price"])
-					MySQL.Async.execute('DELETE FROM repos_for_sale WHERE vehicleProps LIKE "%' .. plate .. '%"', {})
+					RLCore.Functions.ExecuteSql(false,'DELETE FROM repos_for_sale WHERE props LIKE "%' .. plate .. '%"', {})
 				end
 			else
 			end
@@ -109,18 +108,17 @@ ESX.RegisterServerCallback("tp_repocarsales:buyVehicle", function(source, cb, ve
 
 		cb(true)
 	else
-		cb(false, xPlayer.getAccount("bank")["money"])
+		cb(false, xPlayer.PlayerData.money['bank'])
 	end
 end)
 
-ESX.RegisterServerCallback("tp_repocarsales:removeVehicleLG", function(source, cb, vehProps, price)
-	local src = source
-	local xPlayer = ESX.GetPlayerFromId(src)
+RLCore.Functions.CreateCallback("tp_repocarsales:removeVehicleLG", function(source, cb, vehProps, price)
+	local xPlayer = RLCore.Functions.GetPlayer(source)
 	local price = price
 	local plate = vehProps["plate"]
 
 	if xPlayer.getAccount("bank")["money"] >= price or price == 0 then
-		MySQL.Async.execute("INSERT INTO owned_vehicles (plate, owner, vehicle, state, stored, garage) VALUES (@plate, @identifier, @vehProps, @state, @stored, @garage)",
+		RLCore.Functions.ExecuteSql(false,"INSERT INTO bbvehicles (plate, owner, vehicle, state, stored, garage) VALUES (@plate, @identifier, @vehProps, @state, @stored, @garage)",
 			{
 				["@plate"] = plate,
 				["@identifier"] = xPlayer["identifier"],
@@ -131,7 +129,7 @@ ESX.RegisterServerCallback("tp_repocarsales:removeVehicleLG", function(source, c
 			}
 		)
 		TriggerClientEvent("tp_repocarsales:refreshVehicles", -1)
-		MySQL.Async.execute('DELETE FROM vehicles_for_sale WHERE vehicleProps LIKE "%' .. plate .. '%"', {})
+		RLCore.Functions.ExecuteSql(false,'DELETE FROM vehicles_for_sale WHERE props LIKE "%' .. plate .. '%"', {})
 		cb(true)
 	else
 		cb(false, xPlayer.getAccount("bank")["money"])
@@ -143,7 +141,7 @@ function RetrievePlayerVehicles(newIdentifier, cb)
 
 	local yourVehicles = {}
 
-	MySQL.Async.fetchAll("SELECT * FROM owned_vehicles WHERE owner = @identifier", {['@identifier'] = identifier}, function(result) 
+	RLCore.Functions.ExecuteSql(false,"SELECT * FROM bbvehicles WHERE owner = @identifier", {['@identifier'] = identifier}, function(result) 
 
 		for id, values in pairs(result) do
 
@@ -166,9 +164,9 @@ function UpdateCash(identifier, cash)
 		TriggerClientEvent("pNotify:SendNotification", {text = 'someone bought your vehicle for '.. cash ..':-', layout = "centerLeft", timeout = 5000, type = 'success', progressBar = true, theme = 'lg', animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"}})
 		--TriggerClientEvent("esx:showNotification", xPlayer.source, "Someone bought your vehicle and transferred $" .. cash)
 	else
-		MySQL.Async.fetchAll('SELECT bank FROM users WHERE identifier = @identifier', { ["@identifier"] = identifier }, function(result)
+		RLCore.Functions.ExecuteSql(false,'SELECT bank FROM users WHERE identifier = @identifier', { ["@identifier"] = identifier }, function(result)
 			if result[1]["bank"] ~= nil then
-				MySQL.Async.execute("UPDATE users SET bank = @newBank WHERE identifier = @identifier",
+				RLCore.Functions.ExecuteSql(false,"UPDATE users SET bank = @newBank WHERE identifier = @identifier",
 					{
 						["@identifier"] = identifier,
 						["@newBank"] = result[1]["bank"] + cash

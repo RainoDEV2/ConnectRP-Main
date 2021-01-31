@@ -1,28 +1,24 @@
-ESX = nil
 PlayerData = {}
 
-Citizen.CreateThread(function()
-    while ESX == nil do
+RLCore = nil
+Citizen.CreateThread(function() 
+    while RLCore == nil do
         Citizen.Wait(10)
-        TriggerEvent("esx:getSharedObject", function(response)
-            ESX = response
-        end)
+        TriggerEvent("RLCore:GetObject", function(obj) RLCore = obj end)    
     end
 
-    if ESX.IsPlayerLoaded() then
-		PlayerData = ESX.GetPlayerData()
-		RemoveVehicles()
-		Citizen.Wait(500)
-		LoadSellPlace()
-		SpawnVehicles()
+    while not RLCore.Functions.GetPlayerData() do
+        Wait(1)
     end
-end)
 
-RegisterNetEvent("esx:playerLoaded")
-AddEventHandler("esx:playerLoaded", function(response)
-	PlayerData = response
+    while not RLCore.Functions.GetPlayerData().job do
+        Wait(1)
+    end
+
+	PlayerData = RLCore.Functions.GetPlayerData()
+	--[[ RemoveVehicles()
 	LoadSellPlace()
-	SpawnVehicles()
+	SpawnVehicles()  ]]
 end)
 
 RegisterNetEvent("LG_CLBan")
@@ -55,11 +51,11 @@ function LoadSellPlace()
 			local ped = PlayerPedId()
 			local pedCoords = GetEntityCoords(ped)
 			
-			for i = 1, #Config.VehiclePositions, 1 do
+			for i = 1, #Config.VehiclePositions, 1 do 
 				if Config.VehiclePositions[i]["entityId"] ~= nil then
 					local pedCoords = GetEntityCoords(ped)
 					local vehCoords = GetEntityCoords(Config.VehiclePositions[i]["entityId"])					
-					local vehProps = ESX.Game.GetVehicleProperties(Config.VehiclePositions[i]["entityId"])
+					local props = RLCore.Functions.GetVehicleProperties(Config.VehiclePositions[i]["entityId"])
 					local vehName1 = GetEntityModel(Config.VehiclePositions[i]["entityId"])
 					local vehName2 = GetLabelText(GetDisplayNameFromVehicleModel(vehName1))
 					if VehName2 == nil then
@@ -71,17 +67,17 @@ function LoadSellPlace()
 					local suspension = 'Stock'
 					local randombool, Ground = GetGroundZFor_3dCoord(vehCoords.x, vehCoords.y, vehCoords.z)
 					
-					if vehProps.modTurbo and vehProps.modTurbo > 0 then 
+					if props.modTurbo and props.modTurbo > 0 then 
 						turbs = 'Yes'
 					end
-					if vehProps.modEngine >= 0 then
-						engine = ("Level " .. tostring(vehProps.modEngine + 1))
+					if props.modEngine >= 0 then
+						engine = ("Level " .. tostring(props.modEngine + 1))
 					end
-					if vehProps.modTransmission >= 0 then
-						gearbox = ("Level " .. tostring(vehProps.modTransmission + 1))
+					if props.modTransmission >= 0 then
+						gearbox = ("Level " .. tostring(props.modTransmission + 1))
 					end
-					if vehProps.modSuspension >= 0 then
-						suspension = ("Level " .. tostring(vehProps.modSuspension + 1))
+					if props.modSuspension >= 0 then
+						suspension = ("Level " .. tostring(props.modSuspension + 1))
 					end
 					
 
@@ -96,12 +92,13 @@ function LoadSellPlace()
 						DrawText3Db(vehCoords.x, vehCoords.y, Ground + 1.6, drawTextC)
 
 						if IsControlJustPressed(0, 38) then
-							if IsPedInVehicle(ped, Config.VehiclePositions[i]["entityId"], false) then
-								OpenSellMenu(Config.VehiclePositions[i]["entityId"], Config.VehiclePositions[i]["price"], true, Config.VehiclePositions[i]["owner"])
-							else
-								exports['mythic_notify']:SendAlert('error', 'You must sit in/on the vehicle!')
-								--TriggerEvent("pNotify:SendNotification", {text = 'You must sit in/on the vehicle!', layout = "bottomCenter", timeout = 5000, type = 'error', progressBar = true, animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"}})
-							end
+							RLCore.Functions.TriggerCallback('tp_repocarsales:buyVehicle', function(isPurchasable, totalMoney)
+								if isPurchasable then
+									print("Bought it")
+								else
+									RLCore.Functions.Notify("You cannot afford this car.", "success")
+								end
+							end,RLCore.Functions.GetVehicleProperties(Config.VehiclePositions[i]["entityId"]), price)
 						end
 					end
 				end
@@ -129,11 +126,11 @@ function OpenSellMenu(veh, price, buyVehicle, owner)
 		function(data, menu)
 			local action = data.current.value
 			if action == "buy" then
-				ESX.TriggerServerCallback('tp_repocarsales:buyVehicle', function(isPurchasable, totalMoney)
+				ESX.TriggerCallback('tp_repocarsales:buyVehicle', function(isPurchasable, totalMoney)
 					if isPurchasable then
 						menu.close()
 					else
-						exports['mythic_notify']:SendAlert('error', "You cannot afford this car.")
+						RLCore.Functions.Notify("You cannot afford this car.", "success")
 						menu.close()
 					end
 				end,ESX.Game.GetVehicleProperties(veh), price)
@@ -146,37 +143,42 @@ end
 RegisterNetEvent("reposales_DeleteVehicle")
 AddEventHandler("reposales_DeleteVehicle", function(price)
 	DeleteVehicle(GetVehiclePedIsUsing(PlayerPedId()))
-	exports['mythic_notify']:SendAlert('success', 'You bought the vehicle for $' .. price .. '.')
-	--TriggerEvent("pNotify:SendNotification", {text = 'You bought the vehicle for ' .. price ..':-', layout = "centerLeft", timeout = 5000, type = 'success', progressBar = true, animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"}})
+	RLCore.Functions.Notify("You bought the vehicle for $'" .. price .. "'.", "success")
 	Citizen.Wait(5000)
-	exports['mythic_notify']:SendAlert('success', 'Your vehicle is now ready to collect from your garage')
-	--TriggerEvent("pNotify:SendNotification", {text = 'Your vehicle is now ready to collect from your garage', layout = "centerLeft", timeout = 5000, type = 'success', progressBar = true, animation = {open = "gta_effects_fade_in", close = "gta_effects_fade_out"}})
+	RLCore.Functions.Notify("Your vehicle is now ready to collect from your garage", "success")
 end)
 
 function RemoveVehicles()
 	local VehPos = Config.VehiclePositions
 	for i = 1, #VehPos, 1 do
-		local veh, distance = ESX.Game.GetClosestVehicle(VehPos[i])
+		local veh, distance = RLCore.Functions.GetClosestVehicle(VehPos[i])
 		if DoesEntityExist(veh) and distance <= 1.0 then
 			DeleteEntity(veh)
 		end
 	end
 end
 
+RegisterCommand('ff', function() 
+	--RemoveVehicles()
+	LoadSellPlace()
+	SpawnVehicles()
+end)
+
 function SpawnVehicles()
 	local VehPos = Config.VehiclePositions
-	ESX.TriggerServerCallback("tp_repocarsales:retrieveVehicles", function(vehicles)
+	RLCore.Functions.TriggerCallback("tp_repocarsales:retrieveVehicles", function(vehicles)
+		print("Callback Got")
 		for i = 1, #vehicles, 1 do
-			local vehicleProps = vehicles[i]["vehProps"]
-			LoadModel(vehicleProps["model"])
-			VehPos[i]["entityId"] = CreateVehicle(vehicleProps["model"], VehPos[i]["x"], VehPos[i]["y"], VehPos[i]["z"], VehPos[i]["h"], false)
+			local props = vehicles[i]["props"]
+			LoadModel(props["model"])
+			VehPos[i]["entityId"] = CreateVehicle(props["model"], VehPos[i]["x"], VehPos[i]["y"], VehPos[i]["z"], VehPos[i]["h"], false)
 			VehPos[i]["price"] = vehicles[i]["price"]
 			--VehPos[i]["owner"] = vehicles[i]["owner"]
-			ESX.Game.SetVehicleProperties(VehPos[i]["entityId"], vehicleProps)
+			RLCore.Functions.SetVehicleProperties(VehPos[i]["entityId"], props)
 			SetVehicleOnGroundProperly(VehPos[i]["entityId"])
 			FreezeEntityPosition(VehPos[i]["entityId"], true)
 			SetEntityAsMissionEntity(VehPos[i]["entityId"], true, true)
-			SetModelAsNoLongerNeeded(vehicleProps["model"])
+			SetModelAsNoLongerNeeded(props["model"])
 		end
 	end)
 end

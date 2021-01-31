@@ -43,6 +43,7 @@ RLCore.Functions.CreateCallback('JAM_VehicleFinance:RepoVehicleEnd', function(so
 
 	local canDel = true
 	local val = 0
+	local xPlayer = RLCore.Functions.GetPlayerData(source)
 
 	print(json.encode(vehicle.plate))
 
@@ -60,9 +61,7 @@ RLCore.Functions.CreateCallback('JAM_VehicleFinance:RepoVehicleEnd', function(so
 	
 		if canDel then
 
-			
-			--xPlayer.addMoney(val)
-			--TriggerClientEvent("banking:addBalance", source, val)
+			xPlayer.Functions.AddMoney("bank", val)
 			vehicleProps = vehicle
 			price = data[1].finance
 			print(json.encode(price))

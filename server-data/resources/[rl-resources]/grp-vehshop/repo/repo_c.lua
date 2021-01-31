@@ -175,7 +175,7 @@ function DrawRepoMarker(closestRepo, timer)
 				    if ped and ped ~= 0 then TaskLeaveVehicle(ped,closestRepo,16); end
 				    end 
 					RLCore.Functions.DeleteVehicle(closestRepo)
-					RLCore.Functions.Notify("You earnt $~g~'..val..'~s~ for the repossession.",'inform')
+					RLCore.Functions.Notify('You earnt $~g~'..val..'~s~ for the repossession.', "success")
 						--ESX.ShowNotification('You earnt $~g~'..val..'~s~ for the repossession.')
 						table.remove(Towables,k)
 					else
