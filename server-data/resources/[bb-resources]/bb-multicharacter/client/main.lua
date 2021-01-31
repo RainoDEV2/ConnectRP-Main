@@ -210,6 +210,11 @@ function selectChar()
     openCharMenu(true)
 end
 
+RegisterCommand("show", function(source, args, raw)
+    TriggerEvent('bb-multicharacter:client:chooseChar')
+    TriggerServerEvent('mumble:infinity:server:mutePlayer')
+end)
+
 function getPedFromCharID(id)
     for k, v in pairs(createdChars) do
         if v.key == id then
@@ -323,7 +328,10 @@ RegisterNUICallback('removeCharacter', function()
     TriggerServerEvent('bb-multicharacter:server:deleteCharacter', currentChar.dat[1])
     DoScreenFadeOut(750)
     Wait(500)
-    TriggerEvent('bb-multicharacter:refreshPeds')
+    deletePeds()
+    currentChar = nil
+    TriggerEvent('bb-multicharacter:client:chooseChar')
+    TriggerServerEvent('mumble:infinity:server:mutePlayer')
 end)
 
 RegisterNUICallback('removeBlur', function()
@@ -388,6 +396,13 @@ end
 
 RegisterNetEvent('bb-multicharacter:client:chooseChar')
 AddEventHandler('bb-multicharacter:client:chooseChar', function()
+    print("CURR CHAR", currentChar)
+    if currentChar ~= nil then
+        print("IM RUNNING CUZ IM")
+        deletePeds()
+        currentChar = nil
+    end
+
     SetNuiFocus(false, false)
     DoScreenFadeOut(0)
 
