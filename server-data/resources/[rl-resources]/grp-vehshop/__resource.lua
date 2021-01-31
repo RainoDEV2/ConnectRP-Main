@@ -4,14 +4,14 @@ client_script {
     "vehshop.lua",
     "plategenerator/client.lua",
     "repo/repo_c.lua",
-    "reposhop/reposhop_c.lua",
-    "config.lua"
+    --"reposhop/reposhop_c.lua",
+    --"config.lua"
 }
 
 server_script {
     "server.lua",
     "plategenerator/server.lua",
     "repo/repo_s.lua",
-    "reposhop/reposhop_s.lua",
-    "config.lua"
+    --"reposhop/reposhop_s.lua",
+    --"config.lua"
 }
