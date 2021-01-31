@@ -106,7 +106,7 @@ Citizen.CreateThread(function()
     while true do
         Wait(3600000)
         dailyWithdraws = {}
-        TriggerClientEvent('RLCore:Notify', -1, "Daily limit resetted.", "success")
+        TriggerClientEvent('RLCore:Notify', -1, "ATM resetted.", "success")
     end
 end)
 
