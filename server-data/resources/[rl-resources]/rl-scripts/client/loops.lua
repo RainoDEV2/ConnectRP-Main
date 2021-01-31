@@ -200,20 +200,16 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-        Wait(5)
-        SetCreateRandomCops(false)
+		Wait(0)
+		for i = 1, 12 do
+			EnableDispatchService(i, false)
+		end
+		SetPlayerWantedLevel(PlayerId(), 0, false)
+		SetPlayerWantedLevelNow(PlayerId(), false)
+		SetPlayerWantedLevelNoDrop(PlayerId(), 0, false)
+		SetCreateRandomCops(false)
         SetCreateRandomCopsNotOnScenarios(false)
-        SetCreateRandomCopsOnScenarios(false)
-        
-        --[[ SetVehicleModelIsSuppressed(GetHashKey("rubble"), true)
-        SetVehicleModelIsSuppressed(GetHashKey("dump"), true)
-        SetVehicleModelIsSuppressed(GetHashKey("taco"), true)
-        SetVehicleModelIsSuppressed(GetHashKey("biff"), true)
-        SetVehicleModelIsSuppressed(GetHashKey("hydra"), true)
-        SetVehicleModelIsSuppressed(GetHashKey("rhino"), true)
-        SetVehicleModelIsSuppressed(GetHashKey("polmav"), true)
-        SetVehicleModelIsSuppressed(GetHashKey("lazer"), true)
-		SetVehicleModelIsSuppressed(GetHashKey("policeb"), true) ]]
+		SetCreateRandomCopsOnScenarios(false)
 		SetVehicleModelIsSuppressed(GetHashKey("sentinel"), true)
-    end
+	end
 end)
