@@ -1780,10 +1780,12 @@ RLConfig.Doors = {
 		distance = 2.0,
 	},
 
+	--vector3(410.06054, -1028.298, 29.396188)
+
 	{
-		objName = 725274945,
-		objCoords  = vector3(411.07, -1029.19, 29.40),
-		textCoords = vector3(411.07, -1029.19, 29.40),
+		objName = -1635161509,
+		objCoords  = vector3(410.06, -1028.29, -29.39),
+		textCoords = vector3(410.06, -1028.29, -29.39),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
