@@ -74,7 +74,7 @@ Citizen.CreateThread(function()
 
         if isLoggedIn then
             for k, v in pairs(availableKeys) do
-                if IsControlJustPressed(0, Keys[v]) or IsDisabledControlJustPressed(0, Keys[v]) then
+                if IsControlJustPressed(0, Keys[v]) or IsDisabledControlJustPressed(0, Keys[v]) and IsInputDisabled(2) then
                     local keyMeta = RLCore.Functions.GetPlayerData().metadata["commandbinds"]
                     local args = {}
                     if next(keyMeta) ~= nil then
@@ -86,7 +86,7 @@ Citizen.CreateThread(function()
                             RLCore.Functions.Notify('There is still nothing tied to ['..v ..'] / bind to bind a command', 'primary', 4000)
                         end
                     else
-                        RLCore.Functions.Notify('You don\'t have any commands yet, / binds to bind a command', 'primary', 4000)
+                        RLCore.Functions.Notify("You don't have any commands yet, / binds to bind a command", 'primary', 4000)
                     end
                 end
             end

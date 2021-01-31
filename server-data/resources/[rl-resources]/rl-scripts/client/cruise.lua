@@ -614,7 +614,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
         local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
 
-        if (IsControlJustReleased(0, button) or IsDisabledControlJustReleased(0, button)) and vehicle ~= nil and vehicle ~= 0 and GetPedInVehicleSeat(vehicle, 0) then
+        if (IsControlJustReleased(0, button) or IsDisabledControlJustReleased(0, button)) and vehicle ~= nil and vehicle ~= 0 and GetPedInVehicleSeat(vehicle, 0) and IsInputDisabled(2) then
             toggleEngine()
         end
     end

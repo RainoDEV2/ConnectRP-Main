@@ -173,7 +173,7 @@ Citizen.CreateThread(function()
         DisableControlAction(0, Keys["3"], true)
         DisableControlAction(0, Keys["4"], true)
         DisableControlAction(0, Keys["5"], true)
-        if IsDisabledControlJustPressed(0, Keys["F2"]) and not isCrafting then
+        if IsDisabledControlJustPressed(0, Keys["F2"]) and not isCrafting and IsInputDisabled(2) then
             RLCore.Functions.GetPlayerData(function(PlayerData)
                 if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     local curVeh = nil
@@ -269,11 +269,11 @@ Citizen.CreateThread(function()
             end)
         end
 
-        if IsDisabledControlJustPressed(0, Keys["TAB"]) then
+        if IsDisabledControlJustPressed(0, Keys["TAB"]) and IsInputDisabled(2) then
             ToggleHotbar(true)
         end
 
-        if IsDisabledControlJustReleased(0, Keys["TAB"]) then
+        if IsDisabledControlJustReleased(0, Keys["TAB"]) and IsInputDisabled(2) then
             ToggleHotbar(false)
         end
 

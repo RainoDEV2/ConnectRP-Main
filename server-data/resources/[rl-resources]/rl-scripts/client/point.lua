@@ -38,7 +38,7 @@ Citizen.CreateThread(function()
         end
 
         if not keyPressed then
-            if IsControlPressed(0, Keys["B"]) and not mp_pointing and IsPedOnFoot(PlayerPedId()) then
+            if IsControlPressed(0, Keys["B"]) and not mp_pointing and IsPedOnFoot(PlayerPedId()) and IsInputDisabled(2) then
                 Wait(200)
                 if not IsControlPressed(0, Keys["B"]) then
                     keyPressed = true
