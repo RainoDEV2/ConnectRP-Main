@@ -14,8 +14,8 @@ RLCore.Commands.Add("bank", "Check your bank balance", {}, false, function(sourc
 	TriggerClientEvent('hud:client:ShowMoney', source, xPlayer['PlayerData']['money']['bank'])
 end)
 
-RegisterServerEvent("bb-hud:Server:UpdateStress")
-AddEventHandler('bb-hud:Server:UpdateStress', function(StressGain)
+RegisterServerEvent("rl-hud:Server:UpdateStress")
+AddEventHandler('rl-hud:Server:UpdateStress', function(StressGain)
 	local src = source
     local Player = RLCore.Functions.GetPlayer(src)
     local newStress
