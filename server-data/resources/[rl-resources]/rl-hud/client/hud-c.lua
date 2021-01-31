@@ -6,6 +6,8 @@ local lownotify = 0
 local toghud = false
 local mumbleInfo = 2
 local svrId = GetPlayerServerId(PlayerId())
+local zoomLevels = { 900, 1000, 1100, 1200, 1300, 1400 }
+local currZoom = 1
 
 local speed = 0.0
 local seatbeltOn = false
@@ -47,6 +49,10 @@ end)
 
 --General UI Updates
 Citizen.CreateThread(function()
+    -- Hide North Blip (Only need to call on resource start)
+	local northBlip = GetNorthRadarBlip()
+    SetBlipAlpha(northBlip, 0)
+
     Citizen.Wait(0)
     while true do
         local player = PlayerPedId()
@@ -70,7 +76,6 @@ Citizen.CreateThread(function()
     end
 end)
 
-
 --Food Thirst
 Citizen.CreateThread(function()
 	while true do
@@ -84,6 +89,44 @@ Citizen.CreateThread(function()
         Citizen.Wait(5000)
     end
 end)
+
+-- Map Zoom Handler
+Citizen.CreateThread(function()
+    SetMapZoomDataLevel(0, 0.96, 0.9, 0.08, 0.0, 0.0) -- Level 0
+    SetMapZoomDataLevel(1, 1.6, 0.9, 0.08, 0.0, 0.0) -- Level 1
+    SetMapZoomDataLevel(2, 8.6, 0.9, 0.08, 0.0, 0.0) -- Level 2
+    SetMapZoomDataLevel(3, 12.3, 0.9, 0.08, 0.0, 0.0) -- Level 3
+    SetMapZoomDataLevel(4, 22.3, 0.9, 0.08, 0.0, 0.0) -- Level 4
+    Wait(500)
+    SetRadarZoom(zoomLevels[currZoom])
+
+    while true do
+        if IsControlJustReleased(0, 207) then
+            MinimapIn()
+        elseif IsControlJustReleased(0, 208) then
+            MinimapOut()
+        end
+        Citizen.Wait(5)
+    end
+end)
+
+MinimapIn = function()
+    if currZoom == 1 then
+        currZoom = #zoomLevels
+    else
+        currZoom = currZoom - 1
+    end
+    SetRadarZoom(zoomLevels[currZoom])
+end
+
+MinimapOut = function()
+    if currZoom == #zoomLevels then
+        currZoom = 1
+    else
+        currZoom = currZoom + 1
+    end
+    SetRadarZoom(zoomLevels[currZoom])
+end
 
 --[[ Citizen.CreateThread(function()
     while true do
