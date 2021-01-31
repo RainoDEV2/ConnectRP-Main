@@ -99,34 +99,28 @@ Citizen.CreateThread(function()
     SetMapZoomDataLevel(4, 22.3, 0.9, 0.08, 0.0, 0.0) -- Level 4
     Wait(500)
     SetRadarZoom(zoomLevels[currZoom])
-
-    while true do
-        if IsControlJustReleased(0, 207) then
-            MinimapIn()
-        elseif IsControlJustReleased(0, 208) then
-            MinimapOut()
-        end
-        Citizen.Wait(5)
-    end
 end)
 
-MinimapIn = function()
+RegisterCommand( "map_zoom_in", function()
     if currZoom == 1 then
         currZoom = #zoomLevels
     else
         currZoom = currZoom - 1
     end
     SetRadarZoom(zoomLevels[currZoom])
-end
+end)
 
-MinimapOut = function()
-    if currZoom == #zoomLevels then
-        currZoom = 1
+RegisterCommand( "map_zoom_out", function()
+    if currZoom == 1 then
+        currZoom = #zoomLevels
     else
-        currZoom = currZoom + 1
+        currZoom = currZoom - 1
     end
     SetRadarZoom(zoomLevels[currZoom])
-end
+end)
+
+RegisterKeyMapping( "map_zoom_in", "Zoom in your mini map", "keyboard", "")
+RegisterKeyMapping( "map_zoom_out", "Zoom out your mini map", "keyboard", "")
 
 --[[ Citizen.CreateThread(function()
     while true do
