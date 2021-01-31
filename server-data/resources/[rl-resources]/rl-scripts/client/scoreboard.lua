@@ -168,7 +168,7 @@ Citizen.CreateThread(function()
 
     while true do
         Citizen.Wait(0)
-        if IsControlPressed(0, 10) then
+        if IsControlPressed(0, 10) and IsInputDisabled(2) then
             if not IsAnyMenuOpen() then
                 ST.Scoreboard.Menu:Open()
             end
