@@ -421,6 +421,7 @@ AddEventHandler('rl-houses:server:LogoutLocation', function()
 	local MyItems = Player.PlayerData.items
 	RLCore.Functions.ExecuteSql(true, "UPDATE `players` SET `inventory` = '"..RLCore.EscapeSqli(json.encode(MyItems)).."' WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'")
 	RLCore.Player.Logout(src)
+	TriggerClientEvent("rl-hud-player:client:SpawnedIn", src, false)
     TriggerClientEvent('bb-multicharacter:client:chooseChar', src)
 end)
 
