@@ -76,10 +76,11 @@ RegisterNetEvent('police:client:CameraCommand')
 AddEventHandler('police:client:CameraCommand', function(cameraId)
     local plyPed = PlayerPedId()
     local plyCoords = GetEntityCoords(plyPed)
-    local distance = GetDistanceBetweenCoords(plyCoords.x, plyCoords.y,plyCoords.z,438.75601, -992.4405, 30.689327, true)
-
-    if distance < 4 then
+    local distance = GetDistanceBetweenCoords(plyCoords.x, plyCoords.y,plyCoords.z,445.19451, -997.7368, 34.970149, true)
+    if distance < 10 or IsPedInAnyVehicle(GetPlayerPed(PlayerId())) then
         TriggerEvent('police:client:ActiveCamera', cameraId)
+    else
+        RLCore.Functions.Notify("You need to be in the dispatch center or in your cruiser to view cameras", "error")
     end
 end)
 
