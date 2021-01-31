@@ -406,14 +406,6 @@ Config.Products = {
             type = "item",
             slot = 10,
         },
-        [11] = {
-            name = "binoculars",
-            price = 300,
-            amount = 50,
-            info = {},
-            type = "item",
-            slot = 11,
-        },    
         [12] = {
             name = "diving_gear",
             price = 1500,
