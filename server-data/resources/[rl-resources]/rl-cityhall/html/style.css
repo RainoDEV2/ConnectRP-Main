@@ -188,7 +188,8 @@ body {
     bottom: 0;
     right: 0;
     margin: 5vh;
-    width: 20vh;
+    width: fit-content;
+    padding: 10px;
     height: 5vh;
     background: rgb(235, 50, 50);
 }
