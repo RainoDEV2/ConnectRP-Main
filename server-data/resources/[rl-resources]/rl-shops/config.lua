@@ -118,6 +118,14 @@ Config.Products = {
             type = "item",
             slot = 13,
         },
+        [14] = {
+            name = "notepad",
+            price = 25,
+            amount = 5,
+            info = {},
+            type = "item",
+            slot = 14,
+        },
     },
     ["coffeelounge"] = {
         [1] = {
@@ -421,6 +429,14 @@ Config.Products = {
             info = {},
             type = "item",
             slot = 13,
+        },
+        [14] = {
+            name = "notepad",
+            price = 25,
+            amount = 5,
+            info = {},
+            type = "item",
+            slot = 14,
         },
     },   
     ["gsgasoline"] = {
