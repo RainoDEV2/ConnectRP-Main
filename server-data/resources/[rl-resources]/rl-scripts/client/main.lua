@@ -20,3 +20,130 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
+attachedPropPerm = 0
+function removeAttachedPropPerm()
+	if DoesEntityExist(attachedPropPerm) then
+		DeleteEntity(attachedPropPerm)
+		attachedPropPerm = 0
+	end
+end
+
+RegisterNetEvent('destroyPropPerm')
+AddEventHandler('destroyPropPerm', function()
+	removeAttachedPropPerm()
+end)
+
+local APPbone = 0
+local APPx = 0.0
+local APPy = 0.0
+local APPz = 0.0
+local APPxR = 0.0
+local APPyR = 0.0
+local APPzR = 0.0
+
+local holdingPackage = false
+
+RegisterNetEvent('attachPropPerm')
+AddEventHandler('attachPropPerm', function(attachModelSent,boneNumberSent,x,y,z,xR,yR,zR)
+
+	if attachedPropPerm ~= 0 then
+		removeAttachedPropPerm()
+		return
+	end
+	TriggerEvent("DoLongHudText","Press 7 to drop or pickup the object.",37)
+	
+	holdingPackage = true
+	attachModel = GetHashKey(attachModelSent)
+	boneNumber = boneNumberSent
+	SetCurrentPedWeapon(PlayerPedId(), 0xA2719263)
+	local bone = GetPedBoneIndex(PlayerPedId(), boneNumberSent)
+	--local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(), true))
+	RequestModel(attachModel)
+	while not HasModelLoaded(attachModel) do
+		Citizen.Wait(100)
+	end
+	attachedPropPerm = CreateObject(attachModel, 1.0, 1.0, 1.0, 1, 1, 0)
+	AttachEntityToEntity(attachedPropPerm, PlayerPedId(), bone, x, y, z, xR, yR, zR, 1, 1, 0, 0, 2, 1)
+
+	APPbone = bone
+	APPx = x
+	APPy = y
+	APPz = z
+	APPxR = xR
+	APPyR = yR
+	APPzR = zR
+end)
+
+function loadAnimDict( dict )
+    while ( not HasAnimDictLoaded( dict ) ) do
+        RequestAnimDict( dict )
+        Citizen.Wait( 5 )
+    end
+end
+
+function randPickupAnim()
+  local randAnim = math.random(7)
+    loadAnimDict('random@domestic')
+    TaskPlayAnim(PlayerPedId(),'random@domestic', 'pickup_low',5.0, 1.0, 1.0, 48, 0.0, 0, 0, 0)
+end
+
+function propAttachDrop()
+	if attachedPropPerm ~= 0 then
+
+		if (`WEAPON_UNARMED` ~= GetSelectedPedWeapon(PlayerPedId()) and holdingPackage) then
+
+			if not holdingPackage then
+
+				local dst = #(GetEntityCoords(attachedPropPerm) - GetEntityCoords(PlayerPedId()))
+
+				if dst < 2 then
+				--	TaskTurnPedToFaceEntity(PlayerPedId(), attachedPropPerm, 1.0)
+					holdingPackage = not holdingPackage
+					randPickupAnim()
+					Citizen.Wait(1000)
+					PropCarryAnim()
+					ClearPedTasks(PlayerPedId())
+					ClearPedSecondaryTask(PlayerPedId())
+					AttachEntityToEntity(attachedPropPerm, PlayerPedId(), APPbone, APPx, APPy, APPz, APPxR, APPyR, APPzR, 1, 1, 0, 0, 2, 1)
+				end
+
+			else
+				holdingPackage = not holdingPackage
+				ClearPedTasks(PlayerPedId())
+				ClearPedSecondaryTask(PlayerPedId())
+				randPickupAnim()
+				Citizen.Wait(500)
+				DetachEntity(attachedPropPerm)
+			end
+
+		end
+	end
+end
+
+--[[ Citizen.CreateThread(function()
+  exports["np-keybinds-1"]:registerKeyMapping("", "Player", "Drop Prop", "+propAttachDrop", "-propAttachDrop")
+  RegisterCommand('+propAttachDrop', propAttachDrop, false)
+  RegisterCommand('-propAttachDrop', function() end, false)
+end)
+ ]]
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(5)
+        if IsControlJustReleased(0, 161) and holdingPackage then
+            propAttachDrop()
+        end
+    end
+end)
+
+function PropCarryAnim()
+	-- anims for specific carrying props.
+end
+
+attachedProp = 0
+function removeAttachedProp()
+	if DoesEntityExist(attachedProp) then
+		DeleteEntity(attachedProp)
+		attachedProp = 0
+	end
+end
