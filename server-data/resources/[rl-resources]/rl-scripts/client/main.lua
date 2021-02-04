@@ -50,8 +50,9 @@ AddEventHandler('attachPropPerm', function(attachModelSent,boneNumberSent,x,y,z,
 	if attachedPropPerm ~= 0 then
 		removeAttachedPropPerm()
 		return
-	end
-	TriggerEvent("DoLongHudText","Press 7 to drop or pickup the object.",37)
+    end
+    RLCore.Functions.Notify("Press 7 to drop or pickup the object.")
+	--TriggerEvent("DoLongHudText","Press 7 to drop or pickup the object.",37)
 	
 	holdingPackage = true
 	attachModel = GetHashKey(attachModelSent)
