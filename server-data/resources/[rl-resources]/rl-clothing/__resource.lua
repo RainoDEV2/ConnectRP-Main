@@ -9,6 +9,7 @@ client_script('client/healingspots.lua')
 client_script('client/barbershop.lua')
 client_script('client/skins.lua')
 client_script('client/client.lua')
+client_script('client/backup.lua')
 
 ui_page('client/html/index.html')
 
