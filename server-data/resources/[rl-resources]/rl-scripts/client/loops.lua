@@ -216,7 +216,7 @@ end)
 
 --OutOfBreathe
 
-local isSprinting = false
+--[[ local isSprinting = false
 
 Citizen.CreateThread(function()
 	while true do
@@ -245,4 +245,4 @@ Citizen.CreateThread(function()
 	isSprinting = IsPedSprinting(lPed)
         Citizen.Wait(500)
     end
-end)
+end) ]]
