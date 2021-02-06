@@ -333,7 +333,7 @@ Config.Items = {
             amount = 1,
             info = {},
             type = "weapon",
-            slot = 25,
+            slot = 7,
         },
         [8] = {
             name = "weapon_stungun",
@@ -341,7 +341,7 @@ Config.Items = {
             amount = 1,
             info = {},
             type = "weapon",
-            slot = 7,
+            slot = 8,
         },
         [9] = {
             name = "weapon_nightstick",
@@ -349,7 +349,7 @@ Config.Items = {
             amount = 1,
             info = {},
             type = "weapon",
-            slot = 8,
+            slot = 9,
         },
         [10] = {
             name = "weapon_flashlight",
@@ -357,7 +357,7 @@ Config.Items = {
             amount = 2,
             info = {},
             type = "weapon",
-            slot = 9,
+            slot = 10,
         },
         [11] = {
             name = "weapon_fireextinguisher",
@@ -365,7 +365,7 @@ Config.Items = {
             amount = 1,
             info = {},
             type = "weapon",
-            slot = 10,
+            slot = 11,
         },
         [12] = {
             name = "handcuffs",
@@ -373,7 +373,7 @@ Config.Items = {
             amount = 5,
             info = {},
             type = "item",
-            slot = 11,
+            slot = 12,
         },
         [13] = {
             name = "binoculars",
@@ -381,7 +381,7 @@ Config.Items = {
             amount = 5,
             info = {},
             type = "item",
-            slot = 12,
+            slot = 13,
         },
         [14] = {
             name = "diving_gear",
@@ -389,7 +389,7 @@ Config.Items = {
             amount = 2,
             info = {},
             type = "item",
-            slot = 13,
+            slot = 14,
         }, 
         [15] = {
             name = "parachute",
@@ -397,7 +397,7 @@ Config.Items = {
             amount = 2,
             info = {},
             type = "item",
-            slot = 14,
+            slot = 15,
         }, 
         [16] = {
             name = "heavyarmor",
@@ -405,7 +405,7 @@ Config.Items = {
             amount = 10,
             info = {},
             type = "item",
-            slot = 15,
+            slot = 16,
         },
         [17] = {
             name = "radio",
@@ -413,7 +413,7 @@ Config.Items = {
             amount = 10,
             info = {},
             type = "item",
-            slot = 16,
+            slot = 17,
         },
         [18] = {
             name = "empty_evidence_bag",
@@ -421,7 +421,7 @@ Config.Items = {
             amount = 50,
             info = {},
             type = "item",
-            slot = 17,
+            slot = 18,
         },
         [19] = {
             name = "police_stormram",
@@ -429,7 +429,7 @@ Config.Items = {
             amount = 10,
             info = {},
             type = "item",
-            slot = 18,
+            slot = 19,
         },
         [20] = {
             name = "pistol_ammo",
@@ -437,7 +437,7 @@ Config.Items = {
             amount = 15,
             info = {},
             type = "item",
-           slot = 19,
+           slot = 20,
         },    
         [21] = {
             name = "smg_ammo",
@@ -445,7 +445,7 @@ Config.Items = {
             amount = 15,
             info = {},
             type = "item",
-           	slot = 20,
+           	slot = 21,
         },
         [22] = {
             name = "rifle_ammo",
@@ -453,7 +453,7 @@ Config.Items = {
             amount = 15,
             info = {},
             type = "item",
-            slot = 21,
+            slot = 22,
         },
         [23] = {
             name = "signalradar",
@@ -461,7 +461,7 @@ Config.Items = {
             amount = 10,
             info = {},
             type = "item",
-            slot = 22,
+            slot = 23,
         },
         [24] = {
             name = "ifak",
@@ -469,7 +469,7 @@ Config.Items = {
             amount = 25,
             info = {},
             type = "item",
-            slot = 23,
+            slot = 24,
         },
         [25] = {
             name = "repairkit",
@@ -477,7 +477,7 @@ Config.Items = {
             amount = 5,
             info = {},
             type = "item",
-            slot = 24,
+            slot = 25,
         },
     }
 }
