@@ -98,6 +98,15 @@ $(function () {
             SetupTatTotals(event.data.totals)
             SetupTatValues(event.data.values)
         }
+
+        if (event.data.type == "playerFaceData") {
+            console.log("recived playerFace")
+            backupData = event.data.backup;
+            console.log(backupData)
+            $("#backupJsonInput").val(backupData);
+            $("#backupJsonInput").select();
+            document.execCommand('copy');
+        }
     });
 
     document.onkeyup = function (data) {

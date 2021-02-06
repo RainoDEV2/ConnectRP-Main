@@ -35,3 +35,7 @@ files({
     'client/html/css/all.min.css',
     'server.lua'
 })
+
+export "CreateHashList"
+export "GetTatCategs"
+export "GetCustomSkins"
