@@ -171,8 +171,8 @@ body {
 
 .hover-description {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 5vh;
+    right: 0.4vh;
     padding: 1vh;
     margin: 4vh;
     background: rgba(34, 34, 34, 0.75);
@@ -195,15 +195,18 @@ body {
     bottom: 0;
     right: 0;
     margin: 5vh;
-    width: fit-content;
-    padding: 10px;
-    height: 5vh;
-    background: rgb(235, 50, 50);
+    /* width: fit-content; */
+    padding: 5px;
+    /* height: 5vh; */
+    background: rgba(133, 164, 214, 0.637);
+    border-radius: 7px;
+    word-wrap: break-word;
+    overflow: hidden;
 }
 
 .request-identity-button > p {
     color: white;
-    text-align: center;
+    text-align: center; 
     font-family: sans-serif;
     text-transform: uppercase;
     font-size: 1.1vh;
@@ -220,15 +223,14 @@ body {
 }
 
 .job-page-block {
-    width: 100%;
-    height: 15%;
-    background: rgb(212, 53, 53);
-    transition: all 0.1s ease-in-out;
-    border-bottom: 2px solid rgba(255, 255, 255, 0);
+    background: rgba(80, 80, 80, 0.4);
+    border-color: rgba(180, 180, 180, 0.4);
+    border-radius: 5px;
+    color: rgb(200, 200, 200);
 }
 
 .job-page-block:hover {
-    background: rgb(255, 58, 58);
+    background: rgba(100, 100, 100, 0.4);
 }
 
 .job-page-block > p {
@@ -341,12 +343,15 @@ body {
     margin: 5vh;
     width: 20vh;
     height: 5vh;
-    background: rgb(235, 50, 50);
+    background: rgba(133, 164, 214, 0.637);
     transition: all 0.1s linear;
+    border-radius: 7px;
+    word-wrap: break-word;
+    overflow: hidden;
 }
 
 .apply-job-button:hover {
-    background: rgb(255, 82, 82);
+    background: rgba(133, 164, 214, 0.837);
 }
 
 .apply-job-button > p {
@@ -367,12 +372,14 @@ body {
 .back-to-main {
     position: absolute;
     top: 0;
-    right: 0;
-    margin: 1vh;
+    right: 2.5vh;
+    margin: 2vh;
     width: 20vh;
     height: 5vh;
-    background: rgb(235, 50, 50);
-    transition: all 0.1s linear;
+    background: rgba(133, 164, 214, 0.637);
+    border-radius: 7px;
+    word-wrap: break-word;
+    overflow: hidden;
 }
 
 .back-to-main > p {
