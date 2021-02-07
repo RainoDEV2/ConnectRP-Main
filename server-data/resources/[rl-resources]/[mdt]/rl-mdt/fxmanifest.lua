@@ -12,7 +12,8 @@ files {
     "ui/script.js",
     "ui/badge.png",
 	"ui/footer.png",
-	"ui/mugshot.png"
+	"ui/mugshot.png",
+    "ui/mdt.png"
 }
 
 server_scripts {
