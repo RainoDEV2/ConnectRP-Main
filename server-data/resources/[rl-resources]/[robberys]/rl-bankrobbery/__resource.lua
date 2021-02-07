@@ -11,6 +11,12 @@ client_scripts {
     'client/doors.lua',
     'client/paleto.lua',
     'config.lua',
+
+    --'@PolyZone/client.lua',
+    --'@PolyZone/BoxZone.lua',
+    --'@PolyZone/ComboZone.lua',
+    --'@mka-lasers/client/client.lua',
+
 }
 
 server_scripts {
