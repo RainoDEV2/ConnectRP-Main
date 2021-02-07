@@ -447,7 +447,7 @@ function EcstasyEffect()
         end
     end
     startStamina = 0
-    exports["acidtrip"]:DoAcid(60000)
+    exports["acidtrip"]:DoAcid(120000)
 end
 
 function CrackBaggyEffect()
@@ -485,7 +485,7 @@ function MethBagEffect()
     end
     startStamina = 0
     SetRunSprintMultiplierForPlayer(PlayerId(), 1.0)
-    exports["acidtrip"]:DoAcid(120000)
+    --exports["acidtrip"]:DoAcid(120000)
 end
 
 function CokeBaggyEffect()
