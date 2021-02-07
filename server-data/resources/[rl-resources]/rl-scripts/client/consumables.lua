@@ -434,7 +434,6 @@ AddEventHandler("consumables:client:Drink", function(itemName)
 end)
 
 function EcstasyEffect()
-    AcidTripEcstasy()
     local startStamina = 30
     SetFlash(0, 0, 500, 7000, 500)
     while startStamina > 0 do 
@@ -590,7 +589,6 @@ function CrackBaggyEffect()
 end
 
 function MethBagEffect()
-    AcidTripMeth()
     local startStamina = 8
     TrevorEffect()
     SetRunSprintMultiplierForPlayer(PlayerId(), 1.49)
