@@ -435,15 +435,17 @@ AddEventHandler('police:sv', function(index)
             template = '<div class="chat-message emergency">Police Vehicles: '.. str ..' </div>',
         })
     elseif Vehicles[tonumber(index)] then
-        TriggerEvent("RLCore:Notify", "Spawning vehicle", "error")
+        TriggerEvent("RLCore:Notify", "Spawning vehicle")
         local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         local head = GetEntityHeading(ped)
         local radhead = math.rad(head)
         local model = GetHashKey(Vehicles[tonumber(index)]['model'])
-        local newpos = {x = pos.x-math.sin(radhead)*3, y = pos.y+math.cos(radhead)*3, z = pos.z}
+        local newpos = {x = pos.x-math.sin(radhead)*3, y = pos.y+math.cos(radhead)*7, z = pos.z}
+
+        Citizen.Wait(100)
         RequestModel(model)
-        while not HasModelLoaded(model) do
+        while not HasModelLoaded(model) do 
             Wait(500)
         end
         local veh = CreateVehicle(model, newpos.x, newpos.y, newpos.z, head, true, true)
