@@ -128,7 +128,7 @@ local MarioZAdd = 0.01
 
 DoAcid = function(time)
   local song = (time and time >= 200000 and 2 or 1)
-  SendNUIMessage({type = "playMusic", song = song})
+  --SendNUIMessage({type = "playMusic", song = song})
 
   InitCubes()
 

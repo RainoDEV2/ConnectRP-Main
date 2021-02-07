@@ -433,14 +433,6 @@ AddEventHandler("consumables:client:Drink", function(itemName)
     end)
 end)
 
-function AcidTripEcstasy()
-    exports["acidtrip"]:DoAcid(60000)
-end
-
-function AcidTripMeth()
-    exports["acidtrip"]:DoAcid(120000)
-end
-
 function EcstasyEffect()
     AcidTripEcstasy()
     local startStamina = 30
@@ -454,8 +446,8 @@ function EcstasyEffect()
             ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', 0.08)
         end
     end
-
     startStamina = 0
+    exports["acidtrip"]:DoAcid(60000)
 end
 
 function CrackBaggyEffect()
@@ -493,6 +485,7 @@ function MethBagEffect()
     end
     startStamina = 0
     SetRunSprintMultiplierForPlayer(PlayerId(), 1.0)
+    exports["acidtrip"]:DoAcid(120000)
 end
 
 function CokeBaggyEffect()
