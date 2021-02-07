@@ -857,6 +857,6 @@ RegisterCommand( "escort_nearest_player", function()
     end
 end ) 
 
-RegisterKeyMapping( "unseat_nearest_player", "Unseat nearest (EMERGENCY)", "keyboard", "up")
-RegisterKeyMapping( "seat_nearest_player", "Seat nearest (EMERGENCY)", "keyboard", "down")
-RegisterKeyMapping( "escort_nearest_player", "Seat nearest (EMERGENCY)", "keyboard", "left")
+RegisterKeyMapping( "unseat_nearest_player", "Unseat nearest (EMERGENCY)", "keyboard", "")
+RegisterKeyMapping( "seat_nearest_player", "Seat nearest (EMERGENCY)", "keyboard", "")
+RegisterKeyMapping( "escort_nearest_player", "Seat nearest (EMERGENCY)", "keyboard", "")
