@@ -50,29 +50,59 @@ AddEventHandler("client:cigarette", function()
         TriggerEvent('animations:client:EmoteCommandStart', {"smoke"})
 end)
 
+local drugEffectTime
+function map_range(s, a1, a2, b1, b2)
+  return b1 + (s - a1) * (b2 - b1) / (a2 - a1)
+end
+
 
 RegisterNetEvent("stress:timed")
 AddEventHandler("stress:timed",function(alteredValue,scenario)
-	local removedStress = 0
-	Wait(1000)
+local timeout = 500
 
-	RLCore.Functions.Notify("Stress is being relieved")
-	while true do
-		removedStress = removedStress + 100
-		if removedStress >= alteredValue then
-			break
-		end
-        local armor = GetPedArmour(PlayerPedId())
-        SetPedArmour(PlayerPedId(),armor+3)
-		if scenario ~= "None" then
-			if not IsPedUsingScenario(PlayerPedId(),scenario) then
-				TriggerEvent("animation:cancel")
-				break
-			end
-		end
-		Citizen.Wait(1000)
-	end
-	TriggerServerEvent("server:alterStress",false,removedStress)
+  while not IsPedUsingScenario(PlayerPedId(), scenario) do
+    Wait(1)
+
+    timeout = timeout - 1
+
+    if timeout == 0 then
+      print("WEED ANIMATION TIMED OUT")
+      return
+    end
+  end
+
+  --TriggerEvent("addiction:drugTaken", "weed")
+  local removedStress = 0
+  RLCore.Functions.Notify('Stress is being relieved')
+
+  SetPlayerMaxArmour(PlayerId(), 60)
+
+  local addictionFactor = getFactor("weed")
+
+  -- Addiction will scale the amount of armor you get over time between 0 and 3 dependiong on how addicted you are
+  local armorchange = map_range(addictionFactor, 0.0, 5.0, 3.0, 0.0)
+
+  if armorchange < 0 then
+    armorchange = 0
+  end
+
+  while removedStress <= alteredValue do
+    removedStress = removedStress + 100
+
+    local armor = GetPedArmour(PlayerPedId())
+
+    SetPedArmour(PlayerPedId(), armor + math.ceil(armorchange))
+
+    if scenario ~= "None" then
+      if not IsPedUsingScenario(PlayerPedId(), scenario) then
+        TriggerEvent("animation:cancel")
+        break
+      end
+    end
+
+    Citizen.Wait(1000)
+  end
+  TriggerServerEvent('rl-hud:Server:RelieveStress', removedStress)
 end)
 
 function loadAnimDict(dict)
@@ -451,21 +481,59 @@ function EcstasyEffect()
 end
 
 function CrackBaggyEffect()
-    local startStamina = 8
-    TrevorEffect()
-    SetRunSprintMultiplierForPlayer(PlayerId(), 1.43)
-    while startStamina > 0 do 
-        Citizen.Wait(1000)
-        if math.random(1, 100) < 10 then
-            RestorePlayerStamina(PlayerId(), 1.0)
-        end
-        startStamina = startStamina - 1
-        if math.random(1, 100) < 51 then
-            TrevorEffect()
-        end
+  --TriggerEvent("addiction:drugTaken", "cocaine")
+  drugEffectTime = 0
+
+  --TriggerEvent("fx:run", "cocaine", 8, 0.0, false, false)
+
+  local addictionFactor = getFactor("cocaine")
+
+  -- sets the sprint multipler based on the addictionfactor... if your addiction is higher then 5.0, you start slowing down. max sprint speep is 1.25
+  local sprintfactor = map_range(addictionFactor, 0.0, 5.0, 1.1, 1.00)
+
+  if sprintfactor < 1.0 then
+    sprintfactor = 1.0
+  end
+
+  SetRunSprintMultiplierForPlayer(PlayerId(), sprintfactor)
+
+  drugEffectTime = 50 + (150 * (quality and quality / 100 or 1.0))
+  if quality and quality < 40 then
+    RLCore.Functions.Notify('This is some poor quality shit')
+    --TriggerEvent("DoLongHudText", "This is some poor quality shit", 2)
+  end
+
+  TriggerServerEvent('rl-hud:Server:GainStress', math.random(250))
+
+  while drugEffectTime > 0 do
+    Citizen.Wait(1000)
+    RestorePlayerStamina(PlayerId(), 1.0)
+    drugEffectTime = drugEffectTime - 1
+
+    if IsPedRagdoll(PlayerPedId()) then
+      SetPedToRagdoll(PlayerPedId(), math.random(5), math.random(5), 3, 0, 0, 0)
     end
-    startStamina = 0
-    SetRunSprintMultiplierForPlayer(PlayerId(), 1.0)
+
+    local armor = GetPedArmour(PlayerPedId())
+    SetPedArmour(PlayerPedId(), armor + 3)
+
+    if math.random(500) < 3 then
+      --TriggerEvent("fx:run", "cocaine", 8, 0.0, false, false)
+      Citizen.Wait(math.random(30000))
+    end
+
+    if math.random(100) > 91 and IsPedRunning(PlayerPedId()) then
+      SetPedToRagdoll(PlayerPedId(), math.random(1000), math.random(1000), 3, 0, 0, 0)
+    end
+  end
+
+  drugEffectTime = 0
+
+  if IsPedRunning(PlayerPedId()) then
+    SetPedToRagdoll(PlayerPedId(), 1000, 1000, 3, 0, 0, 0)
+  end
+
+  SetRunSprintMultiplierForPlayer(PlayerId(), 1.0)
 end
 
 function MethBagEffect()
