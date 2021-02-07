@@ -668,10 +668,10 @@ function DeleteGear()
 	end
 end
 
-RegisterNetEvent('oxygenmaskclient:UseGear')
+--[[ RegisterNetEvent('oxygenmaskclient:UseGear')
 AddEventHandler('oxygenmaskclient:UseGear', function(bool)
     if bool then
-        GearAnim()
+        GearAnim() 
         RLCore.Functions.Progressbar("equip_gear", "Oxygen Tank", 30000, false, true, {}, {}, {}, {}, function() -- Done
             DeleteGear()
             local maskModel = GetHashKey("p_d_scuba_mask_s")
@@ -719,7 +719,7 @@ AddEventHandler('oxygenmaskclient:UseGear', function(bool)
             RLCore.Functions.Notify('You are not wearing an oxygen tank.', 'error')
         end
     end
-end)
+end) ]]
 
 function GearAnim()
     loadAnimDict("clothingshirt")    	
