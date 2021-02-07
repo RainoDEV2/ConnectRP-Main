@@ -414,29 +414,29 @@ Config.Products = {
             type = "item",
             slot = 10,
         },
-        [12] = {
+        [11] = {
             name = "diving_gear",
             price = 1500,
             amount = 10,
             info = {},
             type = "item",
-            slot = 12,
+            slot = 1112,
         },
-        [13] = {
+        [12] = {
             name = "jerry_can",
             price = 200,
             amount = 50,
             info = {},
             type = "item",
-            slot = 13,
+            slot = 12,
         },
-        [14] = {
+        [13] = {
             name = "notepad",
             price = 25,
             amount = 5,
             info = {},
             type = "item",
-            slot = 14,
+            slot = 13,
         },
     },   
     ["gsgasoline"] = {
