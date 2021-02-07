@@ -416,11 +416,11 @@ Config.Products = {
         },
         [11] = {
             name = "diving_gear",
-            price = 1500,
+            price = 3000,
             amount = 10,
             info = {},
             type = "item",
-            slot = 1112,
+            slot = 11,
         },
         [12] = {
             name = "jerry_can",
