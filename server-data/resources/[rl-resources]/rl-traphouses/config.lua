@@ -20,7 +20,7 @@ Config.TrapHouses = {
             ["interaction"] = {x = 142.69097, y = -1656.077, z = -9.661718, h =355.38665, r = 1.0},
         },
         keyholders = {},
-        pincode = 8518,
+        pincode = 4915,
         inventory = {},
         opened = false,
         takingover = false,
