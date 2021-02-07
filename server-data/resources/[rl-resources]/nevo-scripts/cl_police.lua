@@ -238,20 +238,28 @@ AddEventHandler('police:unmaskAccepted', function()
 end)
 
 local PoliceGarages = {
-    { ['x'] = 424.1455, ['y'] = -1023.361, ['z'] = 28.92278, ['h'] = 300.83587 },
-    { ['x'] = -459.241, ['y'] = 6002.0151, ['z'] = 31.342147, ['h'] = 200.63348 },
-    { ['x'] = -439.5925, ['y'] = 6029.1791, ['z'] = 31.340551, ['h'] = 274.22802 },
-    { ['x'] = 1855.5954, ['y'] = 3674.6323, ['z'] = 33.661075, ['h'] = 30.010299 },
-    { ['x'] = 293.09509, ['y'] = -581.854, ['z'] = 43.193058, ['h'] = 152.69309 },
-    { ['x'] = 293.09509, ['y'] = -581.854, ['z'] = 43.193058, ['h'] = 152.69309 },
-    { ['x'] = 1855.0419, ['y'] = 2587.0893, ['z'] = 45.106185, ['h'] = 110.52773 },
-    { ['x'] = -342.9639, ['y'] = -136.1628, ['z'] = 39.009616, ['h'] = 270.94482 },
-    { ['x'] = -211.3267, ['y'] = -1326.596, ['z'] = 30.89038, ['h'] = 261.77297 },
-    { ['x'] = 731.14245, ['y'] = -1088.785, ['z'] = 22.163265, ['h'] = 300.03933 },
-	{ ['x'] = -1629.60, ['y'] = -1141.96, ['z'] = 0.86, ['h'] = 146.34 },
-	{ ['x'] = -2814.367, ['y'] = 2380.24, ['z'] = 0.31, ['h'] = 65.84 },
-	{ ['x'] = -641.04, ['y'] = 6357.82, ['z'] = -0.23, ['h'] = 61.35 },
-	{ ['x'] = 1543.67, ['y'] = 3900.56, ['z'] = 30.43, ['h'] = 143.82 }
+    { ['x'] = 424.1455, ['y'] = -1023.361, ['z'] = 28.92278, ['h'] = 300.83587 }, --MRPD
+    { ['x'] = -459.241, ['y'] = 6002.0151, ['z'] = 31.342147, ['h'] = 200.63348 }, --Paleto SO [Back]
+    { ['x'] = -439.5925, ['y'] = 6029.1791, ['z'] = 31.340551, ['h'] = 274.22802 }, --Paleto SO [Front]
+    { ['x'] = 1855.5954, ['y'] = 3674.6323, ['z'] = 33.661075, ['h'] = 30.010299 }, --Sandy SO
+    { ['x'] = 293.09509, ['y'] = -581.854, ['z'] = 43.193058, ['h'] = 152.69309 }, --Pillbox Top
+    { ['x'] = 328.79818, ['y'] = -576.1756, ['z'] = 28.79684, ['h'] = 335.01394 }, --Pillbox Garage
+    { ['x'] = 1855.0419, ['y'] = 2587.0893, ['z'] = 45.106185, ['h'] = 110.52773 }, --Prison Front Gate
+    { ['x'] = -342.9639, ['y'] = -136.1628, ['z'] = 39.009616, ['h'] = 270.94482 }, --LS Customs City
+    { ['x'] = -211.3267, ['y'] = -1326.596, ['z'] = 30.89038, ['h'] = 261.77297 }, --Benny's
+    { ['x'] = 731.14245, ['y'] = -1088.785, ['z'] = 22.163265, ['h'] = 300.03933 }, --Benny's Eastside
+    { ['x'] = 543.89459, ['y'] = -48.94509, ['z'] = 70.938583, ['h'] = 36.126594 }, --Vinewood PD
+    { ['x'] = 851.33215, ['y'] = -1347.345, ['z'] = 26.063589, ['h'] = 16.034034 }, --Popular St. PD
+    { ['x'] = 386.225, ['y'] = -1621.106, ['z'] = 29.291929, ['h'] = 16.555995 }, --Impound Lot
+    { ['x'] = -1125.6, ['y'] = -848.7072, ['z'] = 13.474318, ['h'] = 248.5904 }, --Vespucci PD
+    { ['x'] = -573.215, ['y'] = -150.6306, ['z'] = 38.000049, ['h'] = 294.70989 }, --Jewelry Store PD
+    { ['x'] = 248.91729, ['y'] = -376.2828, ['z'] = 44.487892, ['h'] = 328.6835 }, --Courthouse
+    { ['x'] = 2844.8344, ['y'] = -644.1699, ['z'] = 0.3108676, ['h'] = 314.00671 }, --Noose Facility [Boat]
+	{ ['x'] = -1629.60, ['y'] = -1141.96, ['z'] = 0.86, ['h'] = 146.34 }, --Pier [Boat]
+    { ['x'] = -781.5328, ['y'] = -1496.836, ['z'] = 1.3747351, ['h'] = 111.25369 }, --Canals [Boat]
+    { ['x'] = -285.4203, ['y'] = 6626.3344, ['z'] = 7.0817317, ['h'] = 143.50152 }, --Paleto [Boat]
+    { ['x'] = 3867.3889, ['y'] = 4464.2163, ['z'] = 2.7240889, ['h'] = 271.06408 }, --Catfish View Dock [Boat]
+    --{ ['x'] = 0, ['y'] = 0, ['z'] = 0, ['h'] = 0 },
 }
 
 function IsNearPoliceGarage()
@@ -373,30 +381,33 @@ function GetClosestPlayer()
 end
 
 Vehicles = {
-    { model = "POLVIC", label = "LSPD Vic"},
-    --{ model = "POLVIC2", label = "BCSO/SASP Vic"},
-    --{ model = "POLTAURUS", label = "Taurus"},
-    --{ model = "POLTAH", label = "Tahoe"},
+    { model = "POLVIC2", label = "S.A.L.E. CVPI"},
+    { model = "POLTAURUS", label = "S.A.L.E. Taurus"},
+    { model = "POLCHAR", label = "2014 Charger"},
+    { model = "police2", label = "2018 Charger"},
+    { model = "explorer", label = "2016 Explorer"},
+    { model = "POLTAH", label = "2015 Tahoe"},
+    { model = "POLRAPTOR", label = "S.A.L.E. Raptor"},
+    { model = "2015POLSTANG", label = "2015 Mustang"},
     { model = "pol8", label = "Motorbike"},
-    { model = "POLRAPTOR", label = "Raptor"},
-    --{ model = "POLCHAR", label = "Charger"},
-    { model = "POL10", label = "SWAT Suburban"},
+    { model = "riot", label = "SWAT Insurgent"},
+    { model = "sspres", label = "SWAT Suburban"},
     { model = "pbus2", label = "Prison Bus"},
     { model = "policet", label = "Armored Van"},
     { model = "polschafter3", label = "UC Schafter"},
-    --{ model = "2015POLSTANG", label = "Mustang"},
-    { model = "fbi", label = "FBI Buffalo"},
-    { model = "fbi2", label = "TFBI Granger"},
-    { model = "ucwashington", label = "UC Washington"},
-    { model = "ucbanshee", label = "UC Banshee"},
-    { model = "ucrancher", label = "UC Rancher"},
-    { model = "ucprimo", label = "UC Primo"},
-    { model = "uccoquette", label = "UC Coquette"},
-    { model = "ucbuffalo", label = "UC Buffalo"},
     { model = "ucballer", label = "UC Baller"},
-    { model = "ucballer", label = "UC Comet"},
-	{ model = "psp_bmwgs", label = "Motorcycle"},
-	{ model = "predator", label = "Boat"},
+    { model = "uccomet", label = "UC Comet"},
+    { model = "predator", label = "Boat"},
+    --{ model = "fbi", label = "FBI Buffalo"},
+    --{ model = "fbi2", label = "TFBI Granger"},
+    --{ model = "ucwashington", label = "UC Washington"},
+    --{ model = "ucbanshee", label = "UC Banshee"},
+    --{ model = "ucrancher", label = "UC Rancher"},
+    --{ model = "ucprimo", label = "UC Primo"},
+    --{ model = "uccoquette", label = "UC Coquette"},
+    --{ model = "ucbuffalo", label = "UC Buffalo"},
+    --{ model = "POLVIC", label = "LSPD Vic"},
+	--{ model = "psp_bmwgs", label = "Motorcycle"},
 }
 
 RegisterNetEvent('police:sv')
