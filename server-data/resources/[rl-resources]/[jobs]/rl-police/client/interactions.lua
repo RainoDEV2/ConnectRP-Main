@@ -83,6 +83,8 @@ AddEventHandler('police:client:PutInVehicle', function()
                         return
                     end
                 end
+            else
+                RLCore.Functions.Notify("No vehicle near you", "error")
             end
         end
     end
