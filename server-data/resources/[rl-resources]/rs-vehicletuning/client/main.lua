@@ -428,11 +428,15 @@ Citizen.CreateThread(function()
         if (IsPedInAnyVehicle(GetPlayerPed(-1), false)) then
             local veh = GetVehiclePedIsIn(GetPlayerPed(-1),false)
             if ModdedVehicles[tostring(veh)] == nil and not IsThisModelABicycle(GetEntityModel(veh)) then
-                local fSteeringLock = GetVehicleHandlingFloat(veh, 'CHandlingData', 'fSteeringLock')
-                fSteeringLock = math.ceil((fSteeringLock * 0.6)) + 0.1
 
-                SetVehicleHandlingFloat(veh, 'CHandlingData', 'fSteeringLock', fSteeringLock)
-                SetVehicleHandlingField(veh, 'CHandlingData', 'fSteeringLock', fSteeringLock)
+                if GetVehicleClass(veh) ~= 14 then
+                    local fSteeringLock = GetVehicleHandlingFloat(veh, 'CHandlingData', 'fSteeringLock')
+                    fSteeringLock = math.ceil((fSteeringLock * 0.7)) + 0.1
+
+                    SetVehicleHandlingFloat(veh, 'CHandlingData', 'fSteeringLock', fSteeringLock)
+                    SetVehicleHandlingField(veh, 'CHandlingData', 'fSteeringLock', fSteeringLock)
+                end
+
 
                 local fInitialDriveMaxFlatVel = GetVehicleHandlingFloat(veh, 'CHandlingData', 'fInitialDriveMaxFlatVel')
 
