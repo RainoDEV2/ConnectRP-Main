@@ -70,21 +70,17 @@ AddEventHandler('police:client:PutInVehicle', function()
     if isHandcuffed or isEscorted then
         local vehicle, distance = RLCore.Functions.GetClosestVehicle()
         if DoesEntityExist(vehicle) then
-            if distance < 2.5 then
-                for i = GetVehicleMaxNumberOfPassengers(vehicle), 1, -1 do
-                    if IsVehicleSeatFree(vehicle, i) then
-                        isEscorted = false
-                        TriggerEvent('hospital:client:isEscorted', isEscorted)
-                        ClearPedTasks(GetPlayerPed(-1))
-                        DetachEntity(GetPlayerPed(-1), true, false)
+            for i = GetVehicleMaxNumberOfPassengers(vehicle), 1, -1 do
+                if IsVehicleSeatFree(vehicle, i) then
+                    isEscorted = false
+                    TriggerEvent('hospital:client:isEscorted', isEscorted)
+                    ClearPedTasks(GetPlayerPed(-1))
+                    DetachEntity(GetPlayerPed(-1), true, false)
 
-                        Citizen.Wait(100)
-                        SetPedIntoVehicle(GetPlayerPed(-1), vehicle, i)
-                        return
-                    end
+                    Citizen.Wait(100)
+                    SetPedIntoVehicle(GetPlayerPed(-1), vehicle, i)
+                    return
                 end
-            else
-                RLCore.Functions.Notify("No vehicle near you", "error")
             end
         end
     end
