@@ -40,7 +40,7 @@ Citizen.CreateThread(function()
     end
 end)
 
---[[Citizen.CreateThread(function()
+Citizen.CreateThread(function()
     Wait(1000)
     if RLCore.Functions.GetPlayerData() ~= nil then
         TriggerServerEvent("weapons:server:LoadWeaponAmmo")
@@ -56,7 +56,7 @@ end)
             TriggerEvent("debug", 'Weapons: Config Received', 'success')
         end)
     end
-end)]]--
+end)
 
 local MultiplierAmount = 0
 
@@ -246,7 +246,7 @@ AddEventHandler('weapons:client:SetWeaponQuality', function(amount)
     TriggerEvent("debug", 'Weapons: Update Weapon Quality', 'success')
 end)
 
---[[Citizen.CreateThread(function()
+Citizen.CreateThread(function()
     while true do
         if isLoggedIn then
             local inRange = false
@@ -320,7 +320,7 @@ RegisterNetEvent("weapons:client:SyncRepairShops")
 AddEventHandler("weapons:client:SyncRepairShops", function(NewData, key)
     Config.WeaponRepairPoints[key].IsRepairing = NewData.IsRepairing
     Config.WeaponRepairPoints[key].RepairingData = NewData.RepairingData
-end)]]--
+end)
 
 RegisterNetEvent('rl-weapons:client:SetWeaponAmmoManual')
 AddEventHandler('rl-weapons:client:SetWeaponAmmoManual', function(weapon, ammo)
