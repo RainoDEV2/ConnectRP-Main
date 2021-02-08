@@ -1,9 +1,14 @@
 local carorder = {
-    [1] = {name = 'POLVIC2', x = 437.70855, y = -986.0989, z = 25.377687, h = 90.793922, handel = nil},
-    [2] = {name = 'POLTAURUS', x = 437.70425, y = -988.8076, z = 25.264362, h = 91.674201, handel = nil},
-    [3] = {name = 'POLCHAR', x = 437.70358, y = -991.5166, z = 25.393491, h = 90.150108, handel = nil},
-    [4] = {name = '2015POLSTANG', x = 437.3215, y = -994.0807, z = 24.989467, h = 89.558151, handel = nil},
-    [5] = {name = 'POLTAH', x = 437.49325, y = -996.7955, z = 25.227069, h = 91.912986, handel = nil},
+    [1] = {name = 'POLVIC2', x = 425.5407, y = -976.1185, z = 25.699813, h = 271.07153, handel = nil},
+    [2] = {name = 'POLTAURUS', x = 425.5407, y = -978.8673, z = 25.699813, h = 271.07153, handel = nil},
+    [3] = {name = 'POLCHAR', x = 425.5407, y = -981.5893, z = 25.699813, h = 271.07153, handel = nil},
+    [4] = {name = '18CHGRLEO', x = 425.4165, y = -984.346, z = 25.699813, h = 271.07153, handel = nil},
+    [5] = {name = '2015POLSTANG', x = 425.4539, y = -989.0507, z = 25.699813, h = 271.07153, handel = nil},
+
+    [6] = {name = 'EXPLEO', x = 425.68551, y = -991.8132, z = 25.699806, h = 271.07153, handel = nil},
+    [7] = {name = 'DURANLEO', x = 425.72311, y = -994.5032, z = 25.699806, h = 271.07153, handel = nil},
+    [8] = {name = 'POLTAH', x = 425.74923, y = -997.1234, z = 25.699813, h = 271.07153, handel = nil},
+
 }
 
 local parking = {
@@ -37,9 +42,9 @@ Citizen.CreateThread(function()
             if DoesEntityExist(v.handel) then
                 parking.here = true
                 local cpos = GetEntityCoords(v.handel, false)
-                local dist2 = GetDistanceBetweenCoords(cpos.x - 2.5, cpos.y, cpos.z + 0.5, ppos.x, ppos.y, ppos.z, true)
+                local dist2 = GetDistanceBetweenCoords(cpos.x + 2.5, cpos.y, cpos.z + 0.5, ppos.x, ppos.y, ppos.z, true)
                 if dist2 <= 1 then
-                    DrawText3Ds(cpos.x - 2.5, cpos.y, cpos.z + 0.5, 'Press [E] To Drive!')
+                    DrawText3Ds(cpos.x + 2.5, cpos.y, cpos.z + 0.5, 'Press [E] To Drive!')
                     if IsControlJustPressed(0, 38) then
                         TriggerServerEvent('rl:police:garage:jobcheck', v.name)
                     end
