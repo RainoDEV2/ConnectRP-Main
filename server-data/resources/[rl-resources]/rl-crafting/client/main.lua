@@ -46,7 +46,7 @@ Citizen.CreateThread(function()
 			local objectPos = GetEntityCoords(craftObject)
 			if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, objectPos.x, objectPos.y, objectPos.z, true) < 1.5 then
 				awayFromObject = false
-				DrawText3D(objectPos.x, objectPos.y, objectPos.z + 1.0, "~g~E~w~ - Craft")
+				DrawText3D(objectPos.x, objectPos.y, objectPos.z + 1.0, "[E] Craft")
 				if IsControlJustReleased(0, Keys["E"]) then
 					local crafting = {}
 					crafting.label = "Crafting"
