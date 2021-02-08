@@ -7419,37 +7419,52 @@ RLShared.Jobs = {
 		defaultDuty = true,
 	},
 	["judge"] = {
-		label = "Judge",
+		label = "Department of Justice",
 		payment = 500,
 		grades = {
             ['0'] = {
-                name = "Employee",
-                payment = 150
+                name = "Attorney",
+                payment = 400
+			},
+			['1'] = {
+				name = "Senior Attorney"
+				payment = 475
+			},
+			['2'] = {
+				name = "Assistant District Attorney"
+				payment = 550
+			},
+			['3'] = {
+				name = "District Attorney"
+				payment = 600
+			},
+			['4'] = {
+				name = "Justice"
+				payment = 700
+			},
+			['5'] = {
+				name = "Chief Justice"
+				payment = 700
 			},
 		},
 		defaultDuty = true,
 	},
 	["lawyer"] = {
-		label = "Lawyer",
+		label = "San Andreas Bar",
 		payment = 50,
 		defaultDuty = true,
 		grades = {
 			['0'] = {
-                name = "Secretary",
-                payment = 75
+                name = "Paralegal",
+                payment = 200
             },
             ['1'] = {
                 name = "Lawyer",
-                payment = 150
+                payment = 250
             },
             ['2'] = {
-                name = "Judge",
-                payment = 200
-            },
-            ['3'] = {
-                name = "Court President",
-                isboss = true,
-                payment = 1000
+                name = "Senior Lawyer",
+                payment = 300
             },
 		}
 	},
