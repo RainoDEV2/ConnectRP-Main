@@ -7197,7 +7197,7 @@ RLShared.Jobs = {
 		grades = {
             ['0'] = {
                 name = "Unemployed",
-                payment = 50
+                payment = 125
 			},
 		},
 		defaultDuty = true,
@@ -7211,69 +7211,69 @@ RLShared.Jobs = {
             },
             ['1'] = {
                 name = "Officer",
-				payment = 400
+				payment = 345
 			},
             ['2'] = {
                 name = "Deputy",
-				payment = 400
+				payment = 345
 			},
             ['3'] = {
                 name = "Trooper",
-                payment = 400
+                payment = 345
             },
             ['4'] = {
                 name = "Senior Officer",
-                payment = 475
+                payment = 375
 			},
 			['5'] = {
                 name = "Senior Deputy",
-                payment = 475
+                payment = 375
             },
             ['6'] = {
                 name = "Corporal",
-                payment = 500
+                payment = 395
             },
             ['7'] = {
                 name = "Sergeant",
-                payment = 700
+                payment = 425
             },
             ['8'] = {
                 name = "Lieutenant",
-                payment = 850
+                payment = 450
             },
             ['9'] = {
                 name = "Captian",
-                payment = 900
+                payment = 450
             },
             ['10'] = {
 				name = "Assistant Chief of Police",
 				isboss = true,
-                payment = 1000
+                payment = 475
             },
             ['11'] = {
 				name = "Chief of Police",
 				isboss = true,
-                payment = 1000
+                payment = 475
 			},
 			['12'] = {
 				name = "Undersheriff",
 				isboss = true,
-				payment = 1000
+				payment = 475
 			},
 			['13'] = {
 				name = "Sheriff",
 				isboss = true,
-                payment = 1000
+                payment = 475
 			},
 			['14'] = {
 				name = "Lieutenant Colonel",
 				isboss = true,
-                payment = 1000
+                payment = 475
 			},
 			['15'] = {
 				name = "Colonel",
 				isboss = true,
-                payment = 1000
+                payment = 475
             },
         },
         defaultDuty = true,
@@ -7284,32 +7284,32 @@ RLShared.Jobs = {
 		grades = {
 			['0'] = {
                 name = "Rookie",
-                payment = 120
+                payment = 250
             },
             ['1'] = {
                 name = "Medical Orderly",
-                payment = 140
+                payment = 260
             },
             ['2'] = {
                 name = "Paramedic",
-                payment = 160
+                payment = 270
             },
             ['3'] = {
                 name = "Doctor",
-                payment = 180
+                payment = 320
             },
             ['4'] = {
                 name = "Commander-in-Chief",
-                payment = 200
+                payment = 330
             },
             ['5'] = {
                 name = "Supervisor",
-                payment = 220
+                payment = 340
             },
             ['6'] = {
                 name = "EMS Chief",
                 isboss = true,
-                payment = 240
+                payment = 350
             },
         },
 		defaultDuty = true,
@@ -7424,27 +7424,27 @@ RLShared.Jobs = {
 		grades = {
             ['0'] = {
                 name = "Attorney",
-                payment = 400
+                payment = 300
 			},
 			['1'] = {
-				name = "Senior Attorney"
-				payment = 475
+				name = "Senior Attorney",
+				payment = 310
 			},
 			['2'] = {
-				name = "Assistant District Attorney"
-				payment = 550
+				name = "Assistant District Attorney",
+				payment = 325
 			},
 			['3'] = {
-				name = "District Attorney"
-				payment = 600
+				name = "District Attorney",
+				payment = 350
 			},
 			['4'] = {
-				name = "Justice"
-				payment = 700
+				name = "Justice",
+				payment = 395
 			},
 			['5'] = {
-				name = "Chief Justice"
-				payment = 700
+				name = "Chief Justice",
+				payment = 420
 			},
 		},
 		defaultDuty = true,
@@ -7495,16 +7495,16 @@ RLShared.Jobs = {
 		grades = {
             ['0'] = {
                 name = "Employee",
-                payment = 55
+                payment = 80
 			},
 			['1'] = {
                 name = "Experienced",
-                payment = 90
+                payment = 125
 			},
 			['2'] = {
 				name = "Boss",
 				isboss = true,
-                payment = 120
+                payment = 140
 			},
 		}
 	},
