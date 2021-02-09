@@ -46,12 +46,6 @@ RegisterServerEvent('rl-cityhall:server:requestId')
 AddEventHandler('rl-cityhall:server:requestId', function(identityData)
     local src = source
     local Player = RLCore.Functions.GetPlayer(src)
-
-    local licenses = {
-        ["driver"] = true,
-        ["business"] = Player.PlayerData.metadata["licences"]["business"],
-        ['weapon1'] = Player.PlayerData.metadata["licences"]["weapon1"]
-    }
     
     local info = {}
     if identityData.item == "id_card" then

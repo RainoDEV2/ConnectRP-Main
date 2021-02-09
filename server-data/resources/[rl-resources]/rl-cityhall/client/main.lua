@@ -206,11 +206,11 @@ local idTypes = {
         label = "ID card",
         item = "id_card"
     },
-    ["drivers license"] = {
+    ["drivers"] = {
         label = "Drivers License",
         item = "driver_license"
     },
-    ['Weapon ID'] = {
+    ['weapon'] = {
         label = "Concealed Carry Licence",
         item = "weapon_card"
     }
@@ -220,25 +220,56 @@ RegisterNUICallback('requestId', function(data)
     if inRange then
         local idType = data.idType
         local PlayerData = RLCore.Functions.GetPlayerData()
-        --print(idType)
-        --print(idTypes[idType])
         TriggerServerEvent('rl-cityhall:server:requestId', idTypes[idType])
-        RLCore.Functions.Notify('You got your id card applied for $ 50', 'success', 3500)
+        RLCore.Functions.Notify('You got a copy of your ID card for $ 50', 'success', 3500)
     else
         RLCore.Functions.Notify('Unfortunately it wont work mate...', 'error')
     end
 end)
 
+local lic = {
+    'driver',
+    'weapon1'
+}
+
+local lic2 = {
+    licenseType,
+    label,
+    av = {},
+}
+
 RegisterNUICallback('requestLicenses', function(data, cb)
     local availableLicenses = {}
-    RLCore.Functions.TriggerCallback('RLCore:server:checklicence', function(result)    
-        if result == "has licence" then licenseType = "drivers license" label = "Drivers license" end
-        table.insert(availableLicenses, {
-            idType = licenseType,
-            label = label
-        })
-        cb(availableLicenses)
-    end, 'driver')
+    for i = 0, 2 do
+        if lic[i] ~= nil then
+            RLCore.Functions.TriggerCallback('RLCore:server:checklicence', function(result)
+                if result == "has licence" then 
+                    if i == 1 then
+                        lic2.licenseType = "drivers" 
+                        lic2.label = "Drivers license"
+                    else
+                        lic2.licenseType = "weapon" 
+                        lic2.label = "weapon license"
+                    end
+                    table.insert(lic2.av, {
+                        idType = lic2.licenseType,
+                        label = lic2.label
+                    })
+                elseif result == 'no licence' then
+                    if i == 2 then
+                        table.insert(lic2.av, {
+                            idType = "weaponR",
+                            label = "weapon license"
+                        })
+                    end
+                end
+            end, lic[i])
+            Citizen.Wait(200)
+        end
+    end
+    cb(lic2.av)
+    table.remove(lic2.av)
+    table.remove(lic2.av)
 end)
 
 local AvailableJobs = {

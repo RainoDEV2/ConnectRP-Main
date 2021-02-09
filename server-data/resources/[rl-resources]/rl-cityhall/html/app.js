@@ -5,8 +5,11 @@ var selectedIdentityType = null;
 var selectedJob = null;
 var selectedJobId = null;
 
+/* $(".container2").hide(); */
+
 qbCityhall.Open = function(data) {
     $(".container").fadeIn(150);
+    $(".container2").hide();
 }
 
 qbCityhall.Close = function() {
@@ -17,6 +20,17 @@ qbCityhall.Close = function() {
 
     $(selectedJob).removeClass("job-selected");
     $(selectedIdentity).removeClass("job-selected");
+}
+
+qbCityhall.OpenTest = function(data) {
+    $('.container2').fadeIn(150);
+}
+
+qbCityhall.CloseTest = function() {
+    $(".container2").fadeOut(150, function(){
+        qbCityhall.ResetPages();
+    });
+    $.post('http://rl-cityhall/close');
 }
 
 qbCityhall.ResetPages = function() {
@@ -35,7 +49,7 @@ $(document).ready(function(){
             case "close":
                 qbCityhall.Close();
                 break;
-        }
+            }
     })
 });
 
@@ -59,9 +73,9 @@ $('.cityhall-option-block').click(function(e){
     if (blockPage == "identity") {
         $(".identity-page-blocks").html("");
         $(".identity-page-blocks").html('<div class="identity-page-block" data-type="id-kaart" onmouseover="' + hoverDescription("id-kaart") + '" onmouseout="' + hoverDescription("id-kaart") + '"><p>ID card</p></div>');
-        $.post('http://rl-cityhall/requestLicenses', JSON.stringify({}), function(licenses){
+        $.post('http://rl-cityhall/requestLicenses', JSON.stringify({}), function(licenses){-
             $.each(licenses, function(i, license){
-                var elem = '<div class="identity-page-block" data-type="' + license.idType + '" onmouseover="' + hoverDescription(license.idType) + '" onmouseout="' + hoverDescription(license.idType) + '"><p>' + license.label + '</p></div>';
+                var elem = '<div class="identity-page-block" data-type="' + license.idType + '"><p>' + license.label + '</p></div>';
                 $(".identity-page-blocks").append(elem);
             });
         });
@@ -100,10 +114,16 @@ $(document).on("click", ".identity-page-block", function(e){
         selectedIdentity = this;
         if (idType== "id-kaart") {
             $(".request-identity-button").fadeIn(100);
-            $(".request-identity-button").html("<p>Request ID card ($50)</p>")
-        } else {
+            $(".request-identity-button").html("<p>Request A Copy Of Your ID - $50</p>")
+        } else if (idType== "drivers") {
             $(".request-identity-button").fadeIn(100);
-            $(".request-identity-button").html("<p>Request Driver's License Copy - $50</p>")
+            $(".request-identity-button").html("<p>Request A Copy Of Your Driver's License - $50</p>")
+        } else if (idType== "weapon") {
+            $(".request-identity-button").fadeIn(100);
+            $(".request-identity-button").html("<p>Request A Copy Of Your Weapon's License - $50</p>")
+        } else if (idType== "weaponR") {
+            $(".request-identity-button").fadeIn(100);
+            $(".request-identity-button").html("<p>Request A Weapon's Saftey Test - $5000</p>")
         }
     } else if (selectedIdentity == this) {
         $(this).removeClass("identity-selected");
@@ -114,21 +134,30 @@ $(document).on("click", ".identity-page-block", function(e){
         $(this).addClass("identity-selected");
         selectedIdentity = this;
         if($(this).data('type') == "id-kaart") {
-            $(".request-identity-button").html("<p>Request ID card - $50</p>")
-        } else {
-            $(".request-identity-button").html("<p>Apply for a driver's license - $50</p>")
+            $(".request-identity-button").html("<p>Request A Copy Of Your ID - $50</p>")
+        } else if ($(this).data('type') == "drivers"){
+            $(".request-identity-button").html("<p>Request A Copy Of Your Driver's License - $50</p>")
+        } else if ($(this).data('type') == "weapon"){
+            $(".request-identity-button").html("<p>Request A Copy Of Your Weapon's License - $50</p>")
+        } else if ($(this).data('type') == "weaponR"){
+            $(".request-identity-button").html("<p>Request A Weapon's Saftey Test - $5000</p>")
         }
     }
 });
 
 $(".request-identity-button").click(function(e){
     e.preventDefault();
-
-    $.post('http://rl-cityhall/requestId', JSON.stringify({
+    if (selectedIdentityType == 'weaponR') {
+        $(".container").fadeOut(0, function(){
+            qbCityhall.ResetPages();
+        });
+        qbCityhall.OpenTest();
+    } else {
+        $.post('http://rl-cityhall/requestId', JSON.stringify({
         idType: selectedIdentityType
-    }))
-
+        }))
     qbCityhall.ResetPages();
+    }
 });
 
 $(document).on("click", ".job-page-block", function(e){
