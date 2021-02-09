@@ -381,15 +381,15 @@ function GetClosestPlayer()
 end
 
 Vehicles = {
-    { model = "POLVIC2", label = "S.A.L.E. CVPI"}, --1
-    { model = "POLTAURUS", label = "S.A.L.E. Taurus"}, --2
-    { model = "POLCHAR", label = "2014 Charger"}, --3
-    { model = "18chgrleo", label = "2018 Charger"}, --4
-    { model = "expleo", label = "2016 Explorer"}, --5
-    { model = "POLTAH", label = "2015 Tahoe"}, --6
-    { model = "duranleo", label = "Dodge Durango"}, --7
+    --{ model = "POLVIC2", label = "S.A.L.E. CVPI"}, --1
+    --{ model = "POLTAURUS", label = "S.A.L.E. Taurus"}, --2
+    --{ model = "POLCHAR", label = "2014 Charger"}, --3
+    --{ model = "18chgrleo", label = "2018 Charger"}, --4
+    --{ model = "expleo", label = "2016 Explorer"}, --5
+    --{ model = "POLTAH", label = "2015 Tahoe"}, --6
+    --{ model = "duranleo", label = "Dodge Durango"}, --7
     { model = "POLRAPTOR", label = "S.A.L.E. Raptor"}, --8
-    { model = "2015POLSTANG", label = "2015 Mustang"}, --9
+    --{ model = "2015POLSTANG", label = "2015 Mustang"}, --9
     { model = "predator", label = "Boat"}, --10
     { model = "code3gator", label = "Gator"}, --11
     { model = "pol8", label = "Motorbike"}, --12
