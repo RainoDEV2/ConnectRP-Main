@@ -325,13 +325,6 @@
         <rear value="false"/>
       </Item>
 			<Item>
-        <wheelName>wheel_spor_ete</wheelName>
-        <wheelVariation />
-        <modShopLabel>ete</modShopLabel>
-        <rimRadius value="0.348500"/>
-        <rear value="false"/>
-      </Item>
-			<Item>
         <wheelName>wheel_spor_tsl</wheelName>
         <wheelVariation />
         <modShopLabel>tsl</modShopLabel>
@@ -370,6 +363,83 @@
         <wheelName>wheel_spor_fm</wheelName>
         <wheelVariation />
         <modShopLabel>fm1</modShopLabel>
+        <rimRadius value="0.348500"/>
+        <rear value="false"/>
+      </Item>
+			<Item>
+        <wheelName>wheel_spor_scc</wheelName>
+        <wheelVariation />
+        <modShopLabel>scc</modShopLabel>
+        <rimRadius value="0.348500"/>
+        <rear value="false"/>
+      </Item>
+			<Item>
+        <wheelName>wheel_spor_bp8</wheelName>
+        <wheelVariation />
+        <modShopLabel>bp8</modShopLabel>
+        <rimRadius value="0.348500"/>
+        <rear value="false"/>
+      </Item>
+			<Item>
+        <wheelName>wheel_spor_wkb</wheelName>
+        <wheelVariation />
+        <modShopLabel>wkb</modShopLabel>
+        <rimRadius value="0.348500"/>
+        <rear value="false"/>
+      </Item>
+			<Item>
+        <wheelName>wheel_spor_ete1</wheelName>
+        <wheelVariation />
+        <modShopLabel>ete1</modShopLabel>
+        <rimRadius value="0.348500"/>
+        <rear value="false"/>
+      </Item>
+			<Item>
+        <wheelName>wheel_spor_brs</wheelName>
+        <wheelVariation />
+        <modShopLabel>brs</modShopLabel>
+        <rimRadius value="0.348500"/>
+        <rear value="false"/>
+      </Item>
+			<Item>
+        <wheelName>wheel_spor_gx1</wheelName>
+        <wheelVariation />
+        <modShopLabel>gx1</modShopLabel>
+        <rimRadius value="0.348500"/>
+        <rear value="false"/>
+      </Item>
+	  <Item>
+        <wheelName>wheel_spor_est</wheelName>
+        <wheelVariation />
+        <modShopLabel>est</modShopLabel>
+        <rimRadius value="0.348500"/>
+        <rear value="false"/>
+      </Item>
+	  <Item>
+        <wheelName>wheel_spor_rct4</wheelName>
+        <wheelVariation />
+        <modShopLabel>rct4</modShopLabel>
+        <rimRadius value="0.348500"/>
+        <rear value="false"/>
+      </Item>
+	  <Item>
+        <wheelName>wheel_spor_cr9</wheelName>
+        <wheelVariation />
+        <modShopLabel>cr9</modShopLabel>
+        <rimRadius value="0.348500"/>
+        <rear value="false"/>
+      </Item>
+	  <Item>
+        <wheelName>wheel_spor_gtc1</wheelName>
+        <wheelVariation />
+        <modShopLabel>gtc1</modShopLabel>
+        <rimRadius value="0.348500"/>
+        <rear value="false"/>
+      </Item>
+			<Item>
+        <wheelName>wheel_spor_h06</wheelName>
+        <wheelVariation />
+        <modShopLabel>h06</modShopLabel>
         <rimRadius value="0.348500"/>
         <rear value="false"/>
       </Item>
