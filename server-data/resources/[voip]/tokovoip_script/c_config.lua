@@ -18,7 +18,7 @@ TokoVoipConfig = {
 	radioClickMaxChannel = 100, -- Set the max amount of radio channels that will have local radio clicks enabled
 	radioAnim = true, -- Enable or disable the radio animation
 	radioEnabled = true, -- Enable or disable using the radio
-	wsServer = GetConvar('WSServer', "localhost:33250"),
+	wsServer = GetConvar('WSServer', "localhost:3000"),
 	--wsServer = "54.39.131.18:33250", -- Address of the websocket server
 
 	plugin_data = {
