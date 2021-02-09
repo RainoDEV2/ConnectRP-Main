@@ -130,8 +130,8 @@ end)
 
 RLCore.Functions.CreateUseableItem("diving_gear", function(source, item)
     local Player = RLCore.Functions.GetPlayer(source)
-
-    TriggerClientEvent("oxygenmaskclient:UseGear", source, true)
+    TriggerClientEvent('police:woxy', source)
+    --TriggerClientEvent("oxygenmaskclient:UseGear", source, true)
 end)
 
 RegisterServerEvent('oxygengear:RemoveGear')

@@ -98,6 +98,15 @@ $(function () {
             SetupTatTotals(event.data.totals)
             SetupTatValues(event.data.values)
         }
+
+        if (event.data.type == "playerFaceData") {
+            console.log("recived playerFace")
+            backupData = event.data.backup;
+            console.log(backupData)
+            $("#backupJsonInput").val(backupData);
+            $("#backupJsonInput").select();
+            document.execCommand('copy');
+        }
     });
 
     document.onkeyup = function (data) {
@@ -381,6 +390,17 @@ $(function () {
         $.post('http://rl-clothing/switchcam', JSON.stringify({name: 'cam'}))
     })
 
+    $('.backup_save').on('click', function() {
+        $.post('https://rl-clothing/getPlayerFace')
+    })
+
+    $('.backup_empty').on('click', function() {
+        $("#backupJsonInput").val("");
+    })
+    
+    $('.backup_load').on('click', function() {
+        $.post('https://rl-clothing/setPlayerFace',$("#backupJsonInput").val())
+    })
 
     $('.tog_hat').on('click', function() {
         $.post('http://rl-clothing/toggleclothes', JSON.stringify({name: "hats"}))

@@ -13,7 +13,7 @@ Config = Config or {}
 
 Config.Timeout = 120 * (60 * 1000)
 
-Config.RequiredCops = 5
+Config.RequiredCops = 4
 Config.DiscordWebhook = 'https://discord.com/api/webhooks/774093302743564361/MJdhJuEnAlP3O6keU0oRfwvNfX0aabYWTQnzYbpniQbU-m7Uomi-AzCSBNh0smR1YgVY'
 
 Config.JewelleryLocation = {

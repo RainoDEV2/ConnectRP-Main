@@ -595,3 +595,33 @@ function loadAnimDict(dict)
         Citizen.Wait(10)
     end
 end
+
+--PolstangSportsMode
+local sport = false
+RegisterNetEvent("police:sport")
+AddEventHandler("police:sport",function()
+  if (IsPedInAnyVehicle(PlayerPedId(), false)) then
+    local veh = GetVehiclePedIsIn(PlayerPedId(),false)
+    local Driver = GetPedInVehicleSeat(veh, -1)
+    local defaultHash = `2015POLSTANG`
+
+    if Driver == PlayerPedId() and IsVehicleModel( veh, defaultHash ) then
+      local fInitialDriveForce = GetVehicleHandlingFloat(veh, 'CHandlingData', 'fInitialDriveForce')
+      if fInitialDriveForce < 0.31 then
+        TriggerEvent("customNotification","Sports Enabled")
+        sport = true
+        SetvehicleHandlingFloat(veh, 'CHandlingData', 'fInitialDriveForce', 0.5200000)
+        SetvehicleHandlingFloat(veh, 'CHandlingData', 'fDriveInertia', 0.3500000)
+      else
+        TriggerEvent("customNotification","Sports Disabled")
+        sport = false
+        SetvehicleHandlingFloat(veh, 'CHandlingData', 'fInitialDriveForce', 0.305000)
+        SetvehicleHandlingFloat(veh, 'CHandlingData', 'fDriveInertia', 0.850000)
+      end
+    else
+      if sport then
+        sport = false
+      end
+    end
+  end
+end)

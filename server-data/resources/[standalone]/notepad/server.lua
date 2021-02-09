@@ -1,3 +1,6 @@
+RLCore = nil
+TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
+
 local serverNotes = {}
 
 RegisterServerEvent("server:destroyNote")
@@ -18,6 +21,8 @@ AddEventHandler("server:requestNotes", function()
     TriggerClientEvent('client:updateNotes', src, serverNotes)
 end)
 
-RegisterCommand('notepad', function(source)
-    TriggerClientEvent('Notepad:open', source)
+
+RLCore.Functions.CreateUseableItem('notepad', function(source)
+    local Player = RLCore.Functions.GetPlayer(source)
+	TriggerClientEvent('Notepad:open', source)
 end)

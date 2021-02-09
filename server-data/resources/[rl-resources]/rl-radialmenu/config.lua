@@ -176,6 +176,18 @@ rootMenuConfig =  {
     },
 
     {
+        id = "oxygentank",
+        displayName = "Remove Oxygen Tank",
+        icon = "#oxygen-mask",
+        functionName = "RemoveOxyTank",
+        enableMenu = function()
+            local Data = RLCore.Functions.GetPlayerData()
+            return not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and hasOxygenTankOn
+        end,
+
+    },
+
+    {
         id = "objects",
         displayName = "Objects",
         icon = "#objects",
@@ -1083,6 +1095,13 @@ newSubMenus = {
         functionName = "rl-tow:client:TowVehicle"
     }
 }
+
+
+RegisterNetEvent("menu:hasOxygenTank")
+AddEventHandler("menu:hasOxygenTank", function(pHasOxygenTank)
+    hasOxygenTankOn = pHasOxygenTank
+end)
+
 
 function GetPlayers()
     local players = {}

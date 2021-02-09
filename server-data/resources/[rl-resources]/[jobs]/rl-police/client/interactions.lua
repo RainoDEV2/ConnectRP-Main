@@ -68,7 +68,7 @@ end)
 RegisterNetEvent('police:client:PutInVehicle')
 AddEventHandler('police:client:PutInVehicle', function()
     if isHandcuffed or isEscorted then
-        local vehicle = RLCore.Functions.GetClosestVehicle()
+        local vehicle, distance = RLCore.Functions.GetClosestVehicle()
         if DoesEntityExist(vehicle) then
             for i = GetVehicleMaxNumberOfPassengers(vehicle), 1, -1 do
                 if IsVehicleSeatFree(vehicle, i) then

@@ -14,10 +14,10 @@ Config = Config or {}
 Config.ItemTiers = 1
 
 
-Config.MinimumPaletoPolice = 6
-Config.MinimumPacificPolice = 7
+Config.MinimumPaletoPolice = 5
+Config.MinimumPacificPolice = 5
 Config.MinimumFleecaPolice = 5
-Config.MinimumThermitePolice = 6
+Config.MinimumThermitePolice = 5
 
 Config.FleecaLog = 'https://discord.com/api/webhooks/774095295889670175/ifVMB7phOv_vNcWZOojDIw7PNRo9TDCVZWp18uBFcpO4om0_E8pXWrrrnlCrKYGsa1FY'
 Config.PaletoLog = 'https://discord.com/api/webhooks/774097889911373874/TkExZzxEwLNWQctoVPIOfUbOg2yCo1w8J0DBJ-Tv505ztxe-y3dxEW-SKcttGOcuMFWj'

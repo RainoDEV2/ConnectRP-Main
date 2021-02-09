@@ -445,26 +445,147 @@ function EcstasyEffect()
             ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', 0.08)
         end
     end
-
     startStamina = 0
+    exports["acidtrip"]:DoAcid(120000)
+end
+
+function Drugs1()
+	StartScreenEffect("DrugsMichaelAliensFightIn", 3.0, 0)
+	Citizen.Wait(8000)
+	StartScreenEffect("DrugsMichaelAliensFight", 3.0, 0)
+	Citizen.Wait(8000)
+	StartScreenEffect("DrugsMichaelAliensFightOut", 3.0, 0)
+	StopScreenEffect("DrugsMichaelAliensFightIn")
+	StopScreenEffect("DrugsMichaelAliensFight")
+	StopScreenEffect("DrugsMichaelAliensFightOut")
+
+end
+
+function Drugs2()
+	StartScreenEffect("DrugsTrevorClownsFightIn", 3.0, 0)
+	Citizen.Wait(8000)
+	StartScreenEffect("DrugsTrevorClownsFight", 3.0, 0)
+	Citizen.Wait(8000)
+	StartScreenEffect("DrugsTrevorClownsFightOut", 3.0, 0)
+	StopScreenEffect("DrugsTrevorClownsFight")
+	StopScreenEffect("DrugsTrevorClownsFightIn")
+	StopScreenEffect("DrugsTrevorClownsFightOut")
+end
+
+function RevertToStressMultiplier()
+
+	local factor = (stresslevel / 2) / 10000
+	local factor = 1.0 - factor
+
+
+	if factor > 0.1 then
+
+		SetSwimMultiplierForPlayer(PlayerId(), factor)
+		SetRunSprintMultiplierForPlayer(PlayerId(), factor)
+	else
+		SetRunSprintMultiplierForPlayer(PlayerId(), 1.0)
+	end
+
 end
 
 function CrackBaggyEffect()
-    local startStamina = 8
-    TrevorEffect()
-    SetRunSprintMultiplierForPlayer(PlayerId(), 1.43)
-    while startStamina > 0 do 
-        Citizen.Wait(1000)
-        if math.random(1, 100) < 10 then
-            RestorePlayerStamina(PlayerId(), 1.0)
-        end
-        startStamina = startStamina - 1
-        if math.random(1, 100) < 51 then
-            TrevorEffect()
-        end
+    dstamina = 0
+    stresslevel = 0
+
+    Citizen.Wait(1000)
+    RLCore.Functions.Notify('You sniffed the full bag! Get ready for a trip...', 'error')
+    local death = math.random(1,99)
+      if death <= 7 then
+        RLCore.Functions.Notify('You should call a doctor, You dont feel so good.....', 'error')
+        Citizen.Wait(10000)
+        RLCore.Functions.Notify('You felt your heart skip a beat....', 'error')
+        TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 0.5, 'heartrate', 1.0)
+        Citizen.Wait(8000)
+        SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
+        DoScreenFadeOut(500)
+        Citizen.Wait(500)
+        DoScreenFadeIn(500)
+        Citizen.Wait(8000)
+        RequestAnimSet("MOVE_M@DRUNK@VERYDRUNK")
+        ResetPedMovementClipset(GetPlayerPed(-1))
+        SetPedMovementClipset(GetPlayerPed(-1),"MOVE_M@DRUNK@VERYDRUNK", 0.8)
+        SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
+        StartScreenEffect("DrugsTrevorClownsFight", 3.0, 0)
+        Citizen.Wait(8000)
+        SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
+        DoScreenFadeOut(500)
+        Citizen.Wait(500)
+        DoScreenFadeIn(500)
+        Citizen.Wait(8000) 
+        SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
+        Citizen.Wait(8000)
+        SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
+        DoScreenFadeOut(500)
+        Citizen.Wait(500)
+        DoScreenFadeIn(500)
+        RLCore.Functions.Notify('YOU NEED MEDICAL ATTENTION', 'error')
+        Citizen.Wait(6000)
+        SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
+        Citizen.Wait(15000)
+        RLCore.Functions.Notify('CARDIAC ARREST....', 'error')
+        SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
+        Citizen.Wait(500)
+        SetEntityHealth(GetPlayerPed(-1), 0)
+        ResetPedMovementClipset(GetPlayerPed(-1))
+        StopScreenEffect("DrugsTrevorClownsFight")
+      else
+
+
+      if math.random(100) > 50 then
+          Drugs1()
+      else
+          Drugs2()
+      end
+
+      SetPedArmour( GetPlayerPed(-1), 100 )
+
+      if stresslevel > 500 then
+          SetRunSprintMultiplierForPlayer(PlayerId(), 1.08)
+          dstamina = 200
+      else
+          SetRunSprintMultiplierForPlayer(PlayerId(), 1.1)
+          dstamina = 200
+      end
+
+      while dstamina > 0 do
+
+          Citizen.Wait(1000)
+          RestorePlayerStamina(PlayerId(), 1.0)
+          dstamina = dstamina - 1
+
+          if IsPedRagdoll(GetPlayerPed(-1)) then
+              SetPedToRagdoll(GetPlayerPed(-1), math.random(5), math.random(5), 3, 0, 0, 0)
+          end
+
+          if math.random(500) < 3 then
+              if math.random(100) > 50 then
+                  Drugs1()
+              else
+                  Drugs2()
+              end
+              Citizen.Wait(math.random(30000))
+          end
+
+          if math.random(100) > 75 and IsPedRunning(GetPlayerPed(-1)) then
+              SetPedToRagdoll(GetPlayerPed(-1), math.random(1000), math.random(1000), 3, 0, 0, 0)
+          end
+
+      end
+
+      dstamina = 0
+
+      if IsPedRunning(GetPlayerPed(-1)) then
+          SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
+      end
+
+      SetRunSprintMultiplierForPlayer(PlayerId(), 1.0)
+      RevertToStressMultiplier()
     end
-    startStamina = 0
-    SetRunSprintMultiplierForPlayer(PlayerId(), 1.0)
 end
 
 function MethBagEffect()
@@ -483,6 +604,7 @@ function MethBagEffect()
     end
     startStamina = 0
     SetRunSprintMultiplierForPlayer(PlayerId(), 1.0)
+    --exports["acidtrip"]:DoAcid(120000)
 end
 
 function CokeBaggyEffect()
@@ -546,10 +668,10 @@ function DeleteGear()
 	end
 end
 
-RegisterNetEvent('oxygenmaskclient:UseGear')
+--[[ RegisterNetEvent('oxygenmaskclient:UseGear')
 AddEventHandler('oxygenmaskclient:UseGear', function(bool)
     if bool then
-        GearAnim()
+        GearAnim() 
         RLCore.Functions.Progressbar("equip_gear", "Oxygen Tank", 30000, false, true, {}, {}, {}, {}, function() -- Done
             DeleteGear()
             local maskModel = GetHashKey("p_d_scuba_mask_s")
@@ -597,7 +719,7 @@ AddEventHandler('oxygenmaskclient:UseGear', function(bool)
             RLCore.Functions.Notify('You are not wearing an oxygen tank.', 'error')
         end
     end
-end)
+end) ]]
 
 function GearAnim()
     loadAnimDict("clothingshirt")    	

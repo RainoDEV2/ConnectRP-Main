@@ -4,7 +4,7 @@ Config.Blip = {
     blipName = "Bank",
     blipType = 108,
     blipColor = 37,
-    blipScale = 0.8
+    blipScale = 0.6
     }
 
 Config.ATMModels = {

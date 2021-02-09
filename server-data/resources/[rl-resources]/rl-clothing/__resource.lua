@@ -9,6 +9,7 @@ client_script('client/healingspots.lua')
 client_script('client/barbershop.lua')
 client_script('client/skins.lua')
 client_script('client/client.lua')
+client_script('client/backup.lua')
 
 ui_page('client/html/index.html')
 
@@ -34,3 +35,7 @@ files({
     'client/html/css/all.min.css',
     'server.lua'
 })
+
+export "CreateHashList"
+export "GetTatCategs"
+export "GetCustomSkins"

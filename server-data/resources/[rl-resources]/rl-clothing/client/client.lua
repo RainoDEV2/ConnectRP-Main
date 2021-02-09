@@ -806,7 +806,7 @@ function OpenMenu(name)
         RefreshUI()
         EnableGUI(true, name)
     else
-        TriggerEvent("DoLongHudText", "You are not welcome here!");
+        RLCore.Functions.Notify('You are not welcome here!', 'error')
     end
 end
 

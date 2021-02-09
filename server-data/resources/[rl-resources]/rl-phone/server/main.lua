@@ -928,9 +928,10 @@ RLCore.Functions.CreateCallback('rl-phone:server:HasPhone', function(source, cb)
     
     if Player ~= nil then
         local HasPhone = Player.Functions.GetItemByName("phone")
+        local HasPhoneAss = Player.Functions.GetItemByName("assphone")
         local retval = false
 
-        if HasPhone ~= nil then
+        if HasPhone ~= nil or HasPhoneAss ~= nil then
             cb(true)
         else
             cb(false)

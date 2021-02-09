@@ -79,36 +79,36 @@ function IsWeaponBlocked(WeaponName)
     return retval
 end
 
--- RegisterServerEvent('weapons:server:UpdateWeaponQuality')
--- AddEventHandler('weapons:server:UpdateWeaponQuality', function(data)
---     local src = source
---     local Player = RLCore.Functions.GetPlayer(src)
---     local WeaponData = RLCore.Shared.Weapons[GetHashKey(data.name)]
---     local WeaponSlot = Player.PlayerData.items[data.slot]
---     local DecreaseAmount = Config.DurabilityMultiplier[data.name]
+RegisterServerEvent('weapons:server:UpdateWeaponQuality')
+AddEventHandler('weapons:server:UpdateWeaponQuality', function(data)
+    local src = source
+    local Player = RLCore.Functions.GetPlayer(src)
+    local WeaponData = RLCore.Shared.Weapons[GetHashKey(data.name)]
+     local WeaponSlot = Player.PlayerData.items[data.slot]
+    local DecreaseAmount = Config.DurabilityMultiplier[data.name]
     
---     if not IsWeaponBlocked(WeaponData.name) then
---         if WeaponSlot.info.quality ~= nil then
---             if WeaponSlot.info.quality - DecreaseAmount > 0 then
---                 WeaponSlot.info.quality = WeaponSlot.info.quality - DecreaseAmount
---             else
---                 WeaponSlot.info.quality = 0
---                 TriggerClientEvent('inventory:client:UseWeapon', src, data)
---                 TriggerClientEvent('RLCore:Notify', src, "Jouw wapen is gebroken, je moet dit wapen repareren voordat je hem weer kunt gebruiken.", "error")
---             end
---         else
---             WeaponSlot.info.quality = 100
---             if WeaponSlot.info.quality - DecreaseAmount > 0 then
---                 WeaponSlot.info.quality = WeaponSlot.info.quality - DecreaseAmount
---             else
---                 WeaponSlot.info.quality = 0
---                 TriggerClientEvent('inventory:client:UseWeapon', src, data)
---                 TriggerClientEvent('RLCore:Notify', src, "Jouw wapen is gebroken, je moet dit wapen repareren voordat je hem weer kunt gebruiken.", "error")
---             end
---         end
---         Player.Functions.SetInventory(Player.PlayerData.items)
---     end
--- end)
+    if not IsWeaponBlocked(WeaponData.name) then
+        if WeaponSlot.info.quality ~= nil then
+            if WeaponSlot.info.quality - DecreaseAmount > 0 then
+                WeaponSlot.info.quality = WeaponSlot.info.quality - DecreaseAmount
+            else
+                WeaponSlot.info.quality = 0
+                TriggerClientEvent('inventory:client:UseWeapon', src, data)
+                 TriggerClientEvent('RLCore:Notify', src, "Your weapon is broken, you must fix this weapon before you can use it again.", "error")
+            end
+        else
+            WeaponSlot.info.quality = 100
+            if WeaponSlot.info.quality - DecreaseAmount > 0 then
+                WeaponSlot.info.quality = WeaponSlot.info.quality - DecreaseAmount
+            else
+                WeaponSlot.info.quality = 0
+                TriggerClientEvent('inventory:client:UseWeapon', src, data)
+                TriggerClientEvent('RLCore:Notify', src, "Your weapon is broken, you must fix this weapon before you can use it again.", "error")
+            end
+        end
+        Player.Functions.SetInventory(Player.PlayerData.items)
+    end
+end)
 
 RegisterServerEvent('weapons:server:UpdateWeaponQuality')
 AddEventHandler('weapons:server:UpdateWeaponQuality', function(data, RepeatAmount)
@@ -161,7 +161,7 @@ AddEventHandler("weapons:server:SetWeaponQuality", function(data, hp)
     Player.Functions.SetInventory(Player.PlayerData.items)
 end)
 
---[[RLCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, cb, RepairPoint, data)
+RLCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, cb, RepairPoint, data)
     local src = source
     local Player = RLCore.Functions.GetPlayer(src)
     local minute = 60 * 1000
@@ -232,7 +232,7 @@ AddEventHandler("weapons:server:TakeBackWeapon", function(k, data)
     Config.WeaponRepairPoints[k].IsRepairing = false
     Config.WeaponRepairPoints[k].RepairingData = {}
     TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[k], k)
-end)]]--
+end)
 
 RLCore.Functions.CreateUseableItem("pistol_suppressor", function(source, item)
     local Player = RLCore.Functions.GetPlayer(source)
