@@ -1,16 +1,7 @@
 module.exports = {
-  //-- [REQUIRED] IPv4 Address of your teamspeak 3 server
-  TSServer: "54.39.131.18",
-
-  //-- [REQUIRED] Port of the ws_server
-  //-- Make sure you open the port you specify below
-  //-- Please use a port above 30k as some networks block those below it
-  WSServerPort: 33250,
-
-  //-- [OPTIONAL] IPv4 Address of the ws_server
-  //-- Set by autoconfig
-  // WSServerIP: "127.0.0.1",
-
-  //-- [OPTIONAL] Enable connection/disconnection logs
-  enableLogs: false,
+  TSServer: "127.0.0.1", // IP Address of your teamspeak 3 server
+  WSServerIP: "127.0.0.1", // IP Address of the ws-server is running on
+  WSServerPort: 3000, // Websocket port, default: 3000
+  FivemServerIP: "127.0.0.1", // IP Adress of your FiveM server
+  FivemServerPort: 30120, // Port of your FiveM Server
 };
