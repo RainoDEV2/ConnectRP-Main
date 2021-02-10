@@ -144,11 +144,11 @@ window.addEventListener('message', function (event) {
                 $('#rect1').css('visibility', 'hidden')
                 $('#rect2').css('visibility', 'hidden')
                 $('#rect3').css('visibility', 'hidden')
-            } else if (event.data.proximity == 2){
+            } else if (event.data.proximity == 1){
                 $('#rect1').css('visibility', 'hidden')
                 $('#rect2').css('visibility', 'visible')
                 $('#rect3').css('visibility', 'visible')
-            } else if (event.data.proximity == 1){
+            } else if (event.data.proximity == 2){
                 $('#rect1').css('visibility', 'hidden')
                 $('#rect2').css('visibility', 'hidden')
                 $('#rect3').css('visibility', 'visible')

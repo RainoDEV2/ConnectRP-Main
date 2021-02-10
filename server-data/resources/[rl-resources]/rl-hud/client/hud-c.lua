@@ -75,9 +75,6 @@ Citizen.CreateThread(function()
 			talking = iTalking,
 			proximity = exports['tokovoip_script']:getPlayerData(GetPlayerServerId(PlayerId()), "voip:mode")
 		})
-		
-		print(json.encode(proximity))
-
         Citizen.Wait(200)
     end
 end)
