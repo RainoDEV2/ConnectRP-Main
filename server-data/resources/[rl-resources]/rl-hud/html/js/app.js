@@ -140,19 +140,19 @@ window.addEventListener('message', function (event) {
                 $('#rect3').css('fill', '#FFFFFF')
             }
 
-            if (event.data.talking == 0) {
+            if (event.data.proximity == 0) {
                 $('#rect1').css('visibility', 'hidden')
                 $('#rect2').css('visibility', 'hidden')
                 $('#rect3').css('visibility', 'hidden')
-            } else if (event.data.talking == 2){
+            } else if (event.data.proximity == 2){
                 $('#rect1').css('visibility', 'hidden')
                 $('#rect2').css('visibility', 'visible')
                 $('#rect3').css('visibility', 'visible')
-            } else if (event.data.talking == 1){
+            } else if (event.data.proximity == 1){
                 $('#rect1').css('visibility', 'hidden')
                 $('#rect2').css('visibility', 'hidden')
                 $('#rect3').css('visibility', 'visible')
-            } else if (event.data.talking == 3){
+            } else if (event.data.proximity == 3){
                 $('#rect1').css('visibility', 'visible')
                 $('#rect2').css('visibility', 'visible')
                 $('#rect3').css('visibility', 'visible')
