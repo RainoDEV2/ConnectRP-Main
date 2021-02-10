@@ -64,8 +64,6 @@ Citizen.CreateThread(function()
 		exports['tokovoip_script']:getPlayerData(GetPlayerServerId(PlayerId()), 'radio:talking') == true and 'radio' or 
 		exports['tokovoip_script']:getPlayerData(GetPlayerServerId(PlayerId()), "voip:talking") ~= nil and 
 		exports['tokovoip_script']:getPlayerData(GetPlayerServerId(PlayerId()), "voip:talking") == 1 and 'normal' or false
-
-		print(json.encode(iTalking))
         
         SendNUIMessage({
             action = 'updateStatusHud',
