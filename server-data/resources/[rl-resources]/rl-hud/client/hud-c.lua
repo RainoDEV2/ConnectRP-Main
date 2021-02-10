@@ -60,7 +60,12 @@ Citizen.CreateThread(function()
         local armor = GetPedArmour(player)
 		local oxy = oxygenTank
         local talking = false
-        local iTalking = exports['tokovoip_script']:getPlayerData(GetPlayerServerId(PlayerId()), 'radio:talking') ~= nil and exports['tokovoip_script']:getPlayerData(GetPlayerServerId(PlayerId()), 'radio:talking') == true and 'radio' or exports['tokovoip_script']:getPlayerData(GetPlayerServerId(PlayerId()), "voip:talking") ~= nil and exports['tokovoip_script']:getPlayerData(GetPlayerServerId(PlayerId()), "voip:talking") == 1 and 'normal' or false
+        local iTalking = exports['tokovoip_script']:getPlayerData(GetPlayerServerId(PlayerId()), 'radio:talking') ~= nil and 
+		exports['tokovoip_script']:getPlayerData(GetPlayerServerId(PlayerId()), 'radio:talking') == true and 'radio' or 
+		exports['tokovoip_script']:getPlayerData(GetPlayerServerId(PlayerId()), "voip:talking") ~= nil and 
+		exports['tokovoip_script']:getPlayerData(GetPlayerServerId(PlayerId()), "voip:talking") == 1 and 'normal' or false
+
+		print(json.encode(iTalking))
         
         SendNUIMessage({
             action = 'updateStatusHud',
@@ -71,10 +76,12 @@ Citizen.CreateThread(function()
 			--mumble = mumbleInfo,
 			talking = iTalking,
 		})
-		
+		 
         Citizen.Wait(200)
     end
 end)
+
+
 
 --Food Thirst
 Citizen.CreateThread(function()
