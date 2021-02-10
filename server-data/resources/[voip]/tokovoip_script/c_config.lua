@@ -2,7 +2,7 @@ TokoVoipConfig = {
 	refreshRate = 100, -- Rate at which the data is sent to the TSPlugin
 	networkRefreshRate = 2000, -- Rate at which the network data is updated/reset on the local ped
 	playerListRefreshRate = 5000, -- Rate at which the playerList is updated
-	minVersion = "1.5.0", -- Version of the TS plugin required to play on the server
+	minVersion = "1.5.4", -- Version of the TS plugin required to play on the server
 	enableDebug = false, -- Enable or disable tokovoip debug (Shift+9)
 
 	distance = {
@@ -18,8 +18,8 @@ TokoVoipConfig = {
 	radioClickMaxChannel = 100, -- Set the max amount of radio channels that will have local radio clicks enabled
 	radioAnim = true, -- Enable or disable the radio animation
 	radioEnabled = true, -- Enable or disable using the radio
-	wsServer = GetConvar('WSServer', "localhost:3000"),
-	--wsServer = "54.39.131.18:33250", -- Address of the websocket server
+	--wsServer = GetConvar('WSServer', "localhost:3000"),
+	wsServer = "54.39.131.18:3000", -- Address of the websocket server
 
 	plugin_data = {
 		-- TeamSpeak channel name used by the voip
