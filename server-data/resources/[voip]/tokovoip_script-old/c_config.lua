@@ -2,24 +2,23 @@ TokoVoipConfig = {
 	refreshRate = 100, -- Rate at which the data is sent to the TSPlugin
 	networkRefreshRate = 2000, -- Rate at which the network data is updated/reset on the local ped
 	playerListRefreshRate = 5000, -- Rate at which the playerList is updated
-	minVersion = "1.5.4", -- Version of the TS plugin required to play on the server
+	minVersion = "1.5.0", -- Version of the TS plugin required to play on the server
 	enableDebug = false, -- Enable or disable tokovoip debug (Shift+9)
 
 	distance = {
-		12, -- Normal speech distance in gta distance units
-		4, -- Whisper speech distance in gta distance units
-		34, -- Shout speech distance in gta distance units
+		15, -- Normal speech distance in gta distance units
+		5, -- Whisper speech distance in gta distance units
+		40, -- Shout speech distance in gta distance units
 	},
 	headingType = 0, -- headingType 0 uses GetGameplayCamRot, basing heading on the camera's heading, to match how other GTA sounds work. headingType 1 uses GetEntityHeading which is based on the character's direction
 	radioKey = Keys["CAPS"], -- Keybind used to talk on the radio
 	keySwitchChannels = Keys["Z"], -- Keybind used to switch the radio channels
 	keySwitchChannelsSecondary = Keys["LEFTSHIFT"], -- If set, both the keySwitchChannels and keySwitchChannelsSecondary keybinds must be pressed to switch the radio channels
-	keyProximity = Keys["-"], -- Keybind used to switch the proximity mode
+	keyProximity = Keys["Z"], -- Keybind used to switch the proximity mode
 	radioClickMaxChannel = 100, -- Set the max amount of radio channels that will have local radio clicks enabled
 	radioAnim = true, -- Enable or disable the radio animation
 	radioEnabled = true, -- Enable or disable using the radio
-	--wsServer = GetConvar('WSServer', "localhost:3000"),
-	wsServer = "54.39.131.18:33250", -- Address of the websocket server
+	wsServer = "54.39.131.18:3000", -- Address of the websocket server
 
 	plugin_data = {
 		-- TeamSpeak channel name used by the voip
@@ -44,20 +43,22 @@ TokoVoipConfig = {
 		-- The following is purely TS client settings, to match tastes
 		local_click_on = true, -- Is local click on sound active
 		local_click_off = true, -- Is local click off sound active
-		remote_click_on = true, -- Is remote click on sound active
+		remote_click_on = false, -- Is remote click on sound active
 		remote_click_off = true, -- Is remote click off sound active
 		enableStereoAudio = true, -- If set to true, positional audio will be stereo (you can hear people more on the left or the right around you)
-		ClickVolume = -15, -- Set the radio clicks volume, -15 is a good default
+		-- ClickVolume = -15, -- Set the radio clicks volume, -15 is a good default
 
-		--localName = "", -- If set, this name will be used as the user's teamspeak display name
-		--localNamePrefix = "[" .. GetPlayerServerId(PlayerId()) .. "] ", -- If set, this prefix will be added to the user's teamspeak display name
+		localName = "", -- If set, this name will be used as the user's teamspeak display name
+		localNamePrefix = "[" .. GetPlayerServerId(PlayerId()) .. "] ", -- If set, this prefix will be added to the user's teamspeak display name
 	}
 };
 
 AddEventHandler("onClientResourceStart", function(resource)
 	if (resource == GetCurrentResourceName()) then	--	Initialize the script when this resource is started
 		Citizen.CreateThread(function()
-			TokoVoipConfig.plugin_data.localName = "["..GetPlayerServerId(PlayerId()).." - ".. GetPlayerName(PlayerId()) .. "]"; -- Set the local name
+			if(TokoVoipConfig.plugin_data.localName == '') then
+				TokoVoipConfig.plugin_data.localName = escape(GetPlayerName(PlayerId())); -- Set the local name
+			end
 		end);
 		TriggerEvent("initializeVoip"); -- Trigger this event whenever you want to start the voip
 	end
