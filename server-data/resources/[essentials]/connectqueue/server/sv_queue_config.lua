@@ -31,16 +31,16 @@ Config.Priority = {
 }
 
 Config.donorLevels = {
-    [1] = {Role = "Developer", Priority = 99},
-    [2] = {Role = "Staff", Priority = 90},
-    [3] = {Role = "Hero", Priority = 35},
-    [4] = {Role = "God", Priority = 30},
-    [5] = {Role = "VIP", Priority = 25},
-    [6] = {Role = "Platinum", Priority = 20},
-    [7] = {Role = "Silver", Priority = 15},
-    [8] = {Role = "Bronze", Priority = 10},
-    [9] = {Role = "Nitro", Priority = 5},
-    [10] = {Role = "Streamer", Priority = 4}
+    --[1] = {Role = "Developer", Priority = 99},
+    --[2] = {Role = "Staff", Priority = 90},
+    --[3] = {Role = "Hero", Priority = 35},
+    --[4] = {Role = "God", Priority = 30},
+    --[5] = {Role = "VIP", Priority = 25},
+    --[6] = {Role = "Platinum", Priority = 20},
+    --[7] = {Role = "Silver", Priority = 15},
+    --[8] = {Role = "Bronze", Priority = 10},
+    --[9] = {Role = "Nitro", Priority = 5},
+    --[10] = {Role = "Streamer", Priority = 4}
 }
 
 -- require people to run steam

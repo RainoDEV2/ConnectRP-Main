@@ -34,12 +34,13 @@ AddEventHandler("playerConnecting", function(name, setCallback, deferrals)
                 deferrals.done()
             else
                 Citizen.Wait(100)
-                local time = os.date("*t")
-                if time.hour >= 9 and time.hour <= 19 then
-                    deferrals.done()
-                else
+                --local time = os.date("*t")
+                --if time.hour >= 9 and time.hour <= 19 then
+                --    deferrals.done()
+		--	print("thef")
+                --else
                     deferrals.done(notWhitelisted)
-                end
+                --end
             end
         end
     else
