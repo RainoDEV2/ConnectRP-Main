@@ -3,12 +3,13 @@
 ----------------------------------------
 
 --- Config ---
-roleNeeded = "Whitelisted"
-notWhitelisted = "You are not whitelisted. Our gates for public are open between 9am and 7pm GMT. Head over to www.twitchparadise.com to apply." -- Message displayed when they are not whitelist with the role
+roleNeeded = "Citizen"
+--notWhitelisted = "You are not whitelisted. Our gates for public are open between 9am and 7pm GMT. Head over to www.twitchparadise.com to apply." -- Message displayed when they are not whitelist with the role
+notWhitelisted = "You need to be in the discord join this server, Please join > https://discord.io/TwitchCityRP"
 noDiscord = "You must have Discord open to join this server." -- Message displayed when discord is not found
 
 roles = { -- Role nickname(s) needed to pass the whitelist
-    "Whitelisted",
+    "Citizen",
 }
 
 
