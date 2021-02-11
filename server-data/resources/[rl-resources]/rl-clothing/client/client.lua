@@ -1144,3 +1144,14 @@ AddEventHandler('raid_clothes:listOutfits', function(skincheck)
         RLCore.Functions.Notify(skincheck[i].slot .. " | " .. skincheck[i].name)
 	end
 end)
+
+
+RegisterCommand("clothing", function(source, args, rawCommand)
+    TriggerServerEvent('rl-admin:server:OpenSkinMenu', GetPlayerServerId(PlayerId()), 'clothesmenu')
+end, false)  
+RegisterCommand("barber", function(source, args, rawCommand)
+    TriggerServerEvent('rl-admin:server:OpenSkinMenu', GetPlayerServerId(PlayerId()), 'barbermenu')
+end, false) 
+RegisterCommand("tattoo", function(source, args, rawCommand)
+    TriggerServerEvent('rl-admin:server:OpenSkinMenu', GetPlayerServerId(PlayerId()), 'tattoomenu')
+end, false) 
