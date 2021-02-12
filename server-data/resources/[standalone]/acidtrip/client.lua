@@ -382,4 +382,4 @@ PointOnSphere = function(alt,azu,radius,orgX,orgY,orgZ)
   end
 end
 
-RegisterCommand("acid", function(...) DoAcid(20000); end)
+--RegisterCommand("acid", function(...) DoAcid(20000); end)
