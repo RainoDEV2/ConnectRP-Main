@@ -55,7 +55,7 @@ Config.AntiEulenAntiStart = {
 }
 
 Config.AntiVPN = {
-    Toggle = true,
+    Toggle = false,
     Punishment = "NONE"
 }
 
