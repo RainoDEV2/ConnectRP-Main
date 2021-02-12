@@ -9,7 +9,6 @@ Config.WebHooks = {
     Explosions = "https://discord.com/api/webhooks/809639146501963798/f1XTS_vrDoLJ5qMR2VtlC96TtT_VXURXe9m8m5UWgU2RE_A8PobZFhw3Ktr8vHxHo0ZT",
     Peds = "https://discord.com/api/webhooks/809639223610441728/uCqEUmBLAdPkJyNNsN7Amcqvw_3YBDwO5EeIAySiyP1xvSBvQkE_3Sh7XFuBYfBCgxsu",
     HeartBeat = "https://discord.com/api/webhooks/809639288895438878/wXZhYY6I0sjF9CokQpAv3EXHEh-EEe4net5d0uNg4c2xMX150i5wh70ABxYUhnAfCFOR",
-    StopMen = "https://discord.com/api/webhooks/809886698855071784/VFgDVYxvlezAq45jlpyugUmSpxNtiIErw6hTyXTyRvVx7tqJB2iAIL2YMYzqf3yC2hip",
 }
 Config.License = ''
 Config.SupportScreenShots = true-- requierements https://github.com/jaimeadf/discord-screenshot  and https://github.com/jaimeadf/screenshot-basic
@@ -17,42 +16,42 @@ Config.DrawSpriteWhenBan = false
 Config.RenewUserBan = true -- If the user is banned and he tries to connect it wil ban the new credentials
 Config.WeaponBlacklist = {
     Toggle = true,
-    Punishment = "NONE", -- BAN/KICK/NONE
+    Punishment = "KICK", -- BAN/KICK/NONE
     MaxAmmo = 250, -- max ammo for users
 }
 
 Config.VehicleBlacklist = {
     Toggle = true,
-    Punishment = "NONE",
-    VehicleMassPunishment = "NONE"
+    Punishment = "BAN",
+    VehicleMassPunishment = "BAN"
 }
 
 Config.AntiProps = {
     Toggle = true,
-    Punishment = "NONE",
-    PropsMassPunishment = "NONE"
+    Punishment = "BAN",
+    PropsMassPunishment = "BAN"
 }
 
 Config.AntiPedSpawn = {
     Toggle = true, 
-    Punishment = "NONE",
-    PedsMassPuunishment = "NONE"
+    Punishment = "BAN",
+    PedsMassPuunishment = "BAN"
 }
 
 Config.AntiSpectate = {
     Toggle = true,
-    Punishment = "NONE"
+    Punishment = "BAN"
 }
 
 Config.AntiStop = {
     Toggle = true,
-    Punishment = "NONE"
+    Punishment = "BAN"
 }
 
 Config.AntiEulenAntiStart = {
     -- this checks the resource count
     Toggle = true,
-    Punishment = "NONE"
+    Punishment = "BAN"
 }
 
 Config.AntiVPN = {
@@ -62,7 +61,7 @@ Config.AntiVPN = {
 
 Config.AntiClearPedTasks = {
     Toggle = true,
-    Punishment = "NONE",
+    Punishment = "BAN",
 }
 
 Config.ExplosionsCheck = {
