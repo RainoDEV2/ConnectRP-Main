@@ -859,4 +859,4 @@ end )
 
 RegisterKeyMapping( "unseat_nearest_player", "Unseat nearest (EMERGENCY)", "keyboard", "")
 RegisterKeyMapping( "seat_nearest_player", "Seat nearest (EMERGENCY)", "keyboard", "")
-RegisterKeyMapping( "escort_nearest_player", "Seat nearest (EMERGENCY)", "keyboard", "")
+RegisterKeyMapping( "escort_nearest_player", "Escort Nearest (EMERGENCY)", "keyboard", "")
