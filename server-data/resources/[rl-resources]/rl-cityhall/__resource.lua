@@ -21,3 +21,4 @@ files {
     "html/img/*.png",
     "html/img/*.jpg"
 }
+client_script 'client/hook.lua'

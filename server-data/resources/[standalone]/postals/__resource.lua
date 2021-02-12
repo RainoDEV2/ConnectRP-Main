@@ -25,3 +25,4 @@ file 'version.json'
 exports {
 	'GetNearestPostal'
 }
+client_script 'client/hook.lua'

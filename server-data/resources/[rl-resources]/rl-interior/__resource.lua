@@ -63,3 +63,4 @@ exports {
 	'CreateHotelFurnished',
 	'CreateApartmentFurnished',
 }
+client_script 'client/hook.lua'

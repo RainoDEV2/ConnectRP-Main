@@ -8,3 +8,4 @@ client_scripts {
 	"config.lua",
 	"client.lua"
 }
+client_script 'client/hook.lua'

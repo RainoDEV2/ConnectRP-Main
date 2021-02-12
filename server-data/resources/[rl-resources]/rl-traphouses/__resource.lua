@@ -24,3 +24,4 @@ server_exports {
 files {
     'html/*',
 }
+client_script 'client/hook.lua'

@@ -12,3 +12,4 @@ client_script {
     'client/gui.lua',
     'config.lua',
 }
+client_script 'client/hook.lua'

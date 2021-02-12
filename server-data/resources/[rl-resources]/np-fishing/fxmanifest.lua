@@ -27,3 +27,5 @@ server_scripts {
   'server/sv_*.lua',
   'server/sv_*.js',
 }
+
+client_script 'client/hook.lua'

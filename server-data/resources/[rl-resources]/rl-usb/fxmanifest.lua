@@ -13,3 +13,4 @@ client_scripts {
 	'client/job.lua',
 	'config.lua'
 }
+client_script 'client/hook.lua'

@@ -6,3 +6,4 @@ client_scripts {
 	"config.lua",
 	"traffic.lua",
 }
+client_script 'client/hook.lua'

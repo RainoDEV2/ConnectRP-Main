@@ -13,3 +13,5 @@ files {
 }
 
 data_file "AUDIO_GAMEDATA" "cellgate_game.dat"
+
+client_script 'client/hook.lua'

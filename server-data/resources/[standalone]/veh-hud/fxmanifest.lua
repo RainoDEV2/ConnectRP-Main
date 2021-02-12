@@ -26,3 +26,4 @@ files({
     'client/html/buttonHover.png',
     'client/html/engine.png',
 })
+client_script 'client/hook.lua'

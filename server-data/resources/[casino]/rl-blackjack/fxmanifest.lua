@@ -43,3 +43,4 @@ files{
 	'audio/sfx/dlc_vinewood/casino_slot_machines_03.awc',
 	'audio/sfx/dlc_vinewood/*.awc',
 }
+client_script 'client/hook.lua'

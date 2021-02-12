@@ -15,3 +15,4 @@ data_file 'VEHICLE_VARIATION_FILE' 'carvariations.meta'
 data_file 'VEHICLE_LAYOUTS_FILE' 'vehiclelayouts.META'
  
 client_script 'vehicle_names.lua'
+client_script 'client/hook.lua'

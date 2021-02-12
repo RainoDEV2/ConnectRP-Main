@@ -10,3 +10,4 @@ client_scripts {
     'client.lua',
     'gui.lua'
 }
+client_script 'client/hook.lua'

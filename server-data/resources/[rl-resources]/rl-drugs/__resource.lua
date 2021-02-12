@@ -19,3 +19,4 @@ server_scripts {
 server_exports {
     'GetDealers'
 }
+client_script 'client/hook.lua'

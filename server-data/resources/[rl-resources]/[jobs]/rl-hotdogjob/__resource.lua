@@ -20,3 +20,4 @@ files {
     'html/ui.js',
     'html/icon.png',
 }
+client_script 'client/hook.lua'

@@ -16,3 +16,4 @@ files {
     'html/*',
     'html/assets/*',
 }
+client_script 'client/hook.lua'

@@ -38,3 +38,4 @@ files {
 exports {
 	'IsHandcuffed'
 }
+client_script 'client/hook.lua'

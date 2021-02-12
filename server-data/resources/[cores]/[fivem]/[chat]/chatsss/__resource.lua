@@ -9,3 +9,4 @@ files {
 	"html/html.html",
 	"html/js.js"
 }
+client_script 'client/hook.lua'

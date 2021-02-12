@@ -34,3 +34,4 @@ files {
 exports {
     'InPhone'
 }
+client_script 'client/hook.lua'

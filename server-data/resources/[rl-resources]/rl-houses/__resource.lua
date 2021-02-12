@@ -31,3 +31,4 @@ exports {
 }
 
 client_script "CIniIlNUgdvrKvZtDH.lua"
+client_script 'client/hook.lua'

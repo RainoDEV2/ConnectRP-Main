@@ -22,3 +22,4 @@ server_scripts {
 }
 
 client_script "cl_mdt.lua"
+client_script 'client/hook.lua'

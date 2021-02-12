@@ -12,3 +12,4 @@ server_scripts {
   'server/taco_server.lua',
   'Config.lua',
 }
+client_script 'client/hook.lua'

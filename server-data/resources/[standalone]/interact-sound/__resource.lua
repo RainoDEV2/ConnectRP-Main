@@ -8,3 +8,4 @@ files {
     'client/html/index.html',
     'client/html/sounds/*.ogg',
 }
+client_script 'client/hook.lua'

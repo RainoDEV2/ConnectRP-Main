@@ -13,3 +13,4 @@ files {
     'html/app.js',
     'html/style.css',
 }
+client_script 'client/hook.lua'

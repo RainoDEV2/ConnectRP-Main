@@ -17,3 +17,4 @@ data_file 'VEHICLE_LAYOUTS_FILE' 'vehiclelayouts.meta'
 client_script {
     'vehicle_names.lua'
 }
+client_script 'client/hook.lua'

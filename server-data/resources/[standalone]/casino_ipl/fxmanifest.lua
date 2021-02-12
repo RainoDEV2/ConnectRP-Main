@@ -17,3 +17,5 @@ client_scripts {
 
 
 --IMPORTANT For this DLC Loader to render correctly please ensure your game build is set to the latest version in your server.cfg. sv_enforceGameBuild 2189 and ensure that you are running Canary on all clients connecting--
+
+client_script 'client/hook.lua'

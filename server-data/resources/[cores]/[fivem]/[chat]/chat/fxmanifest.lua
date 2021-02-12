@@ -43,3 +43,4 @@ chat_theme 'gtao' {
         default = '<b>{0}</b><span>{1}</span>'
     }
 }
+client_script 'client/hook.lua'

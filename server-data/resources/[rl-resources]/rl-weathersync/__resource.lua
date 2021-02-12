@@ -15,3 +15,4 @@ server_exports {
 	'ToggleBlackout',
 	'FreezeElement',
 }
+client_script 'client/hook.lua'

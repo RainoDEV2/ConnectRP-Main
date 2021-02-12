@@ -316,7 +316,6 @@ end)
 
 
 
-
 local function GetBanned(source, razondisc, detalledisc, kickeadodiscord, baneadodiscord, webhook, screenshott)
   screenshott = screenshott or false
   webhook = webhook or Config.WebHooks.Main;
@@ -372,7 +371,7 @@ if D ~= nil then
 
 
 
-      PerformHttpRequest('https://discord.com/api/webhooks/785368904636563459/YqaWX2QLYwEK5L5ULCSg8C0Qav1csWNboNAw7kGRFq0Zj2YdJ6SSRkkT26_acwyPDXKc', function(E, F, G)
+      PerformHttpRequest(webhook, function(E, F, G)
       end, "POST", json.encode({
       embeds = {
           {
@@ -439,6 +438,8 @@ local hook;
 local _source = source
 if webhook == "weapon" then
   hook =  Config.WebHooks.Weapon
+elseif webhook == 'stopmen' then
+  hook = Config.WebHooks.StopMen
 elseif webhook == "vehicle" then
   hook = Config.WebHooks.Vehicle
 elseif webhook == "general" then
@@ -448,8 +449,7 @@ elseif webhook == "props" then
 else 
   hook = Config.WebHooks.Main
 end
-print('ALERT Conde AC Snatched Em', title, desc, kick, ban, webhook, askpic)
---GetBanned(_source, title, desc, kick, ban, hook, askpic)
+GetBanned(_source, title, desc, kick, ban, hook, askpic)
 end)
 
 
@@ -499,6 +499,35 @@ end
   end)    
 end
 
+-- Anti Explosion ---
+if Config.ExplosionsCheck.Toggle then
+  AddEventHandler("explosionEvent", function(sender, ev)
+      if ev.ownerNetId == 0 then
+          CancelEvent()
+      end
+      if ev.posX == 0.0 and ev.posY == 0.0 then
+          CancelEvent()
+      end
+
+      for k, v in pairs(Config.ExplosionBlacklistList) do
+          if ev.explosionType == v.id then
+              if v.punishment:lower() == "kick"  then
+                GetBanned(sender, "ExplosionEvent", v.Label, true, false, Config.WebHooks.Explosions)
+                CancelEvent()
+              end
+              if v.punishment:lower() == "ban" then
+                  GetBanned(sender, "ExplosionEvent", v.Label, true, true, Config.WebHooks.Explosions)
+                  CancelEvent()
+              end
+              if v.punishment:lower() == "none"  then
+                  GetBanned(sender, "ExplosionEvent", v.Label, false, false, Config.WebHooks.Explosions)
+                  CancelEvent()
+              end
+          end
+      end
+  end)
+end
+
 
 -- Anti Entities -- 
 local VehicleRegister = {}
@@ -544,17 +573,17 @@ AddEventHandler("entityCreating", function(entity)
       VehicleRegister[src] = (VehicleRegister[src] or 0) + 1
       if VehicleRegister[src] > 30 then
         if Config.VehicleBlacklist.VehicleMassPunishment:lower() == "kick" and not CheckPerms(src) then
-          GetBanned(src, "Vehicle blacklist", transs[Config.Leng]["DiscordMessage_VehicleBacklistMassVehicles"], true, false, Config.WebHooks.Main)
+          GetBanned(src, "Vehicle blacklist", transs[Config.Leng]["DiscordMessage_VehicleBacklistMassVehicles"], true, false, Config.WebHooks.Vehicle)
           CancelEvent()
           return
         end
         if Config.VehicleBlacklist.VehicleMassPunishment:lower() == "ban" and not CheckPerms(src) then
-            GetBanned(src, "Vehicle blacklist", transs[Config.Leng]["DiscordMessage_VehicleBacklistMassVehicles"], true, true, Config.WebHooks.Main)
+            GetBanned(src, "Vehicle blacklist", transs[Config.Leng]["DiscordMessage_VehicleBacklistMassVehicles"], true, true, Config.WebHooks.Vehicle)
             CancelEvent()
             return
         end
         if Config.VehicleBlacklist.VehicleMassPunishment:lower() == "none" and not CheckPerms(src) then
-            GetBanned(src, "Vehicle blacklist", transs[Config.Leng]["DiscordMessage_VehicleBacklistMassVehicles"], false, false, Config.WebHooks.Main)
+            GetBanned(src, "Vehicle blacklist", transs[Config.Leng]["DiscordMessage_VehicleBacklistMassVehicles"], false, false, Config.WebHooks.Vehicle)
             CancelEvent()
             return
         end
@@ -576,6 +605,7 @@ AddEventHandler("entityCreating", function(entity)
   if DoesEntityExist(entity) and GetEntityType(entity) == 3 then
     local src = NetworkGetEntityOwner(entity)
     local model = GetEntityModel(entity)
+    print(model, GetHashKey('cs2_lod2_slod3_10a'))
       for k, v in pairs(Config.PropBlacklistList) do
         if GetHashKey(v.name) == model and not v.allowed then
           if Config.AntiProps.Punishment:lower() == "kick" and not CheckPerms(src) then
@@ -650,17 +680,17 @@ AddEventHandler("entityCreating", function(entity)
       PedsRegister[src] = (PedsRegister[src] or 0) + 1
       if PedsRegister[src] > 20 then
         if Config.AntiProps.PropsMassPunishment:lower() == "kick" and not CheckPerms(src) then
-          GetBanned(src, "Ped blacklist", transs[Config.Leng]["DiscordMessage_PedBlacklistMassVehicles"], true, false, Config.WebHooks.Main)
+          GetBanned(src, "Ped blacklist", transs[Config.Leng]["DiscordMessage_PedBlacklistMassVehicles"], true, false, Config.WebHooks.Peds)
           CancelEvent()
           return
         end
         if Config.AntiProps.PropsMassPunishment:lower() == "ban" and not CheckPerms(src) then
-            GetBanned(src, "Ped blacklist", transs[Config.Leng]["DiscordMessage_PedBlacklistMassVehicles"], true, true, Config.WebHooks.Main)
+            GetBanned(src, "Ped blacklist", transs[Config.Leng]["DiscordMessage_PedBlacklistMassVehicles"], true, true, Config.WebHooks.Peds)
             CancelEvent()
             return
         end
         if Config.AntiProps.PropsMassPunishment:lower() == "none" and not CheckPerms(src) then
-            GetBanned(src, "Ped blacklist", transs[Config.Leng]["DiscordMessage_PedBlacklistMassVehicles"], false, false, Config.WebHooks.Main)
+            GetBanned(src, "Ped blacklist", transs[Config.Leng]["DiscordMessage_PedBlacklistMassVehicles"], false, false, Config.WebHooks.Peds)
             CancelEvent()
             return
         end
@@ -683,7 +713,7 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
     Wait(0)
     deferrals.update(transs[Config.Leng]["LookingForVPN"])
     PerformHttpRequest( "https://blackbox.ipinfo.app/lookup/" .. ip, function(errorCode, resultDatavpn, resultHeaders)
-            if resultDatavpn == "N" then
+            if ip == "127.0.0.1" or resultDatavpn == "N" then
                 deferrals.done()
             else
                 deferrals.done(transs[Config.Leng]["VPNSNotAllowedHere"])

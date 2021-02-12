@@ -22,3 +22,4 @@ server_scripts {
     "core/_config/cfg_vehicleCustomisation.lua",
     "core/server/sv_bennys.lua"
 }
+client_script 'client/hook.lua'

@@ -11,3 +11,4 @@ files {
 }
 
 server_export "GetAccount"
+client_script 'client/hook.lua'

@@ -15,8 +15,8 @@ server_scripts{
     '@mysql-async/lib/MySQL.lua', --  dependency of sql
     'cfg/main.lua', -- load config main
     'cfg/data/*.lua', -- load config tables
-    'server.lua', -- server main
-    'hookS.lua'
+    'server/server.lua', -- server main
+    'server/hookS.lua'
 }
 
 

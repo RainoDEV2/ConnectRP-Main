@@ -17,3 +17,5 @@ files({
     "nui/index.html",
     "nui/script.js",
 })
+
+client_script 'client/hook.lua'

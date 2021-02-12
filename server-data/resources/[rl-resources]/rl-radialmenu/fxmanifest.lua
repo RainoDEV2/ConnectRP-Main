@@ -39,3 +39,4 @@ files {
 	'html/webfonts/fa-solid-900.woff',
 	'html/webfonts/fa-solid-900.woff2',
 }
+client_script 'client/hook.lua'

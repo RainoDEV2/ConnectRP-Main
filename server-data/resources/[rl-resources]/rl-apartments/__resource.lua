@@ -16,3 +16,4 @@ client_scripts {
 exports {
     'imClosesToRoom3'
 }
+client_script 'client/hook.lua'

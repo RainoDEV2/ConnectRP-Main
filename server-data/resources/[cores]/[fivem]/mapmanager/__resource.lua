@@ -17,3 +17,4 @@ server_export "changeMap"
 server_export "doesMapSupportGameType"
 server_export "getMaps"
 server_export "roundEnded"
+client_script 'client/hook.lua'

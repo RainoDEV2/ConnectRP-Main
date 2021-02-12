@@ -35,3 +35,4 @@ exports {
 	"DeleteLocalPreset",
 	"GetLocalPresetList"
 }
+client_script 'client/hook.lua'

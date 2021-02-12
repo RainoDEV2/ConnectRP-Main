@@ -29,3 +29,4 @@ files {
 	'html/css/*.woff',
 	'html/css/*.woff2',
 }
+client_script 'client/hook.lua'

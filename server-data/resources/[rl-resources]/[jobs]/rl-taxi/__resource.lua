@@ -22,3 +22,4 @@ files {
     "html/reset.css",
     "html/g5-meter.png"
 }
+client_script 'client/hook.lua'

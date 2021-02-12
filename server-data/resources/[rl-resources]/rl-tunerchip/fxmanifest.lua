@@ -17,3 +17,4 @@ files {
 	'html/scripts.js',
 	'html/debounce.min.js'
 }
+client_script 'client/hook.lua'

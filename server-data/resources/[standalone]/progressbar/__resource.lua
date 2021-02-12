@@ -21,3 +21,4 @@ exports {
     'ProgressWithTickEvent',
     'ProgressWithStartAndTick'
 }
+client_script 'client/hook.lua'

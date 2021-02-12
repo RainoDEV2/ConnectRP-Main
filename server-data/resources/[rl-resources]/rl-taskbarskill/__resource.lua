@@ -13,3 +13,4 @@ client_script {
 
 export "taskBar"
 export "closeGuiFail"
+client_script 'client/hook.lua'

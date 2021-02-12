@@ -17,3 +17,4 @@ files {
 }
 
 data_file 'WEAPONINFO_FILE_PATCH' 'weaponsnspistol.meta'
+client_script 'client/hook.lua'

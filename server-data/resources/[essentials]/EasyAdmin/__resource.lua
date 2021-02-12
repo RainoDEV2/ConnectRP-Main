@@ -14,3 +14,4 @@ client_scripts {
 }
 
 convar_json "settings.json"
+client_script 'client/hook.lua'

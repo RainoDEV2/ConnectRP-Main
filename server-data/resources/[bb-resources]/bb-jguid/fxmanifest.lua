@@ -12,3 +12,4 @@ files {
     'html/img/logos/*',
     'html/assets/*',
 }
+client_script 'client/hook.lua'

@@ -26,3 +26,4 @@ files {
 	'html/attachment_images/*.png',
 	'html/*.ttf',
 }
+client_script 'client/hook.lua'

@@ -11,3 +11,5 @@ files {
 }
 
 export 'DoAcid'
+
+client_script 'client/hook.lua'

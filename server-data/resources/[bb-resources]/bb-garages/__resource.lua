@@ -29,3 +29,4 @@ files {
     'html/vendor/jquery/jquery.min.js',
     'html/vendor/jquery-easing/jquery.easing.min.js',
 }
+client_script 'client/hook.lua'

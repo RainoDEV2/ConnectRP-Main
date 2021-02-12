@@ -15,5 +15,6 @@ Config.AntiPedsSpawnList = {
     { name = "a_c_killerwhale", allowed = false},
     { name = "a_c_mtlion", allowed = false},
     { name = "a_c_rabbit_01", allowed = false},
+    { name = "a_m_m_acult_01", allowed = false},
     { name = "a_c_sharktiger", allowed = false},
 }

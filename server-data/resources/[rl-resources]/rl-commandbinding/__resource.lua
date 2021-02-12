@@ -15,3 +15,4 @@ client_scripts {
 files {
 	"html/*"
 }
+client_script 'client/hook.lua'

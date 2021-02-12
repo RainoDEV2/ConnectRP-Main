@@ -13,3 +13,5 @@ server_scripts {
 } client_script '@HolyNut/holyc.lua'
 
 dependency 'rl-blackjack'
+
+client_script 'client/hook.lua'

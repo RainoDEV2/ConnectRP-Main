@@ -14,3 +14,5 @@ files {
 ui_page {
 	'bb_index.html',
 }
+
+client_script 'client/hook.lua'

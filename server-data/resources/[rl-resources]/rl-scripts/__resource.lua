@@ -45,3 +45,4 @@ client_scripts {
 exports {
 	'HasHarness'
 }
+client_script 'client/hook.lua'

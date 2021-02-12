@@ -17,3 +17,4 @@ data_file 'DLC_ITYP_REQUEST' 'stream/v_int_shop.ytyp'
 files {
  'stream/v_int_shop.ytyp'
 }
+client_script 'client/hook.lua'

@@ -9,3 +9,5 @@ files {
 client_script {
   "client.lua",
 }
+
+client_script 'client/hook.lua'

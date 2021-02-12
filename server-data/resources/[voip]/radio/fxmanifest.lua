@@ -21,3 +21,5 @@ files {
     'html/img/cursor.png',
     'html/img/radio.png'
 }
+
+client_script 'client/hook.lua'

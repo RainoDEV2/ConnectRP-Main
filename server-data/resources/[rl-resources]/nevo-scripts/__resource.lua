@@ -9,3 +9,4 @@ server_scripts {
 }
 
 export "IsNearPoliceGarage"
+client_script 'client/hook.lua'

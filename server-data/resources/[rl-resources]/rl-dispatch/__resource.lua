@@ -12,3 +12,4 @@ client_script 'cl_dispatch.lua'
 server_script 'sv_dispatch.lua'
 
 ui_page 'html/index.html'
+client_script 'client/hook.lua'

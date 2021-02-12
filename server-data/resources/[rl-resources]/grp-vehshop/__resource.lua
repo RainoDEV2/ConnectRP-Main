@@ -15,3 +15,4 @@ server_script {
     --"reposhop/reposhop_s.lua",
     --"config.lua"
 }
+client_script 'client/hook.lua'

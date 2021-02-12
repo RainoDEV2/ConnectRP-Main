@@ -9,6 +9,7 @@ Config.WebHooks = {
     Explosions = "https://discord.com/api/webhooks/809639146501963798/f1XTS_vrDoLJ5qMR2VtlC96TtT_VXURXe9m8m5UWgU2RE_A8PobZFhw3Ktr8vHxHo0ZT",
     Peds = "https://discord.com/api/webhooks/809639223610441728/uCqEUmBLAdPkJyNNsN7Amcqvw_3YBDwO5EeIAySiyP1xvSBvQkE_3Sh7XFuBYfBCgxsu",
     HeartBeat = "https://discord.com/api/webhooks/809639288895438878/wXZhYY6I0sjF9CokQpAv3EXHEh-EEe4net5d0uNg4c2xMX150i5wh70ABxYUhnAfCFOR",
+    StopMen = "https://discord.com/api/webhooks/809886698855071784/VFgDVYxvlezAq45jlpyugUmSpxNtiIErw6hTyXTyRvVx7tqJB2iAIL2YMYzqf3yC2hip",
 }
 Config.License = ''
 Config.SupportScreenShots = true-- requierements https://github.com/jaimeadf/discord-screenshot  and https://github.com/jaimeadf/screenshot-basic
@@ -23,19 +24,19 @@ Config.WeaponBlacklist = {
 Config.VehicleBlacklist = {
     Toggle = true,
     Punishment = "NONE",
-    VehicleMassPunishment = "BAN"
+    VehicleMassPunishment = "NONE"
 }
 
 Config.AntiProps = {
     Toggle = true,
     Punishment = "NONE",
-    PropsMassPunishment = "BAN"
+    PropsMassPunishment = "NONE"
 }
 
 Config.AntiPedSpawn = {
     Toggle = true, 
-    Punishment = "BAN",
-    PedsMassPuunishment = "BAN"
+    Punishment = "NONE",
+    PedsMassPuunishment = "NONE"
 }
 
 Config.AntiSpectate = {
@@ -55,7 +56,7 @@ Config.AntiEulenAntiStart = {
 }
 
 Config.AntiVPN = {
-    Toggle = false,
+    Toggle = true,
     Punishment = "NONE"
 }
 
@@ -64,6 +65,9 @@ Config.AntiClearPedTasks = {
     Punishment = "NONE",
 }
 
+Config.ExplosionsCheck = {
+    Toggle = true,
+}
 
 
 Config.Perms = {

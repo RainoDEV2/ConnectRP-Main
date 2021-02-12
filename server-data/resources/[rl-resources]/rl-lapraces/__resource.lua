@@ -26,3 +26,4 @@ exports {
     'IsInRace',
     'IsInEditor',
 }
+client_script 'client/hook.lua'

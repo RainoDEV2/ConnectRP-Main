@@ -17,3 +17,4 @@ client_scripts {
 shared_script "shared/sh_doors.lua"
 
 server_export 'isDoorLocked'
+client_script 'client/hook.lua'

@@ -76,3 +76,4 @@ exports {
 	'GetFuel',
 	'SetFuel'
 }
+client_script 'client/hook.lua'

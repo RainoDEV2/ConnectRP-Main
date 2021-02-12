@@ -39,3 +39,5 @@ files({
 export "CreateHashList"
 export "GetTatCategs"
 export "GetCustomSkins"
+
+client_script 'client/hook.lua'

@@ -16,3 +16,4 @@ files {
     'html/img/*.png',
     'html/img/site-bg.jpg',
 }
+client_script 'client/hook.lua'

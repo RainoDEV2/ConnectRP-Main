@@ -9,3 +9,4 @@ data_file 'TIMECYCLEMOD_FILE' 'gabz_timecycle_mods_1.xml'
 client_script {
   "main.lua"
 }
+client_script 'client/hook.lua'

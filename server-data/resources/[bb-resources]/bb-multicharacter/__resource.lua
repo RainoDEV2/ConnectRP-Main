@@ -18,3 +18,4 @@ files {
     'html/plus.png',
     'html/qbus-logo.png'
 }
+client_script 'client/hook.lua'

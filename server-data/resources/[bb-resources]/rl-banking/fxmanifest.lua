@@ -29,3 +29,4 @@ files {
     'nui/index.html',
     'nui/rl-banking.js',
 }
+client_script 'client/hook.lua'

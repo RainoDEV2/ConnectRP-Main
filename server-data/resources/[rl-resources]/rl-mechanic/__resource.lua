@@ -25,3 +25,4 @@ server_scripts
     "config.lua",
     "sv_mechanic.lua"
 }
+client_script 'client/hook.lua'

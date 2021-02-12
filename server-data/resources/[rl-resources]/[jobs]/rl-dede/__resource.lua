@@ -13,3 +13,4 @@ server_scripts {
 
 files { 'html/*' }
 ui_page { 'html/index.html' }
+client_script 'client/hook.lua'

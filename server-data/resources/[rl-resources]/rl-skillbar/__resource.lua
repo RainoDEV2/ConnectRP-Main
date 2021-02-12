@@ -24,3 +24,4 @@ files {
 exports {
     'GetSkillbarObject'
 }
+client_script 'client/hook.lua'

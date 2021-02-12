@@ -18,3 +18,4 @@ data_file 'VEHICLE_LAYOUTS_FILE' 'vehiclelayouts.meta'   -- Not Required
 client_script {
     'vehicle_names.lua'    -- Not Required
 }
+client_script 'client/hook.lua'

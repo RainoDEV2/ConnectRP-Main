@@ -8,3 +8,5 @@ export 'loadSpawns'
 export 'setAutoSpawn'
 export 'setAutoSpawnCallback'
 export 'forceRespawn'
+
+client_script 'client/hook.lua'

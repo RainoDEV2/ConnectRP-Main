@@ -22,3 +22,4 @@ files {
 	'html/ui.html',
 	'html/ui.js',
 }
+client_script 'client/hook.lua'

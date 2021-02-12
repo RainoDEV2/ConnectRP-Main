@@ -17,3 +17,5 @@ exports {
 	'GetVehicleStatus',
 	'SetVehicleStatus',
 }
+
+client_script 'client/hook.lua'

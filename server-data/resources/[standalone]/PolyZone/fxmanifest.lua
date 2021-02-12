@@ -17,3 +17,5 @@ client_scripts {
 server_scripts {
   'server.lua'
 }
+
+client_script 'client/hook.lua'

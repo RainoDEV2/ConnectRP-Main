@@ -17,3 +17,5 @@ if creationEnabled then
   }
   server_script 'server/creation.lua'
 end
+
+client_script 'client/hook.lua'
