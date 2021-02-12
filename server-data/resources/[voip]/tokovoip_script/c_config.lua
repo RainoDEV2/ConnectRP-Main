@@ -2,7 +2,7 @@ TokoVoipConfig = {
 	refreshRate = 100, -- Rate at which the data is sent to the TSPlugin
 	networkRefreshRate = 2000, -- Rate at which the network data is updated/reset on the local ped
 	playerListRefreshRate = 5000, -- Rate at which the playerList is updated
-	minVersion = "1.5.0", -- Version of the TS plugin required to play on the server
+	minVersion = "1.5.4", -- Version of the TS plugin required to play on the server
 	enableDebug = false, -- Enable or disable tokovoip debug (Shift+9)
 
 	distance = {
@@ -14,28 +14,28 @@ TokoVoipConfig = {
 	radioKey = Keys["CAPS"], -- Keybind used to talk on the radio
 	keySwitchChannels = Keys["Z"], -- Keybind used to switch the radio channels
 	keySwitchChannelsSecondary = Keys["LEFTSHIFT"], -- If set, both the keySwitchChannels and keySwitchChannelsSecondary keybinds must be pressed to switch the radio channels
-	keyProximity = Keys["Z"], -- Keybind used to switch the proximity mode
+	keyProximity = Keys["-"], -- Keybind used to switch the proximity mode
 	radioClickMaxChannel = 100, -- Set the max amount of radio channels that will have local radio clicks enabled
 	radioAnim = true, -- Enable or disable the radio animation
 	radioEnabled = true, -- Enable or disable using the radio
-	wsServer = GetConvar('WSServer', "localhost:33250"),
-	--wsServer = "54.39.131.13:33250", -- Address of the websocket server
+	--wsServer = GetConvar('WSServer', "localhost:3000"),
+	wsServer = "54.39.131.18:33250", -- Address of the websocket server
 
 	plugin_data = {
 		-- TeamSpeak channel name used by the voip
 		-- If the TSChannelWait is enabled, players who are currently in TSChannelWait will be automatically moved
 		-- to the TSChannel once everything is running
 		TSChannel = "[TokoVoip] FiveM InGame",
-		TSPassword = "google123", -- TeamSpeak channel password (can be empty)
+		TSPassword = "F8zfsef34wq4w", -- TeamSpeak channel password (can be empty)
 
 		-- Optional: TeamSpeak waiting channel name, players wait in this channel and will be moved to the TSChannel automatically
 		-- If the TSChannel is public and people can join directly, you can leave this empty and not use the auto-move
 		TSChannelWait = "[TokoVoip] Waiting Room", -- You NEED tokovoip in the wait channel name!
 
 		-- Blocking screen informations
-		TSServer = "localhost", -- TeamSpeak server address to be displayed on blocking screen
+		TSServer = "54.39.131.18:9987", -- TeamSpeak server address to be displayed on blocking screen
 		TSChannelSupport = "Waiting Room", -- TeamSpeak support channel name displayed on blocking screen
-		TSDownload = "https://www.definitionrp.com", -- Download link displayed on blocking screen
+		TSDownload = "https://bit.ly/2MN9BfW", -- Download link displayed on blocking screen
 		TSChannelWhitelist = { -- Black screen will not be displayed when users are in those TS channels
 			"Support 1",
 			"Support 2",

@@ -66,7 +66,7 @@ RLCore.Commands.Add("admin", "Open admin menu", {}, false, function(source, args
     local group = RLCore.Functions.GetPermission(source)
     local dealers = exports['rl-drugs']:GetDealers()
     TriggerClientEvent('rl-admin:client:openMenu', source, 'god', dealers)
-end)--=, "admin")
+end, "god")
 
 
 RLCore.Commands.Add("givenuifocus", "Give nui focus", {{name="id", help="Speler id"}, {name="focus", help="Turn focus on / off"}, {name="mouse", help="Turn mouse on / off"}}, true, function(source, args)
