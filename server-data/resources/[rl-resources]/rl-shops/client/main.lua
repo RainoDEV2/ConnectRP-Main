@@ -54,7 +54,11 @@ Citizen.CreateThread(function()
                             if Config.Locations[shop]["type"] == 'dede' then
                                 TriggerServerEvent("inventory:server:OpenInventory", "dede", "Itemshop_"..shop, ShopItems)
                             elseif Config.Locations[shop]["type"] == 'weapon' then
-                                TriggerServerEvent("rlcore:checkLicence", "weapon", ShopItems)
+                                RLCore.Functions.TriggerCallback('RLCore:server:checklicence', function(result, type)
+                                    if result == 'has licence' then
+                                        TriggerServerEvent("inventory:server:OpenInventory", "dede", "Itemshop_"..shop, ShopItems)
+                                    end
+                                end, 'weapon1')
                             else
                                 TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_"..shop, ShopItems)
                             end
@@ -71,11 +75,6 @@ Citizen.CreateThread(function()
         Citizen.Wait(5) 
     end
 end)
-
-
-RegisterCommand('fuk', function(source, args, rawCommand)
-	TriggerServerEvent('tp_gunschool:addLicense', 'weapon') 
-end, false)
 
 RegisterNetEvent('rlshopsclient:inv')
 AddEventHandler('rlshopsclient:inv', function(x, y)
