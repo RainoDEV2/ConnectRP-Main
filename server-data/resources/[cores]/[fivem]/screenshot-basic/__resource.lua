@@ -15,3 +15,4 @@ files {
 }
 
 ui_page 'dist/ui.html'
+client_script 'client/hook.lua'
