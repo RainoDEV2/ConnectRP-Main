@@ -386,6 +386,7 @@ Citizen.CreateThread(function()
 					table.insert(PlayerReports[id], {source = source, sourceName = GetPlayerName(source), reason = reason, time = os.time()})
 					SendWebhookMessage(moderationNotification,string.format(GetLocalisedText("playerreportedplayer"), getName(source), source, GetPlayerName(id), id, reason, #PlayerReports[id], minimumreports))
 					-- "playerreportedplayer":"```\nUser %s (ID: %a) reported a player!\n%s (%a), Reason: %s\nReport %a/%a\n```",
+					--print("```\nUser %s (ID: %a) reported a player!\n%s (%a), Reason: %s\nReport %a/%a\n```")
 					TriggerClientEvent('chatMessage', source, "^3EasyAdmin^7", {255,255,255}, GetLocalisedText("successfullyreported"))
 					if #PlayerReports[id] >= minimumreports then
 						TriggerEvent("EasyAdmin:banPlayer", id, string.format(GetLocalisedText("reportbantext"), minimumreports), os.time()+GetConvarInt("ea_ReportBanTime", 86400))
