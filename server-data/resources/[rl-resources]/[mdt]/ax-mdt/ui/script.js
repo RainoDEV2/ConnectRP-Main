@@ -64,6 +64,7 @@ const mdtApp = new Vue({
             convictions: null,
             mugshot_url: "",
             fingerprint: "",
+            weapons: "",
             dateofbirth: null,
             id: null,
             identifier: null,
@@ -74,6 +75,7 @@ const mdtApp = new Vue({
             mugshot_url: "",
             licenses: [],
             fingerprint: "",
+            weapons: "",
             licenses_removed: [],
             convictions: [],
             convictions_removed: []
@@ -187,6 +189,7 @@ const mdtApp = new Vue({
             this.offender_selected.notes = this.offender_changes.notes;
             this.offender_selected.mugshot_url = this.offender_changes.mugshot_url;
             this.offender_selected.fingerprint = this.offender_changes.fingerprint;
+            this.offender_selected.weapons = this.offender_changes.weapons;
             this.offender_selected.licenses = this.offender_changes.licenses;
             this.offender_selected.convictions = this.offender_changes.convictions;
             return;
@@ -498,6 +501,7 @@ document.onreadystatechange = () => {
                 mdtApp.offender_changes.notes = mdtApp.offender_selected.notes;
                 mdtApp.offender_changes.mugshot_url = mdtApp.offender_selected.mugshot_url;
                 mdtApp.offender_changes.fingerprint = mdtApp.offender_selected.fingerprint;
+                mdtApp.offender_changes.weapons = mdtApp.offender_selected.weapons;
                 mdtApp.offender_changes.licenses = mdtApp.offender_selected.licenses;
                 mdtApp.offender_changes.licenses_removed = [];
                 mdtApp.offender_changes.convictions = mdtApp.offender_selected.convictions;

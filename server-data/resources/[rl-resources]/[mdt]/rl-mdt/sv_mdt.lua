@@ -91,9 +91,13 @@ AddEventHandler("mdt:getOffenderDetails", function(offender)
 	}, function(result)
 		offender.notes = ""
 		offender.mugshot_url = ""
+		offender.fingerprint = ""
+		offender.weapons = ""
 		if result[1] then
 			offender.notes = result[1].notes
 			offender.mugshot_url = result[1].mugshot_url
+			offender.fingerprint = result[1].fingerprint
+			offender.weapons = result[1].weapons
 		end
 		exports['ghmattimysql']:execute('SELECT * FROM `user_convictions` WHERE `char_id` = @id', {
 			['@id'] = offender.id
@@ -144,9 +148,13 @@ AddEventHandler("mdt:getOffenderDetailsById", function(char_id)
 		}, function(result)
 			offender.notes = ""
 			offender.mugshot_url = ""
+			offender.fingerprint = ""
+			offender.weapons = ""
 			if result[1] then
 				offender.notes = result[1].notes
 				offender.mugshot_url = result[1].mugshot_url
+				offender.mugshot_url = result[1].fingerprint
+				offender.mugshot_url = result[1].weapons
 			end
 			exports['ghmattimysql']:execute('SELECT * FROM `user_convictions` WHERE `char_id` = @id', {
 				['@id'] = offender.id
@@ -190,16 +198,20 @@ AddEventHandler("mdt:saveOffenderChanges", function(id, changes, citizenid)
 		['@id']  = id
 	}, function(result)
 		if result[1] then
-			exports['ghmattimysql']:execute('UPDATE `user_mdt` SET `notes` = @notes, `mugshot_url` = @mugshot_url WHERE `char_id` = @id', {
+			exports['ghmattimysql']:execute('UPDATE `user_mdt` SET `notes` = @notes, `mugshot_url` = @mugshot_url, `fingerprint` = @fingerprint, `weapons` = @weapons WHERE `char_id` = @id', {
 				['@id'] = id,
 				['@notes'] = changes.notes,
-				['@mugshot_url'] = changes.mugshot_url
+				['@mugshot_url'] = changes.mugshot_url,
+				['@fingerprint'] = changes.fingerprint,
+				['@weapons'] = changes.weapons
 			})
 		else
-			exports['ghmattimysql']:execute('INSERT INTO `user_mdt` (`char_id`, `notes`, `mugshot_url`) VALUES (@id, @notes, @mugshot_url)', {
+			exports['ghmattimysql']:execute('INSERT INTO `user_mdt` (`char_id`, `notes`, `mugshot_url`, `fingerprint`, `weapons`) VALUES (@id, @notes, @mugshot_url, @fingerprint, @weapons)', {
 				['@id'] = id,
 				['@notes'] = changes.notes,
-				['@mugshot_url'] = changes.mugshot_url
+				['@mugshot_url'] = changes.mugshot_url,
+				['@fingerprint'] = changes.fingerprint,
+				['@weapons'] = changes.weapons
 			})
 		end
 
@@ -325,10 +337,22 @@ AddEventHandler("mdt:sentencePlayer", function(jailtime, charges, char_id, fine,
 				if result[1].id == char_id then
 					if jailtime and jailtime > 0 then
 						jailtime = math.ceil(jailtime)
-						TriggerEvent("esx-qalle-jail:jailPlayer", src, jailtime, jailmsg)
+						TriggerClientEvent("police:client:JailCommand", src, src, jailtime)
 					end
 					if fine > 0 then
-						TriggerClientEvent("mdt:billPlayer", usource, src, 'society_police', 'Fine: '..jailmsg, fine)
+						local Player = RLCore.Functions.GetPlayer(usource)
+    					local OtherPlayer = RLCore.Functions.GetPlayer(tonumber(src))
+						local title = "SanAndreas State Fine"
+
+						RLCore.Functions.ExecuteSql(false, "INSERT INTO `phone_invoices` (`citizenid`, `amount`, `society`, `title`) VALUES ('" .. OtherPlayer.PlayerData.citizenid .. "', " .. fine .. ", '" .. Player.PlayerData.job.name .. "', '" .. title .. "')", function()
+							TriggerClientEvent('RLCore:Notify', src, "You received a fine for a total of $" .. fine)
+							TriggerClientEvent("rl-phone:RefreshPhone", src)
+		
+							TriggerClientEvent('chat:addMessage', src, {
+								template = '<div class="chat-message"><b>BILL:</b> {0}</div>',
+								args = { "You wrote a bill for " .. fine .. " dollar(s)" }
+							})
+						end)
 					end
 					return
 				end

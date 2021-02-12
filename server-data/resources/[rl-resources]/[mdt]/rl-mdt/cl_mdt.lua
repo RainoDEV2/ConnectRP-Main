@@ -155,6 +155,9 @@ RegisterNUICallback("sentencePlayer", function(data, cb)
         end
     end
     TriggerServerEvent("mdt:sentencePlayer", data.jailtime, data.charges, data.char_id, data.fine, players)
+    RLCore.Functions.Notify('You have sentenced the individual') 
+    PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+ 
     cb('ok')
 end)
 
@@ -246,8 +249,8 @@ end)
 
 RegisterNetEvent("mdt:billPlayer")
 AddEventHandler("mdt:billPlayer", function(src, sharedAccountName, label, amount)
-    TriggerServerEvent("esx_billing:sendBill", src, sharedAccountName, label, amount)
-end)
+
+end) 
 
 function ToggleGUI(explicit_status)
   if explicit_status ~= nil then

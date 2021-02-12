@@ -461,6 +461,9 @@
                     <h3>FINGERPRINT</h3>
                     <h4 v-if="offender_selected.fingerprint"> {{ offender_selected.fingerprint }} </h4>
                     <h4 v-else-if="offender_selected.fingerprint == null"> ... </h4>
+                    <h3>WEAPON SERIALS</h3>
+                    <h4 v-if="offender_selected.weapons"> {{ offender_selected.weapons }} </h4>
+                    <h4 v-else-if="offender_selected.weapons == null"> ... </h4>
                     <h3>NOTES</h3>
                     <h4 v-if="offender_selected.notes"> {{ offender_selected.notes }} </h4>
                     <h4 v-if="offender_selected.haswarrant"> {{ offender_selected.firstname}} {{offender_selected.lastname}} Has An Active Warrant... </h4>
@@ -523,7 +526,7 @@
                         <h3>DETAILS</h3>
                         <h4 v-if="report_selected.incident" style="white-space: pre-line; white-space: pre-wrap;">{{ report_selected.incident }}</h4>
                         <h4 v-else-if="report_selected.incident == null"> ... </h4>
-                        <h4 v-if="report_selected.jailtime">Sentence: {{ report_selected.jailtime }} Months</h4>
+                        <h4 v-if="report_selected.jailtime">Sentence: {{ report_selected.jailtime }} months</h4>
                     </template>
                     <template v-else-if="report_edit.enable == true">
                         <h3>DETAILS (EDIT)</h3>
@@ -543,7 +546,7 @@
                     <h4 v-else-if="report_selected.author == null"> ... </h4>
                     <br />
                     <button type="button" v-on:click="changePage('Search Reports')" id="search-reports" class="noselect">BACK TO REPORTS</button>
-                    <button v-if="report_edit.enable == false" type="button" v-on:click="SentencePlayer()" class="noselect">FINE</button>
+                    <button v-if="report_edit.enable == false" type="button" v-on:click="SentencePlayer()" class="noselect">FINE/SENTENCE</button>
                     <button v-if="report_edit.enable == false" type="button" v-on:click="ToggleReportEdit()" class="noselect">EDIT</button>
                     <button v-if="report_edit.enable == false" type="button" v-on:click="DeleteSelectedReport()" class="noselect">DELETE</button>
                     <template v-else-if="report_edit.enable">
@@ -558,11 +561,15 @@
     
                 <br />
                 <div class="left-side">
-                    <form class="noselect">
+                    <form class="noselect"> 
                         <h3>NOTES</h3>
                         <input v-model="offender_changes.notes" class="no-select" type="text" v-bind:placeholder="offender_selected.notes">
                         <h3 style="margin-top: 20px">MUGSHOT URL</h3>
                         <input v-model="offender_changes.mugshot_url" class="noselect" type="text" v-bind:placeholder="offender_selected.mugshot_url">
+                        <h3>FINGERPRINT</h3>
+                        <input v-model="offender_changes.fingerprint" class="noselect" type="text" v-bind:placeholder="offender_selected.fingerprint">
+                        <h3>WEAPON SERIALS</h3>
+                        <input v-model="offender_changes.weapons" class="noselect" type="text" v-bind:placeholder="offender_selected.weapons">
                         <h3 style="margin-top: 20px">LICENSES</h3>
                         <h4 v-if="offender_changes.licenses == false"> ... </h4>
                         <span v-else-if="offender_changes.licenses" v-for="license in offender_changes.licenses">

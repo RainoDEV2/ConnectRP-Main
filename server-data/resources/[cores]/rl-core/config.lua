@@ -5,7 +5,7 @@ RLConfig.IdentifierType = "steam" -- Set the identifier type (can be: steam, lic
 RLConfig.DefaultSpawn = {x=-1035.71,y=-2731.87,z=12.86,a=0.0}
 
 RLConfig.Money = {}
-RLConfig.Money.MoneyTypes = {['cash'] = 2500, ['bank'] = 10000, ['crypto'] = 0 } -- ['type']=startamount - Add or remove money types for your server (for ex. ['blackmoney']=0), remember once added it will not be removed from the database!
+RLConfig.Money.MoneyTypes = {['cash'] = 1000, ['bank'] = 5000, ['crypto'] = 0 } -- ['type']=startamount - Add or remove money types for your server (for ex. ['blackmoney']=0), remember once added it will not be removed from the database!
 RLConfig.Money.DontAllowMinus = {'cash', 'crypto'} -- Money that is not allowed going in minus
 
 RLConfig.Player = {}

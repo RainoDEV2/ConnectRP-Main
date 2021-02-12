@@ -63,6 +63,8 @@ const mdtApp = new Vue({
             licenses: false,
             convictions: null,
             mugshot_url: "",
+            fingerprint:"",
+            weapons:"",
             dateofbirth: null,
             id: null,
             identifier: null,
@@ -72,6 +74,8 @@ const mdtApp = new Vue({
             notes: "",
             mugshot_url: "",
             licenses: [],
+            fingerprint:"",
+            weapons:"",
             licenses_removed: [],
             convictions: [],
             convictions_removed: []
@@ -172,6 +176,8 @@ const mdtApp = new Vue({
             this.changePage("Search Offenders");
             this.offender_selected.notes = this.offender_changes.notes;
             this.offender_selected.mugshot_url = this.offender_changes.mugshot_url;
+            this.offender_selected.fingerprint = this.offender_changes.fingerprint;
+            this.offender_selected.weapons = this.offender_changes.weapons;
             this.offender_selected.licenses = this.offender_changes.licenses;
             this.offender_selected.convictions = this.offender_changes.convictions;
             return;
@@ -209,10 +215,10 @@ const mdtApp = new Vue({
                     }
 
                     this.report_new.recommended_fine = this.report_new.recommended_fine + this.offenses[key].amount
-                    console.log(this.offenses[key].jail);
-                    if (this.offenses[key].jail) {
+                    console.log(this.offenses[key].jailtime);
+                    if (this.offenses[key].jailtime) {
                         console.log(this.report_new.recommended_sentence);
-                        this.report_new.recommended_sentence = this.report_new.recommended_sentence + this.offenses[key].jail
+                        this.report_new.recommended_sentence = this.report_new.recommended_sentence + this.offenses[key].jailtime
                     }
 
                     return;
@@ -232,8 +238,8 @@ const mdtApp = new Vue({
                     for (var key in this.offenses) {
                         if (offense == this.offenses[key].label) {
                             this.report_new.recommended_fine = this.report_new.recommended_fine - this.offenses[key].amount
-                            if (this.offenses[key].jail) {
-                                this.report_new.recommended_sentence = this.report_new.recommended_sentence - this.offenses[key].jail
+                            if (this.offenses[key].jailtime) {
+                                this.report_new.recommended_sentence = this.report_new.recommended_sentence - this.offenses[key].jailtime
                             }
                         }
                     }
