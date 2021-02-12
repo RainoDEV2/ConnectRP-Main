@@ -1146,7 +1146,7 @@ AddEventHandler('raid_clothes:listOutfits', function(skincheck)
 end)
 
 
-RegisterCommand("clothing", function(source, args, rawCommand)
+--[[ RegisterCommand("clothing", function(source, args, rawCommand)
     TriggerServerEvent('rl-admin:server:OpenSkinMenu', GetPlayerServerId(PlayerId()), 'clothesmenu')
 end, false)  
 RegisterCommand("barber", function(source, args, rawCommand)
@@ -1154,4 +1154,4 @@ RegisterCommand("barber", function(source, args, rawCommand)
 end, false) 
 RegisterCommand("tattoo", function(source, args, rawCommand)
     TriggerServerEvent('rl-admin:server:OpenSkinMenu', GetPlayerServerId(PlayerId()), 'tattoomenu')
-end, false) 
+end, false)  ]]
