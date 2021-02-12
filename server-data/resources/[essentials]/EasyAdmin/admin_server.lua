@@ -68,7 +68,6 @@ Citizen.CreateThread(function()
 	
 	
 	moderationNotification = GetConvar("ea_moderationNotification", "false")
-	print("YEEEET 1")
 	if GetConvar("ea_enableDebugging", "false") == "true" then
 		enableDebugging = true
 		PrintDebugMessage("^1Debug Messages Enabled, Anonymous Admins may not be anonymous!")
