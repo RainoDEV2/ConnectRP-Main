@@ -128,7 +128,7 @@ function TokoVoip.initialize(self)
 					setPlayerData(self.serverId, "radio:channel", currentChannelID, true);
 					self:updateTokoVoipInfo();
 				end
-			elseif (IsControlJustPressed(0, self.keyProximity)) then -- Switch proximity modes (normal / whisper / shout)
+			elseif (IsControlJustPressed(0, 243)) then -- Switch proximity modes (normal / whisper / shout)
 				if (not self.mode) then
 					self.mode = 1;
 				end
