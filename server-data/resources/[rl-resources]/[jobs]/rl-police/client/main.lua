@@ -625,3 +625,15 @@ AddEventHandler("police:sport",function()
     end
   end
 end)
+
+RegisterNetEvent('police:client:addwep')
+AddEventHandler('police:client:addwep', function()
+    local cid, dist = GetClosestPlayer()
+    local realcid = RLCore.Functions.GetPlayer(cid)
+    local p1 = GetPlayerServerId(cid)
+    if dist <= 1.5 then
+        TriggerServerEvent('police:server:addwep', realcid, p1)
+    else
+        RLCore.Functions.Notify("No Player Found!", "error")
+    end
+end)
