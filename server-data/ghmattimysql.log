@@ -1,2 +1,2 @@
 [ERROR] connect ETIMEDOUT
-[ERROR] [MySQL] [rl-core] An error happens on MySQL for query "INSERT INTO juliet_bans (banid, name, steamid, license, discordId, razon, fatreason) VALUES (@banid, @name, @steamIdentifier, @license, @discordId, @razon, @fatreason) : []": ER_BAD_NULL_ERROR: Column 'banid' cannot be null
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`, `bannedby`) VALUES ('Slinky', 'steam:11000010e6cd7b4', 'license:3ac1fd9619fc5770e3b4ac2a87c8c2803008e6db', 'xbl:2533274974835539', 'live:844427987348179', 'Unauthorized Trigger', 'Slinky') : []": ER_WRONG_VALUE_COUNT_ON_ROW: Column count doesn't match value count at row 1
