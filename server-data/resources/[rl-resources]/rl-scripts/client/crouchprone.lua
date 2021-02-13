@@ -1,6 +1,6 @@
 local crouched = false
 local proned = false
-crouchKey = 20
+crouchKey = 36
 proneKey = 20
 
 Citizen.CreateThread( function()
@@ -13,13 +13,19 @@ Citizen.CreateThread( function()
 			if ( not IsPauseMenuActive() ) then 
 				if ( IsDisabledControlJustPressed( 0, crouchKey ) and not proned ) then 
 					RequestAnimSet( "move_ped_crouched" )
+                    RequestAnimSet("MOVE_M@TOUGH_GUY@")
 					while ( not HasAnimSetLoaded( "move_ped_crouched" ) ) do 
 						Citizen.Wait( 100 )
 					end 		
+                    while ( not HasAnimSetLoaded( "MOVE_M@TOUGH_GUY@" ) ) do 
+                        Citizen.Wait( 100 )
+                    end 
 					if ( crouched and not proned ) then 
 						ResetPedMovementClipset( ped )
 						ResetPedStrafeClipset(ped)
+                        SetPedMovementClipset( ped,"MOVE_M@TOUGH_GUY@", 0.5)
                         crouched = false 
+                        Citizen.Wait(700)
                         TriggerEvent("dpemotes:WalkCommandStart")
 					elseif ( not crouched and not proned ) then
 						SetPedMovementClipset( ped, "move_ped_crouched", 0.65 )
