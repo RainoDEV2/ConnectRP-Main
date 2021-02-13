@@ -1,2 +1,1 @@
 [ERROR] connect ETIMEDOUT
-[ERROR] [MySQL] [rl-core] An error happens on MySQL for query "INSERT INTO juliet_bans (banid, name, steamid, license, discordId, razon, fatreason) VALUES (@banid, @name, @steamIdentifier, @license, @discordId, @razon, @fatreason) : []": ER_BAD_NULL_ERROR: Column 'banid' cannot be null
