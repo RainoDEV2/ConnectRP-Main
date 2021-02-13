@@ -130,6 +130,7 @@ Citizen.CreateThread(function()
                                     if isTruckerVehicle(GetVehiclePedIsIn(GetPlayerPed(-1), false)) then
                                         DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
                                         TriggerServerEvent('rl-trucker:server:DoBail', false)
+                                        RemoveTruckerBlips()
                                     else
                                         RLCore.Functions.Notify('This is not the company vehicle!', 'error')
                                     end

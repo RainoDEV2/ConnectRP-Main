@@ -1,1 +1,2 @@
 [ERROR] connect ETIMEDOUT
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query "SELECT * from juliet_bans : []": ER_NO_SUCH_TABLE: Table 'realisticlifev2.juliet_bans' doesn't exist
