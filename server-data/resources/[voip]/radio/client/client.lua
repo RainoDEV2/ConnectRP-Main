@@ -109,7 +109,7 @@ RegisterNUICallback('joinRadio', function(data, cb)
 
     if tonumber(data.channel) ~= tonumber(getPlayerRadioChannel) then
         if tonumber(data.channel) <= Config.RestrictedChannels then
-          if job == "police" or job == "ems" or job == "doctor" or job == "mechanic" then
+          if job == "police" or job == "ambulance" or job == "doctor" or job == "mechanic" then
             if( (tonumber(data.channel) <= Config.RestrictedChannels and job == 'ambulance' or job == 'police')) or ((tonumber(data.channel) == 11 or tonumber(data.channel) == 12 or tonumber(data.channel) == 13) and job == 'mechanic') or ((tonumber(data.channel) == 6 or tonumber(data.channel) == 7 or tonumber(data.channel) == 8 or tonumber(data.channel) == 9) and PlayerData.job.name == 'lawyer') then
               exports.tokovoip_script:removePlayerFromRadio(getPlayerRadioChannel)
               exports.tokovoip_script:setPlayerData(playerName, "radio:channel", tonumber(data.channel), true);
