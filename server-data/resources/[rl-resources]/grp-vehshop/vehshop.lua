@@ -598,6 +598,10 @@ AddEventHandler("car:testdrive", function()
 
 		TaskWarpPedIntoVehicle(PlayerPedId(),veh,-1)
 		TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId())), GetVehiclePedIsIn(PlayerPedId()))
+		Citizen.Wait(350)
+		TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId())), GetVehiclePedIsIn(PlayerPedId()))
+		Citizen.Wait(350)
+		TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId())), GetVehiclePedIsIn(PlayerPedId()))
 		myspawnedvehs[veh] = true
 	else
 		RLCore.Functions.Notify("A car is on the spawn point.",'error')
