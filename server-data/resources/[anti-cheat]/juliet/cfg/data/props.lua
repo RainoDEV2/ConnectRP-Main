@@ -387,7 +387,7 @@ Config.PropBlacklistList = {
     { name = "prop_Ld_ferris_wheel", allowed = false},
     { name = "p_tram_crash_s", allowed = false},
     { name = "p_oil_slick_01", allowed = false},
-    { name = "p_ld_stinger_s", allowed = false},
+    { name = "p_ld_stinger_s", allowed = true},
     { name = "p_ld_soc_ball_01", allowed = false},
     { name = "p_parachute1_s", allowed = false},
     { name = "p_cablecar_s", allowed = false},

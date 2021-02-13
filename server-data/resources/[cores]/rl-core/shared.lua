@@ -7207,73 +7207,73 @@ RLShared.Jobs = {
         grades = {
 			['0'] = {
                 name = "S.A.L.E. Cadet",
-                payment = 250
+                payment = 350
             },
             ['1'] = {
                 name = "Officer",
-				payment = 345
+				payment = 445
 			},
             ['2'] = {
                 name = "Deputy",
-				payment = 345
+				payment = 445
 			},
             ['3'] = {
                 name = "Trooper",
-                payment = 345
+                payment = 445
             },
             ['4'] = {
                 name = "Senior Officer",
-                payment = 375
+                payment = 475
 			},
 			['5'] = {
                 name = "Senior Deputy",
-                payment = 375
+                payment = 475
             },
             ['6'] = {
                 name = "Corporal",
-                payment = 395
+                payment = 495
             },
             ['7'] = {
                 name = "Sergeant",
-                payment = 425
+                payment = 525
             },
             ['8'] = {
                 name = "Lieutenant",
-                payment = 450
+                payment = 550
             },
             ['9'] = {
                 name = "Captian",
-                payment = 450
+                payment = 550
             },
             ['10'] = {
 				name = "Assistant Chief of Police",
 				isboss = true,
-                payment = 475
+                payment = 575
             },
             ['11'] = {
 				name = "Chief of Police",
 				isboss = true,
-                payment = 475
+                payment = 575
 			},
 			['12'] = {
 				name = "Undersheriff",
 				isboss = true,
-				payment = 475
+				payment = 575
 			},
 			['13'] = {
 				name = "Sheriff",
 				isboss = true,
-                payment = 475
+                payment = 575
 			},
 			['14'] = {
 				name = "Lieutenant Colonel",
 				isboss = true,
-                payment = 475
+                payment = 575
 			},
 			['15'] = {
 				name = "Colonel",
 				isboss = true,
-                payment = 475
+                payment = 575
             },
         },
         defaultDuty = false,
