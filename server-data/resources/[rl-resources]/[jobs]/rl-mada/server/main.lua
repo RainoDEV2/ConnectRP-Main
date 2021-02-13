@@ -94,6 +94,7 @@ AddEventHandler('hospital:server:RevivePlayer', function(playerId, isOldMan)
     local Patient = RLCore.Functions.GetPlayer(tonumber(playerId))
     if Patient ~= nil then
         Player.Functions.AddMoney("bank", 250, "checkin-at-hospital") 
+        print(json.encode(Player))
 	    TriggerEvent("bb-bossmenu:server:addAccountMoney", "ambulance", 250)
 
         TriggerClientEvent('hospital:client:Revive', Patient.PlayerData.source)
