@@ -193,15 +193,7 @@ local function DropBanSql(source,a, b)
   local name = GetPlayerName(source) or steamIdentifier
   local newbanid = GenerateBanId();
   
-  RLCore.Functions.ExecuteSql(true, "INSERT INTO juliet_bans (banid, name, steamid, license, discordId, razon, fatreason) VALUES (@banid, @name, @steamIdentifier, @license, @discordId, @razon, @fatreason)", {
-    ['@banid'] = newbanid,
-    ['@name'] = name,
-    ['@steamIdentifier'] = steamIdentifier,
-    ['@license'] = license,
-    ['@discordId'] = discord,
-    ['@razon'] = a,
-    ['@fatreason'] = b
-  })
+  RLCore.Functions.ExecuteSql(true, "INSERT INTO juliet_bans (banid, name, steamid, license, discordId, razon, fatreason) VALUES ('"..newbanid.."', '"..name.."', '"..steamIdentifier.."', '"..license.."', '"..discord.."', '"..a.."', '"..b.."')")
   if Config.DrawSpriteWhenBan then
     Citizen.CreateThread(function()
       local cancion = math.random(1, #canciones)
@@ -222,7 +214,7 @@ local _source = source
   if CheckPerms(_source) then
     local steamid = args[1]
     if args[1] then
-      RLCore.Functions.ExecuteSql(true, "DELETE FROM juliet_bans WHERE banid = @identifier",{['@identifier'] = tostring(steamid)})
+      RLCore.Functions.ExecuteSql(true, "DELETE FROM juliet_bans WHERE banid = '"..tostring(steamid).."'")
       TriggerClientEvent('chat:addMessage', _source, {
         args = {'[Juliet]', "User with banid ^1" .. steamid .. '^7 has been unbanned'}
       })
