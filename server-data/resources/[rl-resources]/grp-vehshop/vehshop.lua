@@ -177,7 +177,7 @@ local vehshopOwner = {
 				{name = "Jackal", costs = 40000, description = {}, model = "jackal"},
 				{name = "Oracle", costs = 30000, description = {}, model = "oracle"},
 				{name = "Oracle XS", costs = 35000, description = {}, model = "oracle2"},
-				{name = "Sentinel", costs = 20000, description = {}, model = "sentinel"},
+				{name = "Sentinel", costs = 45000, description = {}, model = "sentinel"},
 				{name = "Sentinel XS", costs = 25000, description = {}, model = "sentinel2"},
 				{name = "Windsor", costs = 160000, description = {}, model = "windsor"},
 				{name = "Windsor Drop", costs = 165000, description = {}, model = "windsor2"},
