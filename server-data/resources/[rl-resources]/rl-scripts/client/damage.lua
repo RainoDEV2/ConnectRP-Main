@@ -3,7 +3,7 @@ CreateThread(function()
 	SetWeaponDamageModifier(`WEAPON_BOTTLE`, 0.45) -- Melee
 	SetWeaponDamageModifier(`WEAPON_FLASHLIGHT`, 0.45) -- Melee
 	SetWeaponDamageModifier(`WEAPON_KNUCKLE`, 0.4) -- Melee
-	SetWeaponDamageModifier(`WEAPON_NIGHTSTICK`, 0.0) -- Melee
+	SetWeaponDamageModifier(`WEAPON_NIGHTSTICK`, 0.6) -- Melee
 	SetWeaponDamageModifier(`WEAPON_HAMMER`, 0.4) -- Melee
 	SetWeaponDamageModifier(`WEAPON_CROWBAR`, 0.4) -- Melee
 	SetWeaponDamageModifier(`WEAPON_POOLCUE`, 0.4) -- Melee
