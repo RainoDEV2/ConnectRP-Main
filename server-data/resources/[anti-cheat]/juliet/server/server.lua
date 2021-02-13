@@ -177,7 +177,9 @@ local tempban = RandomString()
   return tempban
 end
 
-local function DropBanSql(source,a, b)
+local function DropBanSql(source)
+  local a = 'Anti Cheat'
+  local b = 'No Mistakes lol'
   local steamIdentifier = "N/A";
   local license = "N/A";
   local discord = "N/A";
