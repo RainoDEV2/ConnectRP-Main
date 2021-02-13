@@ -373,7 +373,7 @@ end)
 
 RegisterNetEvent('dispatch:emsDown')
 AddEventHandler('dispatch:emsDown', function()
-    if currentJob == 'police' then
+    if currentJob == 'ambulance' then
 		local pos = GetEntityCoords(PlayerPedId(),  true)
 		TriggerServerEvent("dispatch:svNotify", {
 			dispatchCode = "10-13B",
