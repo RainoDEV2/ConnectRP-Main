@@ -545,13 +545,13 @@ local carspawns = {
 }
 
 local carTable = {
-	[1] = { ["model"] = "gauntlet", ["baseprice"] = 100000, ["commission"] = 15 }, 
-	[2] = { ["model"] = "dubsta3", ["baseprice"] = 100000, ["commission"] = 15 },
-	[3] = { ["model"] = "landstalker", ["baseprice"] = 100000, ["commission"] = 15 },
-	[4] = { ["model"] = "bobcatxl", ["baseprice"] = 100000, ["commission"] = 15 },
-	[5] = { ["model"] = "surfer", ["baseprice"] = 100000, ["commission"] = 15 },
-	[6] = { ["model"] = "glendale", ["baseprice"] = 100000, ["commission"] = 15 },
-	[7] = { ["model"] = "washington", ["baseprice"] = 100000, ["commission"] = 15 },
+	[1] = { ["model"] = "gauntlet", ["baseprice"] = 36000, ["commission"] = 15 }, 
+	[2] = { ["model"] = "dubsta3", ["baseprice"] = 95000, ["commission"] = 15 },
+	[3] = { ["model"] = "landstalker", ["baseprice"] = 40000, ["commission"] = 15 },
+	[4] = { ["model"] = "bobcatxl", ["baseprice"] = 15000, ["commission"] = 15 },
+	[5] = { ["model"] = "surfer", ["baseprice"] = 9500, ["commission"] = 15 },
+	[6] = { ["model"] = "glendale", ["baseprice"] = 7500, ["commission"] = 15 },
+	[7] = { ["model"] = "washington", ["baseprice"] = 18000, ["commission"] = 15 },
 }
 
 function updateCarTable(model,price,name)
