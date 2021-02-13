@@ -44,14 +44,14 @@ Config.AntiSpectate = {
 }
 
 Config.AntiStop = {
-    Toggle = true,
-    Punishment = "BAN"
+    Toggle = false,
+    Punishment = "NONE"
 }
 
 Config.AntiEulenAntiStart = {
     -- this checks the resource count
-    Toggle = true,
-    Punishment = "BAN"
+    Toggle = false,
+    Punishment = "NONE"
 }
 
 Config.AntiVPN = {

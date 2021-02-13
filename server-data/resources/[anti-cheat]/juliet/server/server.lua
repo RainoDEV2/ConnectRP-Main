@@ -104,7 +104,7 @@ Juliet:  %s
 -- Ace checking -- 
 local function CheckPerms(j)
 local l = false;
-  if  IsPlayerAceAllowed(j, Config.Perms.God) then
+  if IsPlayerAceAllowed(j, Config.Perms.God) then
     return true
   end
 return false
