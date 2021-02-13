@@ -713,6 +713,14 @@ Config.Items = {
             type = "item",
             slot = 4,
         },
+        [5] = {
+            name = "lockpick",
+            price = 200,
+            amount = 25,
+            info = {},
+            type = "item",
+            slot = 5,
+        },
     }
 }
 
