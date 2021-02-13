@@ -181,31 +181,35 @@ Citizen.CreateThread(function()
                                 end)
                             end
                         else
-                            DrawText3D(Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, "[E] - Garbage truck")
-                            if IsControlJustReleased(0, Keys["E"]) then
-                                RLCore.Functions.TriggerCallback('rl-garbagejob:server:HasMoney', function(HasMoney)
-                                    if HasMoney then
-                                        local coords = Config.Locations["vehicle"].coords
-                                        RLCore.Functions.SpawnVehicle("trash2", function(veh)
-                                            GarbageVehicle = veh
-                                            SetVehicleNumberPlateText(veh, "GARB"..tostring(math.random(1000, 9999)))
-                                            SetEntityHeading(veh, coords.h)
-                                            exports['LegacyFuel']:SetFuel(veh, 100)
-                                            TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
-                                            SetEntityAsMissionEntity(veh, true, true)
-                                            TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
-                                            SetVehicleEngineOn(veh, true, true)
-                                            hasVuilniswagen = true
-                                            GarbageLocation = 1
-                                            IsWorking = true
-                                            SetGarbageRoute()
-                                            RLCore.Functions.Notify("You have paid $1000!")
-                                            RLCore.Functions.Notify("You have started working, location is indicated on your GPS!")
-                                        end, coords, true)
-                                    else
-                                        RLCore.Functions.Notify("You do not have enough money for the deposit .. Deposit costs are $ 1000, -")
-                                    end
-                                end)
+                            if not IsWorking then
+                                DrawText3D(Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, "[E] - Garbage truck")
+                                if IsControlJustReleased(0, Keys["E"]) then
+                                    RLCore.Functions.TriggerCallback('rl-garbagejob:server:HasMoney', function(HasMoney)
+                                        if HasMoney then
+                                            local coords = Config.Locations["vehicle"].coords
+                                            RLCore.Functions.SpawnVehicle("trash2", function(veh)
+                                                GarbageVehicle = veh
+                                                SetVehicleNumberPlateText(veh, "GARB"..tostring(math.random(1000, 9999)))
+                                                SetEntityHeading(veh, coords.h)
+                                                exports['LegacyFuel']:SetFuel(veh, 100)
+                                                TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+                                                SetEntityAsMissionEntity(veh, true, true)
+                                                TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
+                                                SetVehicleEngineOn(veh, true, true)
+                                                hasVuilniswagen = true
+                                                GarbageLocation = 1
+                                                IsWorking = true
+                                                SetGarbageRoute()
+                                                RLCore.Functions.Notify("You have paid $1000!")
+                                                RLCore.Functions.Notify("You have started working, location is indicated on your GPS!")
+                                            end, coords, true)
+                                        else
+                                            RLCore.Functions.Notify("You do not have enough money for the deposit .. Deposit costs are $ 1000, -")
+                                        end
+                                    end)
+                                end
+                            else
+                                DrawText3D(Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, "Return The Old Truck To Get A New One")
                             end
                         end
                     end
