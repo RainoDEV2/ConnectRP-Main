@@ -59,7 +59,7 @@ AddEventHandler('hospital:server:SetArmor', function(amount)
     local src = source
     local Player = RLCore.Functions.GetPlayer(src)
     if Player ~= nil then
-        Player.Functions.SetMetaData("armor", amount)
+        Player.Functions.SetMetaData("armor", amount) 
     end
 end)
 
@@ -93,6 +93,9 @@ AddEventHandler('hospital:server:RevivePlayer', function(playerId, isOldMan)
     local Player = RLCore.Functions.GetPlayer(src)
     local Patient = RLCore.Functions.GetPlayer(tonumber(playerId))
     if Patient ~= nil then
+        Player.Functions.AddMoney("bank", 250, "checkin-at-hospital") 
+	    TriggerEvent("bb-bossmenu:server:addAccountMoney", "ambulance", 250)
+
         TriggerClientEvent('hospital:client:Revive', Patient.PlayerData.source)
         TriggerServerEvent("RLCore:Server:SetMetaData", "hunger", RLCore.Functions.GetPlayerData().metadata["hunger"] + 100)
         TriggerServerEvent("RLCore:Server:SetMetaData", "thirst", RLCore.Functions.GetPlayerData().metadata["thirst"] + 100)
@@ -141,7 +144,7 @@ end)
 RLCore.Commands.Add("status", "Check a person's health (EMS Only)", {}, false, function(source, args)
     local Player = RLCore.Functions.GetPlayer(source)
     if Player.PlayerData.job.name == "ambulance" then
-        TriggerClientEvent("hospital:client:CheckStatus", source)
+        TriggerClientEvent("hospital:client:CheckStatus", source) 
     else
         TriggerClientEvent('chat:addMessage', source , {
             template = '<div class="chat-message emergency"><b>SYSTEM:</b> {0}</div>',
