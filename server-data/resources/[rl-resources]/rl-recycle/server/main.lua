@@ -17,7 +17,7 @@ AddEventHandler("rl-recycle:server:getItem", function()
     local Player = RLCore.Functions.GetPlayer(src)
     for i = 1, 1, 1 do
         local randItem = ItemTable[math.random(1, #ItemTable)]
-        local amount = math.random(2,4)
+        local amount = math.random(2,10)
         Player.Functions.AddItem(randItem, amount)
         TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items[randItem], 'add')
         Citizen.Wait(500)
@@ -26,7 +26,7 @@ AddEventHandler("rl-recycle:server:getItem", function()
     local Luck = math.random(1, 10)
     local Odd = math.random(1, 10)
     if Luck == Odd then
-        local random = math.random(3, 7)
+        local random = math.random(3, 10)
         Player.Functions.AddItem("rubber", random)
         TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items["rubber"], 'add')
     end
