@@ -7,6 +7,7 @@ CreateThread(function()
 		Wait(5)
 		local playerPed = PlayerPedId()
 		if IsControlJustPressed(0, 38) and IsInputDisabled(2) then
+			Citizen.Wait(100)
 			if not IsPedInAnyVehicle(playerPed) then 
 				RequestAnimDict("random@arrests@busted")
 				while not HasAnimDictLoaded("random@arrests@busted") do 
@@ -30,6 +31,7 @@ CreateThread(function()
 		Wait(5)
 		local playerPed = PlayerPedId()
 		if IsControlJustPressed(0, 73) and IsInputDisabled(2) then
+			Citizen.Wait(100)
 			if not IsPedInAnyVehicle(playerPed) then 
 				RequestAnimDict('missminuteman_1ig_2')
 				while not HasAnimDictLoaded('missminuteman_1ig_2') do
