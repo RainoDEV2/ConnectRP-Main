@@ -7276,7 +7276,7 @@ RLShared.Jobs = {
                 payment = 475
             },
         },
-        defaultDuty = true,
+        defaultDuty = false,
 	},
 	
 	["ambulance"] = {
@@ -7312,7 +7312,7 @@ RLShared.Jobs = {
                 payment = 350
             },
         },
-		defaultDuty = true,
+		defaultDuty = false,
 	},
 
 	["trucker"] = {
