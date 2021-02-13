@@ -7456,15 +7456,15 @@ RLShared.Jobs = {
 		grades = {
 			['0'] = {
                 name = "Paralegal",
-                payment = 200
+                payment = 230
             },
             ['1'] = {
                 name = "Lawyer",
-                payment = 250
+                payment = 280
             },
             ['2'] = {
                 name = "Senior Lawyer",
-                payment = 300
+                payment = 375
             },
 		}
 	},
@@ -7473,17 +7473,21 @@ RLShared.Jobs = {
 		payment = 150,
 		grades = {
             ['0'] = {
-                name = "Employee",
-                payment = 145
+                name = "Part-Time",
+                payment = 225
             },
-            ['1'] = {
-                name = "Shift Supervisor",
-                payment = 170
+			['1'] = {
+                name = "Employee",
+                payment = 265
             },
             ['2'] = {
+                name = "Shift Supervisor",
+                payment = 310
+            },
+            ['3'] = {
 				name = "Boss",
 				isboss = true,
-                payment = 220
+                payment = 370
             },
         },
 		defaultDuty = true,
