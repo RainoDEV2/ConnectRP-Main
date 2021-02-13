@@ -438,6 +438,22 @@ Config.Products = {
             type = "item",
             slot = 13,
         },
+        [14] = {
+            name = "repairkit",
+            price = 225,
+            amount = 5,
+            info = {},
+            type = "item",
+            slot = 14,
+        },
+        [15] = {
+            name = "advancedrepairkit",
+            price = 450,
+            amount = 5,
+            info = {},
+            type = "item",
+            slot = 15,
+        },
     },   
     ["gsgasoline"] = {
         [1] = {
