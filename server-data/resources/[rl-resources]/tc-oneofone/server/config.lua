@@ -1,17 +1,17 @@
 Config = {
-    VehicleName = 'sultan',
+    VehicleName = '16challenger',
     VehicleLoc = {
-        x = -963.6536,
-        y = -2987.631,
-        z = 13.945071,
-        h = 140.13835,
+        x = 1981.8708,
+        y = 5174.2685,
+        z = 46.858005,
+        h = 130.32205,
     },
     VehicleCost = {
-        copper = 125,
-        aluminum = 250,
-        steel = 150,
-        plastic = 75,
-        glass = 50,
+        copper = 650,
+        aluminum = 650,
+        steel = 750,
+        plastic = 320,
+        glass = 150,
         rubber = 200,
     },
     ShopLoc = {
