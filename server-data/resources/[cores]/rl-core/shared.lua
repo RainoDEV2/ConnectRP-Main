@@ -7474,16 +7474,16 @@ RLShared.Jobs = {
 		grades = {
             ['0'] = {
                 name = "Employee",
-                payment = 100
+                payment = 145
             },
             ['1'] = {
                 name = "Shift Supervisor",
-                payment = 120
+                payment = 170
             },
             ['2'] = {
 				name = "Boss",
 				isboss = true,
-                payment = 150
+                payment = 220
             },
         },
 		defaultDuty = true,
