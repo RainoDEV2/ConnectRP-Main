@@ -7193,11 +7193,11 @@ RLShared.Gangs = {
 RLShared.Jobs = {
 	["unemployed"] = {
 		label = "Unemployed",
-		payment = 50,
+		payment = 180,
 		grades = {
             ['0'] = {
                 name = "Unemployed",
-                payment = 125
+                payment = 180
 			},
 		},
 		defaultDuty = true,
