@@ -269,7 +269,7 @@ Citizen.CreateThread(function()
                                                 hasZak = false
                                                 local AmountOfLocations = #Config.Locations["vuilnisbakken"]
                                                 if (AmountOfBags - 1) == 0 then
-                                                    Earnings = Earnings + math.random(250, 270)
+                                                    Earnings = Earnings + math.random(125, 195)
 
                                                     local foundNextLocation, randomLocation = true, -1
                                                     while foundNextLocation do
