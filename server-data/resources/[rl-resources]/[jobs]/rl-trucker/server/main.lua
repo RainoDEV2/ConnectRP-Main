@@ -39,15 +39,15 @@ AddEventHandler('rl-trucker:server:01101110', function(drops)
     local Player = RLCore.Functions.GetPlayer(src)
     local drops = tonumber(drops)
     local bonus = 0
-    local DropPrice = math.random(55, 100)
+    local DropPrice = math.random(150, 300)
     if drops > 5 then 
-        bonus = math.ceil((DropPrice / 100) * 5) + 50
+        bonus = math.ceil((DropPrice / 100) * 5) + 100
     elseif drops > 10 then
-        bonus = math.ceil((DropPrice / 100) * 7) + 60
+        bonus = math.ceil((DropPrice / 100) * 7) + 300
     elseif drops > 15 then
-        bonus = math.ceil((DropPrice / 100) * 10) + 70
-    elseif drops > 20 then 
-        bonus = math.ceil((DropPrice / 100) * 12) + 80
+        bonus = math.ceil((DropPrice / 100) * 10) + 400
+    elseif drops > 20 then
+        bonus = math.ceil((DropPrice / 100) * 12) + 500
     end
     local price = (DropPrice * drops) + bonus
     local taxAmount = math.ceil((price / 100) * PaymentTax)
