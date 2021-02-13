@@ -28,7 +28,7 @@ AddEventHandler('rl-trucker:server:DoBail', function(bool, vehInfo)
         if Bail[Player.PlayerData.citizenid] ~= nil then
             Player.Functions.AddMoney('cash', Bail[Player.PlayerData.citizenid], "trucker-bail-paid")
             Bail[Player.PlayerData.citizenid] = nil
-            TriggerClientEvent('RLCore:Notify', src, 'You got the deposit of 1000, - back', 'success')
+            TriggerClientEvent('RLCore:Notify', src, 'You got your deposit of 1000, - back', 'success')
         end
     end
 end)
@@ -54,5 +54,5 @@ AddEventHandler('rl-trucker:server:01101110', function(drops)
     local payment = price - taxAmount
     Player.Functions.AddJobReputation(1)
     Player.Functions.AddMoney("bank", payment, "trucker-salary")
-    TriggerClientEvent('chatMessage', source, "BAAN", "warning", "You have received your salary of: $"..payment..", bruto: $"..price.." (of which $"..bonus.." bonus) with $"..taxAmount.." tax ("..PaymentTax.."%)")
+    TriggerClientEvent('chatMessage', source, "BAAN", "warning", "You have received your salary of: $"..payment..", Before Tax: $"..price.." (of which $"..bonus.." bonus) with $"..taxAmount.." tax ("..PaymentTax.."%)")
 end)
