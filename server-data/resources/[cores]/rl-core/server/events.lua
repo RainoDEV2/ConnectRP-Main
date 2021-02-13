@@ -124,7 +124,7 @@ AddEventHandler('RLCore:ReceivedSalary', function()
 	local Player = RLCore.Functions.GetPlayer(src)
 	
 	if Player ~= nil then
-		Player.Functions.AddMoney("cash", Player.PlayerData.job.payment, 'salary-update')
+		Player.Functions.AddMoney("bank", Player.PlayerData.job.payment, 'salary-update')
 		TriggerClientEvent('RLCore:Notify', src, "You received your salary. [$"..Player.PlayerData.job.payment .. "]")
 	end
 end)
