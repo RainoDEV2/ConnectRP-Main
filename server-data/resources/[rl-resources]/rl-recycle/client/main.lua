@@ -115,7 +115,7 @@ Citizen.CreateThread(function ()
                         if IsControlJustReleased(0, Keys["E"]) then
                             DropPackage()
                             ScrapAnim()
-                            RLCore.Functions.Progressbar("deliver_reycle_package", "Packaging..", 10000, false, true, {
+                            RLCore.Functions.Progressbar("deliver_reycle_package", "Unpacking...", 10000, false, true, {
                                 disableMovement = true,
                                 disableCarMovement = true,
                                 disableMouse = false,
