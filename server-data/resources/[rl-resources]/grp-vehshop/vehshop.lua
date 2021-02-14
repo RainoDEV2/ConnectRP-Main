@@ -76,9 +76,9 @@ local vehshopDefault = {
 			title = "job vehicles",
 			name = "job vehicles",
 			buttons = {
-				{name = "Taxi Cab", costs = 4000, description = {}, model = "taxi"},
-				{name = "Flat Bed", costs = 4000, description = {}, model = "flatbed"},
-				{name = "News Rumpo", costs = 4000, description = {}, model = "rumpo"},
+				{name = "Taxi Cab", costs = 18500, description = {}, model = "taxi"},
+				{name = "Flat Bed", costs = 22000, description = {}, model = "flatbed"},
+				{name = "News Rumpo", costs = 19000, description = {}, model = "rumpo"},
 			}
 		},
 		["cycles"] = {
@@ -146,9 +146,9 @@ local vehshopOwner = {
 			title = "job vehicles",
 			name = "job vehicles",
 			buttons = {
-				{name = "Taxi Cab", costs = 4000, description = {}, model = "taxi"},
-				{name = "Flat Bed", costs = 4000, description = {}, model = "flatbed"},
-				{name = "News Rumpo", costs = 4000, description = {}, model = "rumpo"},
+				{name = "Taxi Cab", costs = 18500, description = {}, model = "taxi"},
+				{name = "Flat Bed", costs = 22000, description = {}, model = "flatbed"},
+				{name = "News Rumpo", costs = 19000, description = {}, model = "rumpo"},
 			}
 		},
 		["compacts"] = {
