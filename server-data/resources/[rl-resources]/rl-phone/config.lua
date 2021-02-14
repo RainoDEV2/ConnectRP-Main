@@ -129,11 +129,12 @@ Config.PhoneApplications = {
         slot = 11,
         Alerts = 0,
     },
-    ["drivers"] = {
-        app = "drivers",
+    ["taxi"] = {
+        app = "taxi",
         color = "#fb9403",
         icon = "fas fa-taxi",
         tooltipText = "Taxi",
+        style = "font-size: 2.8vh";
         job = false,
         blockedjobs = {},
         slot = 12,
