@@ -48,7 +48,7 @@ AddEventHandler('rl-hotdogjob:server:Pay', function(Amount, Price)
     else
         local timeTable = os.date("*t", 2147483647)
         RLCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`, `bannedby`) VALUES ('"..GetPlayerName(src).."', '"..GetPlayerIdentifiers(src)[1].."', '"..GetPlayerIdentifiers(src)[2].."', '"..GetPlayerIdentifiers(src)[3].."', '"..GetPlayerIdentifiers(src)[4].."', 'Unauthorized Trigger', '"..GetPlayerName(src).."')")
-        DropPlayer(src, "You have been banned from the server: Unauthorized Trigger\nYour ban expires in "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\nCheck our website for more information:  www.realistic-life.co.il")
+        DropPlayer(src, "You have been banned from the server: Unauthorized Trigger\nYour ban expires in "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\nSpeak to someone in discord if you feel this is incorrect.")
         TriggerEvent('bb-logs:server:createLog', 'anticheat', 'rl-hotdogjob:server:Pay', "Has been banned from the server.\n**Reason:** Unauthorized Trigger.", src)
     end
 end)

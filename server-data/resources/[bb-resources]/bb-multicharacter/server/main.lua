@@ -71,7 +71,7 @@ end)
 RegisterServerEvent('bb-multicharacter:server:disconnect')
 AddEventHandler('bb-multicharacter:server:disconnect', function()
     local src = source
-    DropPlayer(src, "You have disconnected from RealisticLifeRP")
+    DropPlayer(src, "You have disconnected from TwitchCityRP")
 end)
 
 

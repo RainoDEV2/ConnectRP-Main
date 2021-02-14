@@ -26,7 +26,7 @@ RegisterServerEvent('rl-admin:server:kickPlayer')
 AddEventHandler('rl-admin:server:kickPlayer', function(playerId, reason)
     local src = source
     if RLCore.Functions.HasPermission(src, permissions["kick"]) then
-        DropPlayer(playerId, "You have been kicked out of the server:\n"..reason.."\n\n🔸 Check our website for more information: realisticlife.co.il")
+        DropPlayer(playerId, "You have been kicked out of the server:\n"..reason.."\n\n🔸 Check our discord for more information")
         TriggerEvent('bb-logs:server:createLog', 'admin', 'rl-admin:server:kickPlayer', "Player "  .. GetPlayerName(playerId) .." Kicked successfully.", src)
     else
         TriggerEvent('bb-logs:server:createLog', 'admin', 'rl-admin:server:kickPlayer', "Tried to kick "  .. GetPlayerName(playerId) .." with no perms.", src)
@@ -51,7 +51,7 @@ AddEventHandler('rl-admin:server:banPlayer', function(playerId, time, reason)
         end
         local timeTable = os.date("*t", banTime)
         RLCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`, `bannedby`) VALUES ('"..GetPlayerName(playerId).."', '"..GetPlayerIdentifiers(playerId)[1].."', '"..GetPlayerIdentifiers(playerId)[2].."', '"..GetPlayerIdentifiers(playerId)[3].."', '"..GetPlayerIdentifiers(playerId)[4].."', '"..reason.."', "..banTime..", '"..GetPlayerName(src).."')")
-        DropPlayer(playerId, "You have been banned from the server:\n"..reason.."\nYour ban expires in "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\nCheck our website for more information:  www.realistic-life.co.il")
+        DropPlayer(playerId, "You have been banned from the server:\n"..reason.."\nYour ban expires in "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\nCheck our discord for more information")
         TriggerEvent('bb-logs:server:createLog', 'admin', 'rl-admin:server:banPlayer', "Banned "  .. GetPlayerName(playerId) .." for " .. tostring(banTime) .." with reason " .. reason, src)
     end
 end)
