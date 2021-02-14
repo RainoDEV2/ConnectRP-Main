@@ -233,7 +233,7 @@ function LockVehicle()
     end
     local plate = GetVehicleNumberPlateText(veh)
     local vehpos = GetEntityCoords(veh, false)
-    if veh ~= nil and GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 10.0 then
+    if veh ~= nil and GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 14.0 then
         RLCore.Functions.TriggerCallback('vehiclekeys:CheckHasKey', function(result)
             if result then
                 local isParked = isParked(plate)
