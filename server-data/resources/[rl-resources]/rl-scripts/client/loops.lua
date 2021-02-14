@@ -173,6 +173,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(500)
 		RemoveWeaponDrops()
+		DistantCopCarSirens(false) -- Disables ambient sirens.
 	end
 end)
 

@@ -116,10 +116,10 @@ RegisterCommand( "map_zoom_in", function()
 end)
 
 RegisterCommand( "map_zoom_out", function()
-    if currZoom == 1 then
-        currZoom = #zoomLevels
+    if currZoom == #zoomLevels then
+        currZoom = 1
     else
-        currZoom = currZoom - 1
+        currZoom = currZoom + 1
     end
     SetRadarZoom(zoomLevels[currZoom])
 end)
