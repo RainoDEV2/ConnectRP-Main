@@ -7524,16 +7524,16 @@ RLShared.Jobs = {
 		grades = {
             ['0'] = {
                 name = "Employee",
-                payment = 80
+                payment = 370
 			},
 			['1'] = {
                 name = "Experienced",
-                payment = 125
+                payment = 400
 			},
 			['2'] = {
 				name = "Boss",
 				isboss = true,
-                payment = 140
+                payment = 450
 			},
 		}
 	},
