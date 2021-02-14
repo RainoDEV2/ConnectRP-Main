@@ -21,6 +21,7 @@ BBGarages.Functions = {
                 while not vehicles do Wait(0) end
                 RLCore.Functions.TriggerCallback('bb-garages:server:hasFines', function(hasfines)
                     if hasfines == false then
+                        print("I DONT HAVE A FINE")
                         if onVehicle then
                             local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
                             local vehicleProps = RLCore.Functions.GetVehicleProperties(vehicle)
@@ -60,7 +61,6 @@ BBGarages.Functions = {
                     else
                         TriggerEvent('RLCore:Notify', 'You got some unpaid fines! We aren\'t supporting it here!', "error")
                     end
-                    
                 end)
                 SetNuiFocus(true, true)
             end, BBGarages.Functions.GetNearbyVehicles(true), #BBGarages.Functions.GetFreeSlots(name, key), name, key)
