@@ -64,6 +64,7 @@ BBGarages.Functions = {
             else
                 TriggerEvent('RLCore:Notify', 'You got some unpaid fines! We aren\'t supporting it here!', "error")
             end
+        end)
         elseif key == 'impounds' then
             RLCore.Functions.TriggerCallback('bb-garages:server:hasFines', function(hasfines)
                 if hasfines == false then
