@@ -92,7 +92,7 @@ AddEventHandler('rl-bankrobbery:server:recieveItem', function(type, lockerID)
                 TriggerClientEvent('RLCore:Notify', src, "You couldnt find any card there.", "error")
             end
         else
-            if ply.Functions.AddItem('goldbar', math.random(5, 10)) then
+            if ply.Functions.AddItem('goldbar', math.random(5, 14)) then
                 TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items['goldbar'], "add")
             else
                 TriggerClientEvent('RLCore:Notify', src, "Couldnt add item, you may dont have free space on you.", "error")
