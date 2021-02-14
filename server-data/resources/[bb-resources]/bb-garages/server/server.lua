@@ -240,7 +240,7 @@ AddEventHandler('bb-garages:server:vehiclePayout', function(garage, plate, price
                         else
                             TriggerClientEvent('RLCore:Notify', src, "Are you sure you got the money? :thinking:", "error")
                         end
-                    end    
+                   -- end    
                 else
                     TriggerClientEvent('RLCore:Notify', src, "Couldnt find your vehicle, big OOF", "error")
                     cb(false)
@@ -262,7 +262,7 @@ AddEventHandler('bb-garages:server:vehiclePayout', function(garage, plate, price
                 print('^2[bb-garages] ^7Released ' .. plate .. ' from the house garage')
                 
                 TriggerClientEvent('bb-garages:client:releaseVehicle', src, veh, typ, garage)
-            end
+            --end
         end)
     end
 end)
