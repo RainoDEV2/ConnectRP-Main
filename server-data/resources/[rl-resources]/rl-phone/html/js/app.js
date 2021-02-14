@@ -221,9 +221,13 @@ $(document).on('click', '.phone-application', function(e){
                     $.post('http://rl-phone/SetupSellix', JSON.stringify({}), function(data){
                         SetupSellixData(data); 
                     });
-                } else if (PressedApplication == "drivers") {
+                /* } else if (PressedApplication == "drivers") {
                     $.post('http://rl-phone/GetCurrentDrivers', JSON.stringify({}), function(data){
                         SetupDrivers(data.drivers, data.isTaxi);
+                    }); */
+                } else if (PressedApplication == "taxi") {
+                    $.post('http://rl-phone/GetCurrentDrivers', JSON.stringify({}), function(data){
+                        SetupDrivers(data);
                     });
                 } else if (PressedApplication == "store") {
                     $.post('http://rl-phone/SetupStoreApps', JSON.stringify({}), function(data){

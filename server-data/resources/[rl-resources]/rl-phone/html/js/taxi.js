@@ -1,26 +1,26 @@
-SetupLawyers = function(data) {
-    $(".lawyers-list").html("");
+SetupDrivers = function(data) {
+    $(".driver-list").html("");
 
     if (data.length > 0) {
-        $.each(data, function(i, lawyer){
-            var element = '<div class="lawyer-list" id="lawyerid-'+i+'"> <div class="lawyer-list-firstletter">' + (lawyer.name).charAt(0).toUpperCase() + '</div> <div class="lawyer-list-fullname">' + lawyer.name + '</div> <div class="lawyer-list-call"><i class="fas fa-phone"></i></div> </div>'
-            $(".lawyers-list").append(element);
-            $("#lawyerid-"+i).data('LawyerData', lawyer);
+        $.each(data, function(i, taxi){
+            var element = '<div class="taxi-list" id="taxiid-'+i+'"> <div class="taxi-list-firstletter">' + (taxi.name).charAt(0).toUpperCase() + '</div> <div class="taxi-list-fullname">' + taxi.name + '</div> <div class="taxi-list-call"><i class="fas fa-phone"></i></div> </div>'
+            $(".driver-list").append(element);
+            $("#taxiid-"+i).data('taxiData', taxi);
         });
     } else {
-        var element = '<div class="lawyer-list"><div class="no-lawyers">There are no lawyers available.</div></div>'
-        $(".lawyers-list").append(element);
+        var element = '<div class="taxi-list"><div class="no-driver">There are no taxi drivers on duty.</div></div>'
+        $(".driver-list").append(element);
     }
 }
 
-$(document).on('click', '.lawyer-list-call', function(e){
+$(document).on('click', '.taxi-list-call', function(e){
     e.preventDefault();
 
-    var LawyerData = $(this).parent().data('LawyerData');
+    var taxiData = $(this).parent().data('taxiData');
     
     var cData = {
-        number: LawyerData.phone,
-        name: LawyerData.name
+        number: taxiData.phone,
+        name: taxiData.name
     }
 
     $.post('http://rl-phone/CallContact', JSON.stringify({
@@ -32,7 +32,7 @@ $(document).on('click', '.lawyer-list-call', function(e){
                 if (status.CanCall) {
                     if (!status.InCall) {
                         if (RL.Phone.Data.AnonymousCall) {
-                            RL.Phone.Notifications.Add("fas fa-phone", "Phone", "You have started an anonymous call!");
+                            RL.Phone.Notifications.Add("fas fa-phone", "Phone", "You started a secret search!");
                         }
                         $(".phone-call-outgoing").css({"display":"block"});
                         $(".phone-call-incoming").css({"display":"none"});
@@ -41,7 +41,7 @@ $(document).on('click', '.lawyer-list-call', function(e){
                         RL.Phone.Functions.HeaderTextColor("white", 400);
                         RL.Phone.Animations.TopSlideUp('.phone-application-container', 400, -160);
                         setTimeout(function(){
-                            $(".lawyers-app").css({"display":"none"});
+                            $(".taxi-app").css({"display":"none"});
                             RL.Phone.Animations.TopSlideDown('.phone-application-container', 400, 0);
                             RL.Phone.Functions.ToggleApp("phone-call", "block");
                         }, 450);
@@ -51,16 +51,16 @@ $(document).on('click', '.lawyer-list-call', function(e){
                     
                         RL.Phone.Data.currentApplication = "phone-call";
                     } else {
-                        RL.Phone.Notifications.Add("fas fa-phone", "Phone", "You are already busy!");
+                        RL.Phone.Notifications.Add("fas fa-phone", "Phone", "You are busy!");
                     }
                 } else {
-                    RL.Phone.Notifications.Add("fas fa-phone", "Phone", "This person is talking!");
+                    RL.Phone.Notifications.Add("fas fa-phone", "Phone", "The number you are calling is busy!");
                 }
             } else {
-                RL.Phone.Notifications.Add("fas fa-phone", "Phone", "This person is not available!");
+                RL.Phone.Notifications.Add("fas fa-phone", "Phone", "The person's phone is off!");
             }
         } else {
-            RL.Phone.Notifications.Add("fas fa-phone", "Phone", "You cannot call your own number!");
+            RL.Phone.Notifications.Add("fas fa-phone", "Phone", "You cannot call your own number..");
         }
     });
 });

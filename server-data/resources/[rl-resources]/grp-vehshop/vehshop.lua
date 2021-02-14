@@ -241,7 +241,7 @@ local vehshopOwner = {
 				{name = "190z", costs = 115000, description = {}, model = "z190"},
 				{name = "GT500", costs = 140000, description = {}, model = "gt500"},
 				{name = "Savestra", costs = 125000, description = {}, model = "savestra"},
-				{name = "Elegy Retro Custom", costs = 11000, description = {}, model = "elegy"},
+				{name = "Elegy Retro Custom", costs = 110000, description = {}, model = "elegy"},
 			}
 		},
 		["imports"] = {
@@ -483,7 +483,6 @@ local vehshopOwner = {
 				{name = "Bati 801", costs = 32000, description = {}, model = "bati"},
 				{name = "BF400", costs = 13000, description = {}, model = "bf400"},
 				{name = "Carbon RS", costs = 22000, description = {}, model = "carbonrs"},
-				{name = "Daemon", costs = 24000, description = {}, model = "daemon"},
 				{name = "Enduro", costs = 8000, description = {}, model = "enduro"},
 				{name = "Faggio", costs = 3500, description = {}, model = "faggio"},
 				{name = "Gargoyle", costs = 30000, description = {}, model = "gargoyle"},
@@ -504,7 +503,7 @@ local vehshopOwner = {
 				{name = "Defiler", costs = 26000, description = {}, model = "defiler"},
 				{name = "Chimera", costs = 32000, description = {}, model = "chimera"},
 				{name = "Daemon", costs = 16000, description = {}, model = "daemon"},
-				{name = "DaemonHigh", costs = 12000, description = {}, model = "daemon2"},
+				{name = "DaemonHigh", costs = 24000, description = {}, model = "daemon2"},
 			}
 		},
 		["cycles"] = {

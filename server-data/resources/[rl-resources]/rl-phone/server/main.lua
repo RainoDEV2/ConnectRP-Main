@@ -990,7 +990,7 @@ AddEventHandler('rl-phone:server:AddTransaction', function(data)
     RLCore.Functions.ExecuteSql(false, "INSERT INTO `crypto_transactions` (`citizenid`, `title`, `message`) VALUES ('"..Player.PlayerData.citizenid.."', '"..escape_sqli(data.TransactionTitle).."', '"..escape_sqli(data.TransactionMessage).."')")
 end)
 
-RLCore.Functions.CreateCallback('rl-phone:server:GetCurrentDrivers', function(source, cb)
+--[[ RLCore.Functions.CreateCallback('rl-phone:server:GetCurrentDrivers', function(source, cb)
     local Lawyers = {}
     for k, v in pairs(RLCore.Functions.GetPlayers()) do
         local Player = RLCore.Functions.GetPlayer(v)
@@ -1004,7 +1004,7 @@ RLCore.Functions.CreateCallback('rl-phone:server:GetCurrentDrivers', function(so
         end
     end
     cb(Lawyers, RLCore.Functions.GetPlayer(source).PlayerData.job.name == "taxi")
-end)
+end) ]]
 
 RLCore.Functions.CreateCallback('rl-phone:server:GetCurrentLawyers', function(source, cb)
     local Lawyers = {}
@@ -1113,4 +1113,20 @@ end)
 RegisterServerEvent('rl-phone:server:clearVehicleTrunk')
 AddEventHandler('rl-phone:server:clearVehicleTrunk', function(plate)
     RLCore.Functions.ExecuteSql(false, "DELETE FROM `trunkitems` WHERE `plate` = '"..plate.."'")
+end)
+
+RLCore.Functions.CreateCallback('rl-phone:server:GetCurrentDrivers', function(source, cb)
+    local drivers = {}
+    for k, v in pairs(RLCore.Functions.GetPlayers()) do
+        local Player = RLCore.Functions.GetPlayer(v)
+        if Player ~= nil then
+            if Player.PlayerData.job.name == "taxi" then
+                table.insert(drivers, {
+                    name = Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname,
+                    phone = Player.PlayerData.charinfo.phone,
+                })
+            end
+        end
+    end
+    cb(drivers)
 end)

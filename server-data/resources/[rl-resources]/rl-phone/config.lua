@@ -86,16 +86,16 @@ Config.PhoneApplications = {
         slot = 8,
         Alerts = 0,
     },
-   --[[ ["crypto"] = {
+    --[[ ["crypto"] = {
         app = "crypto",
         color = "#004682",
         icon = "fas fa-chart-pie",
         tooltipText = "Crypto",
         job = false,
         blockedjobs = {},
-        slot = 9,
+        slot = 16,
         Alerts = 0,
-    },]]--
+    }, ]]
     ["racing"] = {
         app = "racing",
         color = "#353b48",
@@ -118,16 +118,7 @@ Config.PhoneApplications = {
         slot = 10,
         Alerts = 0,
     },
-    ["meos"] = {
-        app = "meos",
-        color = "#004682",
-        icon = "fas fa-ad",
-        tooltipText = "MEOS",
-        job = "police",
-        blockedjobs = {},
-        slot = 11,
-        Alerts = 0,
-    },
+    
     ["lawyers"] = {
         app = "lawyers",
         color = "#353b48",
@@ -135,17 +126,18 @@ Config.PhoneApplications = {
         tooltipText = "Lawyers",
         job = false,
         blockedjobs = {},
-        slot = 12,
+        slot = 11,
         Alerts = 0,
     },
-    ["drivers"] = {
-        app = "drivers",
+    ["taxi"] = {
+        app = "taxi",
         color = "#fb9403",
         icon = "fas fa-taxi",
         tooltipText = "Taxi",
+        style = "font-size: 2.8vh";
         job = false,
         blockedjobs = {},
-        slot = 13,
+        slot = 12,
         Alerts = 0,
     },
     ["rentel"] = {
@@ -156,7 +148,7 @@ Config.PhoneApplications = {
         style = "padding-right: .3vh; font-size: 2vh";
         job = false,
         blockedjobs = {},
-        slot = 14,
+        slot = 13,
         Alerts = 0,
     },
     ["sellix"] = {
@@ -169,6 +161,16 @@ Config.PhoneApplications = {
         blockedjobs = {
             "police"
         },
+        slot = 14,
+        Alerts = 0,
+    },
+    ["meos"] = {
+        app = "meos",
+        color = "#004682",
+        icon = "fas fa-ad",
+        tooltipText = "MEOS",
+        job = "police",
+        blockedjobs = {},
         slot = 15,
         Alerts = 0,
     },
