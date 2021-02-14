@@ -4216,9 +4216,33 @@ RLShared.Vehicles = {
         ["trunkslots"] = 40,
         ["shop"] = "pdm",
     },
+	['flyingspur'] = {
+		['name'] = "Bently Flying Spur",
+		['brand'] = 'Bently',
+		['model'] = 'flyingspur',
+		['price'] = 100,
+		['category'] = 'sports',
+		['hash'] = GetHashKey('flyingspur'),
+		['image'] = 'https://vignette.wikia.nocookie.net/gtawiki/images/0/07/FaggioMod-GTAO-front.png',
+		['trunkspace'] = 600000,
+		['trunkslots'] = 100,
+		['shop'] = 'nfs',
+	},
 }
 
 RLShared.VehicleModels = {	
+	[GetHashKey("flyingspur")] = {
+		["name"] = "Flying Spur",
+		["brand"] = "Bentley",
+		["model"] = "flyingspur",
+		["price"] = 0,
+		["category"] = "coupes",
+		["hash"] = GetHashKey("flyingspur"),
+		["image"] = "https://vignette.wikia.nocookie.net/gtawiki/images/0/07/FaggioMod-GTAO-front.png",
+		["trunkspace"] = 600000,
+		["trunkslots"] = 100,
+		["shop"] = "nfs",
+	},
 	[GetHashKey("yFiat595ssB")] = {
 		["name"] = "",
 		["brand"] = "Sidney Mobile",
