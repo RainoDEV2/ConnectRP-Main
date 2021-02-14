@@ -13,6 +13,7 @@ AddEventHandler('playerDropped', function(reason)
 	if(src==nil or (RLCore.Players[src] == nil)) then return false end
 	RLCore.Players[src].Functions.Save()
 	RLCore.Players[src] = nil
+	TriggerEvent("scoreboard:RemovePlayer", src)
 end)
 
 -- Checking everything before joining

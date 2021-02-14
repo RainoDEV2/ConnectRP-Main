@@ -56,6 +56,8 @@ RegisterNUICallback('spawnplayer', function(data)
 
     print(type)
 
+    TriggerEvent("scoreboard:AddPlayer")
+
     if type == "current" then
         TriggerEvent("debug", 'Spawn: Last Location', 'success')
 
