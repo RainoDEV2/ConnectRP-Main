@@ -3,17 +3,17 @@ Config = {}
 Config.MinCops = 3
 
 Config.RobbableItems = {
-    [1] =  {chance = 8, id = 0, name = 'Cash', quantity = math.random(1, 1200)}, 
+    [1] =  {chance = 8, id = 0, name = 'Cash', quantity = math.random(1, 1450)}, 
     [2] =  {chance = 3, id = 'samsung_s8', name = 'Samsung S8', quantity = 1}, 
     [3] =  {chance = 3, id = 'iphone', name = 'Apple iPhone', quantity = 1}, 
     [4] =  {chance = 3, id = 'samsungphone', name = 'Samsung Phone', quantity = 1}, 
-    [5] =  {chance = 3, id = 'goldchain', name = 'Gold Chain', quantity = 1}, 
-    [6] =  {chance = 3, id = 'diamond_ring', name = 'Diamond Ring', quantity = 1}, 
-    [7] =  {chance = 3, id = 'watch', name = 'Watch', quantity = 1}, 
-    [8] =  {chance = 4, id = '10kgoldchain', name = '10K Gold Chain', quantity = 1},
+    [5] =  {chance = 3, id = 'goldchain', name = 'Gold Chain', quantity = 3}, 
+    [6] =  {chance = 3, id = 'diamond_ring', name = 'Diamond Ring', quantity = 3}, 
+    [7] =  {chance = 3, id = 'watch', name = 'Watch', quantity = 2}, 
+    [8] =  {chance = 4, id = '10kgoldchain', name = '10K Gold Chain', quantity = 4},
     [9] =  {chance = 15, id = 'electronickit', name = 'Electronic Kit', quantity = 1},
-    [10] = {chance = 3, id = 'joint', name = 'Joint', quantity = 1},
-    [11] = {chance = 3, id = 'oxy', name = 'Oxy 100MG', quantity = 1},
+    [10] = {chance = 3, id = 'joint', name = 'Joint', quantity = 5},
+    [11] = {chance = 3, id = 'oxy', name = 'Oxy 100MG', quantity = 5},
     [12] = {chance = 2, id = 'certificate', name = 'Certificate', quantity = 1},
 }
 
