@@ -366,3 +366,18 @@ function getVehicleInDirection(coordFrom, coordTo)
 
     return vehicle ~= nil and vehicle or 0
 end
+
+RegisterNetEvent('police:client:AddWep')
+AddEventHandler('police:client:AddWep', function()
+    local player, distance = RLCore.Functions.GetClosestPlayer()
+    if player ~= -1 then
+        if distance < 2.5 then
+            local playerId = GetPlayerServerId(player)
+            TriggerServerEvent("police:server:AddWep", playerId)
+        else
+            RLCore.Functions.Notify("You aren't close enough to this person!", "error")
+        end
+    else
+        RLCore.Functions.Notify("No one found!", "error")
+    end
+end)

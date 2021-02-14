@@ -4,13 +4,13 @@ TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
 local ItemList = {
     ["goldchain"] = math.random(100, 250),
 	["goldcoin"] = math.random(100, 200),
-	["goldbar"] = math.random(100, 300),
+	["goldbar"] = 350,
     ["Watch"] = math.random(100, 200),
 	["diamond_ring"] = math.random(200, 350),
     ["rolex"] = math.random(600, 700),
-	["markedbills"] = math.random(11700, 15000),
-	["cashroll"] = math.random(1000, 2000),
-	["cashstack"] = math.random(575, 1125),
+	["markedbills"] = math.random(13700, 15000),
+	["cashroll"] = math.random(1500, 2000),
+	["cashstack"] = math.random(755, 1125),
 	["10kgoldchain"] = math.random(200, 300),
 }
 
