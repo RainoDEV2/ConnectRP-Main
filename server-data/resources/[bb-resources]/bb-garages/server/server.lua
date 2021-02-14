@@ -16,7 +16,7 @@ serverConfig['houses'] = json.decode(LoadResourceFile(GetCurrentResourceName(), 
 local networkVehicles = {}
 local isAuthorized = true
 local coordsSaver = {}
-
+local vehicles = {}
 
 CreateThread(function()
     Wait(1000)
@@ -225,7 +225,6 @@ AddEventHandler('bb-garages:server:vehiclePayout', function(garage, plate, price
                     local veh = vehicle[1]
 
                     local modelExists = IsModelExists(veh.model)
-                    if modelExists == true then
                         if xPlayer.Functions.RemoveMoney('cash', tonumber(price)) or (GaragesConfig['settings']['bank-payments'] == true and xPlayer.Functions.RemoveMoney('bank', tonumber(price))) then
                             RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `state` = 'unknown', `parking` = '' WHERE `id` = '" .. veh.id .. "'")
                             if typ == 'garages' then
@@ -241,9 +240,7 @@ AddEventHandler('bb-garages:server:vehiclePayout', function(garage, plate, price
                         else
                             TriggerClientEvent('RLCore:Notify', src, "Are you sure you got the money? :thinking:", "error")
                         end
-                    else
-                        TriggerClientEvent('RLCore:Notify', src, "Error while fetching model, Please contact support [CODE " .. veh.id .. "]", "error")
-                    end
+                    end    
                 else
                     TriggerClientEvent('RLCore:Notify', src, "Couldnt find your vehicle, big OOF", "error")
                     cb(false)
@@ -257,7 +254,6 @@ AddEventHandler('bb-garages:server:vehiclePayout', function(garage, plate, price
             local veh = vehicle[1]
 
             local modelExists = IsModelExists(veh.model)
-            if modelExists == true then
                 RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `state` = 'unknown', `parking` = '' WHERE `id` = '" .. veh.id .. "'")
                 
                 serverConfig['houses'][garage]['slots'][json.decode(veh.parking)[1]][2] = true
@@ -266,8 +262,6 @@ AddEventHandler('bb-garages:server:vehiclePayout', function(garage, plate, price
                 print('^2[bb-garages] ^7Released ' .. plate .. ' from the house garage')
                 
                 TriggerClientEvent('bb-garages:client:releaseVehicle', src, veh, typ, garage)
-            else
-                TriggerClientEvent('RLCore:Notify', src, "Error while fetching model, Please contact support [CODE " .. veh.id .. "]", "error")
             end
         end)
     end
@@ -696,12 +690,13 @@ AddEventHandler('bb-garages:server:dev:saveCoords', function(name, index)
 end)
 
 function IsModelExists(model)
-    for key, value in pairs(RLCore.Shared.Vehicles) do
-        if value['model'] == model then
-            return true
-        end
-    end
-    return false
+	for k,v in ipairs(vehicles) do
+		if v.model == model then
+			return v.name
+		end
+	end
+
+	return
 end
 
 function GetClosestGarage(coords)
