@@ -16,11 +16,11 @@ BBGarages = {}
 BBGarages.Config = {}
 BBGarages.Functions = {
     TriggerNUI = (function(onVehicle, name, data, key)
-        if key == 'garages' or key == 'houses' then
-            RLCore.Functions.TriggerCallback('bb-garages:server:getOwnedVehicles', function(vehicles)
-                while not vehicles do Wait(0) end
-                RLCore.Functions.TriggerCallback('bb-garages:server:hasFines', function(hasfines)
-                    if hasfines == false then
+        RLCore.Functions.TriggerCallback('bb-garages:server:hasFines', function(hasfines)
+            if hasfines == false then
+                if key == 'garages' or key == 'houses' then
+                    RLCore.Functions.TriggerCallback('bb-garages:server:getOwnedVehicles', function(vehicles)
+                        while not vehicles do Wait(0) end
                         print("I DONT HAVE A FINE")
                         if onVehicle then
                             local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
@@ -58,12 +58,12 @@ BBGarages.Functions = {
                                 garage = name
                             })
                         end
-                    else
-                        TriggerEvent('RLCore:Notify', 'You got some unpaid fines! We aren\'t supporting it here!', "error")
-                    end
-                end)
-                SetNuiFocus(true, true)
-            end, BBGarages.Functions.GetNearbyVehicles(true), #BBGarages.Functions.GetFreeSlots(name, key), name, key)
+                    end)
+                    SetNuiFocus(true, true)
+                end, BBGarages.Functions.GetNearbyVehicles(true), #BBGarages.Functions.GetFreeSlots(name, key), name, key)
+            else
+                TriggerEvent('RLCore:Notify', 'You got some unpaid fines! We aren\'t supporting it here!', "error")
+            end
         elseif key == 'impounds' then
             RLCore.Functions.TriggerCallback('bb-garages:server:hasFines', function(hasfines)
                 if hasfines == false then
