@@ -46,6 +46,8 @@ Citizen.CreateThread(function()
             DisableControlAction(0, 75, true)  -- Disable exit vehicle
             DisableControlAction(27, 75, true) -- Disable exit vehicle
 
+            DisableControlAction(0, 82, true) -- comma - ragdoll
+
             if (not IsEntityPlayingAnim(GetPlayerPed(-1), "mp_arresting", "idle", 3) and not IsEntityPlayingAnim(GetPlayerPed(-1), "mp_arrest_paired", "crook_p2_back_right", 3)) and not RLCore.Functions.GetPlayerData().metadata["isdead"] then
                 loadAnimDict("mp_arresting")
                 TaskPlayAnim(GetPlayerPed(-1), "mp_arresting", "idle", 8.0, -8, -1, cuffType, 0, 0, 0, 0)
