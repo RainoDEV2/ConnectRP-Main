@@ -196,7 +196,7 @@ local vehshopOwner = {
 				{name = "Bestia GTS", costs = 175000, description = {}, model = "bestiagts"},
 				{name = "Buffalo", costs = 15000, description = {}, model = "buffalo"},
 				{name = "Buffalo S", costs = 20000, description = {}, model = "buffalo2"},
-				{name = "Carbonizzare", costs = 11000, description = {}, model = "carbonizzare"},
+				{name = "Carbonizzare", costs = 165000, description = {}, model = "carbonizzare"},
 				{name = "Comet", costs = 75000, description = {}, model = "comet2"},
 				{name = "Coquette", costs = 80000, description = {}, model = "coquette"},
 				{name = "Feltzer", costs = 75000, description = {}, model = "feltzer2"},
