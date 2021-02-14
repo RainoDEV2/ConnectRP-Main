@@ -690,13 +690,12 @@ AddEventHandler('bb-garages:server:dev:saveCoords', function(name, index)
 end)
 
 function IsModelExists(model)
-	for k,v in ipairs(vehicles) do
-		if v.model == model then
-			return v.name
-		end
-	end
-
-	return
+	for key, value in pairs(RLCore.Shared.Vehicles) do
+        if value['model'] == model then
+            return true
+        end
+    end
+    return false
 end
 
 function GetClosestGarage(coords)
