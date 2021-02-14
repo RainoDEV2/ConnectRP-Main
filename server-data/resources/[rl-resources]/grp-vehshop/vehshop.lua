@@ -241,7 +241,7 @@ local vehshopOwner = {
 				{name = "190z", costs = 115000, description = {}, model = "z190"},
 				{name = "GT500", costs = 140000, description = {}, model = "gt500"},
 				{name = "Savestra", costs = 125000, description = {}, model = "savestra"},
-				{name = "Elegy Retro Custom", costs = 11000, description = {}, model = "elegy"},
+				{name = "Elegy Retro Custom", costs = 110000, description = {}, model = "elegy"},
 			}
 		},
 		["imports"] = {
