@@ -161,7 +161,7 @@ rootMenuConfig =  {
             local Data = RLCore.Functions.GetPlayerData()
             return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and (Data.job ~= nil and Data.job.name == "police" and Data.job.onduty))
         end,
-        subMenus = {"police:drag", "police:softcuff", "police:cuff", "ems:putinvehicle","ems:unseatvehicle","police:unmask", "ems:revive"}
+        subMenus = {"police:drag", "police:softcuff", "police:cuff", "ems:putinvehicle","ems:unseatvehicle","police:unmask", "ems:revive", "police:gsrtest"}
     },
 
     {
@@ -1001,6 +1001,12 @@ newSubMenus = {
         title = "Soft Cuff",
         icon = "#cuffs-cuff",
         functionName = "police:client:CuffPlayerSoft"
+    },
+
+    ["police:gsrtest"] = {
+        title = "GSR Test",
+        icon = "#police-gsr-test",
+        functionName = "GSR_Client:PerformTest"
     },
 	
 	--------------------------------------
