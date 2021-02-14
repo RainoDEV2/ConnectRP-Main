@@ -39,6 +39,7 @@ AddEventHandler('oxydelivery:receiveoxy', function()
 	local oxy = math.random(1, 3)
 
 	Player.Functions.AddItem("oxy", oxy)
+	TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items["oxy"], "add")
 end)
 
 local DoorLocked = true

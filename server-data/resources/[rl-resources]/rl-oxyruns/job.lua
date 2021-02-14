@@ -1,4 +1,4 @@
-local DoorLocked = false
+local DoorLocked = true --SET BACK TO FALSE IF WE WANT TO LEWL
 local Objects, POIOffsets = {}, {}
 local drugStorePed = nil
 
