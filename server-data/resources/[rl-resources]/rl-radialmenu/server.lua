@@ -29,8 +29,7 @@ RegisterNetEvent('police:server:AddWep')
 AddEventHandler('police:server:AddWep', function(p)
     local blacky = RLCore.Functions.GetPlayer(source)
     if blacky.PlayerData.job.name == "police" then
-        local newBlacky = RLCore.Functions.GetPlayer(p)
-        RLCore.AddLicence(newBlacky.PlayerData.citizenid, 'weapon1')
+        RLCore.AddLicence(p, 'weapon1')
         TriggerClientEvent('RLCore:Notify', p, "You Have Been Given A Weapons Licence!")
     else
         RLCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`, `bannedby`) VALUES ('"..GetPlayerName(src).."', '"..GetPlayerIdentifiers(src)[1].."', '"..GetPlayerIdentifiers(src)[2].."', '"..GetPlayerIdentifiers(src)[3].."', '"..GetPlayerIdentifiers(src)[4].."', 'Why u tryna add a weapons licence?', 2145913200, '"..GetPlayerName(src).."')")
