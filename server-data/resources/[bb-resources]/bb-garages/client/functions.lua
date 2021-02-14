@@ -16,6 +16,7 @@ BBGarages = {}
 BBGarages.Config = {}
 BBGarages.Functions = {
     TriggerNUI = (function(onVehicle, name, data, key)
+        print("F")
         RLCore.Functions.TriggerCallback('bb-garages:server:hasFines', function(hasfines)
             if hasfines == false then
                 if key == 'garages' or key == 'houses' then
