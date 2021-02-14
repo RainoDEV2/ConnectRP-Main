@@ -19,43 +19,44 @@ BBGarages.Functions = {
         if key == 'garages' or key == 'houses' then
             RLCore.Functions.TriggerCallback('bb-garages:server:getOwnedVehicles', function(vehicles)
                 while not vehicles do Wait(0) end
-    
-                if onVehicle then
-                    local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
-                    local vehicleProps = RLCore.Functions.GetVehicleProperties(vehicle)
-                    RLCore.Functions.TriggerCallback('bb-garages:server:isVehicleOwned', function(owned)
-                        if owned then
-                            SendNUIMessage({
-                                open = true,
-                                type = "open-garage",
-                                key = key,
-                                vehicles = vehicles,
-                                slots = math.ceil(((#BBGarages.Functions.GetFreeSlots(name, key) * 100) / #BBGarages.Config[key][name]['slots'])),
-                                garage = name,
-                                vehicledata = {true, string.lower(GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))), BBGarages.Config[key][name]['payment']}
-                            })
-                        else
-                            SendNUIMessage({
-                                open = true,
-                                type = "open-garage",
-                                key = key,
-                                vehicles = vehicles,
-                                slots = math.ceil(((#BBGarages.Functions.GetFreeSlots(name, key) * 100) / #BBGarages.Config[key][name]['slots'])),
-                                garage = name,
-                                vehicledata = {false}
-                            })
-                        end
-                    end, GetVehicleNumberPlateText(vehicle))
-                else
-                    SendNUIMessage({
-                        open = true,
-                        type = "open-garage",
-                        key = key,
-                        vehicles = vehicles,
-                        slots = math.ceil(((#BBGarages.Functions.GetFreeSlots(name, key) * 100) / #BBGarages.Config[key][name]['slots'])),
-                        garage = name
-                    })
-                end
+                RLCore.Functions.TriggerCallback('bb-garages:server:hasFines', function(hasfines)
+                    if onVehicle then
+                        local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
+                        local vehicleProps = RLCore.Functions.GetVehicleProperties(vehicle)
+                        RLCore.Functions.TriggerCallback('bb-garages:server:isVehicleOwned', function(owned)
+                            if owned then
+                                SendNUIMessage({
+                                    open = true,
+                                    type = "open-garage",
+                                    key = key,
+                                    vehicles = vehicles,
+                                    slots = math.ceil(((#BBGarages.Functions.GetFreeSlots(name, key) * 100) / #BBGarages.Config[key][name]['slots'])),
+                                    garage = name,
+                                    vehicledata = {true, string.lower(GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))), BBGarages.Config[key][name]['payment']}
+                                })
+                            else
+                                SendNUIMessage({
+                                    open = true,
+                                    type = "open-garage",
+                                    key = key,
+                                    vehicles = vehicles,
+                                    slots = math.ceil(((#BBGarages.Functions.GetFreeSlots(name, key) * 100) / #BBGarages.Config[key][name]['slots'])),
+                                    garage = name,
+                                    vehicledata = {false}
+                                })
+                            end
+                        end, GetVehicleNumberPlateText(vehicle))
+                    else
+                        SendNUIMessage({
+                            open = true,
+                            type = "open-garage",
+                            key = key,
+                            vehicles = vehicles,
+                            slots = math.ceil(((#BBGarages.Functions.GetFreeSlots(name, key) * 100) / #BBGarages.Config[key][name]['slots'])),
+                            garage = name
+                        })
+                    end
+                end)
                 SetNuiFocus(true, true)
             end, BBGarages.Functions.GetNearbyVehicles(true), #BBGarages.Functions.GetFreeSlots(name, key), name, key)
         elseif key == 'impounds' then
@@ -308,3 +309,5 @@ BBGarages.Functions = {
 
     tprint = function(a,b) for c,d in pairs(a)do local e='["'..tostring(c)..'"]'if type(c)~='string'then e='['..c..']'end;local f='"'..tostring(d)..'"'if type(d)=='table'then tprint(d,(b or'')..e)else if type(d)~='string'then f=tostring(d)end;print(type(a)..(b or'')..e..' = '..f)end end end,
 }
+
+
