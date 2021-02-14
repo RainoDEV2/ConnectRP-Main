@@ -118,16 +118,7 @@ Config.PhoneApplications = {
         slot = 10,
         Alerts = 0,
     },
-    ["meos"] = {
-        app = "meos",
-        color = "#004682",
-        icon = "fas fa-ad",
-        tooltipText = "MEOS",
-        job = "police",
-        blockedjobs = {},
-        slot = 11,
-        Alerts = 0,
-    },
+    
     ["lawyers"] = {
         app = "lawyers",
         color = "#353b48",
@@ -135,7 +126,7 @@ Config.PhoneApplications = {
         tooltipText = "Lawyers",
         job = false,
         blockedjobs = {},
-        slot = 12,
+        slot = 11,
         Alerts = 0,
     },
     ["drivers"] = {
@@ -145,7 +136,7 @@ Config.PhoneApplications = {
         tooltipText = "Taxi",
         job = false,
         blockedjobs = {},
-        slot = 13,
+        slot = 12,
         Alerts = 0,
     },
     ["rentel"] = {
@@ -156,7 +147,7 @@ Config.PhoneApplications = {
         style = "padding-right: .3vh; font-size: 2vh";
         job = false,
         blockedjobs = {},
-        slot = 14,
+        slot = 13,
         Alerts = 0,
     },
     ["sellix"] = {
@@ -169,6 +160,16 @@ Config.PhoneApplications = {
         blockedjobs = {
             "police"
         },
+        slot = 14,
+        Alerts = 0,
+    },
+    ["meos"] = {
+        app = "meos",
+        color = "#004682",
+        icon = "fas fa-ad",
+        tooltipText = "MEOS",
+        job = "police",
+        blockedjobs = {},
         slot = 15,
         Alerts = 0,
     },
