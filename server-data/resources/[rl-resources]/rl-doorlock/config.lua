@@ -235,7 +235,7 @@ RLConfig.Doors = {
 		locked = true,
 		pickable = false,
 		distance = 2.5,
-		doors = {
+		doors = { 
 			{
 				objName = 165994623,
 				objYaw = 100,
