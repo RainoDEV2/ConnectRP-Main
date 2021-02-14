@@ -865,11 +865,11 @@ Config.Locations = {
         ["type"] = "gsgasoline",
         ["coords"] = {
             [1] = {
-                ["x"] = -46.99,
-                ["y"] = -1759.48,
-                ["z"] = 29.42,
+                ["x"] = -48.18456,
+                ["y"] = -1757.005,
+                ["z"] = 29.421018,
             },
-        },
+        }, 
         ["products"] = Config.Products["gsgasoline"],
     },
     ["robsliquor"] = {
