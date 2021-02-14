@@ -206,7 +206,7 @@
       </SubHandlingData>
     </Item>  
     <Item type="CHandlingData">
-      <handlingName>2015POLSTANG</handlingName>
+      <handlingName>2015POLSTANGOLD</handlingName>
       <fMass value="2015.000000" />
       <fInitialDragCoeff value="1.0000000" />
       <fDownforceModifier value="1.320000" />
