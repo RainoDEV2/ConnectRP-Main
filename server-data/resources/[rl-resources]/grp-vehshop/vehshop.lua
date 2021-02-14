@@ -483,7 +483,6 @@ local vehshopOwner = {
 				{name = "Bati 801", costs = 32000, description = {}, model = "bati"},
 				{name = "BF400", costs = 13000, description = {}, model = "bf400"},
 				{name = "Carbon RS", costs = 22000, description = {}, model = "carbonrs"},
-				{name = "Daemon", costs = 24000, description = {}, model = "daemon"},
 				{name = "Enduro", costs = 8000, description = {}, model = "enduro"},
 				{name = "Faggio", costs = 3500, description = {}, model = "faggio"},
 				{name = "Gargoyle", costs = 30000, description = {}, model = "gargoyle"},
@@ -504,7 +503,7 @@ local vehshopOwner = {
 				{name = "Defiler", costs = 26000, description = {}, model = "defiler"},
 				{name = "Chimera", costs = 32000, description = {}, model = "chimera"},
 				{name = "Daemon", costs = 16000, description = {}, model = "daemon"},
-				{name = "DaemonHigh", costs = 12000, description = {}, model = "daemon2"},
+				{name = "DaemonHigh", costs = 24000, description = {}, model = "daemon2"},
 			}
 		},
 		["cycles"] = {
