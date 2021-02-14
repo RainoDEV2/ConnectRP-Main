@@ -15,7 +15,7 @@ RegisterServerEvent('hiddenheal:payBill')
 AddEventHandler('hiddenheal:payBill', function()
     local source = source
 	local xPlayer = ESX.GetPlayerFromId(source)
-	xPlayer.removeBank(2000)
+	xPlayer.removeBank(250)
 end)
 
 AddEventHandler('playerDropped', function (reason)

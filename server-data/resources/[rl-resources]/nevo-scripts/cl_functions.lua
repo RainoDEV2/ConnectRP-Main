@@ -124,7 +124,7 @@ Citizen.CreateThread(function()
         if distance < 10 then
             if not IsPedInAnyVehicle(PlayerPedId(), true) then
                 if distance < 3 then
-			        Draw3DText(coords.x, coords.y, coords.z + 0.5, '[E] - Check In ($2,000)')
+			        Draw3DText(coords.x, coords.y, coords.z + 0.5, '[E] - Check In ($450)')
                         if IsControlJustReleased(0, 38) then
                             DisableControlAction(0, 38, true)
                             if (GetEntityHealth(PlayerPedId()) <= 200) then
@@ -148,7 +148,7 @@ Citizen.CreateThread(function()
                                         TriggerServerEvent('hiddenheal:payBill')
                                         EnableControlAction(0, 38, true)
                                         EnableControlAction(0, 38, true)
-                                        RLCore.Functions.Notify('You were billed For $2,000.')
+                                        RLCore.Functions.Notify('You were billed For $450.')
                                     end, function()
                                         RLCore.Functions.Notify("Canceled.", "error")
                                     end)

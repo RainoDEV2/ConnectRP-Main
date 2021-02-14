@@ -189,7 +189,7 @@ local vehshopOwner = {
 			title = "sports",
 			name = "sports",
 			buttons = {
-				{name = "9F", costs = 12000, description = {}, model = "ninef"},
+				{name = "9F", costs = 120000, description = {}, model = "ninef"},
 				{name = "9F Cabrio", costs = 165000, description = {}, model = "ninef2"},
 				{name = "Alpha", costs = 15000, description = {}, model = "alpha"},
 				{name = "Banshee", costs = 70000, description = {}, model = "banshee"},
@@ -241,7 +241,7 @@ local vehshopOwner = {
 				{name = "190z", costs = 115000, description = {}, model = "z190"},
 				{name = "GT500", costs = 140000, description = {}, model = "gt500"},
 				{name = "Savestra", costs = 125000, description = {}, model = "savestra"},
-				{name = "Elegy Retro Custom", costs = 250000, description = {}, model = "elegy"},
+				{name = "Elegy Retro Custom", costs = 11000, description = {}, model = "elegy"},
 			}
 		},
 		["imports"] = {
@@ -394,7 +394,7 @@ local vehshopOwner = {
 				{name = "Tampa", costs = 34000, description = {}, model = "tampa"},
 				{name = "Virgo", costs = 22000, description = {}, model = "virgo"},
 				{name = "Vigero", costs = 23000, description = {}, model = "vigero"},
-				{name = "Elliie", costs = 290000, description = {}, model = "ellie"},
+				{name = "Elliie", costs = 65000, description = {}, model = "ellie"},
 				{name = "Phoenix", costs = 34000, description = {}, model = "phoenix"},
 				{name = "Slam Van", costs = 19500, description = {}, model = "slamvan"},
 				{name = "Yosemite", costs = 45000, description = {}, model = "yosemite"},
