@@ -1,5 +1,3 @@
-author "Lucifer🏴#9955"
-
 fx_version "adamant"
 game { "gta5" }
 
