@@ -175,7 +175,7 @@ AddEventHandler('lockpicks:UseLockpick', function(isAdvanced)
                     if street2 ~= nil then 
                         streetLabel = streetLabel .. " " .. street2
                     end
-                    if math.random(1, 10) < 5 then
+                    if math.random(1, 10) < 7 then
                         TriggerServerEvent("rl-storerobbery:server:callCops", "cashier", currentRegister)   
                         TriggerEvent('dispatch:storeRobbery', 'Store Robbery: Cash Register Lockpicking in progress')
                     end
@@ -194,7 +194,7 @@ AddEventHandler('lockpicks:UseLockpick', function(isAdvanced)
                             if street2 ~= nil then 
                                 streetLabel = streetLabel .. " " .. street2
                             end
-                            if math.random(1, 10) < 5 then
+                            if math.random(1, 10) < 7 then
                                 TriggerServerEvent("rl-storerobbery:server:callCops", "cashier", currentRegister)
                                 TriggerEvent('dispatch:storeRobbery', 'Store Robbery: Cash Register Lockpicking in progress')
                             end
@@ -292,7 +292,7 @@ RegisterNUICallback('success', function()
     if currentRegister ~= 0 then
         lockpick(false)
         TriggerServerEvent('rl-storerobbery:server:setRegisterStatus', currentRegister)
-        local lockpickTime = 30000
+        local lockpickTime = 55000
         LockpickDoorAnim(lockpickTime)
         RLCore.Functions.Progressbar("search_register", "Emptying Register", lockpickTime, false, true, {
             disableMovement = true,
