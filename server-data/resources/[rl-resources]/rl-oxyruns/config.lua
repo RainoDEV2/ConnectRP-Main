@@ -1,7 +1,7 @@
 Config = {}
 
 Config.StartOxyPayment = 2500 -- Cash you pay to start the delivery kekw
-Config.RunAmount = math.random(7,10) -- How many dropoffs you can do per payment, stops at max math.random
+Config.RunAmount = math.random(4,7) -- How many dropoffs you can do per payment, stops at max math.random
 Config.OxyChance = 70 -- Percentage chance of getting oxy on the run. Multiplied by 100. 10% = 100, 20% = 200, 50% = 500, etc. Default 55%.
 Config.BigRewarditemChance = 1 -- Percentage of getting rare item on oxy run. Multiplied by 100. 0.1% = 1, 1% = 10, 20% = 200, 50% = 500, etc. Default 0.1%.
 
