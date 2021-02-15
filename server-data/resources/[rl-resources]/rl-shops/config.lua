@@ -477,7 +477,6 @@ Config.Products = {
             info = {},
             type = "item",
             slot = 18,
-            },
         },
     },   
     ["gsgasoline"] = {
