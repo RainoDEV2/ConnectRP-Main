@@ -131,12 +131,20 @@ Config.Items = {
             slot = 7,
         },
         [8] = {
+            name = "weapon_stungun",
+            price = 25,
+            amount = 1,
+            info = {},
+            type = "weapon",
+            slot = 8,
+        },
+        [9] = {
             name = "weapon_flashlight",
             price = 150,
             amount = 3,
             info = {},
             type = "item",
-            slot = 8,
+            slot = 9,
         },
     }
 }
