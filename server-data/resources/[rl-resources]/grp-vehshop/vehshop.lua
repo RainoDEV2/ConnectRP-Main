@@ -135,6 +135,7 @@ local vehshopOwner = {
 				{name = "Sedans", description = ''},
 				{name = "Sports", description = ''},
 				{name = "Sports Classics", description = ''},
+				{name = "lowriders", description = ''},
 				--{name = "Imports", description = ''},
 				{name = "Muscle", description = ''},
 				{name = "Off-Road", description = ''},
@@ -222,6 +223,15 @@ local vehshopOwner = {
 				{name = "Comet Safari", costs = 47000, description = {}, model = "comet4"},
 				{name = "Pariah", costs = 79000, description = {}, model = "pariah"},
 				{name = "Elegy", costs = 87000, description = {}, model = "elegy2"},
+				{name = "Jester Classic", costs = 33000, description = {}, model = "jester3"},
+				{name = "Neon", costs =69000, description = {}, model = "neon"},
+				{name = "8F Drafter", costs =38000, description = {}, model = "drafter"},
+				{name = "D10", costs =100000, description = {}, model = "coquette4"},
+				{name = "Seven 70", costs =90000, description = {}, model = "seven70"}
+				{name = "Ruston", costs =80000, description = {}, model = "ruston"}
+				{name = "Komoda", costs =50000, description = {}, model = "komoda"}
+				{name = "V-STR", costs =43000, description = {}, model = "vstr"}
+
 			}
 		},
 		["sportsclassics"] = {
@@ -242,6 +252,12 @@ local vehshopOwner = {
 				{name = "GT500", costs = 140000, description = {}, model = "gt500"},
 				{name = "Savestra", costs = 125000, description = {}, model = "savestra"},
 				{name = "Elegy Retro Custom", costs = 110000, description = {}, model = "elegy"},
+				{name = "Cheeta Classic ", costs =230000, description = {}, model = "cheetah2"},
+				{name = "Mamba", costs =175000, description = {}, model = "mamba"},
+				{name = "Roosevelt", costs =200000 , description = {}, model = "btype"},
+				{name = "Z-type", costs =175000 , description = {}, model = "ztype"},
+				{name = "Turismo Classic", costs =230000 , description = {}, model = "turismo2"},
+
 			}
 		},
 		["imports"] = {
@@ -400,6 +416,14 @@ local vehshopOwner = {
 				{name = "Yosemite", costs = 45000, description = {}, model = "yosemite"},
 				{name = "Tulip", costs = 55000, description = {}, model = "tulip"},
 				{name = "Vamos", costs = 65000, description = {}, model = "vamos"},
+				{name = "Deviant", costs = 50000, description = {}, model = "deviant"},
+				{name = "Hermes", costs = 200000, description = {}, model = "hermes"},
+				{name = "Drift Yosemite", costs =45000, description = {}, model = "yosemite2"},
+				{name = "Dominator GTX", costs =, description = {}, model = "dominator3"},
+				{name = "Nightshade", costs =33000, description = {}, model = "nigthshade"},
+				{name = "Dukes Beater", costs =22000, description = {}, model = "dukes3"},
+				{name = "Ruiner", costs =20000, description = {}, model = "ruiner"},
+
 			}
 		},
 		["offroad"] = {
@@ -414,6 +438,12 @@ local vehshopOwner = {
 				{name = "Sandking", costs = 70000, description = {}, model = "sandking"},
 				{name = "Kamacho", costs = 90000, description = {}, model = "kamacho"},
 				{name = "Dubsta 6x6", costs = 95000, description = {}, model = "dubsta3"},
+				{name = "Lifted Yosemite", costs =40000 , description = {}, model = "yosemite3"},
+				{name = "Guardian", costs = 75000, description = {}, model = "guardian"}
+				{name = "Riata", costs = 45000, description = {}, model = "riata"},
+				{name = "Desert Raid", costs =55000, description = {}, model = "trophytruck2"},
+				{name = "Trophy Truck", costs =35000, description = {}, model = "trophytruck"},
+
 			}
 		},
 		["suvs"] = {
@@ -432,6 +462,14 @@ local vehshopOwner = {
 				{name = "Patriot", costs = 40000, description = {}, model = "patriot"},
 				{name = "Gresley", costs = 25000, description = {}, model = "gresley"},
 				{name = "Toros", costs = 110000, description = {}, model = "toros"},
+				{name = "Dubsta Luxury", costs = 75000, description = {}, model = "dubsta2"},
+				{name = "Mesa", costs = 12000, description = {}, model = "mesa"},
+				{name = "Mesa Trail", costs = 42500, description = {}, model = "mesa3"},
+				{name = "Rebla", costs = 42500, description = {}, model = "rebla"},
+				{name = "Baller", costs =55000 , description = {}, model = "baller2"},
+				{name = "Baller LE", costs =60000 , description = {}, model = "baller3"},
+				{name = "Baller LE LWB", costs =65000 , description = {}, model = "baller4"},
+
 			}
 		},
 		["vans"] = {
@@ -472,6 +510,11 @@ local vehshopOwner = {
 				{name = "Washington", costs = 18000, description = {}, model = "washington"},
 				{name = "Tailgater", costs = 87500, description = {}, model = "tailgater"},
 				{name = "Cognoscenti", costs = 30000, description = {}, model = "cognoscenti"},
+				{name = "Cheburek", costs = 32000, description = {}, model = "cheburek"},
+				{name = "Stafford", costs = 60000, description = {}, model = "stafford"},
+				{name = "Surge", costs =25000 , description = {}, model = "surge"},
+				{name = "Sugio", costs =62000 , description = {}, model = "Sugoi"},
+
 			}
 		},
 		["motorcycles"] = {
@@ -519,6 +562,22 @@ local vehshopOwner = {
 				{name = "Pro 3", costs = 2000, description = {}, model = "tribike3"},
 			}
 		},
+		["lowriders"] = {
+			title = "lowriders",
+			name = "lowriders",
+			buttons = {
+				{name = "Moonbeam Lux", costs = 32500, description = {}, model = "moonbeam2"},
+				{name = "Chino Lux", costs = 34000, description = {}, model = "chino2"},
+				{name = "Voodoo Lux", costs = 33000, description = {}, model = "voodoo2"},
+				{name = "Faction Lux", costs = 31000, description = {}, model = "faction2"},
+				{name = "Slamvan Lux", costs = 32500, description = {}, model = "slamvan3"},
+				{name = "Buccaneer Lux", costs = 33000, description = {}, model = "buccaneer2"},
+				{name = "Primo Lux", costs = 30000, description = {}, model = "primo2"},
+				{name = "Minivan Lux", costs = 26000, description = {}, model = "minivan2"},
+				{name = "Manana Lux", costs = 35000, description = {}, model = "manana2"},
+			}
+		},
+
 	}
 }
 
