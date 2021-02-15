@@ -416,6 +416,37 @@ Config.Jobs = {
         }
     }
 }]]--
+-- HUNTING
+Citizen.CreateThread(function() 
+    while true do
+        Citizen.Wait(1)
+        if QBCore == nil then
+            TriggerEvent("RLCore:GetObject", function(obj) QBCore = obj end)     ------//// Just change "XD:GetObject" to your respective framework. Example "QBCore:GetObject" etc.
+			Citizen.Wait(200)
+        end
+	end
+end)
+Notify = "RLCore:Notify"
+
+Inventory = 'inventory:client:ItemBox'
+
+
+AnimalPositions = {
+	{ x = -1505.2, y = 4887.39, z = 78.38 },
+	{ x = -1164.68, y = 4806.76, z = 223.11 },
+	{ x = -1410.63, y = 4730.94, z = 44.0369 },
+	{ x = -1377.29, y = 4864.31, z = 134.162 },
+	{ x = -1697.63, y = 4652.71, z = 22.2442 },
+	{ x = -1259.99, y = 5002.75, z = 151.36 },
+	{ x = -960.91, y = 5001.16, z = 183.0 },
+}
+
+Positions = {
+	['StartHunting'] = { ['hint'] = '[E] Start Hunting', ['x'] = -769.23773193359, ['y'] = 5595.6215820313, ['z'] = 33.48571395874 },
+	['Sell'] = { ['hint'] = '[E] Sell', ['x'] = 959.62, ['y'] = -1991.8, ['z'] = 30.23 },
+}
+
+----------------------
 
 Config.DropOff = {
     Name = "Drop Off",
