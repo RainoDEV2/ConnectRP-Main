@@ -468,7 +468,7 @@ Config.Products = {
             ammount = 50,
             info = {},
             type = "item",
-            slot = 17
+            slot = 17,
         },
         [18] = {
             name = "weapon_bat"
@@ -476,7 +476,7 @@ Config.Products = {
             ammount = 50,
             info = {},
             type = "item",
-            slot = 18
+            slot = 18,
             },
         },
     },   
