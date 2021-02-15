@@ -416,37 +416,6 @@ Config.Jobs = {
         }
     }
 }]]--
--- HUNTING
-Citizen.CreateThread(function() 
-    while true do
-        Citizen.Wait(1)
-        if QBCore == nil then
-            TriggerEvent("RLCore:GetObject", function(obj) QBCore = obj end)     ------//// Just change "XD:GetObject" to your respective framework. Example "QBCore:GetObject" etc.
-			Citizen.Wait(200)
-        end
-	end
-end)
-Notify = "RLCore:Notify"
-
-Inventory = 'inventory:client:ItemBox'
-
-
-AnimalPositions = {
-	{ x = -1505.2, y = 4887.39, z = 78.38 },
-	{ x = -1164.68, y = 4806.76, z = 223.11 },
-	{ x = -1410.63, y = 4730.94, z = 44.0369 },
-	{ x = -1377.29, y = 4864.31, z = 134.162 },
-	{ x = -1697.63, y = 4652.71, z = 22.2442 },
-	{ x = -1259.99, y = 5002.75, z = 151.36 },
-	{ x = -960.91, y = 5001.16, z = 183.0 },
-}
-
-Positions = {
-	['StartHunting'] = { ['hint'] = '[E] Start Hunting', ['x'] = -769.23773193359, ['y'] = 5595.6215820313, ['z'] = 33.48571395874 },
-	['Sell'] = { ['hint'] = '[E] Sell', ['x'] = 959.62, ['y'] = -1991.8, ['z'] = 30.23 },
-}
-
-----------------------
 
 Config.DropOff = {
     Name = "Drop Off",
@@ -630,5 +599,153 @@ Config.DropOffLocations = {
         [29] =  { ['x'] = -37.57359, ['y'] = 170.36849, ['z'] = 95.359237 },
         [30] =  { ['x'] = 17.745203, ['y'] = -13.83824, ['z'] = 70.310768 },
         [31] =  { ['x'] = 101.53557, ['y'] = -222.4989, ['z'] = 54.636135 },
+    }
+}
+
+--fishing 
+Config.Debug = false
+Config.JobBusy = false
+
+Config.MarkerData = {
+    ["type"] = 6,
+    ["size"] = vector3(2.0, 2.0, 2.0),
+    ["color"] = vector3(0, 255, 150)
+}
+
+Config.FishingRestaurant = {
+    ["name"] = "La Spada Fish Restaurant",
+    ["blip"] = {
+        ["sprite"] = 628,
+        ["color"] = 3
+    },
+    ["ped"] = {
+        ["model"] = 0xED0CE4C6,
+        ["position"] = vector3(-1038.4545898438, -1397.0551757813, 5.553192615509),
+        ["heading"] = 75.0
+    }
+}
+
+Config.FishingItems = {
+    ["rod"] = {
+        ["name"] = "fishingrod",
+        ["label"] = "Fishing Rod"
+    },
+    ["bait"] = {
+        ["name"] = "fishingbait",
+        ["label"] = "Fishing Bait"
+    },
+    ["fish"] = {
+        ["price"] = 25 
+    },
+    ["stripedbass"] = {
+        ["price"] = 50
+    },
+    ["bluefish"] = {
+        ["price"] = 50
+    },
+    ["redfish"] = {
+        ["price"] = 100 
+    },
+    ["pacifichalibut"] = {
+        ["price"] = 100 
+    },
+    ["goldfish"] = {
+        ["price"] = 100
+    },
+    ["largemouthbass"] = {
+        ["price"] = 500
+    },
+    ["salmon"] = {
+        ["price"] = 500
+    },
+    ["catfish"] = {
+        ["price"] = 500
+    },
+    ["tigersharkmeat"] = {
+        ["price"] = 500
+    },
+    ["stingraymeat"] = {
+        ["price"] = 1000
+    },
+    ["killerwhalemeat"] = {
+        ["price"] = 1000
+    },
+}
+
+Config.FishingZones = {
+    {
+        ["name"] = "Beach Fishing",
+        ["coords"] = vector3(-1948.1279296875, -749.79125976563, 2.5400819778442),
+        ["radius"] = 50.0,
+    },
+    {
+        ["name"] = "Sandy Fishing 1",
+        ["coords"] = vector3(1311.5769042969, 4228.833984375, 33.915531158447),
+        ["radius"] = 50.0,
+    },
+    {
+        ["name"] = "Sandy Fishing 2",
+        ["coords"] = vector3(1525.0518798828, 3908.9050292969, 30.799766540527),
+        ["radius"] = 50.0,
+    },
+    {
+        ["name"] = "Sandy Fishing 3",
+        ["coords"] = vector3(2223.6940917969, 4575.70703125, 31.233570098877),
+        ["radius"] = 50.0,
+    },
+    {
+        ["name"] = "Sandy Fishing 4",
+        ["coords"] = vector3(31.989250183105, 4294.7797851563, 31.231893539429),
+        ["radius"] = 50.0,
+    },
+    {
+        ["name"] = "ocean Fishing 1",
+        ["coords"] = vector3(-1835.0385742188, -1820.4168701172, 3.6758048534393),
+        ["radius"] = 200.0,
+    },
+    {
+        ["name"] = "ocean Fishing 2",
+        ["coords"] = vector3(-722.52124023438, 7188.6108398438, 1.8514842987061),
+        ["radius"] = 200.0,
+    },
+    {
+        ["name"] = "ocean Fishing 3",
+        ["coords"] = vector3(3469.1770019531, 1271.2962646484, 1.366447687149),
+        ["radius"] = 200.0,
+    },
+    {
+        ["name"] = "ocean Fishing 4",
+        ["coords"] = vector3(-3277.4191894531, 2613.3405761719, 1.6248697042465),
+        ["radius"] = 200.0,
+    },
+    {
+        ["name"] = "special0",
+        ["coords"] = vector3(7040.34, 8172.63, 204.435),
+        ["radius"] = 500.0,
+        ["secret"] = true,
+    },
+    {
+        ["name"] = "special1",
+        ["coords"] = vector3(3194.11121337885, 906.8347851562501, 442.03224151611005),
+        ["radius"] = 10.0,
+        ["secret"] = true,
+    },
+    {
+        ["name"] = "special2",
+        ["coords"] = vector3(-3081.5139697266004, 4007.4116894532, 201.00122415304185),
+        ["radius"] = 10.0,
+        ["secret"] = true,
+    },
+    {
+        ["name"] = "special3",
+        ["coords"] = vector3(-2523.3720629883, 7160.87897460945, 200.27662748873234),
+        ["radius"] = 10.0,
+        ["secret"] = true,
+    },
+    {
+        ["name"] = "special4",
+        ["coords"] = vector3(250.32162254333554, 1483.387672119135, 496.65704315185496),
+        ["radius"] = 10.0,
+        ["secret"] = true,
     }
 }
