@@ -463,7 +463,7 @@ Config.Products = {
             slot = 16,
         },
         [17] = {
-            name = "weapon_crowbar"
+            name = "weapon_crowbar",
             price = 500,
             ammount = 50,
             info = {},
@@ -471,7 +471,7 @@ Config.Products = {
             slot = 17,
         },
         [18] = {
-            name = "weapon_bat"
+            name = "weapon_bat",
             price = 500,
             ammount = 50,
             info = {},
