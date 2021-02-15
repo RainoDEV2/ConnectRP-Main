@@ -5,7 +5,7 @@ TriggerEvent("RLCore:GetObject", function(obj) RLCore = obj end)
 RLCore.Commands.Add("mdt", "Police Database", {}, false, function(source, args)
 	local usource = source
     local xPlayer = RLCore.Functions.GetPlayer(source)
-    if xPlayer and (xPlayer.PlayerData.job.name == 'police' or xPlayer.PlayerData.job.name == 'lawyer' or xPlayer.PlayerData.job.name == 'judge' and xPlayer.PlayerData.job.isboss) then
+    if xPlayer and xPlayer.PlayerData.job.name == 'police' or xPlayer.PlayerData.job.name == 'lawyer' or xPlayer.PlayerData.job.name == 'judge' or xPlayer.PlayerData.job.isboss then
     	exports['ghmattimysql']:execute("SELECT * FROM (SELECT * FROM `mdt_reports` ORDER BY `id` DESC LIMIT 3) sub ORDER BY `id` DESC", {}, function(reports)
     		for r = 1, #reports do
     			reports[r].charges = json.decode(reports[r].charges)
