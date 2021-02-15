@@ -198,7 +198,7 @@ RLCore.Functions.GetClosestVehicle = function(coords)
 
 	TriggerEvent("debug", 'RLCore: Closest Vehicle Distance ' .. closestDistance, 'normal')
 
-	return closestVehicle
+	return closestVehicle, closestDistance
 end
 
 RLCore.Functions.GetClosestPed = function(coords, ignoreList)

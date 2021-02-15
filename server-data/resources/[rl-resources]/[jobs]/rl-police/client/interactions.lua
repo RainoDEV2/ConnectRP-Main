@@ -72,16 +72,34 @@ AddEventHandler('police:client:PutInVehicle', function()
     if isHandcuffed or isEscorted then
         local vehicle, distance = RLCore.Functions.GetClosestVehicle()
         if DoesEntityExist(vehicle) then
-            for i = GetVehicleMaxNumberOfPassengers(vehicle), 1, -1 do
-                if IsVehicleSeatFree(vehicle, i) then
-                    isEscorted = false
-                    TriggerEvent('hospital:client:isEscorted', isEscorted)
-                    ClearPedTasks(GetPlayerPed(-1))
-                    DetachEntity(GetPlayerPed(-1), true, false)
-
-                    Citizen.Wait(100)
-                    SetPedIntoVehicle(GetPlayerPed(-1), vehicle, i)
-                    return
+            if distance <= 5.0 then
+                local maxSeats, freeSeat = GetVehicleMaxNumberOfPassengers(vehicle)
+                if maxSeats > 0 then
+                    local seats = {}
+                    for i = 1, maxSeats, 1 do -- Loop through all seats and add them into seats table
+                        table.insert(seats, i)
+                    end
+    
+                    table.sort(seats, function(a, b) return a > b end) -- Sort the amount of seats available highest to lowest, so it places them in highest seat first.
+    
+                    if #seats > 1 then -- If our vehicle has more than one passenger seat
+                        for index, seat in pairs(seats) do
+                            if IsVehicleSeatFree(vehicle, seat) then
+                                freeSeat = seat
+                                break
+                            end
+                        end
+                    else
+                        freeSeat = 0 -- Set seat to front right passenger seat
+                    end
+                    
+                    if freeSeat then
+                        TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, freeSeat)
+                        loadAnimDict("mp_arresting")
+                        TaskPlayAnim(PlayerPedId(), "mp_arresting", "idle", 8.0, -8, -1, 49, 0, 0, 0, 0) -- Play arrest animation in vehicle, rather than just sitting
+                    end
+                else
+                    RLCore.Functions.Notify("No passenger seat found!", "error")
                 end
             end
         end
