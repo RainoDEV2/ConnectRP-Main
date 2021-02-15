@@ -161,6 +161,11 @@ AddEventHandler('police:server:SetHandcuffStatus', function(isHandcuffed)
 	end
 end)
 
+RLCore.Functions.CreateCallback('police:server:isPlayerCuffed', function(source, cb, playerId)
+    local Player = RLCore.Functions.GetPlayer(playerId)
+    cb(Player.PlayerData.metadata["ishandcuffed"])
+end)
+
 RegisterServerEvent('heli:spotlight')
 AddEventHandler('heli:spotlight', function(state)
 	local serverID = source

@@ -14,6 +14,7 @@ isLoggedIn = true
 
 isHandcuffed = false
 cuffType = 1
+handcuffsProp = nil
 isEscorted = false
 draggerId = 0
 PlayerJob = {}
@@ -77,6 +78,8 @@ Citizen.CreateThread(function()
     PlayerJob = RLCore.Functions.GetPlayerData().job
     onDuty = RLCore.Functions.GetPlayerData().job.onduty
     isHandcuffed = false
+    DeleteEntity(handcuffsProp)
+    handcuffsProp = nil
     TriggerServerEvent("RLCore:Server:SetMetaData", "ishandcuffed", false)
     TriggerServerEvent("police:server:SetHandcuffStatus", false)
     TriggerServerEvent("police:server:UpdateBlips")
@@ -166,6 +169,8 @@ AddEventHandler('RLCore:Client:OnPlayerUnload', function()
     TriggerServerEvent("police:server:UpdateCurrentCops")
     isLoggedIn = false
     isHandcuffed = false
+    DeleteEntity(handcuffsProp)
+    handcuffsProp = nil
     isEscorted = false
     onDuty = false
     ClearPedTasks(GetPlayerPed(-1))
@@ -529,6 +534,8 @@ RegisterNetEvent('police:client:SendToJail')
 AddEventHandler('police:client:SendToJail', function(time)
     TriggerServerEvent("police:server:SetHandcuffStatus", false)
     isHandcuffed = false
+    DeleteEntity(handcuffsProp)
+    handcuffsProp = nil
     isEscorted = false
     ClearPedTasks(GetPlayerPed(-1))
     DetachEntity(GetPlayerPed(-1), true, false)
