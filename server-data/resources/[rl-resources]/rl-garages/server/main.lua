@@ -161,23 +161,13 @@ AddEventHandler('rl-garage:server:updateVehicleState', function(state, plate, ga
     exports['ghmattimysql']:execute('UPDATE bbvehicles SET state = @state, garage = @garage, depotprice = @depotprice WHERE plate = @plate', {['@state'] = state, ['@plate'] = plate, ['@depotprice'] = 0, ['@citizenid'] = pData.PlayerData.citizenid, ['@garage'] = garage})
 end)
 
-RegisterServerEvent('rl-garage:server:updateVehicleStatus')
-AddEventHandler('rl-garage:server:updateVehicleStatus', function(fuel, engine, body, plate, garage)
+RegisterServerEvent('rl-garage:server:updateComponents')
+AddEventHandler('rl-garage:server:updateComponents', function(components, plate, garage)
     local src = source
     local pData = RLCore.Functions.GetPlayer(src)
 
-    if engine > 1000 then
-        engine = engine / 1000
-    end
-
-    if body > 1000 then
-        body = body / 1000
-    end
-
-    exports['ghmattimysql']:execute('UPDATE bbvehicles SET fuel = @fuel, engine_damage = @engine_damage, body_damage = @body_damage WHERE plate = @plate AND citizenid = @citizenid AND garage = @garage', {
-        ['@fuel'] = fuel, 
-        ['@engine_damage'] = engine, 
-        ['@body_damage'] = body,
+    exports['ghmattimysql']:execute('UPDATE bbvehicles SET props = @props WHERE plate = @plate AND citizenid = @citizenid AND garage = @garage', {
+        ['@props'] = json.encode(components),
         ['@plate'] = plate,
         ['@garage'] = garage,
         ['@citizenid'] = pData.PlayerData.citizenid
