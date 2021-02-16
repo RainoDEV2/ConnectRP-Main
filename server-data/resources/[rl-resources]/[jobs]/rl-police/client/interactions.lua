@@ -101,8 +101,10 @@ AddEventHandler('police:client:PutInVehicle', function()
                         DetachEntity(ped, true, false)
                         Wait(100)
                         TaskWarpPedIntoVehicle(ped, vehicle, freeSeat)
-                        loadAnimDict("mp_arresting")
-                        TaskPlayAnim(ped, "mp_arresting", "idle", 8.0, -8, -1, 49, 0, 0, 0, 0) -- Play arrest animation in vehicle, rather than just sitting
+                        if isHandcuffed then -- If handcuffed do the handcuff sit animation
+                            loadAnimDict("mp_arresting")
+                            TaskPlayAnim(ped, "mp_arresting", "idle", 8.0, -8, -1, 49, 0, 0, 0, 0) -- Play arrest animation in vehicle, rather than just sitting
+                        end
                     end
                 else
                     RLCore.Functions.Notify("No passenger seat found!", "error")
