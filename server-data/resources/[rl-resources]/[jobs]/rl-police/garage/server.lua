@@ -27,17 +27,6 @@ AddEventHandler('rl:police:garage:jobcheck', function(value)
             end
         end
         if value == 'POLCHAR' then
-            if (stupiduser.PlayerData.job.name == "police" and stupiduser.PlayerData.job.grade.level >= 3) then
-                TriggerClientEvent('rl:police:garage:jobcheck:back', source, value, 1)
-            else
-                if stupiduser.PlayerData.job.name ~= "police" then
-                    TriggerClientEvent('rl:police:garage:jobcheck:back', source, value, 3)
-                else
-                    TriggerClientEvent('rl:police:garage:jobcheck:back', source, value, 2)
-                end
-            end
-        end
-        if value == '2015POLSTANG' then
             if (stupiduser.PlayerData.job.name == "police" and stupiduser.PlayerData.job.grade.level >= 4) then
                 TriggerClientEvent('rl:police:garage:jobcheck:back', source, value, 1)
             else
@@ -48,8 +37,19 @@ AddEventHandler('rl:police:garage:jobcheck', function(value)
                 end
             end
         end
+        if value == '2015POLSTANG' then
+            if (stupiduser.PlayerData.job.name == "police" and stupiduser.PlayerData.job.grade.level >= 6) then
+                TriggerClientEvent('rl:police:garage:jobcheck:back', source, value, 1)
+            else
+                if stupiduser.PlayerData.job.name ~= "police" then
+                    TriggerClientEvent('rl:police:garage:jobcheck:back', source, value, 3)
+                else
+                    TriggerClientEvent('rl:police:garage:jobcheck:back', source, value, 2)
+                end
+            end
+        end
         if value == 'POLTAH' then
-            if (stupiduser.PlayerData.job.name == "police" and stupiduser.PlayerData.job.grade.level >= 5) then
+            if (stupiduser.PlayerData.job.name == "police" and stupiduser.PlayerData.job.grade.level >= 8) then
                 TriggerClientEvent('rl:police:garage:jobcheck:back', source, value, 1)
             else
                 if stupiduser.PlayerData.job.name ~= "police" then
@@ -62,7 +62,7 @@ AddEventHandler('rl:police:garage:jobcheck', function(value)
 
         --REARRANGE
         if value == '18CHGRLEO' then
-            if (stupiduser.PlayerData.job.name == "police" and stupiduser.PlayerData.job.grade.level >= 3) then
+            if (stupiduser.PlayerData.job.name == "police" and stupiduser.PlayerData.job.grade.level >= 7) then
                 TriggerClientEvent('rl:police:garage:jobcheck:back', source, value, 1)
             else
                 if stupiduser.PlayerData.job.name ~= "police" then
@@ -73,7 +73,7 @@ AddEventHandler('rl:police:garage:jobcheck', function(value)
             end
         end
         if value == 'EXPLEO' then
-            if (stupiduser.PlayerData.job.name == "police" and stupiduser.PlayerData.job.grade.level >= 3) then
+            if (stupiduser.PlayerData.job.name == "police" and stupiduser.PlayerData.job.grade.level >= 5) then
                 TriggerClientEvent('rl:police:garage:jobcheck:back', source, value, 1)
             else
                 if stupiduser.PlayerData.job.name ~= "police" then
@@ -84,7 +84,7 @@ AddEventHandler('rl:police:garage:jobcheck', function(value)
             end
         end
         if value == 'TRHAWK' then
-            if (stupiduser.PlayerData.job.name == "police" and stupiduser.PlayerData.job.grade.level >= 3) then
+            if (stupiduser.PlayerData.job.name == "police" and stupiduser.PlayerData.job.grade.level >= 8) then
                 TriggerClientEvent('rl:police:garage:jobcheck:back', source, value, 1)
             else
                 if stupiduser.PlayerData.job.name ~= "police" then
