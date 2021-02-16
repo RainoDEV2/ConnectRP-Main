@@ -76,7 +76,7 @@ Citizen.CreateThread(function()
                         end
                     end
 
-                    if storeDist < 2 then
+                    --[[ if storeDist < 2 then
                         if not firstAlarm then
                             if validWeapon() then
                                 TriggerEvent('dispatch:jewelryRobbery')
@@ -88,7 +88,7 @@ Citizen.CreateThread(function()
                                 firstAlarm = true
                             end
                         end
-                    end
+                    end ]]
                 end
             -- end
         end
@@ -151,6 +151,16 @@ function smashVitrine(k)
         RLCore.Functions.Notify("You broke the glass.", "error")
     end
 
+
+    TriggerEvent('dispatch:jewelryRobbery')
+    local cameraID = math.random(31,34)
+    if not usedCameras[cameraID] then
+        usedCameras[cameraID] = true
+        TriggerServerEvent("police:camera", cameraID)
+    end
+    firstAlarm = true
+
+
     smashing = true
 
     RLCore.Functions.Progressbar("smash_vitrine", "Robbing", Config.WhitelistedWeapons[pedWeapon]["timeOut"], false, true, {
@@ -188,7 +198,6 @@ function smashVitrine(k)
             Citizen.Wait(2500)
         end
     end)
-
     isInTimeout = false
 end
 

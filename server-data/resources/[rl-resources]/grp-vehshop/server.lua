@@ -206,3 +206,38 @@ end)
     end)
     --RLCore.Functions.ExecuteSql(false,'UPDATE finance FROM bbvehicles WHERE ')
 ]]
+
+RLCore.Functions.CreateCallback('tc-finance:RepayLoan', function(source, cb, plate, price)
+	local xPlayer = RLCore.Functions.GetPlayer(source)
+	while not xPlayer do
+		xPlayer = RLCore.Functions.GetPlayer(source)
+		Citizen.Wait(10)
+	end
+	local cbData
+
+    
+   
+	if  xPlayer.PlayerData.money['bank'] >= price then xPlayer.Functions.RemoveMoney('bank',price)
+        cbData = true
+    else cbData = false
+    end 
+	if cbData then
+        
+
+		RLCore.Functions.ExecuteSql(false,"SELECT * FROM owned_vehicles WHERE plate=@plate",{['@plate'] = plate}, function(data)	
+            if not data or not data[1] then return; end
+            local prevAmount = data[1].finance
+            if prevAmount - price <= 0 or prevAmount - price <= 0.0 then settimer = 0; else settimer = JVF.MaxRepayTime * 60; end
+            RLCore.Functions.ExecuteSql(false,'UPDATE bbvehicles SET finance=@finance WHERE plate=@plate',{['@finance'] = prevAmount - price, ['@plate'] = plate})
+            RLCore.Functions.ExecuteSql(false,'UPDATE bbvehicles SET financetimer=@financetimer WHERE plate=@plate',{['@financetimer'] = settimer, ['@plate'] = plate})
+        end)
+	end
+end)
+
+RLCore.Functions.CreateCallback('tc-finance:GetOwnedVehicles',function(source, cb)
+	local xPlayer = RLCore.Functions.GetPlayer(source)
+	while not xPlayer do xPlayer = RLCore.Functions.GetPlayer(source); Citizen.Wait(0);end
+	RLCore.Functions.ExecuteSql(false,"SELECT * FROM bbvehicles WHERE citizenid= '" .. xPlayer.PlayerData.citizenid .. "'", function(data)	
+	    cb(data)
+    end)
+end)

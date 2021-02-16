@@ -3,7 +3,7 @@ Config = {}
 Config.MinimalDoctors = 3
 
 Config.Locations = {
-    ["checking"] = {x = 307.93, y = -594.99, z = 43.28, h = 0.0},
+    ["checking"] = {x = 312.07571, y = -593.4837, z = 43.284061, h = 0.0},
     ["pharmacy"] = {x = 309.08, y = -592.91, z = 43.28, h = 0.0},
 
     ["duty"] = {
@@ -12,9 +12,14 @@ Config.Locations = {
     ["vehicle"] = {
         [1] = {x = 294.578, y = -574.761, z = 43.179, h = 35.792},
         [2] = {x = 337.63403, y = -578.8991, z = 28.796844, h = 156.24035},
+        [3] = {x = 317.77432, y = -573.7828, z = 28.796842, h = 252.14067 },
+        [4] = {x = 318.88052, y = -569.4916, z = 28.796842, h = 248.68237 },
+        [5] = {x = 320.51202, y = -565.1149, z = 28.796842, h = 247.20288 },
+        [6] = {x = 315.9385, y = -578.1325, z = 28.796842, h = 245.12908 },
     },
     ["helicopter"] = {
         [1] = {x = 351.58, y = -587.45, z = 74.16, h = 160.5},
+        [2] = {x = 449.168, y = -981.325, z = 43.691, h = 87.234},
     },    
     ["armory"] = {
         [1] = {x = 306.26, y = -601.7, z = 43.28, h = 90.654},
@@ -40,9 +45,10 @@ Config.Locations = {
 Config.Vehicles = {
     ["emsa"] = "Ambulance",
     ["emsc"] = "Dodge Charger",
-	["emsf"] = "Paramedic SUV",
-	["emst"] = "Paramedic Van",
-    ["madabike"] = "Bike",
+	["emsf"] = "Paramedic F-350",
+	["emst"] = "Paramedic Tahoe",
+    ["emsv"] = "Coroner Van",
+
 }
 
 Config.Helicopter = "emsair"
@@ -131,12 +137,20 @@ Config.Items = {
             slot = 7,
         },
         [8] = {
+            name = "weapon_stungun",
+            price = 25,
+            amount = 1,
+            info = {},
+            type = "weapon",
+            slot = 8,
+        },
+        [9] = {
             name = "weapon_flashlight",
             price = 150,
             amount = 3,
             info = {},
             type = "item",
-            slot = 8,
+            slot = 9,
         },
     }
 }

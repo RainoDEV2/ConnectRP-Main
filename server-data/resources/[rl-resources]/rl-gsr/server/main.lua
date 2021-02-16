@@ -53,11 +53,11 @@ end)
 
 RegisterServerEvent("GSR_Server:SetGSR")
 AddEventHandler("GSR_Server:SetGSR", function()
-    print("SET MA GSR BITCHHHHHH")
+    --print("SET MA GSR BITCHHHHHH")
     local src = source
     local identifier = GetPlayerIdentifiers(src)[1]
     gsrData[identifier] = os.time(os.date("!*t")) + Config.gsrTime
-    print("GSR TINGS", json.encode(gsrData[identifier]))
+    --print("GSR TINGS", json.encode(gsrData[identifier]))
 end)
 
 

@@ -55,6 +55,10 @@ Config.Locations = {
        [7] = { ['x'] = 436.2752, ['y'] = -975.8202, ['z'] = 25.699792, ['h'] = 94.253761 },
        --[8] = { ['x'] = 437.36444, ['y'] = -991.4945, ['z'] = 25.825035, ['h'] = 93.966674 },
        [8] = { ['x'] = 444.99926, ['y'] = -991.558, ['z'] = 25.699813, ['h'] = 265.90441 },
+       [9] = { ['x'] = 317.77432, ['y'] = -573.7828, ['z'] = 28.796842, ['h'] = 252.14067 },
+       [10] = { ['x'] = 318.88052, ['y'] = -569.4916, ['z'] = 28.796842, ['h'] = 248.68237 },
+       [11] = { ['x'] = 320.51202, ['y'] = -565.1149, ['z'] = 28.796842, ['h'] = 247.20288 },
+       [12] = { ['x'] = 315.9385, ['y'] = -578.1325, ['z'] = 28.796842, ['h'] = 245.12908 },
 
    },
    ["stash"] = {
@@ -70,6 +74,7 @@ Config.Locations = {
        [1] = {x = 449.168, y = -981.325, z = 43.691, h = 87.234},
        [2] = {x = 1893.71, y = 3697.82, z = 32.88, h = 213.31},
        [3] = {x = -475.43, y = 5988.353, z = 31.716, h = 31.34},
+       [4] = {x = 352.17401, y = -588.3106, z = 74.161773, h = 68.790626},
    }, 
    ["boat"] = {
        [1] = {x = -789.27, y = -1486.10, z = 0.26, h = 105.81},
@@ -170,13 +175,15 @@ Config.SecurityCameras = {
 
 
 Config.Vehicles = {
-    ["POLVIC"] = "LSPD Vic",
-    --["POLVIC2"] = "BCSO/SASP Vic",
-    --["POLTAURUS"] = "Taurus",
-    --["POLTAH"] = "Tahoe",
-    ["pol8"] = "Motorbike",
-    ["POLRAPTOR"] = "Raptor",
-    --["POLCHAR"] = "Charger",
+    --["POLVIC"] = "LSPD Vic",
+    ["POLVIC2"] = "2011 Crown Vic",
+    ["POLTAURUS"] = "2016 Taurus",
+    ["POLTAH"] = "2015 Tahoe",
+    --["pol8"] = "Motorbike",
+    ["POLRAPTOR"] = "2020 Raptor",
+    ["expleo"] = "2016 Explorer",
+    ["18chgrleo"] = "2018 Charger",
+    ["POLCHAR"] = "2014 Charger",
     ["POL10"] = "SWAT Suburban",
     ["pbus2"] = "Prison Bus",
     ["policet"] = "Armored Van",
@@ -433,7 +440,7 @@ Config.Items = {
         },
         [20] = {
             name = "pistol_ammo",
-            price = 20,
+            price = 10,
             amount = 15,
             info = {},
             type = "item",
@@ -441,7 +448,7 @@ Config.Items = {
         },    
         [21] = {
             name = "smg_ammo",
-            price = 20,
+            price = 15,
             amount = 15,
             info = {},
             type = "item",
@@ -449,7 +456,7 @@ Config.Items = {
         },
         [22] = {
             name = "rifle_ammo",
-            price = 20,
+            price = 15,
             amount = 15,
             info = {},
             type = "item",

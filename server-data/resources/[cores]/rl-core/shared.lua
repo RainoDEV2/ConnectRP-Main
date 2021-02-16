@@ -7228,77 +7228,78 @@ RLShared.Jobs = {
 	},
 	["police"] = {
         label = "San Andreas Law Enforcement",
+		payment = 850,
         grades = {
 			['0'] = {
                 name = "S.A.L.E. Cadet",
-                payment = 350
+                payment = 375
             },
             ['1'] = {
                 name = "Officer",
-				payment = 445
+				payment = 450
 			},
             ['2'] = {
                 name = "Deputy",
-				payment = 445
+				payment = 450
 			},
             ['3'] = {
                 name = "Trooper",
-                payment = 445
+                payment = 700
             },
             ['4'] = {
                 name = "Senior Officer",
-                payment = 475
+                payment = 550
 			},
 			['5'] = {
                 name = "Senior Deputy",
-                payment = 475
+                payment = 550
             },
             ['6'] = {
                 name = "Corporal",
-                payment = 495
+                payment = 650
             },
             ['7'] = {
                 name = "Sergeant",
-                payment = 525
+                payment = 700
             },
             ['8'] = {
                 name = "Lieutenant",
-                payment = 550
+                payment = 775
             },
             ['9'] = {
                 name = "Captian",
 				isboss = true,
-                payment = 550
+                payment = 800
             },
             ['10'] = {
 				name = "Assistant Chief of Police",
 				isboss = true,
-                payment = 575
+                payment = 850
             },
             ['11'] = {
 				name = "Chief of Police",
 				isboss = true,
-                payment = 575
+                payment = 850
 			},
 			['12'] = {
 				name = "Undersheriff",
 				isboss = true,
-				payment = 575
+				payment = 850
 			},
 			['13'] = {
 				name = "Sheriff",
 				isboss = true,
-                payment = 575
+                payment = 850
 			},
 			['14'] = {
 				name = "Lieutenant Colonel",
 				isboss = true,
-                payment = 575
+                payment = 850
 			},
 			['15'] = {
 				name = "Colonel",
 				isboss = true,
-                payment = 575
+                payment = 850
             },
         },
         defaultDuty = false,
@@ -7306,35 +7307,36 @@ RLShared.Jobs = {
 	
 	["ambulance"] = {
 		label = "Ambulance",
+		payment = 700,
 		grades = {
 			['0'] = {
                 name = "Rookie",
-                payment = 250
+                payment = 400
             },
             ['1'] = {
                 name = "Medical Orderly",
-                payment = 260
+                payment = 450
             },
             ['2'] = {
                 name = "Paramedic",
-                payment = 270
+                payment = 500
             },
             ['3'] = {
                 name = "Doctor",
-                payment = 320
+                payment = 550
             },
             ['4'] = {
                 name = "Commander-in-Chief",
-                payment = 330
+                payment = 550
             },
             ['5'] = {
                 name = "Supervisor",
-                payment = 340
+                payment = 675
             },
             ['6'] = {
                 name = "EMS Chief",
                 isboss = true,
-                payment = 350
+                payment = 700
             },
         },
 		defaultDuty = false,
@@ -7445,52 +7447,79 @@ RLShared.Jobs = {
 	},
 	["judge"] = {
 		label = "Department of Justice",
-		payment = 500,
+		payment = 700,
 		grades = {
             ['0'] = {
                 name = "Attorney",
-                payment = 300
+                payment = 550
 			},
 			['1'] = {
 				name = "Senior Attorney",
-				payment = 310
+				payment = 550
 			},
 			['2'] = {
 				name = "Assistant District Attorney",
-				payment = 325
+				payment = 575
 			},
 			['3'] = {
 				name = "District Attorney",
-				payment = 350
+				payment = 600
 			},
 			['4'] = {
 				name = "Justice",
-				payment = 395
+				payment = 675
 			},
 			['5'] = {
 				name = "Chief Justice",
-				payment = 420
+				isboss = true,
+				payment = 700
 			},
 		},
 		defaultDuty = true,
 	},
 	["lawyer"] = {
-		label = "San Andreas Bar",
-		payment = 50,
+		label = "Department of Justice",
+		payment = 700,
 		defaultDuty = true,
 		grades = {
 			['0'] = {
                 name = "Paralegal",
-                payment = 230
+                payment = 450
             },
             ['1'] = {
                 name = "Lawyer",
-                payment = 280
+                payment = 500
             },
             ['2'] = {
                 name = "Senior Lawyer",
-                payment = 375
-            },
+                payment = 550
+			},
+            ['3'] = {
+                name = "Attorney",
+                payment = 550
+			},
+			['4'] = {
+				name = "Senior Attorney",
+				payment = 550
+			},
+			['5'] = {
+				name = "Assistant District Attorney",
+				payment = 575
+			},
+			['6'] = {
+				name = "District Attorney",
+				isboss = true,
+				payment = 600
+			},
+			['7'] = {
+				name = "Justice",
+				payment = 675
+			},
+			['8'] = {
+				name = "Chief Justice",
+				isboss = true,
+				payment = 700
+			},
 		}
 	},
 	["cardealer"] = {
@@ -7519,21 +7548,21 @@ RLShared.Jobs = {
 	},
 	["mechanic"] = {
 		label = "Mechanic",
-		payment = 150,
+		payment = 650,
 		defaultDuty = true,
 		grades = {
             ['0'] = {
                 name = "Employee",
-                payment = 370
+                payment = 500
 			},
 			['1'] = {
                 name = "Experienced",
-                payment = 400
+                payment = 575
 			},
 			['2'] = {
 				name = "Boss",
 				isboss = true,
-                payment = 450
+                payment = 650
 			},
 		}
 	},

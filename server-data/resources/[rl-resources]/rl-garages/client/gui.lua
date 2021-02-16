@@ -189,7 +189,7 @@ function ClearMenu()
 end
 
 function MenuCallFunction(fnc, arg)
-	print(fun)
-	print(arg)
+	-- print(fun)
+	-- print(arg)
 	_G[fnc](arg)
 end

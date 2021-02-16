@@ -5,7 +5,7 @@ TriggerEvent("RLCore:GetObject", function(obj) RLCore = obj end)
 RLCore.Commands.Add("mdt", "Police Database", {}, false, function(source, args)
 	local usource = source
     local xPlayer = RLCore.Functions.GetPlayer(source)
-    if xPlayer and (xPlayer.PlayerData.job.name == 'police' or xPlayer.PlayerData.job.name == 'lawyer' or xPlayer.PlayerData.job.name == 'judge' and xPlayer.PlayerData.job.isboss) then
+    if xPlayer and xPlayer.PlayerData.job.name == 'police' or xPlayer.PlayerData.job.name == 'lawyer' or xPlayer.PlayerData.job.name == 'judge' or xPlayer.PlayerData.job.isboss then
     	exports['ghmattimysql']:execute("SELECT * FROM (SELECT * FROM `mdt_reports` ORDER BY `id` DESC LIMIT 3) sub ORDER BY `id` DESC", {}, function(reports)
     		for r = 1, #reports do
     			reports[r].charges = json.decode(reports[r].charges)
@@ -438,16 +438,30 @@ AddEventHandler("mdt:getVehicle", function(vehicle)
 		['@citizenid'] = vehicle.owner
 	}, function(result)
 		if result[1] then
+			local ownerId = vehicle.owner
 			local charinfo = json.decode(result[1].charinfo)
-
 			vehicle.owner = charinfo.firstname .. ' ' .. charinfo.lastname .. ' - ' .. result[1].citizenid
 			vehicle.owner_id = result[1].id
-		else
-			vehicle.owner = 'Unknown'
-			vehicle.owner_id = 0
-		end
 
-		TriggerClientEvent("mdt:returnVehicleDetails", usource, vehicle)
+			exports['ghmattimysql']:execute("SELECT * FROM `bbvehicles` WHERE `citizenid` = @citizenid AND `plate` = @plate", {
+				['@citizenid'] = ownerId,
+				["@plate"] = vehicle.plate
+			}, function(vehData)
+				vehicle.model = vehData[1].model
+				local vehProps = json.decode(vehData[1].props)
+				if vehProps.color1 then
+					vehicle.color = colors[tostring(vehProps.color1)]
+					if colors[tostring(vehProps.color2)] then
+						vehicle.color = colors[tostring(vehProps.color2)] .. ", " .. colors[tostring(vehProps.color1)]
+					end
+				end
+				TriggerClientEvent("mdt:returnVehicleDetails", usource, vehicle) -- We have to do this via the if statement, as the event is ran, before all data is collected. Unfortunately, we can't make it be async in Lua
+			end)
+		else
+			vehicle.owner = 'Unknown (Character Not Found | Make a support ticket with the plate thank you)'
+			vehicle.owner_id = 0
+			TriggerClientEvent("mdt:returnVehicleDetails", usource, vehicle) -- We have to do this via the if statement, as the event is ran, before all data is collected. Unfortunately, we can't make it be async in Lua
+		end
 	end)
 end)
 

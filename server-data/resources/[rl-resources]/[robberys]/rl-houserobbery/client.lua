@@ -55,6 +55,14 @@ end)
   end 
  end)
 
+local beenDone = false
+
+function behave()
+  beenDone = true
+  Citizen.Wait(300000)
+  beenDone = false
+end
+
 RegisterNetEvent('lockpicks:UseLockpick')
 AddEventHandler('lockpicks:UseLockpick', function(advanced)
   if not advanced then
@@ -64,10 +72,16 @@ AddEventHandler('lockpicks:UseLockpick', function(advanced)
   if isRobbing and DoesEntityExist(safe) then
     local playerCoords = GetEntityCoords(PlayerPedId(), true)
     if GetDistanceBetweenCoords(playerCoords, safepos.x, safepos.y, safepos.z, true) <= 3.0 then
-      TriggerEvent("safecracking:loop",5)
 
-      if math.random(1, 20) == 1 then 
-        TriggerServerEvent('houseRobberies:removeLockpick')
+      if beenDone then
+        TriggerEvent('RLCore:Notify', 'You have allready looted this safe', "error")
+      else
+        TriggerEvent("safecracking:loop",5)
+        behave()
+
+        if math.random(1, 20) == 1 then 
+          TriggerServerEvent('houseRobberies:removeLockpick')
+        end
       end
     end
   end

@@ -72,16 +72,42 @@ AddEventHandler('police:client:PutInVehicle', function()
     if isHandcuffed or isEscorted then
         local vehicle, distance = RLCore.Functions.GetClosestVehicle()
         if DoesEntityExist(vehicle) then
-            for i = GetVehicleMaxNumberOfPassengers(vehicle), 1, -1 do
-                if IsVehicleSeatFree(vehicle, i) then
-                    isEscorted = false
-                    TriggerEvent('hospital:client:isEscorted', isEscorted)
-                    ClearPedTasks(GetPlayerPed(-1))
-                    DetachEntity(GetPlayerPed(-1), true, false)
-
-                    Citizen.Wait(100)
-                    SetPedIntoVehicle(GetPlayerPed(-1), vehicle, i)
-                    return
+            if distance <= 5.0 then
+                local maxSeats, freeSeat = GetVehicleMaxNumberOfPassengers(vehicle)
+                if maxSeats > 0 then
+                    local ped = PlayerPedId()
+                    local seats = {}
+                    for i = 1, maxSeats, 1 do -- Loop through all seats and add them into seats table
+                        table.insert(seats, i)
+                    end
+    
+                    table.sort(seats, function(a, b) return a > b end) -- Sort the amount of seats available highest to lowest, so it places them in highest seat first.
+    
+                    if #seats > 1 then -- If our vehicle has more than one passenger seat
+                        for index, seat in pairs(seats) do
+                            if IsVehicleSeatFree(vehicle, seat) then
+                                freeSeat = seat
+                                break
+                            end
+                        end
+                    else
+                        freeSeat = 0 -- Set seat to front right passenger seat
+                    end
+                    
+                    if freeSeat then
+                        isEscorted = false
+                        TriggerEvent('hospital:client:isEscorted', isEscorted)
+                        ClearPedTasks(ped)
+                        DetachEntity(ped, true, false)
+                        Wait(100)
+                        TaskWarpPedIntoVehicle(ped, vehicle, freeSeat)
+                        if isHandcuffed then -- If handcuffed do the handcuff sit animation
+                            loadAnimDict("mp_arresting")
+                            TaskPlayAnim(ped, "mp_arresting", "idle", 8.0, -8, -1, 49, 0, 0, 0, 0) -- Play arrest animation in vehicle, rather than just sitting
+                        end
+                    end
+                else
+                    RLCore.Functions.Notify("No passenger seat found!", "error")
                 end
             end
         end
@@ -301,54 +327,6 @@ AddEventHandler('police:client:KidnapPlayer', function()
     end
 end)
 
-RegisterNetEvent('police:client:CuffPlayerSoft')
-AddEventHandler('police:client:CuffPlayerSoft', function()
-    if not IsPedRagdoll(GetPlayerPed(-1)) then
-        local player, distance = GetClosestPlayer()
-        if player ~= -1 and distance < 1.5 then
-            local playerId = GetPlayerServerId(player)
-            if not IsPedInAnyVehicle(GetPlayerPed(player)) and not IsPedInAnyVehicle(GetPlayerPed(GetPlayerPed(-1))) then
-                TriggerServerEvent("police:server:CuffPlayer", playerId, true)
-                HandCuffAnimation()
-                TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 2.0, 'handcuff', 0.9)
-            else
-                RLCore.Functions.Notify("You cannot soft cuff in a vehicle", "error")
-            end
-        else
-            RLCore.Functions.Notify("No one around!", "error")
-        end
-    else
-        Citizen.Wait(2000)
-    end
-end)
-
-RegisterNetEvent('police:client:CuffPlayer')
-AddEventHandler('police:client:CuffPlayer', function()
-    if not IsPedRagdoll(GetPlayerPed(-1)) then
-        local player, distance = GetClosestPlayer()
-        if player ~= -1 and distance < 1.5 then
-            RLCore.Functions.TriggerCallback('RLCore:HasItem', function(result)
-                if result then 
-                    local playerId = GetPlayerServerId(player)
-                    if not IsPedInAnyVehicle(GetPlayerPed(player)) and not IsPedInAnyVehicle(GetPlayerPed(GetPlayerPed(-1))) then
-                        TriggerServerEvent("police:server:CuffPlayer", playerId, false)
-                        HandCuffAnimation()
-                        TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 2.0, 'handcuff', 0.9)
-                    else
-                        RLCore.Functions.Notify("You cannot cuff in a vehicle", "error")
-                    end
-                else
-                    RLCore.Functions.Notify("You have no handcuffs with you", "error")
-                end
-            end, "handcuffs")
-        else
-            RLCore.Functions.Notify("No one around!", "error")
-        end
-    else
-        Citizen.Wait(2000)
-    end
-end)
-
 RegisterNetEvent('police:client:GetEscorted')
 AddEventHandler('police:client:GetEscorted', function(playerId)
     RLCore.Functions.GetPlayerData(function(PlayerData)
@@ -429,44 +407,126 @@ AddEventHandler('police:client:GetKidnappedDragger', function(playerId)
     end)
 end)
 
-local lastSkill = 0
-RegisterNetEvent('police:client:GetCuffed')
-AddEventHandler('police:client:GetCuffed', function(playerId, isSoftcuff)
-    if not isHandcuffed then
-    local finished = 0
-    if not RLCore.Functions.GetPlayerData().metadata["isdead"] and lastSkill < 3 and not isHandcuffed then
-        finished = exports["rl-taskbarskill"]:taskBar(1200,7)
-        lastSkill = lastSkill + 1
-    end
-
-    if finished == 100 then return end
-        isHandcuffed = true
-        lastSkill = 0
-        print("cuffedbaby")
-        TriggerEvent("tokovoip_script:ToggleRadioTalk", true)
-        TriggerServerEvent("police:server:SetHandcuffStatus", true)
-        ClearPedTasksImmediately(GetPlayerPed(-1))
-        if not isSoftcuff then
-            cuffType = 16
-            GetCuffedAnimation(playerId)
-            RLCore.Functions.Notify("You are fascinated!")
+RegisterNetEvent('police:client:CuffPlayer')
+AddEventHandler('police:client:CuffPlayer', function(softCuff)
+    if not IsPedRagdoll(GetPlayerPed(-1)) then
+        local player, distance = GetClosestPlayer()
+        if player ~= -1 and distance < 1.5 then
+            RLCore.Functions.TriggerCallback('RLCore:HasItem', function(hasCuffs)
+                if hasCuffs then
+                    local playerId = GetPlayerServerId(player)
+                    if not IsPedInAnyVehicle(GetPlayerPed(player), false) and not IsPedInAnyVehicle(PlayerPedId(), false) then
+                        RLCore.Functions.TriggerCallback('police:server:isPlayerCuffed', function(isCuffed)
+                            if not isCuffed then
+                                RLCore.Functions.Notify("Handcuffing")
+                            else
+                                RLCore.Functions.Notify("Uncuffing")
+                            end
+                            TriggerServerEvent("police:server:CuffPlayer", playerId, softCuff)
+                        end, playerId)
+                    else
+                        RLCore.Functions.Notify("You cannot soft cuff in a vehicle", "error")
+                    end
+                else
+                    RLCore.Functions.Notify("You have no handcuffs with you", "error")
+                end
+            end, "handcuffs")
         else
-            cuffType = 49
-            GetCuffedAnimation(playerId)
-            RLCore.Functions.Notify("You are fascinated, but you can walk")
+            RLCore.Functions.Notify("No one around!", "error")
         end
-
     else
-        isHandcuffed = false
-        isEscorted = false
-        TriggerEvent('hospital:client:isEscorted', isEscorted)
-        DetachEntity(GetPlayerPed(-1), true, false)
-        TriggerServerEvent("police:server:SetHandcuffStatus", false)
-        TriggerEvent("tokovoip_script:ToggleRadioTalk", false)
-        ClearPedTasksImmediately(GetPlayerPed(-1))
-        RLCore.Functions.Notify("You are untied!")
+        Citizen.Wait(2000)
     end
 end)
+
+RegisterNetEvent("police:client:Hardcuff")
+AddEventHandler("police:client:Hardcuff", function()
+    TriggerEvent("police:client:CuffPlayer", false)
+end)  
+
+RegisterNetEvent("police:client:Softcuff")
+AddEventHandler("police:client:Softcuff", function()
+    TriggerEvent("police:client:CuffPlayer", true)
+end)    
+
+RegisterNetEvent("police:client:CufferAnimation")
+AddEventHandler("police:client:CufferAnimation", function(cuffeeId, animType)
+    local ped = PlayerPedId()
+    
+    if animType == "cuff" then
+        loadAnimDict("mp_arrest_paired")
+        TaskPlayAnim(ped, "mp_arrest_paired", "cop_p2_back_right", 8.0, -8, -1, 48, 0, 0, 0, 0)
+        Wait(3200)
+        ClearPedSecondaryTask(ped)
+    elseif animType == "uncuff" then
+        loadAnimDict("mp_arresting")
+        local bone = GetPedBoneIndex(ped, 0xFA11)
+		handcuffKeys = CreateObject(GetHashKey("prop_cuff_keys_01"), GetEntityCoords(ped, false))
+		AttachEntityToEntity(handcuffKeys, ped, bone, 0.02, 0.005, 0.01, 100.0, 280.0, 70.0, true, true, false, true, 1, true)
+        TaskPlayAnim(ped, "mp_arresting", "a_uncuff", 8.0, -8, -1, 49, 0, 0, 0, 0)
+        Wait(2000)
+        DeleteObject(handcuffKeys)
+        handcuffKeys = nil
+        ClearPedTasks(ped)
+    end
+end)
+
+RegisterNetEvent('police:client:GetCuffed')
+AddEventHandler('police:client:GetCuffed', function(playerId, softCuff)
+    local ped = PlayerPedId()
+    local finished = 0
+
+    loadAnimDict("mp_arresting")
+    if not isHandcuffed then
+        if not RLCore.Functions.GetPlayerData().metadata["isdead"] then
+            finished = exports["rl-taskbarskill"]:taskBar(1200, 7)
+        else
+            finished = 100
+        end
+
+        if softCuff then
+            cuffType = 49
+        else
+            cuffType = 16
+        end
+
+        if finished == 100 then return end
+        isHandcuffed = true
+        TriggerEvent("tokovoip_script:ToggleRadioTalk", true)
+        TriggerServerEvent("police:server:SetHandcuffStatus", true)
+        TriggerServerEvent("police:server:CufferAnimation", playerId, "cuff")
+        local cuffer = GetPlayerPed(GetPlayerFromServerId(playerId))
+        local heading = GetEntityHeading(cuffer)
+        loadAnimDict("mp_arrest_paired")
+        SetEntityCoords(ped, GetOffsetFromEntityInWorldCoords(cuffer, 0.0, 0.45, 0.0))
+        Citizen.Wait(100)
+        SetEntityHeading(ped, heading)
+        TaskPlayAnim(ped, "mp_arrest_paired", "crook_p2_back_right", 8.0, -8, -1, 32, 0, 0, 0, 0)
+        Wait(1500)
+        TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 2.0, 'handcuff', 0.9)
+        Wait(2000)
+        if handcuffsProp == nil then
+            local bone = GetPedBoneIndex(ped, 18905)
+            handcuffsProp = CreateObject(GetHashKey("p_cs_cuffs_02_s"), GetEntityCoords(ped, false), true, false, true) 
+            AttachEntityToEntity(handcuffsProp, ped, bone, 0.005, 0.060, 0.03, -180.0, 280.0, 70.0, true, true, false, true, 1, true)
+            if not NetworkGetEntityIsNetworked(handcuffsProp) then
+                NetworkRegisterEntityAsNetworked(handcuffsProp)
+            end
+        end
+        SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
+        RLCore.Functions.Notify("Handcuffed")
+    else
+        TriggerServerEvent("police:server:CufferAnimation", playerId, "uncuff")
+        Wait(2000)
+        isHandcuffed = false
+        DeleteEntity(handcuffsProp)
+        handcuffsProp = nil
+        TriggerServerEvent("police:server:SetHandcuffStatus", false)
+        TriggerEvent("tokovoip_script:ToggleRadioTalk", false)
+        ClearPedTasks(ped)
+        RLCore.Functions.Notify("You are uncuffed!")
+    end
+end)    
 
 RegisterNetEvent('police:client:Uncuffed')
 AddEventHandler('police:client:Uncuffed', function()
@@ -492,6 +552,8 @@ AddEventHandler('police:client:UseShitLockpick', function(item)
     end
 end)
 
+
+
 function IsTargetDead(playerId)
     local retval = nil
     RLCore.Functions.TriggerCallback('police:server:isPlayerDead', function(result)
@@ -514,14 +576,34 @@ function HandCuffAnimation()
 end
 
 function GetCuffedAnimation(playerId)
+    local ped = PlayerPedId()
     local cuffer = GetPlayerPed(GetPlayerFromServerId(playerId))
     local heading = GetEntityHeading(cuffer)
     loadAnimDict("mp_arrest_paired")
-    SetEntityCoords(GetPlayerPed(-1), GetOffsetFromEntityInWorldCoords(cuffer, 0.0, 0.45, 0.0))
+    SetEntityCoords(ped, GetOffsetFromEntityInWorldCoords(cuffer, 0.0, 0.45, 0.0))
     Citizen.Wait(100)
-    SetEntityHeading(GetPlayerPed(-1), heading)
-    TaskPlayAnim(GetPlayerPed(-1), "mp_arrest_paired", "crook_p2_back_right", 3.0, 3.0, -1, 32, 0, 0, 0, 0)
-    Citizen.Wait(2500)
+    SetEntityHeading(ped, heading)
+    TaskPlayAnim(ped, "mp_arrest_paired", "crook_p2_back_right", 3.0, 3.0, -1, 32, 0, 0, 0, 0)
+    Citizen.Wait(750)
+    TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 2.0, 'handcuff', 0.9)
+    Wait(2000)
+    if handcuffsProp == nil then
+        local bone = GetPedBoneIndex(ped, 18905)
+        handcuffsProp = CreateObject(GetHashKey("p_cs_cuffs_02_s"), GetEntityCoords(ped, false), true, false, true) 
+        AttachEntityToEntity(handcuffsProp, ped, bone, 0.005, 0.060, 0.03, -180.0, 280.0, 70.0, true, true, false, true, 1, true)
+        if not NetworkGetEntityIsNetworked(handcuffsProp) then
+            NetworkRegisterEntityAsNetworked(handcuffsProp)
+        end
+    else
+        print("WE CANT CREATE CUFF PROP, AS IT ALREADY EXISTS, DOING SO WILL MAKE IT STICK TO YOU")
+    end
+end
+
+function UncuffAnimation()
+    loadAnimDict("mp_arresting")
+    TaskPlayAnim(PlayerPedId(), "mp_arresting", "a_uncuff", 8.0, -8, -1, 49, 0, 0, 0, 0)
+    Wait(2000)
+    ClearPedTasks(PlayerPedId())
 end
 
 function IsHandcuffed()

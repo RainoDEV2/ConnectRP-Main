@@ -44,7 +44,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
         if OutsideVehicles[vehicle.plate] ~= nil then
             local VehExists = DoesEntityExist(OutsideVehicles[vehicle.plate])
             if not VehExists then
-                RLCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
+                RLCore.Functions.SpawnVehicle(vehicle.model, function(veh)
                     RLCore.Functions.SetVehicleProperties(veh, vehicle.props)
                     --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                         RLCore.Functions.SetVehicleProperties(veh, properties)
@@ -68,7 +68,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                             TriggerServerEvent('rl-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
                         end
 
-                        if vehicle.vehicle == "urus" then
+                        if vehicle.model == "urus" then
                             SetVehicleExtra(veh, 1, false)
                             SetVehicleExtra(veh, 2, true)
                         end
@@ -78,7 +78,6 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                         TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
                         exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                         SetEntityAsMissionEntity(veh, true, true)
-                        doCarDamage(veh, vehicle)
                         TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                         RLCore.Functions.Notify("Vehicle Off: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "%", "primary", 4500)
                         closeMenuFull()
@@ -89,7 +88,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
             else
                 local Engine = GetVehicleEngineHealth(OutsideVehicles[vehicle.plate])
                 if Engine < 40.0 then
-                    RLCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
+                    RLCore.Functions.SpawnVehicle(vehicle.model, function(veh)
                         RLCore.Functions.SetVehicleProperties(veh, vehicle.props)
                         --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                             RLCore.Functions.SetVehicleProperties(veh, properties)
@@ -118,7 +117,6 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                             TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
                             exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                             SetEntityAsMissionEntity(veh, true, true)
-                            doCarDamage(veh, vehicle)
                             TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                             RLCore.Functions.Notify("Vehicle Off: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "%", "primary", 4500)
                             closeMenuFull()
@@ -132,7 +130,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                 end
             end
         else
-            RLCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
+            RLCore.Functions.SpawnVehicle(vehicle.model, function(veh)
                 RLCore.Functions.SetVehicleProperties(veh, vehicle.props)
                 --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                     RLCore.Functions.SetVehicleProperties(veh, properties)
@@ -154,7 +152,6 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                     TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
                     exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                     SetEntityAsMissionEntity(veh, true, true)
-                    doCarDamage(veh, vehicle)
                     TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                     RLCore.Functions.Notify("Vehicle Off: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "%", "primary", 4500)
                     closeMenuFull()
@@ -164,7 +161,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
             end, Depots[currentGarage].spawnPoint, true)
         end
     else
-        RLCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
+        RLCore.Functions.SpawnVehicle(vehicle.model, function(veh)
             RLCore.Functions.SetVehicleProperties(veh, vehicle.props)
             --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                 RLCore.Functions.SetVehicleProperties(veh, properties)
@@ -192,7 +189,6 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                 TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
                 exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                 SetEntityAsMissionEntity(veh, true, true)
-                doCarDamage(veh, vehicle)
                 TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                 RLCore.Functions.Notify("Vehicle Off: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "%", "primary", 4500)
                 closeMenuFull()
@@ -396,9 +392,10 @@ function VehicleList()
             Menu.addButton(Garages[currentGarage].label, "yeet", Garages[currentGarage].label)
 
             for k, v in pairs(result) do
-                enginePercent = round(v.engine_damage / 10, 0)
-                bodyPercent = round(v.body_damage / 10, 0)
-                currentFuel = v.fuel
+                local vehProps = json.decode(v.props)
+                enginePercent = round(vehProps.engineHealth / 10, 0)
+                bodyPercent = round(vehProps.bodyHealth / 10, 0)
+                currentFuel = vehProps.fuelLevel
                 curGarage = Garages[v.garage].label
 
 
@@ -423,19 +420,25 @@ function VehicleList()
     end, currentGarage)
 end
 
+RegisterCommand("vals", function(source, args, raw)
+    print(GetVehicleEngineHealth(GetVehiclePedIsIn(PlayerPedId(), false)))
+    print(GetVehicleBodyHealth(GetVehiclePedIsIn(PlayerPedId(), false)))
+end)
+
 function TakeOutVehicle(vehicle)
     if vehicle.state == "Garage" then
-        enginePercent = round(vehicle.engine_damage / 10, 1)
-        bodyPercent = round(vehicle.body_damage / 10, 1)
-        currentFuel = vehicle.fuel
+        local vehProps = json.decode(vehicle.props)
+        enginePercent = round(vehProps.engineHealth / 10, 0)
+        bodyPercent = round(vehProps.bodyHealth / 10, 0)
+        currentFuel = vehProps.fuelLevel
 
-        TriggerEvent("debug", 'Garages: Spawn ' .. vehicle.vehicle, 'success')
+        TriggerEvent("debug", 'Garages: Spawn ' .. vehicle.model, 'success')
         print(json.encode(vehicle.plate))
 
         RLCore.Functions.SpawnVehicle(vehicle.model, function(veh)
-            RLCore.Functions.SetVehicleProperties(veh, vehicle.props)
+            SetVehicleProperties(veh, vehicle.props)
+            -- RLCore.Functions.SetVehicleProperties(veh, vehicle.props)
             --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
-
                 if vehicle.plate ~= nil then
                     OutsideVehicles[vehicle.plate] = veh
                     TriggerServerEvent('rl-garages:server:UpdateOutsideVehicles', OutsideVehicles)
@@ -460,7 +463,6 @@ function TakeOutVehicle(vehicle)
                 SetVehicleNumberPlateText(veh, vehicle.plate)
                 SetEntityHeading(veh, Garages[currentGarage].spawnPoint.h)
                 exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
-                doCarDamage(veh, vehicle)
                 SetEntityAsMissionEntity(veh, true, true)
                 TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                 RLCore.Functions.Notify("Vehicle Off: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "%", "primary", 4500)
@@ -486,8 +488,8 @@ end
 
 function TakeOutGarageVehicle(vehicle)
     if vehicle.state == "Garage" then
-        TriggerEvent("debug", 'Garages: Spawn ' .. vehicle.vehicle, 'success')
-        RLCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
+        TriggerEvent("debug", 'Garages: Spawn ' .. vehicle.model, 'success')
+        RLCore.Functions.SpawnVehicle(vehicle.model, function(veh)
             RLCore.Functions.SetVehicleProperties(veh, vehicle.props)
             --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                 RLCore.Functions.SetVehicleProperties(veh, properties)
@@ -506,7 +508,7 @@ function TakeOutGarageVehicle(vehicle)
                     TriggerServerEvent('rl-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
                 end
 
-                if vehicle.vehicle == "urus" then 
+                if vehicle.model == "urus" then 
                     SetVehicleExtra(veh, 1, false)
                     SetVehicleExtra(veh, 2, true)
                 end
@@ -520,7 +522,6 @@ function TakeOutGarageVehicle(vehicle)
                 TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
                 exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                 SetEntityAsMissionEntity(veh, true, true) 
-                doCarDamage(veh, vehicle)
                 TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                 RLCore.Functions.Notify("Vehicle Off: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "%", "primary", 4500)
                 closeMenuFull()
@@ -529,60 +530,6 @@ function TakeOutGarageVehicle(vehicle)
             --end, vehicle.plate)
         end, HouseGarages[currentHouseGarage].takeVehicle, true)
     end
-end
-
-function doCarDamage(currentVehicle, veh)
-	smash = false
-	damageOutside = false
-	damageOutside2 = false 
-	local engine = veh.engine_damage + 0.0
-	local body = veh.body_damage + 0.0
-	if engine < 200.0 then
-		engine = 200.0
-    end
-    
-    if engine > 1000.0 then
-        engine = 1000.0
-    end
-
-	if body < 150.0 then
-		body = 150.0
-	end
-	if body < 900.0 then
-		smash = true
-	end
-
-	if body < 800.0 then
-		damageOutside = true
-	end
-
-	if body < 500.0 then
-		damageOutside2 = true
-	end
-
-    Citizen.Wait(100)
-    SetVehicleEngineHealth(currentVehicle, engine)
-	if smash then
-		SmashVehicleWindow(currentVehicle, 0)
-		SmashVehicleWindow(currentVehicle, 1)
-		SmashVehicleWindow(currentVehicle, 2)
-		SmashVehicleWindow(currentVehicle, 3)
-		SmashVehicleWindow(currentVehicle, 4)
-	end
-	if damageOutside then
-		SetVehicleDoorBroken(currentVehicle, 1, true)
-		SetVehicleDoorBroken(currentVehicle, 6, true)
-		SetVehicleDoorBroken(currentVehicle, 4, true)
-	end
-	if damageOutside2 then
-		SetVehicleTyreBurst(currentVehicle, 1, false, 990.0)
-		SetVehicleTyreBurst(currentVehicle, 2, false, 990.0)
-		SetVehicleTyreBurst(currentVehicle, 3, false, 990.0)
-		SetVehicleTyreBurst(currentVehicle, 4, false, 990.0)
-	end
-	if body < 1000 then
-		SetVehicleBodyHealth(currentVehicle, 985.1)
-	end
 end
 
 function close()
@@ -651,11 +598,7 @@ Citizen.CreateThread(function()
                         local plate = GetVehicleNumberPlateText(curVeh)
                         RLCore.Functions.TriggerCallback('rl-garage:server:checkVehicleOwner', function(owned)
                             if owned then
-                                local bodyDamage = math.ceil(GetVehicleBodyHealth(curVeh))
-                                local engineDamage = math.ceil(GetVehicleEngineHealth(curVeh))
-                                local totalFuel = exports['LegacyFuel']:GetFuel(curVeh)
-        
-                                TriggerServerEvent('rl-garage:server:updateVehicleStatus', totalFuel, engineDamage, bodyDamage, plate, k)
+                                TriggerServerEvent('rl-garage:server:updateComponents', GetVehicleProperties(curVeh), plate, k)
                                 TriggerServerEvent('rl-garage:server:updateVehicleState', 1, plate, k)
                                 TriggerServerEvent('vehiclemod:server:saveStatus', plate)
                                 RLCore.Functions.DeleteVehicle(curVeh)
@@ -798,4 +741,96 @@ function round(num, numDecimalPlaces)
       return math.floor(num * mult + 0.5) / mult
     end
     return math.floor(num + 0.5)
+end
+
+SetVehicleProperties = function(vehicle, vehicleProps)
+    vehicleProps = json.decode(vehicleProps)
+    RLCore.Functions.SetVehicleProperties(vehicle, vehicleProps)
+
+    if vehicleProps["windows"] then
+        for windowId = 1, 13, 1 do
+            if vehicleProps["windows"][windowId] == false then
+                SmashVehicleWindow(vehicle, windowId)
+            end
+        end
+    end
+
+    if vehicleProps["tyres"] then
+        for tyreId = 1, 7, 1 do
+            if vehicleProps["tyres"][tyreId] ~= false then
+                SetVehicleTyreBurst(vehicle, tyreId, true, 1000)
+            end
+        end
+    end
+
+    if vehicleProps["doors"] then
+        for doorId = 0, 5, 1 do
+            if vehicleProps["doors"][doorId] ~= false then
+                SetVehicleDoorBroken(vehicle, doorId - 1, true)
+            end
+        end
+    end
+end
+
+GetVehicleProperties = function(vehicle)
+    if DoesEntityExist(vehicle) then
+        local vehicleProps = RLCore.Functions.GetVehicleProperties(vehicle)
+
+        vehicleProps["tyres"] = {}
+        vehicleProps["windows"] = {}
+        vehicleProps["doors"] = {}
+
+        for id = 1, 7 do
+            local tyreId = IsVehicleTyreBurst(vehicle, id, false)
+        
+            if tyreId then
+                vehicleProps["tyres"][#vehicleProps["tyres"] + 1] = tyreId
+        
+                if tyreId == false then
+                    tyreId = IsVehicleTyreBurst(vehicle, id, true)
+                    vehicleProps["tyres"][ #vehicleProps["tyres"]] = tyreId
+                end
+            else
+                vehicleProps["tyres"][#vehicleProps["tyres"] + 1] = false
+            end
+        end
+
+        for id = 1, 13 do
+            local windowId = IsVehicleWindowIntact(vehicle, id)
+
+            if windowId ~= nil then
+                vehicleProps["windows"][#vehicleProps["windows"] + 1] = windowId
+            else
+                vehicleProps["windows"][#vehicleProps["windows"] + 1] = true
+            end
+        end
+        
+        for id = 0, 5 do
+            local doorId = IsVehicleDoorDamaged(vehicle, id)
+        
+            if doorId then
+                vehicleProps["doors"][#vehicleProps["doors"] + 1] = doorId
+            else
+                vehicleProps["doors"][#vehicleProps["doors"] + 1] = false
+            end
+        end
+
+        local engineDamage = math.ceil(GetVehicleEngineHealth(curVeh))
+        local bodyDamage = math.ceil(GetVehicleBodyHealth(curVeh))
+        local totalFuel = exports['LegacyFuel']:GetFuel(curVeh)
+
+        if engineDamage > 1000 then
+            engineDamage = engineDamage / 1000
+        end
+    
+        if bodyDamage > 1000 then
+            bodyDamage = bodyDamage / 1000
+        end
+
+        vehicleProps["engineHealth"] = engineDamage
+        vehicleProps["bodyHealth"] = bodyDamage
+        vehicleProps["fuelLevel"] = GetVehicleFuelLevel(vehicle)
+
+        return vehicleProps
+    end
 end
