@@ -4,14 +4,14 @@
     <Item type="CHandlingData">
       <handlingName>POLCHAR</handlingName>
       <fMass value="2000.000000" />
-      <fInitialDragCoeff value="2.600000" />
+      <fInitialDragCoeff value="2.000000" />
       <fPercentSubmerged value="80.000000" />
       <vecCentreOfMassOffset x="0.000000" y="0.200000" z="0.040000" />
       <vecInertiaMultiplier x="1.000000" y="1.070000" z="1.280000" />
       <fDriveBiasFront value="0.000000" />
       <nInitialDriveGears value="6" />
-      <fInitialDriveForce value="0.275000" />
-      <fDriveInertia value="0.900000" />
+      <fInitialDriveForce value="0.380000" />
+      <fDriveInertia value="1.000000" />
       <fClutchChangeRateScaleUpShift value="3.000000" />
       <fClutchChangeRateScaleDownShift value="3.000000" />
       <fInitialDriveMaxFlatVel value="195.000000" />
@@ -20,10 +20,10 @@
       <fHandBrakeForce value="1.201000" />
       <fSteeringLock value="40.000000" />
       <fTractionCurveMax value="2.050000" />
-      <fTractionCurveMin value="1.720000" />
+      <fTractionCurveMin value="1.900000" />
       <fTractionCurveLateral value="20.500000" />
       <fTractionSpringDeltaMax value="0.200000" />
-      <fLowSpeedTractionLossMult value="0.730000" />
+      <fLowSpeedTractionLossMult value="0.770000" />
       <fCamberStiffnesss value="0.000000" />
       <fTractionBiasFront value="0.485000" />
       <fTractionLossMult value="1.040000" />
@@ -195,7 +195,7 @@
       <fDriveBiasFront value="0.5" />
       <nInitialDriveGears value="6" />
       <fInitialDriveForce value="0.300000" />
-      <fDriveInertia value="0.750000" />
+      <fDriveInertia value="1.000000" />
       <fClutchChangeRateScaleUpShift value="1.900000" />
       <fClutchChangeRateScaleDownShift value="1.900000" />
       <fInitialDriveMaxFlatVel value="175.000000" />
@@ -204,12 +204,12 @@
       <fHandBrakeForce value="0.901000" />
       <fSteeringLock value="40.000000" />
       <fTractionCurveMax value="2.300000" />
-      <fTractionCurveMin value="1.820000" />
+      <fTractionCurveMin value="1.920000" />
       <fTractionCurveLateral value="20.500000" />
       <fTractionSpringDeltaMax value="0.2" />
-      <fLowSpeedTractionLossMult value="0.200000" />
+      <fLowSpeedTractionLossMult value="0.400000" />
       <fCamberStiffnesss value="0.000000" />
-      <fTractionBiasFront value="0.485000" />
+      <fTractionBiasFront value="0.420000" />
       <fTractionLossMult value="1.040000" />
       <fSuspensionForce value="2.250000" />
       <fSuspensionCompDamp value="1.4" />
