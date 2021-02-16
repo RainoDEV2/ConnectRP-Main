@@ -117,6 +117,9 @@ AddEventHandler('rl:police:garage:jobcheck:back', function(name, can)
 	    SetVehicleMod(pp, 13, 3)
 	    SetVehicleMod(pp, 17, 4)
         ToggleVehicleMod(pp, 1, true)
+        print(json.encode(GetVehicleMod(pp, 12)))
+        print(json.encode(GetVehicleMod(pp, 13)))
+        print(json.encode(GetVehicleMod(pp, 17)))
     elseif can == 2 then
         RLCore.Functions.Notify("Your Too Low Of A Rank To Drive This!", "error")
     elseif can == 3 then
