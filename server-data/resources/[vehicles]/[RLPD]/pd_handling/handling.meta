@@ -3,7 +3,7 @@
   <HandlingData>
     <Item type="CHandlingData">
       <!-- Crown Victoria -->
-      <handlingName>POLICE</handlingName>
+      <handlingName>polvicnew</handlingName>
       <fMass value="2000.000000" />
       <fInitialDragCoeff value="2.000000" />
       <fPercentSubmerged value="85.000000" />
