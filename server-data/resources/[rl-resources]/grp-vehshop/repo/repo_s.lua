@@ -151,9 +151,14 @@ AddEventHandler('playerDropped', function()
 		end
 	end)
 
+	local thingi = math.floor(v.financetimer - (((GetGameTimer() - timeJoined) / 1000) / 60))
+
 	for k,v in pairs(data) do
 		if v.finance and v.finance > 0 then
-			RLCore.Functions.ExecuteSql(false,'UPDATE bbvehicles SET financetimer=@financetimer WHERE plate=@plate', {['@financetimer'] = math.floor(v.financetimer - (((GetGameTimer() - timeJoined) / 1000) / 60)), ['@plate'] = v.plate} )
+			RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `financetimer` = '"..thingi.."' WHERE `plate` = '"..v.plate.."'")
+			print("UPDATNG")
+
+			--RLCore.Functions.ExecuteSql(false,'UPDATE bbvehicles SET financetimer=@financetimer WHERE plate=@plate', {['@financetimer'] = math.floor(v.financetimer - (((GetGameTimer() - timeJoined) / 1000) / 60)), ['@plate'] = v.plate} )
 		end
 	end
 	table.remove(PlayerTable, ky)
