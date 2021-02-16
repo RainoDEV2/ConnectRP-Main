@@ -18,17 +18,23 @@ Citizen.CreateThread(function()
 end)
 
 RegisterServerEvent('police:server:CuffPlayer')
-AddEventHandler('police:server:CuffPlayer', function(playerId, isSoftcuff)
+AddEventHandler('police:server:CuffPlayer', function(playerId, soffCuff)
     local src = source
     local Player = RLCore.Functions.GetPlayer(source)
     local CuffedPlayer = RLCore.Functions.GetPlayer(playerId)
     if CuffedPlayer ~= nil then
         if Player.Functions.GetItemByName("handcuffs") ~= nil or Player.PlayerData.job.name == "police" then
-            TriggerClientEvent("police:client:GetCuffed", CuffedPlayer.PlayerData.source, Player.PlayerData.source, isSoftcuff)           
+            TriggerClientEvent("police:client:GetCuffed", playerId, src, soffCuff)           
         else
             TriggerClientEvent('RLCore:Notify', src, "You dont have handcuffs and you are not officer.", "error")
         end
     end 
+end)
+
+RegisterNetEvent("police:server:CufferAnimation")
+AddEventHandler("police:server:CufferAnimation", function(playerId, animType)
+    local src = source
+    TriggerClientEvent("police:client:CufferAnimation", playerId, src, animType)
 end)
 
 RegisterServerEvent('police:server:EscortPlayer')
