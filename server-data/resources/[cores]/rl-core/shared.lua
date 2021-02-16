@@ -7307,7 +7307,7 @@ RLShared.Jobs = {
 	
 	["ambulance"] = {
 		label = "Ambulance",
-		payment = 700
+		payment = 700,
 		grades = {
 			['0'] = {
                 name = "Rookie",
