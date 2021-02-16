@@ -15,6 +15,7 @@ isLoggedIn = true
 isHandcuffed = false
 cuffType = 1
 handcuffsProp = nil
+handcuffKeys = nil
 isEscorted = false
 draggerId = 0
 PlayerJob = {}
