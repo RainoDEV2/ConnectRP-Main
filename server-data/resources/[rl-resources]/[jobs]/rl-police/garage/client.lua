@@ -110,7 +110,6 @@ AddEventHandler('rl:police:garage:jobcheck:back', function(name, can)
         SetPedIntoVehicle(PlayerPedId(), v, -1)
         exports['LegacyFuel']:SetFuel(v, 100)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(v), v)
-        FUCK()
     elseif can == 2 then
         RLCore.Functions.Notify("Your Too Low Of A Rank To Drive This!", "error")
     elseif can == 3 then
@@ -118,10 +117,4 @@ AddEventHandler('rl:police:garage:jobcheck:back', function(name, can)
     end
 end)
 
-function FUCK()
-    local pp = GetVehiclePedIsIn(PlayerPedId())
-    Citizen.Wait(2500)
-    if DoesEntityExist(pp) and IsEntityAVehicle(pp) then
-        ToggleVehicleMod(vehicle, 18, true) -- Turbo
-    end
-end
+
