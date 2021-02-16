@@ -113,6 +113,7 @@ AddEventHandler('rl:police:garage:jobcheck:back', function(name, can)
 	    SetVehicleMod(pp, 13, 3)
 	    SetVehicleMod(pp, 17, 4)
         ToggleVehicleMod(pp, 1, true)
+        exports['LegacyFuel']:SetFuel(pp, 100)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(v), v)
     elseif can == 2 then
         RLCore.Functions.Notify("Your Too Low Of A Rank To Drive This!", "error")
