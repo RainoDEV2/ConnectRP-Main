@@ -163,11 +163,11 @@ local vehshopOwner = {
 				{name = "Panto", costs = 8000, description = {}, model = "panto"},
 				{name = "Prairie", costs = 9000, description = {}, model = "prairie"},
 				{name = "Rhapsody", costs = 16000, description = {}, model = "rhapsody"},
-				{name = "Brioso 300", costs = 11000, description = {}, model = "brioso2"}
-				{name = "Weevil", costs = 10000 , description = {}, model = "weevil"},
-				{name = "Club", costs = 20000 , description = {}, model = "club"},
-				{name = "Issi Custom", costs = 26000, description = {}, model = "issi7"},
-				{name = "Kanjo", costs = 22000, description = {}, model = "kanjo"},	
+				--{name = "Brioso 300", costs = 11000, description = {}, model = "brioso2"},
+				--{name = "Weevil", costs = 10000 , description = {}, model = "weevil"},
+				--{name = "Club", costs = 20000 , description = {}, model = "club"},
+				--{name = "Issi Custom", costs = 26000, description = {}, model = "issi7"},
+				--{name = "Kanjo", costs = 22000, description = {}, model = "kanjo"},	
 			}
 		},
 		["coupes"] = {
@@ -235,8 +235,8 @@ local vehshopOwner = {
 				{name = "Ruston", costs =80000, description = {}, model = "ruston"},
 				{name = "Komoda", costs =50000, description = {}, model = "komoda"},
 				{name = "V-STR", costs =43000, description = {}, model = "vstr"},
-				{name = "Flash GT", costs = 50000 , description = {}, model = "flashgt"},
-				{name = "Sultan 2", costs = 32000, description = {}, model = "sultan2"},
+				--{name = "Flash GT", costs = 50000 , description = {}, model = "flashgt"},
+				--{name = "Sultan 2", costs = 32000, description = {}, model = "sultan2"},
 
 			}
 		},
@@ -263,8 +263,8 @@ local vehshopOwner = {
 				{name = "Roosevelt", costs =200000 , description = {}, model = "btype"},
 				{name = "Z-type", costs =175000 , description = {}, model = "ztype"},
 				{name = "Turismo Classic", costs =230000 , description = {}, model = "turismo2"},
-				{name = "Toreador", costs = 200000, description = {}, model = "toreador"}
-				{name = "Retinue Custom", costs = 150000, description = {}, model = "retinue2"},
+				--{name = "Toreador", costs = 200000, description = {}, model = "toreador"},
+				--{name = "Retinue Custom", costs = 150000, description = {}, model = "retinue2"},
 
 
 			}
@@ -380,23 +380,11 @@ local vehshopOwner = {
 			buttons = {
 				{name = "Asbo", costs = 9895, description = {}, model = "asbo"},
 				{name = "Jugular", costs = 175000, description = {}, model = "jugular"},
-				{name = "Peyote", costs = 75000, description = {}, model = "peyote2"},
 				{name = "Gauntlet 4", costs = 150000, description = {}, model = "gauntlet4"},
-				{name = "Caracara", costs = 190000, description = {}, model = "caracara2"},
-				{name = "Novak", costs = 140000, description = {}, model = "Novak"},
 				{name = "Issi 7", costs = 200000, description = {}, model = "issi7"},
-				{name = "Hellion", costs = 110000, description = {}, model = "hellion"},
-				{name = "Dynasty", costs = 110000, description = {}, model = "Dynasty"},
 				{name = "Gauntlet 3", costs = 130000, description = {}, model = "gauntlet3"},
 				{name = "Nebula", costs = 83000, description = {}, model = "nebula"},
 				{name = "Zion 3", costs = 75000, description = {}, model = "zion3"},
-				{name = "Drafter", costs = 140000, description = {}, model = "drafter"},
-				{name = "Komoda", costs = 195000, description = {}, model = "komoda"},
-				{name = "Rebla", costs = 110000, description = {}, model = "rebla"},
-				{name = "Retinue", costs = 80000, description = {}, model = "retinue2"},
-				{name = "Sugoi", costs = 105000, description = {}, model = "sugoi"},
-				{name = "Sultan 2", costs = 155000, description = {}, model = "sultan2"},
-				{name = "VSTR", costs = 186000, description = {}, model = "vstr"},
 			}
 		},
 		
@@ -426,13 +414,11 @@ local vehshopOwner = {
 				{name = "Deviant", costs = 50000, description = {}, model = "deviant"},
 				{name = "Hermes", costs = 200000, description = {}, model = "hermes"},
 				{name = "Drift Yosemite", costs =45000, description = {}, model = "yosemite2"},
-				{name = "Dominator GTX", costs =, description = {}, model = "dominator3"},
+				{name = "Dominator GTX", costs =65000, description = {}, model = "dominator3"},
 				{name = "Nightshade", costs =33000, description = {}, model = "nigthshade"},
 				{name = "Dukes Beater", costs =22000, description = {}, model = "dukes3"},
 				{name = "Ruiner", costs =20000, description = {}, model = "ruiner"},
-				{name = "Peyote", costs = 32000, description = {}, model = "peyote2"},
-
-
+				--{name = "Peyote", costs = 32000, description = {}, model = "peyote2"},
 			}
 		},
 		["offroad"] = {
@@ -452,12 +438,12 @@ local vehshopOwner = {
 				{name = "Riata", costs = 45000, description = {}, model = "riata"},
 				{name = "Desert Raid", costs =55000, description = {}, model = "trophytruck2"},
 				{name = "Trophy Truck", costs =35000, description = {}, model = "trophytruck"},
-				{name = "Everon", costs = 50000 , description = {}, model = "everon"},
-				{name = "Verus", costs = 15000 , description = {}, model = "verus"},
-				{name = "Caracara", costs = 60000, description = {}, model = "caracara2"},
-				{name = "Hellion", costs = 40000, description = {}, model = "hellion"},
-				{name = "Vagrant", costs = 22000, description = {}, model = "vagrant"},
-				{name = "Outlaw", costs = 22000, description = {}, model = "outlaw"},
+				--{name = "Everon", costs = 50000 , description = {}, model = "everon"},
+				--{name = "Verus", costs = 15000 , description = {}, model = "verus"},
+				--{name = "Caracara", costs = 60000, description = {}, model = "caracara2"},
+				--{name = "Hellion", costs = 40000, description = {}, model = "hellion"},
+				--{name = "Vagrant", costs = 22000, description = {}, model = "vagrant"},
+				--{name = "Outlaw", costs = 22000, description = {}, model = "outlaw"},
 
 
 			}
@@ -485,7 +471,7 @@ local vehshopOwner = {
 				{name = "Baller", costs =55000 , description = {}, model = "baller2"},
 				{name = "Baller LE", costs =60000 , description = {}, model = "baller3"},
 				{name = "Baller LE LWB", costs =65000 , description = {}, model = "baller4"},
-				{name = "Novak", costs = 96000, description = {}, model = "Novak"},
+				--{name = "Novak", costs = 96000, description = {}, model = "Novak"},
 
 			}
 		},
@@ -503,7 +489,7 @@ local vehshopOwner = {
 				{name = "Youga", costs = 14500, description = {}, model = "youga"},
 				{name = "Moonbeam", costs = 12500, description = {}, model = "moonbeam"},
 				{name = "Camper", costs = 34500, description = {}, model = "camper"},
-				{name = "Youga 4x4", costs = 33000 , description = {}, model = "youga3"},
+				--{name = "Youga 4x4", costs = 33000 , description = {}, model = "youga3"},
 			}
 		},
 		["sedans"] = {
@@ -568,9 +554,9 @@ local vehshopOwner = {
 				{name = "DaemonHigh", costs = 24000, description = {}, model = "daemon2"},
 				{name = "Wolfsbane", costs = 19000 , description = {}, model = "wolfsbane"},
 				{name = "Nightblade", costs = 21000 , description = {}, model ="nightblade"},
-				{name = "Veto Modern", costs = 20000 , description = {}, model = "veto2"},
-				{name = "Veto Classic", costs = 15000 , description = {}, model = "veto"},
-				{name = "Manchez Custom", costs = 16000, description = {}, model = "manchez2"},
+				--{name = "Veto Modern", costs = 20000 , description = {}, model = "veto2"},
+				--{name = "Veto Classic", costs = 15000 , description = {}, model = "veto"},
+				--{name = "Manchez Custom", costs = 16000, description = {}, model = "manchez2"},
 
 			}
 		},
@@ -600,7 +586,7 @@ local vehshopOwner = {
 				{name = "Primo Lux", costs = 30000, description = {}, model = "primo2"},
 				{name = "Minivan Lux", costs = 26000, description = {}, model = "minivan2"},
 				{name = "Manana Lux", costs = 35000, description = {}, model = "manana2"},
-				{name = "Glendale Lux", costs = 30000 , description = {}, model ="glendale2"},
+				--{name = "Glendale Lux", costs = 30000 , description = {}, model ="glendale2"},
 			}
 		},
 

@@ -1,0 +1,17 @@
+--[[ function AddTextEntry(key, value)
+    Citizen.InvokeNative(GetHashKey(ADD_TEXT_ENTRY), key, value)
+end ]]
+
+Citizen.CreateThread(function()
+	Citizen.Wait(0)
+	AddTextEntry('polvic2', '2011 Ford Crown Victoria')
+	AddTextEntry('poltaurus', '2016 Ford Taurus')
+	AddTextEntry('18chgrleo', '2018 Dodge Charger')
+	AddTextEntry('polchar', '2014 Dodge Charger')
+	AddTextEntry('expleo', '2016 Ford Explorer')
+	AddTextEntry('2015polstang', '2015 Ford Mustang GT500')
+    AddTextEntry('polraptor', '2020 Ford F150 Raptor')
+	AddTextEntry('code3gator', 'JD Police Gator')
+	AddTextEntry('trhawk', '2018 Dodge TrackHawk')
+	AddTextEntry('poltah', '2015 Chevrolet Tahoe')
+end) 
