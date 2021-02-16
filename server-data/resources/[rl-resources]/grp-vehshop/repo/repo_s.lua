@@ -60,8 +60,6 @@ RLCore.Functions.CreateCallback('JAM_VehicleFinance:RepoVehicleEnd', function(so
 		end
 	
 		if canDel then
-
-			xPlayer.Functions.AddMoney("bank", val)
 			vehicleProps = vehicle
 			price = data[1].finance
 			print(json.encode(price))
@@ -220,6 +218,7 @@ RegisterCommand('doRepay', function(source, args)
 									print("updating")
 									RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `finance` = '"..prevAmount - price.."' WHERE `plate` = '"..pPlate.."'")
 									RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `financetimer` = '1440' WHERE `plate` = '"..pPlate.."'")
+									TriggerEvent("bb-bossmenu:server:addAccountMoney", "cardealer", 250)
 
 								end
 							end)
