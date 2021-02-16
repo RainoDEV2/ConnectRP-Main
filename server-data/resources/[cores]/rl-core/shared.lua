@@ -7471,6 +7471,7 @@ RLShared.Jobs = {
 			},
 			['5'] = {
 				name = "Chief Justice",
+				isboss = true,
 				payment = 700
 			},
 		},
