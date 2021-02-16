@@ -108,6 +108,11 @@ AddEventHandler('rl:police:garage:jobcheck:back', function(name, can)
     if can == 1 then
         local v = CreateVehicle(GetHashKey(name), parking.pullout.x, parking.pullout.y, parking.pullout.z, parking.pullout.h, true, true)
         SetPedIntoVehicle(PlayerPedId(), v, -1)
+        --SetVehicleMod(vehicle, 12, 2)
+	    --SetVehicleMod(vehicle, 13, 3)
+	    --SetVehicleMod(vehicle, 17, 4)
+        ToggleVehicleMod( 1, true)
+        --SetVehicleMod(v, modType, modIndex, customTires)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(v), v)
     elseif can == 2 then
         RLCore.Functions.Notify("Your Too Low Of A Rank To Drive This!", "error")
