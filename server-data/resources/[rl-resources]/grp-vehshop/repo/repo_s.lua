@@ -208,16 +208,16 @@ RegisterCommand('doRepay', function(source, args)
 									settimer = repayTime
 									xPlayer.Functions.RemoveMoney('bank',price)
 								end
-									if prevAmount < price then
-										RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `finance` = '0' WHERE `plate` = '"..pPlate.."'")
-										RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `financetimer` = '1440' WHERE `plate` = '"..pPlate.."'")
-									else
-										RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `finance` = '"..prevAmount - price.."' WHERE `plate` = '"..pPlate.."'")
-										RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `financetimer` = '1440' WHERE `plate` = '"..pPlate.."'")
-										TriggerEvent("bb-bossmenu:server:addAccountMoney", "cardealer", 250)
+								if prevAmount < price then
+									RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `finance` = '0' WHERE `plate` = '"..pPlate.."'")
+									RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `financetimer` = '1440' WHERE `plate` = '"..pPlate.."'")
+								else
+									RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `finance` = '"..prevAmount - price.."' WHERE `plate` = '"..pPlate.."'")
+									RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `financetimer` = '1440' WHERE `plate` = '"..pPlate.."'")
+									TriggerEvent("bb-bossmenu:server:addAccountMoney", "cardealer", 250)
 
-									end
 								end
+								
 							end)
 						end
 					end
