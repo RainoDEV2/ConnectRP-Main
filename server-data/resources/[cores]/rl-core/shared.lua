@@ -7228,6 +7228,7 @@ RLShared.Jobs = {
 	},
 	["police"] = {
         label = "San Andreas Law Enforcement",
+		payment = 850,
         grades = {
 			['0'] = {
                 name = "S.A.L.E. Cadet",
@@ -7306,6 +7307,7 @@ RLShared.Jobs = {
 	
 	["ambulance"] = {
 		label = "Ambulance",
+		payment = 700
 		grades = {
 			['0'] = {
                 name = "Rookie",
@@ -7445,7 +7447,7 @@ RLShared.Jobs = {
 	},
 	["judge"] = {
 		label = "Department of Justice",
-		payment = 500,
+		payment = 700,
 		grades = {
             ['0'] = {
                 name = "Attorney",
@@ -7476,7 +7478,7 @@ RLShared.Jobs = {
 	},
 	["lawyer"] = {
 		label = "San Andreas Bar",
-		payment = 50,
+		payment = 550,
 		defaultDuty = true,
 		grades = {
 			['0'] = {
@@ -7519,7 +7521,7 @@ RLShared.Jobs = {
 	},
 	["mechanic"] = {
 		label = "Mechanic",
-		payment = 150,
+		payment = 650,
 		defaultDuty = true,
 		grades = {
             ['0'] = {
