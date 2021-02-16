@@ -108,7 +108,7 @@ AddEventHandler('rl:police:garage:jobcheck:back', function(name, can)
     if can == 1 then
         local v = CreateVehicle(GetHashKey(name), parking.pullout.x, parking.pullout.y, parking.pullout.z, parking.pullout.h, true, true)
         SetPedIntoVehicle(PlayerPedId(), v, -1)
-        exports['LegacyFuel']:SetFuel(pp, 100)
+        exports['LegacyFuel']:SetFuel(v, 100)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(v), v)
         FUCK()
     elseif can == 2 then
