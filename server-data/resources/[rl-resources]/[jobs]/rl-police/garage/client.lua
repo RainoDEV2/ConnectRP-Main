@@ -121,12 +121,7 @@ end)
 function FUCK()
     local pp = GetVehiclePedIsIn(PlayerPedId())
     Citizen.Wait(2500)
-    ToggleVehicleMod(pp, 17, true)
-    SetVehicleMod(pp, 12, 2)
-	    SetVehicleMod(pp, 13, 3)
-	    SetVehicleMod(pp, 17, 4)
-        ToggleVehicleMod(pp, 1, true)
-        print(json.encode(GetVehicleMod(pp, 12)))
-        print(json.encode(GetVehicleMod(pp, 13)))
-        print(json.encode(GetVehicleMod(pp, 17)))
+    if DoesEntityExist(pp) and IsEntityAVehicle(pp) then
+        ToggleVehicleMod(vehicle, 18, true) -- Turbo
+    end
 end
