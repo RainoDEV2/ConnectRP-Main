@@ -426,13 +426,11 @@ local vehshopOwner = {
 				{name = "Deviant", costs = 50000, description = {}, model = "deviant"},
 				{name = "Hermes", costs = 200000, description = {}, model = "hermes"},
 				{name = "Drift Yosemite", costs =45000, description = {}, model = "yosemite2"},
-				{name = "Dominator GTX", costs =, description = {}, model = "dominator3"},
+				{name = "Dominator GTX", costs =65000, description = {}, model = "dominator3"},
 				{name = "Nightshade", costs =33000, description = {}, model = "nigthshade"},
 				{name = "Dukes Beater", costs =22000, description = {}, model = "dukes3"},
 				{name = "Ruiner", costs =20000, description = {}, model = "ruiner"},
 				{name = "Peyote", costs = 32000, description = {}, model = "peyote2"},
-
-
 			}
 		},
 		["offroad"] = {
