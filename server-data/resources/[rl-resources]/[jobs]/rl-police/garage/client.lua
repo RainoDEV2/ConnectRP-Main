@@ -108,21 +108,23 @@ AddEventHandler('rl:police:garage:jobcheck:back', function(name, can)
     if can == 1 then
         local v = CreateVehicle(GetHashKey(name), parking.pullout.x, parking.pullout.y, parking.pullout.z, parking.pullout.h, true, true)
         SetPedIntoVehicle(PlayerPedId(), v, -1)
-        local pp = GetVehiclePedIsIn(PlayerPedId())
-        
         exports['LegacyFuel']:SetFuel(pp, 100)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(v), v)
-        Citizen.Wait(500)
-        SetVehicleMod(pp, 12, 2)
-	    SetVehicleMod(pp, 13, 3)
-	    SetVehicleMod(pp, 17, 4)
-        ToggleVehicleMod(pp, 1, true)
-        print(json.encode(GetVehicleMod(pp, 12)))
-        print(json.encode(GetVehicleMod(pp, 13)))
-        print(json.encode(GetVehicleMod(pp, 17)))
     elseif can == 2 then
         RLCore.Functions.Notify("Your Too Low Of A Rank To Drive This!", "error")
     elseif can == 3 then
         RLCore.Functions.Notify("Your Not A Police Officer!", "error")
     end
 end)
+
+function FUCK()
+    local pp = GetVehiclePedIsIn(PlayerPedId())
+    Citizen.Wait(2500)
+    SetVehicleMod(pp, 12, 2)
+	    SetVehicleMod(pp, 13, 3)
+	    SetVehicleMod(pp, 17, 4)
+        ToggleVehicleMod(pp, 1, true)
+        print(json.encode(GetVehicleMod(pp, 12)))
+        print(json.encode(GetVehicleMod(pp, 13)))
+        print(json.encode(GetVehicleMod(pp, 17)))
+end
