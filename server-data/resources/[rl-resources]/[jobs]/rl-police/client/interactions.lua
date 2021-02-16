@@ -75,6 +75,7 @@ AddEventHandler('police:client:PutInVehicle', function()
             if distance <= 5.0 then
                 local maxSeats, freeSeat = GetVehicleMaxNumberOfPassengers(vehicle)
                 if maxSeats > 0 then
+                    local ped = PlayerPedId()
                     local seats = {}
                     for i = 1, maxSeats, 1 do -- Loop through all seats and add them into seats table
                         table.insert(seats, i)
@@ -94,9 +95,14 @@ AddEventHandler('police:client:PutInVehicle', function()
                     end
                     
                     if freeSeat then
-                        TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, freeSeat)
+                        isEscorted = false
+                        TriggerEvent('hospital:client:isEscorted', isEscorted)
+                        ClearPedTasks(ped)
+                        DetachEntity(ped, true, false)
+                        Wait(100)
+                        TaskWarpPedIntoVehicle(ped, vehicle, freeSeat)
                         loadAnimDict("mp_arresting")
-                        TaskPlayAnim(PlayerPedId(), "mp_arresting", "idle", 8.0, -8, -1, 49, 0, 0, 0, 0) -- Play arrest animation in vehicle, rather than just sitting
+                        TaskPlayAnim(ped, "mp_arresting", "idle", 8.0, -8, -1, 49, 0, 0, 0, 0) -- Play arrest animation in vehicle, rather than just sitting
                     end
                 else
                     RLCore.Functions.Notify("No passenger seat found!", "error")
