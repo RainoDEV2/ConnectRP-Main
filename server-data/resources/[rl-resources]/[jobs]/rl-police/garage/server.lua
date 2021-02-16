@@ -83,7 +83,7 @@ AddEventHandler('rl:police:garage:jobcheck', function(value)
                 end
             end
         end
-        if value == 'DURANLEO' then
+        if value == 'TRHAWK' then
             if (stupiduser.PlayerData.job.name == "police" and stupiduser.PlayerData.job.grade.level >= 3) then
                 TriggerClientEvent('rl:police:garage:jobcheck:back', source, value, 1)
             else
