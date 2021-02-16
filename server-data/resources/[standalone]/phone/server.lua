@@ -113,7 +113,7 @@ function getNumberPhone(identifier)
 	while not xPlayer do xPlayer =RLCore.Functions.GetPlayer(source); Citizen.Wait(0);end
     
     RLCore.Functions.ExecuteSql(false,"SELECT phone_number FROM players WHERE citizenid='" .. xPlayer.PlayerData.citizenid .. "'",  function(result)
-        print(json.encode(xPlayer.PlayerData.citizenid))
+        --print(json.encode(xPlayer.PlayerData))
         print(json.encode(result))
         print(json.encode(result[1].phone_number))
         if result[1] ~= nil then
@@ -455,19 +455,31 @@ AddEventHandler('phone:updatePhoneJob', function(advert)
     --local handle = handle
     local src = source
     local xPlayer = RLCore.Functions.GetPlayer(src)
-    local mynumber = getNumberPhone(xPlayer.identifier)
+    local mynumber = getNumberPhone()
+    print(json.encode(mynumber))
     local name = getIdentity(src)
 
     fal = name.firstname .. " " .. name.lastname
 
-    exports.ghmattimysql:execute('INSERT INTO phone_yp (name, advert, phoneNumber) VALUES (@name, @advert, @phoneNumber)', {
-        ['name'] = fal,
-        ['advert'] = advert,
-        ['phoneNumber'] = mynumber
+    exports.ghmattimysql:execute('INSERT INTO phone_yp (name, message, phoneNumber) VALUES (@name, @message, @phoneNumber)', {
+        ['@name'] = fal,
+        ['@message'] = advert,  
+        ['@phoneNumber'] = mynumber
     }, function(result)
         TriggerClientEvent('refreshYP', src)
     end)
 end)
+
+
+--[[ RegisterNetEvent('getContacts')
+AddEventHandler('getContacts', function()
+    local xPlayer =RLCore.Functions.GetPlayer(source) 
+	while not xPlayer do xPlayer =RLCore.Functions.GetPlayer(source); Citizen.Wait(0);end
+    RLCore.Functions.ExecuteSql(false,"SELECT * FROM phone_contacts WHERE '" .. xPlayer.PlayerData.citizenid .. "'",  function(contacts)
+        TriggerClientEvent('phone:loadContacts', source, contacts)
+    end)
+end) ]]
+
 
 RegisterNetEvent('phone:foundLawyer')
 AddEventHandler('phone:foundLawyer', function(name, phoneNumber)
