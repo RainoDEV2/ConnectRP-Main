@@ -3,7 +3,7 @@ Config = {}
 Config.MinimalDoctors = 3
 
 Config.Locations = {
-    ["checking"] = {x = 307.93, y = -594.99, z = 43.28, h = 0.0},
+    ["checking"] = {x = 312.07571, y = -593.4837, z = 43.284061, h = 0.0},
     ["pharmacy"] = {x = 309.08, y = -592.91, z = 43.28, h = 0.0},
 
     ["duty"] = {
