@@ -434,7 +434,7 @@ Config.Items = {
         },
         [20] = {
             name = "pistol_ammo",
-            price = 20,
+            price = 10,
             amount = 15,
             info = {},
             type = "item",
@@ -442,7 +442,7 @@ Config.Items = {
         },    
         [21] = {
             name = "smg_ammo",
-            price = 20,
+            price = 15,
             amount = 15,
             info = {},
             type = "item",
@@ -450,7 +450,7 @@ Config.Items = {
         },
         [22] = {
             name = "rifle_ammo",
-            price = 20,
+            price = 15,
             amount = 15,
             info = {},
             type = "item",
