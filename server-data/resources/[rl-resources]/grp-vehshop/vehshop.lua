@@ -263,7 +263,7 @@ local vehshopOwner = {
 				{name = "Roosevelt", costs =200000 , description = {}, model = "btype"},
 				{name = "Z-type", costs =175000 , description = {}, model = "ztype"},
 				{name = "Turismo Classic", costs =230000 , description = {}, model = "turismo2"},
-				{name = "Toreador", costs = 200000, description = {}, model = "toreador"}
+				{name = "Toreador", costs = 200000, description = {}, model = "toreador"},
 				{name = "Retinue Custom", costs = 150000, description = {}, model = "retinue2"},
 
 
