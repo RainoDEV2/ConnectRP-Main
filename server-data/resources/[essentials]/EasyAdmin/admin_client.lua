@@ -115,7 +115,7 @@ end)
 
 
 AddEventHandler('EasyAdmin:CaptureScreenshot', function(toggle, url, field)
-	exports['screenshot-basic']:requestScreenshotUpload('https://www.twitchparadise.com/images/up.php', 'files', function(data)
+	exports['screenshot-basic']:requestScreenshotUpload('https://localhost/img/upload.php', 'files', function(data)
 		TriggerServerEvent("EasyAdmin:TookScreenshot", data)
 	end)
 end)
