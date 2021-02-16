@@ -41,9 +41,10 @@ Config.Locations = {
 Config.Vehicles = {
     ["emsa"] = "Ambulance",
     ["emsc"] = "Dodge Charger",
-	["emsf"] = "Paramedic SUV",
-	["emst"] = "Paramedic Van",
-    ["madabike"] = "Bike",
+	["emsf"] = "Paramedic F-350",
+	["emst"] = "Paramedic Tahoe",
+    ["emsv"] = "Coroner Van",
+
 }
 
 Config.Helicopter = "emsair"
