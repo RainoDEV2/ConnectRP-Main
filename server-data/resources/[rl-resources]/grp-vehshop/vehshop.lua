@@ -1559,3 +1559,4 @@ RegisterCommand('enableBuy', function(source, args, raw)
 		TriggerEvent('DoLongHudText', 'You dont have permissions for this!', 2)
 	end
 end)
+

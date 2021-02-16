@@ -254,3 +254,115 @@ RegisterCommand('checkRepos', function(...)
 end)
 
 Citizen.CreateThread(function(...) Start(); end)
+
+
+RegisterCommand('checkRepay', function(source, args)
+	local plyPed = GetPlayerPed(-1)
+	if not IsPedInAnyVehicle(plyPed, false) then RLCore.Functions.Notify('Get in a vehicle first.')
+		return
+	end
+	local plyVeh = GetVehiclePedIsIn(plyPed, true)
+	local vehProps = RLCore.Functions.GetVehicleProperties(plyVeh)
+
+	RLCore.Functions.TriggerCallback('tc-finance:GetOwnedVehicles', function(data)
+		if not data then RLCore.Functions.Notify("You dont own any vehicles", 'error') 
+			return
+		end
+		local matched = false
+		for k,v in pairs(data) do
+			if vehProps.plate == v.plate then 
+				matched = true
+				print(vehProps.plate,v.plate)
+				if v.finance then
+					if v.finance < 1 then
+						
+						
+						RLCore.Functions.Notify("You own this vehicle", 'error') 
+					else
+						local fprice = v.financetimer / 60
+						local pprice = round(fprice)
+						RLCore.Functions.Notify("You owe $"..v.finance..". You have "..(pprice).." minutes remaining to make a repayment.") 
+					end
+				end
+			end
+		end
+		if not matched then RLCore.Functions.Notify("You dont own this vehicle", 'error'); end
+	end)
+end)
+
+function round(num)
+    under = math.floor(num)
+    upper = math.floor(num) + 1
+    underV = -(under - num)
+    upperV = upper - num
+    if (upperV > underV) then
+        return under
+    else
+        return upper
+    end
+end
+
+--[[ RegisterCommand('doRepay', function(source, args)
+	if not IsPedInAnyVehicle(GetPlayerPed(-1), false) then 
+		RLCore.Functions.Notify("Get in a vehicle first")
+		return
+	end
+	if not args then 
+		RLCore.Functions.Notify("You need to enter a valid amount", 'error')
+		return
+	end
+	local repayAmount = tonumber(args[1])
+	if not repayAmount or repayAmount == nil or repayAmount < 1 then 
+		RLCore.Functions.Notify("You need to enter a valid amount", 'error')
+	end
+	
+	local plyPed = GetPlayerPed(-1)
+	local plyVeh = GetVehiclePedIsIn(plyPed, true)
+	local vehProps = RLCore.Functions.GetVehicleProperties(plyVeh)
+
+	local lowestAmount
+	local vehPrice
+
+	for k,v in pairs(JVS.ShopData) do
+		for k,v in pairs(v) do
+			if GetHashKey(v.model)%0x100000000 == vehProps.model%0x100000000 then 
+				lowestAmount = (v.price / JVF.MaxRepayments)
+				vehPrice = v.price
+			end
+		end
+	end
+
+	RLCore.Function.TriggerCallback('tc-finance:GetOwnedVehicles', function(data)
+		if not data then return; end
+		local matched = false
+		for k,v in pairs(data) do
+			if vehProps.plate == v.plate then 
+				matched = true
+				if not v.finance or (v.finance and v.finance < 1) then
+					RLCore.Functions.Notify("This vehicle has already been paid for.")
+					--ESX.ShowNotification("This vehicle has already been paid for.")
+				else
+					local diff = 0
+					local calc = v.finance + lowestAmount
+					if calc > vehPrice then diff = calc - vehPrice; else diff = lowestAmount; end
+					if repayAmount < diff then 
+						RLCore.Functions.Notify("You need to pay at least $~r~"..diff.."~s~ at a time.")
+						return 
+					else
+						RLCore.Functions.TriggerCallback('tc-finance:RepayLoan', function(valid) 
+							if valid then 
+								RLCore.Functions.Notify("You have payed $~g~"..repayAmount.." ~s~towards this vehicles loan.")
+								TriggerServerEvent('JAM_VehicleFinance:RemoveFromRepoList', vehProps.plate)
+								return 
+							else 
+								RLCore.Functions.Notify("You don't have enough money.", 'error')
+								return
+							end
+						end, vehProps.plate, repayAmount)
+					end
+				end
+			end
+		end
+		if not matched then RLCore.Functions.Notify("No body owns this vehicle", 'error'); end
+	end)
+end)  ]]
