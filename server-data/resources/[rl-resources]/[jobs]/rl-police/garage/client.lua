@@ -111,7 +111,7 @@ AddEventHandler('rl:police:garage:jobcheck:back', function(name, can)
         --SetVehicleMod(vehicle, 12, 2)
 	    --SetVehicleMod(vehicle, 13, 3)
 	    --SetVehicleMod(vehicle, 17, 4)
-        ToggleVehicleMod( 1, true)
+        ToggleVehicleMod(v, 1, true)
         --SetVehicleMod(v, modType, modIndex, customTires)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(v), v)
     elseif can == 2 then
