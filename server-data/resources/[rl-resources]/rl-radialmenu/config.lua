@@ -994,13 +994,13 @@ newSubMenus = {
     ['police:cuff'] = {
         title = "Cuff",
         icon = "#cuffs-cuff",
-        functionName = "police:client:CuffPlayer"
+        functionName = "police:client:Hardcuff"
     },
 
     ['police:softcuff'] = {
         title = "Soft Cuff",
         icon = "#cuffs-cuff",
-        functionName = "police:client:CuffPlayerSoft"
+        functionName = "police:client:Softcuff"
     },
 
     ["police:gsrtest"] = {
