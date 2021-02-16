@@ -60,8 +60,6 @@ RLCore.Functions.CreateCallback('JAM_VehicleFinance:RepoVehicleEnd', function(so
 		end
 	
 		if canDel then
-
-			xPlayer.Functions.AddMoney("bank", val)
 			vehicleProps = vehicle
 			price = data[1].finance
 			print(json.encode(price))
@@ -132,6 +130,8 @@ end)
 
 AddEventHandler('playerDropped', function()
 	local identifiers, steamIdentifier = GetPlayerIdentifiers(source)
+	local xPlayer =RLCore.Functions.GetPlayer(source) 
+	while not xPlayer do xPlayer =RLCore.Functions.GetPlayer(source); Citizen.Wait(0);end
   for _, v in pairs(identifiers) do
       if string.find(v, "steam") then
           steamIdentifier = v
@@ -145,15 +145,85 @@ AddEventHandler('playerDropped', function()
 	if not timeJoined then return; end
 
 	local identifier = steamIdentifier
-	local data = RLCore.Functions.ExecuteSql(false,"SELECT * FROM bbvehicles WHERE citizenid='"..xPlayer.PlayerData.citizenid.."'")	
-	if not data then 
-		return 
-	end
+	RLCore.Functions.ExecuteSql(false,"SELECT * FROM bbvehicles WHERE citizenid='"..xPlayer.PlayerData.citizenid.."'", function(data)	 
+		if not data then 
+			return 
+		end
+	end)
+
+	local thingi = math.floor(v.financetimer - (((GetGameTimer() - timeJoined) / 1000) / 60))
 
 	for k,v in pairs(data) do
 		if v.finance and v.finance > 0 then
-			RLCore.Functions.ExecuteSql(false,'UPDATE bbvehicles SET financetimer=@financetimer WHERE plate=@plate', {['@financetimer'] = math.floor(v.financetimer - (((GetGameTimer() - timeJoined) / 1000) / 60)), ['@plate'] = v.plate} )
+			RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `financetimer` = '"..thingi.."' WHERE `plate` = '"..v.plate.."'")
+			print("UPDATNG")
+
+			--RLCore.Functions.ExecuteSql(false,'UPDATE bbvehicles SET financetimer=@financetimer WHERE plate=@plate', {['@financetimer'] = math.floor(v.financetimer - (((GetGameTimer() - timeJoined) / 1000) / 60)), ['@plate'] = v.plate} )
 		end
 	end
 	table.remove(PlayerTable, ky)
+end)
+
+ 
+RegisterCommand('doRepay', function(source, args)
+    local src = source
+    local pPlate = plate
+    local xPlayer = RLCore.Functions.GetPlayer(source)
+	if GetVehiclePedIsIn(GetPlayerPed(src), false) == 0 then 
+		RLCore.Functions.Notify("Get in a vehicle first")
+		return
+	end
+
+	local plyVeh = GetVehiclePedIsIn(GetPlayerPed(src), false)
+	local pPlate = GetVehicleNumberPlateText(plyVeh)
+
+    if pPlate ~= nil then
+
+        RLCore.Functions.ExecuteSql(false,"SELECT buy_price, plate FROM bbvehicles WHERE plate= '" .. pPlate .. "'",function(pData)
+			for k,v in pairs(pData) do
+				if pData ~= nil then
+					if pPlate == v.plate then
+						local price = (v.buy_price / 10)
+						if xPlayer.PlayerData.money['bank'] >= price then
+							fuck = true
+							TriggerClientEvent("RLCore:Notify",src, "You payed $'".. price .. "' on your vehicle.")
+							--TriggerClientEvent('chatMessage', src, 'IMPORTANT: ', 1, 'Please see pdm dealer for reimbursement. Take a screen shot of the payment or you will not receive any money back!')
+							--TriggerClientEvent('chatMessage', src, 'IMPORTANT: ', 1, 'You payed $'.. price .. ' on your vehicle.')
+						else
+							fuck = false
+							TriggerClientEvent("RLCore:Notify",src, "You need $'".. price .. "' to pay your finance.")
+							--TriggerClientEvent('DoLongHudText', src, 'You don\'t have enough money to pay on this vehicle!', 2)
+							--TriggerClientEvent('DoLongHudText', src, 'You need $'.. price .. ' to pay for your vehicle!', 1)
+						end
+
+						if fuck then
+							RLCore.Functions.ExecuteSql(false,"SELECT finance FROM bbvehicles WHERE plate= '" .. pPlate .. "'" ,function(data)
+								if not data or not data[1] then 
+									return
+								end
+								local prevAmount = data[1].finance
+								if prevAmount - price <= 0 or prevAmount - price <= 0.0 then
+									settimer = 0
+								else
+									settimer = repayTime
+									xPlayer.Functions.RemoveMoney('bank',price)
+								end
+									if prevAmount < price then
+										RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `finance` = '0' WHERE `plate` = '"..pPlate.."'")
+										RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `financetimer` = '1440' WHERE `plate` = '"..pPlate.."'")
+									else
+										RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `finance` = '"..prevAmount - price.."' WHERE `plate` = '"..pPlate.."'")
+										RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `financetimer` = '1440' WHERE `plate` = '"..pPlate.."'")
+										TriggerEvent("bb-bossmenu:server:addAccountMoney", "cardealer", 250)
+
+									end
+								end
+							end)
+						end
+					end
+					return
+				end
+			end
+		end)
+    end
 end)
