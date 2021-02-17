@@ -110,14 +110,12 @@
           <npcName />
         </Item>
       </drivers>
-       <extraIncludes>
-        <Item>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5</Item>
-      </extraIncludes>
+      <extraIncludes />
       <doorsWithCollisionWhenClosed />
       <driveableDoors />
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
-      <requiredExtras>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5</requiredExtras>
+      <requiredExtras />
       <cinematicPartCamera>
         <Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
         <Item>WHEEL_FRONT_LEFT_CAMERA</Item>
@@ -228,14 +226,12 @@
       <trailers />
       <additionalTrailers />
       <drivers />
-       <extraIncludes>
-        <Item>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5</Item>
-      </extraIncludes>
+      <extraIncludes />
       <doorsWithCollisionWhenClosed />
       <driveableDoors />
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
-      <requiredExtras>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5</requiredExtras>
+      <requiredExtras />
       <rewards />
       <cinematicPartCamera>
         <Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
@@ -354,16 +350,13 @@
           <npcName />
         </Item>
       </drivers>
-       <extraIncludes>
-        <Item>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_6 EXTRA_7 EXTRA_8 EXTRA_9</Item>
-      </extraIncludes>
+      <extraIncludes />
       <doorsWithCollisionWhenClosed />
       <driveableDoors />
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
-      <requiredExtras>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_6 EXTRA_7 EXTRA_8 EXTRA_9</requiredExtras>
+      <requiredExtras />
       <rewards>
-        <Item>REWARD_STAT_WEAPON</Item>
       </rewards>
       <cinematicPartCamera>
         <Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
@@ -484,16 +477,13 @@
           <npcName />
         </Item>
       </drivers>
-       <extraIncludes>
-        <Item>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_6 EXTRA_7 EXTRA_8 EXTRA_9</Item>
-      </extraIncludes>
+      <extraIncludes />
       <doorsWithCollisionWhenClosed />
       <driveableDoors />
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
-      <requiredExtras>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_6 EXTRA_7 EXTRA_8 EXTRA_9</requiredExtras>
+      <requiredExtras />
       <rewards>
-        <Item>REWARD_STAT_WEAPON</Item>
       </rewards>
       <cinematicPartCamera>
         <Item>WHEEL_FRONT_RIGHT_CAMERA</Item>

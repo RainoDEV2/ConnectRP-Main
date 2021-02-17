@@ -106,23 +106,13 @@
           <npcName />
         </Item>
       </drivers>
-      <extraIncludes>
-        <Item>EXTRA_1 EXTRA_3</Item>
-        <Item>EXTRA_2</Item>
-        <Item>EXTRA_4</Item>
-        <Item>EXTRA_5</Item>
-        <Item>EXTRA_6</Item>
-        <Item>EXTRA_7</Item>
-      </extraIncludes>
+      <extraIncludes />
       <doorsWithCollisionWhenClosed />
       <driveableDoors />
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
-      <requiredExtras>EXTRA_1 EXTRA_3 EXTRA_4 EXTRA_5 EXTRA_6 EXTRA_7</requiredExtras>
+      <requiredExtras />
       <rewards>
-        <Item>REWARD_WEAPON_PUMPSHOTGUN</Item>
-        <Item>REWARD_AMMO_PUMPSHOTGUN_ENTER_VEHICLE</Item>
-        <Item>REWARD_STAT_WEAPON</Item>
       </rewards>
       <cinematicPartCamera>
         <Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
@@ -244,18 +234,13 @@
           <npcName />
         </Item>
       </drivers>
-      <extraIncludes>
-        <Item>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5 EXTRA_6 EXTRA_7 EXTRA_8</Item>
-      </extraIncludes>
+      <extraIncludes />
       <doorsWithCollisionWhenClosed />
       <driveableDoors />
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
-      <requiredExtras>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5 EXTRA_6 EXTRA_7 EXTRA_8</requiredExtras>
+      <requiredExtras />
       <rewards>
-        <Item>REWARD_WEAPON_PUMPSHOTGUN</Item>
-        <Item>REWARD_AMMO_PUMPSHOTGUN_ENTER_VEHICLE</Item>
-        <Item>REWARD_STAT_WEAPON</Item>
       </rewards>
       <cinematicPartCamera>
         <Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
@@ -377,14 +362,12 @@
           <npcName />
         </Item>
       </drivers>
-      <extraIncludes>
-        <Item>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5 EXTRA_6 EXTRA_7 EXTRA_8 EXTRA_9 EXTRA_10 EXTRA_11 EXTRA_12</Item>
-      </extraIncludes>
+      <extraIncludes />
       <doorsWithCollisionWhenClosed />
       <driveableDoors />
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
-      <requiredExtras>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5 EXTRA_6 EXTRA_7 EXTRA_8 EXTRA_9 EXTRA_10 EXTRA_11 EXTRA_12</requiredExtras>
+      <requiredExtras />
       <rewards>
       </rewards>
       <cinematicPartCamera>
@@ -507,17 +490,12 @@
           <npcName />
         </Item>
       </drivers>
-      <extraIncludes>
-        <Item>EXTRA_1 EXTRA_3</Item>
-        <Item>EXTRA_2</Item>
-        <Item>EXTRA_4</Item>
-        <Item>EXTRA_5</Item>
-      </extraIncludes>
+      <extraIncludes />
       <doorsWithCollisionWhenClosed />
       <driveableDoors />
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
-      <requiredExtras>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5</requiredExtras>
+      <requiredExtras />
       <rewards>
       </rewards>
       <cinematicPartCamera>
@@ -640,14 +618,12 @@
           <npcName />
         </Item>
       </drivers>
-      <extraIncludes>
-        <Item>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5 EXTRA_6 EXTRA_8 EXTRA_9</Item>
-      </extraIncludes>
+      <extraIncludes />
       <doorsWithCollisionWhenClosed />
       <driveableDoors />
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
-      <requiredExtras>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5 EXTRA_6 EXTRA_8 EXTRA_9</requiredExtras>
+      <requiredExtras />
       <rewards>
       </rewards>
       <cinematicPartCamera>
@@ -770,20 +746,12 @@
           <npcName />
         </Item>
       </drivers>
-      <extraIncludes>
-        <Item>EXTRA_1 EXTRA_5</Item>
-        <Item>EXTRA_2</Item>
-        <Item>EXTRA_3</Item>
-        <Item>EXTRA_4</Item>
-        <Item>EXTRA_7</Item>
-        <Item>EXTRA_8</Item>
-        <Item>EXTRA_TEN</Item>
-      </extraIncludes>
+      <extraIncludes />
       <doorsWithCollisionWhenClosed />
       <driveableDoors />
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
-      <requiredExtras>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5 EXTRA_7 EXTRA_8 EXTRA_TEN</requiredExtras>
+      <requiredExtras />
       <rewards>
       </rewards>
       <cinematicPartCamera>
@@ -1330,9 +1298,7 @@
       <trailers />
       <additionalTrailers />
       <drivers />
-      <extraIncludes>
-      	<Item>EXTRA_1</Item>
-      </extraIncludes>
+      <extraIncludes />
       <vfxExtraInfos />
       <doorsWithCollisionWhenClosed />
       <driveableDoors />

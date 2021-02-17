@@ -111,14 +111,12 @@
           <npcName />
         </Item>
       </drivers>
-       <extraIncludes>
-        <Item>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5</Item>
-      </extraIncludes>
+      <extraIncludes />
       <doorsWithCollisionWhenClosed />
       <driveableDoors />
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
-      <requiredExtras>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5</requiredExtras>
+      <requiredExtras />
       <rewards>
       </rewards>
       <cinematicPartCamera>
