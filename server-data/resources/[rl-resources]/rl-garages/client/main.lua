@@ -365,7 +365,7 @@ function DepotList()
                     print(b,g)
                 end ]]
 
-                print(v.props.engineHealth)
+                print(v.engineHealth)
                 enginePercent = round(v.engineHealth / 10, 0)
                 bodyPercent = round(v.bodyHealth / 10, 0)
                 currentFuel = v.fuel
