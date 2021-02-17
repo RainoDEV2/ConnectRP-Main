@@ -360,7 +360,10 @@ function DepotList()
             
 
             for k, v in pairs(result) do
-                print(k,v)
+                for b, g in pairs(v) do 
+                    print(b,g)
+                end
+
                 print(v.engineHealth)
                 enginePercent = round(v.engine_damage / 10, 0)
                 bodyPercent = round(v.body_damage / 10, 0)
