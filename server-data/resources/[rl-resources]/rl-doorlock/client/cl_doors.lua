@@ -399,9 +399,18 @@ Citizen.CreateThread(function()
                                 local swingcount = 0
                                 while active do
                                     Citizen.Wait(1)
-                                    DrawText3DTest(doorCoordsOffset["x"], doorCoordsOffset["y"], doorCoordsOffset["z"], "locking" )
-                                    swingcount = swingcount + 1
-                                    if swingcount > 100 then
+
+                                    locked, heading = GetStateOfClosestDoorOfType(GetHashKey(targetDoor["doorType"]), doorCoords["x"], doorCoords["y"], doorCoords["z"]) 
+                                    heading = math.ceil(heading * 100) 
+                                    DrawText3DTest(doorCoordsOffset["x"], doorCoordsOffset["y"], doorCoordsOffset["z"], "Locking" )
+                                    
+                                    local dist = #(plyCoords - vector3(targetDoor["x"], targetDoor["y"], targetDoor["z"]))
+                                    local dst2 = #(plyCoords - vector3(1830.45, 2607.56, 45.59))
+
+                                    if heading < 1.5 and heading > -1.5 then
+                                        swingcount = swingcount + 1
+                                    end             
+                                    if dist > 150.0 or swingcount > 100 or dst2 < 200.0 then
                                         active = false
                                     end
                                 end
@@ -413,7 +422,7 @@ Citizen.CreateThread(function()
                                 while active do
                                     Citizen.Wait(1)
                                     DrawText3DTest(doorCoordsOffset["x"], doorCoordsOffset["y"], doorCoordsOffset["z"], "Unlocking" )
-                                    swingcount = swingcount + 2
+                                    swingcount = swingcount + 1
                                     if swingcount > 100 then
                                         active = false
                                     end
