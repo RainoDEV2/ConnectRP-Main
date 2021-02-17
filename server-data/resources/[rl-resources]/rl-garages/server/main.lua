@@ -75,7 +75,7 @@ RLCore.Functions.CreateCallback("rl-garage:server:GetDepotVehicles", function(so
         if result[1] ~= nil then
             for k, v in pairs(result) do
                 if v.status ~= nil then
-                    v.status = json.decode(v.status)
+                    v.status = json.decode(v.props)
                 end
             end
             cb(result)
