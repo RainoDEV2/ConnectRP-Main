@@ -74,8 +74,8 @@ RLCore.Functions.CreateCallback("rl-garage:server:GetDepotVehicles", function(so
     exports['ghmattimysql']:execute('SELECT * FROM bbvehicles WHERE citizenid = @citizenid AND state = @state', {['@citizenid'] = pData.PlayerData.citizenid, ['@state'] = 0}, function(result)
         if result[1] ~= nil then
             for k, v in pairs(result) do
-                if v.props ~= nil then
-                    v.props = json.decode(v.props)
+                if v.status ~= nil then
+                    v.status = json.decode(v.status)
                 end
             end
             cb(result)
