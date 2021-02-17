@@ -356,13 +356,13 @@ function pickUpCash()
                 TriggerServerEvent('truckrobbery:addItem', "security_card_01", 1)
             end
 
-            local math = math.random(1,10)
+            local fuckazazel = math.random(1,10)
             if chance >= 70 then
-                if math <= 4 then 
+                if fuckazazel <= 4 then 
                     TriggerServerEvent('truckrobbery:addItem', "weedburn", 1)
-                elseif math <= 3 then 
+                elseif fuckazazel <= 3 then 
                     TriggerServerEvent('truckrobbery:addItem', "cokeburn", 1)
-                elseif math <= 2 then
+                elseif fuckazazel <= 2 then
                     TriggerServerEvent('truckrobbery:addItem', "methburn", 1)
                 end
             end
