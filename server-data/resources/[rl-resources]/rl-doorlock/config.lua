@@ -1062,7 +1062,7 @@ RLConfig.Doors = {
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
-		pickable = false,
+		pickable = true,
 		distance = 1.5,
 		size = 2
 	},
