@@ -339,3 +339,12 @@ AddEventHandler('playerDropped', function(playerId)
 		RLCore.Functions.ExecuteSql(false, "UPDATE `players` SET `armour` = '"..currentArmour[src].."' WHERE `players` = '"..result[1].citizenid.."'")
 	end
 end)
+
+
+AddEventHandler('playerDropped', function(playerId)
+	local src = playerId
+	local xPlayer = RLCore.Functions.GetPlayer(src)
+	if currentArmour[src] > 0 then
+		RLCore.Functions.ExecuteSql(false, "UPDATE `players` SET `armour` = '"..currentArmour[src].."' WHERE `players` = '"..result[1].citizenid.."'")
+	end
+end)
