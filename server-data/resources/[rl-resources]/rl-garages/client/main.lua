@@ -326,9 +326,9 @@ function HouseGarage(house)
                     v.state = "In Beslag"
                 end
                 
-                local label = RLCore.Shared.Vehicles[v.vehicle]["name"]
-                if RLCore.Shared.Vehicles[v.vehicle]["brand"] ~= nil then
-                    label = RLCore.Shared.Vehicles[v.vehicle]["brand"].." "..RLCore.Shared.Vehicles[v.vehicle]["name"]
+                local label = RLCore.Shared.Vehicles[v.model]["name"]
+                if RLCore.Shared.Vehicles[v.model]["brand"] ~= nil then
+                    label = RLCore.Shared.Vehicles[v.model]["brand"].." "..RLCore.Shared.Vehicles[v.model]["name"]
                 end
 
                 Menu.addButton(label, "TakeOutGarageVehicle", v, v.state, " Motor: " .. enginePercent.."%", " Body: " .. bodyPercent.."%")
@@ -365,9 +365,9 @@ function DepotList()
                     print(b,g)
                 end ]]
 
-                print(v.engineHealth)
-                enginePercent = round(v.engineHealth / 10, 0)
-                bodyPercent = round(v.bodyHealth / 10, 0)
+                print(v.props.engineHealth)
+                enginePercent = round(v.props.engineHealth / 10, 0)
+                bodyPercent = round(v.props.bodyHealth / 10, 0)
                 currentFuel = v.fuel
                 
 
@@ -375,9 +375,9 @@ function DepotList()
                     v.state = "Depot"
                 end
 
-                local label = RLCore.Shared.Vehicles[v.vehicle]["name"]
-                if RLCore.Shared.Vehicles[v.vehicle]["brand"] ~= nil then
-                    label = RLCore.Shared.Vehicles[v.vehicle]["brand"].." "..RLCore.Shared.Vehicles[v.vehicle]["name"]
+                local label = RLCore.Shared.Vehicles[v.model]["name"]
+                if RLCore.Shared.Vehicles[v.model]["brand"] ~= nil then
+                    label = RLCore.Shared.Vehicles[v.model]["brand"].." "..RLCore.Shared.Vehicles[v.model]["name"]
                 end
                 Menu.addButton(label, "TakeOutDepotVehicle", v, v.state .. " ($"..v.depotprice..",-)", " Motor: " .. enginePercent.."%", " Body: " .. bodyPercent.."%")
             end
