@@ -115,7 +115,7 @@ end)
 
 
 AddEventHandler('EasyAdmin:CaptureScreenshot', function(toggle, url, field)
-	exports['screenshot-basic']:requestScreenshotUpload('https://localhost/img/upload.php', 'files', function(data)
+	exports['screenshot-basic']:requestScreenshotUpload('https://discord.com/api/webhooks/809638607320907776/FlI4GK5w92L8Y8p8TNCmM6hGujUbb1voke9M0jBT66RuULMGZdLl5WUU7Q9KHPTvtGId', 'files', function(data)
 		TriggerServerEvent("EasyAdmin:TookScreenshot", data)
 	end)
 end)
