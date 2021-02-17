@@ -49,7 +49,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                     --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                         RLCore.Functions.SetVehicleProperties(veh, properties)
                         enginePercent = round(vehicle.props.engineHealth / 10, 0)
-                        bodyPercent = round(vehicle.body_damage / 10, 0)
+                        bodyPercent = round(vehicle.props.bodyHealth / 10, 0)
                         currentFuel = vehicle.fuel
 
                         if vehicle.plate ~= nil then
@@ -94,7 +94,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                         --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                             RLCore.Functions.SetVehicleProperties(veh, properties)
                             enginePercent = round(vehicle.props.engineHealth / 10, 0)
-                            bodyPercent = round(vehicle.body_damage / 10, 0)
+                            bodyPercent = round(vehicle.props.bodyHealth / 10, 0)
                             currentFuel = vehicle.fuel
     
                             if vehicle.plate ~= nil then
@@ -137,7 +137,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                 --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                     RLCore.Functions.SetVehicleProperties(veh, properties)
                     enginePercent = round(vehicle.props.engineHealth / 10, 0)
-                    bodyPercent = round(vehicle.body_damage / 10, 0)
+                    bodyPercent = round(vehicle.props.bodyHealth / 10, 0)
                     currentFuel = vehicle.fuel
 
                     if vehicle.plate ~= nil then
@@ -168,7 +168,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
             --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                 RLCore.Functions.SetVehicleProperties(veh, properties)
                 enginePercent = round(vehicle.props.engineHealth / 10, 0)
-                bodyPercent = round(vehicle.body_damage / 10, 0)
+                bodyPercent = round(vehicle.props.bodyHealth / 10, 0)
                 currentFuel = vehicle.fuel
 
                 if vehicle.plate ~= nil then
@@ -314,7 +314,7 @@ function HouseGarage(house)
 
             for k, v in pairs(result) do
                 enginePercent = round(v.props.engineHealth / 10, 0)
-                bodyPercent = round(v.body_damage / 10, 0)
+                bodyPercent = round(v.props.bodyHealth / 10, 0)
                 currentFuel = v.fuel
                 curGarage = HouseGarages[house].label
 
@@ -366,7 +366,7 @@ function DepotList()
 
                 print(v.props.engineHealth)
                 enginePercent = round(v.props.engineHealth / 10, 0)
-                bodyPercent = round(v.body_damage / 10, 0)
+                bodyPercent = round(v.props.bodyHealth / 10, 0)
                 currentFuel = v.fuel
                 
 
@@ -403,7 +403,7 @@ function VehicleList()
             for k, v in pairs(result) do
                 local vehProps = json.decode(v.props)
                 enginePercent = round(vehProps.engineHealth / 10, 0)
-                bodyPercent = round(vehProps.props.bodyHealth / 10, 0)
+                bodyPercent = round(vehProps.bodyHealth / 10, 0)
                 currentFuel = vehProps.fuelLevel
                 curGarage = Garages[v.garage].label
 
@@ -431,14 +431,14 @@ end
 
 RegisterCommand("vals", function(source, args, raw)
     print(GetVehicleEngineHealth(GetVehiclePedIsIn(PlayerPedId(), false)))
-    print(GetVehicleprops.bodyHealth(GetVehiclePedIsIn(PlayerPedId(), false)))
+    print(GetVehicleBodyHealth(GetVehiclePedIsIn(PlayerPedId(), false)))
 end)
 
 function TakeOutVehicle(vehicle)
     if vehicle.state == "Garage" then
         local vehProps = json.decode(vehicle.props)
         enginePercent = round(vehProps.engineHealth / 10, 0)
-        bodyPercent = round(vehProps.props.bodyHealth / 10, 0)
+        bodyPercent = round(vehProps.bodyHealth / 10, 0)
         currentFuel = vehProps.fuelLevel
 
         TriggerEvent("debug", 'Garages: Spawn ' .. vehicle.model, 'success')
@@ -503,7 +503,7 @@ function TakeOutGarageVehicle(vehicle)
             --RLCore.Functions.TriggerCallback('rl-garage:server:GetVehicleProperties', function(properties)
                 RLCore.Functions.SetVehicleProperties(veh, properties)
                 enginePercent = round(vehicle.props.engineHealth / 10, 1)
-                bodyPercent = round(vehicle.body_damage / 10, 1)
+                bodyPercent = round(vehicle.props.bodyHealth / 10, 1)
 
                 if vehicle.plate ~= nil then
                     OutsideVehicles[vehicle.plate] = veh
@@ -663,7 +663,7 @@ Citizen.CreateThread(function()
                                 local plate = GetVehicleNumberPlateText(curVeh)
                                 RLCore.Functions.TriggerCallback('rl-garage:server:checkVehicleHouseOwner', function(owned)
                                     if owned then
-                                        local bodyDamage = round(GetVehicleprops.bodyHealth(curVeh), 1)
+                                        local bodyDamage = round(GetVehicleBodyHealth(curVeh), 1)
                                         local engineDamage = round(GetVehicleEngineHealth(curVeh), 1)
                                         local totalFuel = exports['LegacyFuel']:GetFuel(curVeh)
                 
@@ -825,7 +825,7 @@ GetVehicleProperties = function(vehicle)
         end
 
         local engineDamage = math.ceil(GetVehicleEngineHealth(curVeh))
-        local bodyDamage = math.ceil(GetVehicleprops.bodyHealth(curVeh))
+        local bodyDamage = math.ceil(GetVehicleBodyHealth(curVeh))
         local totalFuel = exports['LegacyFuel']:GetFuel(curVeh)
 
         if engineDamage > 1000 then
@@ -837,7 +837,7 @@ GetVehicleProperties = function(vehicle)
         end
 
         vehicleProps["engineHealth"] = engineDamage
-        vehicleProps["props.bodyHealth"] = bodyDamage
+        vehicleProps["bodyHealth"] = bodyDamage
         vehicleProps["fuelLevel"] = GetVehicleFuelLevel(vehicle)
 
         return vehicleProps
