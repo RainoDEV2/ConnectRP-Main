@@ -360,8 +360,8 @@ function DepotList()
             
 
             for k, v in pairs(result) do
-                print(json.encode(result))
-                print(json.encode(v['engineHealth']))
+                print(k,v)
+                print(v.engineHealth)
                 enginePercent = round(v.engine_damage / 10, 0)
                 bodyPercent = round(v.body_damage / 10, 0)
                 currentFuel = v.fuel
