@@ -19,6 +19,8 @@ Config.WhitelistedCreators = {
     "WGZ05833",
     "NVU77833",
     "AHO58808",
+    "EVY33035",
+
 }
 
 Config.RaceSetupAllowed = true
