@@ -374,10 +374,13 @@ function DepotList()
                 if v.state == 0 then
                     v.state = "Depot"
                 end
-
-                local label = RLCore.Shared.Vehicles[v.model]["name"]
-                if RLCore.Shared.Vehicles[v.model]["brand"] ~= nil then
-                    label = RLCore.Shared.Vehicles[v.model]["brand"].." "..RLCore.Shared.Vehicles[v.model]["name"]
+                if RLCore.Shared.Vehicles[v.model]["name"] == nil then
+                    label = v.model
+                else 
+                    local label = RLCore.Shared.Vehicles[v.model]["name"]
+                    if RLCore.Shared.Vehicles[v.model]["brand"] ~= nil then
+                        label = RLCore.Shared.Vehicles[v.model]["brand"].." "..RLCore.Shared.Vehicles[v.model]["name"]
+                    end
                 end
                 Menu.addButton(label, "TakeOutDepotVehicle", v, v.state .. " ($"..v.depotprice..",-)", " Motor: " .. enginePercent.."%", " Body: " .. bodyPercent.."%")
             end
