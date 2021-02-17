@@ -6,7 +6,7 @@
 	<Item> <!--EMSAIR--> <!--Ambulance-->
       <modelName>emsair</modelName>
       <txdName>emsair</txdName>
-      <handlingId>FROGGER</handlingId>
+      <handlingId>E85Heli</handlingId>
       <gameName>EMS FROGGER</gameName>
       <vehicleMakeName />
       <expressionDictName>null</expressionDictName>
