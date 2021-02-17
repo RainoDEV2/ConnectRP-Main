@@ -214,7 +214,7 @@ Citizen.CreateThread(function()
 		SetCreateRandomCopsOnScenarios(false)
 		SetVehicleModelIsSuppressed(GetHashKey("sentinel"), true)
 	end
-end)
+end) 
 
 --OutOfBreathe
 

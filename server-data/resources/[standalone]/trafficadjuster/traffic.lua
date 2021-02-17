@@ -29,5 +29,7 @@ Citizen.CreateThread(function()
         SetVehicleModelIsSuppressed(GetHashKey("taco"), true)
         SetVehicleModelIsSuppressed(GetHashKey("biff"), true)
         SetVehicleModelIsSuppressed(GetHashKey("blimp"), true)
+		SetVehicleModelIsSuppressed(GetHashKey("boxville5"), true)
+        SetVehicleModelIsSuppressed(GetHashKey("technical"), true)
     end
 end)
