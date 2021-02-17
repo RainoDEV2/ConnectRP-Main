@@ -149,7 +149,8 @@ end)
 
 RegisterServerEvent("vehiclemod:server:saveStatus")
 AddEventHandler("vehiclemod:server:saveStatus", function(plate)
-    RLCore.Functions.BanInjection(source, 'rs-vehicletuning (saveStatus)')
+    RLCore.Functions.TriggerCallback('vehiclemod:server:saveStatus', function(result)
+    end, plate)
 end)
 
 function IsVehicleOwned(plate)
@@ -172,7 +173,7 @@ function GetVehicleStatus(plate)
     return retval
 end
 
-RLCore.Commands.Add("setvehiclestatus", "Zet vehicle status", {{name="part", help="Type of status you want to edit"}, {name="amount", help="Level of status"}}, true, function(source, args)
+RLCore.Commands.Add("setvehiclestatus", "set vehicle status", {{name="part", help="Type of status you want to edit"}, {name="amount", help="Level of status"}}, true, function(source, args)
     local part = args[1]:lower()
     local level = tonumber(args[2])
     TriggerClientEvent("vehiclemod:client:setPartLevel", source, part, level)
