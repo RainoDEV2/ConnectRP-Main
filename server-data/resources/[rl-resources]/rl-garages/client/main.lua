@@ -357,14 +357,15 @@ function DepotList()
         else
             Menu.addButton(Depots[currentGarage].label, "yeet", Depots[currentGarage].label)
 
-            print(json.encode(result))
-            print(json.encode(v.engine_damage))
+            
 
             for k, v in pairs(result) do
+                print(json.encode(result))
+                print(json.encode(v.engine_damage))
                 enginePercent = round(v.engine_damage / 10, 0)
                 bodyPercent = round(v.body_damage / 10, 0)
                 currentFuel = v.fuel
-
+                
 
                 if v.state == 0 then
                     v.state = "Depot"
