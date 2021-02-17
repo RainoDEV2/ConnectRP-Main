@@ -1,4 +1,4 @@
-local DoorLocked = true --SET BACK TO FALSE IF WE WANT TO LEWL
+local DoorLocked = false --SET BACK TO FALSE IF WE WANT TO LEWL
 local Objects, POIOffsets = {}, {}
 local drugStorePed = nil
 
@@ -12,7 +12,7 @@ CreateThread(function()
         local letSleep = true
 
         local distance = {}
-        local whitelisted = (RLCore and RLCore.Functions.GetPlayerData().job and RLCore.Functions.GetPlayerData().job.name == 'drugdealer')
+        local whitelisted = true --(RLCore and RLCore.Functions.GetPlayerData().job and RLCore.Functions.GetPlayerData().job.name == 'drugdealer')
         local isboss = (RLCore and RLCore.Functions.GetPlayerData().job and RLCore.Functions.GetPlayerData().job.isboss)
 
         for k,v in pairs(Config.Locations) do
@@ -24,11 +24,12 @@ CreateThread(function()
 
         if (distance['enter'] < 5) then
             if (whitelisted) then
-                DrawText3Ds(Config.Locations['enter'].x, Config.Locations['enter'].y, Config.Locations['enter'].z, "[E] - Enter | [H] - " .. (DoorLocked and "Unlock" or "Lock"))
-                if (IsControlJustPressed(0, 74)) then 
-                    openDoorAnim()
-                    TriggerServerEvent('rl-oxyruns:server:doorState', not DoorLocked)
-                end
+                DrawText3Ds(Config.Locations['enter'].x, Config.Locations['enter'].y, Config.Locations['enter'].z, "Press [E] to enter")
+                --DrawText3Ds(Config.Locations['enter'].x, Config.Locations['enter'].y, Config.Locations['enter'].z, "[E] - Enter | [H] - " .. (DoorLocked and "Unlock" or "Lock"))
+                --if (IsControlJustPressed(0, 74)) then 
+                --    openDoorAnim()
+                --    TriggerServerEvent('rl-oxyruns:server:doorState', not DoorLocked)
+                --end
             elseif not DoorLocked then
                 DrawText3Ds(Config.Locations['enter'].x, Config.Locations['enter'].y, Config.Locations['enter'].z, "Press [E] to enter")
             end
@@ -41,16 +42,17 @@ CreateThread(function()
             end
         elseif (distance['exit'] < 5) then
             if (whitelisted) then
-                DrawText3Ds(Config.Locations['exit'].x, Config.Locations['exit'].y, Config.Locations['exit'].z, "[E] - Leave | [H] - " .. (DoorLocked and "Unlock" or "Lock"))
-                if (IsControlJustPressed(0, 74)) then 
-                    openDoorAnim()
-                    TriggerServerEvent('rl-oxyruns:server:doorState', not DoorLocked)
-                end
+                DrawText3Ds(Config.Locations['exit'].x, Config.Locations['exit'].y, Config.Locations['exit'].z, --[[ DoorLocked and "Locked" or ]] "Press [E] to leave")
+                --DrawText3Ds(Config.Locations['exit'].x, Config.Locations['exit'].y, Config.Locations['exit'].z, "[E] - Leave | [H] - " .. (DoorLocked and "Unlock" or "Lock"))
+                --if (IsControlJustPressed(0, 74)) then 
+                --    openDoorAnim()
+                --    TriggerServerEvent('rl-oxyruns:server:doorState', not DoorLocked)
+                --end
             else
-                DrawText3Ds(Config.Locations['exit'].x, Config.Locations['exit'].y, Config.Locations['exit'].z, DoorLocked and "Locked" or "Press [E] to leave")
+                DrawText3Ds(Config.Locations['exit'].x, Config.Locations['exit'].y, Config.Locations['exit'].z, --[[ DoorLocked and "Locked" or ]] "Press [E] to leave")
             end
 
-            if IsControlJustPressed(0, 38) and (whitelisted or not DoorLocked) then
+            if IsControlJustPressed(0, 38) and (whitelisted --[[ or not DoorLocked ]]) then
                 openDoorAnim()
                 Wait(500)
                 DoScreenFadeOut(500)
