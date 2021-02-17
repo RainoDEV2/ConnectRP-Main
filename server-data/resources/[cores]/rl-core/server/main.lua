@@ -12,3 +12,4 @@ RegisterServerEvent('RLCore:GetObject')
 AddEventHandler('RLCore:GetObject', function(cb)
 	cb(GetCoreObject())
 end)
+

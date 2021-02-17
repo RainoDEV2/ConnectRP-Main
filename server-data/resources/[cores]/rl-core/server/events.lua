@@ -313,3 +313,29 @@ AddEventHandler('RLCore:Command:CheckOwnedVehicle', function(VehiclePlate)
 		end)
 	end
 end)
+
+local currentArmour = {}
+
+RegisterNetEvent('drp-framework:updateArmour')
+AddEventHandler('drp-framework:updateArmour', function(updateArmour)
+	local src = source
+	currentArmour[src] = updateArmour
+end)
+
+RegisterNetEvent('tc-armour:update')
+AddEventHandler('tc-armour:update', function(playerId)
+    local xPlayer = RLCore.Functions.GetPlayer(playerId)
+    RLCore.Functions.ExecuteSql(false, "SELECT `armour` FROM `players` WHERE `citizenid` = '"..result[1].citizenid.."'", function(result)
+        if (data ~= nil) then
+            TriggerClientEvent('drp-framework:setArmour', playerId, data)
+		end
+    end)
+end)
+
+AddEventHandler('playerDropped', function(playerId)
+	local src = playerId
+	local xPlayer = RLCore.Functions.GetPlayer(src)
+	if currentArmour[src] > 0 then
+		RLCore.Functions.ExecuteSql(false, "UPDATE `players` SET `armour` = '"..currentArmour[src].."' WHERE `players` = '"..result[1].citizenid.."'")
+	end
+end)

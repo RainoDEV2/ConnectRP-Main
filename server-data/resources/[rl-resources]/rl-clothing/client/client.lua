@@ -994,17 +994,43 @@ AddEventHandler("raid_clothes:AdminSetModel", function(model)
     SetSkin(hashedModel, true)
 end)
 
-RegisterCommand("try", function(source, args, rawCommand)
-    TriggerServerEvent("clothing:checkIfNew") 
-end, false)
+local timeout = false
 
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(5)
+        if timeout then
+            Citizen.Wait(300000)
+            timeout = false
+        end
+    end
+end)
+
+RegisterCommand("try", function(source, args, rawCommand)
+    local armed = IsPedArmed(PlayerPedId(), 4)
+    if not IsPedInAnyVehicle(PlayerPedId()) then
+        if armed ~= 1 and not timeout then
+            timeout = true
+            RLCore.Functions.Progressbar("pickup_reycle_package", "Trying to refresh", 2000, false, true, {}, {}, {}, {}, function()
+                TriggerServerEvent('drp-framework:updatearmour', GetPedArmour(PlayerPedId()))
+                TriggerServerEvent("clothing:checkIfNew")
+                Citizen.Wait(3000)
+                TriggerServerEvent('drp-framework:loadArmour')
+            end)
+        else
+            RLCore.Functions.Notify("You cant do this right now.", "error")
+        end
+    else
+        RLCore.Functions.Notify("You cant do this right now.", "error")
+    end
+end, false)
 
 RegisterNetEvent("raid_clothes:defaultReset")
 AddEventHandler("raid_clothes:defaultReset", function()
     local LocalPlayer = exports["np-base"]:getModule("LocalPlayer")
     local gender = LocalPlayer:getCurrentCharacter().gender
     Citizen.Wait(1000)
-    if gender ~= 0 then
+    if gender ~= 0 then 
         SetSkin(`mp_f_freemode_01`, true)
     else
         SetSkin(`mp_m_freemode_01`, true)
@@ -1107,7 +1133,10 @@ end, false)
 RegisterCommand("outfituse", function(source, args, rawCommand)
     if exports["rl-houses"]:imClosesToRoom2() or exports["rl-apartments"]:imClosesToRoom3() or (IsNearShop(clothingShops) < 9.0) then
         if args[1] then
+            TriggerServerEvent('drp-framework:updatearmour', GetPedArmour(PlayerPedId()))
             TriggerEvent('raid_clothes:outfits', 3, args[1])
+            Citizen.Wait(3000)
+            TriggerServerEvent('drp-framework:loadArmour')
         else
             RLCore.Functions.Notify("You need to do something like /outfituse 1 <br/ > <br/ > 1 being the slot id that you will have had previously saved.!")
         end
