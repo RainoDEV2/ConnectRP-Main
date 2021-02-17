@@ -2,6 +2,7 @@ RLCore = nil
 TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
 
 local VehicleStatus = {}
+
 local VehicleDrivingDistance = {}
 
 RLCore.Functions.CreateCallback('rs-vehicletuning:server:GetDrivingDistances', function(source, cb)
@@ -149,8 +150,9 @@ end)
 
 RegisterServerEvent("vehiclemod:server:saveStatus")
 AddEventHandler("vehiclemod:server:saveStatus", function(plate)
-    RLCore.Functions.TriggerCallback('vehiclemod:server:saveStatus', function(result)
-    end, plate)
+    if VehicleStatus[plate] ~= nil then
+        exports['ghmattimysql']:execute('UPDATE bbvehicles SET status = @status WHERE plate = @plate', {['@status'] = json.encode(VehicleStatus[plate]), ['@plate'] = plate})
+    end
 end)
 
 function IsVehicleOwned(plate)
