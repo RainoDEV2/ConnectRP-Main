@@ -1,7 +1,7 @@
 Config = {}
 
 Config.AttachmentCrafting = {
-    ["location"] = {x = -1001.34, y = 4847.43, z = 275.01, h = 183.43, r = 1.0}, 
+    ["location"] = {x = 896.44866, y = -3217.424, z = -98.22556, h = 58.780258, r = 1.0}, 
     ["items"] = {
         [1] = {
             name = "pistol_extendedclip",
