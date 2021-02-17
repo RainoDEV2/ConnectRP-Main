@@ -693,8 +693,8 @@ Config.Items = {
         },
         [2] = {
             name = "nitrous",
-            price = 500,
-            amount = 25,
+            price = 10000,
+            amount = 2,
             type = "item",
             slot = 2,
         },
