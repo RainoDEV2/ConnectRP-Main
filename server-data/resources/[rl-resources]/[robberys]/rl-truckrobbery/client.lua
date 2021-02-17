@@ -349,11 +349,22 @@ function pickUpCash()
                 TaskPlayAnim(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 8.0, -8, -1, 49, 0, 0, 0, 0)
                 FreezeEntityPosition(GetPlayerPed(-1), true)
             end
-            Progressbar(50000,"Collecting Items")
+            Progressbar(60000,"Collecting Items")
 
             local chance = math.random(1, 100)
-            if chance >= 50 then
+            if chance >= 65 then
                 TriggerServerEvent('truckrobbery:addItem', "security_card_01", 1)
+            end
+
+            local math = math.random(1,10)
+            if chance >= 70 then
+                if math <= 4 then 
+                    TriggerServerEvent('truckrobbery:addItem', "weedburn", 1)
+                elseif math <= 3 then 
+                    TriggerServerEvent('truckrobbery:addItem', "cokeburn", 1)
+                elseif math <= 2 then
+                    TriggerServerEvent('truckrobbery:addItem', "methburn", 1)
+                end
             end
 
             for i = 1, #Config.Items, 1 do
