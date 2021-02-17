@@ -360,12 +360,12 @@ function DepotList()
             
 
             for k, v in pairs(result) do
-                print(json.encode(result))
+                --print(json.encode(result))
                 --[[ for b, g in pairs(v.props) do 
                     print(b,g)
                 end ]]
 
-                print(v.props.engineHealth)
+                --print(v.props.engineHealth)
                 enginePercent = round(v.props.engineHealth / 10, 0)
                 bodyPercent = round(v.props.bodyHealth / 10, 0)
                 currentFuel = v.fuel
