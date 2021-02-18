@@ -1501,8 +1501,8 @@ AddEventHandler('playerSpawned', function(spawn)
 	end
 end)
 
-
-RegisterCommand('finance', function(source, args, raw)
+RegisterNetEvent("rl-radial:finance")
+AddEventHandler("rl-radial:finance", function())
 	local pData = RLCore.Functions.GetPlayerData()
 	local job = pData.job.name
 	if job == 'cardealer' then
@@ -1513,6 +1513,45 @@ RegisterCommand('finance', function(source, args, raw)
 		TriggerEvent('DoLongHudText', 'You dont have permissions for this!', 2)
 	end
 end)
+
+RegisterNetEvent("rl-radial:enablebuy")
+AddEventHandler("rl-radial:enablebuy", function())
+	local pData = RLCore.Functions.GetPlayerData()
+	local job = pData.job.name
+	if job == 'cardealer' then
+		TriggerEvent('buyEnable')
+	elseif job == 'tuner' then
+		TriggerEvent('tuner:enable_buy')
+	else
+		TriggerEvent('DoLongHudText', 'You dont have permissions for this!', 2)
+	end
+end)
+
+RegisterNetEvent("rl-radial:testdrive")
+AddEventHandler("rl-radial:testdrive", function())
+	local pData = RLCore.Functions.GetPlayerData()
+	local job = pData.job.name
+	if job == 'cardealer' then
+		TriggerEvent('car:testdrive')
+	elseif job == 'tuner' then
+		TriggerEvent('car:testdrive_tuner')
+	else
+		TriggerEvent('DoLongHudText', 'You dont have permissions for this!', 2)
+	end
+end)
+
+
+--[[ RegisterCommand('finance', function(source, args, raw)
+	local pData = RLCore.Functions.GetPlayerData()
+	local job = pData.job.name
+	if job == 'cardealer' then
+		TriggerEvent('finance')
+	elseif job == 'tuner' then
+		TriggerEvent('finance_tuner')
+	else
+		TriggerEvent('DoLongHudText', 'You dont have permissions for this!', 2)
+	end
+end) ]]
 
 RegisterCommand('commission', function(source, args, raw)
 	local pData = RLCore.Functions.GetPlayerData()
@@ -1536,7 +1575,7 @@ RegisterCommand('commission', function(source, args, raw)
 	end
 end)
 
-RegisterCommand('testdrive', function(source, args, raw)
+--[[ RegisterCommand('testdrive', function(source, args, raw)
 	local pData = RLCore.Functions.GetPlayerData()
 	local job = pData.job.name
 	if job == 'cardealer' then
@@ -1546,9 +1585,9 @@ RegisterCommand('testdrive', function(source, args, raw)
 	else
 		TriggerEvent('DoLongHudText', 'You dont have permissions for this!', 2)
 	end
-end)
+end) ]]
 
-RegisterCommand('enableBuy', function(source, args, raw)
+--[[ RegisterCommand('enableBuy', function(source, args, raw)
 	local pData = RLCore.Functions.GetPlayerData()
 	local job = pData.job.name
 	if job == 'cardealer' then
@@ -1558,5 +1597,5 @@ RegisterCommand('enableBuy', function(source, args, raw)
 	else
 		TriggerEvent('DoLongHudText', 'You dont have permissions for this!', 2)
 	end
-end)
+end) ]]
 

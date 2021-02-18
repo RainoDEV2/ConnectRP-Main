@@ -132,6 +132,17 @@ rootMenuConfig =  {
     },
 
     {
+        id = "cardealer",
+        displayName = "Cardealer Actions",
+        icon = "#mechanic",
+        enableMenu =function()
+            local Data = RLCore.Functions.GetPlayerData()
+            return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and Data.job ~= nil and Data.job.name == "cardealer")
+        end,
+        subMenus = { "cardealer:finance", "cardealer:enablebuy", "cardealer:testDrive"}
+    },
+
+    {
         id = "judge",
         displayName = "Judge Actions",
         icon = "judge-actions",
@@ -255,6 +266,25 @@ rootMenuConfig =  {
 }
 
 newSubMenus = {
+
+    ['cardealer:finance'] = {
+        title = "Enable Finance",
+        icon = "#police-gsr-test",
+        functionName = "rl-radial:finance"
+    },
+
+    ['cardealer:enablebuy'] = {
+        title = "Enable Purchase",
+        icon = "#police-gsr-test",
+        functionName = "rl-radial:enablebuy" 
+    },
+
+    ['cardealer:testDrive'] = {
+        title = "Start Testdrive",
+        icon = "#police-gsr-test",
+        functionName = "rl-radial:testdrive" 
+    },
+
     ['judge:mdt'] = {
         title = "MDT",
         icon = "#police-mdt",
