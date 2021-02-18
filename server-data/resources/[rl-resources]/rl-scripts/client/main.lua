@@ -165,6 +165,13 @@ RegisterCommand('titanic', function(source, args, rawCommand)
 	end
 end, false) 
 
+Citizen.CreateThread(function()
+	while true do
+		Wait(0)
+		Citizen.InvokeNative(0xC54A08C85AE4D410, 1.0)
+	end
+end)
+
 
 
 
