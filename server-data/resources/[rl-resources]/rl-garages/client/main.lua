@@ -585,7 +585,7 @@ Citizen.CreateThread(function()
                                     Menu.hidden = not Menu.hidden
                                     currentGarage = k
                                 else
-                                    print("SUCK YOUR MUDDA")
+                                    RLCore.Functions.Notify("You have unpaid state fines, Please pay your fines in the banking app before you can use the garage...", "error")
                                 end
                             end)
                         end
@@ -718,15 +718,21 @@ Citizen.CreateThread(function()
                 DrawMarker(2, Depots[k].takeVehicle.x, Depots[k].takeVehicle.y, Depots[k].takeVehicle.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
                 if takeDist <= 1.5 then
                     if not IsPedInAnyVehicle(ped) then
-                        DrawText3Ds(Depots[k].takeVehicle.x, Depots[k].takeVehicle.y, Depots[k].takeVehicle.z + 0.5, '~g~E~w~ - Garage')
+                        DrawText3Ds(Depots[k].takeVehicle.x, Depots[k].takeVehicle.y, Depots[k].takeVehicle.z + 0.5, '[E] Garage')
                         if IsControlJustPressed(1, 177) and not Menu.hidden then
                             close()
                             PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
                         end
                         if IsControlJustPressed(0, 38) then
-                            MenuDepot()
-                            Menu.hidden = not Menu.hidden
-                            currentGarage = k
+                            RLCore.Functions.TriggerCallback('bb-garages:server:hasFines', function(hasfines)
+                                if hasfines == false then
+                                    MenuDepot()
+                                    Menu.hidden = not Menu.hidden
+                                    currentGarage = k
+                                else
+                                    RLCore.Functions.Notify("You have unpaid state fines, Please pay your fines in the banking app before you can use the garage...", "error")
+                                end)
+                            end)
                         end
                     end
                 end
