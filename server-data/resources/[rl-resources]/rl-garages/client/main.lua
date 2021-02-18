@@ -319,16 +319,16 @@ function HouseGarage(house)
                 curGarage = HouseGarages[house].label
 
                 if v.state == 0 then
-                    v.state = "Uit"
+                    v.state = "Out"
                 elseif v.state == 1 then
                     v.state = "Garage"
                 elseif v.state == 2 then
-                    v.state = "In Beslag"
+                    v.state = "In"
                 end
                 
-                local label = RLCore.Shared.Vehicles[v.model]["name"]
-                if RLCore.Shared.Vehicles[v.model]["brand"] ~= nil then
-                    label = RLCore.Shared.Vehicles[v.model]["brand"].." "..RLCore.Shared.Vehicles[v.model]["name"]
+                local label = RLCore.Shared.Vehicles[v.vehicle]["name"]
+                if RLCore.Shared.Vehicles[v.vehicle]["brand"] ~= nil then
+                    label = RLCore.Shared.Vehicles[v.vehicle]["brand"].." "..RLCore.Shared.Vehicles[v.vehicle]["name"]
                 end
 
                 Menu.addButton(label, "TakeOutGarageVehicle", v, v.state, " Motor: " .. enginePercent.."%", " Body: " .. bodyPercent.."%")
@@ -370,17 +370,13 @@ function DepotList()
                 bodyPercent = round(v.props.bodyHealth / 10, 0)
                 currentFuel = v.fuel
                 
-
                 if v.state == 0 then
                     v.state = "Depot"
                 end
-                if RLCore.Shared.Vehicles[v.model]["name"] == nil then
-                    label = v.model
-                else 
-                    local label = RLCore.Shared.Vehicles[v.model]["name"]
-                    if RLCore.Shared.Vehicles[v.model]["brand"] ~= nil then
-                        label = RLCore.Shared.Vehicles[v.model]["brand"].." "..RLCore.Shared.Vehicles[v.model]["name"]
-                    end
+
+                local label = RLCore.Shared.Vehicles[v.vehicle]["name"]
+                if RLCore.Shared.Vehicles[v.vehicle]["brand"] ~= nil then
+                    label = RLCore.Shared.Vehicles[v.vehicle]["brand"].." "..RLCore.Shared.Vehicles[v.vehicle]["name"]
                 end
                 Menu.addButton(label, "TakeOutDepotVehicle", v, v.state .. " ($"..v.depotprice..",-)", " Motor: " .. enginePercent.."%", " Body: " .. bodyPercent.."%")
             end
