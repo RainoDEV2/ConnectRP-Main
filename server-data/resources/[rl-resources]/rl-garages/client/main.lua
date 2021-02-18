@@ -374,11 +374,13 @@ function DepotList()
                     v.state = "Depot"
                 end
 
-                local label = RLCore.Shared.Vehicles[v.vehicle]["name"]
-                if RLCore.Shared.Vehicles[v.vehicle]["brand"] ~= nil then
-                    label = RLCore.Shared.Vehicles[v.vehicle]["brand"].." "..RLCore.Shared.Vehicles[v.vehicle]["name"]
-                end
-                Menu.addButton(label, "TakeOutDepotVehicle", v, v.state .. " ($"..v.depotprice..",-)", " Motor: " .. enginePercent.."%", " Body: " .. bodyPercent.."%")
+                --local label = RLCore.Shared.Vehicles[v.vehicle]["name"]
+                --if RLCore.Shared.Vehicles[v.vehicle]["brand"] ~= nil then
+                --    label = RLCore.Shared.Vehicles[v.vehicle]["brand"].." "..RLCore.Shared.Vehicles[v.vehicle]["name"]
+                --else
+                --   label = v.model
+                --end
+                Menu.addButton(v.model, "TakeOutDepotVehicle", v, v.state .. " ($"..v.depotprice..",-)", " Motor: " .. enginePercent.."%", " Body: " .. bodyPercent.."%")
             end
         end
             
@@ -416,12 +418,12 @@ function VehicleList()
                     v.state = "In"
                 end
 
-                local label = RLCore.Shared.Vehicles[v.model]["name"]
-                if RLCore.Shared.Vehicles[v.model]["brand"] ~= nil then
-                    label = RLCore.Shared.Vehicles[v.model]["brand"].." "..RLCore.Shared.Vehicles[v.model]["name"]
-                end
+                --local label = RLCore.Shared.Vehicles[v.model]["name"]
+                --if RLCore.Shared.Vehicles[v.model]["brand"] ~= nil then
+                --    label = RLCore.Shared.Vehicles[v.model]["brand"].." "..RLCore.Shared.Vehicles[v.model]["name"]
+                --end
 
-                Menu.addButton(label, "TakeOutVehicle", v, v.state, " Motor: " .. enginePercent .. "%", " Body: " .. bodyPercent.. "%")
+                Menu.addButton(v.model, "TakeOutVehicle", v, v.state, " Motor: " .. enginePercent .. "%", " Body: " .. bodyPercent.. "%")
             end
         end
             
