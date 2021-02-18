@@ -326,9 +326,9 @@ function HouseGarage(house)
                     v.state = "In"
                 end
                 
-                local label = RLCore.Shared.Vehicles[v.vehicle]["name"]
-                if RLCore.Shared.Vehicles[v.vehicle]["brand"] ~= nil then
-                    label = RLCore.Shared.Vehicles[v.vehicle]["brand"].." "..RLCore.Shared.Vehicles[v.vehicle]["name"]
+                local label = RLCore.Shared.Vehicles[v.model]["name"]
+                if RLCore.Shared.Vehicles[v.model]["brand"] ~= nil then
+                    label = RLCore.Shared.Vehicles[v.model]["brand"].." "..RLCore.Shared.Vehicles[v.model]["name"]
                 end
 
                 Menu.addButton(label, "TakeOutGarageVehicle", v, v.state, " Motor: " .. enginePercent.."%", " Body: " .. bodyPercent.."%")
@@ -566,71 +566,70 @@ Citizen.CreateThread(function()
         local pos = GetEntityCoords(ped)
         local inGarageRange = false
 
-        RLCore.Functions.TriggerCallback('bb-garages:server:hasFines', function(hasfines)
-            if hasfines == false then
-
-                for k, v in pairs(Garages) do
-                    local takeDist = GetDistanceBetweenCoords(pos, Garages[k].takeVehicle.x, Garages[k].takeVehicle.y, Garages[k].takeVehicle.z)
-                    if takeDist <= 15 then
-                        inGarageRange = true
-                        DrawMarker(2, Garages[k].takeVehicle.x, Garages[k].takeVehicle.y, Garages[k].takeVehicle.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
-                        if takeDist <= 1.5 then
-                            if not IsPedInAnyVehicle(ped) then
-                                DrawText3Ds(Garages[k].takeVehicle.x, Garages[k].takeVehicle.y, Garages[k].takeVehicle.z + 0.5, '[E] Garage')
-                                if IsControlJustPressed(1, 177) and not Menu.hidden then
-                                    close()
-                                    PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
-                                end
-                                if IsControlJustPressed(0, 38) then
+        for k, v in pairs(Garages) do
+            local takeDist = GetDistanceBetweenCoords(pos, Garages[k].takeVehicle.x, Garages[k].takeVehicle.y, Garages[k].takeVehicle.z)
+            if takeDist <= 15 then
+                inGarageRange = true
+                DrawMarker(2, Garages[k].takeVehicle.x, Garages[k].takeVehicle.y, Garages[k].takeVehicle.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
+                if takeDist <= 1.5 then
+                    if not IsPedInAnyVehicle(ped) then
+                        DrawText3Ds(Garages[k].takeVehicle.x, Garages[k].takeVehicle.y, Garages[k].takeVehicle.z + 0.5, '[E] Garage')
+                        if IsControlJustPressed(1, 177) and not Menu.hidden then
+                            close()
+                            PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
+                        end
+                        if IsControlJustPressed(0, 38) then
+                            RLCore.Functions.TriggerCallback('bb-garages:server:hasFines', function(hasfines)
+                                if hasfines == false then
                                     MenuGarage()
                                     Menu.hidden = not Menu.hidden
                                     currentGarage = k
                                 end
                             else
-                                DrawText3Ds(Garages[k].takeVehicle.x, Garages[k].takeVehicle.y, Garages[k].takeVehicle.z, Garages[k].label)
-                            end
+                                print("FAK OFF")
+                            end)
                         end
-
-                        Menu.renderGUI()
-
-                        if takeDist >= 4 and not Menu.hidden then
-                            closeMenuFull()
-                        end
-                    end
-
-                    local putDist = GetDistanceBetweenCoords(pos, Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z)
-
-                    if putDist <= 25 and IsPedInAnyVehicle(ped) then
-                        inGarageRange = true
-                        DrawMarker(2, Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 255, 255, 255, 255, false, false, false, true, false, false, false)
-                        if putDist <= 1.5 then
-                            DrawText3Ds(Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z + 0.5, '[E] Park Vehicle')
-                            if IsControlJustPressed(0, 38) then
-                                local curVeh = GetVehiclePedIsIn(ped)
-                                local plate = GetVehicleNumberPlateText(curVeh)
-                                RLCore.Functions.TriggerCallback('rl-garage:server:checkVehicleOwner', function(owned)
-                                    if owned then
-                                        TriggerServerEvent('rl-garage:server:updateComponents', GetVehicleProperties(curVeh), plate, k)
-                                        TriggerServerEvent('rl-garage:server:updateVehicleState', 1, plate, k)
-                                        TriggerServerEvent('vehiclemod:server:saveStatus', plate)
-                                        RLCore.Functions.DeleteVehicle(curVeh)
-                                        if plate ~= nil then
-                                            OutsideVehicles[plate] = veh
-                                            TriggerServerEvent('rl-garages:server:UpdateOutsideVehicles', OutsideVehicles)
-                                        end
-                                        RLCore.Functions.Notify("Vehicle parked in, "..Garages[k].label, "primary", 4500)
-                                    else
-                                        RLCore.Functions.Notify("Nobody owns this vehicle..", "error", 3500)
-                                    end
-                                end, plate)
-                            end
-                        end
+                    else
+                        DrawText3Ds(Garages[k].takeVehicle.x, Garages[k].takeVehicle.y, Garages[k].takeVehicle.z, Garages[k].label)
                     end
                 end
-            else
-                RLCore.Functions.Notify("You have state fines that you need to pay, Check your banking app.", "error")
+
+                Menu.renderGUI()
+
+                if takeDist >= 4 and not Menu.hidden then
+                    closeMenuFull()
+                end
             end
-        end)
+
+            local putDist = GetDistanceBetweenCoords(pos, Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z)
+
+            if putDist <= 25 and IsPedInAnyVehicle(ped) then
+                inGarageRange = true
+                DrawMarker(2, Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 255, 255, 255, 255, false, false, false, true, false, false, false)
+                if putDist <= 1.5 then
+                    DrawText3Ds(Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z + 0.5, '[E] Park Vehicle')
+                    if IsControlJustPressed(0, 38) then
+                        local curVeh = GetVehiclePedIsIn(ped)
+                        local plate = GetVehicleNumberPlateText(curVeh)
+                        RLCore.Functions.TriggerCallback('rl-garage:server:checkVehicleOwner', function(owned)
+                            if owned then
+                                TriggerServerEvent('rl-garage:server:updateComponents', GetVehicleProperties(curVeh), plate, k)
+                                TriggerServerEvent('rl-garage:server:updateVehicleState', 1, plate, k)
+                                TriggerServerEvent('vehiclemod:server:saveStatus', plate)
+                                RLCore.Functions.DeleteVehicle(curVeh)
+                                if plate ~= nil then
+                                    OutsideVehicles[plate] = veh
+                                    TriggerServerEvent('rl-garages:server:UpdateOutsideVehicles', OutsideVehicles)
+                                end
+                                RLCore.Functions.Notify("Vehicle parked in, "..Garages[k].label, "primary", 4500)
+                            else
+                                RLCore.Functions.Notify("Nobody owns this vehicle..", "error", 3500)
+                            end
+                        end, plate)
+                    end
+                end
+            end
+        end
         if not inGarageRange then
             Citizen.Wait(1000)
         end
