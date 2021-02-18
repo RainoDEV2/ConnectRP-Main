@@ -1502,7 +1502,7 @@ AddEventHandler('playerSpawned', function(spawn)
 end)
 
 RegisterNetEvent("rl-radial:finance")
-AddEventHandler("rl-radial:finance", function())
+AddEventHandler("rl-radial:finance", function()
 	local pData = RLCore.Functions.GetPlayerData()
 	local job = pData.job.name
 	if job == 'cardealer' then
@@ -1515,7 +1515,7 @@ AddEventHandler("rl-radial:finance", function())
 end)
 
 RegisterNetEvent("rl-radial:enablebuy")
-AddEventHandler("rl-radial:enablebuy", function())
+AddEventHandler("rl-radial:enablebuy", function()
 	local pData = RLCore.Functions.GetPlayerData()
 	local job = pData.job.name
 	if job == 'cardealer' then
@@ -1528,7 +1528,7 @@ AddEventHandler("rl-radial:enablebuy", function())
 end)
 
 RegisterNetEvent("rl-radial:testdrive")
-AddEventHandler("rl-radial:testdrive", function())
+AddEventHandler("rl-radial:testdrive", function()
 	local pData = RLCore.Functions.GetPlayerData()
 	local job = pData.job.name
 	if job == 'cardealer' then
