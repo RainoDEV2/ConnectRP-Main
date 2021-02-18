@@ -29,7 +29,7 @@ client_scripts {
 	, "gtav/trevors_trailer.lua"
 	, "gtav/ufo.lua"
 	, "gtav/zancudo_gates.lua"
-    --, "gtav/cayoperico.lua"
+    , "gtav/cayoperico.lua"
 
 
 	-- GTA Online
@@ -101,6 +101,6 @@ client_scripts {
 	, "dlc_afterhours/nightclubs.lua"
 
 -- DLC Diamond Casino
-	--, "dlc_casino/casino.lua"
+	, "dlc_casino/casino.lua"
 	--, "dlc_casino/penthouse.lua"
 } 
