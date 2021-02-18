@@ -579,15 +579,13 @@ Citizen.CreateThread(function()
                             PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
                         end
                         if IsControlJustPressed(0, 38) then
-                            --RLCore.Functions.TriggerCallback('bb-garages:server:hasFines', function(hasfines)
-                            --    if hasfines == false then
+                            RLCore.Functions.TriggerCallback('bb-garages:server:hasFines', function(hasfines)
+                                if hasfines == false then
                                     MenuGarage()
                                     Menu.hidden = not Menu.hidden
                                     currentGarage = k
-                            --    end
-                            --else
-                            --    print("FAK OFF")
-                            --end)
+                                end
+                            end)
                         end
                     else
                         DrawText3Ds(Garages[k].takeVehicle.x, Garages[k].takeVehicle.y, Garages[k].takeVehicle.z, Garages[k].label)
