@@ -479,14 +479,16 @@ function TakeOutVehicle(vehicle)
                 RLCore.Functions.Notify("Vehicle Off: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "%", "primary", 4500)
                 closeMenuFull()
                 TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
-                TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
+                TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate, vehicle)
                 SetVehicleEngineOn(veh, true, true)
+                Citizen.Wait(500)
+                TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate, vehicle)
             --end, vehicle.plate)
             
         end, Garages[currentGarage].spawnPoint, true)
-    elseif vehicle.state == "Uit" then
+    elseif vehicle.state == "Out" then
         RLCore.Functions.Notify("Is your vehicle in the depot??", "error", 2500)
-    elseif vehicle.state == "In Beslag" then
+    elseif vehicle.state == "In" then
         RLCore.Functions.Notify("This vehicle has been seized by the Police", "error", 4000)
     end
 end
@@ -536,8 +538,10 @@ function TakeOutGarageVehicle(vehicle)
                 TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                 RLCore.Functions.Notify("Vehicle Off: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "%", "primary", 4500)
                 closeMenuFull()
-                TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
+                TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate, vehicle)
                 SetVehicleEngineOn(veh, true, true)
+                Citizen.Wait(500)
+                TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate, vehicle)
             --end, vehicle.plate)
         end, HouseGarages[currentHouseGarage].takeVehicle, true)
     end
