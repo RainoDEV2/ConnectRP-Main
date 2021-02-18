@@ -278,7 +278,7 @@ Citizen.CreateThread(function() -- Aiming with a melee, hitting with a melee or 
     end
 end)
 
-Citizen.CreateThread(function() -- Staying still or walking
+--[[ Citizen.CreateThread(function() -- Staying still or walking
     while true do
         local ped = PlayerPedId()
         local status = IsPedStill(ped)
@@ -298,7 +298,7 @@ Citizen.CreateThread(function() -- Staying still or walking
             Citizen.Wait(5)
         end
     end
-end)
+end) ]]
 
 Citizen.CreateThread(function() -- Skydiving with parachute
     while true do
