@@ -584,6 +584,8 @@ Citizen.CreateThread(function()
                                     MenuGarage()
                                     Menu.hidden = not Menu.hidden
                                     currentGarage = k
+                                else
+                                    print("SUCK YOUR MUDDA")
                                 end
                             end)
                         end

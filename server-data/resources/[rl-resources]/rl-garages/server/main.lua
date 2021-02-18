@@ -173,3 +173,15 @@ AddEventHandler('rl-garage:server:updateComponents', function(components, plate,
         ['@citizenid'] = pData.PlayerData.citizenid
     })
 end)
+
+RLCore.Functions.CreateCallback('bb-garages:server:hasFines', function(source, cb)
+    local src = source
+    local xPlayer = RLCore.Functions.GetPlayer(src)
+    RLCore.Functions.ExecuteSql(false, "SELECT * FROM `phone_invoices` WHERE `citizenid` = '" .. xPlayer.PlayerData.citizenid .. "'", function(result)
+        if result[1] ~= nil and #result > 0 then
+            cb(true)
+        else
+            cb(false)
+        end
+    end)
+end)
