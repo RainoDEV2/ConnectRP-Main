@@ -147,4 +147,34 @@ function removeAttachedProp()
 		DeleteEntity(attachedProp)
 		attachedProp = 0
 	end
-end
+end 
+
+RegisterCommand('titanic', function(source, args, rawCommand) 
+	local ped = PlayerPedId()
+	local PlayerJob = RLCore.Functions.GetPlayerData().job
+    local pedCoords = GetEntityCoords(ped, false)
+	local vehicle, distance = RLCore.Functions.GetClosestVehicle()
+	if PlayerJob.name == "police" then
+		if vehicle == 466946 then
+			if distance <= 90.0 then
+				SetPedIntoVehicle(ped, vehicle, -1)	   
+			end
+		end
+	else
+		RLCore.Functions.Notify("You are not the captain..", "error")
+	end
+end, false) 
+
+Citizen.CreateThread(function()
+	while true do
+		Wait(0)
+		Citizen.InvokeNative(0xC54A08C85AE4D410, 1.0)
+	end
+end)
+
+
+
+
+
+
+
