@@ -332,7 +332,7 @@
       </SubHandlingData>
     </Item>  
 <Item type="CHandlingData">
-			<handlingName>POLSCHAFTER3</handlingName>
+			<handlingName>POLSCHAFTERold</handlingName>
 			<fMass value="1500.000000" />
 			<fInitialDragCoeff value="7.2500000" />
 			<fPercentSubmerged value="85.000000" />
