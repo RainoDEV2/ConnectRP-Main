@@ -84,7 +84,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                         closeMenuFull()
                         SetVehicleEngineOn(veh, true, true)
                     --end, vehicle.plate)
-                    TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate, veh)
+                    TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate, vehicle)
                 end, Depots[currentGarage].spawnPoint, true)
             else
                 local Engine = GetVehicleEngineHealth(OutsideVehicles[vehicle.plate])
@@ -200,7 +200,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
         end, Depots[currentGarage].spawnPoint, true)
     end
 
-    TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), false)))
+    TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate, vehicle)
 end)
 
 function AddTemporaryBlip(vehicle)  
