@@ -57,8 +57,8 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                             OutsideVehicles[vehicle.plate] = veh
                             TriggerServerEvent('rl-garages:server:UpdateOutsideVehicles', OutsideVehicles)
                         end
-
-                        if vehicle.status ~= nil and next(vehicle.status) ~= nil then
+                        
+                        if vehicle.status ~= nil then
                             TriggerServerEvent('rl-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
                         end
                         
@@ -175,8 +175,8 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
                     OutsideVehicles[vehicle.plate] = veh
                     TriggerServerEvent('rl-garages:server:UpdateOutsideVehicles', OutsideVehicles)
                 end
-
-                if vehicle.status ~= nil and next(vehicle.status) ~= nil then
+                
+                if vehicle.status ~= nil then
                     TriggerServerEvent('rl-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
                 end
                 
@@ -733,7 +733,7 @@ Citizen.CreateThread(function()
                                     currentGarage = k
                                 else
                                     RLCore.Functions.Notify("You have unpaid state fines, Please pay your fines in the banking app before you can use the garage...", "error")
-                                end)
+                                end
                             end)
                         end
                     end
