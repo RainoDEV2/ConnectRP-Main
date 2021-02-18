@@ -114,6 +114,12 @@ Garages = {
         spawnPoint = {x = 212.04, y = -800.325, z = 30.89, h = 292.27}, 
         putVehicle = {x = 218.89, y = -781.10, z = 30.80},
     },
+    ["garageu"] = {
+        label = "Garage U",
+        takeVehicle = {x = 471.85104, y = -1079.385, z = 29.202161},
+        spawnPoint = {x = 471.89437, y = -1084.551, z = 29.204067, h = 268.17147}, 
+        putVehicle = {x = 485.48229, y = -1097.508, z = 29.201673},
+    },
 }
 
 HouseGarages = {}
