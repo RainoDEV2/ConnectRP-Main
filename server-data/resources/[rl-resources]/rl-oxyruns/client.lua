@@ -394,11 +394,11 @@ Citizen.CreateThread(function()
 		elseif OxyRun then
             Citizen.Wait(100)
 
-			if not DoesEntityExist(oxyVehicle) or GetVehicleEngineHealth(oxyVehicle) < 20.0 or GetVehicleBodyHealth(oxyVehicle) < 20.0 then
-				OxyRun = false
-				tasking = false
-				RLCore.Functions.Notify("The dealer isn't giving you anymore locations due to the state of his car", "error")
-			else
+			--if not DoesEntityExist(oxyVehicle) or GetVehicleEngineHealth(oxyVehicle) < 20.0 or GetVehicleBodyHealth(oxyVehicle) < 20.0 then
+			--	OxyRun = false
+			--	tasking = false
+			--	RLCore.Functions.Notify("The dealer isn't giving you anymore locations due to the state of his car", "error")
+			--else
 				if tasking then
 			        Citizen.Wait(30000)
 			    else
@@ -415,7 +415,7 @@ Citizen.CreateThread(function()
 				    	OxyRun = false
 				    end
 				end
-			end
+			--end
 	    end
     end
 end)
