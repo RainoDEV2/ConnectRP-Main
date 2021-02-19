@@ -380,7 +380,7 @@ function DepotList()
                 --else
                 --   label = v.model
                 --end
-                Menu.addButton(v.model, "TakeOutDepotVehicle", v, v.state .. " ($"..v.depotprice..",-)", " Motor: " .. enginePercent.."%", " Body: " .. bodyPercent.."%")
+                Menu.addButton(GetLabelText(GetDisplayNameFromVehicleModel(v.model)), "TakeOutDepotVehicle", v, v.state .. " ($"..v.depotprice..",-)", " Motor: " .. enginePercent.."%", " Body: " .. bodyPercent.."%")
             end
         end
             
