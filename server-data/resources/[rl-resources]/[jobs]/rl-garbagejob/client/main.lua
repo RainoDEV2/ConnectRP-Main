@@ -291,7 +291,7 @@ Citizen.CreateThread(function()
                                                         RLCore.Functions.Notify("All garbage bags are done, move on to the next location!")
                                                     else
                                                         RLCore.Functions.Notify("You are done working! Go back to the dump.")
-                                                        TriggerEvent('bb-scripts:client:locationChange', 'a')
+                                                        --TriggerEvent('bb-scripts:client:locationChange', 'a') 
                                                         IsWorking = false
                                                         RemoveBlip(DeliveryBlip)
                                                         SetRouteBack()
