@@ -137,8 +137,8 @@
       <modelName>trhawk</modelName>
       <txdName>trhawk</txdName>
       <handlingId>trhawk</handlingId>
-      <gameName>Trackhawk</gameName>
-      <vehicleMakeName>JEEP</vehicleMakeName>
+      <gameName>trhawk</gameName>
+      <vehicleMakeName />
       <expressionDictName>null</expressionDictName>
       <expressionName>null</expressionName>
       <animConvRoofDictName>null</animConvRoofDictName>
