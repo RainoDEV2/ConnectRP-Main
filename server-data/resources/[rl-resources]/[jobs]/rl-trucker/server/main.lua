@@ -41,13 +41,13 @@ AddEventHandler('rl-trucker:server:01101110', function(drops)
     local bonus = 0
     local DropPrice = math.random(150, 300)
     if drops > 5 then 
-        bonus = math.ceil((DropPrice / 100) * 5) + 100
+        bonus = math.ceil((DropPrice / 100) * 5) + 80
     elseif drops > 10 then
-        bonus = math.ceil((DropPrice / 100) * 7) + 300
+        bonus = math.ceil((DropPrice / 100) * 7) + 260
     elseif drops > 15 then
-        bonus = math.ceil((DropPrice / 100) * 10) + 400
+        bonus = math.ceil((DropPrice / 100) * 10) + 320
     elseif drops > 20 then
-        bonus = math.ceil((DropPrice / 100) * 12) + 500
+        bonus = math.ceil((DropPrice / 100) * 12) + 410
     end
     local price = (DropPrice * drops) + bonus
     local taxAmount = math.ceil((price / 100) * PaymentTax)
