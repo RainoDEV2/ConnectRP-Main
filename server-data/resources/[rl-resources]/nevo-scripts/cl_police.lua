@@ -393,7 +393,7 @@ Vehicles = {
     { model = "predator", label = "Boat"}, --10
     { model = "code3gator", label = "Gator"}, --11
     { model = "pol8", label = "Motorbike"}, --12
-    { model = "riot", label = "SWAT Insurgent"}, --13
+    { model = "sahpinsurgent", label = "SWAT Insurgent"}, --13
     { model = "sspres", label = "SWAT Suburban"}, --14
     { model = "pbus2", label = "Prison Bus"}, --15
     { model = "policet", label = "Armored Van"}, --16
