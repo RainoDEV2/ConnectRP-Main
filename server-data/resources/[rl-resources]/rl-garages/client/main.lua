@@ -423,7 +423,7 @@ function VehicleList()
                 --    label = RLCore.Shared.Vehicles[v.model]["brand"].." "..RLCore.Shared.Vehicles[v.model]["name"]
                 --end
 
-                Menu.addButton(v.model, "TakeOutVehicle", v, v.state, " Motor: " .. enginePercent .. "%", " Body: " .. bodyPercent.. "%")
+                Menu.addButton(GetLabelText(GetDisplayNameFromVehicleModel(v.model)), "TakeOutVehicle", v, v.state, " Motor: " .. enginePercent .. "%", " Body: " .. bodyPercent.. "%")
             end
         end
             
