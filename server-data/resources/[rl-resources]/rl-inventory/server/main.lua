@@ -826,7 +826,9 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 		local price = tonumber((itemData.price*fromAmount))
 
 		if Player.Functions.RemoveMoney("cash", price, "itemshop-bought-item") then
+			itemData.info.serie = tostring(Config.RandomInt(2) .. Config.RandomStr(3) .. Config.RandomInt(1) .. Config.RandomStr(2) .. Config.RandomInt(3) .. Config.RandomStr(4))
 			Player.Functions.AddItem(itemData.name, fromAmount, toSlot, itemData.info)
+
 			TriggerEvent('bb-bossmenu:server:addAccountMoney', 'dedeshop', price)
 			TriggerClientEvent('rl-shops:client:UpdateShop', src, RLCore.Shared.SplitStr(shopType, "_")[2], itemData, fromAmount)
 			TriggerClientEvent('RLCore:Notify', src, itemInfo["label"] .. " purchased!", "success")
@@ -874,6 +876,7 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 					TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2drop2", name=fromItemData.name, amount=fromAmount, target=fromInventory})
 					TriggerEvent("rl-log:server:CreateLog", "drop", "Received Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) reveived item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount.. "** -  dropid: *" .. fromInventory .. "*")
 				end
+				itemData.info.serie = tostring(Config.RandomInt(2) .. Config.RandomStr(3) .. Config.RandomInt(1) .. Config.RandomStr(2) .. Config.RandomInt(3) .. Config.RandomStr(4))
 				Player.Functions.AddItem(fromItemData.name, fromAmount, toSlot, fromItemData.info)
 			else
 				toInventory = tonumber(toInventory)
