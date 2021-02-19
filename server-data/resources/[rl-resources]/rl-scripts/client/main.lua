@@ -149,7 +149,7 @@ function removeAttachedProp()
 	end
 end 
 
-RegisterCommand('titanic', function(source, args, rawCommand) 
+--[[ RegisterCommand('titanic', function(source, args, rawCommand) 
 	local ped = PlayerPedId()
 	local PlayerJob = RLCore.Functions.GetPlayerData().job
     local pedCoords = GetEntityCoords(ped, false)
@@ -163,14 +163,14 @@ RegisterCommand('titanic', function(source, args, rawCommand)
 	else
 		RLCore.Functions.Notify("You are not the captain..", "error")
 	end
-end, false) 
+end, false) ]] 
 
-Citizen.CreateThread(function()
+--[[ Citizen.CreateThread(function()
 	while true do
 		Wait(0)
 		Citizen.InvokeNative(0xC54A08C85AE4D410, 1.0)
 	end
-end)
+end) ]]
 
 
 
