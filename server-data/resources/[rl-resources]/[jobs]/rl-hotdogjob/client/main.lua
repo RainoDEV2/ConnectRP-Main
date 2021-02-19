@@ -607,24 +607,24 @@ function FinishMinigame(faults)
     end
     if Config.Stock[Quality].Current + 1 <= Config.Stock[Quality].Max[Config.MyLevel] then
         TriggerServerEvent('rl-hotdogjob:server:UpdateReputation', Quality)
-        if Config.MyLevel == 1 then
+        --if Config.MyLevel == 1 then
             RLCore.Functions.Notify('You have made '..Config.Stock[Quality].Label..' Hotdog!')
 			TriggerServerEvent('RLCore:Server:AddItem', "hotdog", 1)
 			TriggerEvent('inventory:client:ItemBox', RLCore.Shared.Items["hotdog"], "add")
 			TriggerServerEvent("hotdog:cash")
             Config.Stock[Quality].Current = Config.Stock[Quality].Current + 1
-        else
-            local Luck = math.random(1, 2)
-            local LuckyNumber = math.random(1, 2)
-            local LuckyAmount = math.random(1, Config.MyLevel)
-            if Luck == LuckyNumber then
-                RLCore.Functions.Notify('You have made '..LuckyAmount..' '..Config.Stock[Quality].Label..' Hotdog!')
-                Config.Stock[Quality].Current = Config.Stock[Quality].Current + LuckyAmount
-            else
-                RLCore.Functions.Notify('You have made '..Config.Stock[Quality].Label..' Hotdog!')
-                Config.Stock[Quality].Current = Config.Stock[Quality].Current + 1
-            end
-        end
+        -- else
+        --     local Luck = math.random(1, 2)
+        --     local LuckyNumber = math.random(1, 2)
+        --     local LuckyAmount = math.random(1, Config.MyLevel)
+        --     if Luck == LuckyNumber then
+        --         RLCore.Functions.Notify('You have made '..LuckyAmount..' '..Config.Stock[Quality].Label..' Hotdog!')
+        --         Config.Stock[Quality].Current = Config.Stock[Quality].Current + LuckyAmount
+        --     else
+        --         RLCore.Functions.Notify('You have made '..Config.Stock[Quality].Label..' Hotdog!')
+        --         Config.Stock[Quality].Current = Config.Stock[Quality].Current + 1
+        --     end
+        -- end
     else
         RLCore.Functions.Notify('You do not have ('..Config.Stock[Quality].Label..') stock more about it..')
     end
