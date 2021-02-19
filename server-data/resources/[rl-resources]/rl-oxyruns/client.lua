@@ -428,7 +428,7 @@ AddEventHandler("oxydelivery:startDealing", function()
 	salecount = 0
 	OxyRun = true
 	firstdeal = true
-	RLCore.Functions.Notify('Your pager will be updated with locations soon.')
+	RLCore.Functions.Notify('Your pager will be updated with locations soon, Finish all runs or im keeping your money.')
 	CreateOxyVehicle()
 end)
 
