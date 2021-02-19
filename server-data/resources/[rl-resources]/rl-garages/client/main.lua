@@ -841,9 +841,9 @@ GetVehicleProperties = function(vehicle)
             end
         end
 
-        local engineDamage = math.ceil(GetVehicleEngineHealth(curVeh))
-        local bodyDamage = math.ceil(GetVehicleBodyHealth(curVeh))
-        local totalFuel = exports['LegacyFuel']:GetFuel(curVeh)
+        local engineDamage = math.ceil(GetVehicleEngineHealth(vehicle))
+        local bodyDamage = math.ceil(GetVehicleBodyHealth(vehicle))
+        local totalFuel = exports['LegacyFuel']:GetFuel(vehicle)
 
         if engineDamage > 1000 then
             engineDamage = engineDamage / 1000
