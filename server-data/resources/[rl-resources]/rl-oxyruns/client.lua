@@ -392,8 +392,9 @@ Citizen.CreateThread(function()
 		    firstdeal = false
 
 		elseif OxyRun then
+            Citizen.Wait(100)
 
-			if not DoesEntityExist(oxyVehicle) or GetVehicleEngineHealth(oxyVehicle) < 200.0 or GetVehicleBodyHealth(oxyVehicle) < 200.0 then
+			if not DoesEntityExist(oxyVehicle) or GetVehicleEngineHealth(oxyVehicle) < 20.0 or GetVehicleBodyHealth(oxyVehicle) < 20.0 then
 				OxyRun = false
 				tasking = false
 				RLCore.Functions.Notify("The dealer isn't giving you anymore locations due to the state of his car", "error")
@@ -404,6 +405,12 @@ Citizen.CreateThread(function()
 			        TriggerEvent("oxydelivery:client")  
 				    salecount = salecount + 1
 				    if salecount == Config.RunAmount then
+                        RLCore.Functions.Notify("The dealer isn't giving you anymore locations thank you for the help! See you again soon and here is your deposit back.", "error")
+                        TriggerServerEvent("oxy:server:doathing")
+                        local math = math.random(1,1000)
+                        if math <= 40 then
+                            TriggerServerEvent("oxydelivery:receiveBigRewarditem")
+                        end
 				    	Citizen.Wait(300000)
 				    	OxyRun = false
 				    end

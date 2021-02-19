@@ -16,10 +16,10 @@ AddEventHandler('oxydelivery:server', function()
 	if Player.PlayerData.money.cash >= Config.StartOxyPayment then
 		Timers[src] = GetGameTimer()
 		Player.Functions.RemoveMoney("cash", Config.StartOxyPayment)
-		TriggerEvent("bb-bossmenu:server:addAccountMoney", "drugdealer", 2500)
+		--TriggerEvent("bb-bossmenu:server:addAccountMoney", "drugdealer", 2500)
 		TriggerClientEvent("oxydelivery:startDealing", src)
 		TriggerClientEvent("rl-oxyruns:client:AcceptBribe", src)
-		PerformHttpRequest('WEBHOOK_HERE', function(err, text, headers) end, 'POST', json.encode({username = "Oxy Runs Log", content = "__**" .. GetPlayerName(source) .. "**__ Started Oxy Run"}), { ['Content-Type'] = 'application/json' })
+		--PerformHttpRequest('WEBHOOK_HERE', function(err, text, headers) end, 'POST', json.encode({username = "Oxy Runs Log", content = "__**" .. GetPlayerName(source) .. "**__ Started Oxy Run"}), { ['Content-Type'] = 'application/json' })
 	else
 		TriggerClientEvent('RLCore:Notify', src, 'Not enough money.', 'error')
 	end
@@ -30,13 +30,21 @@ AddEventHandler('oxydelivery:receiveBigRewarditem', function()
 	local src = source
 	local Player = RLCore.Functions.GetPlayer(src)
 	Player.Functions.AddItem("security_card_03", 1)
+	TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items["security_card_03"], "add")
+end)
+
+RegisterServerEvent('oxy:server:doathing')
+AddEventHandler('oxy:server:doathing', function()
+	local src = source
+	local Player = RLCore.Functions.GetPlayer(src)
+	Player.Functions.AddMoney("cash", 2500)
 end)
 
 RegisterServerEvent('oxydelivery:receiveoxy')
 AddEventHandler('oxydelivery:receiveoxy', function()
 	local src = source
 	local Player = RLCore.Functions.GetPlayer(src)
-	local oxy = math.random(1, 3)
+	local oxy = math.random(1, 5)
 
 	Player.Functions.AddItem("oxy", oxy)
 	TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items["oxy"], "add")
