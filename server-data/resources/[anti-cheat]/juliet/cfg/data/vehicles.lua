@@ -86,7 +86,6 @@ Config.VehiclesBlacklistList = {
 	{vehicle = "DOMINATOR4", allowed = false},
 	{vehicle = "DOMINATOR5", allowed = false},
 	{vehicle = "DOMINATOR6", allowed = false},
-	{vehicle = "TOREADOR", allowed = false},
 	{vehicle = "JB7002", allowed = false},
 	{vehicle = "ZR380", allowed = false},
 	{vehicle = "ZR3802", allowed = false},
