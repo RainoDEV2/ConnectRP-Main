@@ -115,7 +115,7 @@ Citizen.CreateThread(function()
             if Distance < 4 then
                 inRange = true
                 if Distance < 1.5 then
-                    DrawText3Ds(VendingPos.x, VendingPos.y, VendingPos.z, '~r~[E]~w~ ' .. typ[3])
+                    DrawText3Ds(VendingPos.x, VendingPos.y, VendingPos.z, '[E] ' .. typ[3])
                     if IsControlJustPressed(0, Keys["E"]) then
                         local ShopItems = {}
                         ShopItems.label = typ[3]
