@@ -55,26 +55,26 @@ AddEventHandler('rl-garbagejob:server:Pay', function(amount, location)
     local Player = RLCore.Functions.GetPlayer(src)
 
     if amount > 0 then
-        if canGetPaid[src] ~= nil and canGetPaid[src] == true then
-            canGetPaid[src] = false
-            Player.Functions.AddMoney('cash', amount)
+        --if canGetPaid[src] ~= nil and canGetPaid[src] == true then
+        --canGetPaid[src] = false
+        Player.Functions.AddMoney('cash', amount)
 
-            if location == #Config.Locations["vuilnisbakken"] then
-                for i = 1, math.random(3, 5), 1 do
-                    local item = Materials[math.random(1, #Materials)]
-                    Player.Functions.AddItem(item, math.random(40, 70))
-                    TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items[item], 'add')
-                    Citizen.Wait(500)
-                end
+        if location == #Config.Locations["vuilnisbakken"] then
+            for i = 1, math.random(3, 5), 1 do
+                local item = Materials[math.random(1, #Materials)]
+                Player.Functions.AddItem(item, math.random(40, 70))
+                TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items[item], 'add')
+                Citizen.Wait(500)
             end
+        end
 
             TriggerClientEvent('RLCore:Notify', src, "You recieved $"..amount.."", "success")
-        else
-            local timeTable = os.date("*t", 2147483647)
-            RLCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`, `bannedby`) VALUES ('"..GetPlayerName(src).."', '"..GetPlayerIdentifiers(src)[1].."', '"..GetPlayerIdentifiers(src)[2].."', '"..GetPlayerIdentifiers(src)[3].."', '"..GetPlayerIdentifiers(src)[4].."', 'Unauthorized Trigger', '"..GetPlayerName(src).."')")
-            DropPlayer(src, "You have been banned from the server: Unauthorized Trigger\nYour ban expires in "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\nSpeak to someone in discord if you feel this is incorrect.")
-            TriggerEvent('bb-logs:server:createLog', 'anticheat', 'rl-garbagejob:server:Pay', "Has been banned from the server.\n**Reason:** Unauthorized Trigger.", src)
-        end
+        --else
+        --    local timeTable = os.date("*t", 2147483647)
+        --    RLCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`, `bannedby`) VALUES ('"..GetPlayerName(src).."', '"..GetPlayerIdentifiers(src)[1].."', '"..GetPlayerIdentifiers(src)[2].."', '"..GetPlayerIdentifiers(src)[3].."', '"..GetPlayerIdentifiers(src)[4].."', 'Unauthorized Trigger', '"..GetPlayerName(src).."')")
+        --    DropPlayer(src, "You have been banned from the server: Unauthorized Trigger\nYour ban expires in "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\nSpeak to someone in discord if you feel this is incorrect.")
+        --    TriggerEvent('bb-logs:server:createLog', 'anticheat', 'rl-garbagejob:server:Pay', "Has been banned from the server.\n**Reason:** Unauthorized Trigger.", src)
+        --end
     else
         TriggerClientEvent('RLCore:Notify', src, "You haven't earned anything..", "error")
     end
