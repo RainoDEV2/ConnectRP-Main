@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Do not change The sirenSettings value=XX it Most Be 6520 To All Lights Work - Not 1 -->
+<CVehicleModelInfoVariation>
+  <variationData>
+    <Item>
+      <modelName>sahpinsurgent</modelName>
+      <colors>
+        <Item>
+          <indices content="char_array">
+            <Item value="132" />
+            <Item value="0" />
+            <Item value="0" />
+            <Item value="156" />
+          </indices>
+          <liveries />
+        </Item>
+      </colors>
+      <kits />
+      <windowsWithExposedEdges />
+      <plateProbabilities>
+        <Probabilities>
+          <Item>
+            <Name>police guv plate</Name>
+            <Value value="100" />
+          </Item>
+        </Probabilities>
+      </plateProbabilities>
+      <lightSettings value="23" />
+      <sirenSettings value="6520" />
+    </Item>
+  </variationData>
+</CVehicleModelInfoVariation>

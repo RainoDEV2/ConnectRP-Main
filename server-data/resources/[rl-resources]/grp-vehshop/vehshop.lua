@@ -72,12 +72,12 @@ local vehshopDefault = {
 				{name = "Job Vehicles", description = ''},
 			}
 		},
-		["jobvehicles"] = {
-			title = "job vehicles",
-			name = "job vehicles",
+		["Job Vehicles"] = {
+			title = "Job Vehicles",
+			name = "Job Vehicles",
 			buttons = {
-				{name = "Taxi Cab", costs = 18500, description = {}, model = "taxi"},
 				{name = "Flat Bed", costs = 22000, description = {}, model = "flatbed"},
+				{name = "Taxi Cab", costs = 18500, description = {}, model = "taxi"},
 				{name = "News Rumpo", costs = 19000, description = {}, model = "rumpo"},
 			}
 		},
@@ -86,6 +86,8 @@ local vehshopDefault = {
 			name = "cycles",
 			buttons = {
 				{name = "BMX", costs = 150, description = {}, model = "bmx"},
+				{name = "Caddy", costs = 5000, description = {}, model = "caddy"},
+				{name = "Old Caddy", costs = 3000, description = {}, model = "caddy2"},
 				{name = "Cruiser", costs = 240, description = {}, model = "cruiser"},
 				{name = "Fixter", costs = 270, description = {}, model = "fixter"},
 				{name = "Scorcher", costs = 300, description = {}, model = "scorcher"},
@@ -129,32 +131,34 @@ local vehshopOwner = {
 			title = "VEHICLES",
 			name = "vehicles",
 			buttons = {
-				{name = "Job Vehicles", description = ''},
+				{name = "Cayo Perico", description = ''},
 				{name = "Compacts", description = ''},
 				{name = "Coupes", description = ''},
-				{name = "Sedans", description = ''},
-				{name = "Sports", description = ''},
-				{name = "Sports Classics", description = ''},
-				{name = "lowriders", description = ''},
-				{name = "casino", description = ''},
+				{name = "Diamond Casino", description = ''},
+				{name = "Job Vehicles", description = ''},
+				{name = "Lowriders", description = ''},
 				{name = "Muscle", description = ''},
 				{name = "Off-Road", description = ''},
-				{name = "SUVs", description = ''},
+				{name = "Sedans", description = ''},
+				{name = "Sports", description = ''},
+				{name = "Sport Classics", description = ''},
+				{name = "Suvs", description = ''},
 				{name = "Vans", description = ''},
+				--{name = "Custom Imports", description = ''},
 			}
 		},
-		["jobvehicles"] = {
-			title = "job vehicles",
-			name = "job vehicles",
+		["Job Vehicles"] = {
+			title = "Job Vehicles",
+			name = "Job Vehicles",
 			buttons = {
 				{name = "Taxi Cab", costs = 18500, description = {}, model = "taxi"},
 				{name = "Flat Bed", costs = 22000, description = {}, model = "flatbed"},
 				{name = "News Rumpo", costs = 19000, description = {}, model = "rumpo"},
 			}
 		},
-		["compacts"] = {
-			title = "compacts",
-			name = "compacts",
+		["Compacts"] = {
+			title = "Compacts",
+			name = "Compacts",
 			buttons = {			
 				{name = "Blista", costs = 12000, description = {}, model = "blista"},
 				{name = "Brioso R/A", costs = 22000, description = {}, model = "brioso"},
@@ -163,16 +167,11 @@ local vehshopOwner = {
 				{name = "Panto", costs = 8000, description = {}, model = "panto"},
 				{name = "Prairie", costs = 9000, description = {}, model = "prairie"},
 				{name = "Rhapsody", costs = 16000, description = {}, model = "rhapsody"},
-				--{name = "Brioso 300", costs = 11000, description = {}, model = "brioso2"},
-				--{name = "Weevil", costs = 10000 , description = {}, model = "weevil"},
-				--{name = "Club", costs = 20000 , description = {}, model = "club"},
-				--{name = "Issi Custom", costs = 26000, description = {}, model = "issi7"},
-				--{name = "Kanjo", costs = 22000, description = {}, model = "kanjo"},	
 			}
 		},
-		["coupes"] = {
-			title = "coupes",
-			name = "coupes",
+		["Coupes"] = {
+			title = "Coupes",
+			name = "Coupes",
 			buttons = {
 				{name = "Cognoscenti Cabrio", costs = 150000, description = {}, model = "cogcabrio"},
 				{name = "Exemplar", costs = 80000, description = {}, model = "exemplar"},
@@ -190,88 +189,89 @@ local vehshopOwner = {
 				{name = "Zion Cabrio", costs = 15000, description = {}, model = "zion2"},
 			}
 		},
-		["sports"] = {
-			title = "sports",
-			name = "sports",
+		["Sports"] = {
+			title = "Sports",
+			name = "Sports",
 			buttons = {
 				{name = "9F", costs = 120000, description = {}, model = "ninef"},
 				{name = "9F Cabrio", costs = 165000, description = {}, model = "ninef2"},
 				{name = "Alpha", costs = 15000, description = {}, model = "alpha"},
 				{name = "Banshee", costs = 70000, description = {}, model = "banshee"},
+				{name = "Banshee 900r", costs = 120000, description = {}, model = "banshee2"},
 				{name = "Bestia GTS", costs = 175000, description = {}, model = "bestiagts"},
 				{name = "Buffalo", costs = 15000, description = {}, model = "buffalo"},
 				{name = "Buffalo S", costs = 20000, description = {}, model = "buffalo2"},
 				{name = "Carbonizzare", costs = 165000, description = {}, model = "carbonizzare"},
 				{name = "Comet", costs = 75000, description = {}, model = "comet2"},
+				{name = "Comet Safari", costs = 47000, description = {}, model = "comet4"},
+				{name = "Comet SR", costs = 110000, description = {}, model = "comet5"},
 				{name = "Coquette", costs = 80000, description = {}, model = "coquette"},
+				{name = "D10", costs =100000, description = {}, model = "coquette4"},
+				{name = "Elegy", costs = 90000, description = {}, model = "elegy2"},
+				{name = "Elegy Retro Custom", costs = 87000, description = {}, model = "elegy"},
 				{name = "Feltzer", costs = 75000, description = {}, model = "feltzer2"},
+				{name = "Flash GT", costs = 87000, description = {}, model = "flashgt"},
 				{name = "Furore GT", costs = 30000, description = {}, model = "furoregt"},
+				{name = "Futo", costs = 8000, description = {}, model = "futo"},
 				{name = "Fusilade", costs = 15000, description = {}, model = "fusilade"},
 				{name = "Jester", costs = 95000, description = {}, model = "jester"},
+				{name = "Jester Classic", costs = 50000, description = {}, model = "jester3"},
+				{name = "Khamelion", costs = 80000, description = {}, model = "khamelion"},
 				{name = "Kuruma", costs = 76000, description = {}, model = "kuruma"},
+				{name = "Locust", costs = 750000, description = {}, model = "locust"},
 				{name = "Lynx", costs = 125000, description = {}, model = "lynx"},
 				{name = "Massacro", costs = 165000, description = {}, model = "massacro"},
+				{name = "Neon", costs =69000, description = {}, model = "neon"},
 				{name = "Omnis", costs = 58000, description = {}, model = "omnis"},
+				{name = "Pariah", costs = 79000, description = {}, model = "pariah"},
 				{name = "Penumbra", costs = 15000, description = {}, model = "penumbra"},
+				{name = "Raiden", costs = 40000, description = {}, model = "raiden"},
 				{name = "Rapid GT", costs = 40000, description = {}, model = "rapidgt"},
 				{name = "Rapid GT Convertible", costs = 60000, description = {}, model = "rapidgt2"},
+				{name = "Raptor 3-Wheeler", costs = 40000, description = {}, model = "raptor"},
 				{name = "Schafter V12", costs = 50000, description = {}, model = "schafter3"},
+				{name = "Sentinel Classic", costs = 48000, description = {}, model = "sentinel3"},
+				{name = "Seven 70", costs =90000, description = {}, model = "seven70"},
+				{name = "Specter", costs = 100000, description = {}, model = "specter"},
+				{name = "Specter Custom", costs = 150000, description = {}, model = "specter2"},
+				{name = "Streiter", costs = 75000, description = {}, model = "streiter"},
 				{name = "Sultan", costs = 38000, description = {}, model = "sultan"},
 				{name = "SultanRS", costs = 48000, description = {}, model = "sultanrs"},
 				{name = "Surano", costs = 78000, description = {}, model = "surano"},
 				{name = "Tropos", costs = 90000, description = {}, model = "tropos"},
 				{name = "Verkierer", costs = 74000, description = {}, model = "verlierer2"},
-				{name = "Comet SR", costs = 110000, description = {}, model = "comet5"},
-				{name = "Sentinel Classic", costs = 48000, description = {}, model = "sentinel3"},
-				{name = "Streiter", costs = 75000, description = {}, model = "streiter"},
-				{name = "Comet Safari", costs = 47000, description = {}, model = "comet4"},
-				{name = "Pariah", costs = 79000, description = {}, model = "pariah"},
-				{name = "Elegy", costs = 87000, description = {}, model = "elegy2"},
-				{name = "Jester Classic", costs = 33000, description = {}, model = "jester3"},
-				{name = "Neon", costs =69000, description = {}, model = "neon"},
-				--{name = "8F Drafter", costs =38000, description = {}, model = "drafter"},
-				{name = "D10", costs =100000, description = {}, model = "coquette4"},
-				{name = "Seven 70", costs =90000, description = {}, model = "seven70"},
 				{name = "Ruston", costs =80000, description = {}, model = "ruston"},
-				--{name = "Komoda", costs =50000, description = {}, model = "komoda"},
-				--{name = "V-STR", costs =43000, description = {}, model = "vstr"},
-				--{name = "Flash GT", costs = 50000 , description = {}, model = "flashgt"},
-				--{name = "Sultan 2", costs = 32000, description = {}, model = "sultan2"},
-
 			}
 		},
-		["sportsclassics"] = {
-			title = "sports classics",
-			name = "sportsclassics",
+		["Sport Classics"] = {
+			title = "Sport Classics",
+			name = "Sport Classics",
 			buttons = {
+				{name = "190z", costs = 115000, description = {}, model = "z190"},
 				{name = "Casco", costs = 250000, description = {}, model = "casco"},
+				{name = "Cheeta Classic ", costs =230000, description = {}, model = "cheetah2"},
 				{name = "Coquette Classic", costs = 60000, description = {}, model = "coquette2"},
+				{name = "GT500", costs = 140000, description = {}, model = "gt500"},
 				{name = "JB 700", costs = 55000, description = {}, model = "jb700"},
+				{name = "Mamba", costs =175000, description = {}, model = "mamba"},
 				{name = "Pigalle", costs = 10000, description = {}, model = "pigalle"},
+				{name = "Savestra", costs = 125000, description = {}, model = "savestra"},
 				{name = "Stinger", costs = 200000, description = {}, model = "stinger"},
 				{name = "Stinger GT", costs = 235000, description = {}, model = "stingergt"},
 				{name = "Stirling GT", costs = 100000, description = {}, model = "feltzer3"},
 				{name = "Rapid GT Classic", costs = 45000, description = {}, model = "rapidgt3"},
-				{name = "Retinue", costs = 130000, description = {}, model = "retinue"},
+				{name = "Retinue", costs = 65000, description = {}, model = "retinue"},
+				{name = "Retinue Custom", costs = 80000, description = {}, model = "retinue2"},
 				{name = "Viseris", costs = 128000, description = {}, model = "viseris"}, 
-				{name = "190z", costs = 115000, description = {}, model = "z190"},
-				{name = "GT500", costs = 140000, description = {}, model = "gt500"},
-				{name = "Savestra", costs = 125000, description = {}, model = "savestra"},
-				{name = "Elegy Retro Custom", costs = 110000, description = {}, model = "elegy"},
-				{name = "Cheeta Classic ", costs =230000, description = {}, model = "cheetah2"},
-				{name = "Mamba", costs =175000, description = {}, model = "mamba"},
 				{name = "Roosevelt", costs =200000 , description = {}, model = "btype"},
-				{name = "Z-type", costs =175000 , description = {}, model = "ztype"},
+				{name = "Roosevelt Luxury", costs =280000 , description = {}, model = "btype3"},
 				{name = "Turismo Classic", costs =230000 , description = {}, model = "turismo2"},
-				--{name = "Toreador", costs = 200000, description = {}, model = "toreador"},
-				--{name = "Retinue Custom", costs = 150000, description = {}, model = "retinue2"},
-
-
+				{name = "Z-type", costs =175000 , description = {}, model = "ztype"},
 			}
 		},
-		["imports"] = {
-			title = "imports",
-			name = "imports",
+		["Custom Imports"] = {
+			title = "Custom Imports",
+			name = "Custom Imports",
 			buttons = {
 				 {name = "Audi RS7", costs = 125000, description = {}, model = "rs7"},
 				 {name = "Audi R8 V10", costs = 425000, description = {}, model = "r8v10"},
@@ -374,219 +374,249 @@ local vehshopOwner = {
 				 {name = "ZR380", costs = 145000, description = {}, model = "zr3806str"},		 		
 			}
 		},
-		["casino"] = {
-			title = "casino",
-			name = "casino",
+		["Diamond Casino"] = {
+			title = "Diamond Casino",
+			name = "Diamond Casino",
 			buttons = {
 				{name = "Asbo", costs = 9895, description = {}, model = "asbo"},
+				{name = "Blista Kanjo", costs = 22000, description = {}, model = "kanjo"},
+				{name = "Caracara", costs = 190000, description = {}, model = "caracara2"},
+				{name = "9F Drafter", costs = 140000, description = {}, model = "drafter"},
+				{name = "Drift Yosemite", costs =45000, description = {}, model = "yosemite2"},
+				{name = "Dynasty", costs = 110000, description = {}, model = "Dynasty"},
+				{name = "Everon", costs = 50000 , description = {}, model = "everon"},
+				{name = "FF Penumbra", costs = 40000, description = {}, model = "penumbra2"},
+				{name = "Gauntlet Classic", costs = 130000, description = {}, model = "gauntlet3"},
+				{name = "Gauntlet Hellfire", costs = 150000, description = {}, model = "gauntlet4"},
+				{name = "Glendale Lux", costs = 30000 , description = {}, model ="glendale2"},
+				{name = "Hellion", costs = 110000, description = {}, model = "hellion"},
+				{name = "Imorgon", costs = 140000, description = {}, model = "Imorgon"},
+				{name = "Issi Sport", costs = 200000, description = {}, model = "issi7"},
 				{name = "Jugular", costs = 175000, description = {}, model = "jugular"},
-				{name = "Gauntlet 4", costs = 150000, description = {}, model = "gauntlet4"},
-				{name = "Issi 7", costs = 200000, description = {}, model = "issi7"},
-				{name = "Gauntlet 3", costs = 130000, description = {}, model = "gauntlet3"},
+				{name = "Komoda", costs = 195000, description = {}, model = "komoda"},
 				{name = "Nebula", costs = 83000, description = {}, model = "nebula"},
-				{name = "Zion 3", costs = 75000, description = {}, model = "zion3"},
+				{name = "Novak", costs = 140000, description = {}, model = "Novak"},
+				{name = "Outlaw", costs = 100000, description = {}, model = "outlaw"},
+				{name = "Paragon", costs = 100000, description = {}, model = "paragon"},
+				{name = "Peyote Gasser", costs = 75000, description = {}, model = "peyote2"},
+				{name = "Rebla", costs = 110000, description = {}, model = "rebla"},
+				{name = "Sugoi", costs = 105000, description = {}, model = "sugoi"},
+				{name = "Sultan Classic", costs = 155000, description = {}, model = "sultan2"},
+				{name = "Vagrant", costs = 90000, description = {}, model = "vagrant"},
+				{name = "V-STR", costs = 186000, description = {}, model = "vstr"},
+				{name = "Youga 4x4", costs = 33000 , description = {}, model = "youga3"},
+				{name = "Zion Classic", costs = 75000, description = {}, model = "zion3"},
 			}
 		},
-		
-		["muscle"] = {
-			title = "muscle",
-			name = "muscle",
+		["Cayo Perico"] = {
+			title = "Cayo Perico",
+			name = "Cayo Perico",
+			buttons = {
+				{name = "Brioso 300", costs = 11000, description = {}, model = "brioso2"},
+				{name = "Club", costs = 20000 , description = {}, model = "club"},
+				{name = "Itali RSX", costs = 750000, description = {}, model = "italirsx"},
+				{name = "Mammoth Squaddie", costs = 36000 , description = {}, model = "squaddie"},
+				{name = "Manchez Scout", costs = 10000 , description = {}, model = "manchez2"},
+				{name = "SlamTruck", costs = 36000 , description = {}, model = "slamtruck"},
+				{name = "Stryder", costs = 25000 , description = {}, model = "stryder"},
+				{name = "Toreador", costs = 200000, description = {}, model = "toreador"},
+				{name = "Veto Classic", costs = 10000 , description = {}, model = "veto"},
+				{name = "Veto Modern", costs = 30000 , description = {}, model = "veto2"},
+				{name = "Verus", costs = 12000 , description = {}, model = "verus"},
+				{name = "Weevil", costs = 10000 , description = {}, model = "weevil"},
+				{name = "Winky", costs = 16000 , description = {}, model = "winky"},
+			}
+		},		
+		["Muscle"] = {
+			title = "Muscle",
+			name = "Muscle",
 			buttons = {
 				{name = "Blade", costs = 22000, description = {}, model = "blade"},
 				{name = "Buccaneer", costs = 24000, description = {}, model = "buccaneer"},
 				{name = "Chino", costs = 26000, description = {}, model = "chino"},
 				{name = "Coquette BlackFin", costs = 115000, description = {}, model = "coquette3"},
+				{name = "Deviant", costs = 50000, description = {}, model = "deviant"},
 				{name = "Dominator", costs = 40000, description = {}, model = "dominator"},
+				{name = "Dominator GTX", costs =65000, description = {}, model = "dominator3"},
 				{name = "Dukes", costs = 45000, description = {}, model = "dukes"},
-				{name = "Gauntlet", costs = 36000, description = {}, model = "gauntlet"},
-				{name = "Faction", costs = 36000, description = {}, model = "faction"},
-				{name = "Picador", costs = 10000, description = {}, model = "picador"},
-				{name = "Sabre Turbo", costs = 24000, description = {}, model = "sabregt"},
-				{name = "Tampa", costs = 34000, description = {}, model = "tampa"},
-				{name = "Virgo", costs = 22000, description = {}, model = "virgo"},
-				{name = "Vigero", costs = 23000, description = {}, model = "vigero"},
+				{name = "Dukes Beater", costs =22000, description = {}, model = "dukes3"},
 				{name = "Elliie", costs = 65000, description = {}, model = "ellie"},
+				{name = "Faction", costs = 36000, description = {}, model = "faction"},
+				{name = "Gang Slam Van", costs = 19500, description = {}, model = "slamvan2"},
+				{name = "Gauntlet", costs = 36000, description = {}, model = "gauntlet"},
+				{name = "Hermes", costs = 200000, description = {}, model = "hermes"},
+				{name = "Picador", costs = 10000, description = {}, model = "picador"},
 				{name = "Phoenix", costs = 34000, description = {}, model = "phoenix"},
+				{name = "Rat Loader", costs = 19500, description = {}, model = "ratloader2"},
+				{name = "Ruiner", costs =20000, description = {}, model = "ruiner"},
+				{name = "Sabre Turbo", costs = 24000, description = {}, model = "sabregt"},
 				{name = "Slam Van", costs = 19500, description = {}, model = "slamvan"},
-				{name = "Yosemite", costs = 45000, description = {}, model = "yosemite"},
+				{name = "Tampa", costs = 34000, description = {}, model = "tampa"},
 				{name = "Tulip", costs = 55000, description = {}, model = "tulip"},
 				{name = "Vamos", costs = 65000, description = {}, model = "vamos"},
-				{name = "Deviant", costs = 50000, description = {}, model = "deviant"},
-				{name = "Hermes", costs = 200000, description = {}, model = "hermes"},
-				--{name = "Drift Yosemite", costs =45000, description = {}, model = "yosemite2"},
-				{name = "Dominator GTX", costs =65000, description = {}, model = "dominator3"},
-				{name = "Nightshade", costs =33000, description = {}, model = "nigthshade"},
-				{name = "Dukes Beater", costs =22000, description = {}, model = "dukes3"},
-				{name = "Ruiner", costs =20000, description = {}, model = "ruiner"},
-				--{name = "Peyote", costs = 32000, description = {}, model = "peyote2"},
+				{name = "Virgo", costs = 22000, description = {}, model = "virgo"},
+				{name = "Vigero", costs = 23000, description = {}, model = "vigero"},
+				{name = "Nightshade", costs =33000, description = {}, model = "nightshade"},
+				{name = "Yosemite", costs = 45000, description = {}, model = "yosemite"},
 			}
 		},
-		["offroad"] = {
-			title = "off-road",
-			name = "off-road",
+		["Off-Road"] = {
+			title = "Off-Road",
+			name = "Off-Road",
 			buttons = {
+				{name = "Bodhi", costs = 5000, description = {}, model = "bodhi2"},	
 				{name = "Bifta", costs = 15000, description = {}, model = "bifta"},
 				{name = "Blazer", costs = 7000, description = {}, model = "blazer"},
 				{name = "Brawler", costs = 40000, description = {}, model = "brawler"},
+				{name = "Desert Raid", costs =55000, description = {}, model = "trophytruck2"},
+				{name = "Dubsta 6x6", costs = 95000, description = {}, model = "dubsta3"},
 				{name = "Dune Buggy", costs = 10000, description = {}, model = "dune"},
+				{name = "Free Crawler", costs = 70000, description = {}, model = "freecrawler"},
+				{name = "Guardian", costs = 75000, description = {}, model = "guardian"},
+				{name = "Kalahari", costs = 5000, description = {}, model = "kalahari"},
+				{name = "Kamacho", costs = 90000, description = {}, model = "kamacho"},
+				{name = "Lifted Mesa", costs = 45000, description = {}, model = "mesa3"},
+				{name = "Lifted Yosemite", costs =40000 , description = {}, model = "yosemite3"},
+				{name = "Riata", costs = 45000, description = {}, model = "riata"},
 				{name = "Rebel", costs = 45000, description = {}, model = "rebel2"},
 				{name = "Sandking", costs = 70000, description = {}, model = "sandking"},
-				{name = "Kamacho", costs = 90000, description = {}, model = "kamacho"},
-				{name = "Dubsta 6x6", costs = 95000, description = {}, model = "dubsta3"},
-				{name = "Lifted Yosemite", costs =40000 , description = {}, model = "yosemite3"},
-				{name = "Guardian", costs = 75000, description = {}, model = "guardian"},
-				{name = "Riata", costs = 45000, description = {}, model = "riata"},
-				{name = "Desert Raid", costs =55000, description = {}, model = "trophytruck2"},
 				{name = "Trophy Truck", costs =35000, description = {}, model = "trophytruck"},
-				--{name = "Everon", costs = 50000 , description = {}, model = "everon"},
-				--{name = "Verus", costs = 15000 , description = {}, model = "verus"},
-				--{name = "Caracara", costs = 60000, description = {}, model = "caracara2"},
-				--{name = "Hellion", costs = 40000, description = {}, model = "hellion"},
-				--{name = "Vagrant", costs = 22000, description = {}, model = "vagrant"},
-				--{name = "Outlaw", costs = 22000, description = {}, model = "outlaw"},
-
-
 			}
 		},
-		["suvs"] = {
-			title = "suvs",
-			name = "suvs",
+		["Suvs"] = {
+			title = "Suvs",
+			name = "Suvs",
 			buttons = {
-				{name = "Cavalcade", costs = 30000, description = {}, model = "cavalcade2"},
-				{name = "Granger", costs = 26000, description = {}, model = "granger"},
-				{name = "Huntley S", costs = 145000, description = {}, model = "huntley"},
-				{name = "Landstalker", costs = 40000, description = {}, model = "landstalker"},
-				{name = "Radius", costs = 16000, description = {}, model = "radi"},
-				{name = "Rocoto", costs = 24000, description = {}, model = "rocoto"},
-				{name = "Seminole", costs = 10500, description = {}, model = "seminole"},
-				{name = "XLS", costs = 56000, description = {}, model = "xls"},
-				{name = "Dubsta", costs = 80000, description = {}, model = "dubsta"},
-				{name = "Patriot", costs = 40000, description = {}, model = "patriot"},
-				{name = "Gresley", costs = 25000, description = {}, model = "gresley"},
-				{name = "Toros", costs = 110000, description = {}, model = "toros"},
-				{name = "Dubsta Luxury", costs = 75000, description = {}, model = "dubsta2"},
-				{name = "Mesa", costs = 12000, description = {}, model = "mesa"},
-				{name = "Mesa Trail", costs = 42500, description = {}, model = "mesa3"},
-				{name = "Rebla", costs = 42500, description = {}, model = "rebla"},
 				{name = "Baller", costs =55000 , description = {}, model = "baller2"},
 				{name = "Baller LE", costs =60000 , description = {}, model = "baller3"},
 				{name = "Baller LE LWB", costs =65000 , description = {}, model = "baller4"},
-				--{name = "Novak", costs = 96000, description = {}, model = "Novak"},
-
+				{name = "Cavalcade", costs = 30000, description = {}, model = "cavalcade2"},
+				{name = "Dubsta", costs = 80000, description = {}, model = "dubsta"},
+				{name = "Dubsta Luxury", costs = 120000, description = {}, model = "dubsta2"},
+				{name = "Granger", costs = 26000, description = {}, model = "granger"},
+				{name = "Gresley", costs = 25000, description = {}, model = "gresley"},
+				{name = "Huntley S", costs = 145000, description = {}, model = "huntley"},
+				{name = "Landstalker", costs = 40000, description = {}, model = "landstalker"},
+				{name = "Mesa", costs = 12000, description = {}, model = "mesa"},
+				{name = "Patriot", costs = 40000, description = {}, model = "patriot"},
+				{name = "Radius", costs = 16000, description = {}, model = "radi"},
+				{name = "Rocoto", costs = 24000, description = {}, model = "rocoto"},
+				{name = "Seminole", costs = 10500, description = {}, model = "seminole"},
+				{name = "Rocoto", costs = 42500, description = {}, model = "rocoto"},
+				{name = "Toros", costs = 110000, description = {}, model = "toros"},
+				{name = "XLS", costs = 56000, description = {}, model = "xls"},
 			}
 		},
-		["vans"] = {
-			title = "vans",
-			name = "vans",
+		["Vans"] = {
+			title = "Vans",
+			name = "Vans",
 			buttons = {
 				{name = "Bison", costs = 30000, description = {}, model = "bison"},
 				{name = "Bobcat XL", costs = 15000, description = {}, model = "bobcatxl"},
+				{name = "Camper", costs = 34500, description = {}, model = "camper"},
+				{name = "Clown van", costs = 20000, description = {}, model = "speedo2"},
 				{name = "Gang Burrito", costs = 15000, description = {}, model = "gburrito"},
 				{name = "Journey", costs = 10000, description = {}, model = "journey"},
 				{name = "Minivan", costs = 65000, description = {}, model = "minivan"},
+				{name = "Moonbeam", costs = 12500, description = {}, model = "moonbeam"},
 				{name = "Paradise", costs = 22000, description = {}, model = "paradise"},
 				{name = "Surfer", costs = 9500, description = {}, model = "surfer"},
 				{name = "Youga", costs = 14500, description = {}, model = "youga"},
-				{name = "Moonbeam", costs = 12500, description = {}, model = "moonbeam"},
-				{name = "Camper", costs = 34500, description = {}, model = "camper"},
-				--{name = "Youga 4x4", costs = 33000 , description = {}, model = "youga3"},
 			}
 		},
-		["sedans"] = {
-			title = "sedans",
-			name = "sedans",
+		["Sedans"] = {
+			title = "Sedans",
+			name = "Sedans",
 			buttons = {
-				{name = "Emperor", costs = 7000, description = {}, model = "emperor2"},
-				{name = "Tornado", costs = 9000, description = {}, model = "tornado3"},
-				{name = "Bodhi", costs = 5000, description = {}, model = "bodhi2"},		
 				{name = "Asea", costs = 9500, description = {}, model = "asea"},
 				{name = "Asterope", costs = 10000, description = {}, model = "asterope"},
+				{name = "Cheburek", costs = 32000, description = {}, model = "cheburek"},
+				{name = "Cognoscenti", costs = 30000, description = {}, model = "cognoscenti"},
+				{name = "Cognoscenti 55", costs = 35000, description = {}, model = "cog55"},
+				{name = "Dynasty", costs = 7500, description = {}, model = "Dynasty"},
+				{name = "Emperor", costs = 7000, description = {}, model = "emperor2"},
 				{name = "Fugitive", costs = 30000, description = {}, model = "fugitive"},
 				{name = "Glendale", costs = 7500, description = {}, model = "glendale"},
 				{name = "Intruder", costs = 25000, description = {}, model = "intruder"},
 				{name = "Premier", costs = 9000, description = {}, model = "premier"},
 				{name = "Regina", costs = 32000, description = {}, model = "regina"},
 				{name = "Schafter", costs = 45000, description = {}, model = "schafter2"},
+				{name = "Stafford", costs = 60000, description = {}, model = "stafford"},
 				{name = "Stanier", costs = 10000, description = {}, model = "stanier"},
 				{name = "Stratum", costs =90000, description = {}, model = "stratum"},
+				{name = "Stretch Limo", costs = 25000, description = {}, model = "stretch"},
 				{name = "Super Diamond", costs = 50000, description = {}, model = "superd"},
+				{name = "Surge", costs =25000 , description = {}, model = "surge"},
+				{name = "Tornado", costs = 9000, description = {}, model = "tornado3"},	
+				{name = "Tailgater", costs = 87500, description = {}, model = "tailgater"},
 				{name = "Warrener", costs = 85000, description = {}, model = "warrener"},
 				{name = "Washington", costs = 18000, description = {}, model = "washington"},
-				{name = "Tailgater", costs = 87500, description = {}, model = "tailgater"},
-				{name = "Cognoscenti", costs = 30000, description = {}, model = "cognoscenti"},
-				{name = "Cheburek", costs = 32000, description = {}, model = "cheburek"},
-				{name = "Stafford", costs = 60000, description = {}, model = "stafford"},
-				{name = "Surge", costs =25000 , description = {}, model = "surge"},
-				{name = "Sugio", costs =62000 , description = {}, model = "Sugoi"},
-				{name = "Dynasty", costs = 7500, description = {}, model = "Dynasty"},
 
 			}
 		},
-		["motorcycles"] = {
-			title = "MOTORCYCLES",
-			name = "motorcycles",
+		["Motorcycles"] = {
+			title = "Motorcycles",
+			name = "Motorcycles",
 			buttons = {		
 				{name = "Akuma", costs = 20000, description = {}, model = "AKUMA"},
+				{name = "Avarus", costs = 26000, description = {}, model = "avarus"},
 				{name = "Bagger", costs = 14000, description = {}, model = "bagger"},
 				{name = "Bati 801", costs = 32000, description = {}, model = "bati"},
 				{name = "BF400", costs = 13000, description = {}, model = "bf400"},
 				{name = "Carbon RS", costs = 22000, description = {}, model = "carbonrs"},
+				{name = "Chimera", costs = 32000, description = {}, model = "chimera"},
+				{name = "Daemon", costs = 16000, description = {}, model = "daemon"},
+				{name = "DaemonHigh", costs = 24000, description = {}, model = "daemon2"},
+				{name = "Defiler", costs = 26000, description = {}, model = "defiler"},
 				{name = "Enduro", costs = 8000, description = {}, model = "enduro"},
+				{name = "Esskey", costs = 11000, description = {}, model = "esskey"},
 				{name = "Faggio", costs = 3500, description = {}, model = "faggio"},
 				{name = "Gargoyle", costs = 30000, description = {}, model = "gargoyle"},
 				{name = "Hexer", costs = 45000, description = {}, model = "hexer"},
 				{name = "Innovation", costs = 18000, description = {}, model = "innovation"},
+				{name = "Manchez", costs = 12000, description = {}, model = "manchez"},
 				{name = "Nemesis", costs = 16000, description = {}, model = "nemesis"},
+				{name = "Nightblade", costs = 21000 , description = {}, model ="nightblade"},
 				{name = "PCJ-600", costs = 11000, description = {}, model = "pcj"},
 				{name = "Ruffian", costs = 19000, description = {}, model = "ruffian"}, 
 				{name = "Sanchez", costs = 8000, description = {}, model = "sanchez"},
 				{name = "Sovereign", costs = 29000, description = {}, model = "sovereign"},
-				{name = "Zombiea", costs = 30000, description = {}, model = "zombiea"},
 				{name = "Vespa", costs = 4995, description = {}, model = "faggio2"},
-				{name = "Manchez", costs = 12000, description = {}, model = "manchez"},
 				{name = "Vortex", costs = 38000, description = {}, model = "vortex"},
-				{name = "Avarus", costs = 26000, description = {}, model = "avarus"},
 				{name = "Vader", costs = 9800, description = {}, model = "vader"},
-				{name = "Esskey", costs = 11000, description = {}, model = "esskey"},
-				{name = "Defiler", costs = 26000, description = {}, model = "defiler"},
-				{name = "Chimera", costs = 32000, description = {}, model = "chimera"},
-				{name = "Daemon", costs = 16000, description = {}, model = "daemon"},
-				{name = "DaemonHigh", costs = 24000, description = {}, model = "daemon2"},
 				{name = "Wolfsbane", costs = 19000 , description = {}, model = "wolfsbane"},
-				{name = "Nightblade", costs = 21000 , description = {}, model ="nightblade"},
-				--{name = "Veto Modern", costs = 20000 , description = {}, model = "veto2"},
-				--{name = "Veto Classic", costs = 15000 , description = {}, model = "veto"},
-				--{name = "Manchez Custom", costs = 16000, description = {}, model = "manchez2"},
-
+				{name = "Zombiea", costs = 30000, description = {}, model = "zombiea"},
 			}
 		},
 		["cycles"] = {
 			title = "cycles",
 			name = "cycles",
 			buttons = {
-				{name = "BMX", costs = 550, description = {}, model = "bmx"},
+				{name = "BMX", costs = 150, description = {}, model = "bmx"},
+				{name = "Caddy", costs = 5000, description = {}, model = "caddy"},
+				{name = "Old Caddy", costs = 3000, description = {}, model = "caddy2"},
 				{name = "Cruiser", costs = 240, description = {}, model = "cruiser"},
 				{name = "Fixter", costs = 270, description = {}, model = "fixter"},
 				{name = "Scorcher", costs = 300, description = {}, model = "scorcher"},
-				{name = "Pro 1", costs = 1800, description = {}, model = "tribike"},
-				{name = "Pro 2", costs = 1900, description = {}, model = "tribike2"},
-				{name = "Pro 3", costs = 2000, description = {}, model = "tribike3"},
+				{name = "Pro 1", costs = 2500, description = {}, model = "tribike"},
+				{name = "Pro 2", costs = 2600, description = {}, model = "tribike2"},
+				{name = "Pro 3", costs = 2900, description = {}, model = "tribike3"},
 			}
 		},
-		["lowriders"] = {
-			title = "lowriders",
-			name = "lowriders",
+		["Lowriders"] = {
+			title = "Lowriders",
+			name = "Lowriders",
 			buttons = {
-				{name = "Moonbeam Lux", costs = 32500, description = {}, model = "moonbeam2"},
-				{name = "Chino Lux", costs = 34000, description = {}, model = "chino2"},
-				{name = "Voodoo Lux", costs = 33000, description = {}, model = "voodoo2"},
-				{name = "Faction Lux", costs = 31000, description = {}, model = "faction2"},
-				{name = "Slamvan Lux", costs = 32500, description = {}, model = "slamvan3"},
 				{name = "Buccaneer Lux", costs = 33000, description = {}, model = "buccaneer2"},
-				{name = "Primo Lux", costs = 30000, description = {}, model = "primo2"},
-				{name = "Minivan Lux", costs = 26000, description = {}, model = "minivan2"},
+				{name = "Chino Lux", costs = 34000, description = {}, model = "chino2"},
+				{name = "Faction Lux", costs = 31000, description = {}, model = "faction2"},
 				{name = "Manana Lux", costs = 35000, description = {}, model = "manana2"},
-				--{name = "Glendale Lux", costs = 30000 , description = {}, model ="glendale2"},
+				{name = "Minivan Lux", costs = 26000, description = {}, model = "minivan2"},
+				{name = "Moonbeam Lux", costs = 32500, description = {}, model = "moonbeam2"},
+				{name = "Primo Lux", costs = 30000, description = {}, model = "primo2"},
+				{name = "Sabre Lux", costs = 24000, description = {}, model = "sabregt2"},
+				{name = "Slamvan Lux", costs = 32500, description = {}, model = "slamvan3"},
+				{name = "Voodoo Lux", costs = 33000, description = {}, model = "voodoo"},
 			}
 		},
 
@@ -1232,37 +1262,41 @@ function ButtonSelected(button)
 		if btn == "Vehicles" then
 			OpenMenu('vehicles')
 		elseif btn == "Motorcycles" then
-			OpenMenu('motorcycles')
+			OpenMenu('Motorcycles')
 		elseif btn == "Cycles" then
 			OpenMenu('cycles')
 		end
 	elseif this == "vehicles" then
 		if btn == "Sports" then
-			OpenMenu('sports')
+			OpenMenu('Sports')
 		elseif btn == "Sedans" then
-			OpenMenu('sedans')
+			OpenMenu('Sedans')
 		elseif btn == "Job Vehicles" then
-			OpenMenu('jobvehicles')
+			OpenMenu('Job Vehicles')
 		elseif btn == "Compacts" then
-			OpenMenu('compacts')
+			OpenMenu('Compacts')
 		elseif btn == "Coupes" then
-			OpenMenu('coupes')
-		elseif btn == "Sports Classics" then
-			OpenMenu("sportsclassics")
-		elseif btn == "Imports" then
-			OpenMenu('imports')
-		elseif btn == "casino" then
-			OpenMenu('casino')
+			OpenMenu('Coupes')
+		elseif btn == "Sport Classics" then
+			OpenMenu("Sport Classics")
+		elseif btn == "Custom Imports" then
+			OpenMenu('Custom Imports')
+		elseif btn == "Lowriders" then
+			OpenMenu('Lowriders')			
+		elseif btn == "Diamond Casino" then
+			OpenMenu('Diamond Casino')
+		elseif btn == "Cayo Perico" then
+			OpenMenu('Cayo Perico')	
 		elseif btn == "Muscle" then
-			OpenMenu('muscle')
+			OpenMenu('Muscle')
 		elseif btn == "Off-Road" then
-			OpenMenu('offroad')
-		elseif btn == "SUVs" then
-			OpenMenu('suvs')
+			OpenMenu('Off-Road')
+		elseif btn == "Suvs" then
+			OpenMenu('Suvs')
 		elseif btn == "Vans" then
-			OpenMenu('vans')
+			OpenMenu('Vans')
 		end
-	elseif this == "jobvehicles" or this == "compacts" or this == "coupes" or this == "sedans" or this == "sports" or this == "sportsclassics" or this == "casino" or this == "imports" or this == "muscle" or this == "offroad" or this == "suvs" or this == "vans" or this == "industrial" or this == "cycles" or this == "motorcycles" then
+	elseif this == "Job Vehicles" or this == "Compacts" or this == "Coupes" or this == "Sedans" or this == "Sports" or this == "Sport Classics" or this == "Lowriders" or this == "Diamond Casino" or this == "Cayo Perico" or this == "Custom Imports" or this == "Muscle" or this == "Off-Road" or this == "Suvs" or this == "Vans" or this == "industrial" or this == "cycles" or this == "Motorcycles" then
 		if ownerMenu then
 			updateCarTable(button.model,button.costs,button.name)
 		else
@@ -1296,7 +1330,7 @@ function Back()
 	backlock = true
 	if vehshop.currentmenu == "main" then
 		CloseCreator()
-	elseif vehshop.currentmenu == "jobvehicles" or vehshop.currentmenu == "compacts" or vehshop.currentmenu == "coupes" or vehshop.currentmenu == "sedans" or vehshop.currentmenu == "sports" or vehshop.currentmenu == "sportsclassics" or vehshop.currentmenu == "casino" or vehshop.currentmenu == "imports" or vehshop.currentmenu == "muscle" or vehshop.currentmenu == "offroad" or vehshop.currentmenu == "suvs" or vehshop.currentmenu == "vans" or vehshop.currentmenu == "industrial" or vehshop.currentmenu == "cycles" or vehshop.currentmenu == "motorcycles" then
+	elseif vehshop.currentmenu == "Job Vehicles" or vehshop.currentmenu == "Compacts" or vehshop.currentmenu == "Coupes" or vehshop.currentmenu == "Sedans" or vehshop.currentmenu == "Sports" or vehshop.currentmenu == "Sport Classics" or vehshop.currentmenu == "Lowriders" or vehshop.currentmenu == "Diamond Casino" or vehshop.currentmenu == "Cayo Perico" or vehshop.currentmenu == "Custom Imports" or vehshop.currentmenu == "Muscle" or vehshop.currentmenu == "Off-Road" or vehshop.currentmenu == "Suvs" or vehshop.currentmenu == "Vans" or vehshop.currentmenu == "industrial" or vehshop.currentmenu == "cycles" or vehshop.currentmenu == "Motorcycles" then
 		if DoesEntityExist(fakecar.car) then
 			Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(fakecar.car))
 		end
@@ -1341,7 +1375,7 @@ Citizen.CreateThread(function()
 					end
 
 					y = y + 0.04
-					if vehshop.currentmenu == "jobvehicles" or vehshop.currentmenu == "compacts" or vehshop.currentmenu == "coupes" or vehshop.currentmenu == "sedans" or vehshop.currentmenu == "sports" or vehshop.currentmenu == "sportsclassics" or vehshop.currentmenu == "casino" or vehshop.currentmenu == "imports" or vehshop.currentmenu == "muscle" or vehshop.currentmenu == "offroad" or vehshop.currentmenu == "suvs" or vehshop.currentmenu == "vans" or vehshop.currentmenu == "industrial" or vehshop.currentmenu == "cycles" or vehshop.currentmenu == "motorcycles" then
+					if vehshop.currentmenu == "Job Vehicles" or vehshop.currentmenu == "Compacts" or vehshop.currentmenu == "Coupes" or vehshop.currentmenu == "Sedans" or vehshop.currentmenu == "Sports" or vehshop.currentmenu == "Sport Classics" or vehshop.currentmenu == "Lowriders" or vehshop.currentmenu == "Diamond Casino" or vehshop.currentmenu == "Cayo Perico" or vehshop.currentmenu == "Custom Imports" or vehshop.currentmenu == "Muscle" or vehshop.currentmenu == "Off-Road" or vehshop.currentmenu == "Suvs" or vehshop.currentmenu == "Vans" or vehshop.currentmenu == "industrial" or vehshop.currentmenu == "cycles" or vehshop.currentmenu == "Motorcycles" then
 						if selected then
 							if fakecar.model ~= button.model then
 								if DoesEntityExist(fakecar.car) then
@@ -1401,7 +1435,7 @@ Citizen.CreateThread(function()
 			end
 
 			if DoesEntityExist(fakecar.car) then
-				if vehshop.currentmenu == "cycles" or vehshop.currentmenu == "motorcycles" then
+				if vehshop.currentmenu == "cycles" or vehshop.currentmenu == "Motorcycles" then
 					daz = 6.0
 					if fakecar.model == "Chimera" then
 						daz = 8.0

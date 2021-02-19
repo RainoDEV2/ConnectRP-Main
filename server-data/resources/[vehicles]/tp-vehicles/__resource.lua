@@ -158,27 +158,6 @@ files {
      'servercars/raptor/carcols.meta',
      'servercars/raptor/handling.meta',    
 
---
---EMS Vehicles
---
-
-     --Ambulance Files
-     'emsvehicles/ambulance/vehicles.meta',
-     'emsvehicles/ambulance/carvariations.meta',
-     'emsvehicles/ambulance/carcols.meta',
-     'emsvehicles/ambulance/handling.meta',   
-
-     --EMS Tahoe Files
-     'emsvehicles/emstahoe/vehicles.meta',
-     'emsvehicles/emstahoe/carvariations.meta',
-     'emsvehicles/emstahoe/carcols.meta',
-     'emsvehicles/emstahoe/handling.meta',  
-
-     --Ambulance Files
-     'emsvehicles/vehicles.meta',
-     'emsvehicles/carvariations.meta',
-     'emsvehicles/carcols.meta',
-     'emsvehicles/handling.meta',   
 
 --
 --Mechanic Vehicles  
@@ -203,14 +182,6 @@ files {
      'mechanicvehicles/mechvan/carcols.meta',
      'mechanicvehicles/mechvan/handling.meta',        
 
---
---PD Vehicles  
---
-     'pdvehicles/vehicles.meta',
-     'pdvehicles/carvariations.meta',
-     'pdvehicles/carcols.meta',
-     'pdvehicles/handling.meta',
-     'pdvehicles/vehiclelayouts.meta',
 }  
 
 
@@ -364,30 +335,6 @@ data_file 'CARCOLS_FILE' 'servercars/raptor/carcols.meta'
 data_file 'VEHICLE_VARIATION_FILE' 'servercars/raptor/carvariations.meta'
 
 --
---EMS Vehicles Data 
---
-
----- Ambulance Data
-data_file 'VEHICLE_METADATA_FILE' 'emsvehicles/ambulance/vehicles.meta'
-data_file 'CARCOLS_FILE' 'emsvehicles/ambulance/carcols.meta'
-data_file 'VEHICLE_VARIATION_FILE' 'emsvehicles/ambulance/carvariations.meta'
-data_file 'HANDLING_FILE' 'emsvehicles/ambulance/handling.meta'
-
----- EMS Tahoe Data
-data_file 'VEHICLE_METADATA_FILE' 'emsvehicles/emstahoe/vehicles.meta'
-data_file 'CARCOLS_FILE' 'emsvehicles/emstahoe/carcols.meta'
-data_file 'VEHICLE_VARIATION_FILE' 'emsvehicles/emstahoe/carvariations.meta'
-data_file 'HANDLING_FILE' 'emsvehicles/emstahoe/handling.meta'
-
----- Fire Pack Data
-data_file 'VEHICLE_METADATA_FILE' 'emsvehicles/vehicles.meta'
-data_file 'CARCOLS_FILE' 'emsvehicles/carcols.meta'
-data_file 'VEHICLE_VARIATION_FILE' 'emsvehicles/carvariations.meta'
-data_file 'HANDLING_FILE' 'emsvehicles/handling.meta'
-
-client_script 'vehicle_names.lua'
-
---
 --Mechanic Vehicles Data 
 --
 
@@ -410,13 +357,3 @@ data_file 'VEHICLE_METADATA_FILE' 'mechanicvehicles/mechvan/vehicles.meta'
 data_file 'CARCOLS_FILE' 'mechanicvehicles/mechvan/carcols.meta'
 data_file 'VEHICLE_VARIATION_FILE' 'mechanicvehicles/mechvan/carvariations.meta'
 
---
---PD Vehicles  
---
-
-data_file 'HANDLING_FILE' 'pdvehicles/handling.meta'
-data_file 'VEHICLE_METADATA_FILE' 'pdvehicles/vehicles.meta'
-data_file 'CARCOLS_FILE' 'pdvehicles/carcols.meta'
-data_file 'VEHICLE_VARIATION_FILE' 'pdvehicles/carvariations.meta'
-data_file 'VEHICLE_LAYOUTS_FILE' 'pdvehicles/vehiclelayouts.meta'
-client_script 'client/hook.lua'
