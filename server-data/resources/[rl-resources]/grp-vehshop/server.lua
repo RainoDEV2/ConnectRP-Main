@@ -98,18 +98,19 @@ end)
 -- Get All finance > 0 then take 10min off
 -- Every 10 Min
 function updateFinance()
-    RLCore.Functions.ExecuteSql(false,'SELECT financetimer, plate FROM bbvehicles WHERE financetimer > @financetimer', {
-        ["@financetimer"] = 0
+    exports['ghmattimysql']:execute("SELECT `financetimer`, `plate` FROM `bbvehicles` WHERE `financetimer` = @financetimer", {
+        ['@financetimer'] = 0
     }, function(result)
         for i=1, #result do
             local financeTimer = result[i].financetimer
             local plate = result[i].plate
             local newTimer = financeTimer - 10
             if financeTimer ~= nil then
-                RLCore.Functions.ExecuteSql(false,'UPDATE bbvehicles SET financetimer=@financetimer WHERE plate=@plate', {
-                    ['@plate'] = plate,
-                    ['@financetimer'] = newTimer
-                })
+                exports.ghmattimysql:execute('UPDATE bbvehicles SET `financetimer` = @financetimer WHERE plate = @plate', {
+                    ['@financetimer'] = newTimer,
+                    ['@plate'] = plate
+                }, function(result)
+                end)
             end
         end
     end)
