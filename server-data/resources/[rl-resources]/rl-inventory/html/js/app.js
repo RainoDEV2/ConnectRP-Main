@@ -109,42 +109,42 @@ $(document).on('mousedown', '.item-slot', function(event){
             }
             
             break;
-        // case 3:
-        //     fromSlot = $(this).attr("data-slot");
-        //     fromInventory = $(this).parent();
+        case 3:
+            fromSlot = $(this).attr("data-slot");
+            fromInventory = $(this).parent();
 
-        //     if ($(fromInventory).attr('data-inventory') == "player") {
-        //         toInventory = $(".other-inventory");
-        //     } else {
-        //         toInventory = $(".player-inventory");
-        //     }
-        //     toSlot = GetFirstFreeSlot(toInventory, $(this));
-        //     if ($(this).data('item') === undefined) {
-        //         return;
-        //     }
-        //     toAmount = $(this).data('item').amount;
-        //     if (ControlPressed) {
-        //         if (toAmount > 1) {
-        //             toAmount = Math.round(toAmount / 2)
-        //         }
-        //     }
-        //     if (CanQuickMove()) {
-        //         if (toSlot === null) {
-        //             InventoryError(fromInventory, fromSlot);
-        //             return;
-        //         }
-        //         if (fromSlot == toSlot && fromInventory == toInventory) {
-        //             return;
-        //         }
-        //         if (toAmount >= 0) {
-        //             if (updateweights(fromSlot, toSlot, fromInventory, toInventory, toAmount)) {
-        //                 swap(fromSlot, toSlot, fromInventory, toInventory, toAmount);
-        //             }
-        //         }
-        //     } else {
-        //         InventoryError(fromInventory, fromSlot);
-        //     }
-        //     break;
+            if ($(fromInventory).attr('data-inventory') == "player") {
+                toInventory = $(".other-inventory");
+            } else {
+                toInventory = $(".player-inventory");
+            }
+            toSlot = GetFirstFreeSlot(toInventory, $(this));
+            if ($(this).data('item') === undefined) {
+                return;
+            }
+            toAmount = $(this).data('item').amount;
+            if (ControlPressed) {
+                if (toAmount > 1) {
+                    toAmount = Math.round(toAmount / 2)
+                }
+            }
+            if (CanQuickMove()) {
+                if (toSlot === null) {
+                    InventoryError(fromInventory, fromSlot);
+                    return;
+                }
+                if (fromSlot == toSlot && fromInventory == toInventory) {
+                    return;
+                }
+                if (toAmount >= 0) {
+                    if (updateweights(fromSlot, toSlot, fromInventory, toInventory, toAmount)) {
+                        swap(fromSlot, toSlot, fromInventory, toInventory, toAmount);
+                    }
+                }
+            } else {
+                InventoryError(fromInventory, fromSlot);
+            }
+            break;
     }
 });
 
