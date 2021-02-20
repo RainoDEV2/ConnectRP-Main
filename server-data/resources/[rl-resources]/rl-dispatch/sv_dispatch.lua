@@ -27,7 +27,11 @@ local DispatchMessages = {
     ['10-60'] = { ['label'] = 'Carjacking in progress',['reporter'] = false, ['police'] = true, ['ambulance'] = false, ['blipSprite'] = 225, ['blipColor'] = 4 }, -- Lockpick
     ['10-47'] = { ['label'] = 'Injured person',['reporter'] = false, ['police'] = true, ['ambulance'] = true, ['blipSprite'] = 303, ['blipColor'] = 4 }, -- Death
     ['10-13A'] = { ['label'] = 'Officer down URGENT',['reporter'] = false, ['police'] = true, ['ambulance'] = true, ['important'] = true, ['priority'] = 3, ['sound'] = '10-1314', ['blipSprite'] = 621, ['blipColor'] = 38 }, -- Officer Down
-    ['10-13B'] = { ['label'] = 'EMS down URGENT',['reporter'] = false, ['police'] = true, ['ambulance'] = true, ['important'] = true, ['priority'] = 3, ['sound'] = '10-1314', ['blipSprite'] = 621, ['blipColor'] = 1 }, -- EMS Down
+    ['10-13B'] = { ['label'] = 'Officer down NOT URGENT',['reporter'] = false, ['police'] = true, ['ambulance'] = true, ['important'] = false, ['priority'] = 3, ['sound'] = '10-1314', ['blipSprite'] = 621, ['blipColor'] = 38 }, -- Officer Down
+    ['10-14A'] = { ['label'] = 'EMS down URGENT',['reporter'] = false, ['police'] = true, ['ambulance'] = true, ['important'] = true, ['priority'] = 3, ['sound'] = '10-1314', ['blipSprite'] = 621, ['blipColor'] = 1 }, -- EMS Down
+    ['10-14B'] = { ['label'] = 'EMS down NOT URGENT',['reporter'] = false, ['police'] = true, ['ambulance'] = true, ['important'] = false, ['priority'] = 3, ['sound'] = '10-1314', ['blipSprite'] = 621, ['blipColor'] = 1 }, -- EMS Down
+    
+    
 }
 
 RegisterServerEvent("dispatch:svNotify")

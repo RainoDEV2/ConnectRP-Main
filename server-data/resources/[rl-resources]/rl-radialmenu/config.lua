@@ -45,6 +45,27 @@ rootMenuConfig =  {
         end
     },
     {
+        id = "policeDeadA",
+        displayName = "10-13B",
+        icon = "#police-dead",
+        functionName = "dispatch:officerDownB",
+        enableMenu = function()
+            local Data = RLCore.Functions.GetPlayerData()
+            return (Data.metadata["isdead"] or Data.metadata["inlaststand"]) and (Data.job.name == 'police' and Data.job.onduty)
+        end
+    },
+    {
+        id = "emsDeadA",
+        displayName = "10-14B",
+        icon = "#ems-dead",
+        functionName = "dispatch:emsDownB",
+        enableMenu = function()
+            local Data = RLCore.Functions.GetPlayerData()
+            return (Data.metadata["isdead"] or Data.metadata["inlaststand"]) and (Data.job.name == 'ambulance' and Data.job.onduty)
+        end
+    },
+    
+    {
         id = "general",
         displayName = "General",
         icon = "#globe-europe",
@@ -206,7 +227,7 @@ rootMenuConfig =  {
             local Data = RLCore.Functions.GetPlayerData()
             return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and (Data.job ~= nil and Data.job.name == "police" and Data.job.onduty))
         end,
-        subMenus = {"objects:barier", "objects:cone", "objects:tent", "objects:spike", "objects:light", "objects:remove"}
+        subMenus = {"objects:barier", "objects:cone", "objects:tent", "objects:spike", "objects:spike2", "objects:light", "objects:remove"}
     },
     
     {
@@ -362,6 +383,12 @@ newSubMenus = {
         title = "Spike",
         icon = "#spike",
         functionName = "police:client:SpawnSpikeStrip"
+    },
+
+    ['objects:spike2'] = {
+        title = "Spike Remove",
+        icon = "#spike",
+        functionName = "police:client:RemoveSpikeStrip"
     },
 
     ['objects:light'] = {

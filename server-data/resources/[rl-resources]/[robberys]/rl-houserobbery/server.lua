@@ -31,7 +31,7 @@ AddEventHandler('houseRobberies:searchItem', function()
 
  for i=1, math.random(1, 2) do
   item = Config.RobbableItems[math.random(1, #Config.RobbableItems)]
-  if math.random(1, 15) >= item.chance then
+  if math.random(1, 10) >= item.chance then
    if tonumber(item.id) == 0 and not gotID[item.id] then
     gotID[item.id] = true
     xPlayer.Functions.AddMoney('cash', item.quantity)
