@@ -206,7 +206,7 @@ rootMenuConfig =  {
             local Data = RLCore.Functions.GetPlayerData()
             return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and (Data.job ~= nil and Data.job.name == "police" and Data.job.onduty))
         end,
-        subMenus = {"objects:barier", "objects:cone", "objects:tent", "objects:spike", "objects:light", "objects:remove"}
+        subMenus = {"objects:barier", "objects:cone", "objects:tent", "objects:spike", "objects:spike2", "objects:light", "objects:remove"}
     },
     
     {
@@ -362,6 +362,12 @@ newSubMenus = {
         title = "Spike",
         icon = "#spike",
         functionName = "police:client:SpawnSpikeStrip"
+    },
+
+    ['objects:spike2'] = {
+        title = "Spike Remove",
+        icon = "#spike",
+        functionName = "police:client:RemoveSpikeStrip"
     },
 
     ['objects:light'] = {

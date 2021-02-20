@@ -243,7 +243,7 @@ function GetAreaPoliceObject()
     return objList
 end
 
-local SpikeConfig = {
+--[[ local SpikeConfig = {
     MaxSpikes = 5
 }
 local SpawnedSpikes = {}
@@ -278,37 +278,144 @@ function GetClosestSpike()
         end
     end
     ClosestSpike = current
-end
+end ]]
+
+local usingSpikes = false
 
 RegisterNetEvent('police:client:SpawnSpikeStrip')
 AddEventHandler('police:client:SpawnSpikeStrip', function()
-    if #SpawnedSpikes + 1 < SpikeConfig.MaxSpikes then
-        if PlayerJob.name == "police" and PlayerJob.onduty then
-            local spawnCoords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 2.0, 0.0)
-            local spike = CreateObject(GetHashKey(spikemodel), spawnCoords.x, spawnCoords.y, spawnCoords.z, 1, 1, 1)
-            local netid = NetworkGetNetworkIdFromEntity(spike)
-            SetNetworkIdExistsOnAllMachines(netid, true)
-            SetNetworkIdCanMigrate(netid, false)
-            SetEntityHeading(spike, GetEntityHeading(GetPlayerPed(-1)))
-            PlaceObjectOnGroundProperly(spike)
-            table.insert(SpawnedSpikes, {
-                coords = {
-                    x = spawnCoords.x,
-                    y = spawnCoords.y,
-                    z = spawnCoords.z,
-                },
-                netid = netid,
-                object = spike,
-            })
-            spikesSpawned = true
-            TriggerServerEvent('police:server:SyncSpikes', SpawnedSpikes)
-        end
-    else
-        RLCore.Functions.Notify('There are no Spikestrips left..', 'error')
-    end
+    SetSpikesOnGround()
+end) 
+
+RegisterNetEvent('police:client:RemoveSpikeStrip')
+AddEventHandler('police:client:RemoveSpikeStrip', function()
+    RemoveSpike2() 
+    RLCore.Functions.Notify('Removing spikes...')
+end) 
+
+
+function SetSpikesOnGround()
+    x, y, z = table.unpack(GetEntityCoords(GetPlayerPed(-1), true))
+
+    spike = GetHashKey("P_ld_stinger_s")
+
+    RequestModel(spike)
+    while not HasModelLoaded(spike) do
+      Citizen.Wait(1)
+	end
+	RLCore.Functions.Notify('Deploying spikes...')
+	doAnimation()
+	Citizen.Wait(1700)
+	ClearPedTasksImmediately(GetPlayerPed(-1))
+	usingSpikes = true
+	--FreezeEntityPosition(GetPlayerPed(-1), false)
+	Citizen.Wait(250)
+	local playerheading = GetEntityHeading(GetPlayerPed(-1))
+	coords1 = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 3, 10, -0.7)
+	coords2 = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, -5, -0.5)
+
+	obj1 = CreateObject(spike, coords1['x'], coords1['y'], coords1['z'], true, true, true)
+	obj2 = CreateObject(spike, coords2['x'], coords2['y'], coords2['z'], true, true, true)
+	obj3 = CreateObject(spike, coords2['x'], coords2['y'], coords2['z'], true, true, true)
+	SetEntityHeading(obj1, playerheading)
+	SetEntityHeading(obj2, playerheading)
+	SetEntityHeading(obj3, playerheading)
+	
+
+	AttachEntityToEntity(obj1, GetPlayerPed(-1), 1, 0.0, 4.0, 0.0, 0.0, -90.0, 0.0, true, true, false, false, 2, true)
+	AttachEntityToEntity(obj2, GetPlayerPed(-1), 1, 0.0, 8.0, 0.0, 0.0, -90.0, 0.0, true, true, false, false, 2, true)
+	AttachEntityToEntity(obj3, GetPlayerPed(-1), 1, 0.0, 12.0, 0.0, 0.0, -90.0, 0.0, true, true, false, false, 2, true)
+	
+	DetachEntity(obj1, true, true)
+	DetachEntity(obj2, true, true)
+	DetachEntity(obj3, true, true)
+
+	PlaceObjectOnGroundProperly(obj1)
+	PlaceObjectOnGroundProperly(obj2)
+	PlaceObjectOnGroundProperly(obj3)
+	
+	local blip = AddBlipForEntity(obj2)
+	SetBlipAsFriendly(blip, true)
+	SetBlipSprite(blip, 238)
+	BeginTextCommandSetBlipName("STRING");
+	AddTextComponentString(tostring("SPIKES"))
+	EndTextCommandSetBlipName(blip)
+	
+end
+
+Citizen.CreateThread(function()
+  while true do
+    Citizen.Wait(100)
+    local ped = GetPlayerPed(-1)
+    local veh = GetVehiclePedIsIn(ped, false)
+    local vehCoord = GetEntityCoords(veh)
+    if IsPedInAnyVehicle(ped, false) then
+	  if DoesObjectOfTypeExistAtCoords(vehCoord["x"], vehCoord["y"], vehCoord["z"], 0.9, GetHashKey("P_ld_stinger_s"), true) then
+         TriggerEvent("spike:die", veh)
+         RemoveSpike()
+       end
+     end
+   end
 end)
 
-RegisterNetEvent('police:client:SyncSpikes')
+function RemoveSpike()
+   local ped = GetPlayerPed(-1)
+   local veh = GetVehiclePedIsIn(ped, false)
+   local vehCoord = GetEntityCoords(veh)
+   if DoesObjectOfTypeExistAtCoords(vehCoord["x"], vehCoord["y"], vehCoord["z"], 0.9, GetHashKey("P_ld_stinger_s"), true) then
+      spike = GetClosestObjectOfType(vehCoord["x"], vehCoord["y"], vehCoord["z"], 0.9, GetHashKey("P_ld_stinger_s"), false, false, false)
+      SetEntityAsMissionEntity(spike, true, true)
+	  DeleteObject(spike)
+	  RemoveBlip(blip)
+   end
+end
+
+function RemoveSpike2()
+    local ped = PlayerPedId()
+    local veh = GetVehiclePedIsIn(ped, false)
+    local pedCoord = GetEntityCoords(ped)
+    if DoesObjectOfTypeExistAtCoords(pedCoord["x"], pedCoord["y"], pedCoord["z"], 0.9, GetHashKey("P_ld_stinger_s"), true) then
+       spike = GetClosestObjectOfType(pedCoord["x"], pedCoord["y"], pedCoord["z"], 0.9, GetHashKey("P_ld_stinger_s"), false, false, false)
+       SetEntityAsMissionEntity(spike, true, true)
+       DeleteObject(spike)
+       RemoveBlip(blip)
+    end
+ end
+
+RegisterNetEvent("spike:die")
+AddEventHandler("spike:die", function(veh)
+	SetVehicleTyreBurst(veh, 0, false, 0.001)
+	SetVehicleTyreBurst(veh, 45, false, 0.001)
+	Citizen.Wait(40000)
+	SetVehicleTyreBurst(veh, 1, false, 0.001)
+	SetVehicleTyreBurst(veh, 47, false, 0.001)
+	--Citizen.Wait(40000)
+	-- SetVehicleTyreBurst(veh, 2, false, 0.001)
+	-- Citizen.Wait(40000)
+	-- SetVehicleTyreBurst(veh, 3, false, 0.001)
+	-- Citizen.Wait(40000)
+	-- SetVehicleTyreBurst(veh, 4, false, 0.001)
+	-- Citizen.Wait(40000)
+	-- SetVehicleTyreBurst(veh, 5, false, 0.001)
+end)
+
+function loadAnimDict(dict)
+	while(not HasAnimDictLoaded(dict)) do
+		RequestAnimDict(dict)
+		Citizen.Wait(1)
+	end
+end
+
+function doAnimation()
+	local ped 	  = GetPlayerPed(-1)
+	local coords  = GetEntityCoords(ped)
+
+	--FreezeEntityPosition(ped, true)
+	loadAnimDict("pickup_object")
+	TaskPlayAnim(ped, "pickup_object", "pickup_low", 1.0, 1, -1, 33, 0, 0, 0, 0)
+end
+
+--[[ RegisterNetEvent('police:client:SyncSpikes')
 AddEventHandler('police:client:SyncSpikes', function(table)
     SpawnedSpikes = table
 end)
@@ -374,4 +481,4 @@ Citizen.CreateThread(function()
         end
         Citizen.Wait(3)
     end
-end)
+end) ]]
