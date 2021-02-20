@@ -374,9 +374,51 @@ end)
 RegisterNetEvent('dispatch:emsDown')
 AddEventHandler('dispatch:emsDown', function()
     if currentJob == 'ambulance' then
+        local playerData = RLCore.Functions.GetPlayerData()
+        local callsignal = playerData.metadata["callsign"] ~= nil and playerData.metadata["callsign"] or "None"
+		local pos = GetEntityCoords(PlayerPedId(),  true)
+		TriggerServerEvent("dispatch:svNotify", {
+			dispatchCode = "10-14A",
+            firstStreet = GetStreetAndZone(),
+            callSign = callsignal .. ' | ' .. playerData['charinfo']['firstname']:sub(1,1) .. '. ' .. playerData['charinfo']['lastname'],
+			cid = RLCore.Functions.GetPlayerData()['cid'],
+			origin = {
+				x = pos.x,
+				y = pos.y,
+				z = pos.z
+			  }
+		})
+	end
+end)
+
+RegisterNetEvent('dispatch:officerDownB')
+AddEventHandler('dispatch:officerDownB', function()
+    if currentJob == 'police' then
+        local playerData = RLCore.Functions.GetPlayerData()
+        local callsignal = playerData.metadata["callsign"] ~= nil and playerData.metadata["callsign"] or "None"
 		local pos = GetEntityCoords(PlayerPedId(),  true)
 		TriggerServerEvent("dispatch:svNotify", {
 			dispatchCode = "10-13B",
+            firstStreet = GetStreetAndZone(),
+            callSign = callsignal .. ' | ' .. playerData['charinfo']['firstname']:sub(1,1) .. '. ' .. playerData['charinfo']['lastname'],
+			cid = playerData['cid'],
+			origin = {
+				x = pos.x,
+				y = pos.y,
+				z = pos.z
+			  }
+		})
+	end
+end)
+
+RegisterNetEvent('dispatch:emsDownB')
+AddEventHandler('dispatch:emsDownB', function()
+    if currentJob == 'ambulance' then
+        local playerData = RLCore.Functions.GetPlayerData()
+        local callsignal = playerData.metadata["callsign"] ~= nil and playerData.metadata["callsign"] or "None"
+		local pos = GetEntityCoords(PlayerPedId(),  true)
+		TriggerServerEvent("dispatch:svNotify", {
+			dispatchCode = "10-14B",
             firstStreet = GetStreetAndZone(),
             callSign = callsignal .. ' | ' .. playerData['charinfo']['firstname']:sub(1,1) .. '. ' .. playerData['charinfo']['lastname'],
 			cid = RLCore.Functions.GetPlayerData()['cid'],

@@ -45,6 +45,27 @@ rootMenuConfig =  {
         end
     },
     {
+        id = "policeDeadA",
+        displayName = "10-13B",
+        icon = "#police-dead",
+        functionName = "dispatch:officerDownB",
+        enableMenu = function()
+            local Data = RLCore.Functions.GetPlayerData()
+            return (Data.metadata["isdead"] or Data.metadata["inlaststand"]) and (Data.job.name == 'police' and Data.job.onduty)
+        end
+    },
+    {
+        id = "emsDeadA",
+        displayName = "10-14B",
+        icon = "#ems-dead",
+        functionName = "dispatch:emsDownB",
+        enableMenu = function()
+            local Data = RLCore.Functions.GetPlayerData()
+            return (Data.metadata["isdead"] or Data.metadata["inlaststand"]) and (Data.job.name == 'ambulance' and Data.job.onduty)
+        end
+    },
+    
+    {
         id = "general",
         displayName = "General",
         icon = "#globe-europe",
