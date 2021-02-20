@@ -127,8 +127,22 @@ AddEventHandler('prison:client:SetLockDown', function(isLockdown)
     end
 end)
 
+local alarm = false
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(1000)
+        if alarm then
+            alarm = false
+            Citizen.Wait(1200000)
+            TriggerServerEvent("pbalarm:stopalarmSV",-1)
+        end
+    end
+end)
+
 RegisterNetEvent('prison:client:SetGateHit')
 AddEventHandler('prison:client:SetGateHit', function(key, isHit)
+    TriggerServerEvent("prisonalarm:startalarmSV", -1)
+    alarm = true
     Gates[key].hit = isHit
 end)
 

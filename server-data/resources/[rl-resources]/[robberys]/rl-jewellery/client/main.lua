@@ -41,6 +41,18 @@ AddEventHandler('RLCore:Client:OnPlayerUnload', function()
     isLoggedIn = false
 end)
 
+local alarm = false
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(1000)
+        if alarm then
+            alarm = false
+            Citizen.Wait(600000)
+            TriggerServerEvent("jewelalarm:stopalarmSV", -1)
+        end
+    end
+end)
+
 Citizen.CreateThread(function()
     while true do
         local ped = GetPlayerPed(-1)
@@ -60,10 +72,13 @@ Citizen.CreateThread(function()
                             if IsControlJustPressed(0, Keys["E"]) then
                                 if isInTimeout == false then
                                 TriggerServerEvent('rl-jewellery:server:startglobaltimeout')
+
                                 RLCore.Functions.TriggerCallback('rl-jewellery:server:getCops', function(cops)
                                     if cops >= Config.RequiredCops then
                                         if validWeapon() then
                                             smashVitrine(case)
+                                            TriggerServerEvent("jewelalarm:startalarmSV", -1)
+                                            alarm = true
                                         else
                                             RLCore.Functions.Notify('Your weapon doesn\'t seem strong enough ..', 'error')
                                         end

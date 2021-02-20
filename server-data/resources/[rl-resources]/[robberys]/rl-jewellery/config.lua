@@ -13,7 +13,7 @@ Config = Config or {}
 
 Config.Timeout = 120 * (60 * 1000)
 
-Config.RequiredCops = 4
+Config.RequiredCops = 0
 Config.DiscordWebhook = 'https://discord.com/api/webhooks/774093302743564361/MJdhJuEnAlP3O6keU0oRfwvNfX0aabYWTQnzYbpniQbU-m7Uomi-AzCSBNh0smR1YgVY'
 
 Config.JewelleryLocation = {
@@ -26,109 +26,109 @@ Config.JewelleryLocation = {
 
 Config.WhitelistedWeapons = {
     [GetHashKey("weapon_snspistol")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 15000
     },
     [GetHashKey("weapon_vintagepistol")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 15000
     },
     [GetHashKey("weapon_pistol")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 15000
     },
     [GetHashKey("weapon_pistol_mk2")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 15000
     },
     [GetHashKey("weapon_combatpistol")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 15000
     },
     [GetHashKey("weapon_appistol")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 15000
     },
     [GetHashKey("weapon_pistol50")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 15000
     },
     [GetHashKey("weapon_heavypistol")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 15000
     },
     [GetHashKey("weapon_marksmanpistol")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 15000
     },
     [GetHashKey("weapon_revolver")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 15000
     },
     [GetHashKey("weapon_revolver_mk2")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 15000
     },
     [GetHashKey("weapon_doubleaction")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 15000
     },
     [GetHashKey("weapon_compactrifle")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
     [GetHashKey("weapon_assaultrifle")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
     [GetHashKey("weapon_assaultrifle_mk2")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
     [GetHashKey("weapon_gusenberg")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
     [GetHashKey("weapon_carbinerifle")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
     [GetHashKey("weapon_carbinerifle_mk2")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
     [GetHashKey("weapon_advancedrifle")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
     [GetHashKey("weapon_bullpuprifle")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 8000
     },
     [GetHashKey("weapon_pumpshotgun")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 8000
     },
     [GetHashKey("weapon_sawnoffshotgun")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 8000
     },
     [GetHashKey("weapon_heavyshotgun")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 8000
     },
     [GetHashKey("weapon_dbshotgun")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 8000
     },
     [GetHashKey("weapon_bullpupshotgun")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 8000
     },
     [GetHashKey("weapon_autoshotgun")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 8000
     },
     [GetHashKey("weapon_assaultshotgun")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 8000
     },
     [GetHashKey("weapon_machinepistol")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
     [GetHashKey("weapon_smg")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
     [GetHashKey("weapon_smg_mk2")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
     [GetHashKey("weapon_minismg")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
     [GetHashKey("weapon_assaultsmg")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
     [GetHashKey("weapon_mg")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
     [GetHashKey("weapon_combatmg")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
     [GetHashKey("weapon_microsmg")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 10000
     },
 }
 

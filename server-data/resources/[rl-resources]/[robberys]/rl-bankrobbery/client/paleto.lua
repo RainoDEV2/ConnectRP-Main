@@ -1,6 +1,18 @@
 local requiredItemsShowed = false
 local requiredItemsShowed2 = false
 
+local alarm = false
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(1000)
+        if alarm then
+            alarm = false
+            Citizen.Wait(600000)
+            TriggerServerEvent("prisonalarm:stopalarmSV",-1)
+        end
+    end
+end)
+
 Citizen.CreateThread(function()
     Citizen.Wait(2000)
     local requiredItems = {
@@ -131,6 +143,8 @@ AddEventHandler('rl-bankrobbery:UseBankcardA', function()
                                 if Config.BigBanks["paleto"]["alarm"] then
                                     TriggerServerEvent("rl-bankrobbery:server:callCops", "paleto", 0)
                                     TriggerEvent('dispatch:paletoRobbery')
+                                    TriggerServerEvent("pbalarm:startalarmSV", -1)
+                                    alarm = true
                                     copsCalled = true
                                 end
                             end
