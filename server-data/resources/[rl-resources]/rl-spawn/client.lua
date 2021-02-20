@@ -54,10 +54,6 @@ RegisterNUICallback('spawnplayer', function(data)
     local PlayerData = RLCore.Functions.GetPlayerData()
     local insideMeta = PlayerData.metadata["inside"]
 
-    print(type)
-
-    TriggerEvent("scoreboard:AddPlayer")
-
     if type == "current" then
         TriggerEvent("debug", 'Spawn: Last Location', 'success')
 

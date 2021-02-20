@@ -325,6 +325,11 @@ end)
 RegisterNetEvent('tc-armour:update')
 AddEventHandler('tc-armour:update', function(playerId)
     local xPlayer = RLCore.Functions.GetPlayer(playerId)
+    while not xPlayer do
+        xPlayer = RLCore.Functions.GetPlayer(src)
+        Wait(0)
+	end
+	
     RLCore.Functions.ExecuteSql(false, "SELECT `armour` FROM `players` WHERE `citizenid` = '"..xPlayer.PlayerData.citizenid.."'", function(result)
         if (data ~= nil) then
             TriggerClientEvent('drp-framework:setArmour', playerId, data)
@@ -336,6 +341,11 @@ RegisterServerEvent('drp-framework:loadArmour')
 AddEventHandler('drp-framework:loadArmour', function()
 	local src = source
     local xPlayer = RLCore.Functions.GetPlayer(src)
+    while not xPlayer do
+        xPlayer = RLCore.Functions.GetPlayer(src)
+        Wait(0)
+	end
+	
     RLCore.Functions.ExecuteSql(false, "SELECT `armour` FROM `players` WHERE `citizenid` = '"..xPlayer.PlayerData.citizenid.."'", function(result)
         if (data ~= nil) then 
             TriggerClientEvent('drp-framework:setArmour', src, data)
