@@ -37,7 +37,7 @@ AddEventHandler('RLCore:Server:OnPlayerLoaded', function()
 
     -- print("Added (" .. GetPlayerName(src) .. ") from to players")
     TriggerClientEvent('debug', -1, 'RLCore: ' .. GetPlayerName(source) .. ' (' .. source .. ') Loaded!', 'normal')
-    TriggerClientEvent("scoreboard:AddPlayer", src, {name = GetPlayerName(src), src = src, steamid = GetIdentifier(id, "steam"), discord = GetIdentifier(id, "discord")})
+    TriggerClientEvent("scoreboard:AddPlayer", src, {name = GetPlayerName(src), src = src, steamid = GetIdentifier(src, "steam"), discord = GetIdentifier(src, "discord")})
 end)
 
 AddEventHandler('playerDropped', function(reason)
@@ -45,7 +45,7 @@ AddEventHandler('playerDropped', function(reason)
     TriggerClientEvent('debug', -1, 'RLCore: ' .. GetPlayerName(src) .. ' (' .. src .. ') Dropped! (' .. reason .. ')', 'normal')
     
     -- print("Added (" .. GetPlayerName(src) .. ") from to recent disconnects")
-    TriggerClientEvent("scoreboard:RemovePlayer", src,  {name = GetPlayerName(src), src = src, steamid = GetIdentifier(id, "steam"), discord = GetIdentifier(id, "discord")})
+    TriggerClientEvent("scoreboard:RemovePlayer", src,  {name = GetPlayerName(src), src = src, steamid = GetIdentifier(src, "steam"), discord = GetIdentifier(src, "discord")})
 end)
 
 AddEventHandler("onResourceStart", function(resourceName) -- Add data when resource restarts
