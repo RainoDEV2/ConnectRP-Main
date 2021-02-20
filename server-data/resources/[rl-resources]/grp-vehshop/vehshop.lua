@@ -469,6 +469,7 @@ local vehshopOwner = {
 				{name = "Bodhi", costs = 5000, description = {}, model = "bodhi2"},	
 				{name = "Bifta", costs = 15000, description = {}, model = "bifta"},
 				{name = "Blazer", costs = 7000, description = {}, model = "blazer"},
+				{name = "Blazer Street", costs = 9000, description = {}, model = "blazer4"},
 				{name = "Brawler", costs = 40000, description = {}, model = "brawler"},
 				{name = "Desert Raid", costs =55000, description = {}, model = "trophytruck2"},
 				{name = "Dubsta 6x6", costs = 95000, description = {}, model = "dubsta3"},
