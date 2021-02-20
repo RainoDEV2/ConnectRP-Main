@@ -41,20 +41,3 @@ RegisterServerEvent('carhud:ejection:server')
 AddEventHandler('carhud:ejection:server', function(plyID, veloc)
     TriggerClientEvent("carhud:ejection:client", plyID, veloc)
 end)
-
-Citizen.CreateThread(function()
-    while true do
-        local playersInfo = {}
-        for k, v in pairs(GetPlayers()) do
-            if v ~= nil then
-                local identifier = GetPlayerIdentifier(v)
-                local serverid = RLCore.Functions.GetSource(identifier)
-                table.insert(playersInfo, serverid)
-            end
-        end
-
-        print('^2[DiscordRich]^7 Updated server players. (' .. #playersInfo .. ')')
-        TriggerClientEvent('rl-core:client:updatePlayers', -1, playersInfo)
-        Wait(35000)
-    end
-end)
