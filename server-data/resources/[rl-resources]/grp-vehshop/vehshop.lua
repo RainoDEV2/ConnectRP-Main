@@ -419,7 +419,6 @@ local vehshopOwner = {
 				{name = "Manchez Scout", costs = 10000 , description = {}, model = "manchez2"},
 				{name = "SlamTruck", costs = 36000 , description = {}, model = "slamtruck"},
 				{name = "Stryder", costs = 25000 , description = {}, model = "stryder"},
-				{name = "Toreador", costs = 200000, description = {}, model = "toreador"},
 				{name = "Veto Classic", costs = 10000 , description = {}, model = "veto"},
 				{name = "Veto Modern", costs = 30000 , description = {}, model = "veto2"},
 				{name = "Verus", costs = 12000 , description = {}, model = "verus"},
