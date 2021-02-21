@@ -22,6 +22,7 @@ local isNotInCall, isDialing, isReceivingCall, isCallInProgress = 0, 1, 2, 3
 local callStatus = isNotInCall
 local lstTweets = {}
 local trackedVehs = {}
+local CAMERA_STATE = nil
 
 RLCore = nil
 
@@ -279,7 +280,8 @@ RegisterNUICallback('phone:selfie', function()
     CreateMobilePhone(4)
     CellCamActivate(true, true)
     CellFrontCamActivate(true)
-    
+    Wait(850)
+    CAMERA_STATE = "FINISHED_CREATING"
   else
     closeGui()
     CellCamActivate(false, false)
@@ -1655,7 +1657,6 @@ local mousenumbers = {
 
 -- Disable controls while GUI open
 local CLIENT_ID = '3886c6731298c37'
-local TAKING_IMG = false
 local frontCam = true -- Selfie cam by default
 
 Citizen.CreateThread(function()
@@ -1689,10 +1690,11 @@ Citizen.CreateThread(function()
           selfieMode = false
           DestroyMobilePhone()
           CellCamActivate(false, false)
-          TAKING_IMG = false
+          CAMERA_STATE = nil
         end
 
-        if not TAKING_IMG then
+        print(CAMERA_STATE)
+        if CAMERA_STATE == "FINISHED_CREATING" then
           local buttonsMessage = {
             {name = "Take Picture", button = 191},
             {name = "Change Camera", button = 27},
@@ -1764,22 +1766,21 @@ Citizen.CreateThread(function()
 end)
 
 function TakePicture()
-  if not TAKING_IMG then
-      TAKING_IMG = true
-      
-      BeginTextCommandBusyspinnerOn("STRING")
-      AddTextComponentSubstringPlayerName("Taking Picture")
-      EndTextCommandBusyspinnerOn(3)
-      Wait(0)
-
-      exports['screenshot-basic']:requestScreenshotUpload('https://discord.com/api/webhooks/809638607320907776/FlI4GK5w92L8Y8p8TNCmM6hGujUbb1voke9M0jBT66RuULMGZdLl5WUU7Q9KHPTvtGId', 'files', function(data)
-        local details = KeyboardInput("Enter Details", "", 200)
-        if details ~= nil then
-          TriggerServerEvent("phone:server:PostPicture", details, CalculateTimeToDisplay(), json.decode(data).attachments[1].url)
-        end
-        BusyspinnerOff()
-        TAKING_IMG = false
-      end)
+  if CAMERA_STATE == "FINISHED_CREATING" then
+    CAMERA_STATE = "TAKING_IMG"
+    
+    BeginTextCommandBusyspinnerOn("STRING")
+    AddTextComponentSubstringPlayerName("Taking Picture")
+    EndTextCommandBusyspinnerOn(3)
+    Wait(0)
+    exports['screenshot-basic']:requestScreenshotUpload('https://discord.com/api/webhooks/809638607320907776/FlI4GK5w92L8Y8p8TNCmM6hGujUbb1voke9M0jBT66RuULMGZdLl5WUU7Q9KHPTvtGId', 'files', function(data)
+      local details = KeyboardInput("Enter Details", "", 200)
+      if details ~= nil then
+        TriggerServerEvent("phone:server:PostPicture", details, CalculateTimeToDisplay(), json.decode(data).attachments[1].url)
+      end
+      BusyspinnerOff()
+      CAMERA_STATE = "FINISHED_CREATING"
+    end)
   end
 end
 
