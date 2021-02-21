@@ -68,11 +68,6 @@ AddEventHandler("RLCore:Client:OnPlayerLoaded", function()
   TriggerServerEvent('getContacts')
 end)
 
-RegisterCommand("logout", function(source, args, raw)
-  TriggerServerEvent("rl-houses:server:LogoutLocation")
-end)
-
-
 RegisterNetEvent('RLCore:Client:OnJobUpdate')
 AddEventHandler('RLCore:Client:OnJobUpdate', function(JobInfo)
     PlayerJob = JobInfo
