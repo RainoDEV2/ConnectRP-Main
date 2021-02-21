@@ -344,3 +344,11 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
+
+Citizen.CreateThread(function()
+    while true do
+		Citizen.Wait(2500)
+        ClearAreaOfPeds(969.40423, -124.5897, 74.031448, 50.0, 1)
+    end
+end)
