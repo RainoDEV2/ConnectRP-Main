@@ -22,6 +22,10 @@ files {
 	'polstang/carcols.meta',
 	'polstang/handling.meta',
 	'polstang/carvariations.meta',
+    'policeb/vehicles.meta',
+    'policeb/carvariations.meta',
+    'policeb/carcols.meta',
+    'policeb/handling.meta',
 }
 
 data_file 'HANDLING_FILE' 'handling.meta'
@@ -45,5 +49,9 @@ data_file 'HANDLING_FILE' 'polstang/handling.meta'
 data_file 'VEHICLE_METADATA_FILE' 'polstang/vehicles.meta'
 data_file 'CARCOLS_FILE' 'polstang/carcols.meta'
 data_file 'VEHICLE_VARIATION_FILE' 'polstang/carvariations.meta'
+data_file 'HANDLING_FILE' 'policeb/handling.meta'
+data_file 'VEHICLE_METADATA_FILE' 'policeb/vehicles.meta'
+data_file 'CARCOLS_FILE' 'policeb/carcols.meta'
+data_file 'VEHICLE_VARIATION_FILE' 'policeb/carvariations.meta'
 
 client_script 'vehicle_names.lua'

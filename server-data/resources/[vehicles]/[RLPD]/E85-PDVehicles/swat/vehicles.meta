@@ -109,9 +109,6 @@
       <requiredExtras>EXTRA_1</requiredExtras>
       <rewards>
         <Item>REWARD_ARMOUR</Item>
-        <Item>REWARD_WEAPON_CARBINERIFLE</Item>
-        <Item>REWARD_AMMO_CARBINERIFLE</Item>
-        <Item>REWARD_STAT_WEAPON</Item>
       </rewards>
       <cinematicPartCamera>
         <Item>WHEEL_WIDE_REAR_RIGHT_CAMERA</Item>
