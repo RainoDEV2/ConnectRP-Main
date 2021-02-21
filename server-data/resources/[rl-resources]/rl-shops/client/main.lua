@@ -6,6 +6,10 @@ Citizen.CreateThread(function()
         if RLCore == nil then
             TriggerEvent("RLCore:GetObject", function(obj) RLCore = obj end)    
             Citizen.Wait(200)
+
+            if RLCore ~= nil then
+                return
+            end
         end
     end
 end)
@@ -32,47 +36,54 @@ function DisplayHelpText(str)
 end
 
 Citizen.CreateThread(function()
+    local waitDelay = 500
+    local currLocation = nil
     while true do
-        local InRange = false
-        local PlayerPed = GetPlayerPed(-1)
-        local PlayerPos = GetEntityCoords(PlayerPed)
+        local ped = PlayerPedId()
+        local pedCoords = GetEntityCoords(ped, false)
 
-        for shop, _ in pairs(Config.Locations) do
-            local position = Config.Locations[shop]["coords"]
-            for _, loc in pairs(position) do
-                local dist = GetDistanceBetweenCoords(PlayerPos, loc["x"], loc["y"], loc["z"])
+        for shopIndex, shopData in pairs(Config.Locations) do
+            local position = Config.Locations[shopIndex]["coords"]
+            for index, shopPosData in pairs(position) do
+                local dist = GetDistanceBetweenCoords(pedCoords, shopPosData["x"], shopPosData["y"], shopPosData["z"], false)
+                
                 if dist < 10 then
-                    InRange = true
-					DrawMarker(27, loc["x"], loc["y"], loc["z"] -0.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.001, 1.0001, 0.5001, 0, 25, 165, 100, false, true, 2, false , false, false, false)
+                    waitDelay = 5
+                    currLocation = vector3(shopPosData["x"], shopPosData["y"], shopPosData["z"])
+					DrawMarker(27, shopPosData["x"], shopPosData["y"], shopPosData["z"] -0.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.001, 1.0001, 0.5001, 0, 25, 165, 100, false, true, 2, false , false, false, false)
                     if dist < 1 then
 						DisplayHelpText("Press ~INPUT_CONTEXT~ to open the ~g~shop.")
                         if IsControlJustPressed(0, Config.Keys["E"]) then 
                             local ShopItems = {}
-                            ShopItems.label = Config.Locations[shop]["label"]
-                            ShopItems.items = Config.Locations[shop]["products"]
+                            ShopItems.label = Config.Locations[shopIndex]["label"]
+                            ShopItems.items = Config.Locations[shopIndex]["products"]
                             ShopItems.slots = 30
-                            if Config.Locations[shop]["type"] == 'dede' then
-                                TriggerServerEvent("inventory:server:OpenInventory", "dede", "Itemshop_"..shop, ShopItems)
-                            elseif Config.Locations[shop]["type"] == 'weapon' then
+                            if Config.Locations[shopIndex]["type"] == 'dede' then
+                                TriggerServerEvent("inventory:server:OpenInventory", "dede", "Itemshop_" .. shopIndex, ShopItems)
+                            elseif Config.Locations[shopIndex]["type"] == 'weapon' then
                                 RLCore.Functions.TriggerCallback('RLCore:server:checklicence', function(result, type)
                                     if result == 'has licence' then
-                                        TriggerServerEvent("inventory:server:OpenInventory", "dede", "Itemshop_"..shop, ShopItems)
+                                        TriggerServerEvent("inventory:server:OpenInventory", "dede", "Itemshop_" .. shopIndex, ShopItems)
                                     end
                                 end, 'weapon1')
                             else
-                                TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_"..shop, ShopItems)
+                                TriggerServerEvent("inventory:server:OpenInventory", "shop", "Itemshop_" .. shopIndex, ShopItems)
                             end
-                            TriggerEvent("debug", 'Shops: ' .. Config.Locations[shop]["label"], 'success')
+                            TriggerEvent("debug", 'Shops: ' .. Config.Locations[shopIndex]["label"], 'success')
                         end
-                    end  
+                    end
                 end 
             end
         end
 
-        if not InRange then
-            Citizen.Wait(5000)
-        end 
-        Citizen.Wait(5) 
+        if currLocation ~= nil then
+            if GetDistanceBetweenCoords(pedCoords, currLocation, false) > 10 then
+                waitDelay = 5000
+                currLocation = nil
+            end
+        end
+
+        Wait(waitDelay) 
     end
 end)
 
