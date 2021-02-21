@@ -822,7 +822,7 @@ AddEventHandler('phone:EndCall', function(mySourceID, stupidcallnumberidk, somet
     local src = source
     TriggerClientEvent('phone:removefromToko', source, stupidcallnumberidk)
 
-    if mySourceID ~= 0 or mySourceID ~= nil then
+    if mySourceID and mySourceID ~= 0 or mySourceID ~= nil then
         TriggerClientEvent('phone:removefromToko', mySourceID, stupidcallnumberidk)
         TriggerClientEvent('phone:otherClientEndCall', mySourceID)
     end
