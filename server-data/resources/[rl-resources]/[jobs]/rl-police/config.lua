@@ -185,6 +185,7 @@ Config.Vehicles = {
     ["18chgrleo"] = "2018 Charger",
     ["POLCHAR"] = "2014 Charger",
     ["POL10"] = "SWAT Suburban",
+    ["sahpinsurgent"] = "SWAT Insurgent",
     ["pbus2"] = "Prison Bus",
     ["policet"] = "Armored Van",
     ["polschafter3"] = "UC Schafter",
