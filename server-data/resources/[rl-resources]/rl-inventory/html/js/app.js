@@ -754,8 +754,7 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
             InventoryError($fromInv, $fromSlot);
             return;
         } else if ($toAmount == 0) {
-            InventoryError($fromInv, $fromSlot);
-            return;
+            $toAmount=fromData.amount
         }
         if((toData != undefined || toData != null) && toData.name == fromData.name && !fromData.unique) {
             var newData = [];
