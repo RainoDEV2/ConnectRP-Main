@@ -333,7 +333,7 @@ newSubMenus = {
     ['general:givenum'] = {
         title = "Provide Contact Details",
         icon = "#givenum",
-        functionName = "rl-phone:client:GiveContactDetails"
+        functionName = "phone:client:GiveContactDetails"
     },
 
     ['general:getintrunk'] = {
