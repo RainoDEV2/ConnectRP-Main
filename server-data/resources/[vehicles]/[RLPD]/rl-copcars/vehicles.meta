@@ -1250,7 +1250,7 @@
   <Item> <!--POL8--><!--1200rt-->
       <modelName>POL8</modelName>
       <txdName>POL8</txdName>
-      <handlingId>POLICEB</handlingId>
+      <handlingId>POLICEB2</handlingId>
       <gameName>R 1200RT</gameName>
       <vehicleMakeName>BMW</vehicleMakeName>
       <expressionDictName>null</expressionDictName>
