@@ -758,7 +758,6 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
         } 
         
         if ($toAmount == 0 && $fromInv.attr("data-inventory").split("-")[0] == "dedeshop") {
-            console.log("AMOUNT IS ZERO IN SHOP!");
             InventoryError($fromInv, $fromSlot);
             return;
         }
