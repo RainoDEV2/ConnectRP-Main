@@ -20,6 +20,8 @@ local vehicles = {}
 local isDead = false
 local isNotInCall, isDialing, isReceivingCall, isCallInProgress = 0, 1, 2, 3
 local callStatus = isNotInCall
+local lstTweets = {}
+local trackedVehs = {}
 
 RLCore = nil
 
@@ -29,21 +31,28 @@ Citizen.CreateThread(function()
         if RLCore == nil then
             TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
             Citizen.Wait(200)
+
+            if RLCore ~= nil then
+              isLoggedIn = true
+              PlayerJob = RLCore.Functions.GetPlayerData().job
+              return
+            end
         end
-        while RLCore.Functions.GetPlayerData() == nil do
-          Wait(0)
-        end
-      
-        while RLCore.Functions.GetPlayerData().job == nil do
-          Wait(0)
-        end
-      
-        isLoggedIn = true
-        PlayerJob = RLCore.Functions.GetPlayerData().job
     end
+end)
+
+AddEventHandler("onClientResourceStart", function(resourceName)
+  if GetCurrentResourceName() == resourceName then
     TriggerServerEvent('Server:GetHandle')
     TriggerServerEvent('getYP')
-    Citizen.Wait(200)
+    TriggerServerEvent('getContacts')
+  end
+end)
+
+AddEventHandler("RLCore:Client:OnPlayerLoaded", function()
+  TriggerServerEvent('Server:GetHandle')
+  TriggerServerEvent('getYP')
+  TriggerServerEvent('getContacts')
 end)
 
 
@@ -58,7 +67,7 @@ RegisterNUICallback('btnNotifyToggle', function(data, cb)
       RLCore.Functions.Notify("Popups Enabled", 'success')
       --TriggerEvent("DoLongHudText","Popups Enabled")
     else
-      RLCore.Functions.Notify("Popups Disabled", 'success')
+      RLCore.Functions.Notify("Popups Disabled", 'error')
       --TriggerEvent("DoLongHudText","Popups Disabled")
     end
 end)
@@ -245,6 +254,7 @@ function CellFrontCamActivate(activate)
 end
 
 local selfieMode = false
+
 RegisterNUICallback('phone:selfie', function()
   selfieMode = not selfieMode
   if selfieMode then
@@ -253,6 +263,7 @@ RegisterNUICallback('phone:selfie', function()
     CreateMobilePhone(4)
     CellCamActivate(true, true)
     CellFrontCamActivate(true)
+    
   else
     closeGui()
     CellCamActivate(false, false)
@@ -320,41 +331,19 @@ RegisterNUICallback('callNumber', function(data)
     closeGui()
     local number = data.callnum
     local callTo = getContactName(number)
-    TriggerServerEvent("phone:callContact",number,true)
+    TriggerServerEvent("phone:callContact",number, false)
     recentcalls[#recentcalls + 1] = { ["type"] = 2, ["number"] = number, ["name"] = callTo }
 end)
 
 RegisterNUICallback('manageGroup', function(data)
---   exports['mythic_notify']:SendAlert('inform', 'Coming soon.', 4000)
-
-    TriggerServerEvent('duty:onoff') --setduty in the phone
-    closeGui()
-
-    --[[ local groupid = data.GroupID
-    
-    local rank = GroupRank(groupid)
-    if rank < 2 then
-      SendNUIMessage({
-        openSection = "error",
-        textmessage = "Permission Error",
-      })   
-      return
-    end
-
-    SendNUIMessage({
-        openSection = "error",
-        textmessage = "Loading, please wait.",
-    })   
-
-    TriggerServerEvent("group:pullinformation",groupid,rank) ]]
-
+  TriggerServerEvent('RLCore:ToggleDuty') --setduty in the phone
 end)
 
 RegisterNetEvent("phone:error")
 AddEventHandler("phone:error", function()
       SendNUIMessage({
         openSection = "error",
-        textmessage = "<b>Network Error</b> <br><br> Please contact support if this error persists, thank you for using TPRP Phone Services.",
+        textmessage = "<b>Network Error</b> <br><br> Please contact support if this error persists, thank you for using TCRP Phone Services.",
       })   
 end)
 
@@ -385,11 +374,27 @@ end)
 
 
 local recentcalls = {}
+local calls = {}
+
+RegisterNetEvent("phone:client:sendRecentCalls")
+AddEventHandler("phone:client:sendRecentCalls", function(sentCalls)
+  recentcalls = sentCalls
+  -- print("RECIEVED CALLS", #sentCalls)
+
+  for i, v in pairs(recentcalls) do
+    table.insert(calls, { ["type"] = v.type, ["number"] = v.phoneNumber, ["name"] = v.name, ["date"] = v.date })
+  end
+end)
 
 RegisterNUICallback('getCallHistory', function()
+  TriggerServerEvent('phone:server:getRecentCalls')
+  Citizen.Wait(500)
+
+  -- print(json.encode(recentcalls), json.encode(calls))
+
   SendNUIMessage({
     openSection = "callHistory",
-    callHistory = recentcalls
+    callHistory = calls
   })
 end)
 
@@ -397,33 +402,13 @@ end)
 
 
 RegisterNUICallback('btnTaskGroups', function()
-    -- exports['mythic_notify']:SendAlert('inform', 'Coming soon.', 2500)
-    local jobgrade = RLCore.PlayerData.job.grade.level
-    --local rankConverted = ESX.PlayerData.job.grade_label
-
-    print(jobgrade) 
-
-    local groupObject = {}
-
-   -- local rankConverted = "No Association"
-
-    --[[if jobgrade == 1 then
-      rankConverted = "Associate"
-    elseif jobgrade == 2 then
-      rankConverted = "Management"
-    elseif jobgrade == 3 then
-      rankConverted = "Partner"
-    elseif jobgrade == 4 then
-      rankConverted = "Part-Time Manager"
-    elseif jobgrade == 5 then
-      rankConverted = "CEO"
-    end]]
-
-    table.insert(groupObject, {
-        --namesent = ESX.PlayerData.job.label,
-        --ranksent = rankConverted,
-        idsent = 1
-    })
+    local groupObject = {
+      {
+        namesent = PlayerJob.label,
+        ranksent = PlayerJob.grade.name,
+        idsent = PlayerId()
+      }
+    }
 
     SendNUIMessage({
       openSection = "groups",
@@ -597,7 +582,7 @@ RegisterNUICallback('vehtrack', function(data)
 end)
 
 RegisterNUICallback('vehiclePay', function(data)
-  TriggerServerEvent('tp:phonePayment', data.vehiclePlate)
+  TriggerServerEvent('phone:financePayment', data.vehiclePlate)
 end)
 
 function findVehFromPlateAndLocate(plate)
@@ -613,10 +598,27 @@ function findVehFromPlateAndLocate(plate)
                 local vehCoords = GetEntityCoords(vehicle)
 
                 if phoneNotifications then
-                  exports['mythic_notify']:DoLongHudText('inform', 'Your vehicle has been marked on your GPS.')
+                  RLCore.Functions.Notify("Your vehicle has been marked on your GPS.", "success")
+                  -- exports['mythic_notify']:DoLongHudText('inform', 'Your vehicle has been marked on your GPS.')
                   PlaySound(-1, "Event_Start_Text", "GTAO_FM_Events_Soundset", 0, 0, 1)
                 end
                 SetNewWaypoint(vehCoords.x, vehCoords.y)
+                trackedVehs[NetworkGetNetworkIdFromEntity(vehicle)] = AddBlipForEntity(vehicle)
+                SetBlipSprite(trackedVehs[NetworkGetNetworkIdFromEntity(vehicle)], 227)
+                SetBlipColour(trackedVehs[NetworkGetNetworkIdFromEntity(vehicle)], 3)
+                SetBlipAsShortRange(trackedVehs[NetworkGetNetworkIdFromEntity(vehicle)], false)
+                BeginTextCommandSetBlipName("STRING")
+                AddTextComponentString("Personal Vehicle - " .. GetVehicleNumberPlateText(vehicle))
+                EndTextCommandSetBlipName(trackedVehs[NetworkGetNetworkIdFromEntity(vehicle)])
+
+                while GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId(), false), vehCoords, false) > 10.0 do
+                  Wait(5)
+                end
+                RemoveBlip(trackedVehs[NetworkGetNetworkIdFromEntity(vehicle)])
+                trackedVehs[NetworkGetNetworkIdFromEntity(vehicle)] = nil
+                PlaySound(-1, "Event_Start_Text", "GTAO_FM_Events_Soundset", 0, 0, 1)
+                RLCore.Functions.Notify("Your vehicle has been removed from your GPS, as you are in a close vicinity to it!", "error")
+
             end
         end
     end
@@ -754,50 +756,50 @@ end
 local currentVehicles = {}
 
 RegisterNetEvent("phone:Garage")
-AddEventHandler("phone:Garage", function(vehs)
-  vehicles = vehs
+AddEventHandler("phone:Garage", function(ownedVehicles)
+  vehicles = ownedVehicles
   local showCarPayments = false
+  print("VEHS", json.encode(ownedVehicles))
 
   local parsedVehicleData = {}
-  for ind, value in pairs(vehs) do
-
-    local jsonraw = value.vehicle
-    local jsonparse = json.decode(jsonraw)
-    local engine = jsonparse["engineHealth"]
-    local body = jsonparse["bodyHealth"]
-    local model = jsonparse["model"]
-    local fuel = jsonparse["fuelLevel"]
-    local financetimer = value.financetimer
+  for i, v in pairs(ownedVehicles) do
+    local vehProps = json.decode(v.props)
+    local engine = vehProps.engineHealth
+    local body = vehProps.bodyHealth
+    local model = vehProps.model
+    local fuel = vehProps.fuelLevel
+    local financetimer = v.financetimer
 
     if engine ~= nil then
       local somethingfinal = engine / 10 
-      finalengine = Math.Round(somethingfinal, 0)
+      finalengine = math.ceil(somethingfinal)
     end
 
     if body ~= nil then
       local somethingfinal = body / 10
-      finalbody = Math.Round(somethingfinal, 0)
+      finalbody = math.ceil(somethingfinal)
     end
 
     if model ~= nil then
-      local somethingfinal = GetDisplayNameFromVehicleModel(model)
+      local somethingfinal = GetLabelText(GetDisplayNameFromVehicleModel(model))
       vehName = somethingfinal
     end
 
     if financetimer ~= nil then
       local somethingfinal = (financetimer / 1000) 
-      financetimer = Math.Round(somethingfinal, 0)
+      financetimer = math.ceil(somethingfinal)
     end
-
 
     enginePercent = finalengine
     bodyPercent = finalbody
     vehName =  vehName 
-    vehPlate = value.plate
-    currentGarage = "Garage " .. value.garage
-    coordlocation = value.coords
+    vehPlate = v.plate
+    v.garage = v.garage:gsub("garage", "")
+    v.garage = string.upper(v.garage)
+    currentGarage = "Garage " .. v.garage
+    
     allowspawnattempt = 0
-    state = value.state
+    state = v.state
     lastPayment = financetimer
 
     table.insert(parsedVehicleData, {
@@ -807,15 +809,22 @@ AddEventHandler("phone:Garage", function(vehs)
       state = state,
       enginePercent = enginePercent,
       bodyPercent = bodyPercent,
-      payments = value.finance,
-      lastPayment = value.financetimer,
-      amountDue = value.finance,
+      payments = v.finance,
+      lastPayment = v.financetimer,
+      amountDue = v.finance,
       canSpawn = allowspawnattempt
     })
   end
   
   SendNUIMessage({ openSection = "Garage", showCarPaymentsOwed = showCarPayments, vehicleData = parsedVehicleData})
 end)
+
+function editStringStart(txt, num, amount)
+  if string.len(txt) < num then
+      return "number exceeds string len"
+  end	 
+  return string.gsub(txt, string.sub(txt,num, amount), "")
+end
 
 local pickuppoints = {
   [1] =  { ['x'] = 923.94,['y'] = -3037.88,['z'] = 5.91,['h'] = 270.81, ['info'] = ' Shipping Container BMZU 822693' },
@@ -1428,7 +1437,7 @@ end)
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
-    if IsControlJustPressed(1, 288) then
+    if IsControlJustPressed(1, 244) then
       --RLCore.Functions.TriggerCallback('radio:server:GetItem', function(hasItem)
       --  if not hasItem then
           GotPhone()
@@ -1480,6 +1489,7 @@ function openGuiNow()
     TriggerEvent('animation:sms',true)
     lstContacts = {}
     TriggerServerEvent('getContacts')
+    TriggerServerEvent("Server:GetHandle")
   else
     closeGui()
   end
@@ -1533,7 +1543,7 @@ RegisterNUICallback('newPostSubmit', function(data, cb)
 end)
 
 RegisterNUICallback('deleteYP', function()
-  TriggerServerEvent('phone:RemovePhoneJob')
+  TriggerServerEvent('phone:deleteYP')
 end)
 
 RegisterNetEvent("yellowPages:retrieveLawyersOnline")
@@ -1577,7 +1587,7 @@ AddEventHandler('YPUpdatePhone', function()
     lstnotifications[#lstnotifications + 1] = {
       id = tonumber(i),
       name = jsonparse[tonumber(i)].name,
-      message = jsonparse[tonumber(i)].advert,
+      message = jsonparse[tonumber(i)].message,
       phoneNumber = jsonparse[tonumber(i)].phoneNumber
     }
   end
@@ -1628,6 +1638,10 @@ local mousenumbers = {
 
 
 -- Disable controls while GUI open
+local CLIENT_ID = '3886c6731298c37'
+local TAKING_IMG = false
+local frontCam = true -- Selfie cam by default
+
 Citizen.CreateThread(function()
   local focus = true
   
@@ -1659,6 +1673,27 @@ Citizen.CreateThread(function()
           selfieMode = false
           DestroyMobilePhone()
           CellCamActivate(false, false)
+          TAKING_IMG = false
+        end
+
+        if not TAKING_IMG then
+          local buttonsMessage = {
+            {name = "Take Picture", button = 191},
+            {name = "Change Camera", button = 27},
+            {name = "Close", button = 177}
+          }
+          local scaleForm = setupScaleform("instructional_buttons", buttonsMessage)
+          DrawScaleformMovieFullscreen(scaleForm, 255, 255, 255, 255, 0)
+          if IsControlJustPressed(0, 27) then -- SELFIE MODE
+            frontCam = not frontCam
+            CellFrontCamActivate(frontCam)
+          end
+
+          -- print("SHOW PIC CONTROLS UI")
+          if IsControlJustPressed(0, 191) then
+            -- print("TAKE PIC")
+            TakePicture()
+          end
         end
         HideHudComponentThisFrame(7)
         HideHudComponentThisFrame(8)
@@ -1712,6 +1747,93 @@ Citizen.CreateThread(function()
   end
 end)
 
+function TakePicture()
+  if not TAKING_IMG then
+      TAKING_IMG = true
+      
+      BeginTextCommandBusyspinnerOn("STRING")
+      AddTextComponentSubstringPlayerName("Taking Picture")
+      EndTextCommandBusyspinnerOn(3)
+      Wait(0)
+
+      exports['screenshot-basic']:requestScreenshotUpload('https://discord.com/api/webhooks/809638607320907776/FlI4GK5w92L8Y8p8TNCmM6hGujUbb1voke9M0jBT66RuULMGZdLl5WUU7Q9KHPTvtGId', 'files', function(data)
+        local details = KeyboardInput("Enter Details", "", 200)
+        if details ~= nil then
+          TriggerServerEvent("phone:server:PostPicture", details, CalculateTimeToDisplay(), json.decode(data).attachments[1].url)
+        end
+        BusyspinnerOff()
+        TAKING_IMG = false
+      end)
+  end
+end
+
+function KeyboardInput(TextEntry, ExampleText, MaxStringLength)
+
+	AddTextEntry('FMMC_KEY_TIP1', TextEntry)
+	DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP1", "", ExampleText, "", "", "", MaxStringLength)
+	blockinput = true
+
+	while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do
+		Citizen.Wait(0)
+	end
+
+	if UpdateOnscreenKeyboard() ~= 2 then
+		local result = GetOnscreenKeyboardResult()
+		Citizen.Wait(500)
+		blockinput = false
+		return result
+	else
+		Citizen.Wait(500)
+		blockinput = false
+		return nil
+	end
+end
+
+function ButtonMessage(text)
+  BeginTextCommandScaleformString("STRING")
+  AddTextComponentScaleform(text)
+  EndTextCommandScaleformString()
+end
+
+function Button(ControlButton)
+  N_0xe83a3e3557a56640(ControlButton)
+end
+
+function setupScaleform(scaleform, buttonsMessages)
+  local scaleform = RequestScaleformMovie(scaleform)
+  while not HasScaleformMovieLoaded(scaleform) do
+      Citizen.Wait(0)
+  end
+  PushScaleformMovieFunction(scaleform, "CLEAR_ALL")
+  PopScaleformMovieFunctionVoid()
+
+  PushScaleformMovieFunction(scaleform, "SET_CLEAR_SPACE")
+  PushScaleformMovieFunctionParameterInt(200)
+  PopScaleformMovieFunctionVoid()
+
+  local buttonCount = 0
+  for k, v in pairs(buttonsMessages) do
+    PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
+        PushScaleformMovieFunctionParameterInt(buttonCount)
+    Button(GetControlInstructionalButton(2, v.button, true))
+    ButtonMessage(v.name)
+    PopScaleformMovieFunctionVoid()
+    buttonCount = buttonCount + 1
+  end
+
+  PushScaleformMovieFunction(scaleform, "DRAW_INSTRUCTIONAL_BUTTONS")
+  PopScaleformMovieFunctionVoid()
+
+  PushScaleformMovieFunction(scaleform, "SET_BACKGROUND_COLOUR")
+  PushScaleformMovieFunctionParameterInt(0)
+  PushScaleformMovieFunctionParameterInt(0)
+  PushScaleformMovieFunctionParameterInt(0)
+  PushScaleformMovieFunctionParameterInt(70)
+  PopScaleformMovieFunctionVoid()
+
+  return scaleform
+end
+
 function ShowText(text)
   TriggerEvent("DoLongHudText",text)
 end
@@ -1743,7 +1865,6 @@ end)
 
 RegisterNetEvent('phone:clientGetMessagesBetweenParties')
 AddEventHandler('phone:clientGetMessagesBetweenParties', function(messages, displayName, clientNumber)
-  
   SendNUIMessage({openSection = "messageRead", messages = messages, displayName = displayName, clientNumber = clientNumber})
 end)
 
@@ -1773,8 +1894,10 @@ RegisterNUICallback('messageReply', function(data, cb)
 end)
 
 RegisterNUICallback('newMessageSubmit', function(data, cb)
+  -- print("SMS 3")
   if not isDead then
-    TriggerEvent('phone:sendSMS', tonumber(data.number), data.message)
+    -- print("SMS 3", data.number)
+    TriggerEvent('phone:sendSMS', data.number, data.message)
     cb('ok')
   else
     TriggerEvent("DoLongHudText","You can not do this while injured.",2)
@@ -1823,7 +1946,7 @@ RegisterNUICallback('newContact', function(data, cb)
 end)
 
 RegisterNUICallback('newContactSubmit', function(data, cb)
-  TriggerEvent('phone:addContact', data.name, tonumber(data.number))
+  TriggerEvent('phone:addContact', data.name, tostring(data.number))
   cb('ok')
 end)
 
@@ -1927,9 +2050,9 @@ AddEventHandler('phone:makecall', function(pnumber)
   if callStatus == isNotInCall and not isDead and hasPhone() then
     local dialingName = getContactName(pnumber)
     TriggerEvent('phone:setCallState', isDialing, dialingName)
-    TriggerEvent("animation:phonecallstart")
+    -- TriggerEvent("animation:phonecallstart")
     recentcalls[#recentcalls + 1] = { ["type"] = 2, ["number"] = pnumber, ["name"] = dialingName }
-    TriggerServerEvent('phone:callContact', pnumber, true)
+    TriggerServerEvent('phone:callContact', pnumber, false)
   else
     RLCore.Functions.Notify("It appears you are already in a call, injured or with out a phone, please type /hangup to reset your calls.")
 
@@ -1960,42 +2083,19 @@ function checkForPayPhone()
   return false
 end
 
-RegisterNetEvent('phone:makepayphonecall')
-AddEventHandler('phone:makepayphonecall', function(pnumber) 
-
-    if not checkForPayPhone() then
-      RLCore.Functions.Notify("You are not near a payphone.", 'error')
-      return
-    end
-
-    PhoneBooth = GetEntityCoords( PlayerPedId() )
-    AnonCall = true
-
-    local pnumber = tonumber(pnumber)
-    if callStatus == isNotInCall and not isDead then
-      TriggerEvent('phone:setCallState', isDialing)
-      TriggerEvent("animation:phonecallstart")
-      TriggerEvent("InteractSound_CL:PlayOnOne","payphonestart",0.5)
-      TriggerServerEvent('phone:callContact', pnumber, false)
-    else
-      RLCore.Functions.Notify("You are not near a payphoneIt appears you are already in a call, injured or with out a phone, please type /hangup to reset your calls.", 'error')
-    end
-
-end)
-
 
 
 
 --[[ The following happens for regular calls too ]]
 
 RegisterNUICallback('callContact', function(data, cb)
-  closeGui()
+  -- closeGui()
   AnonCall = false
-  Wait(1500)
   if callStatus == isNotInCall and not isDead and hasPhone() then
     TriggerEvent('phone:setCallState', isDialing, data.name == "" and data.number or data.name)
-    TriggerEvent("animation:phonecallstart")
-    TriggerServerEvent('phone:callContact', data.number, true)
+    -- TriggerEvent("animation:phonecallstart")
+    TriggerServerEvent('phone:callContact', data.number, false)
+    recentcalls[#recentcalls + 1] = { ["type"] = 1, ["number"] = data.number, ["name"] = getContactName(data.number) }
   else
     RLCore.Functions.Notify("It appears you are already in a call, injured or with out a phone, please type /hangup to reset your calls.", 'error')
   end
@@ -2079,6 +2179,9 @@ end)
 
 RegisterNetEvent('phone:initiateCall')
 AddEventHandler('phone:initiateCall', function(srcID)
+  TriggerEvent('phone:setCallState', isDialing)
+  TriggerEvent("animation:phonecallstart")
+  TriggerEvent("InteractSound_CL:PlayOnOne","payphonestart",0.5)
   RLCore.Functions.Notify("You have started a call.")
     --TriggerEvent("DoLongHudText","You have started a call.",1)
     initiatingCall()
@@ -2199,7 +2302,7 @@ function initiatingCall()
     if AnonCall and callTimer < 7 then
       TriggerEvent("InteractSound_CL:PlayOnOne","payphoneringing",0.5)
     elseif not AnonCall then
-      TriggerEvent("InteractSound_CL:PlayOnOne","cellcall",0.5)
+      TriggerEvent("InteractSound_CL:PlayOnOne","ringing",0.1)
     end
     
     Citizen.Wait(2500)
@@ -2216,7 +2319,7 @@ function receivingCall(callFrom)
     if hasPhone() then
       RLCore.Functions.Notify('Call from: ' .. callFrom .. " /ans or /h")
       if phoneNotifications then
-        TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 2.0, 'cellcall', 0.5)
+        TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 2.0, 'ringing', 0.1)
       end
     end
     Citizen.Wait(2300)
@@ -2360,7 +2463,9 @@ end)
 ----------
 
 
-curNotifications = {}
+curNotifications = {
+  {name = "Namessssssssssssssssssssssss", message = "MessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessage"}
+}
 
 RegisterNetEvent('phone:addnotification')
 AddEventHandler('phone:addnotification', function(name,message)
@@ -2389,9 +2494,20 @@ local currentTwats = {}
 
 RegisterNetEvent('Client:UpdateTweets')
 AddEventHandler('Client:UpdateTweets', function(data)
-    
-    SendNUIMessage({openSection = "twatter", twats = data, myhandle = handle})
+  lstTweets = {}
+  for i, tweetData in pairs(data) do
+    lstTweets[#lstTweets + 1] = {
+      id = tweetData.id,
+      handle = tweetData.handle,
+      message = tweetData.message
+    }
+  end
+  
+  SendNUIMessage({openSection = "twatter", twats = lstTweets, myhandle = handle})
+end)
 
+RegisterCommand("fatfuck", function(source, args, raw)
+  TriggerEvent("Client:UpdateTweet", {handle = "@imObese2021", message = "Help me lose weight"})
 end)
 
 RegisterNetEvent('Client:UpdateTweet')
@@ -2401,29 +2517,26 @@ AddEventHandler('Client:UpdateTweet', function(data, handle2)
     if not hasPhone() then
       return
     end
+
     if guiEnabled then
-        -- TriggerServerEvent('GetTweets', true)
+      UpdateTwitter(handle2, data.message)
     end
-    
-    -- SendNUIMessage({openSection = "twatter", twats = data, myhandle = handle})
     
     local message = data
     if string.find(message,handle) then
     
         if handle2 ~= handle then
-            SendNUIMessage({openSection = "newtweet"})
+          SendNUIMessage({openSection = "newtweet"})
         
-            if phoneNotifications then
-                PlaySound(-1, "Event_Start_Text", "GTAO_FM_Events_Soundset", 0, 0, 1)
-                RLCore.Functions.Notify('You were just mentioned in a tweet on your phone.')
-            end
+          if phoneNotifications then
+              PlaySound(-1, "Event_Start_Text", "GTAO_FM_Events_Soundset", 0, 0, 1)
+              RLCore.Functions.Notify('You were just mentioned in a tweet on your phone.')
+          end
         end
     end
     
     if allowpopups and not guiEnabled then
         SendNUIMessage({openSection = "notify", handle = handle2, message = message})
-    elseif allowpopups and guiEnabled then
-        -- exports['mythic_notify']:SendAlert('inform', 'Somebody twatted. Please relaunch twatter!', 5000)
     end
 end)
 
@@ -2467,7 +2580,7 @@ AddEventHandler('phone:triggerPager', function()
 end)
 
 RegisterNUICallback('loadGPS', function()
-  exports['mythic_notify']:SendAlert('inform', 'Coming soon.', 4000) --notify
+  -- exports['mythic_notify']:SendAlert('inform', 'Coming soon.', 4000) --notify
   TriggerEvent("openGPS")
 end)
 
@@ -2551,24 +2664,19 @@ AddEventHandler('GPS:SetRoute', function(house_id,house_model)
 		mygps["info"] = rentedOffices[house_id]["name"]
 	else
 		mygps = customGPSlocations[house_id]
-	end
-	if GPSblip ~= nil then
-		RemoveBlip(GPSblip)
-	end
-	GPSblip = AddBlipForCoord(mygps["x"],mygps["y"],mygps["z"])
-	TriggerEvent("GPSActivated",true)
-	SetBlipRoute(GPSblip, 1)
-	SetBlipAsFriendly(GPSblip, 1)
-	SetBlipColour(GPSblip, 6)
+  end
+  GPSblip = true
+	TriggerEvent("GPSActivated", true)
+  SetNewWaypoint(mygps["x"],mygps["y"])
+  RLCore.Functions.Notify("GPS Waypoint Set", 'success')
 end)
 
 RegisterNetEvent('GPSLocations')
 AddEventHandler('GPSLocations', function()
-	if GPSblip ~= nil then
-		RemoveBlip(GPSblip)
-		GPSblip = nil
+  if GPSblip then
+    GPSblip = false
 	end	
-	TriggerEvent("GPSActivated",false)
+	TriggerEvent("GPSActivated", false)
 	TriggerEvent("openGPS",robberycoordsMansions,robberycoords,rentedOffices)
 end)
 
@@ -2608,9 +2716,25 @@ RegisterNUICallback('btnTwatter', function()
 end)
 
 RegisterNUICallback('newTwatSubmit', function(data, cb)
-    closeGui()
-    TriggerServerEvent('Tweet', handle, data.twat, data.time)   
+    -- closeGui()
+    lstTweets[#lstTweets + 1] = {
+      id = #lstTweets + 1,
+      handle = handle,
+      message = data.twat
+    }
+
+    SendNUIMessage({openSection = "twatter", twats = lstTweets, myhandle = handle})
+    TriggerServerEvent('Tweet', handle, data.twat)   
 end)
+
+function UpdateTwitter(tweetHandle, message)
+  lstTweets[#lstTweets + 1] = {
+    id = #lstTweets + 1,
+    handle = tweetHandle,
+    message = message
+  }
+  SendNUIMessage({openSection = "twatter", twats = lstTweets, myhandle = handle})
+end
 
 RegisterNUICallback('btnCamera', function()
   SetNuiFocus(false,false)
@@ -2671,19 +2795,12 @@ RegisterNUICallback('accountInformation', function()
 end)
 
 RegisterNetEvent('getAccountInfo')
-AddEventHandler('getAccountInfo', function(cash, bank, licences)
-
-    --[[ local licencesString = '<br>'
-    for k, v in pairs(licences) do
-        licencesString = licencesString .. v .. "<br>"
-    end ]]
-
+AddEventHandler('getAccountInfo', function(cash, bank, licenses)
     local responseObject = {
         cash = cash,
         bank = bank,
-        job = PlayerJob.name .. ', ' .. PlayerJob.name,
-        secondaryJob = "Coming soon.",
-        licenses = licences, 
+        job = PlayerJob.label .. ', ' .. PlayerJob.grade.name,
+        licenses = licenses, 
         pagerStatus = true
     }
     --exports['mythic_notify']:SendAlert('inform', 'Basic mode.', 2500)
@@ -2695,12 +2812,8 @@ RegisterNetEvent('phone:newSMS')
 AddEventHandler('phone:newSMS', function(id, number, message, mypn, date, recip)
   lastnumber = number
   if hasPhone() then
-    SendNUIMessage({
-        openSection = "newsms"
-    })
-      TriggerServerEvent('phone:getSMS') 
     if phoneNotifications then
-      TriggerEvent("DoLongHudText","You just received a new SMS.",16)
+      RLCore.Functions.Notify("You just received a new SMS.", 'success')
       PlaySound(-1, "Event_Start_Text", "GTAO_FM_Events_Soundset", 0, 0, 1)
     end
   end
@@ -2737,7 +2850,9 @@ end)
 
 RegisterNetEvent('phone:sendSMS')
 AddEventHandler('phone:sendSMS', function(number, message)
+  -- print("SMS 1")
   if(number ~= nil and message ~= nil) then
+    -- print("SMS 1", number)
     TriggerServerEvent('phone:sendSMS', number, message)
     Citizen.Wait(1000)
     TriggerServerEvent('phone:getSMSc')
@@ -2913,6 +3028,7 @@ end
 
 RegisterNetEvent('phone:reply')
 AddEventHandler('phone:reply', function(message)
+  -- print("SMS 2")
   if lastnumber ~= 0 then
     TriggerServerEvent('phone:sendSMS', lastnumber, message)
     TriggerEvent("chatMessage", "You", 6, message)
@@ -3041,8 +3157,6 @@ AddEventHandler('phone:deleteContact', function(name, number)
   TriggerServerEvent('deleteContact', name, number)
 end)
 
-
-
 function tablefind(tab,el)
   for index, value in pairs(tab) do
     if value == el then
@@ -3099,7 +3213,7 @@ RegisterNetEvent('sendMessagePhoneN')
 AddEventHandler('sendMessagePhoneN', function(phonenumberlol)
   TriggerServerEvent('message:tome', phonenumberlol)
 
-  local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+  local closestPlayer, closestDistance = RLCore.Functions.GetClosestPlayer()
 	if closestPlayer ~= -1 and closestDistance <= 5.0 then
     TriggerServerEvent('message:inDistanceZone', GetPlayerServerId(closestPlayer), phonenumberlol)
   else    
@@ -3110,56 +3224,33 @@ end)
 
 -----KEYS
 
---[[ RegisterNUICallback('btnGiveKey', function(data, cb)
-  TriggerEvent("houses:GiveKey")
-end)
+-- RegisterNUICallback('btnGiveKey', function(data, cb)
+--   TriggerEvent("houses:GiveKey")
+-- end)
 
-RegisterNUICallback('btnWipeKeys', function(data, cb)
-  TriggerEvent("houses:WipeKeys")
-end)
+-- RegisterNUICallback('btnWipeKeys', function(data, cb)
+--   TriggerEvent("houses:WipeKeys")
+-- end)
 
 
 RegisterNUICallback('btnProperty2', function(data, cb)
+  print("RUN")
   loading()
-  TriggerServerEvent("ReturnHouseKeys")
+  RLCore.Functions.TriggerCallback('rl-phone:server:GetHouseKeys', function(Keys)
+      print(json.encode(Keys ~= nil and Keys or {}))
+  end)
 end)
 
-RegisterNUICallback('btnProperty', function(data, cb)
-  loading()
-  local realEstateRank = GroupRank("real_estate")
-  if realEstateRank > 0 then
-    SendNUIMessage({
-        openSection = "RealEstate",
-        RERank = realEstateRank
-    })        
-  end
-end)
-
--- settings
-
-RegisterNUICallback('settings', function()
-  local controls = exports["np-base"]:getModule("DataControls"):getBindTable()
-  local settings = exports["np-base"]:getModule("SettingsData"):getSettingsTable()
-  SendNUIMessage({openSection = "settings", currentControls = controls, currentSettings = settings})
-end)
-
-RegisterNUICallback('settingsUpdateToko', function(data, cb)
-
-  if data.tag == "settings" then
-    exports["np-base"]:getModule("SettingsData"):setSettingsTableGlobal(data.settings,true)
-  elseif data.tag == "controlUpdate" then
-    exports["np-base"]:getModule("DataControls"):encodeSetBindTable(data.controls)
-  end
-end)
-
-
-RegisterNUICallback('settingsResetToko', function()
-  TriggerEvent("np-base:cl:player_reset","tokovoip")
-end)
-
-RegisterNUICallback('settingsResetControls', function()
-  TriggerEvent("np-base:cl:player_control",nil)
-end) ]]
+-- RegisterNUICallback('btnProperty', function(data, cb)
+--   loading()
+--   local realEstateRank = GroupRank("real_estate")
+--   if realEstateRank > 0 then
+--     SendNUIMessage({
+--         openSection = "RealEstate",
+--         RERank = realEstateRank
+--     })        
+--   end
+-- end)
 
 local currentMap = {}
  local customMaps = {}
@@ -3481,12 +3572,17 @@ local currentMap = {}
  
  -- Racing:Map
  RegisterNUICallback('racing:map:create', function()
-   if not exports['StreetRaces']:isRecordingRace() then
-     ExecuteCommand('race record')
-     TriggerEvent('DoLongHudText', "Checkpoint recording started, place your checkpoints on the map", 1)
-   else
-     TriggerEvent('DoLongHudText', "Already recording race", 2)
-   end
+  RLCore.Functions.TriggerCallback('rl-lapraces:server:CanRaceSetup', function(CanSetup)
+    print("SETUP", CanSetup)
+      -- TriggerEvent("debug", "Phone: " .. (CanSetup and "Can" or "Can't") .. " Race Setup", "success")
+      -- cb(CanSetup)
+  end)
+  --  if not exports['StreetRaces']:isRecordingRace() then
+  --    ExecuteCommand('race record')
+  --    TriggerEvent('DoLongHudText', "Checkpoint recording started, place your checkpoints on the map", 1)
+  --  else
+  --    TriggerEvent('DoLongHudText', "Already recording race", 2)
+  --  end
  end)
  
  RegisterNUICallback('racing:map:load', function(data)
@@ -3571,4 +3667,63 @@ local currentMap = {}
      ClearBlips()
      RemoveCheckpoints()
    end
- end)
+end)
+
+local PayPhoneHex = {
+  [1] = 1158960338,
+  [2] = -78626473,
+  [3] = 1281992692,
+  [4] = -1058868155,
+  [5] = -429560270,
+  [6] = -2103798695,
+  [7] = 295857659,
+}
+
+function checkForPayPhone()
+  for i = 1, #PayPhoneHex do
+    local objFound = GetClosestObjectOfType( GetEntityCoords(GetPlayerPed(-1)), 5.0, PayPhoneHex[i], 0, 0, 0)
+    if DoesEntityExist(objFound) then
+      return true
+    end
+  end
+  return false
+end
+
+RegisterCommand('payphone', function(source, args, rawCommand)
+    if args[1] then
+        TriggerEvent('phone:makepayphonecall', args[1])
+    else
+      print("/payphone [number]")
+        -- TriggerEvent("notification","/payphone [number].",2)
+    end
+end)
+ 
+RegisterNetEvent('phone:makepayphonecall')
+AddEventHandler('phone:makepayphonecall', function(pnumber) 
+    if not checkForPayPhone() then
+      RLCore.Functions.Notify("You are not near a payphone.", 'error')
+      return
+    end
+
+    if callStatus == isNotInCall and not isDead then
+      AnonCall = true
+      print("NUM", pnumber)
+      TriggerServerEvent('phone:callContact', pnumber, true)
+      recentcalls[#recentcalls + 1] = { ["type"] = 1, ["number"] = pnumber, ["name"] = getContactName(pnumber) }
+    else
+      RLCore.Functions.Notify("It appears you are already in a call, injured or with out a phone, please type /hangup to reset your calls.", 'error')
+    end
+end)
+
+RegisterNetEvent('phone:client:GiveContactDetails')
+AddEventHandler('phone:client:GiveContactDetails', function()
+    local player, distance = RLCore.Functions.GetClosestPlayer()
+    if player ~= -1 and distance < 2.5 then
+        local PlayerId = GetPlayerServerId(player)
+        TriggerServerEvent('phone:server:GiveContactDetails', PlayerId)
+        TriggerEvent("debug", 'Phone: Give Contact Details (ID ' .. PlayerId .. ')', 'success')
+    else
+        RLCore.Functions.Notify("No one around!", "error")
+        TriggerEvent("debug", 'Phone: No Player Nearby', 'error')
+    end
+end)

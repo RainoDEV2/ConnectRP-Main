@@ -33,23 +33,21 @@ local job = nil
 
 RLCore = nil
 
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(10)
-        if RLCore == nil then
-            TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
-            Citizen.Wait(200)
-        end
-        while RLCore.Functions.GetPlayerData() == nil do
-          Wait(0)
-        end
-      
-        while RLCore.Functions.GetPlayerData().job == nil do
-          Wait(0)
-          end
+AddEventHandler("RLCore:Client:OnPlayerLoaded", function()
+  if RLCore == nil then
+      TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
+      Citizen.Wait(200)
+  end
 
-          PlayerJob = RLCore.Functions.GetPlayerData().job
-    end
+  while RLCore.Functions.GetPlayerData() == nil do
+    Wait(0)
+  end
+
+  while RLCore.Functions.GetPlayerData().job == nil do
+    Wait(0)
+  end
+
+  PlayerJob = RLCore.Functions.GetPlayerData().job
 end)
 
 RegisterNetEvent('RLCore:Client:OnJobUpdate')
@@ -334,7 +332,7 @@ Citizen.CreateThread(function()
         payment = 50
       end
       TriggerServerEvent("server:givepayJob", "Entertainer Payment - Near Players = " .. playerCount, payment) 
-    elseif exports["np-base"]:getModule("LocalPlayer"):getVar("job") == "news" then
+    elseif PlayerJob.name == "news" then
       local dist = 0
       if lastBlip.x then 
         dist = #(vector3(GetEntityCoords(PlayerPedId())) - vector3(lastBlip.x,lastBlip.y,lastBlip.z))

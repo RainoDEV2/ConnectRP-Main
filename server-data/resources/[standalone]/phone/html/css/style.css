@@ -772,6 +772,7 @@ body {
 
 .account-information-primary-job {
     text-transform: capitalize;
+    text-align: center;
 }
 
 .account-information-secondary-job {
@@ -1660,4 +1661,17 @@ input.no-spinner[type=number]::-webkit-inner-spin-button, input.no-spinner[type=
 
 .button-row > button {
     margin-top: 10px;
+}
+
+/* HIDE ARROWS ON NUMBER INPUT */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

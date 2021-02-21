@@ -410,6 +410,7 @@ $(document).ready(function() {
                 phoneCallerScreenSetup();
                 break;
             case "notify":
+                console.log("NOTIFY US PLZ!")
                 $('#twatter-notification').fadeIn(300);
                 $('.twatter-notification-title').text(item.handle);
                 $('.twatter-notitication-body').text(decodeEntities(item.message));
@@ -799,20 +800,31 @@ function addGroupTasks(tasks) {
 }
 
 function addGroups(groups) {
-    for (let group in groups) {
+    groups.forEach(element => {
+        console.log(JSON.stringify(element));
         let groupElement = `
             <li class="collection-item">
-                <span style="font-weight:bold">${groups[group].namesent}</span>
+                <span style="font-weight:bold">${element.namesent}</span>
                 <a href="#!" class="secondary-content">
-                    <!-- <span class="phone-button" data-action="btnTaskGang" data-action-data="${groups[group].idsent}" aria-label="Tasks" data-balloon-pos="left"><i class="fas fa-tasks fa-2x"></i></span> &nbsp;&nbsp; -->
-                    <span class="phone-button" data-action="group-manage" data-action-data="${groups[group].idsent}" aria-label="Set Duty" data-balloon-pos="left"><i class="grey-text text-darken-3 fas fa-sign-in-alt fa-2x"></i></span>
+                    <span class="phone-button" data-action="group-manage" data-action-data="${element.idsent}" aria-label="Set Duty" data-balloon-pos="left"><i class="grey-text text-darken-3 fas fa-sign-in-alt fa-2x"></i></span>
                 </a>
-                <br><span style="font-weight:300">${groups[group].ranksent}</span>
-            </li>
-        `
+                <br><span style="font-weight:300">${element.ranksent}</span>
+            </li>`
+            $('.groups-entries').append(groupElement);
+    })
+    // for (let group in groups) {
+    //     let groupElement = `
+    //         <li class="collection-item">
+    //             <span style="font-weight:bold">${groups[group].namesent}</span>
+    //             <a href="#!" class="secondary-content">
+    //                 <span class="phone-button" data-action="group-manage" data-action-data="${groups[group].idsent}" aria-label="Set Duty" data-balloon-pos="left"><i class="grey-text text-darken-3 fas fa-sign-in-alt fa-2x"></i></span>
+    //             </a>
+    //             <br><span style="font-weight:300">${groups[group].ranksent}</span>
+    //         </li>
+    //     `
 
-        $('.groups-entries').append(groupElement);
-    }
+    //     $('.groups-entries').append(groupElement);
+    // }
 }
 
 function addEmails(emails) {
@@ -1119,8 +1131,10 @@ function addGPSLocations(locations) {
 
 function addAccountInformation(accountInfo) {
     if (accountInfo) {
-        $('.account-information-cash').text('$' + (accountInfo.cash ? accountInfo.cash : 0));
-        $('.account-information-bank').text('$' + (accountInfo.bank ? accountInfo.bank : 0));
+        accountInfo.cash = formatMoney(accountInfo.cash);
+        accountInfo.bank= formatMoney(accountInfo.bank);
+        $('.account-information-cash').text((accountInfo.cash ? accountInfo.cash : 0));
+        $('.account-information-bank').text((accountInfo.bank ? accountInfo.bank : 0));
         $('.account-information-primary-job').text(accountInfo.job ? accountInfo.job : "Unemployed.");
         $('.account-information-secondary-job').text(accountInfo.secondaryJob ? accountInfo.secondaryJob : "No secondary job.").hide();
         licenses = accountInfo.licenses/* .split('<br>') */
@@ -1142,14 +1156,9 @@ function addAccountInformation(accountInfo) {
                 </thead>
             <tbody>
             `
-        for (const key of Object(licenses)) {
-            var string = `${key["type"]}`
-            string = string.charAt(0).toUpperCase() + string.slice(1)
-            licenseTable += `<tr>
-                                <td>${string}</td>
-                                <td><i class="${key["status"] == 0 ? "fas fa-check green-text" : "fas fa-times red-text"}"></i></td>
-                            </tr>`
-        }
+        licenses.forEach(element => {
+            licenseTable += `<tr><td>${element.label}</td><td><i class="${element.active ? "fas fa-check green-text" : "fas fa-times red-text"}"></i></td></tr>`
+        })
 
         licenseTable +=
             `
@@ -1162,6 +1171,14 @@ function addAccountInformation(accountInfo) {
         else
             $('.account-information-toggle-pager').removeClass('green-text').addClass('red-text') */
     }
+}
+
+function formatMoney(x) {
+    x = x.toString();
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(x))
+        x = x.replace(pattern, "$1,$2");
+    return "$" + x;
 }
 
 function addTweets(tweets, myHandle) {
@@ -1249,6 +1266,7 @@ function addYellowPage(item) {
 }
 
 function addMessage(item) {
+    console.log("ADD MSG!");
     var date = (item.date === undefined ? Date.now() : item.date);
     var element = $('<div class="row messages-entry"> <div class="col s2 white-text"> <i class="far fa-user-circle fa-2x"></i> </div> <div class="col s10 messages-entry-details"> <div class="row no-padding"> <div class="col s8 messages-entry-details-sender">' + item.msgDisplayName + '</div> <div class="col s4 messages-entry-details-date right-align">' + moment(date).local().fromNow() + '</div> </div> <div class="row "> <div class="col s12 messages-entry-body">' + item.message + '</div> </div> </div> </div>');
     element.id = item.id;
@@ -2056,8 +2074,7 @@ $("#stock-form").submit(function (event) {
 $("#twat-form").submit(function (event) {
     event.preventDefault();
     $.post('http://phone/newTwatSubmit', JSON.stringify({
-        twat: escapeHtml($("#twat-form #twat-body").val()),
-        time: moment.utc()
+        twat: escapeHtml($("#twat-form #twat-body").val())
     }));
     $("#twat-form").trigger("reset");
     $('#twat-modal').modal('close');
@@ -2084,6 +2101,8 @@ $("#yellow-pages-form").submit(function (event) {
 
 $("#new-message-form").submit(function (event) {
     event.preventDefault();
+
+    console.log("NUMBER (" + $("#new-message-form #new-message-number").val() + ")!");
 
     $.post('http://phone/newMessageSubmit', JSON.stringify({
         number: escapeHtml($("#new-message-form #new-message-number").val()),

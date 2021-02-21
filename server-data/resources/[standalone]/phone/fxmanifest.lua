@@ -1,6 +1,6 @@
 fx_version 'adamant'
 game 'gta5'
-description 'TPRP - Phone script similar to NoPixel'
+description 'TCRP - Phone script similar to NoPixel'
 version '1.0.2'
 
 ui_page 'html/ui.html'
