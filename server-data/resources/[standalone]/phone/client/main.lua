@@ -50,9 +50,25 @@ AddEventHandler("onClientResourceStart", function(resourceName)
 end)
 
 AddEventHandler("RLCore:Client:OnPlayerLoaded", function()
+  lstMsgs = {}
+  lstContacts = {}
+  YellowPageArray = {}
+  YellowPages = {}
+  vehicles = {}
+  lstTweets = {}
+  trackedVehs = {}
+  SendNUIMessage({
+    emptyContacts = true
+  })
+
+
   TriggerServerEvent('Server:GetHandle')
   TriggerServerEvent('getYP')
   TriggerServerEvent('getContacts')
+end)
+
+RegisterCommand("logout", function(source, args, raw)
+  TriggerServerEvent("rl-houses:server:LogoutLocation")
 end)
 
 
