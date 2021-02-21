@@ -58,6 +58,7 @@ AddEventHandler("playerSpawned", function()
     if not initialSpawn then
         initialSpawn = true
         TriggerEvent('bb-multicharacter:client:chooseChar')
+        TriggerServerEvent("bb-multicharacter:server:choosingChar")
         TriggerServerEvent('mumble:infinity:server:mutePlayer')
     end
 end)
