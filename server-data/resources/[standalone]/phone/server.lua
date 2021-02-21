@@ -832,7 +832,7 @@ AddEventHandler('phone:EndCall', function(mySourceID, stupidcallnumberidk, somet
     end
 end)
 
-RegisterCommand("ans", function(source, args, rawCommand)
+RegisterCommand("a", function(source, args, rawCommand)
     local src = source
     TriggerClientEvent('phone:answercall', src)
 end, false)
