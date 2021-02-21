@@ -6,7 +6,6 @@ function DespawnInterior(objects, cb)
             end
         end
 
-		TriggerEvent("debug", 'Interior: Despawn', 'error')
         cb()
     end)
 end
@@ -18,8 +17,7 @@ function TeleportToInterior(x, y, z, h)
 
         Citizen.Wait(100)
 
-		DoScreenFadeIn(1000)
-		TriggerEvent("debug", 'Interior: Teleported', 'success')
+        DoScreenFadeIn(1000)
     end)
 end
 
@@ -28,8 +26,6 @@ function getRotation(input)
 end
 
 function CreateApartmentShell(spawn)
-	TriggerEvent("debug", 'Interior: Apartment Shell', 'success')
-
 	local objects = {}
 
     local POIOffsets = {}
@@ -52,8 +48,6 @@ function CreateApartmentShell(spawn)
 end
 
 function CreateCaravanShell(spawn)
-	TriggerEvent("debug", 'Interior: Caravan Shell', 'success')
-
 	local objects = {}
 
     local POIOffsets = {}
@@ -76,8 +70,6 @@ function CreateCaravanShell(spawn)
 end
 
 function CreateFranklinShell(spawn)
-	TriggerEvent("debug", 'Interior: Franklin Shell', 'success')
-
 	local objects = {}
 
     local POIOffsets = {}
@@ -100,8 +92,6 @@ function CreateFranklinShell(spawn)
 end
 
 function CreateFranklinAuntShell(spawn)
-	TriggerEvent("debug", 'Interior: Franklin Aunt Shell', 'success')
-
 	local objects = {}
 
     local POIOffsets = {}
@@ -124,8 +114,6 @@ function CreateFranklinAuntShell(spawn)
 end
 
 function CreateMethlabShell(spawn)
-	TriggerEvent("debug", 'Interior: Methlab Shell', 'success')
-
 	local objects = {}
 
     local POIOffsets = {}

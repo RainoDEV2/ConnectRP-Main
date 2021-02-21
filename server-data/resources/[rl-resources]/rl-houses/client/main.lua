@@ -167,7 +167,7 @@ end)
 RegisterNetEvent('rl-houses:client:setHouseConfig')
 AddEventHandler('rl-houses:client:setHouseConfig', function(houseConfig)
     Config.Houses = houseConfig
-end)
+end) 
 
 RegisterNetEvent('rl-houses:client:lockHouse')
 AddEventHandler('rl-houses:client:lockHouse', function(bool, house)
@@ -242,12 +242,14 @@ DrawText3Ds = function(x, y, z, text)
     ClearDrawOrigin()
 end
 
+
+
 Citizen.CreateThread(function()
     while true do
 
         local pos = GetEntityCoords(GetPlayerPed(-1), true)
         local inRange = false
-
+ 
         if closesthouse ~= nil then
             if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, false) < 30)then
                 inRange = true
@@ -256,14 +258,22 @@ Citizen.CreateThread(function()
                     if not inside then
                         if closesthouse ~= nil then
                             if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, true) < 1.5)then
-                                DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, '~b~/enter~w~ - To enter')
+                                if Config.Houses[closesthouse].locked then
+                                    DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, '~b~E~w~ - Enter')
+                                elseif not Config.Houses[closesthouse].locked then
+                                    DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, '~b~E~w~ - Enter')
+                                end
+                                if IsControlJustPressed(0, Keys["E"]) then
+                                    enterOwnedHouse(closesthouse)
+									TriggerEvent("inhouse",true)
+                                end
                             end
                         end
                     end
 
                     if CurrentDoorBell ~= 0 then
                         if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, true) < 1.5)then
-                            DrawText3Ds(Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z + 0.35, '~g~G~w~ - To open the door')
+                            DrawText3Ds(Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z + 0.35, '~g~G~w~ - Open the door')
                             if IsControlJustPressed(0, Keys["G"]) then
                                 TriggerServerEvent("rl-houses:server:OpenDoor", CurrentDoorBell, closesthouse)
                                 CurrentDoorBell = 0
@@ -271,18 +281,19 @@ Citizen.CreateThread(function()
                         end
                     end
                     -- EXIT HOUSE
-                    if inside then
+				    if inside then
                         if not entering then
                             if POIOffsets ~= nil then
                                 if POIOffsets.exit ~= nil then
-                                    if(GetDistanceBetweenCoords(pos, Config.Houses[CurrentHouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[CurrentHouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[CurrentHouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, true) < 1.5)then
-                                        DrawText3Ds(Config.Houses[CurrentHouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[CurrentHouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[CurrentHouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, '~g~E~w~ - To leave home')
-                                        DrawText3Ds(Config.Houses[CurrentHouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[CurrentHouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[CurrentHouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z - 0.1, '~g~H~w~ - View camera')
+                                    if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, true) < 1.5)then
+                                        DrawText3Ds(Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, '~g~E~w~ - To leave the house')
+                                        DrawText3Ds(Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z - 0.1, '~g~H~w~ - Watch camera')
                                         if IsControlJustPressed(0, Keys["E"]) then
-                                            leaveOwnedHouse(CurrentHouse)
+                                        leaveOwnedHouse(closesthouse)
+									    TriggerEvent("inhouse",false)
                                         end
                                         if IsControlJustPressed(0, Keys["H"]) then
-                                            FrontDoorCam(Config.Houses[CurrentHouse].coords.enter)
+                                            FrontDoorCam(Config.Houses[closesthouse].coords.enter)
                                         end
                                     end
                                 end
@@ -291,46 +302,42 @@ Citizen.CreateThread(function()
                     end
                 else
                     if not isOwned then
-                        if closesthouse ~= nil then
+                        if closesthouse ~= nil then 
                             if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, true) < 1.5)then
                                 if not viewCam and Config.Houses[closesthouse].locked then
-                                    DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, '~g~E~w~ - To view the house')
+                                    DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, '[~g~E~w~] See house')
                                     if IsControlJustPressed(0, Keys["E"]) then
                                         TriggerServerEvent('rl-houses:server:viewHouse', closesthouse)
                                     end
-                                -- elseif not viewCam and not Config.Houses[closesthouse].locked then
-                                --     DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, '[~g~E~w~] Om naar ~b~binnen~w~ te gaan')
-                                --     if IsControlJustPressed(0, Keys["E"])  then
-                                --         enterNonOwnedHouse(closesthouse)
-                                --     end
+                                elseif not viewCam and not Config.Houses[closesthouse].locked then
+                                    DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z + 1.2, '[~g~E~w~] Enter')
+                                    if IsControlJustPressed(0, Keys["E"])  then
+                                        enterNonOwnedHouse(closesthouse)
+                                    end
                                 end
                             end
                         end
                     elseif isOwned then
                         if closesthouse ~= nil then
                             if not inOwned then
-                                -- if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, true) < 1.5)then
-                                    -- if not Config.Houses[closesthouse].locked then
-                                    --     DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, '[~g~E~w~] Om naar ~b~binnen~w~ te gaan')
-                                    --     if IsControlJustPressed(0, Keys["E"])  then
-                                    --         enterNonOwnedHouse(closesthouse)
-                                    --     end
-                                    -- else
-                                    --     DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, 'De deur is ~r~vergrendeld / ~g~G~w~ - Aanbellen')
-                                    --     if IsControlJustPressed(0, Keys["G"]) then
-                                    --         TriggerServerEvent('rl-houses:server:RingDoor', closesthouse)
-                                    --     end
-                                    -- end
-                                -- end
-                            elseif inOwned then
-                                if POIOffsets ~= nil then
-                                    if POIOffsets.exit ~= nil then
-                                        if(GetDistanceBetweenCoords(pos, Config.Houses[CurrentHouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[CurrentHouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[CurrentHouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, true) < 1.5)then
-                                            DrawText3Ds(Config.Houses[CurrentHouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[CurrentHouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[CurrentHouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, '~g~E~w~ - To leave home')
-                                            if IsControlJustPressed(0, Keys["E"]) then
-                                                leaveNonOwnedHouse(CurrentHouse)
-                                            end
+                                if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, true) < 1.5)then
+                                    if not Config.Houses[closesthouse].locked then
+                                        DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z + 1.2, '[~g~E~w~] Enter')
+                                        if IsControlJustPressed(0, Keys["E"])  then
+                                            enterNonOwnedHouse(closesthouse)
                                         end
+                                    else
+                                        DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z + 1.2, 'The door is ~r~closed / ~g~G~w~ - Call at the doorbell')
+                                        if IsControlJustPressed(0, Keys["G"]) then
+                                            TriggerServerEvent('rl-houses:server:RingDoor', closesthouse)
+                                        end
+                                    end
+                                end
+                            elseif inOwned then
+                                if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, true) < 1.5)then
+                                    DrawText3Ds(Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, '~g~E~w~ - Leave')
+                                    if IsControlJustPressed(0, Keys["E"]) then
+                                        leaveNonOwnedHouse(closesthouse)
                                     end
                                 end
                             end
@@ -338,14 +345,10 @@ Citizen.CreateThread(function()
                     end
                     if inside and not isOwned then
                         if not entering then
-                            if POIOffsets ~= nil then
-                                if POIOffsets.exit ~= nil then
-                                    if(GetDistanceBetweenCoords(pos, Config.Houses[CurrentHouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[CurrentHouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[CurrentHouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, true) < 1.5)then
-                                        DrawText3Ds(Config.Houses[CurrentHouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[CurrentHouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[CurrentHouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, '~g~E~w~ - To leave home')
-                                        if IsControlJustPressed(0, Keys["E"]) then
-                                            leaveNonOwnedHouse(CurrentHouse)
-                                        end
-                                    end
+                            if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, true) < 1.5)then
+                                DrawText3Ds(Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, '~g~E~w~ - Leave')
+                                if IsControlJustPressed(0, Keys["E"]) then
+                                    leaveNonOwnedHouse(closesthouse)
                                 end
                             end
                         end
@@ -355,12 +358,12 @@ Citizen.CreateThread(function()
                 local StashObject = nil
                 -- STASH
                 if inside then
-                    if CurrentHouse ~= nil then
+                    if closesthouse ~= nil then
                         if stashLocation ~= nil then
                             if(GetDistanceBetweenCoords(pos, stashLocation.x, stashLocation.y, stashLocation.z, true) < 1.5)then
-                                DrawText3Ds(stashLocation.x, stashLocation.y, stashLocation.z, '~g~E~w~ - Stash')
+                                DrawText3Ds(stashLocation.x, stashLocation.y, stashLocation.z, '~g~E~w~ - Drawer')
                                 if IsControlJustPressed(0, Keys["E"]) then
-                                    local other = {}
+									local other = {}
                                     other.maxweight = 1000000
                                     other.slots = 50
                                     if Config.Houses[CurrentHouse].tier == 1 then
@@ -383,14 +386,31 @@ Citizen.CreateThread(function()
                                     TriggerEvent("inventory:client:SetCurrentStash", CurrentHouse)
                                 end
                             elseif(GetDistanceBetweenCoords(pos, stashLocation.x, stashLocation.y, stashLocation.z, true) < 3)then
-                                DrawText3Ds(stashLocation.x, stashLocation.y, stashLocation.z, 'Stash')
+                                DrawText3Ds(stashLocation.x, stashLocation.y, stashLocation.z, 'Drawer')
+                            end
+                        end
+                    end
+                end
+				
+				local Stash2Object = nil
+                -- STASH
+                if inside then
+                    if closesthouse ~= nil then
+                        if stash2Location ~= nil then
+                            if(GetDistanceBetweenCoords(pos, stash2Location.x, stash2Location.y, stash2Location.z, true) < 1.5)then
+                                DrawText3Ds(stash2Location.x, stash2Location.y, stash2Location.z, '~g~E~w~ - Drawer 2')
+                                if IsControlJustPressed(0, Keys["E"]) then
+									TriggerServerEvent("inventory:server:OpenInventory", "stash", CurrentHouse, other)
+                                end
+                            elseif(GetDistanceBetweenCoords(pos, stash2Location.x, stash2Location.y, stash2Location.z, true) < 3)then
+                               DrawText3Ds(stash2Location.x, stash2Location.y, stash2Location.z, '~g~E~w~ - Drawer 2')
                             end
                         end
                     end
                 end
 
                 if inside then
-                    if CurrentHouse ~= nil then
+                    if closesthouse ~= nil then
                         if outfitLocation ~= nil then
                             if(GetDistanceBetweenCoords(pos, outfitLocation.x, outfitLocation.y, outfitLocation.z, true) < 1.5)then
                                 DrawText3Ds(outfitLocation.x, outfitLocation.y, outfitLocation.z, '/outfits')
@@ -403,10 +423,10 @@ Citizen.CreateThread(function()
                 end
 
                 if inside then
-                    if CurrentHouse ~= nil then
+                    if closesthouse ~= nil then
                         if logoutLocation ~= nil then
                             if(GetDistanceBetweenCoords(pos, logoutLocation.x, logoutLocation.y, logoutLocation.z, true) < 1.5)then
-                                DrawText3Ds(logoutLocation.x, logoutLocation.y, logoutLocation.z, '~g~E~w~ - Logout')
+                                DrawText3Ds(logoutLocation.x, logoutLocation.y, logoutLocation.z, '~g~E~w~ - Switch Character')
                                 if IsControlJustPressed(0, Keys["E"]) then
                                     DoScreenFadeOut(250)
                                     while not IsScreenFadedOut() do
@@ -423,7 +443,7 @@ Citizen.CreateThread(function()
                                     end)
                                 end
                             elseif(GetDistanceBetweenCoords(pos, logoutLocation.x, logoutLocation.y, logoutLocation.z, true) < 3)then
-                                DrawText3Ds(logoutLocation.x, logoutLocation.y, logoutLocation.z, 'Logout')
+                                DrawText3Ds(logoutLocation.x, logoutLocation.y, logoutLocation.z, 'Switch Character')
                             end
                         end
                     end
@@ -629,16 +649,30 @@ function enterOwnedHouse(house)
     Citizen.Wait(250)
     local coords = { x = Config.Houses[house].coords.enter.x, y = Config.Houses[house].coords.enter.y, z= Config.Houses[house].coords.enter.z - Config.MinZOffset}
     LoadDecorations(house)
-    
+
     if Config.Houses[house].tier == 1 then
-        data = exports['rl-interior']:CreateTier1House(coords)
-    elseif Config.Houses[house].tier == 2 then
-		data = exports['rl-interior']:CreateTier1HouseFurnished(coords)
-    elseif Config.Houses[house].tier == 3 then
+        data = exports['rl-interior']:CreateCaravanShell(coords)
+        --data = exports['rl-interior']:CreateTier1House(coords)
+	elseif Config.Houses[house].tier == 2 then
         data = exports['rl-interior']:CreateApartmentShell(coords)
-    elseif Config.Houses[house].tier == 4 then
+        --data = exports['rl-interior']:CreateMichaelShell(coords)
+	elseif Config.Houses[house].tier == 3 then
+        data = exports['rl-interior']:CreateFranklinAuntShell(coords)
+        --data = exports['rl-interior']:CreateTrevorsShell(coords)
+	elseif Config.Houses[house].tier == 4 then
+        data = exports['rl-interior']:CreateTrevorsShell(coords)
+        --data = exports['rl-interior']:CreateFranklinShell(coords)
+	elseif Config.Houses[house].tier == 5 then
+        data = exports['rl-interior']:CreateTier1House(coords)
+        --data = exports['rl-interior']:CreateFranklinAuntShell(coords)
+	elseif Config.Houses[house].tier == 6 then
         data = exports['rl-interior']:CreateMichaelShell(coords)
+        --data = exports['rl-interior']:CreateApartmentShell(coords)
+	elseif Config.Houses[house].tier == 7 then
+        data = exports['rl-interior']:CreateFranklinShell(coords)
+        --data = exports['rl-interior']:CreateCaravanShell(coords)
     end
+
 
     Citizen.Wait(100)
     houseObj = data[1]
@@ -719,13 +753,26 @@ function enterNonOwnedHouse(house)
     LoadDecorations(house)
 
     if Config.Houses[house].tier == 1 then
-        data = exports['rl-interior']:CreateTier1House(coords)
-    elseif Config.Houses[house].tier == 2 then
-        data = exports['rl-interior']:CreateTier1HouseFurnished(coords)
-    elseif Config.Houses[house].tier == 3 then
+        data = exports['rl-interior']:CreateCaravanShell(coords)
+        --data = exports['rl-interior']:CreateTier1House(coords)
+	elseif Config.Houses[house].tier == 2 then
         data = exports['rl-interior']:CreateApartmentShell(coords)
-    elseif Config.Houses[house].tier == 4 then
+        --data = exports['rl-interior']:CreateMichaelShell(coords)
+	elseif Config.Houses[house].tier == 3 then
+        data = exports['rl-interior']:CreateFranklinAuntShell(coords)
+        --data = exports['rl-interior']:CreateTrevorsShell(coords)
+	elseif Config.Houses[house].tier == 4 then
+        data = exports['rl-interior']:CreateTrevorsShell(coords)
+        --data = exports['rl-interior']:CreateFranklinShell(coords)
+	elseif Config.Houses[house].tier == 5 then
+        data = exports['rl-interior']:CreateTier1House(coords)
+        --data = exports['rl-interior']:CreateFranklinAuntShell(coords)
+	elseif Config.Houses[house].tier == 6 then
         data = exports['rl-interior']:CreateMichaelShell(coords)
+        --data = exports['rl-interior']:CreateApartmentShell(coords)
+	elseif Config.Houses[house].tier == 7 then
+        data = exports['rl-interior']:CreateFranklinShell(coords)
+        --data = exports['rl-interior']:CreateCaravanShell(coords)
     end
 
     houseObj = data[1]
@@ -992,7 +1039,7 @@ AddEventHandler('rl-houses:client:viewHouse', function(houseprice, brokerfee, ba
         taxes = taxes,
         totalprice = (houseprice + brokerfee + bankfee + taxes)
     })
-end)
+end) 
 
 function SetClosestHouse()
     local pos = GetEntityCoords(GetPlayerPed(-1), true)
