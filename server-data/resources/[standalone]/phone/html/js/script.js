@@ -2392,7 +2392,7 @@ $('#confirm-modal-accept').click(function (event) {
 
 $('.dial-button').click(function (e) {
     if ($('#call-number').val().length < 10)
-        $('#call-number').val(parseInt($('#call-number').val().toString() + $(this).text()));
+        $('#call-number').val($('#call-number').val().toString() + $(this).text());
     M.updateTextFields();
 });
 

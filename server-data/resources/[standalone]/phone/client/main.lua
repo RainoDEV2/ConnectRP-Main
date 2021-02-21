@@ -400,6 +400,7 @@ AddEventHandler("phone:client:sendRecentCalls", function(sentCalls)
 end)
 
 RegisterNUICallback('getCallHistory', function()
+  calls = {} -- Empty calls table
   TriggerServerEvent('phone:server:getRecentCalls')
   Citizen.Wait(500)
 
@@ -2300,9 +2301,9 @@ end
 
 function receivingCall(callFrom)
   callTimer = 8
-  while (callTimer > 0 and callStatus == isReceivingCall) do
-    if hasPhone() then
-      RLCore.Functions.Notify('Call from: ' .. callFrom .. " /ans or /h")
+  if hasPhone() then
+    RLCore.Functions.Notify('Call from: ' .. callFrom .. " /ans or /h")
+    while (callTimer > 0 and callStatus == isReceivingCall) do
       if phoneNotifications then
         TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 2.0, 'ringing', 0.1)
       end
