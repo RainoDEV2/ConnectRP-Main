@@ -2302,14 +2302,14 @@ end
 function receivingCall(callFrom)
   callTimer = 8
   if hasPhone() then
-    RLCore.Functions.Notify('Call from: ' .. callFrom .. " /ans or /h")
+    RLCore.Functions.Notify('Call from: ' .. callFrom .. " /a or /h")
     while (callTimer > 0 and callStatus == isReceivingCall) do
       if phoneNotifications then
         TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 2.0, 'ringing', 0.1)
       end
+      Citizen.Wait(2300)
+      callTimer = callTimer - 1
     end
-    Citizen.Wait(2300)
-    callTimer = callTimer - 1
   end
   if callStatus ~= isCallInProgress then
     endCall()
