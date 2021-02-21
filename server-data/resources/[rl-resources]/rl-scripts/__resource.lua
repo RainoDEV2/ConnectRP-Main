@@ -6,9 +6,10 @@ server_scripts {
 	"server/consumables.lua",
 	"server/dvall.lua",
 	"server/hostage.lua",
+	"server/scoreboard.lua",
 	"server/main.lua",
 	"config.lua",
-	"server/heli_server.lua",
+	"server/heli_server.lua"
 }
 
 client_scripts {
@@ -39,7 +40,7 @@ client_scripts {
 	"client/push.lua",
 	"client/heli_client.lua",
 	--"client/offroad.lua",
-	"@warmenu/warmenu.lua",
+	"@warmenu/warmenu.lua"
 }
 
 exports {
