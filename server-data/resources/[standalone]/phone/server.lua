@@ -540,6 +540,35 @@ local contacts = {
     {citizenid = "DQJ22077", name = "Juan Sanchez", number = "0545493328"}
 }
 
+local invoices = {
+    {citizenid = "TYU96802", amount = 1000, society = "police", title = "SanAndreas State Fine"},
+    {citizenid = "HKP78058", amount = 5000, society = "police", title = "Weapon"},
+    {citizenid = "FDO16662", amount = 550, society = "police", title = "Robbery"},
+    {citizenid = "PHU97234", amount = 69, society = "police", title = "Arrest#001"},
+    {citizenid = "KJI93025", amount = 1500, society = "police", title = ""},
+    {citizenid = "IAV98865", amount = 6500, society = "police", title = "Gunlicense"},
+    {citizenid = "FDO16662", amount = 22500, society = "police", title = "SanAndreas State Fine"},
+    {citizenid = "PHU97234", amount = 5000, society = "police", title = "SanAndreas State Fine"},
+    {citizenid = "HWN91560", amount = 6500, society = "police", title = "gun"},
+    {citizenid = "KJI93025", amount = 2000, society = "police", title = "Fine"},
+    {citizenid = "FDO16662", amount = 10000, society = "police", title = "arrest3"},
+    {citizenid = "FDO16662", amount = 250, society = "police", title = "SanAndreas State Fine"},
+    {citizenid = "FDO16662", amount = 12750, society = "police", title = "Arrest"},
+    {citizenid = "FDO16662", amount = 250, society = "police", title = "None"},
+    {citizenid = "FDO16662", amount = 250, society = "police", title = "SanAndreas State Fine"},
+    {citizenid = "XUB83326", amount = 1000, society = "police", title = "None"},
+    {citizenid = "FZN85763", amount = 3500, society = "police", title = "None"},
+    {citizenid = "GFR82236", amount = 5500, society = "police", title = "Arrest"},
+    {citizenid = "WRY50189", amount = 4000, society = "police", title = "SanAndreas State Fine"},
+    {citizenid = "OGH20166", amount = 54000, "mechanic", "moto"},
+    {citizenid = "ESL17467", amount = 7000, society = "police", title = "Dirty"},
+    {citizenid = "FDO16662", amount = 8500, society = "police", title = "SanAndreas State Fine"},
+    {citizenid = "FDO16662", amount = 9750, society = "police", title = "Arrest"},
+    {citizenid = "MZU45665", amount = 3000, society = "police", title = "Bank"},
+    {citizenid = "ZYG35649", amount = 32250, society = "police", title = "SanAndreas State Fine"},
+    {citizenid = "ZYG35649", amount = 34250, society = "police", title = "SanAndreas State Fine"}
+}
+
 Citizen.CreateThread(function()
     exports.ghmattimysql:execute("SELECT * FROM phone_contacts", {}, function(foundContacts)
         if #foundContacts <= 0 then
@@ -554,6 +583,26 @@ Citizen.CreateThread(function()
                 end)
                 
                 if next(contacts, i) == nil then
+                    print("[Phone]: Added all contacts from old phone into DB")
+                end
+            end
+        end
+    end)
+    
+    exports.ghmattimysql:execute("SELECT * FROM phone_invoices", {}, function(foundInvoices)
+        if #foundInvoices <= 0 then
+            print("[Phone]: Importing invoices from old phone into DB")
+            for i, v in pairs(invoices) do
+                exports.ghmattimysql:execute('INSERT INTO phone_invoices (citizenid, amount, society, title) VALUES (@citizenid, @amount, @society, @title)', {
+                    ['@citizenid'] = v.citizenid,
+                    ['@amount'] = v.amount,
+                    ["@society"] = v.society,
+                    ["@title"] = v.title
+                }, function(result)
+                    -- print(json.encode(result))
+                end)
+                
+                if next(invoices, i) == nil then
                     print("[Phone]: Added all contacts from old phone into DB")
                 end
             end
