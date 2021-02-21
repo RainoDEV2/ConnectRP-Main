@@ -777,7 +777,7 @@ RegisterNetEvent("phone:Garage")
 AddEventHandler("phone:Garage", function(ownedVehicles)
   vehicles = ownedVehicles
   local showCarPayments = false
-  print("VEHS", json.encode(ownedVehicles))
+  -- print("VEHS", json.encode(ownedVehicles))
 
   local parsedVehicleData = {}
   for i, v in pairs(ownedVehicles) do
@@ -1693,7 +1693,6 @@ Citizen.CreateThread(function()
           CAMERA_STATE = nil
         end
 
-        print(CAMERA_STATE)
         if CAMERA_STATE == "FINISHED_CREATING" then
           local buttonsMessage = {
             {name = "Take Picture", button = 191},
