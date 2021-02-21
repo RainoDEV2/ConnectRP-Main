@@ -755,6 +755,12 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
             return;
         } else if ($toAmount == 0) {
             $toAmount=fromData.amount
+        } 
+        
+        if ($toAmount == 0 && $fromInv.attr("data-inventory").split("-")[0] == "dedeshop") {
+            console.log("AMOUNT IS ZERO IN SHOP!");
+            InventoryError($fromInv, $fromSlot);
+            return;
         }
         if((toData != undefined || toData != null) && toData.name == fromData.name && !fromData.unique) {
             var newData = [];
