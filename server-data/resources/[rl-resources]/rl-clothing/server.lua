@@ -192,6 +192,8 @@ AddEventHandler("raid_clothes:get_outfit",function(slot)
                 ["proptextures"] = json.encode(data.proptextures),
             }
 
+            -- @rl-clothing/server.lua:195: attempt to concatenate a table value
+
             local set = "model = '" .. data.model .. "', drawables = '" .. json.decode(result[1].drawables) .. "', props = '" .. json.decode(result[1].props) .. "',drawtextures = '" .. json.decode(result[1].drawtextures) .. "',proptextures = '" .. json.decode(result[1].proptextures) .. "'"
             exports.ghmattimysql:execute("UPDATE character_current SET "..set.." WHERE citizenid = '" .. characterId .. "'",values)
         else
