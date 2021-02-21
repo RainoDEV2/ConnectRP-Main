@@ -7,8 +7,6 @@ end)
 
 -- Thanks Stroudy <3
 function CreateHotelFurnished(spawn)
-	TriggerEvent("debug", 'Interior: Hotel Furnished', 'success')
-
 	local object = {}
 
 	local POIOffsets = {}
@@ -95,8 +93,6 @@ function CreateHotelFurnished(spawn)
 end
 
 function CreateApartmentFurnished(spawn)
-	TriggerEvent("debug", 'Interior: Apartment Furnished', 'success')
-
 	local objects = {}
 
     local POIOffsets = {}
@@ -127,8 +123,6 @@ function CreateApartmentFurnished(spawn)
 end
 
 function CreateMichaelShell(spawn)
-	TriggerEvent("debug", 'Interior: Michael Shell', 'success')
-
 	local objects = {}
 
     local POIOffsets = {}
@@ -151,8 +145,6 @@ function CreateMichaelShell(spawn)
 end
 
 function CreateTrevorsShell(spawn)
-	TriggerEvent("debug", 'Interior: Trevors Shell', 'success')
-
 	local objects = {}
 
     local POIOffsets = {}
@@ -175,8 +167,6 @@ function CreateTrevorsShell(spawn)
 end
 
 function CreateLesterShell(spawn)
-	TriggerEvent("debug", 'Interior: Lester Shell', 'success')
-
 	local objects = {}
 
     local POIOffsets = {}
@@ -199,8 +189,6 @@ function CreateLesterShell(spawn)
 end
 
 function CreateGunshopShell(spawn)
-	TriggerEvent("debug", 'Interior: Gunshop Shell', 'success')
-
 	local objects = {}
 
     local POIOffsets = {}
@@ -223,8 +211,6 @@ function CreateGunshopShell(spawn)
 end
 
 function CreateTrapHouseShell(spawn)
-	TriggerEvent("debug", 'Interior: TrapHouse Shell', 'success')
-
 	local objects = {}
 
     local POIOffsets = {}
@@ -248,8 +234,6 @@ end
 
 -- Thanks Stroudy <3
 function CreateTier1HouseFurnished(spawn, isBackdoor)
-	TriggerEvent("debug", 'Interior: Tier 1 House Furnished', 'success')
-
     local objects = {}
 
     local POIOffsets = {}

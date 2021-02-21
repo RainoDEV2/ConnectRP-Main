@@ -648,7 +648,7 @@ end
 
 -----modified buying
 RegisterNUICallback('btnAttempCreateHouse', function(data, cb)
-  TriggerEvent("tp-housing:client:createHouses", data.price, data.tier)
+  TriggerEvent("rl-houses:client:createHouses", data.price, data.tier) 
   loadedHouse = false
   local mapLocationsObject = {}
   SendNUIMessage({openSection = "HOUSE", locations = mapLocationsObject })
@@ -1484,7 +1484,7 @@ function openGuiNow()
 
     local isREAgent = false
 
-    if PlayerJob.name == "police" then
+    if PlayerJob.name == "realestate" then
      isREAgent = true
     end
 
@@ -3001,7 +3001,7 @@ function RadioPlayAnim (status, freeze, force)
 
 	if status ~= 'out' and currentStatus == 'out' then
 		Citizen.Wait(380)
-		newRadioProp()
+		--newRadioProp()
 	end
 
 	lastDict = dict

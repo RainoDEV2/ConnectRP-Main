@@ -51,6 +51,7 @@ AddEventHandler('rl-houses:server:addNewHouse', function(street, coords, price, 
 	local houseCount = GetHouseStreetCount(street)
 	local name = street:lower() .. tostring(houseCount)
 	local label = street .. " " .. tostring(houseCount)
+	
 	RLCore.Functions.ExecuteSql(false, "INSERT INTO `houselocations` (`name`, `label`, `coords`, `owned`, `price`, `tier`) VALUES ('"..name.."', '"..label.."', '"..json.encode(coords).."', 0,"..price..", "..tier..")")
 	Config.Houses[name] = {
 		coords = coords,
@@ -80,13 +81,12 @@ end)
 
 RegisterServerEvent('rl-houses:server:viewHouse')
 AddEventHandler('rl-houses:server:viewHouse', function(house)
-	local src     		= source
-	local pData 		= RLCore.Functions.GetPlayer(src)
-
-	local houseprice   	= Config.Houses[house].price
-	local brokerfee 	= 0
-	local bankfee 		= 0
-	local taxes 		= 0
+	local src     		= source 
+	local pData 		= RLCore.Functions.GetPlayerFromId(src)
+	local houseprice   	= Config.Houses[house].price 
+	local brokerfee 	= (houseprice / 100 * 5)
+	local bankfee 		= (houseprice / 100 * 10)  
+	local taxes 		= (houseprice / 100 * 6)
 
 	TriggerClientEvent('rl-houses:client:viewHouse', src, houseprice, brokerfee, bankfee, taxes, pData.PlayerData.charinfo.firstname, pData.PlayerData.charinfo.lastname)
 end)
@@ -147,7 +147,7 @@ RLCore.Functions.CreateCallback('rl-houses:server:hasKey', function(source, cb, 
 		end
 	end
 
-	if RLCore.Functions.HasPermission(src, 'god') then
+	if RLCore.Functions.HasPermission(src, 'god') or Player.PlayerData.job.name == "realestate" then 
 		cb(true)
 		return
 	end

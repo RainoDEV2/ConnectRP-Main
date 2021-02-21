@@ -8,10 +8,13 @@ Config.Houses = {}
 Config.HouseGarages = {}
 
 Config.MinAmounts = {
-    ["1"] = 20000,
+    ["1"] = 25000,
     ["2"] = 40000,
     ["3"] = 55000,
     ["4"] = 80000,
+	["5"] = 11000,
+	["6"] = 15000,
+	["7"] = 185000,
 }
 
 Config.Locations = {

@@ -1,6 +1,4 @@
 function CreateHotel(spawn)
-    TriggerEvent("debug", 'Interior: Hotel', 'success')
-
     local objects = {}
 
     local POIOffsets = {}
@@ -28,8 +26,6 @@ function CreateHotel(spawn)
 end
 
 function CreateTier1House(spawn, isBackdoor)
-    TriggerEvent("debug", 'Interior: Tier 1 House', 'success')
-
     local objects = {}
 
     local POIOffsets = {}
@@ -67,8 +63,6 @@ function CreateTier1House(spawn, isBackdoor)
 end
 
 function CreateTier2House(spawn, isBackdoor)
-    TriggerEvent("debug", 'Interior: Tier 2 House', 'success')
-
     local objects = {}
 
     local POIOffsets = {}
@@ -100,8 +94,6 @@ function CreateTier2House(spawn, isBackdoor)
 end
 
 function CreateTier3House(spawn, isBackdoor)
-    TriggerEvent("debug", 'Interior: Tier 3 House', 'success')
-
     local objects = {}
 
     local POIOffsets = {}
