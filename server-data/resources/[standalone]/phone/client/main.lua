@@ -2071,32 +2071,6 @@ AddEventHandler('phone:makecall', function(pnumber)
   end
 end)
 
-
-
-local PayPhoneHex = {
-  [1] = 1158960338,
-  [2] = -78626473,
-  [3] = 1281992692,
-  [4] = -1058868155,
-  [5] = -429560270,
-  [6] = -2103798695,
-  [7] = 295857659,
-  [8] = -1559354806,
-}
-
-function checkForPayPhone()
-  for i = 1, #PayPhoneHex do
-    local objFound = GetClosestObjectOfType( GetEntityCoords(PlayerPedId()), 5.0, PayPhoneHex[i], 0, 0, 0)
-    if DoesEntityExist(objFound) then
-      return true
-    end
-  end
-  return false
-end
-
-
-
-
 --[[ The following happens for regular calls too ]]
 
 RegisterNUICallback('callContact', function(data, cb)
