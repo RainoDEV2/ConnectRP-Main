@@ -2492,10 +2492,6 @@ AddEventHandler('Client:UpdateTweets', function(data)
   SendNUIMessage({openSection = "twatter", twats = lstTweets, myhandle = handle})
 end)
 
-RegisterCommand("fatfuck", function(source, args, raw)
-  TriggerEvent("Client:UpdateTweet", {handle = "@imObese2021", message = "Help me lose weight"})
-end)
-
 RegisterNetEvent('Client:UpdateTweet')
 AddEventHandler('Client:UpdateTweet', function(data, handle2)
     local src = source
