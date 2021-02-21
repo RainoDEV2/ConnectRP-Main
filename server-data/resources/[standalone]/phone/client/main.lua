@@ -2812,15 +2812,21 @@ end)
 
 RegisterNetEvent('getAccountInfo')
 AddEventHandler('getAccountInfo', function(cash, bank, licenses)
-    local responseObject = {
-        cash = cash,
-        bank = bank,
-        job = PlayerJob.label .. ', ' .. PlayerJob.grade.name,
-        licenses = licenses, 
-        pagerStatus = true
-    }
-    --exports['mythic_notify']:SendAlert('inform', 'Basic mode.', 2500)
-    SendNUIMessage({openSection = "accountInformation", response = responseObject})
+  if PlayerJob.label == "Unemployed" and PlayerJob.grade.level == 0 then
+    PlayerJob.grade.name = ""
+  else
+    PlayerJob.grade.name = ", " ..  PlayerJob.grade.name
+  end
+
+  local responseObject = {
+      cash = cash,
+      bank = bank,
+      job = PlayerJob.label .. "" .. PlayerJob.grade.name,
+      licenses = licenses, 
+      pagerStatus = true
+  }
+  --exports['mythic_notify']:SendAlert('inform', 'Basic mode.', 2500)
+  SendNUIMessage({openSection = "accountInformation", response = responseObject})
 end)
 
 
