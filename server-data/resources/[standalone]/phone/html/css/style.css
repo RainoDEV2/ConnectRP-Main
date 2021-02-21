@@ -757,6 +757,55 @@ body {
     font-weight: bold !important;
 }
 
+.banking-container {
+    height: calc(100% + 5px);
+}
+
+.banking-header {
+    font-size: 1.3em;
+}
+
+.banking-entries-header {
+    height: 10%;
+}
+
+.banking-entries-wrapper {
+    overflow-y: auto;
+    height: 80%;
+    position: relative;
+    /* background-color: red; */
+}
+
+.banking-footer {
+    position: relative;
+    bottom: 0px;
+    height: 10%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.banking-entries {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+.banking-content {
+    padding: 10px !important;
+    word-break: break-word;
+}
+
+.banking-title {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+}
+
+.banking-balance {
+    margin-top: 5px;
+}
+
 /* Account Information */
 
 .account-information-container {

@@ -312,6 +312,11 @@ $(document).ready(function() {
                 openContainer("twatter");
                 $('.notification-twatter').fadeOut(150);
                 break;
+            case "banking":
+                $(".banking-entries").empty();
+                addBankData(item.balance, item.invoices);
+                openContainer("banking")
+                break;
             case "accountInformation":
                 addAccountInformation(item.response);
                 openContainer("account-information");
@@ -1209,6 +1214,37 @@ function addTweets(tweets, myHandle) {
             }
         }
     }
+}
+
+addBankData = function(balance, invoices) {
+    $(".banking-balance").text("Bank Balance - " + formatMoney(balance));
+    invoices.forEach(element => {
+        if (element.id && element.amount && element.society && element.title) {
+            element.amount = formatMoney(element.amount);
+            var bankingEntry = $(`<div class="row no-padding">
+                <div class="col s12">
+                    <div class="card green darken-3 bank-card">
+                        <div class="card-content white-text banking-content">
+                            <span class="card-title banking-title">${element.title} - ${element.amount}</span>
+                            <p>This invoice is payed to the ${capitalize(element.society)}.</p>
+                        </div>
+
+                        <div class="card-action" style="padding-top: 8px;padding-right: 16px;padding-bottom: 8px;padding-left: 16px;">
+                            <span data-invoiceid="${element.id}" class="pay-invoice white-text"><i class="fas fa-check fa-1x"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>`);
+            $('.banking-entries').prepend(bankingEntry);
+        } else {
+            console.log("UNABLE TO GET INVOICE DATA, MAKE A SUPPORT TICKET ON DISCORD!");
+        }
+    })
+}
+
+function capitalize (s) {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
 function addCallHistoryEntries(callHistory) {
@@ -2306,6 +2342,14 @@ $('.twatter-entries').on('click', '.twat-reply', function () {
     $('#twat-modal').modal('open');
     $('#twat-form #twat-body').text($(this).data('poster') + " ");
     M.updateTextFields();
+});
+
+$('.banking-entries').on('click', '.pay-invoice', function () {
+    // $('#twat-modal').modal('open');
+    // $('#twat-form #twat-body').text($(this).data('invoiceid') + " ");
+    // M.updateTextFields();
+    console.log("CLICKED PAY INVOICE ON INVOICE ID (" + $(this).data('invoiceid') + ")!");
+    $.post('http://phone/payInvoice', JSON.stringify({ invoice_id: $(this).data('invoiceid')}));
 });
 
 $('.call-history-entries').on('click', '.btn-call-history-add-contact', function () {

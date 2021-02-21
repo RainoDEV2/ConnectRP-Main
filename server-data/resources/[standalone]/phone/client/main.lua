@@ -2522,6 +2522,41 @@ AddEventHandler('Client:UpdateTweet', function(data, handle2)
     end
 end)
 
+RegisterNetEvent("phone:client:RecieveBanking")
+AddEventHandler("phone:client:RecieveBanking", function(balance, invoices)
+  -- local bankTransactions = {}
+  local bankInvoices = {}
+
+  -- for i, transactionData in pairs(transactions) do
+  --   bankTransactions[#bankTransactions + 1] = {
+  --     id = transactionData.record_id,
+  --     deposited = transactionData.deposited,
+  --     withdraw = transactionData.withdraw,
+  --     balance = transactionData.balance,
+  --     date = transactionData.date,
+  --     type = transactionData.type
+  --   }
+  -- end
+  
+  for i, invoiceData in pairs(invoices) do
+    bankInvoices[#bankInvoices + 1] = {
+      id = invoiceData.invoiceid,
+      amount = invoiceData.amount,
+      society = invoiceData.society,
+      title = invoiceData.title
+    }
+  end
+
+  -- print("RECIEVED & PROCESSED BANKING DATA", "$" .. balance, json.encode(invoices))
+  
+  SendNUIMessage({openSection = "banking", balance = balance, invoices = bankInvoices})
+end)
+
+RegisterNUICallback("payInvoice", function(data, cb)
+  TriggerServerEvent("phone:server:PayInvoice", data.invoice_id)
+  cb("ok")
+end)
+
 function createGeneralAreaBlip(alertX, alertY, alertZ)
   local genX = alertX + math.random(-50, 50)
   local genY = alertY + math.random(-50, 50)
@@ -2717,6 +2752,11 @@ function UpdateTwitter(tweetHandle, message)
   }
   SendNUIMessage({openSection = "twatter", twats = lstTweets, myhandle = handle})
 end
+
+RegisterNUICallback("btnBank", function(data, cb)
+  TriggerServerEvent('phone:server:GetBanking')
+  cb("ok")
+end)
 
 RegisterNUICallback('btnCamera', function()
   SetNuiFocus(false,false)

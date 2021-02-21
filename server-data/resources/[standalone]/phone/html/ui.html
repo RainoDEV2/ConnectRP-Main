@@ -129,16 +129,22 @@
                             <div class="col s3">
                                 <div class="rounded-square yellow phone-button" data-action="notificationsYP" aria-label="Yellow Pages" data-balloon-pos="up"><i class="fas fa-id-card icon"></i></div>
                             </div>
+
                             <div class="col s3">
-                                <div class="rounded-square brown lighten-1 phone-button" data-action="loadGPS" aria-label="GPS" data-balloon-pos="left"><i class="fas fa-map-marked-alt"></i></div>
+                                <div class="rounded-square blue lighten-1 phone-button" data-action="btnTwatter" aria-label="Twatter" data-balloon-pos="left"><i class="fab fa-twitter"></i></div>
+                            </div>
+                            
+                            <div class="col s3">
+                                <div class="rounded-square green lighten-1 phone-button" data-action="btnBank" aria-label="Invoices" data-balloon-pos="left"><i class="fas fa-university"></i></div>
+                            </div>
+
+                            <div class="col s3">
+                                <div class="rounded-square brown lighten-1 phone-button" data-action="loadGPS" aria-label="GPS" data-balloon-pos="right"><i class="fas fa-map-marked-alt"></i></div>
                             </div>
 
                             <!-- <div class="col s3">
                                 <div class="rounded-square blue darken-4 phone-button" data-action-button="browser" data-site="https://www.twitchparadise.com/forum/index.php" aria-label="Los Santos Web" data-balloon-pos="right"><i class="fas fa-globe"></i></div>
                             </div> -->
-                            <div class="col s3">
-                                <div class="rounded-square blue lighten-1 phone-button" data-action="btnTwatter" aria-label="Twatter" data-balloon-pos="left"><i class="fab fa-twitter"></i></div>
-                            </div>
 
                             <div class="col s3">
                                 <div class="rounded-square cyan lighten-2 phone-button" data-action="btnMute" aria-label="Toggle Calls" data-balloon-pos="right">
@@ -167,7 +173,7 @@
                             </div> -->
 
                             <div class="col s3">
-                                <div class="rounded-square teal phone-button" data-action="phone:selfie" aria-label="Selfie Camera" data-balloon-pos="up-left">
+                                <div class="rounded-square teal phone-button" data-action="phone:selfie" aria-label="Selfie Camera" data-balloon-pos="left">
                                     <i class="fa fa-camera"></i></div>
                             </div>
 
@@ -412,9 +418,7 @@
                         <div class="row twatter-header blue lighten-1">
                             <div class="col s10 twatter-handle white-text"></div>
                             <div class="col s2 twatter-add">
-                                <a class="phone-button white-text twatter-toggle-notification"><i id="twatter-toogle-notification-icon"
-                    class="fas fa-bell"></i>
-                </a>
+                                <a class="phone-button white-text twatter-toggle-notification"><i id="twatter-toogle-notification-icon" class="fas fa-bell"></i></a>
                             </div>
                         </div>
                         <div class="row twatter-entries-wrapper scrollbar--dark no-padding ">
@@ -424,6 +428,20 @@
                         <div class="row twatter-footer center-align">
                             <button data-target="twat-modal" class="btn modal-trigger">Twat</button>
                         </div>
+                    </div>
+                    <div class="banking-container phone-app">
+                        <div class="row banking-header">
+                            <div class="col s10 banking-balance white-text"></div>
+                        </div>
+
+                        <div class="row banking-entries-wrapper scrollbar--dark no-padding ">
+                            <div class="row banking-entries">
+                            </div>
+                        </div>
+
+                        <!-- <div class="row banking-footer center-align">
+                            <button data-target="twat-modal" class="btn modal-trigger">Twat</button>
+                        </div> -->
                     </div>
                     <div class="account-information-container phone-app white-text">
                         <div class="row account-information-wrapper">
@@ -768,7 +786,7 @@
                             <div class="real-estate-footer real-estate-header">
                             <div class="row no-padding">
                                 <div class="col s12">
-                                    <button data-target="real-estate-create-modal" aria-label="Create House" data-balloon-pos="up" class="btn-small modal-trigger orange"><i
+                                    <button data-target="real-estate-create-modal" aria-label="Create House" data-balloon-pos="down" class="btn-small modal-trigger orange"><i
                                         class="fas fa-dollar-sign icon"></i>Create</button>
                                     </div>
                                 </div>
@@ -1247,7 +1265,7 @@
                                     </div>
                                     <div class="row no-padding ">
                                         <div class="input-field col s12 input-field-small">
-                                        Shell: <br>
+                                        Tier: <br>
                                         1 | Trevors Caravan <br>
                                         2 | Small Apartment <br>
                                         3 | Franklin Aunts Home <br>
@@ -1262,10 +1280,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button id="real-estate-create-submit" type="submit" class="waves-effect waves-green btn-flat">
-                    <i class="fas fa-dollar-sign fa-2x icon"></i> Create House
-                  </button>
                                     <button class="modal-close waves-effect waves-green btn-flat">Cancel</button>
+                                    <button id="real-estate-create-submit" type="submit" class="waves-effect waves-green btn-flat"><i class="fas fa-dollar-sign fa-2x icon"></i> Create House</button>
                                 </div>
                             </div>
                         </form>

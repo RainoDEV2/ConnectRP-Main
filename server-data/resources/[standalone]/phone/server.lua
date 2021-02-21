@@ -1246,3 +1246,65 @@ AddEventHandler('phone:server:GiveContactDetails', function(PlayerId)
         args = {SuggestionData.name[1], SuggestionData.name[2], SuggestionData.number}
     })
 end)
+
+RegisterNetEvent("phone:server:GetBanking")
+AddEventHandler("phone:server:GetBanking", function()
+    local src = source
+    local xPlayer = RLCore.Functions.GetPlayer(src)
+    while not xPlayer do
+        xPlayer = RLCore.Functions.GetPlayer(src)
+        Wait(0)
+    end
+
+    exports.ghmattimysql:execute("SELECT * FROM phone_invoices WHERE citizenid = @citizenid", {["@citizenid"] = xPlayer.PlayerData.citizenid}, function(foundInvoices)
+        print(json.encode(foundInvoices))
+        TriggerClientEvent("phone:client:RecieveBanking", src, xPlayer.PlayerData.money['bank'], foundInvoices)
+    end)
+end)
+
+local handlingInvoice = {}
+
+RegisterNetEvent("phone:server:PayInvoice")
+AddEventHandler("phone:server:PayInvoice", function(invoice_id)
+    local src = source
+    if not handlingInvoice[src] then
+        handlingInvoice[src] = true
+        local xPlayer = RLCore.Functions.GetPlayer(src)
+        while not xPlayer do
+            xPlayer = RLCore.Functions.GetPlayer(src)
+            Wait(0)
+        end
+
+        exports.ghmattimysql:execute("SELECT `amount`, `title`, `society` FROM phone_invoices WHERE citizenid = @citizenid AND invoiceid = @invoiceid LIMIT 1", {["@citizenid"] = xPlayer.PlayerData.citizenid, ["@invoiceid"] = invoice_id}, function(result)
+            if xPlayer.PlayerData.money['bank'] >= result[1].amount then
+                xPlayer.Functions.RemoveMoney('bank', result[1].amount)
+                TriggerEvent("bb-bossmenu:server:addAccountMoney", result[1].society, result[1].amount)
+                exports.ghmattimysql:execute('DELETE FROM phone_invoices WHERE citizenid = @citizenid AND invoiceid = @invoiceid LIMIT 1', {
+                    ['@citizenid'] = xPlayer.PlayerData.citizenid,
+                    ['@invoiceid'] = tonumber(invoice_id)
+                }, function (deletedData)
+                    if deletedData.affectedRows > 0 then
+                        -- print("DELETED INVOICE")
+                        exports.ghmattimysql:execute("SELECT * FROM phone_invoices WHERE citizenid = @citizenid", {["@citizenid"] = xPlayer.PlayerData.citizenid}, function(foundInvoices)
+                            -- print(json.encode(foundInvoices))
+                            TriggerClientEvent("phone:client:RecieveBanking", src, xPlayer.PlayerData.money['bank'] - result[1].amount, foundInvoices)
+                            TriggerClientEvent('RLCore:Notify', src, "You have payed your fine " .. result[1].title .. " to the " .. FirstUppercase(result[1].society) .. ".", "success")
+                            Wait(500)
+                            handlingInvoice[src] = false
+                        end)
+                    end
+                end)
+            else
+                TriggerClientEvent('RLCore:Notify', src, "You need $" .. result[1].amount - xPlayer.PlayerData.money['bank'] .. " more to pay this fine!", "error")
+                Wait(500)
+                handlingInvoice[src] = false
+            end
+        end)
+    -- else
+        -- print("FUCKER TRYNA SPAM!")
+    end
+end)
+
+function FirstUppercase(str)
+    return (str:gsub("^%l", string.upper))
+end

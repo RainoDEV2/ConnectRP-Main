@@ -54,3 +54,14 @@ CREATE TABLE IF NOT EXISTS `phone_yp` (
   KEY `citizenid` (`citizenid`),
   CONSTRAINT `phone_yp_ibfk_1` FOREIGN KEY (`citizenid`) REFERENCES `players` (`citizenid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `phone_invoices` (
+  `invoiceid` int(11) NOT NULL AUTO_INCREMENT,
+  `citizenid` varchar(50) DEFAULT NULL,
+  `amount` int(11) NOT NULL DEFAULT '0',
+  `society` varchar(50) DEFAULT NULL,
+  `title` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`invoiceid`),
+  KEY `citizenid` (`citizenid`),
+  CONSTRAINT `phone_invoices_ibfk_1` FOREIGN KEY (`citizenid`) REFERENCES `players` (`citizenid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
