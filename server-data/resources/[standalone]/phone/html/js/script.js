@@ -1268,6 +1268,7 @@ function addCallHistoryEntries(callHistory) {
                         <i class="fas fa-phone-alt fa-2x btn-contacts-call" data-name="${callEntry.name}" data-number="${callEntry.number}"></i>
                         <i class="fas fa-comment-medical fa-2x btn-contacts-send-message" data-number="${callEntry.number}"></i>
                         <i class="fas fa-user-plus fa-2x btn-call-history-add-contact" data-number="${callEntry.number}"></i>
+                        <span class="right black-text" aria-label="${moment.utc(callEntry.date).local().calendar(null, calendarFormatDate)}" data-balloon-pos="down">${moment.utc(callEntry.date).local().fromNow()}</span>
                     </div>
                 </li>`);
                 element.data("receiver", number);
