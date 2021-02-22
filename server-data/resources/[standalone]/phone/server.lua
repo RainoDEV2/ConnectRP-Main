@@ -1,12 +1,18 @@
---[[ MySQL.ready(function ()
-    TriggerEvent('deleteAllYP')
-end)
- ]]
 RLCore = nil
 TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
  
 
-local callID = nil 
+local callID = nil  
+
+AddEventHandler("onResourceStart", function(resource)
+	if (resource ~= GetCurrentResourceName()) then return end;
+    TriggerEvent('deleteAllYP')
+end);
+
+RegisterNetEvent('deleteAllYP') 
+AddEventHandler('deleteAllYP', function()
+    exports.ghmattimysql:execute('DELETE FROM phone_yp', {}, function(result) end)
+end)
 
 --[[ Twitter Stuff ]]
 RegisterNetEvent('GetTweets')
@@ -18,7 +24,7 @@ AddEventHandler('GetTweets', function(onePlayer)
         else
             TriggerClientEvent('Client:UpdateTweets', src, foundTweets)
         end
-    end)
+    end) 
 end)
 
 RegisterNetEvent('Tweet')
@@ -105,7 +111,7 @@ AddEventHandler('deleteContact', function(name, number)
     end)
 end)
 
-local contacts = {
+--[[ local contacts = {
     {citizenid = "QGQ76826", name = "Bonnie", number = "0533887859"},
     {citizenid = "IYQ85782", name = "JJ", number = "0584511778"},
     {citizenid = "EMD89976", name = "Fuego", number = "0513982114"},
@@ -608,7 +614,7 @@ Citizen.CreateThread(function()
             end
         end
     end)
-end)
+end) ]]
 
 --[[ Phone calling stuff ]]
 
