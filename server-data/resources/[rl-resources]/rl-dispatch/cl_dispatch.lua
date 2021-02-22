@@ -835,7 +835,7 @@ RegisterCommand('cb', function(source)
 end)
 
 
---[[ Citizen.CreateThread(function()
+Citizen.CreateThread(function()
     while true do
       local ped = PlayerPedId()
       local pos = GetEntityCoords(ped)
@@ -849,7 +849,7 @@ end)
   
       Citizen.Wait(250)
     end
-end) ]]
+end)
 
 function getRandomNpc(basedistance)
 
