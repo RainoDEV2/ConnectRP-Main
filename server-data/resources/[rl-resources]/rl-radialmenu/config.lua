@@ -149,7 +149,7 @@ rootMenuConfig =  {
             local Data = RLCore.Functions.GetPlayerData()
             return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and Data.job ~= nil and Data.job.name == "mechanic")
         end,
-        subMenus = { "mechanic:impound", "mechanic:flatbed", "tow:checkstatus" }
+        subMenus = { "mechanic:impound", "mechanic:flatbed", "tow:checkstatus", "mechanic:repoCheck" }
     },
 
     {
@@ -1053,7 +1053,7 @@ newSubMenus = {
         icon = "#cuffs-cuff",
         functionName = "police:client:Hardcuff"
     },
-
+ 
     ['police:softcuff'] = {
         title = "Soft Cuff",
         icon = "#cuffs-cuff",
@@ -1169,6 +1169,13 @@ newSubMenus = {
         icon = "#mechanic-flatbed",
         functionName = "rl-tow:client:TowVehicle"
     }
+
+    ["mechanic:repoCheck"] = {
+        title = "Check For Repo",
+        icon = "#police-jail",
+        functionName = "mechanic:client:repoCheck"
+    }
+
 }
 
 

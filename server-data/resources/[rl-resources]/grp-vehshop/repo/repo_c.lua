@@ -236,7 +236,7 @@ AddEventHandler('JAM_VehicleFinance:MarkForRepo', function(vehicles)
 	end
 end)
 
-RegisterCommand('checkRepos', function(...) 
+--[[ RegisterCommand('checkRepos', function(...) 
 	local pData = RLCore.Functions.GetPlayerData()
 	allreadyDone = false
 	RLCore.Functions.Notify("If you dont see a message after this, That means there are currently no repos on the streets <br/ > <br/ >Try again in a short while.",'error')
@@ -254,7 +254,28 @@ RegisterCommand('checkRepos', function(...)
 			MechanicUpdate()
 		end
 	end
+end) ]]
+
+
+RegisterNetEvent('mechanic:client:repoCheck')
+AddEventHandler('mechanic:client:repoCheck', function()
+	local pData = RLCore.Functions.GetPlayerData()
+	allreadyDone = false
+	RLCore.Functions.Notify("If you dont see a message after this, That means there are currently no repos on the streets <br/ > <br/ >Try again in a short while.",'error')
+	if pData.job.name == 'mechanic' then
+		if not Towables then 
+			RLCore.Functions.Notify("There are no vehicles marked for reposession at the moment.",'error')
+			return
+		end
+		local compString = ''
+		for k,v in pairs(Towables) do
+			local str = 'Plate : '..v.plate..'\nOwed : '..v.finance..'\n'
+			print(str)
+			MechanicUpdate()
+		end
+	end
 end)
+
 
 Citizen.CreateThread(function(...) Start(); end)
 
