@@ -134,8 +134,7 @@ end)
 --------------------------------------------------------------
 
 RLCore.Functions.CreateCallback('rl-houses:server:hasKey', function(source, cb, house)
-	local src = source
-	local Player = RLCore.Functions.GetPlayer(src)
+	local Player = RLCore.Functions.GetPlayer(source)
 	local retval = false
 	if Player ~= nil then 
 		local identifier = Player.PlayerData.steam
@@ -149,7 +148,7 @@ RLCore.Functions.CreateCallback('rl-houses:server:hasKey', function(source, cb, 
 	if Player.PlayerData.job.name == "realestate" then
 		cb(true)
 		return
-	end
+	end 
 
 	--[[ if RLCore.Functions.HasPermission(src, 'god') then 
 		cb(true)
