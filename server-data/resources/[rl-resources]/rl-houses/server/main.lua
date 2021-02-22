@@ -146,11 +146,15 @@ RLCore.Functions.CreateCallback('rl-houses:server:hasKey', function(source, cb, 
 			retval = false
 		end
 	end
-
-	if RLCore.Functions.HasPermission(src, 'god') or Player.PlayerData.job.name == "realestate" then 
+	if Player.PlayerData.job.name == "realestate" then
 		cb(true)
 		return
 	end
+
+	--[[ if RLCore.Functions.HasPermission(src, 'god') then 
+		cb(true)
+		return
+	end ]]
 	
 	cb(retval)
 end)
