@@ -111,7 +111,7 @@ AddEventHandler('deleteContact', function(name, number)
     end)
 end)
 
---[[ local contacts = {
+local contacts = {
     {citizenid = "QGQ76826", name = "Bonnie", number = "0533887859"},
     {citizenid = "IYQ85782", name = "JJ", number = "0584511778"},
     {citizenid = "EMD89976", name = "Fuego", number = "0513982114"},
@@ -614,7 +614,7 @@ Citizen.CreateThread(function()
             end
         end
     end)
-end) ]]
+end)
 
 --[[ Phone calling stuff ]]
 
