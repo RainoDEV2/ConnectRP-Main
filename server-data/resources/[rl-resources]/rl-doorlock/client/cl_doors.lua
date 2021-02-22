@@ -205,7 +205,7 @@ Citizen.CreateThread(function() -- Calc door around player into an array based o
                 end
             end
         end
-        Wait(3000)
+        Wait(1000)
         closeDoorsStage2 = {}       
         updatedCurrentStage = 0
         lastStaged = {}
