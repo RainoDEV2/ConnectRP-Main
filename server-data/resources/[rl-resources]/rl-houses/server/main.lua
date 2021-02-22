@@ -87,7 +87,7 @@ AddEventHandler('rl-houses:server:viewHouse', function(house)
 	local bankfee 		= (houseprice / 100 * 10)  
 	local taxes 		= (houseprice / 100 * 6)
 
-	TriggerClientEvent('rl-houses:client:viewHouse', src, houseprice, brokerfee, bankfee, taxes, pData.PlayerData.charinfo.firstname, pData.PlayerData.charinfo.lastname)
+	TriggerClientEvent('rl-houses:client:viewHouse', source, houseprice, brokerfee, bankfee, taxes, pData.PlayerData.charinfo.firstname, pData.PlayerData.charinfo.lastname)
 end)
 
 RegisterServerEvent('rl-houses:server:buyHouse')
