@@ -295,6 +295,16 @@ AddEventHandler('beginJail', function(time, delivery)
     RemoveAllPedWeapons(playerPed)
     TriggerEvent("notification", "You have been jailed. You can pick up your shit when you leave.")
 
+    local playerName = GetPlayerName(PlayerId())
+    local getPlayerRadioChannel = exports.tokovoip_script:getPlayerData(playerName, "radio:channel") 
+    if getPlayerRadioChannel == "nil" then
+        -- Do nothing
+    else
+        exports.tokovoip_script:removePlayerFromRadio(getPlayerRadioChannel)
+        exports.tokovoip_script:setPlayerData(playerName, "radio:channel", "nil", true) 
+        TriggerEvent("InteractSound_CL:PlayOnOne","radioclick",0.6)
+    end
+
     local timer = minutes
     while imjailed do
         Citizen.Wait(60000)
