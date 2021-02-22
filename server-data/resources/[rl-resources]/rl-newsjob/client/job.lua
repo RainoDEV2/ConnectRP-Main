@@ -10,6 +10,20 @@ Citizen.CreateThread(function()
 	end
 end)
 
+Citizen.CreateThread(function()
+    for k,v in pairs(Config.Locations) do
+        local blip = AddBlipForCoord(v.x, v.y, v.z)
+        SetBlipColour(blip, 0)
+
+        SetBlipSprite(blip, 52)
+        SetBlipScale(blip, 0.7)
+        SetBlipColour(blip, 2)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentSubstringPlayerName("NEWS STUFF")
+        EndTextCommandSetBlipName(blip)
+    end
+end)
+
 CreateThread(function()
     while true do
         local plyPed = PlayerPedId()
@@ -30,7 +44,13 @@ CreateThread(function()
                         DrawMarker(27, v.x, v.y, v.z-0.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.001, 1.0001, 0.5001, 0, 25, 165, 100, false, true, 2, false, false, false, false)
                     end
                 elseif (whitelisted) then
-                    DrawMarker(27, v.x, v.y, v.z-0.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.001, 1.0001, 0.5001, 0, 25, 165, 100, false, true, 2, false, false, false, false)
+                    if k == "helipad" then 
+                        if isboss then
+                            DrawMarker(27, v.x, v.y, v.z-0.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.001, 1.0001, 0.5001, 0, 25, 165, 100, false, true, 2, false, false, false, false)
+                        end
+                    else
+                        DrawMarker(27, v.x, v.y, v.z-0.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.001, 1.0001, 0.5001, 0, 25, 165, 100, false, true, 2, false, false, false, false)
+                    end
                 end
             end
         end
@@ -66,6 +86,17 @@ CreateThread(function()
                     end
                 end
                 Menu.renderGUI()
+            elseif distance['helipad'] < 5 then
+                if isboss then
+                    DrawText3Ds(Config.Locations["helipad"].x, Config.Locations["helipad"].y, Config.Locations["helipad"].z, IsPedInAnyVehicle(PlayerPedId(), false) and "~g~E~w~ - Store Heli" or "~g~E~w~ - Spawn News Heli")
+                    if IsControlJustReleased(0, 38) then
+                        if IsPedInAnyVehicle(PlayerPedId(), false) then
+                            DeleteVehicle(GetVehiclePedIsIn(PlayerPedId(), false))
+                        else
+                            TakeOutVehicle("wnews3", {x = Config.Locations["helipad"].x, y = Config.Locations["helipad"].y, z = Config.Locations["helipad"].z, a = Config.Locations["helipad"].a})
+                        end
+                    end
+                end
             end
         end
 
@@ -111,12 +142,15 @@ function VehicleList(isDown)
     Menu.addButton("Return", "MenuGarage",nil)
 end
 
-function TakeOutVehicle(vehicleInfo)
-    local coords = Config.Locations["vehicles"]
+function TakeOutVehicle(vehicleInfo, coords)
+    if not coords then
+        coords = Config.Locations["vehicles"]
+        coords.a = GetEntityHeading(PlayerPedId())
+    end
+
     RLCore.Functions.SpawnVehicle(vehicleInfo, function(veh)
         SetVehicleNumberPlateText(veh, "NEWS"..tostring(math.random(1000, 9999)))
-        SetEntityHeading(veh, coords.h)
-        exports['rl-hud']:SetFuel(veh, 100)
+        exports["LegacyFuel"]:SetFuel(veh, 100)
         closeMenuFull()
         TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
