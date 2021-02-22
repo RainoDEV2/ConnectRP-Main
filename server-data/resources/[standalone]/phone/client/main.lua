@@ -2480,7 +2480,8 @@ AddEventHandler('Client:UpdateTweets', function(data)
     lstTweets[#lstTweets + 1] = {
       id = tweetData.id,
       handle = tweetData.handle,
-      message = tweetData.message
+      message = tweetData.message,
+      time = tweetData.time
     }
   end
   
