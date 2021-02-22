@@ -79,8 +79,6 @@ AddEventHandler('rl-houses:server:addGarage', function(house, coords)
 	TriggerClientEvent('RLCore:Notify', src, "You have added a garage to: "..Config.HouseGarages[house].label)
 end)
 
-: @rl-houses/server/main.lua:85: attempt to call a nil value (field 'GetPlayerFromId')
-
 RegisterServerEvent('rl-houses:server:viewHouse')
 AddEventHandler('rl-houses:server:viewHouse', function(house)
 	local pData 		= RLCore.Functions.GetPlayer(source)
