@@ -79,10 +79,11 @@ AddEventHandler('rl-houses:server:addGarage', function(house, coords)
 	TriggerClientEvent('RLCore:Notify', src, "You have added a garage to: "..Config.HouseGarages[house].label)
 end)
 
+: @rl-houses/server/main.lua:85: attempt to call a nil value (field 'GetPlayerFromId')
+
 RegisterServerEvent('rl-houses:server:viewHouse')
 AddEventHandler('rl-houses:server:viewHouse', function(house)
-	local src     		= source 
-	local pData 		= RLCore.Functions.GetPlayerFromId(src)
+	local pData 		= RLCore.Functions.GetPlayer(source)
 	local houseprice   	= Config.Houses[house].price 
 	local brokerfee 	= (houseprice / 100 * 5)
 	local bankfee 		= (houseprice / 100 * 10)  
