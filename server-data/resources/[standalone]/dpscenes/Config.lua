@@ -16,10 +16,8 @@ Config = {
 	},
 	-- Amount of hours a scene is allowed to be up for.
 	SceneLength = {
+		{Hours = 8},
 		{Hours = 24},
-		{Hours = 48},
-		{Hours = 72},
-		{Hours = 96},
 	},
 	--[[ 
 		Blacklist works like this:
