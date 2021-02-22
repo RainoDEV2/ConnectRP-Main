@@ -180,8 +180,10 @@ files {
      'mechanicvehicles/mechvan/vehicles.meta',
      'mechanicvehicles/mechvan/carvariations.meta',
      'mechanicvehicles/mechvan/carcols.meta',
-     'mechanicvehicles/mechvan/handling.meta',        
+     'mechanicvehicles/mechvan/handling.meta',
 
+     -- Weazel News
+     "wnews/*.meta"
 }  
 
 
@@ -356,4 +358,8 @@ data_file 'HANDLING_FILE' 'mechanicvehicles/mechvan/handling.meta'
 data_file 'VEHICLE_METADATA_FILE' 'mechanicvehicles/mechvan/vehicles.meta'
 data_file 'CARCOLS_FILE' 'mechanicvehicles/mechvan/carcols.meta'
 data_file 'VEHICLE_VARIATION_FILE' 'mechanicvehicles/mechvan/carvariations.meta'
+
+-- Weazel News
+data_file 'VEHICLE_METADATA_FILE' 'wnews/vehicles.meta'
+data_file 'VEHICLE_VARIATION_FILE' 'wnews/carvariations.meta'
 
