@@ -11,6 +11,7 @@ server_scripts {
 	"server/events.lua",
 	"server/commands.lua",
 	"server/debug.lua",
+	"server/exports_s.lua",
 }
 
 client_scripts {
@@ -21,7 +22,8 @@ client_scripts {
 	"client/loops.lua",
 	"client/events.lua",
 	"client/debug.lua",
-	"client/commands.lua"
+	"client/commands.lua",
+	"client/exports.lua",
 }
 
 ui_page {
