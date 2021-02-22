@@ -35,7 +35,7 @@ Citizen.CreateThread(function()
 		SetVehicleModelIsSuppressed(GetHashKey("ninef"), true)
 		SetVehicleModelIsSuppressed(GetHashKey("comet"), true)
 		SetVehicleModelIsSuppressed(GetHashKey("bullet"), true)
-		SetVehicleModelIsSuppressed(GetHashKey("carboniz"), true)
+		SetVehicleModelIsSuppressed(GetHashKey("carbonizzare"), true)
 		SetVehicleModelIsSuppressed(GetHashKey("neon"), true)
 		SetVehicleModelIsSuppressed(GetHashKey("tropos"), true)
 		
