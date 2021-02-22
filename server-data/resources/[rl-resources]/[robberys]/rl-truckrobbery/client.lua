@@ -351,13 +351,10 @@ function pickUpCash()
             end
             Progressbar(60000,"Collecting Items")
 
+            local fuckazazel = math.random(1,10)
             local chance = math.random(1, 100)
             if chance >= 65 then
                 TriggerServerEvent('truckrobbery:addItem', "security_card_01", 1)
-            end
-
-            local fuckazazel = math.random(1,10)
-            if chance >= 70 then
                 if fuckazazel <= 4 then 
                     TriggerServerEvent('truckrobbery:addItem', "weedburn", 1)
                 elseif fuckazazel <= 3 then 
