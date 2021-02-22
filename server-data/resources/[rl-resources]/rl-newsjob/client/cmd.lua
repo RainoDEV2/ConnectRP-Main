@@ -104,7 +104,8 @@ Citizen.CreateThread(function()
 		local vehicle = GetVehiclePedIsIn(lPed)
 
 		if holdingCam and IsControlJustReleased(1, 38) then
-			newscamera = true
+			TriggerEvent("hud:toggleui", false)
+ 			newscamera = true
 
 			SetTimecycleModifier("default")
 
@@ -122,7 +123,7 @@ Citizen.CreateThread(function()
 			end
 
 
-			local lPed = GetPlayerPed(-1)
+			local lPed = PlayerPedId()
 			local vehicle = GetVehiclePedIsIn(lPed)
 			local cam2 = CreateCam("DEFAULT_SCRIPTED_FLY_CAMERA", true)
 
@@ -135,7 +136,12 @@ Citizen.CreateThread(function()
 			PopScaleformMovieFunctionVoid()
 
 			while newscamera and not IsEntityDead(lPed) and (GetVehiclePedIsIn(lPed) == vehicle) and true do
+				local pedCoords = GetEntityCoords(lPed, false)
+				local var1, var2 = GetStreetNameAtCoord(pedCoords.x, pedCoords.y, pedCoords.z, Citizen.ResultAsInteger(), Citizen.ResultAsInteger())
+				local currStreet = GetStreetNameFromHashKey(var1)
+
 				if IsControlJustPressed(1, 177) then
+					TriggerEvent("hud:toggleui", true)
 					PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 					newscamera = false
 				end
@@ -150,7 +156,7 @@ Citizen.CreateThread(function()
 
 				DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
 				DrawScaleformMovie(scaleform2, 0.5, 0.63, 1.0, 1.0, 255, 255, 255, 255)
-				Breaking("BREAKING NEWS")
+				Breaking("Live At " .. currStreet)
 				
 				local camHeading = GetGameplayCamRelativeHeading()
 				local camPitch = GetGameplayCamRelativePitch()
