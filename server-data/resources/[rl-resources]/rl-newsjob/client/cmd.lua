@@ -219,8 +219,8 @@ Citizen.CreateThread(function()
 			SetCamRot(cam2, 2.0,1.0,GetEntityHeading(lPed))
 			SetCamFov(cam2, fov)
 			RenderScriptCams(true, false, 0, 1, 0)
-			--PushScaleformMovieFunction(scaleform, "SET_CAM_LOGO")
-			--PushScaleformMovieFunction(scaleform2, "breaking_news")
+			PushScaleformMovieFunction(scaleform, "SET_CAM_LOGO")
+			PushScaleformMovieFunction(scaleform2, "breaking_news")
 			PopScaleformMovieFunctionVoid()
 
 			while newscamera and not IsEntityDead(lPed) and (GetVehiclePedIsIn(lPed) == vehicle) and true do
@@ -237,9 +237,9 @@ Citizen.CreateThread(function()
 				HandleZoom(cam2)
 				HideHUDThisFrame()
 
-				--DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
-				--DrawScaleformMovie(scaleform2, 0.5, 0.63, 1.0, 1.0, 255, 255, 255, 255)
-				--Breaking("BREAKING NEWS")
+				DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
+				DrawScaleformMovie(scaleform2, 0.5, 0.63, 1.0, 1.0, 255, 255, 255, 255)
+				Breaking("BREAKING NEWS")
 				
 				local camHeading = GetGameplayCamRelativeHeading()
 				local camPitch = GetGameplayCamRelativePitch()
