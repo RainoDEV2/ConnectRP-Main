@@ -143,7 +143,7 @@ end)
 function IsPlayerInPolmav()
 	local lPed = GetPlayerPed(-1)
 	local vehicle = GetVehiclePedIsIn(lPed)
-	return IsVehicleModel(vehicle, polmav_hash)
+	return IsVehicleModel(vehicle, polmav_hash) or IsVehicleModel(vehicle, GetHashKey("wnews3"))
 end
 
 function IsHeliHighEnough(heli)
