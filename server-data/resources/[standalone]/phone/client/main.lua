@@ -1450,32 +1450,27 @@ end)
 
 Citizen.CreateThread(function()
   while true do
-    Citizen.Wait(0)
+    Citizen.Wait(5)
     if IsControlJustPressed(1, 244) then
-      --RLCore.Functions.TriggerCallback('radio:server:GetItem', function(hasItem)
-      --  if not hasItem then
+      RLCore.Functions.TriggerCallback('RLCore:HasItem', function(hasItem)
+        if hasItem then
           GotPhone()
-      --      else
-      --        RLCore.Functions.Notify("You dont have a phone, Buy one at your local store", 'error')
-      --      end
-      --end, "phone")
+        else
+            RLCore.Functions.Notify("You dont have a phone, Buy one at your local store", 'error')
+        end
+      end, "phone")
     end
   end
 end) 
 
-
-
-
-
 function GotPhone()
   local Data = RLCore.Functions.GetPlayerData()
-  --return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"])
-    --if not dead then
+    if not Data.metadata["isdead"] and not Data.metadata["inlaststand"] then
       openGuiNow()
       RadioPlayAnim('text', false, true)
-    --else
-    --  RLCore.Functions.Notify("You cant do this unconscious", 'error')
-    --end
+    else
+      RLCore.Functions.Notify("You cant do this unconscious", 'error')
+    end
 end
 
 local recentopen = false
