@@ -423,3 +423,4 @@ exports("addPlayerToRadio", addPlayerToRadio);
 exports("removePlayerFromRadio", removePlayerFromRadio);
 exports("isPlayerInChannel", isPlayerInChannel);
 exports("setRadioVolume", setRadioVolume);
+exports("updateVoipTargetPed", newTargetPed, useLocal);
