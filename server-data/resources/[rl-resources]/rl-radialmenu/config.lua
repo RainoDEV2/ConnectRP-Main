@@ -1168,7 +1168,7 @@ newSubMenus = {
         title = "Tow",
         icon = "#mechanic-flatbed",
         functionName = "rl-tow:client:TowVehicle"
-    }
+    },
 
     ["mechanic:repoCheck"] = {
         title = "Check For Repo",
