@@ -2,6 +2,10 @@
 
 -- USE LIKE > local canRob = not exports["rl-core"]:RobberyActive()
 
+-- How to trigger the timer.
+-- TriggerServerEvent("rl-core:server:heistTimerSet", true, 500) -- 500 being the seconds.
+
+
 -- SERVER
 local debug = false -- Enable if you need to debug
 local cooldownActive = false --Dont touch
