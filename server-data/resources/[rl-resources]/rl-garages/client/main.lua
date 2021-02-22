@@ -796,6 +796,10 @@ SetVehicleProperties = function(vehicle, vehicleProps)
             end
         end
     end
+
+    if vehicleProps["fuelLevel"] then
+        exports["LegacyFuel"]:SetFuel(vehicle, vehicleProps["fuelLevel"])
+    end
 end
 
 GetVehicleProperties = function(vehicle)
