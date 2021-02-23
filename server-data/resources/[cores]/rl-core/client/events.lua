@@ -179,6 +179,6 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         TriggerServerEvent('drp-framework:updateArmour', GetPedArmour(PlayerPedId()))
-        Citizen.Wait(1000)
+        Citizen.Wait(3500)
     end
 end)

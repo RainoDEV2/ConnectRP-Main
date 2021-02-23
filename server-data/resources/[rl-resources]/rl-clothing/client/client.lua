@@ -1012,12 +1012,14 @@ RegisterCommand("try", function(source, args, rawCommand)
         if armed ~= 1 and not timeout then
             timeout = true
             local health = GetEntityHealth(PlayerPedId())
+            local armor = GetPedArmour(PlayerPedId())
             RLCore.Functions.Progressbar("pickup_reycle_package", "Trying to refresh", 2000, false, true, {}, {}, {}, {}, function()
-                TriggerServerEvent('drp-framework:updatearmour', GetPedArmour(PlayerPedId()))
                 TriggerServerEvent("clothing:checkIfNew")
                 Citizen.Wait(1500)
                 SetEntityHealth(PlayerPedId(), health)
-                Citizen.Wait(100)
+                SetPedArmour(PlayerPedId(), armor)
+                TriggerServerEvent('drp-framework:updatearmour', armor)
+                Citizen.Wait(1500)
                 TriggerServerEvent('drp-framework:loadArmour')
             end)
         else
