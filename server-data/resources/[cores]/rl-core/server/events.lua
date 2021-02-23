@@ -316,13 +316,13 @@ end)
 
 local currentArmour = {}
 
-Citizen.CreateThread(function()
+--[[ Citizen.CreateThread(function()
 	while true do 
 		Citizen.Wait(2500)
 		print(json.encode(currentArmour))
 	end
 end)	
-
+ ]]
 RegisterNetEvent('drp-framework:updateArmour')
 AddEventHandler('drp-framework:updateArmour', function(updateArmour)
 	local src = source
@@ -367,7 +367,7 @@ AddEventHandler('playerDropped', function(playerId)
 	local xPlayer = RLCore.Functions.GetPlayer(src)
 	while not xPlayer do
         xPlayer = RLCore.Functions.GetPlayer(src)
-        Wait(0)
+        Wait(0) 
 	end
 	if currentArmour[src] > 0 then
 		exports.ghmattimysql:execute("UPDATE players SET `armour` = @armour WHERE `citizenid` = @citizenid", {
@@ -378,7 +378,7 @@ AddEventHandler('playerDropped', function(playerId)
 	end
 end)
 
-RegisterCommand("testa", function(source, args, raw)
+--[[ RegisterCommand("testa", function(source, args, raw)
     local src = source
 	local xPlayer = RLCore.Functions.GetPlayer(src)
 	while not xPlayer do
@@ -392,7 +392,4 @@ RegisterCommand("testa", function(source, args, raw)
 		}, function ()
 		end)
 	end
-	--[[ if currentArmour[src] > 0 then
-		RLCore.Functions.ExecuteSql(false, "UPDATE `players` SET `armour` = '"..currentArmour[src].."' WHERE `players` = '"..xPlayer.PlayerData.citizenid.."'")
-	end ]]
-end)
+end) ]]
