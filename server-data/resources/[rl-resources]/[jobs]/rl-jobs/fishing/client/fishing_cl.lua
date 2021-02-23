@@ -522,11 +522,13 @@ Citizen.CreateThread(function()
                                             SetVehicleNumberPlateText(veh, "FISH"..tostring(math.random(1000, 9999)))
                                             SetEntityHeading(veh, coords.h)
                                             exports['LegacyFuel']:SetFuel(veh, 100)
-                                            TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+                                            TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
                                             SetEntityAsMissionEntity(veh, true, true)
                                             TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
                                             SetVehicleEngineOn(veh, true, true)
                                             RLCore.Functions.Notify("You have paid $1000!")
+                                            Citizen.Wait(5000)
+                                            RLCore.Functions.Notify("You can lower your anchor by pressing [E] make sure you first turn off your engine!")
                                         end, coords, true)
                                     else
                                         RLCore.Functions.Notify("You do not have enough money for the deposit .. Deposit costs are $ 1000")
@@ -550,3 +552,39 @@ function BringBackCar()
     DeleteVehicle(veh)
     GarbageVehicle = nil
 end
+
+--Anchor
+local anchored = false
+local boat = nil
+Citizen.CreateThread(function()
+	while true do
+
+		Wait(0)
+		local ped = PlayerPedId()
+		if IsPedInAnyBoat(ped) then
+		    boat = GetVehiclePedIsIn(ped, true)
+		end
+		if IsControlJustPressed(0, 38) and not IsPedInAnyVehicle(ped) and boat ~= nil then
+			if not anchored then
+				SetBoatAnchor(boat, true)
+				TaskStartScenarioInPlace(ped, 'CODE_HUMAN_MEDIC_TEND_TO_DEAD', 0, true)
+				Citizen.Wait(10000)
+				RLCore.Functions.Notify("You have lowered the anchor")
+                --sound
+				ClearPedTasks(ped)
+                anchored = true
+            elseif anchored then
+				TaskStartScenarioInPlace(ped, 'CODE_HUMAN_MEDIC_TEND_TO_DEAD', 0, true)
+				Citizen.Wait(10000)
+				SetBoatAnchor(boat, false)
+				RLCore.Functions.Notify("Anchor retreived")
+                --sound 
+				ClearPedTasks(ped)
+                anchored = false
+			end
+		end
+		if IsVehicleEngineOn(boat) then
+			anchored = false
+		end
+	end
+end)
