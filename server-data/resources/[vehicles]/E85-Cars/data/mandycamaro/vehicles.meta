@@ -7,8 +7,8 @@
       <modelName>camaro_ss</modelName>
       <txdName>camaro_ss</txdName>
       <handlingId>CAMARO_SS</handlingId>
-      <gameName>Camaro SS</gameName>
-      <vehicleMakeName>CHEVROLET</vehicleMakeName>
+      <gameName>camaro_ss</gameName>
+      <vehicleMakeName />
       <expressionDictName>null</expressionDictName>
       <expressionName>null</expressionName>
       <animConvRoofDictName>null</animConvRoofDictName>
