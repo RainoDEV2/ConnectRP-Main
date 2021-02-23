@@ -4,10 +4,10 @@ Config.Houses = {}
 Config.Spawns = {
     ["legion"] = {
         coords = {
-            x = 208.37, 
-            y = -890.53, 
-            z = 30.69, 
-            h = 69.35 
+            x = 223.58, 
+            y = -857.61, 
+            z = 31.00, 
+            h = 158.24 
         },
         location = "legion",
         label = "Legion Park",
