@@ -14,6 +14,7 @@
   {title="Clothing", colour=3, id=73, x = -712.215881, y = -155.352982, z = 37.4151268}, -- Clothing 13
   {title="Clothing", colour=3, id=73, x = 121.76, y = -224.6, z = 54.56}, -- Clothing 14
   {title="Clothing", colour=3, id=73, x = -1207.5267333984, y = -1456.9530029297, z = 4.3763856887817}, -- Clothing 15
+  {title="Clothing", colour=3, id=73, x = 198.55157, y = -876.997, z = 30.0000}, -- Clothing 16
   {title="Barber Shop", colour=9, id=71, x = -814.3, y = -183.8, z = 36.6}, -- Barber Shop 1
   {title="Barber Shop", colour=9, id=71, x = 136.8, y = -1708.4, z = 28.3}, -- Barber Shop 2
   {title="Barber Shop", colour=9, id=71, x = -1282.6, y = -1116.8, z = 6.0}, -- Barber Shop 3
