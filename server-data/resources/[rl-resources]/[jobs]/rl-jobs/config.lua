@@ -651,10 +651,10 @@ Config.FishingItems = {
         ["price"] = 100
     },
     ["largemouthbass"] = {
-        ["price"] = 500
+        ["price"] = 350
     },
     ["salmon"] = {
-        ["price"] = 500
+        ["price"] = 400
     },
     ["catfish"] = {
         ["price"] = 500
