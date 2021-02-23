@@ -98,7 +98,7 @@ AddEventHandler('lockpicks:UseLockpick', function(advanced)
             isLockpicking = false
             pedSpawned = false
     
-            if math.random(1, 5) == 1 then
+            if math.random(1, 10) <= 3 then
               TriggerEvent('dispatch:houseRobbery')
             end
     
