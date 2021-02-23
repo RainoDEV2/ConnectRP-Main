@@ -356,6 +356,10 @@ end)
 AddEventHandler('playerDropped', function(playerId)
 	local src = playerId
 	local xPlayer = RLCore.Functions.GetPlayer(src)
+	while not xPlayer do
+        xPlayer = RLCore.Functions.GetPlayer(src)
+        Wait(0)
+	end
 	if currentArmour[src] > 0 then
 		RLCore.Functions.ExecuteSql(false, "UPDATE `players` SET `armour` = '"..currentArmour[src].."' WHERE `players` = '"..xPlayer.PlayerData.citizenid.."'")
 	end
