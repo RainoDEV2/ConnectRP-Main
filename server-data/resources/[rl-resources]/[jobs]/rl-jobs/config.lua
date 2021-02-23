@@ -137,10 +137,8 @@ Config.Jobs = {
             boss = vector3(16.851915, -1606.724, 29.390621),
             shop = vector3(20.285358, -1602.047, 29.377981),
         }
-    }
-}
-
-    --[[['coffee'] = {
+    },
+    ['coffee'] = {
         ['name'] = 'coffee',
 
         ['blip'] = {
@@ -415,7 +413,7 @@ Config.Jobs = {
             boss = vector3(-1202.503, -894.4131, 13.995186),
         }
     }
-}]]--
+}
 
 Config.DropOff = {
     Name = "Drop Off",
@@ -613,7 +611,7 @@ Config.MarkerData = {
 }
 
 Config.FishingRestaurant = {
-    ["name"] = "La Spada Fish Restaurant",
+    ["name"] = "Fish Restaurant",
     ["blip"] = {
         ["sprite"] = 628,
         ["color"] = 3
@@ -631,7 +629,7 @@ Config.FishingItems = {
         ["label"] = "Fishing Rod"
     },
     ["bait"] = {
-        ["name"] = "fishingbait",
+        ["name"] = "fishingbait", 
         ["label"] = "Fishing Bait"
     },
     ["fish"] = {
