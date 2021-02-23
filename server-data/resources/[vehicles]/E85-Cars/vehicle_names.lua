@@ -3,6 +3,6 @@
 end ]]
 
 Citizen.CreateThread(function()
-	Citizen.Wait(0)
 	AddTextEntry('hemicuda', '1971 Plymouth Hemi Cuda')
+	AddTextEntry('titanic2', 'RMS Titanic')
 end) 

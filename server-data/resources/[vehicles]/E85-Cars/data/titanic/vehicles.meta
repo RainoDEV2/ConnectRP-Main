@@ -7,7 +7,7 @@
       <modelName>titanic2</modelName>
       <txdName>titanic2</txdName>
       <handlingId>titanic2</handlingId>
-      <gameName>PREDATOR</gameName>
+      <gameName>titanic2</gameName>
       <vehicleMakeName />
       <expressionDictName>null</expressionDictName>
       <expressionName>null</expressionName>
@@ -108,9 +108,6 @@
       <needsRopeTexture value="false" />
       <requiredExtras />
       <rewards>
-        <Item>REWARD_WEAPON_CARBINERIFLE</Item>
-        <Item>REWARD_AMMO_CARBINERIFLE</Item>
-        <Item>REWARD_STAT_WEAPON</Item>
       </rewards>
       <cinematicPartCamera>
         <Item>VEH_WINDOW_FRONT_LEFT_CAMERA</Item>
