@@ -554,7 +554,7 @@ function BringBackCar()
 end
 
 --Anchor
-local anchored = false
+--[[ local anchored = false
 local boat = nil
 Citizen.CreateThread(function()
 	while true do
@@ -587,4 +587,4 @@ Citizen.CreateThread(function()
 			anchored = false
 		end
 	end
-end)
+end) ]]
