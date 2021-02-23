@@ -1350,4 +1350,16 @@ Config.Locations = {
         },
         ["products"] = Config.Products["weapons"],
     },    
+    ["legionstore"] = {
+        ["label"] = "Legion Store",
+        ["type"] = "normal",
+        ["coords"] = {
+            [1] = {
+                ["x"] = 190.3218,
+                ["y"] = -889.5715,
+                ["z"] = 30.00000,
+            },
+        }, 
+        ["products"] = Config.Products["normal"],
+    },
 }
