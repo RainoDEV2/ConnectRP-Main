@@ -126,6 +126,22 @@ Config.Products = {
             type = "item",
             slot = 14,
         },
+        [15] = {
+            name = "fishingrod",
+            price = 250,
+            amount = 50,
+            info = {},
+            type = "item",
+            slot = 15,
+        },
+        [16] = {
+            name = "fishingbait",
+            price = 45,
+            amount = 100,
+            info = {},
+            type = "item",
+            slot = 16,
+        },
     },
     ["coffeelounge"] = {
         [1] = {
@@ -465,7 +481,7 @@ Config.Products = {
         [17] = {
             name = "weapon_crowbar",
             price = 500,
-            ammount = 50,
+            amount = 50,
             info = {},
             type = "item",
             slot = 17,
@@ -473,11 +489,12 @@ Config.Products = {
         [18] = {
             name = "weapon_bat",
             price = 500,
-            ammount = 50,
+            amount = 50,
             info = {},
             type = "item",
             slot = 18,
         },
+
     },   
     ["gsgasoline"] = {
         [1] = {
