@@ -675,7 +675,7 @@ anims = {
 
     ["holster"] = function(ped)
 
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         if not holstered then
             holstered = true
             loadAnimDict("reaction@intimidation@cop@unarmed")

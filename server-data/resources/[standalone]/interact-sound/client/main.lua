@@ -69,7 +69,7 @@ RegisterNetEvent('InteractSound_CL:PlayWithinDistance')
 AddEventHandler('InteractSound_CL:PlayWithinDistance', function(playerNetId, maxDistance, soundFile, soundVolume)
     local target = GetPlayerFromServerId(playerNetId)
     if target ~= nil and target ~= -1 then
-        local lCoords = GetEntityCoords(GetPlayerPed(-1))
+        local lCoords = GetEntityCoords(PlayerPedId())
         local eCoords = GetEntityCoords(GetPlayerPed(target))
         local distIs  = Vdist(lCoords.x, lCoords.y, lCoords.z, eCoords.x, eCoords.y, eCoords.z)
         if(distIs <= maxDistance) then

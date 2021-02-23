@@ -85,14 +85,14 @@ local function reelInFish()
         Sync.DeleteObject(fishingRod)
         fishingRod = nil
     end
-    ClearPedTasks(GetPlayerPed(-1))
+    ClearPedTasks(PlayerPedId())
 end
 
 local fishing = false
 local function startFishing()
     if fishing then return end
     fishing = true
-    -- TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_STAND_FISHING", 0, true)
+    -- TaskStartScenarioInPlace(PlayerPedId(), "WORLD_HUMAN_STAND_FISHING", 0, true)
 
     local rodModel = "prop_fishing_rod_01"
     local rodHash = `prop_fishing_rod_01`

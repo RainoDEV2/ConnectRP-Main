@@ -67,7 +67,7 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         local dist
 
@@ -99,7 +99,7 @@ Citizen.CreateThread(function()
         [2] = {name = RLCore.Shared.Items["trojan_usb"]["name"], image = RLCore.Shared.Items["trojan_usb"]["image"]},
     }
     while true do
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
 
         if RLCore ~= nil then
@@ -174,7 +174,7 @@ end
 
 RegisterNetEvent('electronickit:UseElectronickit')
 AddEventHandler('electronickit:UseElectronickit', function()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     if math.random(1, 100) <= 85 and not IsWearingHandshoes() then
         TriggerServerEvent("evidence:server:CreateFingerDrop", pos)
@@ -200,7 +200,7 @@ AddEventHandler('electronickit:UseElectronickit', function()
                                             anim = "hotwire",
                                             flags = 16,
                                         }, {}, {}, function() -- Done
-                                            StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                                            StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
                                             TriggerEvent("mhacking:show")
                                             TriggerEvent("mhacking:start", math.random(5, 9), math.random(10, 18), OnHackDone)
                                             if not copsCalled then
@@ -218,7 +218,7 @@ AddEventHandler('electronickit:UseElectronickit', function()
                                                 end
                                             end
                                         end, function() -- Cancel
-                                            StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                                            StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
                                             RLCore.Functions.Notify("Canceled", "error")
                                         end)
                                     else
@@ -302,8 +302,8 @@ function OpenBankDoor(bankId)
 end
 
 function IsWearingHandshoes()
-    local armIndex = GetPedDrawableVariation(GetPlayerPed(-1), 3)
-    local model = GetEntityModel(GetPlayerPed(-1))
+    local armIndex = GetPedDrawableVariation(PlayerPedId(), 3)
+    local model = GetEntityModel(PlayerPedId())
     local retval = true
     if model == GetHashKey("mp_m_freemode_01") then
         if Config.MaleNoHandshoes[armIndex] ~= nil and Config.MaleNoHandshoes[armIndex] then
@@ -344,7 +344,7 @@ function ResetBankDoors()
 end
 
 function openLocker(bankId, lockerId)
-    local pos = GetEntityCoords(GetPlayerPed(-1))
+    local pos = GetEntityCoords(PlayerPedId())
     if math.random(1, 100) <= 65 and not IsWearingHandshoes() then
         TriggerServerEvent("evidence:server:CreateFingerDrop", pos)
     end
@@ -354,10 +354,10 @@ function openLocker(bankId, lockerId)
             if hasItem then
                 if lockerId ~= 9 then
                     loadAnimDict("anim@heists@fleeca_bank@drilling")
-                    TaskPlayAnim(GetPlayerPed(-1), 'anim@heists@fleeca_bank@drilling', 'drill_straight_idle' , 3.0, 3.0, -1, 1, 0, false, false, false)
-                    local pos = GetEntityCoords(GetPlayerPed(-1), true)
+                    TaskPlayAnim(PlayerPedId(), 'anim@heists@fleeca_bank@drilling', 'drill_straight_idle' , 3.0, 3.0, -1, 1, 0, false, false, false)
+                    local pos = GetEntityCoords(PlayerPedId(), true)
                     local DrillObject = CreateObject(GetHashKey("hei_prop_heist_drill"), pos.x, pos.y, pos.z, true, true, true)
-                    AttachEntityToEntity(DrillObject, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 57005), 0.14, 0, -0.01, 90.0, -90.0, 180.0, true, true, false, true, 1, true)
+                    AttachEntityToEntity(DrillObject, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 57005), 0.14, 0, -0.01, 90.0, -90.0, 180.0, true, true, false, true, 1, true)
                     IsDrilling = true
                     RLCore.Functions.Progressbar("open_locker_drill", "Cracking Safe", 50000, false, true, {
                         disableMovement = true,
@@ -365,7 +365,7 @@ function openLocker(bankId, lockerId)
                         disableMouse = false,
                         disableCombat = true,
                     }, {}, {}, {}, function() -- Done
-                        StopAnimTask(GetPlayerPed(-1), "anim@heists@fleeca_bank@drilling", "drill_straight_idle", 1.0)
+                        StopAnimTask(PlayerPedId(), "anim@heists@fleeca_bank@drilling", "drill_straight_idle", 1.0)
                         DetachEntity(DrillObject, true, true)
                         DeleteObject(DrillObject)
                         TriggerServerEvent('rl-bankrobbery:server:setLockerState', bankId, lockerId, 'isOpened', true)
@@ -374,7 +374,7 @@ function openLocker(bankId, lockerId)
                         RLCore.Functions.Notify("Success", "success")
                         IsDrilling = false
                     end, function() -- Cancel
-                        StopAnimTask(GetPlayerPed(-1), "anim@heists@fleeca_bank@drilling", "drill_straight_idle", 1.0)
+                        StopAnimTask(PlayerPedId(), "anim@heists@fleeca_bank@drilling", "drill_straight_idle", 1.0)
                         TriggerServerEvent('rl-bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
                         DetachEntity(DrillObject, true, true)
                         DeleteObject(DrillObject)
@@ -412,10 +412,10 @@ function openLocker(bankId, lockerId)
         RLCore.Functions.TriggerCallback('RLCore:HasItem', function(hasItem)
             if hasItem then
                 loadAnimDict("anim@heists@fleeca_bank@drilling")
-                TaskPlayAnim(GetPlayerPed(-1), 'anim@heists@fleeca_bank@drilling', 'drill_straight_idle' , 3.0, 3.0, -1, 1, 0, false, false, false)
-                local pos = GetEntityCoords(GetPlayerPed(-1), true)
+                TaskPlayAnim(PlayerPedId(), 'anim@heists@fleeca_bank@drilling', 'drill_straight_idle' , 3.0, 3.0, -1, 1, 0, false, false, false)
+                local pos = GetEntityCoords(PlayerPedId(), true)
                 local DrillObject = CreateObject(GetHashKey("hei_prop_heist_drill"), pos.x, pos.y, pos.z, true, true, true)
-                AttachEntityToEntity(DrillObject, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 57005), 0.14, 0, -0.01, 90.0, -90.0, 180.0, true, true, false, true, 1, true)
+                AttachEntityToEntity(DrillObject, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 57005), 0.14, 0, -0.01, 90.0, -90.0, 180.0, true, true, false, true, 1, true)
                 IsDrilling = true
                 RLCore.Functions.Progressbar("open_locker_drill", "Cracking Safe", 50000, false, true, {
                     disableMovement = true,
@@ -423,7 +423,7 @@ function openLocker(bankId, lockerId)
                     disableMouse = false,
                     disableCombat = true,
                 }, {}, {}, {}, function() -- Done
-                    StopAnimTask(GetPlayerPed(-1), "anim@heists@fleeca_bank@drilling", "drill_straight_idle", 1.0)
+                    StopAnimTask(PlayerPedId(), "anim@heists@fleeca_bank@drilling", "drill_straight_idle", 1.0)
                     DetachEntity(DrillObject, true, true)
                     DeleteObject(DrillObject)
                     TriggerServerEvent('rl-bankrobbery:server:setLockerState', bankId, lockerId, 'isOpened', true)
@@ -432,7 +432,7 @@ function openLocker(bankId, lockerId)
                     RLCore.Functions.Notify("Success", "success")
                     IsDrilling = false
                 end, function() -- Cancel
-                    StopAnimTask(GetPlayerPed(-1), "anim@heists@fleeca_bank@drilling", "drill_straight_idle", 1.0)
+                    StopAnimTask(PlayerPedId(), "anim@heists@fleeca_bank@drilling", "drill_straight_idle", 1.0)
                     TriggerServerEvent('rl-bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
                     DetachEntity(DrillObject, true, true)
                     DeleteObject(DrillObject)
@@ -462,7 +462,7 @@ function openLocker(bankId, lockerId)
             anim = "hotwire",
             flags = 16,
         }, {}, {}, function() -- Done
-            StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+            StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
             TriggerServerEvent('rl-bankrobbery:server:setLockerState', bankId, lockerId, 'isOpened', true)
             TriggerServerEvent('rl-bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
             TriggerServerEvent('rl-bankrobbery:server:recieveItem', 'small', lockerId)
@@ -470,7 +470,7 @@ function openLocker(bankId, lockerId)
             RLCore.Functions.Notify("Success", "success")
             IsDrilling = false
         end, function() -- Cancel
-            StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+            StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
             TriggerServerEvent('rl-bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
             RLCore.Functions.Notify("Cancelled", "error")
             IsDrilling = false

@@ -51,7 +51,7 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(waittime)
-		local playerPed = GetPlayerPed(-1)
+		local playerPed = PlayerPedId()
 		if IsPedInAnyVehicle(playerPed, false) then
 			waittime = 150
 			local playerVeh = GetVehiclePedIsIn(playerPed, false)
@@ -120,7 +120,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(10)
 
-		local player = GetPlayerPed(-1)
+		local player = PlayerPedId()
 
 		-- SEATBELT
 		if IsPedInAnyVehicle(player, false) then
@@ -154,7 +154,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(1000)
 
-		local Ped = GetPlayerPed(-1)
+		local Ped = PlayerPedId()
 		local vehicle = GetVehiclePedIsIn(Ped, false)
 
 		if watchon or IsPedInAnyVehicle(Ped, false) then
@@ -207,7 +207,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(50)
 
-		local Ped = GetPlayerPed(-1)
+		local Ped = PlayerPedId()
 		local vehicle = GetVehiclePedIsIn(Ped, false)
 		local vehicleIsOn = GetIsVehicleEngineRunning(vehicle)
 

@@ -123,7 +123,7 @@ AddEventHandler('police:fix', function()
     end
 
     if IsPedInAnyVehicle(PlayerPedId()) then
-	    local ped = GetPlayerPed(-1)
+	    local ped = PlayerPedId()
 		local veh = GetVehiclePedIsIn(ped)
         FreezeEntityPosition(veh, true)
 		Progressbar(15000,"Fixing Vehicle")
@@ -293,7 +293,7 @@ function CanOpenEvidence()
 
     --[[
     if vehicle ~= 0 and vehicle ~= nil then
-        local pos = GetEntityCoords(GetPlayerPed(-1))
+        local pos = GetEntityCoords(PlayerPedId())
         local vehpos = GetEntityCoords(vehicle)
         local newpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, -2.5, 0)
         local disatance = GetDistanceBetweenCoords(plyCoords.x, plyCoords.y,plyCoords.z,newpos.x, newpos.y, newpos.z)
@@ -363,7 +363,7 @@ function GetClosestPlayer()
     local closestPlayers = RLCore.Functions.GetPlayersFromCoords()
     local closestDistance = -1
     local closestPlayer = -1
-    local coords = GetEntityCoords(GetPlayerPed(-1))
+    local coords = GetEntityCoords(PlayerPedId())
 
     for i=1, #closestPlayers, 1 do
         if closestPlayers[i] ~= PlayerId() then

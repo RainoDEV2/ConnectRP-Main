@@ -110,25 +110,25 @@ Citizen.CreateThread(function()
         if isLoggedIn and RLCore ~= nil then
             if PlayerJob.name == "trucker" then
                 if IsControlJustReleased(0, Keys["DEL"]) then
-                    if IsPedInAnyVehicle(GetPlayerPed(-1)) and isTruckerVehicle(GetVehiclePedIsIn(GetPlayerPed(-1), false)) then
+                    if IsPedInAnyVehicle(PlayerPedId()) and isTruckerVehicle(GetVehiclePedIsIn(PlayerPedId(), false)) then
                         getNewLocation()
-                        CurrentPlate = GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), false))
+                        CurrentPlate = GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId(), false))
                     end
                 end
-                local pos = GetEntityCoords(GetPlayerPed(-1))
+                local pos = GetEntityCoords(PlayerPedId())
                 if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, true) < 10.0) then
                     DrawMarker(2, Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 200, 200, 222, false, false, false, true, false, false, false)
                     if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, true) < 1.5) then
-                        if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+                        if IsPedInAnyVehicle(PlayerPedId(), false) then
                             DrawText3D(Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, "~g~E~w~ - Store Vehicle")
                         else
                             DrawText3D(Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, "~g~E~w~ - Vehicles")
                         end
                         if IsControlJustReleased(0, Keys["E"]) then
-                            if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
-                                if GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1)), -1) == GetPlayerPed(-1) then
-                                    if isTruckerVehicle(GetVehiclePedIsIn(GetPlayerPed(-1), false)) then
-                                        DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
+                            if IsPedInAnyVehicle(PlayerPedId(), false) then
+                                if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
+                                    if isTruckerVehicle(GetVehiclePedIsIn(PlayerPedId(), false)) then
+                                        DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
                                         TriggerServerEvent('rl-trucker:server:DoBail', false)
                                         RemoveTruckerBlips()
                                     else
@@ -171,9 +171,9 @@ Citizen.CreateThread(function()
     
                 if CurrentLocation ~= nil  and currentCount < CurrentLocation.dropcount then
                     if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, CurrentLocation.x, CurrentLocation.y, CurrentLocation.z, true) < 40.0 then
-                        if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+                        if not IsPedInAnyVehicle(PlayerPedId()) then
                             if not hasBox then
-                                local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
+                                local vehicle = GetVehiclePedIsIn(PlayerPedId(), true)
                                 if isTruckerVehicle(vehicle) and CurrentPlate == GetVehicleNumberPlateText(vehicle) then
                                     local trunkpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, -2.5, 0)
                                     if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, trunkpos.x, trunkpos.y, trunkpos.z, true) < 4 and not isWorking then
@@ -191,12 +191,12 @@ Citizen.CreateThread(function()
                                                 flags = 16,
                                             }, {}, {}, function() -- Done
                                                 isWorking = false
-                                                StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                                                StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
                                                 TriggerEvent('animations:client:EmoteCommandStart', {"box"})
                                                 hasBox = true
                                             end, function() -- Cancel
                                                 isWorking = false
-                                                StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                                                StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
                                                 RLCore.Functions.Notify("Canceled..", "error")
                                             end)
                                         end
@@ -219,7 +219,7 @@ Citizen.CreateThread(function()
                                             disableCombat = true,
                                         }, {}, {}, {}, function() -- Done
                                             isWorking = false
-                                            ClearPedTasks(GetPlayerPed(-1))
+                                            ClearPedTasks(PlayerPedId())
                                             hasBox = false
                                             currentCount = currentCount + 1
                                             if currentCount == CurrentLocation.dropcount then
@@ -237,7 +237,7 @@ Citizen.CreateThread(function()
                                             end
                                         end, function() -- Cancel
                                             isWorking = false
-                                            ClearPedTasks(GetPlayerPed(-1))
+                                            ClearPedTasks(PlayerPedId())
                                             RLCore.Functions.Notify("Canceled..", "error")
                                         end)
                                     end
@@ -282,7 +282,7 @@ function getNewLocation()
 end
 
 function getNextClosestLocation()
-    local pos = GetEntityCoords(GetPlayerPed(-1), true)
+    local pos = GetEntityCoords(PlayerPedId(), true)
     local current = 0
     local dist = nil
 
@@ -328,7 +328,7 @@ function isTruckerVehicle(vehicle)
 end
 
 function MenuGarage()
-    ped = GetPlayerPed(-1);
+    ped = PlayerPedId();
     MenuTitle = "Garage"
     ClearMenu()
     Menu.addButton("Vehicle List", "VehicleList", nil)
@@ -336,7 +336,7 @@ function MenuGarage()
 end
 
 function VehicleList(isDown)
-    ped = GetPlayerPed(-1);
+    ped = PlayerPedId();
     MenuTitle = "Vehicles:"
     ClearMenu()
     for k, v in pairs(Config.Vehicles) do
@@ -372,7 +372,7 @@ AddEventHandler('rl-trucker:client:SpawnVehicle', function()
         SetEntityHeading(veh, coords.h)
         exports['LegacyFuel']:SetFuel(veh, 100)
         closeMenuFull()
-        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         SetEntityAsMissionEntity(veh, true, true)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
         SetVehicleEngineOn(veh, true, true)

@@ -12,10 +12,10 @@ AddEventHandler('police:client:spawnCone', function()
         anim = "drop_front",
         flags = 16,
     }, {}, {}, function() -- Done
-        StopAnimTask(GetPlayerPed(-1), "anim@narcotics@trash", "drop_front", 1.0)
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         TriggerServerEvent("police:server:spawnObject", "cone")
     end, function() -- Cancel
-        StopAnimTask(GetPlayerPed(-1), "anim@narcotics@trash", "drop_front", 1.0)
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         RLCore.Functions.Notify("Canceled..", "error")
     end)
 end)
@@ -32,10 +32,10 @@ AddEventHandler('police:client:spawnBarier', function()
         anim = "drop_front",
         flags = 16,
     }, {}, {}, function() -- Done
-        StopAnimTask(GetPlayerPed(-1), "anim@narcotics@trash", "drop_front", 1.0)
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         TriggerServerEvent("police:server:spawnObject", "barier")
     end, function() -- Cancel
-        StopAnimTask(GetPlayerPed(-1), "anim@narcotics@trash", "drop_front", 1.0)
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         RLCore.Functions.Notify("Canceled..", "error")
     end)
 end)
@@ -52,10 +52,10 @@ AddEventHandler('police:client:spawnSchotten', function()
         anim = "drop_front",
         flags = 16,
     }, {}, {}, function() -- Done
-        StopAnimTask(GetPlayerPed(-1), "anim@narcotics@trash", "drop_front", 1.0)
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         TriggerServerEvent("police:server:spawnObject", "schotten")
     end, function() -- Cancel
-        StopAnimTask(GetPlayerPed(-1), "anim@narcotics@trash", "drop_front", 1.0)
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         RLCore.Functions.Notify("Canceled..", "error")
     end)
 end)
@@ -72,10 +72,10 @@ AddEventHandler('police:client:spawnGlobalObj', function(zlz)
         anim = "drop_front",
         flags = 16,
     }, {}, {}, function() -- Done
-        StopAnimTask(GetPlayerPed(-1), "anim@narcotics@trash", "drop_front", 1.0)
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         TriggerServerEvent("police:server:spawnObject", zlz)
     end, function() -- Cancel
-        StopAnimTask(GetPlayerPed(-1), "anim@narcotics@trash", "drop_front", 1.0)
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         RLCore.Functions.Notify("Canceled..", "error")
     end)
 end)
@@ -92,17 +92,17 @@ AddEventHandler('police:client:spawnTent', function()
         anim = "drop_front",
         flags = 16,
     }, {}, {}, function() -- Done
-        StopAnimTask(GetPlayerPed(-1), "anim@narcotics@trash", "drop_front", 1.0)
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         TriggerServerEvent("police:server:spawnObject", "tent")
     end, function() -- Cancel
-        StopAnimTask(GetPlayerPed(-1), "anim@narcotics@trash", "drop_front", 1.0)
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         RLCore.Functions.Notify("Canceled..", "error")
     end)
 end)
 
 RegisterNetEvent('police:client:spawnLight')
 AddEventHandler('police:client:spawnLight', function()
-    local coords = GetEntityCoords(GetPlayerPed(-1))
+    local coords = GetEntityCoords(PlayerPedId())
     RLCore.Functions.Progressbar("spawn_object", "Placing Object..", 1800, false, true, {
         disableMovement = true,
         disableCarMovement = true,
@@ -113,10 +113,10 @@ AddEventHandler('police:client:spawnLight', function()
         anim = "drop_front",
         flags = 16,
     }, {}, {}, function() -- Done
-        StopAnimTask(GetPlayerPed(-1), "anim@narcotics@trash", "drop_front", 1.0)
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         TriggerServerEvent("police:server:spawnObject", "light")
     end, function() -- Cancel
-        StopAnimTask(GetPlayerPed(-1), "anim@narcotics@trash", "drop_front", 1.0)
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         RLCore.Functions.Notify("Canceled..", "error")
     end)
 end)
@@ -135,10 +135,10 @@ AddEventHandler('police:client:deleteObject', function()
             anim = "plant_floor",
             flags = 16,
         }, {}, {}, function() -- Done
-            StopAnimTask(GetPlayerPed(-1), "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", "plant_floor", 1.0)
+            StopAnimTask(PlayerPedId(), "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", "plant_floor", 1.0)
             TriggerServerEvent("police:server:deleteObject", objectId)
         end, function() -- Cancel
-            StopAnimTask(GetPlayerPed(-1), "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", "plant_floor", 1.0)
+            StopAnimTask(PlayerPedId(), "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", "plant_floor", 1.0)
             RLCore.Functions.Notify("Canceled..", "error")
         end)
     end
@@ -157,10 +157,10 @@ AddEventHandler('police:client:deleteAreaObjects', function()
         anim = "plant_floor",
         flags = 16,
     }, {}, {}, function() -- Done
-        StopAnimTask(GetPlayerPed(-1), "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", "plant_floor", 1.0)
+        StopAnimTask(PlayerPedId(), "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", "plant_floor", 1.0)
         TriggerServerEvent("police:server:deleteObjects", areaobjects)
     end, function() -- Cancel
-        StopAnimTask(GetPlayerPed(-1), "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", "plant_floor", 1.0)
+        StopAnimTask(PlayerPedId(), "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", "plant_floor", 1.0)
         RLCore.Functions.Notify("Canceled..", "error")
     end)
 end)
@@ -194,7 +194,7 @@ AddEventHandler('police:client:spawnObject', function(objectId, type, player)
     if GetPlayerFromServerId(player) ~= -1 then
         local coords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(player)))
         local heading = GetEntityHeading(GetPlayerPed(GetPlayerFromServerId(player)))
-        local forward = GetEntityForwardVector(GetPlayerPed(-1))
+        local forward = GetEntityForwardVector(PlayerPedId())
         local x, y, z = table.unpack(coords + forward * 0.5)
         local spawnedObj = CreateObject(Config.Objects[type].model, x, y, z, false, false, false)
         PlaceObjectOnGroundProperly(spawnedObj)
@@ -213,7 +213,7 @@ AddEventHandler('police:client:spawnObject', function(objectId, type, player)
 end)
 
 function GetClosestPoliceObject()
-    local pos = GetEntityCoords(GetPlayerPed(-1), true)
+    local pos = GetEntityCoords(PlayerPedId(), true)
     local current = nil
     local dist = nil
 
@@ -232,7 +232,7 @@ function GetClosestPoliceObject()
 end
 
 function GetAreaPoliceObject()
-    local pos = GetEntityCoords(GetPlayerPed(-1), true)
+    local pos = GetEntityCoords(PlayerPedId(), true)
     local objList = {}
 
     for id, data in pairs(ObjectList) do
@@ -264,7 +264,7 @@ Citizen.CreateThread(function()
 end)
 
 function GetClosestSpike()
-    local pos = GetEntityCoords(GetPlayerPed(-1), true)
+    local pos = GetEntityCoords(PlayerPedId(), true)
     local current = nil
 
     for id, data in pairs(SpawnedSpikes) do
@@ -295,7 +295,7 @@ end)
 
 
 function SetSpikesOnGround()
-    x, y, z = table.unpack(GetEntityCoords(GetPlayerPed(-1), true))
+    x, y, z = table.unpack(GetEntityCoords(PlayerPedId(), true))
 
     spike = GetHashKey("P_ld_stinger_s")
 
@@ -306,13 +306,13 @@ function SetSpikesOnGround()
 	RLCore.Functions.Notify('Deploying spikes...')
 	doAnimation()
 	Citizen.Wait(1700)
-	ClearPedTasksImmediately(GetPlayerPed(-1))
+	ClearPedTasksImmediately(PlayerPedId())
 	usingSpikes = true
-	--FreezeEntityPosition(GetPlayerPed(-1), false)
+	--FreezeEntityPosition(PlayerPedId(), false)
 	Citizen.Wait(250)
-	local playerheading = GetEntityHeading(GetPlayerPed(-1))
-	coords1 = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 3, 10, -0.7)
-	coords2 = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, -5, -0.5)
+	local playerheading = GetEntityHeading(PlayerPedId())
+	coords1 = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 3, 10, -0.7)
+	coords2 = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0, -5, -0.5)
 
 	obj1 = CreateObject(spike, coords1['x'], coords1['y'], coords1['z'], true, true, true)
 	obj2 = CreateObject(spike, coords2['x'], coords2['y'], coords2['z'], true, true, true)
@@ -322,9 +322,9 @@ function SetSpikesOnGround()
 	SetEntityHeading(obj3, playerheading)
 	
 
-	AttachEntityToEntity(obj1, GetPlayerPed(-1), 1, 0.0, 4.0, 0.0, 0.0, -90.0, 0.0, true, true, false, false, 2, true)
-	AttachEntityToEntity(obj2, GetPlayerPed(-1), 1, 0.0, 8.0, 0.0, 0.0, -90.0, 0.0, true, true, false, false, 2, true)
-	AttachEntityToEntity(obj3, GetPlayerPed(-1), 1, 0.0, 12.0, 0.0, 0.0, -90.0, 0.0, true, true, false, false, 2, true)
+	AttachEntityToEntity(obj1, PlayerPedId(), 1, 0.0, 4.0, 0.0, 0.0, -90.0, 0.0, true, true, false, false, 2, true)
+	AttachEntityToEntity(obj2, PlayerPedId(), 1, 0.0, 8.0, 0.0, 0.0, -90.0, 0.0, true, true, false, false, 2, true)
+	AttachEntityToEntity(obj3, PlayerPedId(), 1, 0.0, 12.0, 0.0, 0.0, -90.0, 0.0, true, true, false, false, 2, true)
 	
 	DetachEntity(obj1, true, true)
 	DetachEntity(obj2, true, true)
@@ -346,7 +346,7 @@ end
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(100)
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local veh = GetVehiclePedIsIn(ped, false)
     local vehCoord = GetEntityCoords(veh)
     if IsPedInAnyVehicle(ped, false) then
@@ -359,7 +359,7 @@ Citizen.CreateThread(function()
 end)
 
 function RemoveSpike()
-   local ped = GetPlayerPed(-1)
+   local ped = PlayerPedId()
    local veh = GetVehiclePedIsIn(ped, false)
    local vehCoord = GetEntityCoords(veh)
    if DoesObjectOfTypeExistAtCoords(vehCoord["x"], vehCoord["y"], vehCoord["z"], 0.9, GetHashKey("P_ld_stinger_s"), true) then
@@ -407,7 +407,7 @@ function loadAnimDict(dict)
 end
 
 function doAnimation()
-	local ped 	  = GetPlayerPed(-1)
+	local ped 	  = PlayerPedId()
 	local coords  = GetEntityCoords(ped)
 
 	--FreezeEntityPosition(ped, true)
@@ -434,7 +434,7 @@ Citizen.CreateThread(function()
                 }
 
                 for a = 1, #tires do
-                    local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+                    local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
                     local tirePos = GetWorldPositionOfEntityBone(vehicle, GetEntityBoneIndexByName(vehicle, tires[a].bone))
                     local spike = GetClosestObjectOfType(tirePos.x, tirePos.y, tirePos.z, 15.0, GetHashKey(spikemodel), 1, 1, 1)
                     local spikePos = GetEntityCoords(spike, false)
@@ -457,12 +457,12 @@ Citizen.CreateThread(function()
     while true do
         if isLoggedIn then
             if ClosestSpike ~= nil then
-                local ped = GetPlayerPed(-1)
+                local ped = PlayerPedId()
                 local pos = GetEntityCoords(ped)
                 local dist = GetDistanceBetweenCoords(pos, SpawnedSpikes[ClosestSpike].coords.x, SpawnedSpikes[ClosestSpike].coords.y, SpawnedSpikes[ClosestSpike].coords.z, true)
 
                 if dist < 4 then
-                    if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+                    if not IsPedInAnyVehicle(PlayerPedId()) then
                         if PlayerJob.name == "police" and PlayerJob.onduty then
                             DrawText3D(pos.x, pos.y, pos.z, '[E] Remove spike')
                             if IsControlJustPressed(0, Keys["E"]) then

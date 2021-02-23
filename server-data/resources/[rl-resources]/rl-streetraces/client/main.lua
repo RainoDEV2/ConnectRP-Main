@@ -50,7 +50,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(7)
         if Races ~= nil then
             -- Nog geen race
-            local pos = GetEntityCoords(GetPlayerPed(-1), true)
+            local pos = GetEntityCoords(PlayerPedId(), true)
             if RaceId == 0 then
                 for k, race in pairs(Races) do
                     if Races[k] ~= nil then
@@ -118,7 +118,7 @@ end)
 
 RegisterNetEvent('rl-streetraces:CreateRace')
 AddEventHandler('rl-streetraces:CreateRace', function(amount)
-    local pos = GetEntityCoords(GetPlayerPed(-1), true)
+    local pos = GetEntityCoords(PlayerPedId(), true)
     local WaypointHandle = GetFirstBlipInfoId(8)
     if DoesBlipExist(WaypointHandle) then
         local cx, cy, cz = table.unpack(Citizen.InvokeNative(0xFA7C7F0AADF25D09, WaypointHandle, Citizen.ReturnResultAnyway(), Citizen.ResultAsVector()))
@@ -161,8 +161,8 @@ end)
 function RaceCountDown()
     ShowCountDown = true
     while RaceCount ~= 0 do
-        local pos = GetEntityCoords(GetPlayerPed(-1), true)
-        FreezeEntityPosition(GetVehiclePedIsIn(GetPlayerPed(-1), true), true)
+        local pos = GetEntityCoords(PlayerPedId(), true)
+        FreezeEntityPosition(GetVehiclePedIsIn(PlayerPedId(), true), true)
         PlaySound(-1, "slow", "SHORT_PLAYER_SWITCH_SOUND_SET", 0, 0, 1)
         RLCore.Functions.Notify(RaceCount, 'primary', 800)
         Citizen.Wait(1000)
@@ -170,7 +170,7 @@ function RaceCountDown()
     end
     ShowCountDown = false
     RaceCount = 5
-    FreezeEntityPosition(GetVehiclePedIsIn(GetPlayerPed(-1), true), false)
+    FreezeEntityPosition(GetVehiclePedIsIn(PlayerPedId(), true), false)
     RLCore.Functions.Notify("GOOOOOOOOO!!!")
 
     TriggerEvent("debug", 'Races: Started', 'success')

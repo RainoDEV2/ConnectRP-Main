@@ -23,7 +23,7 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
 
         nearDealer = false
@@ -70,12 +70,12 @@ Citizen.CreateThread(function()
                                             flags = 16,
                                         }, {}, {}, function() -- Done
                                             isHealingPerson = false
-                                            StopAnimTask(GetPlayerPed(-1), healAnimDict, "exit", 1.0)
+                                            StopAnimTask(PlayerPedId(), healAnimDict, "exit", 1.0)
                                             RLCore.Functions.Notify("Person has been revived.")
                                             TriggerServerEvent("hospital:server:RevivePlayer", playerId, true)
                                         end, function() -- Cancel
                                             isHealingPerson = false
-                                            StopAnimTask(GetPlayerPed(-1), healAnimDict, "exit", 1.0)
+                                            StopAnimTask(PlayerPedId(), healAnimDict, "exit", 1.0)
                                             RLCore.Functions.Notify("Failed!", "error")
                                         end)
                                     else
@@ -111,7 +111,7 @@ function GetClosestPlayer()
     local closestPlayers = RLCore.Functions.GetPlayersFromCoords()
     local closestDistance = -1
     local closestPlayer = -1
-    local coords = GetEntityCoords(GetPlayerPed(-1))
+    local coords = GetEntityCoords(PlayerPedId())
 
     for i=1, #closestPlayers, 1 do
         if closestPlayers[i] ~= PlayerId() then
@@ -158,7 +158,7 @@ end
 function knockDoorAnim(home)
     local knockAnimLib = "timetable@jimmy@doorknock@"
     local knockAnim = "knockdoor_idle"
-    local PlayerPed = GetPlayerPed(-1)
+    local PlayerPed = PlayerPedId()
     local myData = RLCore.Functions.GetPlayerData()
 
     if home then
@@ -238,7 +238,7 @@ function requestDelivery()
 end
 
 function randomDeliveryItemOnRep()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local myRep = RLCore.Functions.GetPlayerData().metadata["dealerrep"]
 
     retval = nil
@@ -280,7 +280,7 @@ AddEventHandler('rl-drugs:client:setLocation', function(locationData)
     Citizen.CreateThread(function()
         while true do
 
-            local ped = GetPlayerPed(-1)
+            local ped = PlayerPedId()
             local pos = GetEntityCoords(ped)
             local inDeliveryRange = false
 
@@ -347,7 +347,7 @@ function deliverStuff(activeDelivery)
         }, {}, {}, {}, function() -- Done
             TriggerServerEvent('rl-drugs:server:succesDelivery', activeDelivery, true)
         end, function() -- Cancel
-            ClearPedTasks(GetPlayerPed(-1))
+            ClearPedTasks(PlayerPedId())
             RLCore.Functions.Notify("Canceled..", "error")
         end)
     else
@@ -377,7 +377,7 @@ function checkPedDistance()
 end
 
 function doPoliceAlert()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
     local street1 = GetStreetNameFromHashKey(s1)
@@ -442,7 +442,7 @@ end)
 
 RegisterNetEvent('rl-drugs:client:CreateDealer')
 AddEventHandler('rl-drugs:client:CreateDealer', function(dealerName, minTime, maxTime)
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local loc = GetEntityCoords(ped)
     local DealerData = {
         name = dealerName,
@@ -467,7 +467,7 @@ end)
 
 RegisterNetEvent('rl-drugs:client:GotoDealer')
 AddEventHandler('rl-drugs:client:GotoDealer', function(DealerData)
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
 
     SetEntityCoords(ped, DealerData["coords"]["x"], DealerData["coords"]["y"], DealerData["coords"]["z"])
     RLCore.Functions.Notify('You have gone to Dealer: '.. DealerData["name"] .. ' teleported!', 'success')

@@ -22,7 +22,7 @@ Citizen.CreateThread(function()
 	while true do
         Citizen.Wait(0)
 		if IsPlayerInPolmav() then
-			local lPed = GetPlayerPed(-1)
+			local lPed = PlayerPedId()
 			local heli = GetVehiclePedIsIn(lPed)
 			
 			if IsHeliHighEnough(heli) then
@@ -34,7 +34,7 @@ Citizen.CreateThread(function()
 				if IsControlJustPressed(0, toggle_rappel) then -- Initiate rappel
 					if GetPedInVehicleSeat(heli, 1) == lPed or GetPedInVehicleSeat(heli, 2) == lPed then
 						PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
-						TaskRappelFromHeli(GetPlayerPed(-1), 1)
+						TaskRappelFromHeli(PlayerPedId(), 1)
 						TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 3.0, 'rapell', 0.2)
 					else
 						SetNotificationTextEntry( "STRING" )
@@ -59,7 +59,7 @@ Citizen.CreateThread(function()
 			while not HasScaleformMovieLoaded(scaleform) do
 				Citizen.Wait(0)
 			end
-			local lPed = GetPlayerPed(-1)
+			local lPed = PlayerPedId()
 			local heli = GetVehiclePedIsIn(lPed)
 			local cam = CreateCam("DEFAULT_SCRIPTED_FLY_CAMERA", true)
 			AttachCamToEntity(cam, heli, 0.0,0.0,-1.5, true)
@@ -141,7 +141,7 @@ AddEventHandler('heli:spotlight', function(serverID, state)
 end)
 
 function IsPlayerInPolmav()
-	local lPed = GetPlayerPed(-1)
+	local lPed = PlayerPedId()
 	local vehicle = GetVehiclePedIsIn(lPed)
 	return IsVehicleModel(vehicle, polmav_hash) or IsVehicleModel(vehicle, GetHashKey("wnews3"))
 end
@@ -204,7 +204,7 @@ function GetVehicleInView(cam)
 	local coords = GetCamCoord(cam)
 	local forward_vector = RotAnglesToVec(GetCamRot(cam, 2))
 	--DrawLine(coords, coords+(forward_vector*100.0), 255,0,0,255) -- debug line to show LOS of cam
-	local rayhandle = CastRayPointToPoint(coords, coords+(forward_vector*200.0), 10, GetVehiclePedIsIn(GetPlayerPed(-1)), 0)
+	local rayhandle = CastRayPointToPoint(coords, coords+(forward_vector*200.0), 10, GetVehiclePedIsIn(PlayerPedId()), 0)
 	local _, _, _, _, entityHit = GetRaycastResult(rayhandle)
 	if entityHit>0 and IsEntityAVehicle(entityHit) then
 		return entityHit

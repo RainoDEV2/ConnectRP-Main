@@ -265,7 +265,7 @@ Citizen.CreateThread(function()
                 DrawText3D(coords.x, coords.y, coords.z, '[E] Make It Rain ($200)')
                 if IsControlJustReleased(0, 38) then 
                     loadAnimDict("anim@mp_player_intcelebrationfemale@raining_cash") 
-                    TaskPlayAnim( GetPlayerPed(-1), "anim@mp_player_intcelebrationfemale@raining_cash", "raining_cash", 8.0 , -1 , -1 , 0 , 0 , false , false , false)
+                    TaskPlayAnim( PlayerPedId(), "anim@mp_player_intcelebrationfemale@raining_cash", "raining_cash", 8.0 , -1 , -1 , 0 , 0 , false , false , false)
                     Citizen.Wait(2000)
                     TriggerServerEvent('stripclubstack:pay')     
                     DeleteEntity(cash)

@@ -26,7 +26,7 @@ end)
 
 -- Trigger vehicle save (set interval in config)
 Citizen.CreateThread(function()
-	ped = GetPlayerPed(-1)
+	ped = PlayerPedId()
 	local vehicle = 0
 	local inVeh = false
 	while true do

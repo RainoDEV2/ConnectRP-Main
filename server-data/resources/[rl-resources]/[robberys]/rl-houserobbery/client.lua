@@ -234,7 +234,7 @@ Citizen.CreateThread(function()
 
   if isRobbing then
    for i=1,#myRobbableItems do
-    if (GetDistanceBetweenCoords(generator.x + myRobbableItems[i]["x"], generator.y + myRobbableItems[i]["y"], generator.z + myRobbableItems[i]["z"], GetEntityCoords(GetPlayerPed(-1))) < 1.4) and not myRobbableItems[i]['isSearched'] then
+    if (GetDistanceBetweenCoords(generator.x + myRobbableItems[i]["x"], generator.y + myRobbableItems[i]["y"], generator.z + myRobbableItems[i]["z"], GetEntityCoords(PlayerPedId())) < 1.4) and not myRobbableItems[i]['isSearched'] then
      DrawText3Ds(generator.x + myRobbableItems[i]["x"], generator.y + myRobbableItems[i]["y"], generator.z + myRobbableItems[i]["z"], '~w~Press ~g~H~s~ To Search ' .. myRobbableItems[i]["name"])
 
      if IsControlJustReleased(1, 74) then
@@ -281,7 +281,7 @@ Citizen.CreateThread(function()
      num = math.random(math.ceil(num))
      local fuckup = math.ceil(num)
 
-     if fuckup == 2 and GetEntitySpeed(GetPlayerPed(-1)) > 0.8 then
+     if fuckup == 2 and GetEntitySpeed(PlayerPedId()) > 0.8 then
       calledin = true
       if not isAgro then
        agroNPC()
@@ -292,7 +292,7 @@ Citizen.CreateThread(function()
     end
    end
 
-   if GetEntitySpeed(GetPlayerPed(-1)) > 1.4 then
+   if GetEntitySpeed(PlayerPedId()) > 1.4 then
     local distance, pedcount = closestNPC()
     local alteredsound = 0.1
     if pedcount > 0 then
@@ -302,11 +302,11 @@ Citizen.CreateThread(function()
     end
 
     disturbance = disturbance + alteredsound
-    if GetEntitySpeed(GetPlayerPed(-1)) > 2.0 then
+    if GetEntitySpeed(PlayerPedId()) > 2.0 then
      disturbance = disturbance + alteredsound
     end
 
-    if GetEntitySpeed(GetPlayerPed(-1)) > 3.0 then
+    if GetEntitySpeed(PlayerPedId()) > 3.0 then
      disturbance = disturbance + alteredsound
     end
    else
@@ -550,7 +550,7 @@ function DrawText3Ds(x,y,z, text)
 end
 
 function closestNPC()
- local playerCoords = GetEntityCoords(GetPlayerPed(-1))
+ local playerCoords = GetEntityCoords(PlayerPedId())
  local handle, ped = FindFirstPed()
  local success
  local rped = nil
@@ -559,7 +559,7 @@ function closestNPC()
  repeat
   local pos = GetEntityCoords(ped)
   local distance = GetDistanceBetweenCoords(playerCoords, pos, true)
-  if distance < 25.0 and ped ~= GetPlayerPed(-1) and not IsPedAPlayer(ped) then
+  if distance < 25.0 and ped ~= PlayerPedId() and not IsPedAPlayer(ped) then
    pedcount = pedcount + 1
    if (distance < distanceFrom) then
     distanceFrom = distance
@@ -575,7 +575,7 @@ end
 local attackDog = nil
 
 function agroNPC()
- local playerCoords = GetEntityCoords(GetPlayerPed(-1))
+ local playerCoords = GetEntityCoords(PlayerPedId())
  local handle, ped = FindFirstPed()
  local success
  local rped = nil
@@ -584,11 +584,11 @@ function agroNPC()
  repeat
   local pos = GetEntityCoords(ped)
   local distance = GetDistanceBetweenCoords(playerCoords, pos, true)
-  if distance < 35.0 and ped ~= GetPlayerPed(-1) and not IsPedAPlayer(ped) then
+  if distance < 35.0 and ped ~= PlayerPedId() and not IsPedAPlayer(ped) then
    ClearPedTasksImmediately(ped)
    SetPedDropsWeaponsWhenDead(ped,false)
    GiveWeaponToPed(ped, GetHashKey('WEAPON_BAT'), 150, 0, 1)
-   TaskCombatPed(ped, GetPlayerPed(-1), 0, 16)
+   TaskCombatPed(ped, PlayerPedId(), 0, 16)
    SetPedKeepTask(ped, true)
    isAgro = true
   end
@@ -610,7 +610,7 @@ AddEventHandler('houseRobberies:createDog', function()
   TriggerEvent('dispatch:houseRobbery')
   attackDog = CreatePed(GetPedType(model), model, curHouseCoords.x+3.70339700, curHouseCoords.y+-3.80026800, curHouseCoords.z+2.29917900, 90, 1, 0)
   Citizen.Wait(1500)
-  TaskCombatPed(attackDog, GetPlayerPed(-1), 0, 16)
+  TaskCombatPed(attackDog, PlayerPedId(), 0, 16)
   SetPedKeepTask(attackDog, true)
   Citizen.Wait(45000)
   SetEntityAsNoLongerNeeded(attackDog)

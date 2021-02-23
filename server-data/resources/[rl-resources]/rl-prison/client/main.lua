@@ -115,7 +115,7 @@ Citizen.CreateThread(function()
 		Citizen.Wait(1)
 		if isLoggedIn then
 			if inJail then
-				local pos = GetEntityCoords(GetPlayerPed(-1))
+				local pos = GetEntityCoords(PlayerPedId())
 				if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["freedom"].coords.x, Config.Locations["freedom"].coords.y, Config.Locations["freedom"].coords.z, true) < 1.5) then
 					RLCore.Functions.DrawText3D(Config.Locations["freedom"].coords.x, Config.Locations["freedom"].coords.y, Config.Locations["freedom"].coords.z, "~g~E~w~ - Check time")
 					if IsControlJustReleased(0, Keys["E"]) then
@@ -177,8 +177,8 @@ AddEventHandler('prison:client:Enter', function(time)
 		Citizen.Wait(10)
 	end
 	local RandomStartPosition = Config.Locations.spawns[math.random(1, #Config.Locations.spawns)]
-	SetEntityCoords(GetPlayerPed(-1), RandomStartPosition.coords.x, RandomStartPosition.coords.y, RandomStartPosition.coords.z - 0.9, 0, 0, 0, false)
-	SetEntityHeading(GetPlayerPed(-1), RandomStartPosition.coords.h)
+	SetEntityCoords(PlayerPedId(), RandomStartPosition.coords.x, RandomStartPosition.coords.y, RandomStartPosition.coords.z - 0.9, 0, 0, 0, false)
+	SetEntityHeading(PlayerPedId(), RandomStartPosition.coords.h)
 	Citizen.Wait(500)
 	TriggerEvent('animations:client:EmoteCommandStart', {RandomStartPosition.animation})
 

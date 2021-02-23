@@ -30,7 +30,7 @@ end)
 
 RegisterNetEvent('police:client:SendTrackerLocation')
 AddEventHandler('police:client:SendTrackerLocation', function(requestId)
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local coords = GetEntityCoords(ped)
 
     TriggerServerEvent('police:server:SendTrackerLocation', coords, requestId)

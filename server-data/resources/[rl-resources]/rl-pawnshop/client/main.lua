@@ -38,7 +38,7 @@ Citizen.CreateThread(function()
 	while true do 
 		Citizen.Wait(1)
 		local inRange = false
-		local pos = GetEntityCoords(GetPlayerPed(-1))
+		local pos = GetEntityCoords(PlayerPedId())
 		if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.PawnLocation.x, Config.PawnLocation.y, Config.PawnLocation.z, true) < 5.0 then
 			inRange = true
 			if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.PawnLocation.x, Config.PawnLocation.y, Config.PawnLocation.z, true) < 1.5 then
@@ -48,15 +48,15 @@ Citizen.CreateThread(function()
 				elseif sellItemsSet and sellPrice ~= 0 then
 					DrawText3D(Config.PawnLocation.x, Config.PawnLocation.y, Config.PawnLocation.z, "[E] Pawn items ($"..sellPrice..")")
 					if IsControlJustReleased(0, Keys["E"]) then
-						TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_STAND_IMPATIENT", 0, true)
+						TaskStartScenarioInPlace(PlayerPedId(), "WORLD_HUMAN_STAND_IMPATIENT", 0, true)
 						RLCore.Functions.Progressbar("sell_pawn_items", "Selling ​​Items ..", math.random(10000, 20000), false, true, {}, {}, {}, {}, function() -- Done
-							ClearPedTasks(GetPlayerPed(-1))
+							ClearPedTasks(PlayerPedId())
 							TriggerServerEvent("rl-pawnshop:server:sellPawnItems")
 							TriggerEvent("debug", 'Pawn Shop: Sell ​​Stuff', 'success')
 							sellItemsSet = false
 							sellPrice = 0
 						end, function() -- Cancel
-							ClearPedTasks(GetPlayerPed(-1))
+							ClearPedTasks(PlayerPedId())
 							RLCore.Functions.Notify("Canceled..", "error")
 						end)
 					end
@@ -87,7 +87,7 @@ Citizen.CreateThread(function()
 	while true do 
 		Citizen.Wait(1)
 		local inRange = false
-		local pos = GetEntityCoords(GetPlayerPed(-1))
+		local pos = GetEntityCoords(PlayerPedId())
 		if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.PawnHardwareLocation.x, Config.PawnHardwareLocation.y, Config.PawnHardwareLocation.z, true) < 5.0 then
 			inRange = true
 			if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.PawnHardwareLocation.x, Config.PawnHardwareLocation.y, Config.PawnHardwareLocation.z, true) < 1.5 then
@@ -97,14 +97,14 @@ Citizen.CreateThread(function()
 				elseif sellHardwareItemsSet and sellHardwarePrice ~= 0 then
 					DrawText3D(Config.PawnHardwareLocation.x, Config.PawnHardwareLocation.y, Config.PawnHardwareLocation.z, "[E] Sell Electronic Items ($"..sellHardwarePrice..")")
 					if IsControlJustReleased(0, Keys["E"]) then
-						TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_STAND_IMPATIENT", 0, true)
+						TaskStartScenarioInPlace(PlayerPedId(), "WORLD_HUMAN_STAND_IMPATIENT", 0, true)
 						RLCore.Functions.Progressbar("sell_pawn_items", "Selling ​​Items ..", math.random(10000, 20000), false, true, {}, {}, {}, {}, function() -- Done
-							ClearPedTasks(GetPlayerPed(-1))
+							ClearPedTasks(PlayerPedId())
 							TriggerServerEvent("rl-pawnshop:server:sellHardwarePawnItems")
 							sellHardwareItemsSet = false
 							sellHardwarePrice = 0
 						end, function() -- Cancel
-							ClearPedTasks(GetPlayerPed(-1))
+							ClearPedTasks(PlayerPedId())
 							RLCore.Functions.Notify("Canceled..", "error")
 						end)
 					end

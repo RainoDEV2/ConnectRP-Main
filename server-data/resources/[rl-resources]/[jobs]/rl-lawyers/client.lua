@@ -36,14 +36,14 @@ CreateThread(function()
                 letSleep = false
                 DrawMarker(2, vehicles.x, vehicles.y, vehicles.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
                  if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, vehicles.x, vehicles.y, vehicles.z, true) < 1.5) then
-                    if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+                    if IsPedInAnyVehicle(PlayerPedId(), false) then
                         DrawText3D(vehicles.x, vehicles.y, vehicles.z, "~g~E~w~ - Store the vehicle")
                     else
                         DrawText3D(vehicles.x, vehicles.y, vehicles.z, "~g~E~w~ - Vehicles")
                     end
                     if IsControlJustReleased(0, 38) then
-                        if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
-                            RLCore.Functions.DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
+                        if IsPedInAnyVehicle(PlayerPedId(), false) then
+                            RLCore.Functions.DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
                         else
                             MenuGarage()
                             Menu.hidden = not Menu.hidden
@@ -74,7 +74,7 @@ CreateThread(function()
 end)
 
 function MenuGarage()
-    local ped = GetPlayerPed(-1);
+    local ped = PlayerPedId();
     MenuTitle = "Garage"
     ClearMenu()
     Menu.addButton("Vehicles", "VehicleList", nil)
@@ -101,7 +101,7 @@ function SpawnVehicle(model)
         SetVehicleNumberPlateText(veh, "Law-"..tostring(math.random(1, 100)))
         SetEntityHeading(veh, Config.Locations['vehicles'].h)
         CloseMenu()
-        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
         SetVehicleEngineOn(veh, true, true)
     end, Config.Locations['vehicles'], true)

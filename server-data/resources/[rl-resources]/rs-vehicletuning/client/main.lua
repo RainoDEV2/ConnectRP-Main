@@ -40,7 +40,7 @@ Citizen.CreateThread(function()
 end)
 
 function SetClosestPlate()
-    local pos = GetEntityCoords(GetPlayerPed(-1), true)
+    local pos = GetEntityCoords(PlayerPedId(), true)
     local current = nil
     local dist = nil
     for id,_ in pairs(Config.Plates) do
@@ -112,7 +112,7 @@ Citizen.CreateThread(function()
 
         if isLoggedIn then
             if PlayerJob.name == "mechanic" then
-                local pos = GetEntityCoords(GetPlayerPed(-1))
+                local pos = GetEntityCoords(PlayerPedId())
                 local StashDistance = GetDistanceBetweenCoords(pos, Config.Locations["stash"].x, Config.Locations["stash"].y, Config.Locations["stash"].z, true)
                 local OnDutyDistance = GetDistanceBetweenCoords(pos, Config.Locations["duty"].x, Config.Locations["duty"].y, Config.Locations["duty"].z, true)
                 local VehicleDistance = GetDistanceBetweenCoords(pos, Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, true)
@@ -140,12 +140,12 @@ Citizen.CreateThread(function()
                         inRange = true
                         DrawMarker(2, Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 210, 50, 9, 255, false, false, false, true, false, false, false)
                         if VehicleDistance < 1 then
-                            local InVehicle = IsPedInAnyVehicle(GetPlayerPed(-1))
+                            local InVehicle = IsPedInAnyVehicle(PlayerPedId())
 
                             if InVehicle then
                                 DrawText3Ds(Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, '[E] Hide the vehicle')
                                 if IsControlJustPressed(0, Keys["E"]) then
-                                    DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
+                                    DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
                                 end
                             else
                                 DrawText3Ds(Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, '[E] Grab vehicle')
@@ -185,8 +185,8 @@ Citizen.CreateThread(function()
                                 inRange = true
                                 DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 255, 255, 255, 255, 0, 0, 0, 1, 0, 0, 0)
                                 if PlateDistance < 2 then
-                                    local veh = GetVehiclePedIsIn(GetPlayerPed(-1))
-                                    if IsPedInAnyVehicle(GetPlayerPed(-1)) then
+                                    local veh = GetVehiclePedIsIn(PlayerPedId())
+                                    if IsPedInAnyVehicle(PlayerPedId()) then
                                         if not IsThisModelABicycle(GetEntityModel(veh)) then
                                             DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.3, "[E] Place vehicle on ramp for inspection")
                                             if IsControlJustPressed(0, Config.Keys["E"]) then
@@ -268,7 +268,7 @@ function SpawnListVehicle(model)
         SetEntityHeading(veh, coords.h)
         exports['LegacyFuel']:SetFuel(veh, 100.0)
         Menu.hidden = true
-        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
         SetVehicleEngineOn(veh, true, true)
     end, coords, true)
@@ -404,7 +404,7 @@ function UnattachVehicle()
     FreezeEntityPosition(Config.Plates[ClosestPlate].AttachedVehicle, false)
     SetEntityCoords(Config.Plates[ClosestPlate].AttachedVehicle, Config.Plates[ClosestPlate].coords.x, Config.Plates[ClosestPlate].coords.y, Config.Plates[ClosestPlate].coords.z)
     SetEntityHeading(Config.Plates[ClosestPlate].AttachedVehicle, Config.Plates[ClosestPlate].coords.h)
-    TaskWarpPedIntoVehicle(GetPlayerPed(-1), Config.Plates[ClosestPlate].AttachedVehicle, -1)
+    TaskWarpPedIntoVehicle(PlayerPedId(), Config.Plates[ClosestPlate].AttachedVehicle, -1)
     Wait(500)
     DoScreenFadeIn(250)
     Config.Plates[ClosestPlate].AttachedVehicle = nil
@@ -425,8 +425,8 @@ end)
 Citizen.CreateThread(function()
     while true do 
         Citizen.Wait(1)
-        if (IsPedInAnyVehicle(GetPlayerPed(-1), false)) then
-            local veh = GetVehiclePedIsIn(GetPlayerPed(-1),false)
+        if (IsPedInAnyVehicle(PlayerPedId(), false)) then
+            local veh = GetVehiclePedIsIn(PlayerPedId(),false)
             if ModdedVehicles[tostring(veh)] == nil and not IsThisModelABicycle(GetEntityModel(veh)) then
 
                 if GetVehicleClass(veh) ~= 14 then
@@ -513,9 +513,9 @@ local effectTimer = 0
 Citizen.CreateThread(function()
     while true do 
         Citizen.Wait(1000)
-        if (IsPedInAnyVehicle(GetPlayerPed(-1), false)) then
-            local veh = GetVehiclePedIsIn(GetPlayerPed(-1),false)
-            if not IsThisModelABicycle(GetEntityModel(veh)) and GetPedInVehicleSeat(veh, -1) == GetPlayerPed(-1) then
+        if (IsPedInAnyVehicle(PlayerPedId(), false)) then
+            local veh = GetVehiclePedIsIn(PlayerPedId(),false)
+            if not IsThisModelABicycle(GetEntityModel(veh)) and GetPedInVehicleSeat(veh, -1) == PlayerPedId() then
                 local engineHealth = GetVehicleEngineHealth(veh)
                 local bodyHealth = GetVehicleBodyHealth(veh)
                 local plate = GetVehicleNumberPlateText(veh)
@@ -554,11 +554,11 @@ end)
 
 RegisterNetEvent('vehiclemod:client:getVehicleStatus')
 AddEventHandler('vehiclemod:client:getVehicleStatus', function(plate, status)
-    if not (IsPedInAnyVehicle(GetPlayerPed(-1), false)) then
-        local veh = GetVehiclePedIsIn(GetPlayerPed(-1), true)
+    if not (IsPedInAnyVehicle(PlayerPedId(), false)) then
+        local veh = GetVehiclePedIsIn(PlayerPedId(), true)
         if veh ~= nil and veh ~= 0 then
             local vehpos = GetEntityCoords(veh)
-            local pos = GetEntityCoords(GetPlayerPed(-1))
+            local pos = GetEntityCoords(PlayerPedId())
             if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 5.0 then
                 if not IsThisModelABicycle(GetEntityModel(veh)) then
                     local plate = GetVehicleNumberPlateText(veh)
@@ -583,9 +583,9 @@ end)
 
 RegisterNetEvent('vehiclemod:client:fixEverything')
 AddEventHandler('vehiclemod:client:fixEverything', function()
-    if (IsPedInAnyVehicle(GetPlayerPed(-1), false)) then
-        local veh = GetVehiclePedIsIn(GetPlayerPed(-1),false)
-        if not IsThisModelABicycle(GetEntityModel(veh)) and GetPedInVehicleSeat(veh, -1) == GetPlayerPed(-1) then
+    if (IsPedInAnyVehicle(PlayerPedId(), false)) then
+        local veh = GetVehiclePedIsIn(PlayerPedId(),false)
+        if not IsThisModelABicycle(GetEntityModel(veh)) and GetPedInVehicleSeat(veh, -1) == PlayerPedId() then
             local plate = GetVehicleNumberPlateText(veh)
             RLCore.Functions.TriggerCallback('vehiclemod:server:fixEverything', function(result)
             end, plate)
@@ -600,9 +600,9 @@ end)
 
 RegisterNetEvent('vehiclemod:client:setPartLevel')
 AddEventHandler('vehiclemod:client:setPartLevel', function(part, level)
-    if (IsPedInAnyVehicle(GetPlayerPed(-1), false)) then
-        local veh = GetVehiclePedIsIn(GetPlayerPed(-1),false)
-        if not IsThisModelABicycle(GetEntityModel(veh)) and GetPedInVehicleSeat(veh, -1) == GetPlayerPed(-1) then
+    if (IsPedInAnyVehicle(PlayerPedId(), false)) then
+        local veh = GetVehiclePedIsIn(PlayerPedId(),false)
+        if not IsThisModelABicycle(GetEntityModel(veh)) and GetPedInVehicleSeat(veh, -1) == PlayerPedId() then
             local plate = GetVehicleNumberPlateText(veh)
             if part == "engine" then
                 SetVehicleEngineHealth(veh, level)
@@ -631,11 +631,11 @@ local openingDoor = false
 RegisterNetEvent('vehiclemod:client:repairPart')
 AddEventHandler('vehiclemod:client:repairPart', function(part, level, needAmount)
     -- if CanReapair() then
-        if not IsPedInAnyVehicle(GetPlayerPed(-1), false) then
-            local veh = GetVehiclePedIsIn(GetPlayerPed(-1), true)
+        if not IsPedInAnyVehicle(PlayerPedId(), false) then
+            local veh = GetVehiclePedIsIn(PlayerPedId(), true)
             if veh ~= nil and veh ~= 0 then
                 local vehpos = GetEntityCoords(veh)
-                local pos = GetEntityCoords(GetPlayerPed(-1))
+                local pos = GetEntityCoords(PlayerPedId())
                 if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 5.0 then
                     if not IsThisModelABicycle(GetEntityModel(veh)) then
                         local plate = GetVehicleNumberPlateText(veh)
@@ -656,7 +656,7 @@ AddEventHandler('vehiclemod:client:repairPart', function(part, level, needAmount
                                 flags = 16,
                             }, {}, {}, function() -- Done
                                 openingDoor = false
-                                ClearPedTasks(GetPlayerPed(-1))
+                                ClearPedTasks(PlayerPedId())
                                 if part == "body" then
                                     SetVehicleBodyHealth(veh, GetVehicleBodyHealth(veh) + level)
                                     SetVehicleFixed(veh)
@@ -674,7 +674,7 @@ AddEventHandler('vehiclemod:client:repairPart', function(part, level, needAmount
                                 end
                             end, function() -- Cancel
                                 openingDoor = false
-                                ClearPedTasks(GetPlayerPed(-1))
+                                ClearPedTasks(PlayerPedId())
                                 RLCore.Functions.Notify("Proces Canceled..", "error")
                             end)
                         else
@@ -698,7 +698,7 @@ end)
 function ScrapAnim(time)
     local time = time / 1000
     loadAnimDict("mp_car_bomb")
-    TaskPlayAnim(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic" ,3.0, 3.0, -1, 16, 0, false, false, false)
+    TaskPlayAnim(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic" ,3.0, 3.0, -1, 16, 0, false, false, false)
     openingDoor = true
     Citizen.CreateThread(function()
         while openingDoor do
@@ -707,7 +707,7 @@ function ScrapAnim(time)
             time = time - 2
             if time <= 0 then
                 openingDoor = false
-                StopAnimTask(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic", 1.0)
+                StopAnimTask(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic", 1.0)
             end
         end
     end)

@@ -135,7 +135,7 @@ end)
 
 RegisterNetEvent('rl-tow:client:TowVehicle')
 AddEventHandler('rl-tow:client:TowVehicle', function()
-    local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
+    local vehicle = GetVehiclePedIsIn(PlayerPedId(), true)
     if isTowVehicle(vehicle) then 
         if CurrentTow == nil then 
             local playerped = PlayerPedId()
@@ -148,7 +148,7 @@ AddEventHandler('rl-tow:client:TowVehicle', function()
                     return
                 end
             end
-            if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+            if not IsPedInAnyVehicle(PlayerPedId()) then
                 if vehicle ~= targetVehicle then
                     local towPos = GetEntityCoords(vehicle)
                     local targetPos = GetEntityCoords(targetVehicle)
@@ -163,7 +163,7 @@ AddEventHandler('rl-tow:client:TowVehicle', function()
                             anim = "fixing_a_ped",
                             flags = 16,
                         }, {}, {}, function() -- Done
-                            StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_ped", 1.0)
+                            StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_ped", 1.0)
                             AttachEntityToEntity(targetVehicle, vehicle, GetEntityBoneIndexByName(vehicle, 'bodyshell'), 0.0, -1.5 + -0.85, 0.0 + 1.15, 0, 0, 0, 1, 1, 0, 1, 0, 1)
                             FreezeEntityPosition(targetVehicle, true)
                             CurrentTow = targetVehicle
@@ -173,7 +173,7 @@ AddEventHandler('rl-tow:client:TowVehicle', function()
                             end
                             RLCore.Functions.Notify("Vehicle Towed!")
                         end, function() -- Cancel
-                            StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_ped", 1.0)
+                            StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_ped", 1.0)
                             RLCore.Functions.Notify("Failed!", "error")
                         end)
                     end
@@ -190,7 +190,7 @@ AddEventHandler('rl-tow:client:TowVehicle', function()
                 anim = "fixing_a_ped",
                 flags = 16,
             }, {}, {}, function() -- Done
-                StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_ped", 1.0)
+                StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_ped", 1.0)
                 FreezeEntityPosition(CurrentTow, false)
                 Citizen.Wait(250)
                 AttachEntityToEntity(CurrentTow, vehicle, 20, -0.0, -15.0, 1.0, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
@@ -204,7 +204,7 @@ AddEventHandler('rl-tow:client:TowVehicle', function()
                 CurrentTow = nil
                 RLCore.Functions.Notify("Vehicle tackled!")
             end, function() -- Cancel
-                StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_ped", 1.0)
+                StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_ped", 1.0)
                 RLCore.Functions.Notify("Failed!", "error")
             end)
         end
@@ -227,18 +227,18 @@ Citizen.CreateThread(function()
         Citizen.Wait(1)
         if isLoggedIn and RLCore ~= nil then
             if PlayerJob.name == "tow" then
-                local pos = GetEntityCoords(GetPlayerPed(-1))
+                local pos = GetEntityCoords(PlayerPedId())
                 if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, true) < 10.0) then
                     DrawMarker(2, Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 200, 200, 222, false, false, false, true, false, false, false)
                     if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, true) < 1.5) then
-                        if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+                        if IsPedInAnyVehicle(PlayerPedId(), false) then
                             DrawText3D(Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, "Press [E] to store")
                         else
                             DrawText3D(Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, "Press [E] for vehicles")
                         end
                         if IsControlJustReleased(0, Keys["E"]) then
-                            if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
-                                DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
+                            if IsPedInAnyVehicle(PlayerPedId(), false) then
+                                DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
                                 TriggerServerEvent('rl-tow:server:DoBail', false)
                             else
                                 MenuGarage()
@@ -351,7 +351,7 @@ function isTowVehicle(vehicle)
 end
 
 function MenuGarage()
-    ped = GetPlayerPed(-1);
+    ped = PlayerPedId();
     MenuTitle = "Garage"
     ClearMenu()
     Menu.addButton("Vehicles", "VehicleList", nil)
@@ -359,7 +359,7 @@ function MenuGarage()
 end
 
 function VehicleList(isDown)
-    ped = GetPlayerPed(-1);
+    ped = PlayerPedId();
     MenuTitle = "Vehicles:"
     ClearMenu()
     for k, v in pairs(Config.Vehicles) do
@@ -384,7 +384,7 @@ AddEventHandler('rl-tow:client:SpawnVehicle', function()
         exports['LegacyFuel']:SetFuel(veh, 100)
         SetEntityAsMissionEntity(veh, true, true)
         closeMenuFull()
-        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
         SetVehicleEngineOn(veh, true, true)
         CurrentPlate = GetVehicleNumberPlateText(veh)

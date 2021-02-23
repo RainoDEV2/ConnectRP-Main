@@ -51,7 +51,7 @@ end
 Citizen.CreateThread(function()
     while true do
         local inRange = false
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         
         if isLoggedIn then
@@ -151,7 +151,7 @@ RentVehicleMenu = function()
 end
 
 RentVehicle = function(selectedVehicle)
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
 
     if IsPedInAnyVehicle(ped) then
         RLCore.Functions.Notify('This can only be done on foot..', 'error')
@@ -167,7 +167,7 @@ RegisterNetEvent('rl-vehiclerental:server:SpawnRentedVehicle')
 AddEventHandler('rl-vehiclerental:server:SpawnRentedVehicle', function(vehiclePlate, vehicleData)
     TriggerEvent("debug", 'Rentel: Rented Vehicle Spawned', 'success')
 
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local coords = {
         x = Config.RentalPoints[CurrentRentalPoint]["coords"][2]["x"],
         y = Config.RentalPoints[CurrentRentalPoint]["coords"][2]["y"],
@@ -212,7 +212,7 @@ ReturnVehicle = function()
 end
 
 AcceptReturn = function()
-    local Ped = GetPlayerPed(-1)
+    local Ped = PlayerPedId()
     local CurrentVehicle = GetVehiclePedIsIn(Ped)
     local VehiclePlate = GetVehicleNumberPlateText(CurrentVehicle)
     if noSpace(VehiclePlate) ~= noSpace(RentedVehiclePlate) then

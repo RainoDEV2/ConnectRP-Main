@@ -95,7 +95,7 @@ local currentName = nil
 Citizen.CreateThread(function()
     while true do
 
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         inRange = false
 

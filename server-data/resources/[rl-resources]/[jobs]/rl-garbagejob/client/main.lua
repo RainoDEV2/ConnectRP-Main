@@ -107,7 +107,7 @@ function LoadAnimation(dict)
 end
 
 function BringBackCar()
-    local veh = GetVehiclePedIsIn(GetPlayerPed(-1))
+    local veh = GetVehiclePedIsIn(PlayerPedId())
     DeleteVehicle(veh)
     if EndBlip ~= nil then
         RemoveBlip(EndBlip)
@@ -132,7 +132,7 @@ end
 function PayCheckLoop(location)
     Citizen.CreateThread(function()
         while Earnings > 0 do
-            local ped = GetPlayerPed(-1)
+            local ped = PlayerPedId()
             local pos = GetEntityCoords(ped)
             local coords = Config.Locations["paycheck"].coords
             local distance = GetDistanceBetweenCoords(pos, coords.x, coords.y, coords.z, true)
@@ -157,10 +157,10 @@ end
 
 Citizen.CreateThread(function()
     while true do
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         local spawnplek = Config.Locations["vehicle"].label
-        local InVehicle = IsPedInAnyVehicle(GetPlayerPed(-1), false)
+        local InVehicle = IsPedInAnyVehicle(PlayerPedId(), false)
         local distance = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, true)
         
         if isLoggedIn then
@@ -192,7 +192,7 @@ Citizen.CreateThread(function()
                                                 SetVehicleNumberPlateText(veh, "GARB"..tostring(math.random(1000, 9999)))
                                                 SetEntityHeading(veh, coords.h)
                                                 exports['LegacyFuel']:SetFuel(veh, 100)
-                                                TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+                                                TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
                                                 SetEntityAsMissionEntity(veh, true, true)
                                                 TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
                                                 SetVehicleEngineOn(veh, true, true)
@@ -224,7 +224,7 @@ end)
 Citizen.CreateThread(function()
     while true do
 
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         local inRange = false
 
@@ -335,7 +335,7 @@ Citizen.CreateThread(function()
 end)
 
 function SetGarbageRoute()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     local CurrentLocation = Config.Locations["vuilnisbakken"][GarbageLocation]
 
@@ -356,7 +356,7 @@ function SetGarbageRoute()
 end
 
 function SetRouteBack()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     local inleverpunt = Config.Locations["vehicle"]
 
@@ -373,7 +373,7 @@ function SetRouteBack()
 end
 
 function TakeAnim()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
 
     LoadAnimation('missfbi4prepp1')
     TaskPlayAnim(ped, 'missfbi4prepp1', '_bag_walk_garbage_man', 6.0, -6.0, -1, 49, 0, 0, 0, 0)
@@ -386,11 +386,11 @@ end
 function AnimCheck()
     Citizen.CreateThread(function()
         while true do
-            local ped = GetPlayerPed(-1)
+            local ped = PlayerPedId()
 
             if hasZak then
                 if not IsEntityPlayingAnim(ped, 'missfbi4prepp1', '_bag_walk_garbage_man', 3) then
-                    ClearPedTasks(GetPlayerPed(-1))
+                    ClearPedTasks(PlayerPedId())
                     LoadAnimation('missfbi4prepp1')
                     TaskPlayAnim(ped, 'missfbi4prepp1', '_bag_walk_garbage_man', 6.0, -6.0, -1, 49, 0, 0, 0, 0)
                 end
@@ -404,7 +404,7 @@ function AnimCheck()
 end
 
 function DeliverAnim()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
 
     LoadAnimation('missfbi4prepp1')
     TaskPlayAnim(ped, 'missfbi4prepp1', '_bag_throw_garbage_man', 8.0, 8.0, 1100, 48, 0.0, 0, 0, 0)

@@ -55,7 +55,7 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         inRange = false
 
@@ -139,7 +139,7 @@ function loadAnimDict(dict)
 end
 
 function validWeapon()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local pedWeapon = GetSelectedPedWeapon(ped)
 
     for k, v in pairs(Config.WhitelistedWeapons) do
@@ -155,7 +155,7 @@ local smashing = false
 function smashVitrine(k)
     local animDict = "missheist_jewel"
     local animName = "smash_case"
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local plyCoords = GetOffsetFromEntityInWorldCoords(ped, 0, 0.6, 0)
     local pedWeapon = GetSelectedPedWeapon(ped)
 
@@ -232,8 +232,8 @@ AddEventHandler('rl-jewellery:client:setAlertState', function(bool)
 end)
 
 function IsWearingHandshoes()
-    local armIndex = GetPedDrawableVariation(GetPlayerPed(-1), 3)
-    local model = GetEntityModel(GetPlayerPed(-1))
+    local armIndex = GetPedDrawableVariation(PlayerPedId(), 3)
+    local model = GetEntityModel(PlayerPedId())
     local retval = true
     if model == GetHashKey("mp_m_freemode_01") then
         if Config.MaleNoHandshoes[armIndex] ~= nil and Config.MaleNoHandshoes[armIndex] then

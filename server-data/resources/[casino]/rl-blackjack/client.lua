@@ -16,7 +16,7 @@ local _lambo = nil
 canSitDownCallback = nil
 Citizen.CreateThread(function()
     while true do 
-        local playerCoords = GetEntityCoords(GetPlayerPed(-1))
+        local playerCoords = GetEntityCoords(PlayerPedId())
         local closestChairDist = #(vec(playerCoords.x,playerCoords.y,playerCoords.z) - vec(948.54760742188, 32.051155090332, 76.101249084473))
         if closestChairDist < 55.0 then 
             DisableControlAction(0, 140, true)        
@@ -1384,7 +1384,7 @@ end
 Citizen.CreateThread(function()
 	while true do 
 		Citizen.Wait(5)
-		local ped = GetPlayerPed(-1)
+		local ped = PlayerPedId()
 		local pos = GetEntityCoords(ped)
 
 		local tploc_enter = elevator_entrance_location

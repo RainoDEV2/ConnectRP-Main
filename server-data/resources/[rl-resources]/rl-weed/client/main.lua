@@ -90,7 +90,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
         if insideHouse then
             if plantSpawned then
-                local ped = GetPlayerPed(-1)
+                local ped = PlayerPedId()
                 for k, v in pairs(housePlants[currentHouse]) do
                     local gender = "M"
                     if housePlants[currentHouse][k].gender == "woman" then gender = "V" end
@@ -229,7 +229,7 @@ end
 
 RegisterNetEvent('rl-weed:client:placePlant')
 AddEventHandler('rl-weed:client:placePlant', function(type, item)
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local plyCoords = GetOffsetFromEntityInWorldCoords(ped, 0, 0.75, 0)
     local plantData = {
         ["plantCoords"] = {["x"] = plyCoords.x, ["y"] = plyCoords.y, ["z"] = plyCoords.z},
@@ -282,7 +282,7 @@ AddEventHandler('rl-weed:client:foodPlant', function(item)
     local plantData = {}
     if currentHouse ~= nil then
         if ClosestTarget ~= 0 then
-            local ped = GetPlayerPed(-1)
+            local ped = PlayerPedId()
             local gender = "M"
             if housePlants[currentHouse][ClosestTarget].gender == "woman" then 
                 gender = "V" 

@@ -26,7 +26,7 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        player = GetPlayerPed(-1)
+        player = PlayerPedId()
         veh = GetVehiclePedIsIn(player, false)
         if veh ~= 0 then
             local temp_veh_fuel = GetVehicleFuelLevel(veh)
@@ -63,7 +63,7 @@ end
 -- Check vehicles doors etc and send to UI
 function refreshUI()
     local settings = {}
-    player = GetPlayerPed(-1)
+    player = PlayerPedId()
     veh = GetVehiclePedIsIn(player, false)
     if veh ~= 0 then
         settings.seat1 = checkSeat(player, veh, -1)
@@ -128,7 +128,7 @@ end
 
 RegisterNUICallback('openDoor', function(data, cb)
     doorIndex = tonumber(data['doorIndex'])
-    player = GetPlayerPed(-1)
+    player = PlayerPedId()
     veh = GetVehiclePedIsIn(player, false)
 
     if veh ~= 0 then
@@ -148,7 +148,7 @@ end)
 
 RegisterNUICallback('switchSeat', function(data, cb)
     seatIndex = tonumber(data['seatIndex'])
-    player = GetPlayerPed(-1)
+    player = PlayerPedId()
     veh = GetVehiclePedIsIn(player, false)
     if veh ~= 0 then
         -- May need to check if another player is in seat?
@@ -159,7 +159,7 @@ end)
 
 RegisterNUICallback('togglewindow', function(data, cb)
     windowIndex = tonumber(data['windowIndex'])
-    player = GetPlayerPed(-1)
+    player = PlayerPedId()
     veh = GetVehiclePedIsIn(player, false)
     if veh ~= 0 then
         if not IsVehicleWindowIntact(veh, windowIndex) then
@@ -175,7 +175,7 @@ RegisterNUICallback('togglewindow', function(data, cb)
 end)
 
 RegisterNUICallback('toggleengine', function(data, cb)
-    player = GetPlayerPed(-1)
+    player = PlayerPedId()
     veh = GetVehiclePedIsIn(player, false)
     if veh ~= 0 then
         local engine = not GetIsVehicleEngineRunning(veh)

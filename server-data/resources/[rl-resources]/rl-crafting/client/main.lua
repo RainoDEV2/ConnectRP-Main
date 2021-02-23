@@ -40,7 +40,7 @@ local maxDistance = 1.25
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		local pos, awayFromObject = GetEntityCoords(GetPlayerPed(-1)), true
+		local pos, awayFromObject = GetEntityCoords(PlayerPedId()), true
 		local craftObject = GetClosestObjectOfType(pos, 2.0, -573669520, false, false, false)
 		if craftObject ~= 0 then
 			local objectPos = GetEntityCoords(craftObject)
@@ -64,7 +64,7 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-		local ped = GetPlayerPed(-1)
+		local ped = PlayerPedId()
 		local pos = GetEntityCoords(ped)
 		local inRange = false
 		local distance = GetDistanceBetweenCoords(pos, Config.AttachmentCrafting["location"].x, Config.AttachmentCrafting["location"].y, Config.AttachmentCrafting["location"].z, true)

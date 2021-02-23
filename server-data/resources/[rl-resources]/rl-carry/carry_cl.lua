@@ -37,11 +37,11 @@ RegisterNetEvent('carry:Event')
 AddEventHandler('carry:Event', function(otherPlayer)
  loadAnim('missfinale_c2mcs_1')
  local t, distance = RLCore.Functions.GetClosestPlayer()
- if(distance ~= -1 and distance < 3 and not beingCarried and HasEntityClearLosToEntity( GetPlayerPed(t), GetPlayerPed(-1), 17 ) and not IsPedInAnyVehicle(GetPlayerPed(t)) and not IsPedInAnyVehicle(GetPlayerPed(-1))) then
+ if(distance ~= -1 and distance < 3 and not beingCarried and HasEntityClearLosToEntity( GetPlayerPed(t), PlayerPedId(), 17 ) and not IsPedInAnyVehicle(GetPlayerPed(t)) and not IsPedInAnyVehicle(PlayerPedId())) then
   if isCarrying then
    isCarrying = false
    TriggerServerEvent('undragTarget', GetPlayerServerId(t))
-   ClearPedTasksImmediately(GetPlayerPed(-1))
+   ClearPedTasksImmediately(PlayerPedId())
   else
    isCarrying = true
    TriggerServerEvent('dragTarget', GetPlayerServerId(t))
@@ -69,7 +69,7 @@ end)
 RegisterNetEvent('dragPlayer')
 AddEventHandler('dragPlayer', function(closestID)
   local tPed = GetPlayerPed(GetPlayerFromServerId(closestID))
-  local pP = GetPlayerPed(-1)
+  local pP = PlayerPedId()
   loadAnim("amb@world_human_bum_slumped@male@laying_on_left_side@base")
   TaskPlayAnim(pP, "amb@world_human_bum_slumped@male@laying_on_left_side@base", "base", 8.0, 8.0, -1, 1, 999.0, 0, 0, 0)
   AttachEntityToEntity(pP, tPed, GetPedBoneIndex(tPed, 0x8b93), 0.5, 0.0, 0.25, 0.0, 50.0, 20.0, true, true, false, true, 1, true)
@@ -79,9 +79,9 @@ end)
 
 RegisterNetEvent('undragPlayer')
 AddEventHandler('undragPlayer', function(closestID)
- ClearPedTasksImmediately(GetPlayerPed(-1))
+ ClearPedTasksImmediately(PlayerPedId())
  beingCarried = false
- DetachEntity(GetPlayerPed(-1), true, false)
+ DetachEntity(PlayerPedId(), true, false)
  TriggerServerEvent("rl-carry:beingCarried", beingCarried)
 end)
 
@@ -105,7 +105,7 @@ AddEventHandler('carry:pedEvent', function()
 end)
 
 function getNPC()
- local playerCoords = GetEntityCoords(GetPlayerPed(-1))
+ local playerCoords = GetEntityCoords(PlayerPedId())
  local handle, ped = FindFirstPed()
  local success
  local rped = nil
@@ -126,7 +126,7 @@ end
 
 function canPedBeUsed(ped)
  if ped == nil then return false end
- if ped == GetPlayerPed(-1) then return false end
+ if ped == PlayerPedId() then return false end
  if not DoesEntityExist(ped) then return false end
  if not IsPedOnFoot(ped) then return false end
  if IsEntityDead(ped) then return false end
@@ -146,7 +146,7 @@ function GetClosestPlayer()
  local players = GetPlayers()
  local closestDistance = -1
  local closestPlayer = -1
- local ply = GetPlayerPed(-1)
+ local ply = PlayerPedId()
  local plyCoords = GetEntityCoords(ply, 0)
 
  for index,value in ipairs(players) do
@@ -177,18 +177,18 @@ end
 local isInTrunk = false
 
 RegisterCommand('trunkgetin', function(source, args, rawCommand)
- local pos = GetEntityCoords(GetPlayerPed(-1), false)
+ local pos = GetEntityCoords(PlayerPedId(), false)
  local vehicle = GetClosestVehicle(pos.x, pos.y, pos.z, 5.0, 0, 71)
  if DoesEntityExist(vehicle) and GetVehicleDoorLockStatus(vehicle) == 1 and not kidnapped then
   if not isInTrunk then
-   AttachEntityToEntity(GetPlayerPed(-1), vehicle, -1, 0.0, -2.2, 0.5, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
+   AttachEntityToEntity(PlayerPedId(), vehicle, -1, 0.0, -2.2, 0.5, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
    RaiseConvertibleRoof(vehicle, false)
-   if IsEntityAttached(GetPlayerPed(-1)) then
+   if IsEntityAttached(PlayerPedId()) then
     RequestAnimDict('timetable@floyd@cryingonbed@base')
     while not HasAnimDictLoaded('timetable@floyd@cryingonbed@base') do
      Citizen.Wait(1)
     end
-    TaskPlayAnim(GetPlayerPed(-1), 'timetable@floyd@cryingonbed@base', 'base', 1.0, -1, -1, 1, 0, 0, 0, 0)
+    TaskPlayAnim(PlayerPedId(), 'timetable@floyd@cryingonbed@base', 'base', 1.0, -1, -1, 1, 0, 0, 0, 0)
    end
   end
   isInTrunk = true
@@ -196,13 +196,13 @@ RegisterCommand('trunkgetin', function(source, args, rawCommand)
 end)
 
 RegisterCommand('trunkgetout', function(source, args, rawCommand)
- local pos = GetEntityCoords(GetPlayerPed(-1), false)
+ local pos = GetEntityCoords(PlayerPedId(), false)
  local vehicle = GetClosestVehicle(pos.x, pos.y, pos.z, 5.0, 0, 71)
  if DoesEntityExist(vehicle) and GetVehicleDoorLockStatus(vehicle) == 1 and not kidnapped then
   if isInTrunk then
-   DetachEntity(GetPlayerPed(-1), 0, true)
-   SetEntityVisible(GetPlayerPed(-1), true)
-   ClearPedTasksImmediately(GetPlayerPed(-1))
+   DetachEntity(PlayerPedId(), 0, true)
+   SetEntityVisible(PlayerPedId(), true)
+   ClearPedTasksImmediately(PlayerPedId())
   end
   isInTrunk = false
  end
@@ -222,7 +222,7 @@ RegisterCommand('trunkkidnap', function(source, args, rawCommand)
  if(distance ~= -1 and distance < 3) then
   if isCarrying then
    TriggerServerEvent('putIntoVehicle', GetPlayerServerId(t))
-   ClearPedTasksImmediately(GetPlayerPed(-1))
+   ClearPedTasksImmediately(PlayerPedId())
   end
  end
 end)

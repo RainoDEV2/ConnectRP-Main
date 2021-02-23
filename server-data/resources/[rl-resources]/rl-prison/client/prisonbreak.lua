@@ -36,7 +36,7 @@ Citizen.CreateThread(function()
         currentGate = 0
         if isLoggedIn and RLCore ~= nil then
             if PlayerJob.name ~= "police" then
-                local pos = GetEntityCoords(GetPlayerPed(-1))
+                local pos = GetEntityCoords(PlayerPedId())
                 for k, v in pairs(Gates) do
                     local dist = GetDistanceBetweenCoords(pos, Gates[k].coords.x, Gates[k].coords.y, Gates[k].coords.z, true)
                     if (dist < 1.5) then
@@ -72,7 +72,7 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(7)
-		local pos = GetEntityCoords(GetPlayerPed(-1), true)
+		local pos = GetEntityCoords(PlayerPedId(), true)
 		if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["middle"].coords.x, Config.Locations["middle"].coords.y, Config.Locations["middle"].coords.z, false) > 200.0 and inJail) then
 			inJail = false
             jailTime = 0
@@ -105,11 +105,11 @@ AddEventHandler('electronickit:UseElectronickit', function()
                     anim = "hotwire",
                     flags = 16,
                 }, {}, {}, function() -- Done
-                    StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                    StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
                     TriggerEvent("mhacking:show")
                     TriggerEvent("mhacking:start", math.random(5, 9), math.random(10, 15), OnHackDone)
                 end, function() -- Cancel
-                    StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                    StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
                     RLCore.Functions.Notify("Canceled..", "error")
                 end)
             else
@@ -156,7 +156,7 @@ Citizen.CreateThread(function()
 	while true do
 
 		local found = false
-		local ped = GetPlayerPed(-1)
+		local ped = PlayerPedId()
 		Citizen.Wait(1)
 		local dstscan = 3.0
 		local pos = GetEntityCoords(PlayerPedId(), false)

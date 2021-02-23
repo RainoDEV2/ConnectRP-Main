@@ -48,7 +48,7 @@ Citizen.CreateThread(function()
     setupRegister()
     setupSafes()
     while true do
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         local inRange = false
         for k, v in pairs(Config.Registers) do
@@ -71,7 +71,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(1)
         local inRange = false
         if RLCore ~= nil then
-            local pos = GetEntityCoords(GetPlayerPed(-1))
+            local pos = GetEntityCoords(PlayerPedId())
             for safe,_ in pairs(Config.Safes) do
                 local dist = GetDistanceBetweenCoords(pos, Config.Safes[safe].x, Config.Safes[safe].y, Config.Safes[safe].z)
                 if dist < 3 then
@@ -99,7 +99,7 @@ Citizen.CreateThread(function()
                                         end, safe)
                                     end
 
-                                    local pos = GetEntityCoords(GetPlayerPed(-1))
+                                    local pos = GetEntityCoords(PlayerPedId())
                                     local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
                                     local street1 = GetStreetNameFromHashKey(s1)
                                     local street2 = GetStreetNameFromHashKey(s2)
@@ -156,7 +156,7 @@ RegisterNetEvent('lockpicks:UseLockpick')
 AddEventHandler('lockpicks:UseLockpick', function(isAdvanced)
     usingAdvanced = isAdvanced
     for k, v in pairs(Config.Registers) do
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         local dist = GetDistanceBetweenCoords(pos, Config.Registers[k].x, Config.Registers[k].y, Config.Registers[k].z)
         if dist <= 1 and not Config.Registers[k].robbed then
@@ -212,8 +212,8 @@ AddEventHandler('lockpicks:UseLockpick', function(isAdvanced)
 end)
 
 function IsWearingHandshoes()
-    local armIndex = GetPedDrawableVariation(GetPlayerPed(-1), 3)
-    local model = GetEntityModel(GetPlayerPed(-1))
+    local armIndex = GetPedDrawableVariation(PlayerPedId(), 3)
+    local model = GetEntityModel(PlayerPedId())
     local retval = true
     
     if model == GetHashKey("mp_m_freemode_01") then
@@ -277,7 +277,7 @@ function loadAnimDict(dict)
 end
 
 function takeAnim()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     while (not HasAnimDictLoaded("amb@prop_human_bum_bin@idle_b")) do
         RequestAnimDict("amb@prop_human_bum_bin@idle_b")
         Citizen.Wait(100)
@@ -305,12 +305,12 @@ RegisterNUICallback('success', function()
             flags = 16,
         }, {}, {}, function() -- Done
             openingDoor = false
-            ClearPedTasks(GetPlayerPed(-1))
+            ClearPedTasks(PlayerPedId())
             TriggerServerEvent('rl-storerobbery:server:takeMoney', currentRegister, true)            
             currentRegister = 0
         end, function() -- Cancel
             openingDoor = false
-            ClearPedTasks(GetPlayerPed(-1))
+            ClearPedTasks(PlayerPedId())
             RLCore.Functions.Notify("Process canceled", "error")
             currentRegister = 0
         end)
@@ -330,7 +330,7 @@ end)
 function LockpickDoorAnim(time)
     time = time / 1000
     loadAnimDict("veh@break_in@0h@p_m_one@")
-    TaskPlayAnim(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds" ,3.0, 3.0, -1, 16, 0, false, false, false)
+    TaskPlayAnim(PlayerPedId(), "veh@break_in@0h@p_m_one@", "low_force_entry_ds" ,3.0, 3.0, -1, 16, 0, false, false, false)
     openingDoor = true
     Citizen.CreateThread(function()
         while openingDoor do
@@ -340,7 +340,7 @@ function LockpickDoorAnim(time)
             TriggerServerEvent('rl-storerobbery:server:takeMoney', currentRegister, false)
             if time <= 0 then
                 openingDoor = false
-                StopAnimTask(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0)
+                StopAnimTask(PlayerPedId(), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0)
             end
         end
     end)
@@ -408,7 +408,7 @@ RegisterNUICallback('fail', function()
         end
     end
     if (IsWearingHandshoes() and math.random(1, 100) <= 25) then
-        local pos = GetEntityCoords(GetPlayerPed(-1))
+        local pos = GetEntityCoords(PlayerPedId())
         TriggerServerEvent("evidence:server:CreateFingerDrop", pos)
         RLCore.Functions.Notify("The lockpick bent out of shape.")
     end

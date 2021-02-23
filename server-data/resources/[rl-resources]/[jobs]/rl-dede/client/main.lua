@@ -35,7 +35,7 @@ CreateThread(function()
     EndTextCommandSetBlipName(StoreBlip)
 
     while true do
-        local PlayerPed = GetPlayerPed(-1)
+        local PlayerPed = PlayerPedId()
         local PlayerPos = GetEntityCoords(PlayerPed)
         local InRange = false
         local htmlString = ""

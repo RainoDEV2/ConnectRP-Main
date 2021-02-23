@@ -265,7 +265,7 @@ function spawnPlayer(spawnIdx, cb)
 
         -- spawn the player
         --ResurrectNetworkPlayer(GetPlayerId(), spawn.x, spawn.y, spawn.z, spawn.heading)
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
 
         -- V requires setting coords as well
         SetEntityCoordsNoOffset(ped, spawn.x, spawn.y, spawn.z, false, false, false, true)
@@ -328,7 +328,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(50)
 
-        local playerPed = GetPlayerPed(-1)
+        local playerPed = PlayerPedId()
 
         if playerPed and playerPed ~= -1 then
             -- check if we want to autospawn

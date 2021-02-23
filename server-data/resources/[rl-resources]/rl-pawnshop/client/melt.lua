@@ -39,7 +39,7 @@ Citizen.CreateThread(function()
 	while true do 
 		Citizen.Wait(1)
 		local inRange = false
-		local pos = GetEntityCoords(GetPlayerPed(-1))
+		local pos = GetEntityCoords(PlayerPedId())
 		if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, true) < 3.0 then
 			inRange = true
 			if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, true) < 1.5 then
@@ -61,7 +61,7 @@ Citizen.CreateThread(function()
                                 disableCombat = true,
                             }, {}, {}, {}, function() -- Done
                                 if not Config.IsMelting then
-                                    StopAnimTask(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic", 1.0)
+                                    StopAnimTask(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic", 1.0)
                                     TriggerServerEvent("rl-pawnshop:server:meltItems")
                                 end
                             end)
@@ -82,7 +82,7 @@ local sellItemsSet = false
 function ScrapAnim(time)
     local time = time / 1000
     loadAnimDict("mp_car_bomb")
-    TaskPlayAnim(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic" ,3.0, 3.0, -1, 16, 0, false, false, false)
+    TaskPlayAnim(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic" ,3.0, 3.0, -1, 16, 0, false, false, false)
     openingDoor = true
     Citizen.CreateThread(function()
         while openingDoor do
@@ -91,7 +91,7 @@ function ScrapAnim(time)
             time = time - 2
             if time <= 0 then
                 openingDoor = false
-                StopAnimTask(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic", 1.0)
+                StopAnimTask(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic", 1.0)
             end
         end
     end)

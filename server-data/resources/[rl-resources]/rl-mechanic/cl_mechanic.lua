@@ -84,7 +84,7 @@ Citizen.CreateThread(function()
 
         if not inRange then
             if currentJob == "mechanic" then
-                local pos = GetEntityCoords(GetPlayerPed(-1))
+                local pos = GetEntityCoords(PlayerPedId())
                 local StashDistance = GetDistanceBetweenCoords(pos, Config.Locations["stash"].x, Config.Locations["stash"].y, Config.Locations["stash"].z, true)
                 local OnDutyDistance = GetDistanceBetweenCoords(pos, Config.Locations["duty"].x, Config.Locations["duty"].y, Config.Locations["duty"].z, true)
                 local VehicleDistance = GetDistanceBetweenCoords(pos, Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, true)
@@ -142,12 +142,12 @@ Citizen.CreateThread(function()
                         inRange = true
                         DrawMarker(2, Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 210, 50, 9, 255, false, false, false, true, false, false, false)
                         if VehicleDistance < 1 then
-                            local InVehicle = IsPedInAnyVehicle(GetPlayerPed(-1))
+                            local InVehicle = IsPedInAnyVehicle(PlayerPedId())
 
                             if InVehicle then
                                 DrawText3Ds(Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, '[E] Store the vehicle')
                                 if IsControlJustPressed(0, Keys["E"]) then
-                                    DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
+                                    DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
                                 end
                             else
                                 DrawText3Ds(Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, '[E] Vehicle')
@@ -224,7 +224,7 @@ function SpawnListVehicle(model)
         SetEntityHeading(veh, coords.h)
         exports['LegacyFuel']:SetFuel(veh, 100.0)
         Menu.hidden = true
-        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
         SetVehicleEngineOn(veh, true, true)
     end, coords, true)

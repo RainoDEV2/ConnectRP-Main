@@ -6,11 +6,11 @@ local lastVehicle = nil
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(7)
-        if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-            Speed = GetEntitySpeed(GetVehiclePedIsIn(GetPlayerPed(-1)))
+        if IsPedInAnyVehicle(PlayerPedId()) then
+            Speed = GetEntitySpeed(GetVehiclePedIsIn(PlayerPedId()))
 
-            if IsControlJustReleased(0, Keys["Z"]) and GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1)), -1) == GetPlayerPed(-1) then 
-                if IsPedInAnyVehicle(GetPlayerPed(-1)) then
+            if IsControlJustReleased(0, Keys["Z"]) and GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then 
+                if IsPedInAnyVehicle(PlayerPedId()) then
                     cruiseSpeed = Speed
                     if cruiseOn then
                         RLCore.Functions.Notify("Limiter switched off!")
@@ -32,7 +32,7 @@ end)
 RegisterNetEvent("seatbelt:client:ToggleCruise")
 AddEventHandler("seatbelt:client:ToggleCruise", function()
     cruiseOn = not cruiseOn
-    local maxSpeed = cruiseOn and cruiseSpeed or GetVehicleHandlingFloat(GetVehiclePedIsIn(GetPlayerPed(-1), false),"CHandlingData","fInitialDriveMaxFlatVel")
-    SetEntityMaxSpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false), maxSpeed)
-    lastVehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+    local maxSpeed = cruiseOn and cruiseSpeed or GetVehicleHandlingFloat(GetVehiclePedIsIn(PlayerPedId(), false),"CHandlingData","fInitialDriveMaxFlatVel")
+    SetEntityMaxSpeed(GetVehiclePedIsIn(PlayerPedId(), false), maxSpeed)
+    lastVehicle = GetVehiclePedIsIn(PlayerPedId(), false)
 end)

@@ -84,7 +84,7 @@ Citizen.CreateThread(function()
     while true do
         -- Loop forever and update HUD every frame
         -- Get player PED, position and vehicle and save to locals
-        local player = GetPlayerPed(-1)
+        local player = PlayerPedId()
         local position = GetEntityCoords(player)
         local vehicle = GetVehiclePedIsIn(player, false)
         local engineHealth = (GetVehicleEngineHealth(vehicle) / 10)
@@ -257,7 +257,7 @@ Citizen.CreateThread(function()
         -- Update when player is in a vehicle or on foot (if enabled)
         if pedInVeh or locationAlwaysOn then
             -- Get player, position and vehicle
-            local player = GetPlayerPed(-1)
+            local player = PlayerPedId()
             local position = GetEntityCoords(player)
 
             -- Update time text string
@@ -330,7 +330,7 @@ function drawTxt(content, font, colour, scale, x, y)
 end
 --[[
 function ejectionLUL()
-    local veh = GetVehiclePedIsIn(GetPlayerPed(-1),false)
+    local veh = GetVehiclePedIsIn(PlayerPedId(),false)
     local coords = GetOffsetFromEntityInWorldCoords(veh, 1.0, 2.0, 1.0)
     local coords1 = GetOffsetFromEntityInWorldCoords(veh, 1.0, 3.0, 1.0)
     local coords2 = GetOffsetFromEntityInWorldCoords(veh, 1.0, 4.0, 1.0)
@@ -343,32 +343,32 @@ function ejectionLUL()
     local playerPed = PlayerPedId()
 
   
-    SetEntityCoords(GetPlayerPed(-1),coords)
+    SetEntityCoords(PlayerPedId(),coords)
     Citizen.Wait(0)
-    SetPedToRagdollWithFall(GetPlayerPed(-1), 5511, 5511, 0, 0, 0, 0)
-    SetEntityCoords(GetPlayerPed(-1),coords1)
+    SetPedToRagdollWithFall(PlayerPedId(), 5511, 5511, 0, 0, 0, 0)
+    SetEntityCoords(PlayerPedId(),coords1)
     Citizen.Wait(0)
-    SetEntityCoords(GetPlayerPed(-1),coords2)
+    SetEntityCoords(PlayerPedId(),coords2)
     Citizen.Wait(0)
-    SetEntityCoords(GetPlayerPed(-1),coords3)
+    SetEntityCoords(PlayerPedId(),coords3)
     Citizen.Wait(0)
-    SetEntityCoords(GetPlayerPed(-1),coords4)
+    SetEntityCoords(PlayerPedId(),coords4)
     Citizen.Wait(0)
-    SetEntityCoords(GetPlayerPed(-1),coords5)
+    SetEntityCoords(PlayerPedId(),coords5)
     Citizen.Wait(0)
-    SetEntityCoords(GetPlayerPed(-1),coords6)
+    SetEntityCoords(PlayerPedId(),coords6)
     Citizen.Wait(0)
-    SetEntityCoords(GetPlayerPed(-1),coords7)
+    SetEntityCoords(PlayerPedId(),coords7)
     Citizen.Wait(0)
     
 
     --RespawnPed(playerPed, coords, 0.0)
 
-    SetEntityVelocity(GetPlayerPed(-1), veloc.x*4,veloc.y*4,veloc.z*4)
+    SetEntityVelocity(PlayerPedId(), veloc.x*4,veloc.y*4,veloc.z*4)
 
-    local ejectspeed = math.ceil(GetEntitySpeed(GetPlayerPed(-1)) * 8)
+    local ejectspeed = math.ceil(GetEntitySpeed(PlayerPedId()) * 8)
 
-    SetEntityHealth( GetPlayerPed(-1), (GetEntityHealth(GetPlayerPed(-1)) - ejectspeed) )
+    SetEntityHealth( PlayerPedId(), (GetEntityHealth(PlayerPedId()) - ejectspeed) )
 
 
 
@@ -377,11 +377,11 @@ end
 --]]
 
 function ejectionLUL()
-    local veh = GetVehiclePedIsIn(GetPlayerPed(-1),false)
+    local veh = GetVehiclePedIsIn(PlayerPedId(),false)
     local coords = GetOffsetFromEntityInWorldCoords(veh, 1.0, 0.0, 1.0)
     local veloc = GetEntityVelocity(veh)
 
-    SetEntityCoords(GetPlayerPed(-1),coords)
+    SetEntityCoords(PlayerPedId(),coords)
     Citizen.Wait(1)
 
     --RE ENABLE ONCE WE FIND A SOLUTION
@@ -389,20 +389,20 @@ function ejectionLUL()
     --Maybe make it so if they crash hard enough they get a notification (YOU SMASHED YOUR HEAD OFF THE STEERING WHEEL - only if they have no belt 
     -- and freeze there controls for a few seconds and make the screen fade black etc, If they have there belt on there fine)
 
-    SetPedToRagdoll(GetPlayerPed(-1), 5511, 5511, 0, 0, 0, 0)
+    SetPedToRagdoll(PlayerPedId(), 5511, 5511, 0, 0, 0, 0)
 
-    SetEntityVelocity(GetPlayerPed(-1), veloc.x*4,veloc.y*4,veloc.z*4)
+    SetEntityVelocity(PlayerPedId(), veloc.x*4,veloc.y*4,veloc.z*4)
 
-    --local ejectspeed = math.ceil(GetEntitySpeed(GetPlayerPed(-1)) * 8)
+    --local ejectspeed = math.ceil(GetEntitySpeed(PlayerPedId()) * 8)
 
-    --SetEntityHealth( GetPlayerPed(-1), (GetEntityHealth(GetPlayerPed(-1)) - ejectspeed) )
+    --SetEntityHealth( PlayerPedId(), (GetEntityHealth(PlayerPedId()) - ejectspeed) )
 
     SmashVehicleWindow(veh, 6)
 end
 
 
 function PopTires()
-    local veh = GetVehiclePedIsIn(GetPlayerPed(-1),false)
+    local veh = GetVehiclePedIsIn(PlayerPedId(),false)
 
     SetVehicleTyreBurst(veh, 0, false, 0.001)
     SetVehicleTyreBurst(veh, 45, false, 0.001)
@@ -624,9 +624,9 @@ function toggleEngine()
     local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
     if vehicle ~= nil and vehicle ~= 0 then
 
-        if (GetPedInVehicleSeat(vehicle, -1) == GetPlayerPed(-1)) then
+        if (GetPedInVehicleSeat(vehicle, -1) == PlayerPedId()) then
 
-            if IsVehicleEngineOn(GetVehiclePedIsIn(GetPlayerPed(-1), false)) then
+            if IsVehicleEngineOn(GetVehiclePedIsIn(PlayerPedId(), false)) then
                 SetVehicleEngineOn(vehicle, false, false, true)
                 RLCore.Functions.Notify("Engine Halted")
             else

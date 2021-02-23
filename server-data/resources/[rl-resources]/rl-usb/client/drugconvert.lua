@@ -14,11 +14,11 @@ AddEventHandler("BrickToCoke10g", function()
       return
     end
     converting = true
-	if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+	if not IsPedInAnyVehicle(PlayerPedId()) then
 		loadAnimDict("anim@amb@business@coc@coc_unpack_cut@")
 		TaskPlayAnim(PlayerPedId(), "anim@amb@business@coc@coc_unpack_cut@", "fullcut_cycle_v6_cokecutter", 1.0, 1.0, -1, 1, -1, 0, 0, 0)
 		Progressbar(5000,"Cutting Cocaine Brick to 10g's")
-		StopAnimTask(GetPlayerPed(-1), "anim@amb@business@coc@coc_unpack_cut@", "fullcut_cycle_v6_cokecutter", 1.0)
+		StopAnimTask(PlayerPedId(), "anim@amb@business@coc@coc_unpack_cut@", "fullcut_cycle_v6_cokecutter", 1.0)
 	end
     converting = false
 end)
@@ -30,11 +30,11 @@ AddEventHandler("Coke10gToCoke1g", function()
       return
     end
     converting = true
-	if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+	if not IsPedInAnyVehicle(PlayerPedId()) then
 		loadAnimDict("anim@amb@business@coc@coc_unpack_cut@")
 		TaskPlayAnim(PlayerPedId(), "anim@amb@business@coc@coc_unpack_cut@", "fullcut_cycle_v6_cokecutter", 1.0, 1.0, -1, 1, -1, 0, 0, 0)
 		Progressbar(5000,"Sorting 10g's Cocaine into 1g's")
-		StopAnimTask(GetPlayerPed(-1), "anim@amb@business@coc@coc_unpack_cut@", "fullcut_cycle_v6_cokecutter", 1.0)
+		StopAnimTask(PlayerPedId(), "anim@amb@business@coc@coc_unpack_cut@", "fullcut_cycle_v6_cokecutter", 1.0)
 	end
     converting = false
 end)
@@ -46,11 +46,11 @@ AddEventHandler("BrickToMeth10g", function()
       return
     end
     converting = true
-	if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+	if not IsPedInAnyVehicle(PlayerPedId()) then
 		loadAnimDict("anim@amb@business@coc@coc_unpack_cut@")
 		TaskPlayAnim(PlayerPedId(), "anim@amb@business@coc@coc_unpack_cut@", "fullcut_cycle_v6_cokecutter", 1.0, 1.0, -1, 1, -1, 0, 0, 0)
 		Progressbar(5000,"Cutting Meth Brick into 10g's")
-		StopAnimTask(GetPlayerPed(-1), "anim@amb@business@coc@coc_unpack_cut@", "fullcut_cycle_v6_cokecutter", 1.0)
+		StopAnimTask(PlayerPedId(), "anim@amb@business@coc@coc_unpack_cut@", "fullcut_cycle_v6_cokecutter", 1.0)
 	end
     converting = false
 end)
@@ -62,11 +62,11 @@ AddEventHandler("Meth10gToMeth1g", function()
       return
     end
     converting = true
-	if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+	if not IsPedInAnyVehicle(PlayerPedId()) then
 		loadAnimDict("anim@amb@business@coc@coc_unpack_cut@")
 		TaskPlayAnim(PlayerPedId(), "anim@amb@business@coc@coc_unpack_cut@", "fullcut_cycle_v6_cokecutter", 1.0, 1.0, -1, 1, -1, 0, 0, 0)
 		Progressbar(5000,"Sorting 10g's Meth into 1g's")
-		StopAnimTask(GetPlayerPed(-1), "anim@amb@business@coc@coc_unpack_cut@", "fullcut_cycle_v6_cokecutter", 1.0)
+		StopAnimTask(PlayerPedId(), "anim@amb@business@coc@coc_unpack_cut@", "fullcut_cycle_v6_cokecutter", 1.0)
 	end
     converting = false
 end)
@@ -78,11 +78,11 @@ AddEventHandler("BrickToWeed20g", function()
       return
     end
     converting = true
-	if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+	if not IsPedInAnyVehicle(PlayerPedId()) then
 		loadAnimDict("mini@repair")
 		TaskPlayAnim(PlayerPedId(), "mini@repair", "fixing_a_player", 8.0, -8, -1, 16, 0, 0, 0, 0)
 		Progressbar(5000,"Cutting Weed Brick into 20g's")
-		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
+		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
 	end
     converting = false
 end)
@@ -94,11 +94,11 @@ AddEventHandler("Weed20gToWeed4g", function()
       return
     end
     converting = true
-	if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+	if not IsPedInAnyVehicle(PlayerPedId()) then
 		loadAnimDict("mini@repair")
 		TaskPlayAnim(PlayerPedId(), "mini@repair", "fixing_a_player", 8.0, -8, -1, 16, 0, 0, 0, 0)
 		Progressbar(5000,"Packing Q Bags")
-		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
+		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
 	end
     converting = false
 end)
@@ -110,11 +110,11 @@ AddEventHandler("Weed4gToJoint2g", function()
       return
     end
     converting = true
-	if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+	if not IsPedInAnyVehicle(PlayerPedId()) then
 		loadAnimDict("mini@repair")
 		TaskPlayAnim(PlayerPedId(), "mini@repair", "fixing_a_player", 8.0, -8, -1, 16, 0, 0, 0, 0)
 		Progressbar(5000,"Rolling Joints")
-		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
+		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
 	end
     converting = false
 end)

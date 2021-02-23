@@ -5,7 +5,7 @@ local fueravehicles = {}
 
 function MenuGarage(action)
     if not action then action = ultimaAccion; elseif not action and not ultimaAccion then action = "menu"; end
-    ped = GetPlayerPed(-1);
+    ped = PlayerPedId();
     MenuTitle = "Garage"
     ClearMenu()
     ultimaAccion = action
@@ -48,7 +48,7 @@ function recuperar()
     end
 
    HandleCamera(currentGarage, true)
-   ped = GetPlayerPed(-1);
+   ped = PlayerPedId();
    MenuTitle = "Recover :"
    ClearMenu()
    Menu.addButton("return","MenuGarage",nil)
@@ -81,7 +81,7 @@ function AbrirMenuGuardar()
         CloseMenu()
         return 
     end
-   ped = GetPlayerPed(-1);
+   ped = PlayerPedId();
    MenuTitle = "Save :"
    ClearMenu()
    Menu.addButton("Close","CloseMenu",nil)
@@ -97,7 +97,7 @@ function ListeVehicule()
     end
 
    HandleCamera(currentGarage, true)
-   ped = GetPlayerPed(-1);
+   ped = PlayerPedId();
    MenuTitle = "My vehicles :"
    ClearMenu()
    Menu.addButton("Return","MenuGarage",nil)
@@ -128,5 +128,5 @@ function CloseMenu()
 end
 
 function LocalPed()
-	return GetPlayerPed(-1)
+	return PlayerPedId()
 end

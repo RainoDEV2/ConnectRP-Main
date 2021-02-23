@@ -126,7 +126,7 @@ Citizen.CreateThread(function()
         local inRange = false
         if isLoggedIn then
             if Config ~= nil then
-                local PlayerPed = GetPlayerPed(-1)
+                local PlayerPed = PlayerPedId()
                 local PlayerPos = GetEntityCoords(PlayerPed)
 
                 local v = Config.Locations["take"]
@@ -177,7 +177,7 @@ end)
 function StartWorking()
     RLCore.Functions.TriggerCallback('rl-hotdogjob:server:HasMoney', function(HasMoney)
         if HasMoney then
-            local PlayerPed = GetPlayerPed(-1)
+            local PlayerPed = PlayerPedId()
             local SpawnCoords = Config.Locations["spawn"].coords
             IsWorking = true
         
@@ -217,7 +217,7 @@ end
 function HotdogLoop()
     Citizen.CreateThread(function()
         while true do
-            local PlayerPed = GetPlayerPed(-1)
+            local PlayerPed = PlayerPedId()
             local PlayerPos = GetEntityCoords(PlayerPed)
             local ClosestObject = GetClosestObjectOfType(PlayerPos.x, PlayerPos.y, PlayerPos.z, 3.0, GetHashKey("prop_hotdogstand_01"), 0, 0, 0)
 
@@ -252,7 +252,7 @@ function HotdogLoop()
 
     Citizen.CreateThread(function()
         while true do
-            local PlayerPed = GetPlayerPed(-1)
+            local PlayerPed = PlayerPedId()
             local PlayerPos = GetEntityCoords(PlayerPed)
             local ClosestObject = GetClosestObjectOfType(PlayerPos.x, PlayerPos.y, PlayerPos.z, 3.0, GetHashKey("prop_hotdogstand_01"), 0, 0, 0)
 
@@ -301,7 +301,7 @@ AddEventHandler('rl-hotdogjob:client:ToggleSell', function(data)
 end)
 
 function ToggleSell()
-    local pos = GetEntityCoords(GetPlayerPed(-1))
+    local pos = GetEntityCoords(PlayerPedId())
     local objpos = GetEntityCoords(StandObject)
     local dist = GetDistanceBetweenCoords(pos, objpos.x, objpos.y, objpos.z, true)
 
@@ -310,7 +310,7 @@ function ToggleSell()
             Citizen.CreateThread(function()
                 while true do
                     if SellingData.Enabled then
-                        local player = GetPlayerPed(-1)
+                        local player = PlayerPedId()
                         local coords = GetOffsetFromEntityInWorldCoords(StandObject, OffsetData.x, OffsetData.y, OffsetData.z)
 
                         if not SellingData.HasTarget then
@@ -401,13 +401,13 @@ function SellToPed(ped)
     local coords = GetOffsetFromEntityInWorldCoords(StandObject, OffsetData.x, OffsetData.y, OffsetData.z)
     local pedCoords = GetEntityCoords(ped)
     local pedDist = GetDistanceBetweenCoords(coords, pedCoords)
-    local PlayerDist = GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), coords.x, coords.y, coords.z)
+    local PlayerDist = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), coords.x, coords.y, coords.z)
 
     TaskGoStraightToCoord(ped, coords, 1.2, -1, 0.0, 0.0)
 
     while pedDist > OffsetData.Distance do
         coords = GetOffsetFromEntityInWorldCoords(StandObject, OffsetData.x, OffsetData.y, OffsetData.z)
-        PlayerDist = GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), coords.x, coords.y, coords.z)
+        PlayerDist = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), coords.x, coords.y, coords.z)
         pedCoords = GetEntityCoords(ped)    
         TaskGoStraightToCoord(ped, coords, 1.2, -1, 0.0, 0.0)
         pedDist = GetDistanceBetweenCoords(coords, pedCoords)
@@ -430,16 +430,16 @@ function SellToPed(ped)
     end
 
     FreezeEntityPosition(ped, true)
-    TaskLookAtEntity(ped, GetPlayerPed(-1), 5500.0, 2048, 3)
-    TaskTurnPedToFaceEntity(ped, GetPlayerPed(-1), 5500)
-    local heading = (GetEntityHeading(GetPlayerPed(-1)) + 180)
+    TaskLookAtEntity(ped, PlayerPedId(), 5500.0, 2048, 3)
+    TaskTurnPedToFaceEntity(ped, PlayerPedId(), 5500)
+    local heading = (GetEntityHeading(PlayerPedId()) + 180)
     SetEntityHeading(ped, heading)
     TaskStartScenarioInPlace(ped, "WORLD_HUMAN_STAND_IMPATIENT_UPRIGHT", 0, false)
     SellingData.Target = ped
 
     while pedDist < OffsetData.Distance and SellingData.HasTarget do
         coords = GetOffsetFromEntityInWorldCoords(StandObject, OffsetData.x, OffsetData.y, OffsetData.z)
-        PlayerDist = GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), coords.x, coords.y, coords.z)
+        PlayerDist = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), coords.x, coords.y, coords.z)
         pedCoords = GetEntityCoords(ped)
         pedDist = GetDistanceBetweenCoords(coords, pedCoords)
 
@@ -466,7 +466,7 @@ function SellToPed(ped)
                     RLCore.Functions.Notify(HotdogsForSale..'x Hotdog(\'s) sold for $'..(HotdogsForSale * SellingPrice)..'.', 'success')
                     TriggerServerEvent('rl-hotdogjob:server:Pay', HotdogsForSale, SellingPrice)
                     SellingData.HasTarget = false
-                    local Myped = GetPlayerPed(-1)
+                    local Myped = PlayerPedId()
 
                     Selling = true
 
@@ -567,7 +567,7 @@ function StartHotdogMinigame()
 end
 
 function PrepareAnim()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     LoadAnim('amb@prop_human_bbq@male@idle_a')
     TaskPlayAnim(ped, 'amb@prop_human_bbq@male@idle_a', 'idle_b', 6.0, -6.0, -1, 47, 0, 0, 0, 0)
     SpatelObject = CreateObject(GetHashKey("prop_fish_slice_01"), 0, 0, 0, true, true, true)
@@ -579,7 +579,7 @@ function PreparingAnimCheck()
     PreparingFood = true
     Citizen.CreateThread(function()
         while true do
-            local ped = GetPlayerPed(-1)
+            local ped = PlayerPedId()
 
             if PreparingFood then
                 if not IsEntityPlayingAnim(ped, 'amb@prop_human_bbq@male@idle_a', 'idle_b', 3) then
@@ -632,7 +632,7 @@ function FinishMinigame(faults)
 end
 
 function TakeHotdogStand()
-    local PlayerPed = GetPlayerPed(-1)
+    local PlayerPed = PlayerPedId()
     IsPushing = true
     NetworkRequestControlOfEntity(StandObject)
     LoadAnim(AnimationData.lib)
@@ -645,7 +645,7 @@ function TakeHotdogStand()
 end
 
 function LetKraamLose()
-    local PlayerPed = GetPlayerPed(-1)
+    local PlayerPed = PlayerPedId()
     DetachEntity(StandObject)
     SetEntityCollision(StandObject, true, true)
     ClearPedTasks(PlayerPed)
@@ -656,7 +656,7 @@ function AnimLoop()
     Citizen.CreateThread(function()
         while true do
             if IsPushing then
-                local PlayerPed = GetPlayerPed(-1)
+                local PlayerPed = PlayerPedId()
                 if not IsEntityPlayingAnim(PlayerPed, AnimationData.lib, AnimationData.anim, 3) then
                     LoadAnim(AnimationData.lib)
                     TaskPlayAnim(PlayerPed, AnimationData.lib, AnimationData.anim, 8.0, 8.0, -1, 50, 0, false, false, false)
@@ -674,7 +674,7 @@ function StopWorking()
         RLCore.Functions.TriggerCallback('rl-hotdogjob:server:BringBack', function(DidBail)
             if DidBail then
                 DeleteObject(StandObject)
-                ClearPedTasksImmediately(GetPlayerPed(-1))
+                ClearPedTasksImmediately(PlayerPedId())
                 IsWorking = false
                 StandObject = nil
                 IsPushing = false
@@ -715,15 +715,15 @@ function CheckLoop()
                         end
                     end
 
-                    if IsPedShooting(GetPlayerPed(-1)) or IsPlayerFreeAiming(PlayerId()) or IsPedInMeleeCombat(GetPlayerPed(-1)) then
+                    if IsPedShooting(PlayerPedId()) or IsPlayerFreeAiming(PlayerId()) or IsPedInMeleeCombat(PlayerPedId()) then
                         LetKraamLose()
                     end
 
-                    if IsPedDeadOrDying(GetPlayerPed(-1), false) then
+                    if IsPedDeadOrDying(PlayerPedId(), false) then
                         LetKraamLose()
                     end
 
-                    if IsPedRagdoll(GetPlayerPed(-1)) then
+                    if IsPedRagdoll(PlayerPedId()) then
                         LetKraamLose()
                     end
                 else
@@ -739,7 +739,7 @@ end
 
 RegisterNetEvent('rl-hotdogjob:staff:DeletStand')
 AddEventHandler('rl-hotdogjob:staff:DeletStand', function()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     local Object = GetClosestObjectOfType(pos.x, pos.y, pos.z, 10.0, GetHashKey('prop_hotdogstand_01'), true, false, false)
     
@@ -765,7 +765,7 @@ AddEventHandler('onResourceStop', function(resource)
     if resource == GetCurrentResourceName() then
         if StandObject ~= nil then
             DeleteObject(StandObject)
-            ClearPedTasksImmediately(GetPlayerPed(-1))
+            ClearPedTasksImmediately(PlayerPedId())
         end
     end
 end)

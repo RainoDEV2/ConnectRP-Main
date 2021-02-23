@@ -22,7 +22,7 @@ end)
 RegisterNetEvent("rl-justice:client:showLawyerLicense")
 AddEventHandler("rl-justice:client:showLawyerLicense", function(sourceId, data)
     local sourcePos = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(sourceId)), false)
-    local pos = GetEntityCoords(GetPlayerPed(-1), false)
+    local pos = GetEntityCoords(PlayerPedId(), false)
     if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, sourcePos.x, sourcePos.y, sourcePos.z, true) < 2.0) then
         TriggerEvent('chat:addMessage', {
             template = '<div class="chat-message advert"><div class="chat-message-body"><strong>{0}:</strong><br><br> <strong>No-ID:</strong> {1} <br><strong>First Name:</strong> {2} <br><strong>Last name:</strong> {3} <br><strong>BSN:</strong> {4} </div></div>',

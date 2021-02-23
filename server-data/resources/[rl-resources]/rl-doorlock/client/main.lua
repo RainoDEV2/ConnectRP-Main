@@ -51,7 +51,7 @@ local maxDistance = 1.25
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		local playerCoords, awayFromDoors = GetEntityCoords(GetPlayerPed(-1)), true
+		local playerCoords, awayFromDoors = GetEntityCoords(PlayerPedId()), true
 
 		for k,doorID in ipairs(RLConfig.Doors) do
 			local distance
@@ -143,7 +143,7 @@ end
 
 RegisterNetEvent('lockpicks:UseLockpick')
 AddEventHandler('lockpicks:UseLockpick', function()
-	local ped = GetPlayerPed(-1)
+	local ped = PlayerPedId()
 	local pos = GetEntityCoords(ped)
 	for k, v in pairs(RLConfig.Doors) do
 		local dist = GetDistanceBetweenCoords(pos, RLConfig.Doors[k].textCoords.x, RLConfig.Doors[k].textCoords.y, RLConfig.Doors[k].textCoords.z)
@@ -205,9 +205,9 @@ end
 
 function openDoorAnim()
     loadAnimDict("anim@heists@keycard@") 
-    TaskPlayAnim( GetPlayerPed(-1), "anim@heists@keycard@", "exit", 5.0, 1.0, -1, 16, 0, 0, 0, 0 )
+    TaskPlayAnim( PlayerPedId(), "anim@heists@keycard@", "exit", 5.0, 1.0, -1, 16, 0, 0, 0, 0 )
 	SetTimeout(400, function()
-		ClearPedTasks(GetPlayerPed(-1))
+		ClearPedTasks(PlayerPedId())
 	end)
 end
 

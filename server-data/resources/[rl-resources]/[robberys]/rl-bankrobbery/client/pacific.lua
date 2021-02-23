@@ -16,7 +16,7 @@ Citizen.CreateThread(function()
 		[2] = {name = RLCore.Shared.Items["security_card_02"]["name"], image = RLCore.Shared.Items["security_card_02"]["image"]},
     }
     while true do
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         local inRange = false
         if RLCore ~= nil then
@@ -112,7 +112,7 @@ Citizen.CreateThread(function()
     }
     while true do 
         Citizen.Wait(1)
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         local inRange = false
         if RLCore ~= nil then
@@ -141,7 +141,7 @@ end)
 
 RegisterNetEvent('electronickit:UseElectronickit')
 AddEventHandler('electronickit:UseElectronickit', function()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][2]["x"], Config.BigBanks["pacific"]["coords"][2]["y"], Config.BigBanks["pacific"]["coords"][2]["z"])
     if dist < 1.5 then
@@ -164,7 +164,7 @@ AddEventHandler('electronickit:UseElectronickit', function()
                                         anim = "hotwire",
                                         flags = 16,
                                     }, {}, {}, function() -- Done
-                                        StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                                        StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
                                         TriggerEvent("mhacking:show")
                                         TriggerEvent("mhacking:start", math.random(5, 9), math.random(10, 15), OnHackPacificDone)
                                         if not copsCalled then
@@ -182,7 +182,7 @@ AddEventHandler('electronickit:UseElectronickit', function()
                                             end
                                         end
                                     end, function() -- Cancel
-                                        StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                                        StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
                                         RLCore.Functions.Notify("Canceled", "error")
                                     end)
                                 else
@@ -205,7 +205,7 @@ end)
 
 RegisterNetEvent('rl-bankrobbery:UseBankcardB')
 AddEventHandler('rl-bankrobbery:UseBankcardB', function()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][1]["x"], Config.BigBanks["pacific"]["coords"][1]["y"],Config.BigBanks["pacific"]["coords"][1]["z"])
     if math.random(1, 100) <= 85 and not IsWearingHandshoes() then
@@ -227,7 +227,7 @@ AddEventHandler('rl-bankrobbery:UseBankcardB', function()
                             anim = "hotwire",
                             flags = 16,
                         }, {}, {}, function() -- Done
-                            StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                            StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
                             TriggerServerEvent('rl-doorlock:server:updateState', 67, false)
                             TriggerServerEvent("RLCore:Server:RemoveItem", "security_card_02", 1)
                             if not copsCalled then
@@ -245,7 +245,7 @@ AddEventHandler('rl-bankrobbery:UseBankcardB', function()
                                 end
                             end
                         end, function() -- Cancel
-                            StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                            StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
                             RLCore.Functions.Notify("Canceled", "error")
                         end)
                     else

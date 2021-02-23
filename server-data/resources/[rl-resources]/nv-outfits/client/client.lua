@@ -162,7 +162,7 @@ function SetSkin(model, setDefault)
         end
         SetPlayerModel(PlayerId(), model)
         SetModelAsNoLongerNeeded(model)
-        local player = GetPlayerPed(-1)
+        local player = PlayerPedId()
         FreezePedCameraRotation(player, true)
     end
     SetEntityInvincible(PlayerPedId(),false)

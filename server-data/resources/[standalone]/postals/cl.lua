@@ -8,7 +8,7 @@ local pBlip = nil
 Citizen.CreateThread(
 	function()
 		while true do
-			local x, y = table.unpack(GetEntityCoords(GetPlayerPed(-1)))
+			local x, y = table.unpack(GetEntityCoords(PlayerPedId()))
 
 			local ndm = -1 -- nearest distance magnitude
 			local ni = -1 -- nearest index
@@ -140,7 +140,7 @@ if dev then
 					return
 				end
 			end
-			local coords = GetEntityCoords(GetPlayerPed(-1))
+			local coords = GetEntityCoords(PlayerPedId())
 			table.insert(devLocal, {code = tostring(next), x = coords.x, y = coords.y})
 			print('insert ' .. next)
 			next = next + 1

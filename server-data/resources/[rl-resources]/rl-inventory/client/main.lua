@@ -57,7 +57,7 @@ AddEventHandler('weapons:client:SetCurrentWeapon', function(data, bool)
 end)
 
 function GetClosestVending()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     local object, dst, typ = nil, 0.0, ''
     for _, machine in pairs(Config.VendingObjects) do
@@ -104,7 +104,7 @@ end
 
 Citizen.CreateThread(function()
     while true do
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         local inRange = false
         local VendingMachine, typ = GetClosestVending()
@@ -141,15 +141,15 @@ Citizen.CreateThread(function()
         if showTrunkPos and not inInventory then
             local vehicle = RLCore.Functions.GetClosestVehicle()
             if vehicle ~= 0 and vehicle ~= nil then
-                local pos = GetEntityCoords(GetPlayerPed(-1))
+                local pos = GetEntityCoords(PlayerPedId())
                 local vehpos = GetEntityCoords(vehicle)
-                if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 0.7) and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+                if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 0.7) and not IsPedInAnyVehicle(PlayerPedId()) then
                     local drawpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, -2.5, 0)
                     if (IsBackEngine(GetEntityModel(vehicle))) then
                         drawpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, 2.5, 0)
                     end
                     RLCore.Functions.DrawText3D(drawpos.x, drawpos.y, drawpos.z, "Trunk")
-                    if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, drawpos) < 0.7) and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+                    if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, drawpos) < 0.7) and not IsPedInAnyVehicle(PlayerPedId()) then
                         CurrentVehicle = GetVehicleNumberPlateText(vehicle)
                         showTrunkPos = false
                     end
@@ -177,20 +177,20 @@ Citizen.CreateThread(function()
             RLCore.Functions.GetPlayerData(function(PlayerData)
                 if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     local curVeh = nil
-                    if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-                        local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+                    if IsPedInAnyVehicle(PlayerPedId()) then
+                        local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
                         CurrentGlovebox = GetVehicleNumberPlateText(vehicle)
                         curVeh = vehicle
                         CurrentVehicle = nil
                     else
                         local vehicle = RLCore.Functions.GetClosestVehicle()
                         if vehicle ~= 0 and vehicle ~= nil then
-                            local pos = GetEntityCoords(GetPlayerPed(-1))
+                            local pos = GetEntityCoords(PlayerPedId())
                             local trunkpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, -2.5, 0)
                             if (IsBackEngine(GetEntityModel(vehicle))) then
                                 trunkpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, 2.5, 0)
                             end
-                            if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, trunkpos) < 2.0) and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+                            if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, trunkpos) < 2.0) and not IsPedInAnyVehicle(PlayerPedId()) then
                                 if GetVehicleDoorLockStatus(vehicle) < 2 then
                                     CurrentVehicle = GetVehicleNumberPlateText(vehicle)
                                     curVeh = vehicle
@@ -375,7 +375,7 @@ end)
 Citizen.CreateThread(function()
     while true do
         if Drops ~= nil and next(Drops) ~= nil then
-            local pos = GetEntityCoords(GetPlayerPed(-1), true)
+            local pos = GetEntityCoords(PlayerPedId(), true)
             for k, v in pairs(Drops) do
                 if Drops[k] ~= nil then 
                     if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, v.coords.x, v.coords.y, v.coords.z, true) < 7.5 then
@@ -421,7 +421,7 @@ end)
 
 RegisterNetEvent("inventory:client:OpenInventory")
 AddEventHandler("inventory:client:OpenInventory", function(PlayerAmmo, inventory, other)
-    if not IsEntityDead(GetPlayerPed(-1)) then
+    if not IsEntityDead(PlayerPedId()) then
         ToggleHotbar(false)
         SetNuiFocus(true, true)
         if other ~= nil then
@@ -474,13 +474,13 @@ AddEventHandler("inventory:client:CraftItems", function(itemName, itemCosts, amo
 		anim = "fixing_a_player",
 		flags = 16,
 	}, {}, {}, function() -- Done
-		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
+		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
         TriggerServerEvent("inventory:server:CraftItems", itemName, itemCosts, amount, toSlot, points)
         TriggerEvent('inventory:client:ItemBox', RLCore.Shared.Items[itemName], 'add')
         isCrafting = false
         TriggerEvent("debug", 'Inventory: Craft ' .. RLCore.Shared.Items[itemName].name, 'success')
 	end, function() -- Cancel
-		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
+		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
         RLCore.Functions.Notify("Failed!", "error")
         isCrafting = false
 	end)
@@ -502,13 +502,13 @@ AddEventHandler('inventory:client:CraftAttachment', function(itemName, itemCosts
 		anim = "fixing_a_player",
 		flags = 16,
 	}, {}, {}, function() -- Done
-		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
+		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
         TriggerServerEvent("inventory:server:CraftAttachment", itemName, itemCosts, amount, toSlot, points)
         TriggerEvent('inventory:client:ItemBox', RLCore.Shared.Items[itemName], 'add')
         isCrafting = false
         TriggerEvent("debug", 'Inventory: Craft ' .. RLCore.Shared.Items[itemName].name, 'success')
 	end, function() -- Cancel
-		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
+		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
         RLCore.Functions.Notify("Failed!", "error")
         isCrafting = false
 	end)
@@ -517,28 +517,28 @@ end)
 RegisterNetEvent("inventory:client:PickupSnowballs")
 AddEventHandler("inventory:client:PickupSnowballs", function()
     LoadAnimDict('anim@mp_snowball')
-    TaskPlayAnim(GetPlayerPed(-1), 'anim@mp_snowball', 'pickup_snowball', 3.0, 3.0, -1, 0, 1, 0, 0, 0)
+    TaskPlayAnim(PlayerPedId(), 'anim@mp_snowball', 'pickup_snowball', 3.0, 3.0, -1, 0, 1, 0, 0, 0)
     RLCore.Functions.Progressbar("pickupsnowball", "Picking up snowball", 1500, false, true, {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
-        ClearPedTasks(GetPlayerPed(-1))
+        ClearPedTasks(PlayerPedId())
         TriggerServerEvent('RLCore:Server:AddItem', "snowball", 1)
         TriggerEvent('inventory:client:ItemBox', RLCore.Shared.Items["snowball"], "add")
         TriggerEvent("debug", 'Inventory: Pick up snowballs', 'success')
     end, function() -- Cancel
-        ClearPedTasks(GetPlayerPed(-1))
+        ClearPedTasks(PlayerPedId())
         RLCore.Functions.Notify("Canceled", "error")
     end)
 end)
 
 RegisterNetEvent("inventory:client:UseSnowball")
 AddEventHandler("inventory:client:UseSnowball", function(amount)
-    GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_snowball"), amount, false, false)
-    SetPedAmmo(GetPlayerPed(-1), GetHashKey("weapon_snowball"), amount)
-    SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey("weapon_snowball"), true)
+    GiveWeaponToPed(PlayerPedId(), GetHashKey("weapon_snowball"), amount, false, false)
+    SetPedAmmo(PlayerPedId(), GetHashKey("weapon_snowball"), amount)
+    SetCurrentPedWeapon(PlayerPedId(), GetHashKey("weapon_snowball"), true)
     TriggerEvent("debug", 'Inventory: Use Snowball', 'success')
 end)
 
@@ -546,28 +546,28 @@ RegisterNetEvent("inventory:client:UseWeapon")
 AddEventHandler("inventory:client:UseWeapon", function(weaponData, shootbool)
     local weaponName = tostring(weaponData.name)
     if currentWeapon == weaponName then
-        SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey("WEAPON_UNARMED"), true)
-        RemoveAllPedWeapons(GetPlayerPed(-1), true)
+        SetCurrentPedWeapon(PlayerPedId(), GetHashKey("WEAPON_UNARMED"), true)
+        RemoveAllPedWeapons(PlayerPedId(), true)
         TriggerEvent('weapons:client:SetCurrentWeapon', nil, shootbool)
         currentWeapon = nil
     elseif weaponName == "weapon_stickybomb" then
-        GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(weaponName), ammo, false, false)
-        SetPedAmmo(GetPlayerPed(-1), GetHashKey(weaponName), 2)
-        SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey(weaponName), true)
+        GiveWeaponToPed(PlayerPedId(), GetHashKey(weaponName), ammo, false, false)
+        SetPedAmmo(PlayerPedId(), GetHashKey(weaponName), 2)
+        SetCurrentPedWeapon(PlayerPedId(), GetHashKey(weaponName), true)
         TriggerServerEvent('RLCore:Server:RemoveItem', weaponName, 1)
         TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
         currentWeapon = weaponName
     elseif weaponName == "weapon_molotov" then
-        GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(weaponName), ammo, false, false)
-        SetPedAmmo(GetPlayerPed(-1), GetHashKey(weaponName), 2)
-        SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey(weaponName), true)
+        GiveWeaponToPed(PlayerPedId(), GetHashKey(weaponName), ammo, false, false)
+        SetPedAmmo(PlayerPedId(), GetHashKey(weaponName), 2)
+        SetCurrentPedWeapon(PlayerPedId(), GetHashKey(weaponName), true)
         TriggerServerEvent('RLCore:Server:RemoveItem', weaponName, 1)
         TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
         currentWeapon = weaponName
     elseif weaponName == "weapon_snowball" then
-        GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(weaponName), ammo, false, false)
-        SetPedAmmo(GetPlayerPed(-1), GetHashKey(weaponName), 2)
-        SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey(weaponName), true)
+        GiveWeaponToPed(PlayerPedId(), GetHashKey(weaponName), ammo, false, false)
+        SetPedAmmo(PlayerPedId(), GetHashKey(weaponName), 2)
+        SetCurrentPedWeapon(PlayerPedId(), GetHashKey(weaponName), true)
         TriggerServerEvent('RLCore:Server:RemoveItem', weaponName, 1)
         TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
         currentWeapon = weaponName
@@ -578,12 +578,12 @@ AddEventHandler("inventory:client:UseWeapon", function(weaponData, shootbool)
             if weaponName == "weapon_petrolcan" or weaponName == "weapon_fireextinguisher" then 
                 ammo = 4000 
             end
-            GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(weaponName), ammo, false, false)
-            SetPedAmmo(GetPlayerPed(-1), GetHashKey(weaponName), ammo)
-            SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey(weaponName), true)
+            GiveWeaponToPed(PlayerPedId(), GetHashKey(weaponName), ammo, false, false)
+            SetPedAmmo(PlayerPedId(), GetHashKey(weaponName), ammo)
+            SetCurrentPedWeapon(PlayerPedId(), GetHashKey(weaponName), true)
             if weaponData.info.attachments ~= nil then
                 for _, attachment in pairs(weaponData.info.attachments) do
-                    GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey(weaponName), GetHashKey(attachment.component))
+                    GiveWeaponComponentToPed(PlayerPedId(), GetHashKey(weaponName), GetHashKey(attachment.component))
                 end
             end
             currentWeapon = weaponName
@@ -961,7 +961,7 @@ RegisterNUICallback('RemoveAttachment', function(data, cb)
     RLCore.Functions.TriggerCallback('weapons:server:RemoveAttachment', function(NewAttachments)
         if NewAttachments ~= false then
             local Attachies = {}
-            RemoveWeaponComponentFromPed(GetPlayerPed(-1), GetHashKey(data.WeaponData.name), GetHashKey(Attachment.component))
+            RemoveWeaponComponentFromPed(PlayerPedId(), GetHashKey(data.WeaponData.name), GetHashKey(Attachment.component))
             for k, v in pairs(NewAttachments) do
                 for wep, pew in pairs(WeaponAttachments[WeaponData.name:upper()]) do
                     if v.component == pew.component then
@@ -978,7 +978,7 @@ RegisterNUICallback('RemoveAttachment', function(data, cb)
             }
             cb(DJATA)
         else
-            RemoveWeaponComponentFromPed(GetPlayerPed(-1), GetHashKey(data.WeaponData.name), GetHashKey(Attachment.component))
+            RemoveWeaponComponentFromPed(PlayerPedId(), GetHashKey(data.WeaponData.name), GetHashKey(Attachment.component))
             cb({})
         end
     end, data.AttachmentData, data.WeaponData)
@@ -988,8 +988,8 @@ RegisterNetEvent("inventory:client:CheckWeapon")
 AddEventHandler("inventory:client:CheckWeapon", function(weaponName)
     if currentWeapon == weaponName then 
         TriggerEvent('weapons:ResetHolster')
-        SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey("WEAPON_UNARMED"), true)
-        RemoveAllPedWeapons(GetPlayerPed(-1), true)
+        SetCurrentPedWeapon(PlayerPedId(), GetHashKey("WEAPON_UNARMED"), true)
+        RemoveAllPedWeapons(PlayerPedId(), true)
         currentWeapon = nil
     end
 end)
@@ -1028,9 +1028,9 @@ AddEventHandler("inventory:client:DropItemAnim", function(droppingItem)
     while not HasAnimDictLoaded("pickup_object") do
         Citizen.Wait(7)
     end
-    TaskPlayAnim(GetPlayerPed(-1), "pickup_object" ,"pickup_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
+    TaskPlayAnim(PlayerPedId(), "pickup_object" ,"pickup_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
     Citizen.Wait(2000)
-    ClearPedTasks(GetPlayerPed(-1))
+    ClearPedTasks(PlayerPedId())
 end)
 
 RegisterNetEvent("inventory:client:ShowId")
@@ -1038,7 +1038,7 @@ AddEventHandler("inventory:client:ShowId", function(sourceId, citizenid, charact
     local targ = GetPlayerFromServerId(sourceId)
     if targ ~= nil and targ ~= -1 then
     local sourcePos = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(sourceId)), false)
-    local pos = GetEntityCoords(GetPlayerPed(-1), false)
+    local pos = GetEntityCoords(PlayerPedId(), false)
     if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, sourcePos.x, sourcePos.y, sourcePos.z, true) < 2.0) then
         local gender = "Man"
         if character.gender == 1 then
@@ -1057,7 +1057,7 @@ AddEventHandler("inventory:client:ShowDriverLicense", function(sourceId, citizen
     local targ = GetPlayerFromServerId(sourceId)
     if targ ~= nil and targ ~= -1 then
     local sourcePos = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(sourceId)), false)
-    local pos = GetEntityCoords(GetPlayerPed(-1), false)
+    local pos = GetEntityCoords(PlayerPedId(), false)
     if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, sourcePos.x, sourcePos.y, sourcePos.z, true) < 2.0) then
         TriggerEvent('chat:addMessage', {
             template = '<div class="chat-message advert"><div class="chat-message-body"><strong>{0}:</strong><br><br> <strong>First Name:</strong> {1} <br><strong>Last name:</strong> {2} <br><strong>Birthday:</strong> {3} <br><strong>Driving licenses:</strong> {4}</div></div>',
@@ -1074,7 +1074,7 @@ AddEventHandler("inventory:client:ShowWeaponLicense", function(sourceId, citizen
     local targ = GetPlayerFromServerId(sourceId)
     if targ ~= nil and targ ~= -1 then
     local sourcePos = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(sourceId)), false)
-    local pos = GetEntityCoords(GetPlayerPed(-1), false)
+    local pos = GetEntityCoords(PlayerPedId(), false)
     if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, sourcePos.x, sourcePos.y, sourcePos.z, true) < 2.0) then
         local gender = "Man"
         if character.gender == 1 then
@@ -1116,7 +1116,7 @@ RegisterNUICallback("CloseInventory", function(data, cb)
         CurrentStash = nil
         SetNuiFocus(false, false)
         inInventory = false
-        ClearPedTasks(GetPlayerPed(-1))
+        ClearPedTasks(PlayerPedId())
         return
     end
     if CurrentVehicle ~= nil then
@@ -1165,11 +1165,11 @@ RegisterNUICallback('combineWithAnim', function(data)
         anim = aLib,
         flags = 16,
     }, {}, {}, function() -- Done
-        StopAnimTask(GetPlayerPed(-1), aDict, aLib, 1.0)
+        StopAnimTask(PlayerPedId(), aDict, aLib, 1.0)
         TriggerServerEvent('inventory:server:combineItem', combineData.reward, data.requiredItem, data.usedItem)
         TriggerEvent('inventory:client:ItemBox', RLCore.Shared.Items[combineData.reward], 'add')
     end, function() -- Cancel
-        StopAnimTask(GetPlayerPed(-1), aDict, aLib, 1.0)
+        StopAnimTask(PlayerPedId(), aDict, aLib, 1.0)
         RLCore.Functions.Notify("Failed!", "error")
     end)
 end)
@@ -1192,7 +1192,7 @@ function OpenTrunk()
         RequestAnimDict("amb@prop_human_bum_bin@idle_b")
         Citizen.Wait(100)
     end
-    TaskPlayAnim(GetPlayerPed(-1), "amb@prop_human_bum_bin@idle_b", "idle_d", 4.0, 4.0, -1, 50, 0, false, false, false)
+    TaskPlayAnim(PlayerPedId(), "amb@prop_human_bum_bin@idle_b", "idle_d", 4.0, 4.0, -1, 50, 0, false, false, false)
     if (IsBackEngine(GetEntityModel(vehicle))) then
         SetVehicleDoorOpen(vehicle, 4, false, false)
     else
@@ -1206,7 +1206,7 @@ function CloseTrunk()
         RequestAnimDict("amb@prop_human_bum_bin@idle_b")
         Citizen.Wait(100)
     end
-    TaskPlayAnim(GetPlayerPed(-1), "amb@prop_human_bum_bin@idle_b", "exit", 4.0, 4.0, -1, 50, 0, false, false, false)
+    TaskPlayAnim(PlayerPedId(), "amb@prop_human_bum_bin@idle_b", "exit", 4.0, 4.0, -1, 50, 0, false, false, false)
     if (IsBackEngine(GetEntityModel(vehicle))) then
         SetVehicleDoorShut(vehicle, 4, false)
     else

@@ -37,7 +37,7 @@ Citizen.CreateThread(function()
 	while true do 
 		Citizen.Wait(1)
 		 for k,v in pairs(Config.JobData['locations']) do
-		  local Positie = GetEntityCoords(GetPlayerPed(-1), false)
+		  local Positie = GetEntityCoords(PlayerPedId(), false)
 		  local Gebied = GetDistanceBetweenCoords(Positie.x, Positie.y, Positie.z, Config.JobData['locations'][k].x, Config.JobData['locations'][k].y, Config.JobData['locations'][k].z, true)
 		   if Gebied <= 1.3 then
 				if Config.JobData['locations'][k]['name'] == 'Lettuce' then
@@ -171,13 +171,13 @@ function GetLettuce()
 		anim = "idle_d",
 		flags = 8,
 	}, {}, {}, function() -- Done
-		StopAnimTask(GetPlayerPed(-1), "amb@prop_human_bum_bin@idle_b", "idle_d", 1.0)
+		StopAnimTask(PlayerPedId(), "amb@prop_human_bum_bin@idle_b", "idle_d", 1.0)
 		TriggerServerEvent('RLCore:Server:AddItem', "lettuce", 1)
 		Config.JobData['stock-lettuce']= Config.JobData['stock-lettuce'] - 1
 		TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["lettuce"], "add")
 		Bezig = false
 	end, function()
-		StopAnimTask(GetPlayerPed(-1), "amb@prop_human_bum_bin@idle_b", "idle_d", 1.0)
+		StopAnimTask(PlayerPedId(), "amb@prop_human_bum_bin@idle_b", "idle_d", 1.0)
 		RLCore.Functions.Notify("Canceled..", "error")
 		Bezig = false
 	end)
@@ -189,7 +189,7 @@ end
 function GiveTacoToShop()
 	RLCore.Functions.TriggerCallback('rl-taco:server:get:tacos', function(HasItem, type)
 		if HasItem then
-		  if not IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+		  if not IsPedInAnyVehicle(PlayerPedId(), false) then
 			if Config.JobData['tacos'] <= 9 then	
 				RLCore.Functions.Notify("Taco delivered!", "success")
 				Config.JobData['tacos'] = Config.JobData['tacos'] + 1
@@ -249,7 +249,7 @@ function TakeMoney()
 			Config.JobData['register']= Config.JobData['register'] - 10000        
         end, function() -- Cancel
             GetMoney = false
-            ClearPedTasks(GetPlayerPed(-1))
+            ClearPedTasks(PlayerPedId())
             RLCore.Functions.Notify("Process Canceled..", "error")
         end)
 	else
@@ -275,7 +275,7 @@ end
 function RegisterAnim(time)
 	time = time / 1000
 	loadAnimDict("veh@break_in@0h@p_m_one@")
-	TaskPlayAnim(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds" ,3.0, 3.0, -1, 16, 0, false, false, false)
+	TaskPlayAnim(PlayerPedId(), "veh@break_in@0h@p_m_one@", "low_force_entry_ds" ,3.0, 3.0, -1, 16, 0, false, false, false)
 	GetMoney = true
 	Citizen.CreateThread(function()
 	while GetMoney do
@@ -285,7 +285,7 @@ function RegisterAnim(time)
 		TriggerServerEvent('rl-storerobbery:server:takeMoney', currentRegister, false)
 		if time <= 0 then
 			GetMoney = false
-			StopAnimTask(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0)
+			StopAnimTask(PlayerPedId(), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0)
 		end
 	end
 	end)

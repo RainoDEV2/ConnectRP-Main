@@ -77,10 +77,10 @@ CreateThread(function()
                     TriggerServerEvent("bb-bossmenu:server:openMenu")
                 end
             elseif (distance['vehicles'] < 2.5) then
-                DrawText3Ds(Config.Locations["vehicles"].x, Config.Locations["vehicles"].y, Config.Locations["vehicles"].z, IsPedInAnyVehicle(GetPlayerPed(-1), false) and "~g~E~w~ - Store vehicle" or "~g~E~w~ - Vehicles")
+                DrawText3Ds(Config.Locations["vehicles"].x, Config.Locations["vehicles"].y, Config.Locations["vehicles"].z, IsPedInAnyVehicle(PlayerPedId(), false) and "~g~E~w~ - Store vehicle" or "~g~E~w~ - Vehicles")
                 if IsControlJustReleased(0, 38) then
-                    if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
-                        DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
+                    if IsPedInAnyVehicle(PlayerPedId(), false) then
+                        DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
                     else
                         MenuGarage()
                         Menu.hidden = not Menu.hidden
@@ -125,7 +125,7 @@ function DrawText3Ds(x, y, z, text)
 end
 
 function MenuGarage()
-    ped = GetPlayerPed(-1);
+    ped = PlayerPedId();
     MenuTitle = "Garage"
     ClearMenu()
     Menu.addButton("Vehicles", "VehicleList", nil)
@@ -133,7 +133,7 @@ function MenuGarage()
 end
 
 function VehicleList(isDown)
-    ped = GetPlayerPed(-1);
+    ped = PlayerPedId();
     MenuTitle = "Vehicle:"
     ClearMenu()
     for k, v in pairs(Config.Vehicles) do
@@ -153,7 +153,7 @@ function TakeOutVehicle(vehicleInfo, coords)
         SetVehicleNumberPlateText(veh, "NEWS"..tostring(math.random(1000, 9999)))
         exports["LegacyFuel"]:SetFuel(veh, 100)
         closeMenuFull()
-        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
         SetVehicleEngineOn(veh, true, true)
         CurrentPlate = GetVehicleNumberPlateText(veh)

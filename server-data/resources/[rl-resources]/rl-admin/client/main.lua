@@ -67,7 +67,7 @@ GetPlayersFromCoords = function(coords, distance)
     local closePlayers = {}
 
     if coords == nil then
-		coords = GetEntityCoords(GetPlayerPed(-1))
+		coords = GetEntityCoords(PlayerPedId())
     end
     if distance == nil then
         distance = 5.0
@@ -532,7 +532,7 @@ Citizen.CreateThread(function()
 
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened('exitSpectate') then
-            local playerPed = GetPlayerPed(-1)
+            local playerPed = PlayerPedId()
             WarMenu.CloseMenu()
 
             InSpectatorMode = false
@@ -660,7 +660,7 @@ Citizen.CreateThread(function()
             
 
             if WarMenu.CheckBox("Invisible", isInvisible, function(checked) isInvisible = checked end) then
-                local myPed = GetPlayerPed(-1)
+                local myPed = PlayerPedId()
                 
                 if isInvisible then
                     SetEntityVisible(myPed, false, false)
@@ -819,7 +819,7 @@ Citizen.CreateThread(function()
             if WarMenu.MenuButton("Spectate", currentPlayer) then
                 WarMenu.CloseMenu()
 
-                local playerPed = GetPlayerPed(-1)
+                local playerPed = PlayerPedId()
                 if not InSpectatorMode then
                     LastPosition = GetEntityCoords(playerPed)
                 end
@@ -869,7 +869,7 @@ Citizen.CreateThread(function()
             end
             if WarMenu.MenuButton('Bring', currentPlayer) then
                 local target = GetPlayerPed(currentPlayer)
-                local plyCoords = GetEntityCoords(GetPlayerPed(-1))
+                local plyCoords = GetEntityCoords(PlayerPedId())
 
                 TriggerServerEvent('rl-admin:server:bringTp', GetPlayerServerId(currentPlayer), plyCoords)
             end
@@ -977,7 +977,7 @@ Citizen.CreateThread(function()
 end)
 
 function SpectatePlayer(targetPed, toggle)
-    local myPed = GetPlayerPed(-1)
+    local myPed = PlayerPedId()
 
     if toggle then
         showNames = true
@@ -1017,7 +1017,7 @@ Citizen.CreateThread(function()
     while true do
 
         if showNames then
-            for _, player in pairs(GetPlayersFromCoords(GetEntityCoords(GetPlayerPed(-1)), 5.0)) do
+            for _, player in pairs(GetPlayersFromCoords(GetEntityCoords(PlayerPedId()), 5.0)) do
                 local PlayerId = GetPlayerServerId(player)
                 local PlayerPed = GetPlayerPed(player)
                 local PlayerName = GetPlayerName(player)
@@ -1090,7 +1090,7 @@ Citizen.CreateThread(function()
 
         if deleteLazer then
             local color = {r = 255, g = 255, b = 255, a = 200}
-            local position = GetEntityCoords(GetPlayerPed(-1))
+            local position = GetEntityCoords(PlayerPedId())
             local hit, coords, entity = RayCastGamePlayCamera(1000.0)
             
             -- If entity is found then verifie entity
@@ -1125,7 +1125,7 @@ end)
 RegisterNetEvent('loadspeed')
 AddEventHandler('loadspeed', function(boost)
     print(boost)
-    local CurrentVehicle = GetVehiclePedIsIn(GetPlayerPed(-1))
+    local CurrentVehicle = GetVehiclePedIsIn(PlayerPedId())
     SetVehicleEnginePowerMultiplier(CurrentVehicle, boost)
     SetVehicleEngineTorqueMultiplier(CurrentVehicle, boost)
     SetEntityMaxSpeed(CurrentVehicle, 999.0)
@@ -1259,14 +1259,14 @@ end
 
 RegisterNetEvent('rl-admin:client:bringTp')
 AddEventHandler('rl-admin:client:bringTp', function(coords)
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
 
     SetEntityCoords(ped, coords.x, coords.y, coords.z)
 end)
 
 RegisterNetEvent('rl-admin:client:gotoTp')
 AddEventHandler('rl-admin:client:gotoTp', function(targetId)
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local coords = GetEntityCoords(ped)
     TriggerServerEvent('rl-admin:server:gotoTpstage2', targetId, coords)
 end)
@@ -1274,13 +1274,13 @@ end)
 RegisterNetEvent('rl-admin:client:gotoTp2')
 AddEventHandler('rl-admin:client:gotoTp2', function(coords)
     print(coords)
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     SetEntityCoords(ped, coords.x, coords.y, coords.z)
 end)
 
 RegisterNetEvent('rl-admin:client:Freeze')
 AddEventHandler('rl-admin:client:Freeze', function(toggle)
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
 
     local veh = GetVehiclePedIsIn(ped)
 
@@ -1304,7 +1304,7 @@ end)
 
 RegisterNetEvent('rl-admin:client:SaveCar')
 AddEventHandler('rl-admin:client:SaveCar', function()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local veh = GetVehiclePedIsIn(ped)
 
     if veh ~= nil and veh ~= 0 then
@@ -1356,7 +1356,7 @@ end
 
 RegisterNetEvent('rl-admin:client:SetModel')
 AddEventHandler('rl-admin:client:SetModel', function(skin)
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local model = GetHashKey(skin)
     SetEntityInvincible(ped, true)
 
@@ -1411,12 +1411,12 @@ Citizen.CreateThread(function()
       if InSpectatorMode then
 
           local targetPlayerId = TargetSpectate
-          local playerPed	  = GetPlayerPed(-1)
+          local playerPed	  = PlayerPedId()
           local targetPed	  = GetPlayerPed(targetPlayerId)
           local coords	 = GetEntityCoords(targetPed)
 
           if not DoesEntityExist(targetPed) then
-            local playerPed = GetPlayerPed(-1)
+            local playerPed = PlayerPedId()
             WarMenu.CloseMenu()
 
             InSpectatorMode = false

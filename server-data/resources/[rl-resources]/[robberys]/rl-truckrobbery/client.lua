@@ -111,7 +111,7 @@ local zoneNames = {
 }
 
 function GetTheStreet()
-    local x, y, z = table.unpack(GetEntityCoords(GetPlayerPed(-1), true))
+    local x, y, z = table.unpack(GetEntityCoords(PlayerPedId(), true))
     local currentStreetHash, intersectStreetHash =
         GetStreetNameAtCoord(x, y, z, currentStreetHash, intersectStreetHash)
     currentStreetName = GetStreetNameFromHashKey(currentStreetHash)
@@ -143,15 +143,15 @@ local attempted = 0
 
 RegisterNetEvent("truckrobbery:gruppeCard")
 AddEventHandler("truckrobbery:gruppeCard", function()
-    local coordA = GetEntityCoords(GetPlayerPed(-1), 1)
-    local coordB = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0,
+    local coordA = GetEntityCoords(PlayerPedId(), 1)
+    local coordB = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0,
                                                     100.0, 0.0)
     local targetVehicle = getVehicleInDirection(coordA, coordB)
     if targetVehicle ~= 0 and GetHashKey("stockade") ==
         GetEntityModel(targetVehicle) then
         local entityCreatePoint = GetOffsetFromEntityInWorldCoords(
                                       targetVehicle, 0.0, -4.0, 0.0)
-        local coords = GetEntityCoords(GetPlayerPed(-1))
+        local coords = GetEntityCoords(PlayerPedId())
         local aDist = GetDistanceBetweenCoords(coords["x"], coords["y"],
                                                coords["z"],
                                                entityCreatePoint["x"],
@@ -254,9 +254,9 @@ AddEventHandler('truckrobbery:AddPeds', function(veh)
     SetPedAsCop(ped4, true)
     SetCanAttackFriendly(ped4, false, true)
 
-    TaskCombatPed(ped2, GetPlayerPed(-1), 0, 16)
-    TaskCombatPed(ped3, GetPlayerPed(-1), 0, 16)
-    TaskCombatPed(ped4, GetPlayerPed(-1), 0, 16)
+    TaskCombatPed(ped2, PlayerPedId(), 0, 16)
+    TaskCombatPed(ped3, PlayerPedId(), 0, 16)
+    TaskCombatPed(ped4, PlayerPedId(), 0, 16)
 end)
 
 local pickup = false
@@ -274,7 +274,7 @@ AddEventHandler('truckrobbery:PickupCashLoop', function()
     SetVehicleHandbrake(attempted, true)
     while pickup do
         Citizen.Wait(1)
-        local coords = GetEntityCoords(GetPlayerPed(-1))
+        local coords = GetEntityCoords(PlayerPedId())
         local aDist = GetDistanceBetweenCoords(coords["x"], coords["y"], coords["z"], markerlocation["x"], markerlocation["y"], markerlocation["z"])
         if aDist < 10.0 then
 
@@ -333,7 +333,7 @@ local pickingup = false
 
 function pickUpCash()
     if not pickingup then
-        local coords = GetEntityCoords(GetPlayerPed(-1))
+        local coords = GetEntityCoords(PlayerPedId())
         pickingup = true
         RequestAnimDict("mini@repair")
 
@@ -341,13 +341,13 @@ function pickUpCash()
 
         while pickingup do
             Citizen.Wait(1)
-            local coords2 = GetEntityCoords(GetPlayerPed(-1))
+            local coords2 = GetEntityCoords(PlayerPedId())
             local aDist = GetDistanceBetweenCoords(coords["x"], coords["y"], coords["z"], coords2["x"],  coords2["y"], coords2["z"])
             if aDist > 1.0 or not pickup then pickingup = false end
-            if IsEntityPlayingAnim(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 3) then
+            if IsEntityPlayingAnim(PlayerPedId(), "mini@repair", "fixing_a_player", 3) then
             else
-                TaskPlayAnim(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 8.0, -8, -1, 49, 0, 0, 0, 0)
-                FreezeEntityPosition(GetPlayerPed(-1), true)
+                TaskPlayAnim(PlayerPedId(), "mini@repair", "fixing_a_player", 8.0, -8, -1, 49, 0, 0, 0, 0)
+                FreezeEntityPosition(PlayerPedId(), true)
             end
             Progressbar(60000,"Collecting Items")
 
@@ -370,9 +370,9 @@ function pickUpCash()
             end
             TriggerServerEvent('truckrobbery:addMoney', Config.Money)
             pickingup = false
-            FreezeEntityPosition(GetPlayerPed(-1), false)
+            FreezeEntityPosition(PlayerPedId(), false)
         end
-        ClearPedTasks(GetPlayerPed(-1))
+        ClearPedTasks(PlayerPedId())
     end
 end
 

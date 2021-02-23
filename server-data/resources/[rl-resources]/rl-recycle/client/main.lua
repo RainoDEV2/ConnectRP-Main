@@ -31,7 +31,7 @@ Citizen.CreateThread(function ()
     EndTextCommandSetBlipName(RecycleBlip)
     while true do
         Citizen.Wait(7)
-        local pos = GetEntityCoords(GetPlayerPed(-1), true)
+        local pos = GetEntityCoords(PlayerPedId(), true)
         ---- BUITEN
         if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config['delivery'].outsideLocation.x, Config['delivery'].outsideLocation.y, Config['delivery'].outsideLocation.z, true) < 1.3 then
             DrawText3D(Config['delivery'].outsideLocation.x, Config['delivery'].outsideLocation.y, Config['delivery'].outsideLocation.z + 1, "~g~E~w~ - To enter")
@@ -40,12 +40,12 @@ Citizen.CreateThread(function ()
                 while not IsScreenFadedOut() do
                     Citizen.Wait(10)
                 end
-                SetEntityCoords(GetPlayerPed(-1), Config['delivery'].insideLocation.x, Config['delivery'].insideLocation.y, Config['delivery'].insideLocation.z)
+                SetEntityCoords(PlayerPedId(), Config['delivery'].insideLocation.x, Config['delivery'].insideLocation.y, Config['delivery'].insideLocation.z)
                 DoScreenFadeIn(500)
             end
         end
         ---- BINNEN
-        if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config['delivery'].insideLocation.x, Config['delivery'].insideLocation.y, Config['delivery'].insideLocation.z, true) < 15 and not IsPedInAnyVehicle(GetPlayerPed(-1), false) and not onDuty then
+        if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config['delivery'].insideLocation.x, Config['delivery'].insideLocation.y, Config['delivery'].insideLocation.z, true) < 15 and not IsPedInAnyVehicle(PlayerPedId(), false) and not onDuty then
             DrawMarker(25, Config['delivery'].insideLocation.x, Config['delivery'].insideLocation.y, Config['delivery'].insideLocation.z, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 0.5001, 98, 102, 185,100, 0, 0, 0,0)
             if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config['delivery'].insideLocation.x, Config['delivery'].insideLocation.y, Config['delivery'].insideLocation.z, true) < 1.3 then
                 DrawText3D(Config['delivery'].insideLocation.x, Config['delivery'].insideLocation.y, Config['delivery'].insideLocation.z + 1, "~g~E~w~ - To go outside")
@@ -54,13 +54,13 @@ Citizen.CreateThread(function ()
                     while not IsScreenFadedOut() do
                         Citizen.Wait(10)
                     end
-                    SetEntityCoords(GetPlayerPed(-1), Config['delivery'].outsideLocation.x, Config['delivery'].outsideLocation.y, Config['delivery'].outsideLocation.z + 1)
+                    SetEntityCoords(PlayerPedId(), Config['delivery'].outsideLocation.x, Config['delivery'].outsideLocation.y, Config['delivery'].outsideLocation.z + 1)
                     DoScreenFadeIn(500)
                 end
             end
         end
         ---- INKLOKKEN
-        if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, 1049.15,-3100.63,-39.95, true) < 15 and not IsPedInAnyVehicle(GetPlayerPed(-1), false) and carryPackage == nil then
+        if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, 1049.15,-3100.63,-39.95, true) < 15 and not IsPedInAnyVehicle(PlayerPedId(), false) and carryPackage == nil then
             DrawMarker(25, 1049.15,-3100.63,-39.95, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 0.5001, 255, 0, 0,100, 0, 0, 0,0)
             if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, 1049.15,-3100.63,-39.95, true) < 1.3 then
                 if onDuty then
@@ -95,14 +95,14 @@ Citizen.CreateThread(function ()
         Citizen.Wait(7)
         if onDuty then
             if packagePos ~= nil then
-                local pos = GetEntityCoords(GetPlayerPed(-1), true)
+                local pos = GetEntityCoords(PlayerPedId(), true)
                 if carryPackage == nil then
                     if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, packagePos.x,packagePos.y,packagePos.z, true) < 2.3 then
                         DrawText3D(packagePos.x,packagePos.y,packagePos.z+ 1, "~g~E~w~ - Pack package")
                         if IsControlJustReleased(0, Keys["E"]) then
-                            TaskStartScenarioInPlace(GetPlayerPed(-1), "PROP_HUMAN_BUM_BIN", 0, true)
+                            TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_BUM_BIN", 0, true)
                             RLCore.Functions.Progressbar("pickup_reycle_package", "Picking the package..", 10000, false, true, {}, {}, {}, {}, function() -- Done
-                                ClearPedTasks(GetPlayerPed(-1))
+                                ClearPedTasks(PlayerPedId())
                                 PickupPackage()
                             end)
                         end
@@ -121,7 +121,7 @@ Citizen.CreateThread(function ()
                                 disableMouse = false,
                                 disableCombat = true,
                             }, {}, {}, {}, function() -- Done
-                                StopAnimTask(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic", 1.0)
+                                StopAnimTask(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic", 1.0)
                                 TriggerServerEvent('rl-recycle:server:getItem')
                                 GetRandomPackage()
                             end)
@@ -140,7 +140,7 @@ end)
 function ScrapAnim()
     local time = 5
     loadAnimDict("mp_car_bomb")
-    TaskPlayAnim(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic" ,3.0, 3.0, -1, 16, 0, false, false, false)
+    TaskPlayAnim(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic" ,3.0, 3.0, -1, 16, 0, false, false, false)
     openingDoor = true
     Citizen.CreateThread(function()
         while openingDoor do
@@ -149,7 +149,7 @@ function ScrapAnim()
             time = time - 1
             if time <= 0 then
                 openingDoor = false
-                StopAnimTask(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic", 1.0)
+                StopAnimTask(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic", 1.0)
             end
         end
     end)
@@ -186,22 +186,22 @@ function GetRandomPackage()
 end
 
 function PickupPackage()
-    local pos = GetEntityCoords(GetPlayerPed(-1), true)
+    local pos = GetEntityCoords(PlayerPedId(), true)
     RequestAnimDict("anim@heists@box_carry@")
     while (not HasAnimDictLoaded("anim@heists@box_carry@")) do
         Citizen.Wait(7)
     end
-    TaskPlayAnim(GetPlayerPed(-1), "anim@heists@box_carry@" ,"idle", 5.0, -1, -1, 50, 0, false, false, false)
+    TaskPlayAnim(PlayerPedId(), "anim@heists@box_carry@" ,"idle", 5.0, -1, -1, 50, 0, false, false, false)
     local model = GetHashKey("prop_cs_cardbox_01")
     RequestModel(model)
     while not HasModelLoaded(model) do Citizen.Wait(0) end
     local object = CreateObject(model, pos.x, pos.y, pos.z, true, true, true)
-    AttachEntityToEntity(object, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 57005), 0.05, 0.1, -0.3, 300.0, 250.0, 20.0, true, true, false, true, 1, true)
+    AttachEntityToEntity(object, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 57005), 0.05, 0.1, -0.3, 300.0, 250.0, 20.0, true, true, false, true, 1, true)
     carryPackage = object
 end
 
 function DropPackage()
-    ClearPedTasks(GetPlayerPed(-1))
+    ClearPedTasks(PlayerPedId())
     DetachEntity(carryPackage, true, true)
     DeleteObject(carryPackage)
     carryPackage = nil

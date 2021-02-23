@@ -327,7 +327,7 @@ function LoadPed(data)
 end
 
 function GetCurrentPed()
-    player = GetPlayerPed(-1)
+    player = PlayerPedId()
     return {
         model = GetEntityModel(PlayerPedId()),
         hairColor = GetPedHair(),
@@ -367,11 +367,11 @@ function SetSkin(model, setDefault)
         end
         SetPlayerModel(PlayerId(), model)
         SetModelAsNoLongerNeeded(model)
-        player = GetPlayerPed(-1)
+        player = PlayerPedId()
         FreezePedCameraRotation(player, true)
         if setDefault and model ~= nil and not isCustomSkin(model) then
             if (model ~= `mp_f_freemode_01` and model ~= `mp_m_freemode_01`) then
-                SetPedRandomComponentVariation(GetPlayerPed(-1), true)
+                SetPedRandomComponentVariation(PlayerPedId(), true)
             else
                 SetPedHeadBlendData(player, 0, 0, 0, 15, 0, 0, 0, 1.0, 0, false)
                 SetPedComponentVariation(player, 11, 0, 11, 0)
@@ -796,7 +796,7 @@ end)
 -- Main menu
 
 function OpenMenu(name)
-    player = GetPlayerPed(-1)
+    player = PlayerPedId()
     oldPed = GetCurrentPed()
     local isAllowed = false
     if(oldPed.model == 1885233650 or oldPed.model == -1667301416) then isAllowed = true end
@@ -946,7 +946,7 @@ end)
 
 RegisterNetEvent("raid_clothes:setclothes")
 AddEventHandler("raid_clothes:setclothes", function(data,alreadyExist)
-    player = GetPlayerPed(-1)
+    player = PlayerPedId()
     local function setDefault()
         Citizen.CreateThread(function()
             firstChar = true
@@ -1053,7 +1053,7 @@ end)
 
 RegisterNetEvent("raid_clothes:setpedfeatures")
 AddEventHandler("raid_clothes:setpedfeatures", function(data)
-    player = GetPlayerPed(-1)
+    player = PlayerPedId()
     
     if not data then
         return

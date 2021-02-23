@@ -86,7 +86,7 @@ end)
 
 RegisterNetEvent("evidence:client:ClearBlooddropsInArea")
 AddEventHandler("evidence:client:ClearBlooddropsInArea", function()
-	local pos = GetEntityCoords(GetPlayerPed(-1))
+	local pos = GetEntityCoords(PlayerPedId())
 	local blooddropList = {}
 	RLCore.Functions.Progressbar("clear_blooddrops", "Collecting Blood Samples", 5000, false, true, {
         disableMovement = false,
@@ -130,7 +130,7 @@ end)
 
 RegisterNetEvent("evidence:client:ClearCasingsInArea")
 AddEventHandler("evidence:client:ClearCasingsInArea", function()
-	local pos = GetEntityCoords(GetPlayerPed(-1))
+	local pos = GetEntityCoords(PlayerPedId())
 	local casingList = {}
 	RLCore.Functions.Progressbar("clear_casings", "Removing Bullet Sleeves", 5000, false, true, {
         disableMovement = false,
@@ -184,8 +184,8 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(1)
-		if IsPedShooting(GetPlayerPed(-1)) or IsPedDoingDriveby(GetPlayerPed(-1)) then
-			local weapon = GetSelectedPedWeapon(GetPlayerPed(-1))
+		if IsPedShooting(PlayerPedId()) or IsPedDoingDriveby(PlayerPedId()) then
+			local weapon = GetSelectedPedWeapon(PlayerPedId())
 			if weapon ~= GetHashKey("WEAPON_UNARMED") and weapon ~= GetHashKey("WEAPON_SNOWBALL") and weapon ~= GetHashKey("WEAPON_STUNGUN") and weapon ~= GetHashKey("WEAPON_PETROLCAN") and weapon ~= GetHashKey("WEAPON_FIREEXTINGUISHER") then
 				shotAmount = shotAmount + 1
 				if shotAmount > 5 and (CurrentStatusList == nil or CurrentStatusList["gunpowder"] == nil) then
@@ -205,7 +205,7 @@ Citizen.CreateThread(function()
 	while true do 
 		Citizen.Wait(1)
 		if CurrentCasing ~= nil and CurrentCasing ~= 0 then 
-			local pos = GetEntityCoords(GetPlayerPed(-1))
+			local pos = GetEntityCoords(PlayerPedId())
 			if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Casings[CurrentCasing].coords.x, Casings[CurrentCasing].coords.y, Casings[CurrentCasing].coords.z, true) < 1.5 then
 				DrawText3D(Casings[CurrentCasing].coords.x, Casings[CurrentCasing].coords.y, Casings[CurrentCasing].coords.z, "~g~G~w~ - Bullet Sleeve ~b~#"..Casings[CurrentCasing].type)
 				if IsControlJustReleased(0, Keys["G"]) then
@@ -230,7 +230,7 @@ Citizen.CreateThread(function()
 		end
 
 		if CurrentBlooddrop ~= nil and CurrentBlooddrop ~= 0 then 
-			local pos = GetEntityCoords(GetPlayerPed(-1))
+			local pos = GetEntityCoords(PlayerPedId())
 			if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Blooddrops[CurrentBlooddrop].coords.x, Blooddrops[CurrentBlooddrop].coords.y, Blooddrops[CurrentBlooddrop].coords.z, true) < 1.5 then
 				DrawText3D(Blooddrops[CurrentBlooddrop].coords.x, Blooddrops[CurrentBlooddrop].coords.y, Blooddrops[CurrentBlooddrop].coords.z, "~g~G~w~ - Blood ~b~#"..DnaHash(Blooddrops[CurrentBlooddrop].citizenid))
 				if IsControlJustReleased(0, Keys["G"]) then
@@ -254,7 +254,7 @@ Citizen.CreateThread(function()
 		end
 
 		if CurrentFingerprint ~= nil and CurrentFingerprint ~= 0 then 
-			local pos = GetEntityCoords(GetPlayerPed(-1))
+			local pos = GetEntityCoords(PlayerPedId())
 			if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Fingerprints[CurrentFingerprint].coords.x, Fingerprints[CurrentFingerprint].coords.y, Fingerprints[CurrentFingerprint].coords.z, true) < 1.5 then
 				DrawText3D(Fingerprints[CurrentFingerprint].coords.x, Fingerprints[CurrentFingerprint].coords.y, Fingerprints[CurrentFingerprint].coords.z, "~g~G~w~ - Fingerprint ")
 				if IsControlJustReleased(0, Keys["G"]) then
@@ -286,9 +286,9 @@ Citizen.CreateThread(function()
 		Citizen.Wait(10)
 		if isLoggedIn then 
 			if PlayerJob.name == "police" and onDuty then
-				if IsPlayerFreeAiming(PlayerId()) and GetSelectedPedWeapon(GetPlayerPed(-1)) == GetHashKey("WEAPON_FLASHLIGHT") then
+				if IsPlayerFreeAiming(PlayerId()) and GetSelectedPedWeapon(PlayerPedId()) == GetHashKey("WEAPON_FLASHLIGHT") then
 					if next(Casings) ~= nil then
-						local pos = GetEntityCoords(GetPlayerPed(-1), true)
+						local pos = GetEntityCoords(PlayerPedId(), true)
 						for k, v in pairs(Casings) do
 							if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, v.coords.x, v.coords.y, v.coords.z, true) < 12.5 then
 								CasingsNear[k] = v
@@ -303,7 +303,7 @@ Citizen.CreateThread(function()
 						CasingsNear = {}
 					end
 					if next(Blooddrops) ~= nil then
-						local pos = GetEntityCoords(GetPlayerPed(-1), true)
+						local pos = GetEntityCoords(PlayerPedId(), true)
 						for k, v in pairs(Blooddrops) do
 							if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, v.coords.x, v.coords.y, v.coords.z, true) < 12.5 then
 								BlooddropsNear[k] = v
@@ -318,7 +318,7 @@ Citizen.CreateThread(function()
 						BlooddropsNear = {}
 					end
 					if next(Fingerprints) ~= nil then
-						local pos = GetEntityCoords(GetPlayerPed(-1), true)
+						local pos = GetEntityCoords(PlayerPedId(), true)
 						for k, v in pairs(Fingerprints) do
 							if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, v.coords.x, v.coords.y, v.coords.z, true) < 12.5 then
 								FingerprintsNear[k] = v
@@ -346,7 +346,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1)
 		if isLoggedIn and BlooddropsNear ~= nil then
-			if IsPlayerFreeAiming(PlayerId()) and GetSelectedPedWeapon(GetPlayerPed(-1)) == GetHashKey("WEAPON_FLASHLIGHT") then
+			if IsPlayerFreeAiming(PlayerId()) and GetSelectedPedWeapon(PlayerPedId()) == GetHashKey("WEAPON_FLASHLIGHT") then
 				if PlayerJob.name == "police" and onDuty then
 					for k, v in pairs(BlooddropsNear) do
 						if v ~= nil then
@@ -367,7 +367,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1)
 		if isLoggedIn and CasingsNear ~= nil then
-			if IsPlayerFreeAiming(PlayerId()) and GetSelectedPedWeapon(GetPlayerPed(-1)) == GetHashKey("WEAPON_FLASHLIGHT") then
+			if IsPlayerFreeAiming(PlayerId()) and GetSelectedPedWeapon(PlayerPedId()) == GetHashKey("WEAPON_FLASHLIGHT") then
 				if PlayerJob.name == "police" and onDuty then
 					for k, v in pairs(CasingsNear) do
 						if v ~= nil then
@@ -389,7 +389,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1)
 		if isLoggedIn and FingerprintsNear ~= nil then
-			if IsPlayerFreeAiming(PlayerId()) and GetSelectedPedWeapon(GetPlayerPed(-1)) == GetHashKey("WEAPON_FLASHLIGHT") then
+			if IsPlayerFreeAiming(PlayerId()) and GetSelectedPedWeapon(PlayerPedId()) == GetHashKey("WEAPON_FLASHLIGHT") then
 				if PlayerJob.name == "police" and onDuty then
 					for k, v in pairs(FingerprintsNear) do
 						if v ~= nil then
@@ -436,7 +436,7 @@ function IsPedNearby()
         local ped = GetPlayerPed(player)
         table.insert(PlayerPeds, ped)
     end
-    local player = GetPlayerPed(-1)
+    local player = PlayerPedId()
     local coords = GetEntityCoords(player)
 	local closestPed, closestDistance = RLCore.Functions.GetClosestPed(coords, PlayerPeds)
 	if not IsEntityDead(closestPed) and closestDistance < 100.0 then

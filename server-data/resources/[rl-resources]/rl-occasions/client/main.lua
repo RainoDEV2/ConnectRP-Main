@@ -46,7 +46,7 @@ local isConfirming = false
 Citizen.CreateThread(function()
     while true do
         inRange = false
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         if RLCore ~= nil then
             for _,slot in pairs(Config.OccasionSlots) do
@@ -200,7 +200,7 @@ function openSellContract(bool)
     SendNUIMessage({
         action = "sellVehicle",
         pData = RLCore.Functions.GetPlayerData(),
-        plate = GetVehicleNumberPlateText(GetVehiclePedIsUsing(GetPlayerPed(-1)))
+        plate = GetVehicleNumberPlateText(GetVehiclePedIsUsing(PlayerPedId()))
     })
 end
 
@@ -237,7 +237,7 @@ AddEventHandler('rl-occasions:client:BuyFinished', function(model, plate, mods)
     RLCore.Functions.SpawnVehicle(model, function(veh)
         SetVehicleNumberPlateText(veh, plate)
         SetEntityHeading(veh, Config.BuyVehicle.h)
-        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         exports['LegacyFuel']:SetFuel(veh, 100)
         RLCore.Functions.Notify("Bought Vehicle", "success", 2500)
         TriggerEvent("vehiclekeys:client:SetOwner", plate, veh)
@@ -258,7 +258,7 @@ AddEventHandler('rl-occasions:client:ReturnOwnedVehicle', function(vehdata)
     RLCore.Functions.SpawnVehicle(vehdata.model, function(veh)
         SetVehicleNumberPlateText(veh, vehdata.plate)
         SetEntityHeading(veh, Config.BuyVehicle.h)
-        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         exports['LegacyFuel']:SetFuel(veh, 100)
         RLCore.Functions.Notify("Your vehicle is up for sale again..")
         TriggerEvent("vehiclekeys:client:SetOwner", vehdata.plate, veh)
@@ -274,9 +274,9 @@ end)
 RegisterNUICallback('sellVehicle', function(data)
     local vehicleData = {}
     local PlayerData = RLCore.Functions.GetPlayerData()
-    vehicleData.ent = GetVehiclePedIsUsing(GetPlayerPed(-1))
+    vehicleData.ent = GetVehiclePedIsUsing(PlayerPedId())
     vehicleData.model = RLCore.Shared.VehicleModels[GetEntityModel(vehicleData.ent)]["model"]
-    vehicleData.plate = GetVehicleNumberPlateText(GetVehiclePedIsUsing(GetPlayerPed(-1)))
+    vehicleData.plate = GetVehicleNumberPlateText(GetVehiclePedIsUsing(PlayerPedId()))
     vehicleData.mods = RLCore.Functions.GetVehicleProperties(vehicleData.ent)
     vehicleData.desc = data.desc
 
@@ -287,7 +287,7 @@ end)
 function sellVehicleWait(price)
     DoScreenFadeOut(250)
     Citizen.Wait(250)
-    RLCore.Functions.DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
+    RLCore.Functions.DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
     Citizen.Wait(1500)
     DoScreenFadeIn(250)
     RLCore.Functions.Notify('Your vehicle is upto sale for, $'..price..',-', 'success')

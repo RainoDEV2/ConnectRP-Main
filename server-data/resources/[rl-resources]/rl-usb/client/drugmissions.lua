@@ -41,7 +41,7 @@ AddEventHandler("Drugs:startTheEvent",function(num,typey)
 	local loc = Config.MissionPosition[num]
 	local typed = typey
 	Config.MissionPosition[num].InUse = true
-	local playerped = GetPlayerPed(-1)
+	local playerped = PlayerPedId()
 	TriggerServerEvent("Drugs:syncMissionData",Config.MissionPosition)
 	local taken = false
 	local blip = CreateMissionBlip(loc.Location)
@@ -60,11 +60,11 @@ AddEventHandler("Drugs:startTheEvent",function(num,typey)
 	while not taken and not StopMission do
 		Citizen.Wait(10)
 		
-		if GetDistanceBetweenCoords(loc.Location, GetEntityCoords(GetPlayerPed(-1))) < 2.5 then
+		if GetDistanceBetweenCoords(loc.Location, GetEntityCoords(PlayerPedId())) < 2.5 then
 			DrawText3Ds(loc.Location[1], loc.Location[2], loc.Location[3],"Press [E] to steal the drugs")
 			if IsControlJustPressed(1,38) then					
 				Progressbar(15000,"Stealing Drugs")
-				if GetDistanceBetweenCoords(loc.Location, GetEntityCoords(GetPlayerPed(-1))) < 2.5 then
+				if GetDistanceBetweenCoords(loc.Location, GetEntityCoords(PlayerPedId())) < 2.5 then
 					TriggerEvent('RLCore:Notify', "You stole the drugs.") 
 					if typed == 'meth' or typed == "coke" then
 						TriggerServerEvent("Drugs:reward",{ [typed.."brick"] = Config.Reward[typed]})
@@ -141,7 +141,7 @@ end)
 
 RegisterNetEvent("Drugs:UsableItem")
 AddEventHandler("Drugs:UsableItem",function()
-	if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+	if not IsPedInAnyVehicle(PlayerPedId()) then
 		TaskStartScenarioInPlace(PlayerPedId(), 'WORLD_HUMAN_STAND_MOBILE', 0, true)
 		Citizen.Wait(5000)
 	end
@@ -167,7 +167,7 @@ function AtmHackFirstSuccess(success)
 		DisableControls = true
     else
 		TriggerEvent('RLCore:Notify', "You failed to hack the location.", 'error') 
-		ClearPedTasks(GetPlayerPed(-1))
+		ClearPedTasks(PlayerPedId())
 	end
 end
 
@@ -181,7 +181,7 @@ function AtmHackSecondSuccess(success)
     else
 		TriggerEvent('RLCore:Notify', "You failed to hack the location.", 'error') 
 	end
-	ClearPedTasks(GetPlayerPed(-1))
+	ClearPedTasks(PlayerPedId())
 end
 
 function DrawText3Ds(x, y, z, text)

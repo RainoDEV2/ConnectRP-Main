@@ -307,7 +307,7 @@ AddEventHandler('bb-garages:client:releaseVehicle', function(data, typ, name)
                     TriggerEvent("vehiclekeys:client:SetOwner", data.plate, v)
                     TriggerEvent('RLCore:Notify', "Successfully released your vehicle [Slot " .. parking[1] .. ']', "success")
 
-                    while not IsPedInAnyVehicle(GetPlayerPed(-1), false) do Wait(0) end
+                    while not IsPedInAnyVehicle(PlayerPedId(), false) do Wait(0) end
                     local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
                     if GetVehicleNumberPlateText(vehicle) == data.plate then
                         TriggerEvent("vehiclekeys:client:SetOwner", data.plate, vehicle)
@@ -344,7 +344,7 @@ AddEventHandler('bb-garages:client:releaseVehicle', function(data, typ, name)
                 
                 TriggerEvent('RLCore:Notify', "Successfully released your vehicle [Slot " .. parking[1] .. ']', "success")
 
-                while not IsPedInAnyVehicle(GetPlayerPed(-1), false) do Wait(0) end
+                while not IsPedInAnyVehicle(PlayerPedId(), false) do Wait(0) end
                 local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
                 if GetVehicleNumberPlateText(vehicle) == data.plate then
                     TriggerEvent("vehiclekeys:client:SetOwner", data.plate, vehicle)
@@ -368,7 +368,7 @@ AddEventHandler('bb-garages:client:releaseVehicle', function(data, typ, name)
             TriggerEvent('RLCore:Notify', "Successfully released your vehicle", "success")
         end, BBGarages.Config['impounds'][name]['spawn'], true)
 
-        while not IsPedInAnyVehicle(GetPlayerPed(-1), false) do Wait(0) end
+        while not IsPedInAnyVehicle(PlayerPedId(), false) do Wait(0) end
         local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
         print(GetVehicleNumberPlateText(vehicle))
         if GetVehicleNumberPlateText(vehicle) == data.plate then
@@ -392,7 +392,7 @@ AddEventHandler('bb-garages:client:releaseVehicle', function(data, typ, name)
         end, BBGarages.Config['house'][parking[2]]['slots'][parking[1]][1], true)
 
         
-        while not IsPedInAnyVehicle(GetPlayerPed(-1), false) do Wait(0) end
+        while not IsPedInAnyVehicle(PlayerPedId(), false) do Wait(0) end
         local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
         print(GetVehicleNumberPlateText(vehicle))
         if GetVehicleNumberPlateText(vehicle) == data.plate then

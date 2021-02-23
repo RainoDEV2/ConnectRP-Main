@@ -132,14 +132,14 @@ AddEventHandler('police:client:toggleDatabank', function()
             Citizen.Wait(0)
         end
         local tabletModel = GetHashKey("prop_cs_tablet")
-        local bone = GetPedBoneIndex(GetPlayerPed(-1), 60309)
+        local bone = GetPedBoneIndex(PlayerPedId(), 60309)
         RequestModel(tabletModel)
         while not HasModelLoaded(tabletModel) do
             Citizen.Wait(100)
         end
         tabletProp = CreateObject(tabletModel, 1.0, 1.0, 1.0, 1, 1, 0)
-        AttachEntityToEntity(tabletProp, GetPlayerPed(-1), bone, 0.03, 0.002, -0.0, 10.0, 160.0, 0.0, 1, 0, 0, 0, 2, 1)
-        TaskPlayAnim(GetPlayerPed(-1), "amb@code_human_in_bus_passenger_idles@female@tablet@base", "base", 3.0, 3.0, -1, 49, 0, 0, 0, 0)
+        AttachEntityToEntity(tabletProp, PlayerPedId(), bone, 0.03, 0.002, -0.0, 10.0, 160.0, 0.0, 1, 0, 0, 0, 2, 1)
+        TaskPlayAnim(PlayerPedId(), "amb@code_human_in_bus_passenger_idles@female@tablet@base", "base", 3.0, 3.0, -1, 49, 0, 0, 0, 0)
         SetNuiFocus(true, true)
         SendNUIMessage({
             type = "databank",
@@ -147,7 +147,7 @@ AddEventHandler('police:client:toggleDatabank', function()
     else
         DetachEntity(tabletProp, true, true)
         DeleteObject(tabletProp)
-        TaskPlayAnim(GetPlayerPed(-1), "amb@code_human_in_bus_passenger_idles@female@tablet@base", "exit", 3.0, 3.0, -1, 49, 0, 0, 0, 0)
+        TaskPlayAnim(PlayerPedId(), "amb@code_human_in_bus_passenger_idles@female@tablet@base", "exit", 3.0, 3.0, -1, 49, 0, 0, 0, 0)
         SetNuiFocus(false, false)
         SendNUIMessage({
             type = "closedatabank",
@@ -160,7 +160,7 @@ RegisterNUICallback("closeDatabank", function(data, cb)
     DetachEntity(tabletProp, true, true)
     DeleteObject(tabletProp)
     SetNuiFocus(false, false)
-    TaskPlayAnim(GetPlayerPed(-1), "amb@code_human_in_bus_passenger_idles@female@tablet@base", "exit", 3.0, 3.0, -1, 49, 0, 0, 0, 0)
+    TaskPlayAnim(PlayerPedId(), "amb@code_human_in_bus_passenger_idles@female@tablet@base", "exit", 3.0, 3.0, -1, 49, 0, 0, 0, 0)
 end)
 
 RegisterNetEvent('RLCore:Client:OnPlayerUnload')
@@ -174,8 +174,8 @@ AddEventHandler('RLCore:Client:OnPlayerUnload', function()
     handcuffsProp = nil
     isEscorted = false
     onDuty = false
-    ClearPedTasks(GetPlayerPed(-1))
-    DetachEntity(GetPlayerPed(-1), true, false)
+    ClearPedTasks(PlayerPedId())
+    DetachEntity(PlayerPedId(), true, false)
     if DutyBlips ~= nil then 
         for k, v in pairs(DutyBlips) do
             RemoveBlip(v)
@@ -231,7 +231,7 @@ end]]
 
 RegisterNetEvent('police:client:SendPoliceEmergencyAlert')
 AddEventHandler('police:client:SendPoliceEmergencyAlert', function()
-    local pos = GetEntityCoords(GetPlayerPed(-1))
+    local pos = GetEntityCoords(PlayerPedId())
     local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
     local street1 = GetStreetNameFromHashKey(s1)
     local street2 = GetStreetNameFromHashKey(s2)
@@ -538,8 +538,8 @@ AddEventHandler('police:client:SendToJail', function(time)
     DeleteEntity(handcuffsProp)
     handcuffsProp = nil
     isEscorted = false
-    ClearPedTasks(GetPlayerPed(-1))
-    DetachEntity(GetPlayerPed(-1), true, false)
+    ClearPedTasks(PlayerPedId())
+    DetachEntity(PlayerPedId(), true, false)
     TriggerEvent("prison:client:Enter", time)
 end)
 
@@ -558,7 +558,7 @@ function GetClosestPlayer()
     local closestPlayers = RLCore.Functions.GetPlayersFromCoords()
     local closestDistance = -1
     local closestPlayer = -1
-    local coords = GetEntityCoords(GetPlayerPed(-1))
+    local coords = GetEntityCoords(PlayerPedId())
 
     for i=1, #closestPlayers, 1 do
         if closestPlayers[i] ~= PlayerId() then

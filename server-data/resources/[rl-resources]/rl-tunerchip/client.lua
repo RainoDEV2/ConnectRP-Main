@@ -5,7 +5,7 @@ local serverNotes = {}
 
 RegisterNetEvent("tuning:useLaptop")
 AddEventHandler("tuning:useLaptop", function()
-  local ped = GetPlayerPed(-1)
+  local ped = PlayerPedId()
   if not guiEnabled and IsPedInAnyVehicle(ped, false) then
     Progressbar(2000, "Connecting Tuner Laptop")
     TriggerEvent("tuner:open")

@@ -49,16 +49,16 @@ Citizen.CreateThread(function()
 	while true do 
 		Citizen.Wait(1)
 		if closestScrapyard ~= 0 then
-			local pos = GetEntityCoords(GetPlayerPed(-1))
+			local pos = GetEntityCoords(PlayerPedId())
 			if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations[closestScrapyard]["deliver"].x, Config.Locations[closestScrapyard]["deliver"].y, Config.Locations[closestScrapyard]["deliver"].z, true) < 10.0 then
-				if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-					local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
+				if IsPedInAnyVehicle(PlayerPedId()) then
+					local vehicle = GetVehiclePedIsIn(PlayerPedId(), true)
 					if vehicle ~= 0 and vehicle ~= nil then 
 						local vehpos = GetEntityCoords(vehicle)
 						if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 2.5 and not isBusy then
 							DrawText3Ds(vehpos.x, vehpos.y, vehpos.z, "~g~E~w~ - Disassemble vehicle")
 							if IsControlJustReleased(0, Keys["E"]) then
-								if GetPedInVehicleSeat(vehicle, -1) == GetPlayerPed(-1) then
+								if GetPedInVehicleSeat(vehicle, -1) == PlayerPedId() then
 									if IsVehicleValid(GetEntityModel(vehicle)) then 
 										ScrapVehicle(vehicle)
 									else
@@ -73,7 +73,7 @@ Citizen.CreateThread(function()
 				end
 			end
 			if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations[closestScrapyard]["list"].x, Config.Locations[closestScrapyard]["list"].y, Config.Locations[closestScrapyard]["list"].z, true) < 1.5 then
-				if not IsPedInAnyVehicle(GetPlayerPed(-1)) and not emailSend then
+				if not IsPedInAnyVehicle(PlayerPedId()) and not emailSend then
 					DrawText3Ds(Config.Locations[closestScrapyard]["list"].x, Config.Locations[closestScrapyard]["list"].y, Config.Locations[closestScrapyard]["list"].z, "~g~E~w~ - Email vehicle list")
 					if IsControlJustReleased(0, Keys["E"]) then
 						CreateListEmail()
@@ -128,13 +128,13 @@ function ScrapVehicle(vehicle)
 		disableMouse = false,
 		disableCombat = true,
 	}, {}, {}, {}, function() -- Done
-		StopAnimTask(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic", 1.0)
+		StopAnimTask(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic", 1.0)
 		TriggerServerEvent("rl-scrapyard:server:ScrapVehicle", GetVehicleKey(GetEntityModel(vehicle)))
 		SetEntityAsMissionEntity(vehicle, true, true)
 		DeleteVehicle(vehicle)
 		isBusy = false
 	end, function() -- Cancel
-		StopAnimTask(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic", 1.0)
+		StopAnimTask(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic", 1.0)
 		isBusy = false
 		RLCore.Functions.Notify("Canceled..", "error")
 	end)
@@ -165,7 +165,7 @@ function GetVehicleKey(vehicleModel)
 end
 
 function SetClosestScrapyard()
-	local pos = GetEntityCoords(GetPlayerPed(-1), true)
+	local pos = GetEntityCoords(PlayerPedId(), true)
     local current = nil
     local dist = nil
 	for id, scrapyard in pairs(Config.Locations) do
@@ -185,7 +185,7 @@ end
 function ScrapVehicleAnim(time)
     time = (time / 1000)
     loadAnimDict("mp_car_bomb")
-    TaskPlayAnim(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic" ,3.0, 3.0, -1, 16, 0, false, false, false)
+    TaskPlayAnim(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic" ,3.0, 3.0, -1, 16, 0, false, false, false)
     openingDoor = true
     Citizen.CreateThread(function()
         while openingDoor do
@@ -194,7 +194,7 @@ function ScrapVehicleAnim(time)
 			time = time - 2
             if time <= 0 then
                 openingDoor = false
-                StopAnimTask(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic", 1.0)
+                StopAnimTask(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic", 1.0)
             end
         end
     end)

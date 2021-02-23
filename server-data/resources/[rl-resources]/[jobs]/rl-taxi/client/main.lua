@@ -145,7 +145,7 @@ AddEventHandler('rl-taxi:client:DoTaxiNpc', function()
                 Citizen.CreateThread(function()
                     while not NpcData.NpcTaken do
 
-                        local ped = GetPlayerPed(-1)
+                        local ped = PlayerPedId()
                         local pos = GetEntityCoords(ped)
                         local dist = GetDistanceBetweenCoords(pos, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].x, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].y, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].z, true)
 
@@ -168,7 +168,7 @@ AddEventHandler('rl-taxi:client:DoTaxiNpc', function()
 
                                     meterIsOpen = true
                                     meterActive = true
-                                    lastLocation = GetEntityCoords(GetPlayerPed(-1))
+                                    lastLocation = GetEntityCoords(PlayerPedId())
                                     SendNUIMessage({
                                         action = "openMeter",
                                         toggle = true,
@@ -225,7 +225,7 @@ function GetDeliveryLocation()
     Citizen.CreateThread(function()
         while true do
 
-            local ped = GetPlayerPed(-1)
+            local ped = PlayerPedId()
             local pos = GetEntityCoords(ped)
             local dist = GetDistanceBetweenCoords(pos, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].x, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].y, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].z, true)
 
@@ -315,7 +315,7 @@ function calculateFareAmount()
     if meterIsOpen and meterActive then
         start = lastLocation
         if start then
-            current = GetEntityCoords(GetPlayerPed(-1))
+            current = GetEntityCoords(PlayerPedId())
             distance = CalculateTravelDistanceBetweenPoints(start, current)
             meterData['distanceTraveled'] = distance
     
@@ -340,7 +340,7 @@ Citizen.CreateThread(function()
             if isLoggedIn then
 
                 if PlayerData.job.name == "taxi" then
-                    local ped = GetPlayerPed(-1)
+                    local ped = PlayerPedId()
                     local pos = GetEntityCoords(ped)
 
                     local vehDist = GetDistanceBetweenCoords(pos, Config.Locations["vehicle"]["x"], Config.Locations["vehicle"]["y"], Config.Locations["vehicle"]["z"])
@@ -354,8 +354,8 @@ Citizen.CreateThread(function()
                             if whitelistedVehicle() then
                                 DrawText3D(Config.Locations["vehicle"]["x"], Config.Locations["vehicle"]["y"], Config.Locations["vehicle"]["z"] + 0.3, '[E] Vehicle Parking')
                                 if IsControlJustReleased(0, Keys["E"]) then
-                                    if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
-                                        DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
+                                    if IsPedInAnyVehicle(PlayerPedId(), false) then
+                                        DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
                                     end
                                 end
                             else
@@ -382,7 +382,7 @@ end)
 
 RegisterNetEvent('rl-taxi:client:toggleMeter')
 AddEventHandler('rl-taxi:client:toggleMeter', function()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     
     if IsPedInAnyVehicle(ped, false) then
         if whitelistedVehicle() then
@@ -410,7 +410,7 @@ end)
 
 RegisterNetEvent('rl-taxi:client:enableMeter')
 AddEventHandler('rl-taxi:client:enableMeter', function()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
 
     if meterIsOpen then
         SendNUIMessage({
@@ -429,7 +429,7 @@ RegisterNUICallback('enableMeter', function(data)
             action = "resetMeter"
         })
     end
-    lastLocation = GetEntityCoords(GetPlayerPed(-1))
+    lastLocation = GetEntityCoords(PlayerPedId())
 end)
 
 RegisterNetEvent('rl-taxi:client:toggleMuis')
@@ -451,7 +451,7 @@ RegisterNUICallback('hideMouse', function()
 end)
 
 function whitelistedVehicle()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local veh = GetEntityModel(GetVehiclePedIsIn(ped))
     local retval = false
 
@@ -464,7 +464,7 @@ function whitelistedVehicle()
 end
 
 function TaxiGarage()
-    ped = GetPlayerPed(-1);
+    ped = PlayerPedId();
     MenuTitle = "Garage"
     ClearMenu()
     Menu.addButton("Vehicles", "VehicleList", nil)
@@ -472,7 +472,7 @@ function TaxiGarage()
 end
 
 function VehicleList()
-    ped = GetPlayerPed(-1);
+    ped = PlayerPedId();
     MenuTitle = "Vehicles:"
     ClearMenu()
     for k, v in pairs(Config.AllowedVehicles) do
@@ -489,7 +489,7 @@ function TakeVehicle(k)
         SetEntityHeading(veh, Config.Locations["vehicle"]["h"])
         exports['LegacyFuel']:SetFuel(veh, 100)
         closeMenuFull()
-        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
         SetVehicleEngineOn(veh, true, true)
         dutyPlate = GetVehicleNumberPlateText(veh)

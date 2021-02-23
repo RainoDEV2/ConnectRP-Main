@@ -238,7 +238,7 @@ Citizen.CreateThread(function()
 
 				RLCore.Functions.DrawText3D(pumpCoords.x, pumpCoords.y, pumpCoords.z + 1.2, Config.Strings.ExitVehicle)
 			else
-				local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
+				local vehicle = GetVehiclePedIsIn(PlayerPedId(), true)
 				local vehicleCoords = GetEntityCoords(vehicle)
 
 				if DoesEntityExist(vehicle) and GetDistanceBetweenCoords(GetEntityCoords(ped), vehicleCoords) < 2.5 then
@@ -286,7 +286,7 @@ local alarm = true
 
 Citizen.CreateThread(function()
 	while true do
-		vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
+		vehicle = GetVehiclePedIsIn(PlayerPedId(), true)
 		Citizen.Wait(1000)
 		local ped = PlayerPedId()
 		if IsPedInAnyVehicle(ped) then

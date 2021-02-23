@@ -51,7 +51,7 @@ end
 
 RLCore.Functions.SpawnVehicle = function(model, cb, coords, isnetworked)
     local model = (type(model)=="number" and model or GetHashKey(model))
-    local coords = coords ~= nil and coords or RLCore.Functions.GetCoords(GetPlayerPed(-1))
+    local coords = coords ~= nil and coords or RLCore.Functions.GetCoords(PlayerPedId())
     local isnetworked = isnetworked ~= nil and isnetworked or true
 
     RequestModel(model)
@@ -208,7 +208,7 @@ RLCore.Functions.GetClosestPed = function(coords, ignoreList)
     local closestPed      = -1
     
     if coords == nil then
-        coords = GetEntityCoords(GetPlayerPed(-1))
+        coords = GetEntityCoords(PlayerPedId())
     end
 
 	for i=1, #peds, 1 do
@@ -229,7 +229,7 @@ end
 
 RLCore.Functions.GetClosestPlayer = function(coords)
 	if coords == nil then
-        coords = GetEntityCoords(GetPlayerPed(-1))
+        coords = GetEntityCoords(PlayerPedId())
 	end
 	
 	local closestPlayers = RLCore.Functions.GetPlayersFromCoords(coords)
@@ -258,7 +258,7 @@ RLCore.Functions.GetPlayersFromCoords = function(coords, distance)
     local closePlayers = {}
 
     if coords == nil then
-		coords = GetEntityCoords(GetPlayerPed(-1))
+		coords = GetEntityCoords(PlayerPedId())
     end
     if distance == nil then
         distance = 5.0

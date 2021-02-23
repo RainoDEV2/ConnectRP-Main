@@ -24,7 +24,7 @@ Citizen.CreateThread(function()
         [1] = {name = RLCore.Shared.Items["thermite"]["name"], image = RLCore.Shared.Items["thermite"]["image"]},
     }
     while true do
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         local inRange = false
         if RLCore ~= nil then
@@ -106,7 +106,7 @@ end)
 
 RegisterNetEvent('rl-bankrobbery:UseBankcardA')
 AddEventHandler('rl-bankrobbery:UseBankcardA', function()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["paleto"]["coords"]["x"], Config.BigBanks["paleto"]["coords"]["y"],Config.BigBanks["paleto"]["coords"]["z"])
     if math.random(1, 100) <= 85 and not IsWearingHandshoes() then
@@ -128,7 +128,7 @@ AddEventHandler('rl-bankrobbery:UseBankcardA', function()
                             anim = "hotwire",
                             flags = 16,
                         }, {}, {}, function() -- Done
-                            StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                            StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
                             TriggerServerEvent('rl-bankrobbery:server:setBankState', "paleto", true)
                             TriggerServerEvent("RLCore:Server:RemoveItem", "security_card_01", 1)
                             TriggerServerEvent('rl-doorlock:server:updateState', 78, false)
@@ -149,7 +149,7 @@ AddEventHandler('rl-bankrobbery:UseBankcardA', function()
                                 end
                             end
                         end, function() -- Cancel
-                            StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                            StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
                             RLCore.Functions.Notify("Canceled", "error")
                         end)
                     else

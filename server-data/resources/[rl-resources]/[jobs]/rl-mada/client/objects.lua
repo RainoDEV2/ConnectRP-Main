@@ -133,7 +133,7 @@ LayOut = function(stretcherObject)
 		Citizen.Wait(5)
 
 		if not IsEntityPlayingAnim(PlayerPedId(), 'dead', 'dead_a', 1) then
-			TaskPlayAnim(GetPlayerPed(-1), "dead", "dead_a", 1.0, 1.0, -1, 33, 0, 0, 0, 0)
+			TaskPlayAnim(PlayerPedId(), "dead", "dead_a", 1.0, 1.0, -1, 33, 0, 0, 0, 0)
 		end
 
 		if IsDisabledControlJustPressed(0, 47) then
