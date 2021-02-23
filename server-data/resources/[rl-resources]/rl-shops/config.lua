@@ -1230,7 +1230,7 @@ Config.Locations = {
         },
         ["products"] = Config.Products["coffeeshop"],
     },
-    ["coffeelounge"] = {
+    --[[ ["coffeelounge"] = {
         ["label"] = "Coffee Lounge",
         ["type"] = "coffeelounge",
         ["coords"] = {
@@ -1241,7 +1241,7 @@ Config.Locations = {
             }
         },
         ["products"] = Config.Products["coffeelounge"],
-    },
+    }, ]]
     ["ammunation1"] = {
         ["label"] = "Ammunation",
         ["type"] = "weapon",
