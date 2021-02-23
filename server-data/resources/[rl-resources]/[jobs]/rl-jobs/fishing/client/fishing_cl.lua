@@ -1,6 +1,7 @@
 
 RLCore = nil
 cachedData = {}
+isLoggedIn = false
 
 local JobBusy = false
 
@@ -12,10 +13,12 @@ Citizen.CreateThread(function()
 	end
 end)
 
-RegisterCommand( "gg", function()
-    CreateBlips()
-    TriggerEvent('rl-fishing:tryToFish')
-end ) 
+RegisterNetEvent('RLCore:Client:OnPlayerLoaded')
+AddEventHandler('RLCore:Client:OnPlayerLoaded', function()
+    isLoggedIn = true
+    GarbageVehicle = nil
+    IsWorking = false
+end)
 
 
 
@@ -70,6 +73,7 @@ Citizen.CreateThread(function()
 					sleepThread = 5
 					local displayText = not IsEntityDead(cachedData["storeOwner"]) and "Press ~INPUT_CONTEXT~ to sell your fish to the owner." or "The owner is dead, and therefore can not speak."
 					if IsControlJustPressed(0, 38) then
+                        RLCore.Functions.Notify("Yo, Thanks for the Fish!.. But did you know the taco shop is in high demands right now?")
 						DeleteBlips()
 						SellFish()
 					end
@@ -78,6 +82,7 @@ Citizen.CreateThread(function()
 					sleepThread = 5
 					local displayText = not IsEntityDead(cachedData["storeOwner"]) and "Press ~INPUT_CONTEXT~ to start working."
 					if IsControlJustPressed(0, 38) then
+                        RLCore.Functions.Notify("I have given you locations to fish, Enjoy!")
 						JobBusy = true
 						CreateBlips()
 						Citizen.Wait(5000)
@@ -167,7 +172,7 @@ CastBait = function(rodHandle, castLocation)
     local startedBaiting = GetGameTimer()
     local randomBait = math.random(10000, 30000)
 
-    -- DrawBusySpinner("Waiting for a fish that is biting..")
+    --DrawBusySpinner("Waiting for a fish that is biting..")
     RLCore.Functions.Notify("Waiting for a fish to bite...", "success", "10000")
     TriggerServerEvent('RLCore:Server:RemoveItem', "fishingbait", 1)
 	TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["fishingbait"], "remove")
@@ -202,7 +207,7 @@ CastBait = function(rodHandle, castLocation)
 
     if caughtFish then
         TriggerServerEvent("rl-fishing:receiveFish", castLocation, function(received) end)
-        TriggerServerEvent('qb-hud:Server:RelieveStress', 1)
+        TriggerServerEvent('rl-hud:Server:RelieveStress', 1)
     else
         RLCore.Functions.Notify("The fish got loose.", "error")
     end
@@ -474,4 +479,74 @@ function HasFishingBait()
     end, "fishingbait")
     Wait(1000)
     return rtval
+end
+
+
+---Vehicle spawn
+
+Citizen.CreateThread(function()
+    while true do
+        local ped = PlayerPedId()
+        local pos = GetEntityCoords(ped)
+        local spawnplek = "Fishing Boat Storage"
+        local InVehicle = IsPedInAnyVehicle(ped, false)
+        local distance = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, -1802.503, -1228.861, 1.6110491, true)
+        
+        --if isLoggedIn then
+            if distance < 10.0 then
+                DrawMarker(2, -1802.619, -1228.801, 1.6108186, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 233, 55, 22, 222, false, false, false, true, false, false, false)
+                if distance < 15.0 then
+                    if InVehicle then
+                        DrawText3D(-1800.22,-1231.369, 1.7745625, "[E] Store Rental Boat")
+                        DrawMarker(2, -1800.22,-1231.369, 1.7745625, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 233, 55, 22, 222, false, false, false, true, false, false, false)
+                        if IsControlJustReleased(0, 38) then
+                            RLCore.Functions.TriggerCallback('rl-garbagejob:server:CheckBail', function(DidBail)
+                                if DidBail then
+                                    BringBackCar()
+                                    RLCore.Functions.Notify("You have received a $1000 deposit back!") 
+                                else
+                                    RLCore.Functions.Notify("You have not paid a deposit on this vehicle ..")
+                                end
+                            end)
+                        end
+                    else
+                        if not IsWorking then
+                            DrawText3D(-1802.503, -1228.861, 1.6110491, "[E] Rental Boat")
+                            if IsControlJustReleased(0, 38) then
+                                RLCore.Functions.TriggerCallback('rl-garbagejob:server:HasMoney', function(HasMoney)
+                                    if HasMoney then
+                                        
+                                        local coords = {x = -1798.792, y = -1231.33, z = 1.6819111, h = 327.64468}
+                                        RLCore.Functions.SpawnVehicle("dinghy", function(veh) 
+                                            GarbageVehicle = veh
+                                            SetVehicleNumberPlateText(veh, "FISH"..tostring(math.random(1000, 9999)))
+                                            SetEntityHeading(veh, coords.h)
+                                            exports['LegacyFuel']:SetFuel(veh, 100)
+                                            TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+                                            SetEntityAsMissionEntity(veh, true, true)
+                                            TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
+                                            SetVehicleEngineOn(veh, true, true)
+                                            RLCore.Functions.Notify("You have paid $1000!")
+                                        end, coords, true)
+                                    else
+                                        RLCore.Functions.Notify("You do not have enough money for the deposit .. Deposit costs are $ 1000")
+                                    end
+                                end)
+                            end
+                        else
+                            DrawText3D(Config.Locations["vehicle"].coords.x, Config.Locations["vehicle"].coords.y, Config.Locations["vehicle"].coords.z, "Return Boat")
+                        end
+                    end
+                end
+            end
+        --end
+
+        Citizen.Wait(1)
+    end
+end)
+
+function BringBackCar()
+    local veh = GetVehiclePedIsIn(PlayerPedId())
+    DeleteVehicle(veh)
+    GarbageVehicle = nil
 end

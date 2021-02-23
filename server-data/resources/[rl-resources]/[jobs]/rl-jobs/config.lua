@@ -618,8 +618,8 @@ Config.FishingRestaurant = {
     },
     ["ped"] = {
         ["model"] = 0xED0CE4C6,
-        ["position"] = vector3(-1038.4545898438, -1397.0551757813, 5.553192615509),
-        ["heading"] = 75.0
+        ["position"] = vector3(-1814.4, -1212.923, 13.017529),
+        ["heading"] = 44.0
     }
 }
 

@@ -30,6 +30,7 @@
   {title="Tattoo Shop", colour=23, id=75, x = -289.18, y = 6200.17, z = 31.47}, -- Tattoo Shop 6
   {title="Real Estate Agency", colour=4, id=52, x = -117.16, y = -606.02, z = 36.28}, -- Real Estate Agency
   {title="Vanilla Unicorn", colour=8, id=121, x = 128.70, y = -1298.43, z = 29.23}, -- Vanilla Unicorn
+  {title="Boat Rentals", colour=3, id=427, x = -1802.495, y = -1228.969, z = 29.23}, -- Boat Rentals
 }
 
 Citizen.CreateThread(function()
