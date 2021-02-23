@@ -326,7 +326,7 @@ RegisterNetEvent('tc-armour:update')
 AddEventHandler('tc-armour:update', function(playerId)
     local xPlayer = RLCore.Functions.GetPlayer(playerId)
     while not xPlayer do
-        xPlayer = RLCore.Functions.GetPlayer(src)
+        xPlayer = RLCore.Functions.GetPlayer(playerId)
         Wait(0)
 	end
 	
