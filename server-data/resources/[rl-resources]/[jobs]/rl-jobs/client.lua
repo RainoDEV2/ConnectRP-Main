@@ -88,27 +88,84 @@ Citizen.CreateThread(function()
 					TriggerServerEvent("bb-bossmenu:server:openMenu")
 					Wait(2000)
 				end
-			end
+			end 
 
 			if dst_cooking < 1.5 and not isInRun then
 				DrawText3D(job['locations'].cook.x, job['locations'].cook.y, job['locations'].cook.z, job['settings'].cooking)
 				if not IsPedInAnyVehicle(playerPed) and IsControlJustPressed(0, 38) then
-					Wait(10)
-					TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BBQ", 0, true)
 
-					local skillbarAmount, done = math.random(1, 4), true
-					for counter = 1, skillbarAmount do
-						local finished = exports["rl-taskbarskill"]:taskBar(math.random(1600, 2500), math.random(5, 15))
-						if finished ~= 100 then
-        	    			done = false
-						end
+					if job.name == "taco" then
+						RLCore.Functions.TriggerCallback('rl-fishing:GetItemData', function(count)
+							print(count)
+							if count ~= nil then
+								if count then
+									Wait(10)
+									TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BBQ", 0, true)
+									local skillbarAmount, done = math.random(1, 4), true
+									for counter = 1, skillbarAmount do
+										local finished = exports["rl-taskbarskill"]:taskBar(math.random(1600, 2500), math.random(5, 15))
+										if finished ~= 100 then
+											done = false
+										end
+									end
+									Wait(7000)
+									ClearPedTasks(playerPed)
+									if done == true then
+										TriggerServerEvent('rl-jobs:server:removeItem', "fish", 1)
+										Citizen.Wait(500)
+										TriggerServerEvent('rl-jobs:server:addItem', job['settings'].food_item, 2)
+										RLCore.Functions.Notify(job['settings'].made_items, "success")
+									end
+								else
+									RLCore.Functions.Notify("You need fish to make tacos! 1x Fish = 2x Tacos", "error")
+									return
+								end
+							end
+						end, "fish")
 					end
-
-					Wait(7000)
-					ClearPedTasks(playerPed)
-					if done == true then
-						TriggerServerEvent('rl-jobs:server:addItem', job['settings'].food_item, 2)
-						RLCore.Functions.Notify(job['settings'].made_items, "success")
+					if job.name == "burgershot" then
+						RLCore.Functions.TriggerCallback('rl-fishing:GetItemData', function(count)
+							print(count)
+							if count ~= nil then
+								if count then
+									Wait(10)
+									TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BBQ", 0, true)
+									local skillbarAmount, done = math.random(1, 4), true
+									for counter = 1, skillbarAmount do
+										local finished = exports["rl-taskbarskill"]:taskBar(math.random(1600, 2500), math.random(5, 15))
+										if finished ~= 100 then
+											done = false
+										end
+									end
+									Wait(7000)
+									ClearPedTasks(playerPed)
+									if done == true then
+										TriggerServerEvent('rl-jobs:server:addItem', job['settings'].food_item, 2)
+										RLCore.Functions.Notify(job['settings'].made_items, "success")
+									end
+								else
+									RLCore.Functions.Notify("You dont have any fish! GET MEAT BRUH", "error")
+									return
+								end
+							end
+						end, "meat")
+					end
+					if job.name == "coffee" then
+						Wait(10)
+						TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BBQ", 0, true)
+						local skillbarAmount, done = math.random(1, 4), true
+						for counter = 1, skillbarAmount do
+							local finished = exports["rl-taskbarskill"]:taskBar(math.random(1600, 2500), math.random(5, 15))
+							if finished ~= 100 then
+								done = false
+							end
+						end
+						Wait(7000)
+						ClearPedTasks(playerPed)
+						if done == true then
+							TriggerServerEvent('rl-jobs:server:addItem', job['settings'].food_item, 2)
+							RLCore.Functions.Notify(job['settings'].made_items, "success")
+						end	
 					end
 				end
             end
