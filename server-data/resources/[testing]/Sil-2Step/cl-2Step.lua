@@ -253,7 +253,7 @@ end)
 
 
 
-RegisterNetEvent("c_eff_flames")
+--[[ RegisterNetEvent("c_eff_flames")
 AddEventHandler("c_eff_flames", function(c_veh, mode)
 	for ma,bite in pairs(p_flame_location) do
 		local pedVehicle = GetVehiclePedIsIn(PlayerPedId())
@@ -272,7 +272,7 @@ AddEventHandler("c_eff_flames", function(c_veh, mode)
 			StopParticleFxLooped(createdPart2, 1)
 		end	
 	end
-end)
+end) ]]
 
 RegisterNetEvent("c_eff_flames2")
 AddEventHandler("c_eff_flames2", function(c_veh, mode)
@@ -292,6 +292,24 @@ AddEventHandler("c_eff_flames2", function(c_veh, mode)
 			createdPart = StartNetworkedParticleFxNonLoopedAtCoord(a_flame_particle2, myExhaustBonePos.x, myExhaustBonePos.y, myExhaustBonePos.z, 0.0, GetEntityPitch(pedVehicle), GetEntityHeading(pedVehicle) -90,p_flame_size2,0.0,  0.0,  0.0, 0)
 			StopParticleFxLooped(createdPart, 1)
 		end	
+	end
+end)
+
+p_flame_location = {
+	"exhaust",
+	"exhaust_2",
+	"exhaust_3",
+	"exhaust_4"	
+}
+p_flame_particle = "veh_backfire"
+p_flame_particle_asset = "core" 
+p_flame_size = 2.4
+RegisterNetEvent("c_eff_flames")
+AddEventHandler("c_eff_flames", function(c_veh)
+	for _,bones in pairs(p_flame_location) do
+		UseParticleFxAssetNextCall(p_flame_particle_asset)
+		createdPart = StartParticleFxLoopedOnEntityBone(p_flame_particle, NetToVeh(c_veh), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, GetEntityBoneIndexByName(NetToVeh(c_veh), bones), p_flame_size, 0.0, 0.0, 0.0)
+		StopParticleFxLooped(createdPart, 1)
 	end
 end)
 
@@ -321,7 +339,7 @@ Citizen.CreateThread(function()
 
 						if GetPedInVehicleSeat(pedVehicle, -1) == ped then
 							local vehicleModel = GetEntityModel(pedVehicle)
-							local BackFireDelay = (math.random(100, 500))
+							local BackFireDelay = (math.random(50, 150))
 
 							if RPM > 0.9 and GetEntitySpeed(pedVehicle) < 2.0 then
 
@@ -338,9 +356,11 @@ Citizen.CreateThread(function()
 								DrawHudText("danger ⚠", {255, 0, 0,255},0.93,0.90,0.4,0.4,9)
 								TriggerServerEvent("eff_flames2", VehToNet(pedVehicle))
 								if distance >= 0.1 and distance < 25 then 
-									TriggerServerEvent("InteractSound_SV:PlayWithinDistance",25.0, tostring(math.random(1,6)), LEVOLUME)
+									--TriggerServerEvent("InteractSound_SV:PlayWithinDistance",25.0, tostring(1), LEVOLUME)
+									AddExplosion(vehiclePos.x, vehiclePos.y, vehiclePos.z, 61, 0.0, true, true, 0.0, true)
 								else
-									TriggerServerEvent("InteractSound_SV:PlayWithinDistance",25.0, tostring(math.random(1,6)), randomFloat(0.01,0.5))
+									--TriggerServerEvent("InteractSound_SV:PlayWithinDistance",25.0, tostring(1), randomFloat(0.1,0.2))
+									AddExplosion(vehiclePos.x, vehiclePos.y, vehiclePos.z, 61, 0.0, true, true, 0.0, true)
 								end	
 								SetVehicleTurboPressure(pedVehicle, 25)
 								activated = true
@@ -363,7 +383,7 @@ Citizen.CreateThread(function()
 							local pedPos = GetEntityCoords(ped)
 							local vehiclePos = GetEntityCoords(pedVehicle)
 							local RPM = GetVehicleCurrentRpm(pedVehicle)
-							local AntiLagDelay = (math.random(100, 150))
+							local AntiLagDelay = (math.random(100, 1000))
 							if GetPedInVehicleSeat(pedVehicle, -1) == ped then
 								if RPM > 0.75 then
 									local closestPlayer, distance = RLCore.Functions.GetClosestPlayer()  
@@ -373,9 +393,11 @@ Citizen.CreateThread(function()
 									TriggerServerEvent("eff_flames", VehToNet(pedVehicle))
 
 									if distance >= 0.1 and distance < 25 then 
-										TriggerServerEvent("InteractSound_SV:PlayWithinDistance",25.0, tostring(math.random(1,6)), LEVOLUME)
+										--TriggerServerEvent("InteractSound_SV:PlayWithinDistance",25.0, tostring(1), LEVOLUME)
+										AddExplosion(vehiclePos.x, vehiclePos.y, vehiclePos.z, 61, 0.0, true, true, 0.0, true)
 									else
-										TriggerServerEvent("InteractSound_SV:PlayWithinDistance",25.0, tostring(math.random(1,6)), randomFloat(0.01,0.5))
+										--TriggerServerEvent("InteractSound_SV:PlayWithinDistance",25.0, tostring(1), randomFloat(0.1,0.2))
+										AddExplosion(vehiclePos.x, vehiclePos.y, vehiclePos.z, 61, 0.0, true, true, 0.0, true)
 									end	
 									
 									SetVehicleTurboPressure(pedVehicle, 25)
