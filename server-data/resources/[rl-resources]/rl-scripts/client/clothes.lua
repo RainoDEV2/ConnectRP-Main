@@ -179,7 +179,7 @@ RegisterCommand('p0', function(source)
     if GetEntityModel(PlayerPedId()) == GetHashKey("mp_m_freemode_01") then
         SetPedComponentVariation(PlayerPedId(), 4, 52, 0, 0)
     else
-        SetPedComponentVariation(PlayerPedId(), 4, 52, 0, 0)
+        SetPedComponentVariation(PlayerPedId(), 4, 15, 0, 0)
     end
 
     ClearPedTasks(PlayerPedId())
@@ -210,7 +210,7 @@ RegisterCommand('s0', function(source)
     if GetEntityModel(PlayerPedId()) == GetHashKey("mp_m_freemode_01") then
         SetPedComponentVariation(PlayerPedId(), 6, 45, 0, 0)
     else
-        SetPedComponentVariation(PlayerPedId(), 6, 45, 0, 0)
+        SetPedComponentVariation(PlayerPedId(), 6, 46, 0, 0)
     end
 
     ClearPedTasks(PlayerPedId())
