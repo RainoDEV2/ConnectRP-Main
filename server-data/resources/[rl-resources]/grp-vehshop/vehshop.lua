@@ -504,6 +504,7 @@ local vehshopOwner = {
 				{name = "Gresley", costs = 25000, description = {}, model = "gresley"},
 				{name = "Huntley S", costs = 145000, description = {}, model = "huntley"},
 				{name = "Landstalker", costs = 40000, description = {}, model = "landstalker"},
+				{name = "Landstalker XL", costs = 40000, description = {}, model = "landstalker2"},
 				{name = "Mesa", costs = 12000, description = {}, model = "mesa"},
 				{name = "Patriot", costs = 40000, description = {}, model = "patriot"},
 				{name = "Radius", costs = 16000, description = {}, model = "radi"},
