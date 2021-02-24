@@ -189,6 +189,14 @@ Config.Products = {
             type = "item",
             slot = 7,
         },
+        [8] = {
+            name = "twinkie",
+            price = 5,
+            amount = 15,
+            info = {},
+            type = "item",
+            slot = 8,
+        },
     },
 }
 

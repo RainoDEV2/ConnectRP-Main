@@ -34,7 +34,7 @@ function AttachPropAndPlayAnimation(dictionary,animation,typeAnim,timer,message,
         TriggerEvent("attachItem", "donut")
     elseif itemid == "beer" or itemid == "vodka" or itemid == "whiskey" or itemid == "glassbeer" or itemid == "champagne" or itemid == "glasschampagne" or itemid == "tequila" or itemid == "tequilashot" or itemid == "whitewine" or itemid == "pinacolada" then
         TriggerEvent("attachItem", itemid)
-    elseif itemid == "taco" or itemid == "fishtaco" then
+    elseif itemid == "taco" or itemid == "fishtaco" or itemid == "twinkie" then
         TriggerEvent("attachItem", "taco")
     elseif itemid == "frappuccino" or itemid == "coffee" or itemid == "latte" or itemid == "capuchino" then
         TriggerEvent("attachItem", "coffee")
@@ -93,7 +93,7 @@ AddEventHandler('bb-food:useFood', function(itemid)
         AttachPropAndPlayAnimation("mp_player_inteat@burger", "mp_player_int_eat_burger", 49,6000, "Eating", "consumables:client:EatS", true,itemid,playerVeh)
     end
 	
-    if (itemid == "wings" or itemid == "donut" or itemid == "fries" or itemid == "frenchtoast" or itemid == "waffle" or itemid == "twerks_candy" or itemid == "snikkel_candy") then
+    if (itemid == "wings" or itemid == "donut" or itemid == "fries" or itemid == "frenchtoast" or itemid == "waffle" or itemid == "twerks_candy" or itemid == "snikkel_candy" or itemid == "twinkie") then
         AttachPropAndPlayAnimation("mp_player_inteat@burger", "mp_player_int_eat_burger", 49,6000,"Eating", "consumables:client:EatS", true,itemid,playerVeh)
     end
 	
@@ -128,7 +128,11 @@ AddEventHandler('bb-food:useFood', function(itemid)
     end
 
     if (itemid == "icecream" or itemid == "mshake") then
-        TaskItem("mp_player_inteat@burger", "mp_player_int_eat_burger", 49,6000,"Drink", "consumables:client:EatS", true,itemid,playerVeh)
+        TaskItem("mp_player_inteat@burger", "mp_player_int_eat_burger", 49,6000,"Eating", "consumables:client:EatS", true,itemid,playerVeh)
+	end
+
+    if (itemid == "fudge") then
+        TaskItem("mp_player_inteat@burger", "mp_player_int_eat_burger", 49,6000,"Eating", "consumables:client:EatS", true,itemid,playerVeh)
 	end
 end)
 
@@ -165,6 +169,7 @@ local Consumeables = {
 	["meatfree"] = math.random(20, 40),
 	["fowlburger"] = math.random(20, 40),
     ["icecream"] = math.random(20, 25),
+    ["fudge"] = math.random(20, 25),
     ["mshake"] = math.random(20, 30),
 	["sandwich"] = math.random(20, 30),
     ["water_bottle"] = math.random(23, 46),
@@ -172,6 +177,7 @@ local Consumeables = {
 	["burger"] = math.random(25, 50),
     ["twerks_candy"] = math.random(5, 15),
     ["snikkel_candy"] = math.random(5, 15),
+    ["twinkie"] = math.random(20, 25),
     ["champagne"] = math.random(20, 45),
     ["whitewine"] = math.random(20, 40),
     ["whiskey"] = math.random(10, 25),

@@ -102,6 +102,10 @@ RLCore.Functions.CreateUseableItem("icecream", function(source, item)
     TriggerClientEvent("bb-food:useFood", source, "icecream")
 end)
 
+RLCore.Functions.CreateUseableItem("fudge", function(source, item)
+    TriggerClientEvent("bb-food:useFood", source, "fudge")
+end)
+
 RLCore.Functions.CreateUseableItem("spirte", function(source, item)
     TriggerClientEvent("bb-food:useFood", source, "spirte")
 end)
@@ -152,6 +156,10 @@ end)
 
 RLCore.Functions.CreateUseableItem("snikkel_candy", function(source, item)
     TriggerClientEvent("bb-food:useFood", source, "snikkel_candy")
+end)
+
+RLCore.Functions.CreateUseableItem("twinkie", function(source, item)
+    TriggerClientEvent("bb-food:useFood", source, "twinkie")
 end)
 
 RLCore.Functions.CreateUseableItem("whiskey", function(source, item)

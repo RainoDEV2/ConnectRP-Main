@@ -71,6 +71,14 @@ Config.VendingFoodItems = {
         type = "item",
         slot = 2,
     },
+    [3] = {
+        name = "twinkie",
+        price = 5,
+        amount = 15,
+        info = {},
+        type = "item",
+        slot = 3,
+    },
 }
 
 Config.VendingObjects = {

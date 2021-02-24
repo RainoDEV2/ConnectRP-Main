@@ -495,6 +495,32 @@ RLShared.Items = {
         ["combinable"] = nil,
         ["description"] = "Dont lick your fingers"
 	},
+
+	["fudge"] = {
+        ["name"] = "fudge",
+        ["label"] = "Fudge Bar",
+        ["weight"] = 100,
+        ["type"] = "item",
+        ["image"] = "fudge.png",
+        ["unique"] = true,
+        ["useable"] = true,
+        ["shouldClose"] = true,
+        ["combinable"] = nil,
+        ["description"] = "Dont lick your fingers"
+	},
+
+	["twinkie"] = {
+        ["name"] = "twinkie",
+        ["label"] = "Twinkie",
+        ["weight"] = 100,
+        ["type"] = "item",
+        ["image"] = "twinkie.png",
+        ["unique"] = true,
+        ["useable"] = true,
+        ["shouldClose"] = true,
+        ["combinable"] = nil,
+        ["description"] = "Cream Filled!"
+	},
 }
 
 -- // HASH WEAPON ITEMS, NEED SOMETIMES TO GET INFO FOR CLIENT

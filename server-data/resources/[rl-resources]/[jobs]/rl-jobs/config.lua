@@ -400,6 +400,14 @@ Config.Jobs = {
                 info = {},
                 type = "item",
                 slot = 11,
+            },
+            [12] = {
+                name = "fudge",
+                price = 3,
+                amount = 5,
+                info = {},
+                type = "item",
+                slot = 12,
             }
         },
 

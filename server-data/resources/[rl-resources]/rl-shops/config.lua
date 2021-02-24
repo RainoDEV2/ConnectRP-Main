@@ -142,6 +142,14 @@ Config.Products = {
             type = "item",
             slot = 16,
         },
+        [17] = {
+            name = "twinkie",
+            price = 5,
+            amount = 15,
+            info = {},
+            type = "item",
+            slot = 17,
+        },
     },
     ["coffeelounge"] = {
         [1] = {
@@ -337,6 +345,14 @@ Config.Products = {
             info = {},
             type = "item",
             slot = 7,
+        },
+        [8] = {
+            name = "twinkie",
+            price = 5,
+            amount = 15,
+            info = {},
+            type = "item",
+            slot = 8,
         },
     },
     ["casinohb"] = {
@@ -729,6 +745,14 @@ Config.Products = {
             info = {},
             type = "item",
             slot = 29,
+        },
+        [30] = {
+            name = "twinkie",
+            price = 5,
+            amount = 15,
+            info = {},
+            type = "item",
+            slot = 30,
         },
     },
     ["coffeeshop"] = {
