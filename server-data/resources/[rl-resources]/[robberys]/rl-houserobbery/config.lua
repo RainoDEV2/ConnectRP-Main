@@ -12,9 +12,9 @@ Config.RobbableItems = {
     [7] =  {chance = 3, id = 'watch', name = 'Watch', quantity = 2}, 
     [8] =  {chance = 4, id = '10kgoldchain', name = '10K Gold Chain', quantity = 4},
     [9] =  {chance = 15, id = 'electronickit', name = 'Electronic Kit', quantity = 1},
-    [10] = {chance = 2, id = 'joint', name = 'Joint', quantity = 5},
-    [11] = {chance = 3, id = 'oxy', name = 'Oxy 100MG', quantity = 5},
-    [12] = {chance = 2, id = 'certificate', name = 'Certificate', quantity = 1},
+    --[10] = {chance = 2, id = 'joint', name = 'Joint', quantity = 5},
+    [10] = {chance = 3, id = 'oxy', name = 'Oxy 100MG', quantity = 5},
+    [11] = {chance = 2, id = 'certificate', name = 'Certificate', quantity = 1},
 }
 
 Config.RobbableLocations = {
