@@ -866,15 +866,16 @@ Config.Products = {
 }
 
 Config.Locations = {
-    --[[["casinohb"] = {
+    --just chips
+    ["casinohb"] = {
     
         ["label"] = "Casino",
         ["type"] = "lanone",
         ["coords"] = {
             [1] = {
-                ["x"] = 961.31707763672, 
-                ["y"] = 26.48101234436, 
-                ["z"] = 76.991325378418
+                ["x"] = 1116.4914, 
+                ["y"] = 221.88143, 
+                ["z"] = -49.6401
             },
             [2] = {
                 ["x"] = 958.93334960938, 
@@ -884,14 +885,15 @@ Config.Locations = {
         },
         ["products"] = Config.Products["casinohb"],
     },
+    --fullshop
     ["casino"] = {
         ["label"] = "Casino Shop",
         ["type"] = "lanone",
         ["coords"] = {
             [1] = {
-                ["x"] = 970.96075439453, 
-                ["y"] = 49.544052124023, 
-                ["z"] = 74.991333007813
+                ["x"] = 1108.3914, 
+                ["y"] = 208.55513, 
+                ["z"] = -49.6401
             },
             [2] = {
                 ["x"] = 958.13330078125, 
@@ -900,7 +902,7 @@ Config.Locations = {
             }
         },
         ["products"] = Config.Products["casino"],
-    },]]--
+    },
     ["gsgasoline"] = {
         ["label"] = "Grove Street Gasoline",
         ["type"] = "gsgasoline",

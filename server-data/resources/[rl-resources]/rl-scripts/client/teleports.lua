@@ -16,10 +16,12 @@ Teleports.Locations = {
         [1] = {x = 344.26708, y = -586.2727, z = 28.796852, h = 70.23883, r = 1.0},
         [2] = {x = 330.36489, y = -601.2376, z = 43.284057, h = 258.54037, r = 1.0},
 	},
+    --casino
     [5] = {
         [1] = {x = 935.81481, y = 46.784881, z = 81.095787, h = 70.23883, r = 1.0}, --IN
         [2] = {x = 1089.5623, y = 206.28173, z = -48.99974, h = 258.54037, r = 1.0}, --OUT
 	},
+    --
     [6] = {
         [1] = {x = -1071.132, y = -2207.551, z = 9.0713386, h = 315.42062, r = 1.0}, --IN
         [2] = {x = 894.82171, y = -3245.875, z = -98.25811, h = 85.518112, r = 1.0}, --OUT
@@ -73,10 +75,15 @@ Citizen.CreateThread(function()
                     if dist < 1 then
                         DrawText3Ds(v.x, v.y, v.z, '[E] to Enter/Exit')
                         if IsControlJustReleased(0, 51) then
-                            if k == 1 then
-                                SetEntityCoords(ped, Teleports.Locations[loc][2].x, Teleports.Locations[loc][2].y, Teleports.Locations[loc][2].z)
-                            elseif k == 2 then
-                                SetEntityCoords(ped, Teleports.Locations[loc][1].x, Teleports.Locations[loc][1].y, Teleports.Locations[loc][1].z)
+
+                            if v.x == 935.81481 then
+                                TriggerEvent("casino:client:enter")
+                            else
+                                if k == 1 then
+                                    SetEntityCoords(ped, Teleports.Locations[loc][2].x, Teleports.Locations[loc][2].y, Teleports.Locations[loc][2].z)
+                                elseif k == 2 then
+                                    SetEntityCoords(ped, Teleports.Locations[loc][1].x, Teleports.Locations[loc][1].y, Teleports.Locations[loc][1].z)
+                                end 
                             end
                             ResetTeleport()
                         end

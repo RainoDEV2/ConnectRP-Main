@@ -490,15 +490,14 @@ function CreatePeds()
 			repeat Wait(0) until HasModelLoaded(model)
 		end
 		
+		 
 		local dealer = CreatePed(4, model, v.coords.x, v.coords.y, v.coords.z, v.coords.w, false, true)
-		-- local dealer = ClonePed(PlayerPedId(), 0.0, false, false)
+
 		SetEntityCanBeDamaged(dealer, false)
 		SetBlockingOfNonTemporaryEvents(dealer, true)
 		SetPedCanRagdollFromPlayerImpact(dealer, false)
 		
-		-- SetPedVoiceGroup(dealer, `S_F_Y_Casino_01_ASIAN_02`)
-		
-		-- SetPedDefaultComponentVariation(dealer)
+
 		
 		SetPedResetFlag(dealer, 249, true)
 		SetPedConfigFlag(dealer, 185, true)
@@ -507,25 +506,12 @@ function CreatePeds()
 		
 		SetDealerOutfit(dealer, i+6)
 		
-		-- NetworkSetEntityInvisibleToNetwork(dealer, true)
-		
-		-- N_0x352e2b5cf420bf3b(dealer, true)
-		-- N_0x2f3c3d9f50681de4(dealer, true)
-		
-		-- SetNetworkIdCanMigrate(PedToNet(dealer), false)
-		
-		-- local scene = NetworkCreateSynchronisedScene(v.coords.x, v.coords.y, v.coords.z, vector3(0.0, 0.0, v.coords.w), 2, true, true, 1065353216, 0, 1065353216)
-		-- NetworkAddPedToSynchronisedScene(dealer, scene, "anim_casino_b@amb@casino@games@shared@dealer@", "idle", 2.0, -2.0, 13, 16, 1148846080, 0)
-		-- NetworkStartSynchronisedScene(scene)
+
 		
 		local scene = CreateSynchronizedScene(v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, v.coords.w, 2)
 		TaskSynchronizedScene(dealer, scene, "anim_casino_b@amb@casino@games@shared@dealer@", "idle", 1000.0, -8.0, 4, 1, 1148846080, 0)
 		
-		-- TaskLookAtEntity(dealer, PlayerPedId(), -1, 2048, 3)
-		
-		-- Wait(1500)
-		
-		-- TaskPlayAnim(dealer, anim, "idle", 4.0, -1.0, -1, 0, -1.0, true, true, true)
+
 		
 		spawnedPeds[i] = dealer
 	end
@@ -1414,7 +1400,7 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-	end
+	end 
 end)
 
 function isNight()
