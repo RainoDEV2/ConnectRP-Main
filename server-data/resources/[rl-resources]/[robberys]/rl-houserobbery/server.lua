@@ -70,6 +70,7 @@ AddEventHandler('houseRobberies:searchItem', function()
       xPlayer.Functions.AddItem("weed_ak47_seed", 1) 
       TriggerClientEvent('inventory:client:ItemBox', source, "weed_ak47_seed"], "add")
     end
+  end
 
 end)
 
