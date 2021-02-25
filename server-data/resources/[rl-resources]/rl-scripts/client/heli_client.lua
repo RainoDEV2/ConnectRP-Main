@@ -55,20 +55,20 @@ Citizen.CreateThread(function()
 			
 			if IsHeliHighEnough(heli) then
 				if IsControlJustPressed(0, toggle_helicam) then -- Toggle Helicam
-					PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+					PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 					helicam = true
 				end
 				
 				if IsControlJustPressed(0, toggle_rappel) then -- Initiate rappel
 					Citizen.Trace("try to rappel")
 					if GetPedInVehicleSeat(heli, 1) == lPed or GetPedInVehicleSeat(heli, 2) == lPed then
-						PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+						PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 						TaskRappelFromHeli(PlayerPedId(), 1)
 					else
 						SetNotificationTextEntry( "STRING" )
 						AddTextComponentString("~r~Can't rappel from this seat")
 						DrawNotification(false, false )
-						PlaySoundFrontend(-1, "5_Second_Timer", "DLC_HEISTS_GENERAL_FRONTEND_SOUNDS", false) 
+						PlaySoundFrontend(lPed, "5_Second_Timer", "DLC_HEISTS_GENERAL_FRONTEND_SOUNDS", false) 
 					end
 				end
 			end
@@ -83,7 +83,7 @@ Citizen.CreateThread(function()
 							pause_Tspotlight = false
 							TriggerServerEvent("heli:pause.tracking.spotlight", pause_Tspotlight)
 						end
-						PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+						PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 					else
 						if Fspotlight_state then
 							Fspotlight_state = false	
@@ -95,7 +95,7 @@ Citizen.CreateThread(function()
 						pause_Tspotlight = false
 						tracking_spotlight = true
 						TriggerServerEvent("heli:tracking.spotlight", target_netID, target_plate, targetposx, targetposy, targetposz)
-						PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+						PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 					end				
 				else
 					if tracking_spotlight then
@@ -105,7 +105,7 @@ Citizen.CreateThread(function()
 					end
 					Fspotlight_state = not Fspotlight_state
 					TriggerServerEvent("heli:forward.spotlight", Fspotlight_state)
-					PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+					PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 				end
 			end
 
@@ -126,7 +126,7 @@ Citizen.CreateThread(function()
 					tracking_spotlight = false
 					pause_Tspotlight = false
 					target_vehicle = nil					
-					PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+					PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 				end
 			end
 
@@ -152,7 +152,7 @@ Citizen.CreateThread(function()
 			local locked_on_vehicle = nil
 			while helicam and not IsEntityDead(lPed) and (GetVehiclePedIsIn(lPed) == heli) and IsHeliHighEnough(heli) do
 				if IsControlJustPressed(0, toggle_helicam) then -- Toggle Helicam
-					PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+					PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 					if manual_spotlight and target_vehicle then -- If exiting helicam while manual spotlight is locked on a target, transition to non-helicam auto tracking spotlight
 						TriggerServerEvent("heli:manual.spotlight.toggle")
 						local target_netID = VehToNet(target_vehicle)
@@ -161,14 +161,14 @@ Citizen.CreateThread(function()
 						pause_Tspotlight = false
 						tracking_spotlight = true
 						TriggerServerEvent("heli:tracking.spotlight", target_netID, target_plate, targetposx, targetposy, targetposz)
-						PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+						PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 					end
 					manual_spotlight = false
 					helicam = false
 				end
 
 				if IsControlJustPressed(0, toggle_vision) then
-					PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+					PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 					ChangeVision()
 				end
 
@@ -184,7 +184,7 @@ Citizen.CreateThread(function()
 							DecorSetInt(lPed, "SpotvectorX", SpotvectorX)
 							DecorSetInt(lPed, "SpotvectorY", SpotvectorY)
 							DecorSetInt(lPed, "SpotvectorZ", SpotvectorZ)
-							PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+							PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 							TriggerServerEvent("heli:manual.spotlight")
 						else
 							TriggerServerEvent("heli:manual.spotlight.toggle")
@@ -194,7 +194,7 @@ Citizen.CreateThread(function()
 						TriggerServerEvent("heli:forward.spotlight", Fspotlight_state)
 						manual_spotlight = not manual_spotlight
 						if manual_spotlight then
-							PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+							PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 							TriggerServerEvent("heli:manual.spotlight")
 						else
 							TriggerServerEvent("heli:manual.spotlight.toggle")
@@ -202,7 +202,7 @@ Citizen.CreateThread(function()
 					else -- If no other spotlight mode active, toggle manual spotlight
 						manual_spotlight = not manual_spotlight
 						if manual_spotlight then
-							PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+							PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 							TriggerServerEvent("heli:manual.spotlight")
 						else
 							TriggerServerEvent("heli:manual.spotlight.toggle")
@@ -239,7 +239,7 @@ Citizen.CreateThread(function()
 						local target_distance = GetDistanceBetweenCoords(coords1.x, coords1.y, coords1.z, coords2.x, coords2.y, coords2.z, false)
 						if IsControlJustPressed(0, toggle_lock_on) or target_distance > maxtargetdistance then
 							--Citizen.Trace("Heli: locked_on_vehicle unlocked or lost")
-							PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+							PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 							DecorRemove(target_vehicle, "Target")
 							if tracking_spotlight then
 								TriggerServerEvent("heli:tracking.spotlight.toggle")
@@ -268,7 +268,7 @@ Citizen.CreateThread(function()
 					if DoesEntityExist(vehicle_detected) then
 						RenderVehicleInfo(vehicle_detected)
 						if IsControlJustPressed(0, toggle_lock_on) then
-							PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+							PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 							locked_on_vehicle = vehicle_detected
 			
 							if target_vehicle then -- If previous target exists, remove old target decorator before updating target vehicle
@@ -296,7 +296,7 @@ Citizen.CreateThread(function()
 									pause_Tspotlight = false
 									tracking_spotlight = true
 									TriggerServerEvent("heli:tracking.spotlight", target_netID, target_plate, targetposx, targetposy, targetposz)
-									PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+									PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 								else
 									tracking_spotlight = false
 									pause_Tspotlight = false
@@ -458,7 +458,7 @@ RegisterNetEvent('heli:light.up')
 AddEventHandler('heli:light.up', function(serverID)
 	if brightness < 10 then
 		brightness = brightness + 1.0
-		PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+		PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 	end
 end)
 
@@ -466,7 +466,7 @@ RegisterNetEvent('heli:light.down')
 AddEventHandler('heli:light.down', function(serverID)
 	if brightness > 1.0 then
 		brightness = brightness - 1.0
-		PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+		PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 	end
 end)
 
@@ -474,7 +474,7 @@ RegisterNetEvent('heli:radius.up')
 AddEventHandler('heli:radius.up', function(serverID)
 	if spotradius < 10.0 then
 		spotradius = spotradius + 1.0
-		PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+		PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 	end
 end)
 
@@ -482,7 +482,7 @@ RegisterNetEvent('heli:radius.down')
 AddEventHandler('heli:radius.down', function(serverID)
 	if spotradius > 4.0 then
 		spotradius = spotradius - 1.0
-		PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+		PlaySoundFrontend(lPed, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
 	end
 end)
 
