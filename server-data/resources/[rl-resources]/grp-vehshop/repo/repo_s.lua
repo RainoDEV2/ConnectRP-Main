@@ -132,12 +132,12 @@ AddEventHandler('playerDropped', function()
 	local identifiers, steamIdentifier = GetPlayerIdentifiers(source)
 	local xPlayer =RLCore.Functions.GetPlayer(source) 
 	while not xPlayer do xPlayer =RLCore.Functions.GetPlayer(source); Citizen.Wait(0);end
-  for _, v in pairs(identifiers) do
-      if string.find(v, "steam") then
-          steamIdentifier = v
-          break
-      end
-  end
+	for _, v in pairs(identifiers) do
+		if string.find(v, "steam") then
+			steamIdentifier = v
+			break
+		end
+	end
 	local timeJoined, ky
 	for k,v in pairs(PlayerTable) do 
 		if v.sourceID == steamIdentifier then timeJoined = v.timeJoined; ky = k; end
@@ -145,26 +145,38 @@ AddEventHandler('playerDropped', function()
 	if not timeJoined then return; end
 
 	local identifier = steamIdentifier
-	RLCore.Functions.ExecuteSql(false,"SELECT * FROM bbvehicles WHERE citizenid='"..xPlayer.PlayerData.citizenid.."'", function(data)	 
-		if not data then 
+	exports['ghmattimysql']:execute("SELECT * FROM bbvehicles WHERE citizenid='"..xPlayer.PlayerData.citizenid.."'", function(result)
+
+		if not result then 
 			return 
 		end
-	end)
 
-	for k,v in pairs(data) do
-		local thingi = math.floor(v.financetimer - (((GetGameTimer() - timeJoined) / 1000) / 60))
-		if v.finance and v.finance > 0 then
-			RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `financetimer` = '"..thingi.."' WHERE `plate` = '"..v.plate.."'")
-			print("UPDATNG")
 
-			--RLCore.Functions.ExecuteSql(false,'UPDATE bbvehicles SET financetimer=@financetimer WHERE plate=@plate', {['@financetimer'] = math.floor(v.financetimer - (((GetGameTimer() - timeJoined) / 1000) / 60)), ['@plate'] = v.plate} )
+		for k,v in pairs(result) do
+			local thingi = math.floor(v.financetimer - (((GetGameTimer() - timeJoined) / 1000) / 60))
+			if v.finance and v.finance > 0 then
+				RLCore.Functions.ExecuteSql(false, "UPDATE `bbvehicles` SET `financetimer` = '"..thingi.."' WHERE `plate` = '"..v.plate.."'")
+
+				--RLCore.Functions.ExecuteSql(false,'UPDATE bbvehicles SET financetimer=@financetimer WHERE plate=@plate', {['@financetimer'] = math.floor(v.financetimer - (((GetGameTimer() - timeJoined) / 1000) / 60)), ['@plate'] = v.plate} )
+			end
 		end
-	end
-	table.remove(PlayerTable, ky)
+		table.remove(PlayerTable, ky)
+	end)
 end)
 
- 
-RegisterCommand('doRepay', function(source, args)
+--[[ RegisterCommand('joinwtf', function(source, args)
+	local src = source
+	local identifiers, steamIdentifier = GetPlayerIdentifiers(source)
+    for _, v in pairs(identifiers) do
+        if string.find(v, "steam") then
+            steamIdentifier = v
+            break
+        end
+    end
+	table.insert(PlayerTable, {sourceID = steamIdentifier, timeJoined = GetGameTimer()})
+end)
+  ]]
+--[[ RegisterCommand('doRepay', function(source, args)
     local src = source
     local pPlate = plate
     local xPlayer = RLCore.Functions.GetPlayer(source)
@@ -225,4 +237,4 @@ RegisterCommand('doRepay', function(source, args)
 			end
 		end)
     end
-end)
+end) ]]

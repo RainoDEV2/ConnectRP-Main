@@ -1,7 +1,7 @@
 RLCore = nil
 TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
 
-local repayTime = 168 * 60 -- hours * 60
+local repayTime = 24 * 60 -- hours * 60
 local timer = ((60 * 1000) * 10) -- 10 minute timer
 
 local carTable = {
@@ -97,26 +97,24 @@ end)
 
 -- Get All finance > 0 then take 10min off
 -- Every 10 Min
-function updateFinance()
-    exports['ghmattimysql']:execute("SELECT `financetimer`, `plate` FROM `bbvehicles` WHERE `financetimer` = @financetimer", {
-        ['@financetimer'] = 0
-    }, function(result)
+--[[ function updateFinance()
+    exports['ghmattimysql']:execute("SELECT * FROM `bbvehicles`", function(result)
         for i=1, #result do
             local financeTimer = result[i].financetimer
             local plate = result[i].plate
             local newTimer = financeTimer - 10
             if financeTimer ~= nil then
-                exports.ghmattimysql:execute('UPDATE bbvehicles SET `financetimer` = @financetimer WHERE plate = @plate', {
-                    ['@financetimer'] = newTimer,
-                    ['@plate'] = plate
-                }, function(result)
-                end)
+                if finance ~= 0 then
+                    exports.ghmattimysql:execute('UPDATE bbvehicles SET `financetimer` = @financetimer WHERE plate = @plate', {
+                        ['@financetimer'] = newTimer,
+                        ['@plate'] = plate
+                    }, function(result)
+                    end)
+                end
             end
         end
     end)
-    SetTimeout(timer, updateFinance)
-end
-SetTimeout(timer, updateFinance)
+end ]]
 
 RegisterNetEvent('RS7x:phonePayment')
 AddEventHandler('RS7x:phonePayment', function(plate)
@@ -183,9 +181,13 @@ AddEventHandler('onResourceStop', function(resource)
     end
 end)
 
-Citizen.CreateThread(function()
-    updateFinance()
-end)
+--[[ Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(timer)
+        updateFinance()
+        print("FINANCE UPDATED! You may notice a slight dip in performance or not who knows.")
+    end
+end) ]]
 
 --[[
         MySQL.Async.fetchAll('SELECT finance, plate FROM bbvehicles WHERE finance < @finance', {
