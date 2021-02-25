@@ -7,7 +7,7 @@ local copCars = {
     "hwaycar2", -- trooper cvpi
     "hwaycar", -- trooper suv
     "hwaycar3", -- trooper charger
-    "2015polstang", -- mustang pursuit
+    "polstang", -- mustang pursuit
     "police", -- K9 Vehicle
     "police4", -- uc cv
     "fbi", -- uc charger
