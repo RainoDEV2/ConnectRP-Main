@@ -174,6 +174,7 @@ local vehshopOwner = {
 			name = "Coupes",
 			buttons = {
 				{name = "Cognoscenti Cabrio", costs = 150000, description = {}, model = "cogcabrio"},
+				{name = "Cyclone Electric", costs = 150000, description = {}, model = "cyclone"},
 				{name = "Exemplar", costs = 80000, description = {}, model = "exemplar"},
 				{name = "F620", costs = 90000, description = {}, model = "f620"},
 				{name = "Felon", costs = 50000, description = {}, model = "felon"},
@@ -183,6 +184,7 @@ local vehshopOwner = {
 				{name = "Oracle XS", costs = 35000, description = {}, model = "oracle2"},
 				{name = "Sentinel", costs = 45000, description = {}, model = "sentinel"},
 				{name = "Sentinel XS", costs = 25000, description = {}, model = "sentinel2"},
+				{name = "Voltic Electric", costs = 100000, description = {}, model = "voltic"},
 				{name = "Windsor", costs = 160000, description = {}, model = "windsor"},
 				{name = "Windsor Drop", costs = 165000, description = {}, model = "windsor2"},
 				{name = "Zion", costs = 10000, description = {}, model = "zion"},
@@ -530,6 +532,7 @@ local vehshopOwner = {
 				{name = "Paradise", costs = 22000, description = {}, model = "paradise"},
 				{name = "Surfer", costs = 9500, description = {}, model = "surfer"},
 				{name = "Youga", costs = 14500, description = {}, model = "youga"},
+				{name = "Youga Classic", costs = 14500, description = {}, model = "youga2"},
 			}
 		},
 		["Sedans"] = {
