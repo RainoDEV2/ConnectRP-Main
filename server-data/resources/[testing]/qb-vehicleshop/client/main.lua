@@ -143,13 +143,13 @@ AddEventHandler('tc-vehicleshop:client:spawnBoughtVehicle', function(vehicle)
     end, RL.SpawnPoint, true)
 end)
 
-Citizen.CreateThread(function()
+--[[ Citizen.CreateThread(function()
     for k, v in pairs(RL.VehicleShops) do
         Dealer = AddBlipForCoord(RL.VehicleShops[k].x, RL.VehicleShops[k].y, RL.VehicleShops[k].z)
 
         SetBlipSprite (Dealer, 326)
         SetBlipDisplay(Dealer, 4)
-        SetBlipScale  (Dealer, 0.75)
+        SetBlipScale  (Dealer, 0.6)
         SetBlipAsShortRange(Dealer, true)
         SetBlipColour(Dealer, 37)
 
@@ -171,4 +171,4 @@ Citizen.CreateThread(function()
     BeginTextCommandSetBlipName("STRING")
     AddTextComponentSubstringPlayerName("PDM Quick Car Sell")
     EndTextCommandSetBlipName(QuickSell)
-end)
+end) ]]

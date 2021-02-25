@@ -5,7 +5,7 @@ ui_page "html/index.html"
 client_scripts {
     'client/main.lua',
     'config.lua',
-    'client/showroom.lua',
+    --'client/showroom.lua',
     'client/customshowroom.lua',
 }
 

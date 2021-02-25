@@ -178,7 +178,7 @@ AddEventHandler('tc-vehicleshop:server:SetCustomShowroomVeh', function(vData, k)
     TriggerClientEvent('tc-vehicleshop:client:SetCustomShowroomVeh', -1, vData, k)
 end)
 
-RLCore.Commands.Add("sellv", "Sell ​​vehicle from Custom Car Dealer", {}, false, function(source, args)
+--[[ RLCore.Commands.Add("sellv", "Sell ​​vehicle from Custom Car Dealer", {}, false, function(source, args)
     local Player = RLCore.Functions.GetPlayer(source)
     local TargetId = args[1]
 
@@ -217,7 +217,7 @@ RLCore.Commands.Add("financev", "Sell ​​vehicle from Custom Car Dealer", {},
     else
         TriggerClientEvent('RLCore:Notify', source, 'You are not a Vehicle Dealer', 'error')
     end
-end)
+end) ]]
 
 RegisterServerEvent('tc-vehicleshop:server:SellCustomVehicle')
 AddEventHandler('tc-vehicleshop:server:SellCustomVehicle', function(TargetId, ShowroomSlot)
