@@ -532,6 +532,7 @@ local vehshopOwner = {
 				{name = "Paradise", costs = 22000, description = {}, model = "paradise"},
 				{name = "Surfer", costs = 9500, description = {}, model = "surfer"},
 				{name = "Youga", costs = 14500, description = {}, model = "youga"},
+				{name = "Youga Classic", costs = 14500, description = {}, model = "youga2"},
 			}
 		},
 		["Sedans"] = {
