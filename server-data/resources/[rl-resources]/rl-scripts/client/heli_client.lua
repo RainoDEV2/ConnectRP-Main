@@ -6,8 +6,8 @@
 local fov_max = 80.0
 local fov_min = 5.0 -- max zoom level (smaller fov is more zoom)
 local zoomspeed = 3.0 -- camera zoom speed
-local speed_lr = 4.0 -- speed by which the camera pans left-right 
-local speed_ud = 4.0 -- speed by which the camera pans up-down
+local speed_lr = 10.0 -- speed by which the camera pans left-right 
+local speed_ud = 10.0 -- speed by which the camera pans up-down
 local toggle_helicam = 51 -- control id of the button by which to toggle the helicam mode. Default: INPUT_CONTEXT (E)
 local toggle_vision = 25 -- control id to toggle vision mode. Default: INPUT_AIM (Right mouse btn)
 local toggle_rappel = 154 -- control id to rappel out of the heli. Default: INPUT_DUCK (X)
