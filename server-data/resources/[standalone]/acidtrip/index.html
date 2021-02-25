@@ -6,25 +6,23 @@
 </head>
 <body>
 <div id="player" style="position: absolute; top: -9999px; left: -9999px;"></div>
-<script src="https://www.youtube.com/iframe_api"></script>
+<script src="http://www.youtube.com/player_api"></script>
 <script>
 var player;
 function DoMusic(song) {
-  var vid = (song == 1 ? 'K2ue7Cz3Xu8' : 'K2ue7Cz3Xu8')
+  var vid = (song == 1 ? 'lkM7aocxsxA' : 'FHVD9ft_ANw')
   if (player) {
-    player.loadVideoById(vid,(song == 1 ? 0 : 1));
+    player.loadVideoById(vid,(song == 1 ? 50 : 1));
     player.playVideo();
   } else {
     player = new YT.Player('player', {
-	    height: '1080',
-        width: '1920',
         videoId: vid,
         loop: true,
         events: {
             onReady: function (e) {
                 e.target.playVideo();
                 if (song == 1) {
-                  e.target.seekTo(0);
+                  e.target.seekTo(50);
                 }
             }
         }
