@@ -107,6 +107,6 @@ Config.AllowedItems = {
     ["10kgoldchain"] = {
         name = "10kgoldchain",
         wait = 10000,
-        reward = 3000,
+        reward = 200,
     },
 }
