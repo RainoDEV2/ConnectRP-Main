@@ -7,7 +7,7 @@ Citizen.CreateThread(function()
 
         SetBlipSprite (Dealer, 523)
         SetBlipDisplay(Dealer, 4)
-        SetBlipScale  (Dealer, 0.75)
+        SetBlipScale  (Dealer, 0.6)
         SetBlipAsShortRange(Dealer, true)
         SetBlipColour(Dealer, 37)
 
