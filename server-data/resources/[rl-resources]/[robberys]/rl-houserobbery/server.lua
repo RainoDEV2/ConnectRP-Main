@@ -48,6 +48,30 @@ AddEventHandler('houseRobberies:searchItem', function()
   end
  end
 
+ local math = math.random(1,100)
+ local mathChance = math.random(1,100)
+  if math <= 10 then 
+    if mathChance <= 15 then
+      xPlayer.Functions.AddItem("weed_white-widow_seed", 1) 
+      TriggerClientEvent('inventory:client:ItemBox', source, "weed_white-widow_seed", "add")
+    elseif mathChance <= 12 then
+      xPlayer.Functions.AddItem("weed_skunk_seed", 1) 
+      TriggerClientEvent('inventory:client:ItemBox', source, "weed_skunk_seed", "add")
+    elseif mathChance <= 10 then
+      xPlayer.Functions.AddItem("weed_purple-haze_seed", 1) 
+      TriggerClientEvent('inventory:client:ItemBox', source, "weed_purple-haze_seed", "add")
+    elseif mathChance <= 8 then
+      xPlayer.Functions.AddItem("weed_og-kush_seed", 1) 
+      TriggerClientEvent('inventory:client:ItemBox', source, "weed_og-kush_seed", "add")
+    elseif mathChance <= 6 then 
+      xPlayer.Functions.AddItem("weed_amnesia_seed", 1) 
+      TriggerClientEvent('inventory:client:ItemBox', source, "weed_amnesia_seed", "add")
+    elseif mathChance <= 4 then
+      xPlayer.Functions.AddItem("weed_ak47_seed", 1) 
+      TriggerClientEvent('inventory:client:ItemBox', source, "weed_ak47_seed"], "add")
+    end
+  end
+
 end)
 
 RLCore.Functions.CreateCallback('houserob:checkcops', function(source, cb)
