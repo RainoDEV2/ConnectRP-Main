@@ -12,6 +12,7 @@ end)
 function playerTargetEnable()
     if success then return end
     if IsPedArmed(PlayerPedId(), 6) then return end
+    if IsPedInAnyVehicle(PlayerPedId()) then return end
 
     targetActive = true
 
