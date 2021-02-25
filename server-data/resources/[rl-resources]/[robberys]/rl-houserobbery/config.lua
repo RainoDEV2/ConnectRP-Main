@@ -1,6 +1,6 @@
 Config = {}
 
-Config.MinCops = 3
+Config.MinCops = 1
 
 Config.RobbableItems = {
     [1] =  {chance = 8, id = 0, name = 'Cash', quantity = math.random(1, 1450)}, 
@@ -15,6 +15,12 @@ Config.RobbableItems = {
     --[10] = {chance = 2, id = 'joint', name = 'Joint', quantity = 5},
     [10] = {chance = 3, id = 'oxy', name = 'Oxy 100MG', quantity = 5},
     [11] = {chance = 2, id = 'certificate', name = 'Certificate', quantity = 1},
+    [12] = {chance = 0.1, id = 'weed_white-widow_seed', name = 'White Widow Weed Seed', quantity = 1},
+    [13] = {chance = 0.1, id = 'weed_skunk_seed', name = 'Skunk Weed Seed', quantity = 1},
+    [14] = {chance = 0.1, id = 'weed_purple-haze_seed', name = 'Purple Haze Weed Seed', quantity = 1},
+    [15] = {chance = 0.1, id = 'weed_og-kush_seed', name = 'OG Kush Weed Seed', quantity = 1},
+    [16] = {chance = 0.1, id = 'weed_amnesia_seed', name = 'Amnesia Weed Seed', quantity = 1},
+    [17] = {chance = 0.1, id = 'weed_ak47_seed', name = 'AK47 Weed Seed', quantity = 1},
 }
 
 Config.RobbableLocations = {
