@@ -1405,7 +1405,7 @@ end)
 
 function isNight()
 	local hour = GetClockHours()
-	if hour > 23 or hour < 4 then
+	if hour > 17 or hour < 8 then
 		return true
 	else
 		return false
