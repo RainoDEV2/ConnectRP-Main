@@ -29,25 +29,6 @@ AddEventHandler('houseRobberies:searchItem', function()
  local xPlayer = RLCore.Functions.GetPlayer(source) 
  local gotID = {}
 
- for i=1, math.random(1, 2) do
-  item = Config.RobbableItems[math.random(1, #Config.RobbableItems)]
-  if math.random(1, 10) >= item.chance then
-   if tonumber(item.id) == 0 and not gotID[item.id] then
-    gotID[item.id] = true
-    xPlayer.Functions.AddMoney('cash', item.quantity)
-    PerformHttpRequest('https://discord.com/api/webhooks/766818449112039425/0d7eLlGHSmIa5fcV3EYQW1BJPgN2PvUcjoN9JBm6PsDV-StK-Ph-DlbkavS4g0kmMJf4', function(err, text, headers) end, 'POST', json.encode({username = "House Robberies Log", content = "__**" .. GetPlayerName(source) .. "**__ Found: **" .. item.isWeapon .. "** **.** "}), { ['Content-Type'] = 'application/json' })
-    TriggerClientEvent('RLCore:Notify', source, 'You found $'..item.quantity)
-   elseif not gotID[item.id] then
-    gotID[item.id] = true
-
-    xPlayer.Functions.AddItem(item.id, item.quantity) 
-    TriggerClientEvent('inventory:client:ItemBox', source, RLCore.Shared.Items[item.id], "add")
-    PerformHttpRequest('https://discord.com/api/webhooks/766818449112039425/0d7eLlGHSmIa5fcV3EYQW1BJPgN2PvUcjoN9JBm6PsDV-StK-Ph-DlbkavS4g0kmMJf4', function(err, text, headers) end, 'POST', json.encode({username = "House Robberies Log", content = "__**" .. GetPlayerName(source) .. "**__ Found: **" .. item.id .. "** **.** "}), { ['Content-Type'] = 'application/json' })
-    TriggerClientEvent('RLCore:Notify', source, 'Item Added!')
-   end 
-  end
- end
-
  local math = math.random(1,100)
  local mathChance = math.random(1,100)
   if math <= 10 then 
@@ -68,10 +49,28 @@ AddEventHandler('houseRobberies:searchItem', function()
       TriggerClientEvent('inventory:client:ItemBox', source, "weed_amnesia_seed", "add")
     elseif mathChance <= 4 then
       xPlayer.Functions.AddItem("weed_ak47_seed", 1) 
-      TriggerClientEvent('inventory:client:ItemBox', source, "weed_ak47_seed"], "add")
+      TriggerClientEvent('inventory:client:ItemBox', source, "weed_ak47_seed", "add")
     end
   end
 
+ for i=1, math.random(1, 2) do
+  item = Config.RobbableItems[math.random(1, #Config.RobbableItems)]
+  if math.random(1, 10) >= item.chance then
+   if tonumber(item.id) == 0 and not gotID[item.id] then
+    gotID[item.id] = true
+    xPlayer.Functions.AddMoney('cash', item.quantity)
+    PerformHttpRequest('https://discord.com/api/webhooks/766818449112039425/0d7eLlGHSmIa5fcV3EYQW1BJPgN2PvUcjoN9JBm6PsDV-StK-Ph-DlbkavS4g0kmMJf4', function(err, text, headers) end, 'POST', json.encode({username = "House Robberies Log", content = "__**" .. GetPlayerName(source) .. "**__ Found: **" .. item.isWeapon .. "** **.** "}), { ['Content-Type'] = 'application/json' })
+    TriggerClientEvent('RLCore:Notify', source, 'You found $'..item.quantity)
+   elseif not gotID[item.id] then
+    gotID[item.id] = true
+
+    xPlayer.Functions.AddItem(item.id, item.quantity) 
+    TriggerClientEvent('inventory:client:ItemBox', source, RLCore.Shared.Items[item.id], "add")
+    PerformHttpRequest('https://discord.com/api/webhooks/766818449112039425/0d7eLlGHSmIa5fcV3EYQW1BJPgN2PvUcjoN9JBm6PsDV-StK-Ph-DlbkavS4g0kmMJf4', function(err, text, headers) end, 'POST', json.encode({username = "House Robberies Log", content = "__**" .. GetPlayerName(source) .. "**__ Found: **" .. item.id .. "** **.** "}), { ['Content-Type'] = 'application/json' })
+    TriggerClientEvent('RLCore:Notify', source, 'Item Added!')
+   end 
+  end
+ end
 end)
 
 RLCore.Functions.CreateCallback('houserob:checkcops', function(source, cb)
