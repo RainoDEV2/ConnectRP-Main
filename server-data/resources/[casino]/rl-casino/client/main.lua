@@ -132,6 +132,9 @@ function enterCasino(pIsInCasino, pFromElevator, pCoords, pHeading)
         DoScreenFadeIn(500)
         end)
     end
+
+    
+
     TriggerEvent("np-casino:casinoEnteredEvent")
 end
 
