@@ -22,35 +22,6 @@ Citizen.CreateThread(function()
     end
 end)
 
---[[ RegisterCommand('cas', function()
-    local model = GetHashKey('vw_prop_vw_luckywheel_02a')
-    local baseWheelModel = GetHashKey('vw_prop_vw_luckywheel_01a')
-
-    Citizen.CreateThread(function()
-        -- Base wheel
-        --RequestModel(baseWheelModel)
-        --while not HasModelLoaded(baseWheelModel) do
-        --    Citizen.Wait(0)
-        --end
-
-        --_basewheel = CreateObject(baseWheelModel, _baseWheelPos.x, _baseWheelPos.y, _baseWheelPos.z, false, false, true)
-        --SetEntityHeading(_basewheel, 0.0)
-        --SetModelAsNoLongerNeeded(baseWheelModel)
-
-        -- Wheel
-        RequestModel(model)
-
-        while not HasModelLoaded(model) do
-            Citizen.Wait(0)
-        end
-
-        _wheel = CreateObject(model, 1111.052, 229.849, -50.40, false, false, true)
-        SetEntityHeading(_wheel, 0.9754)
-        SetModelAsNoLongerNeeded(model)    
-    end)
-end) ]]
-
-
 local model = GetHashKey('vw_prop_vw_luckywheel_02a')
 local baseWheelModel = GetHashKey('vw_prop_vw_luckywheel_01a')
 
