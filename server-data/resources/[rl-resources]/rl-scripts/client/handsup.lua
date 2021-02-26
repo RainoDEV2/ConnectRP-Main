@@ -261,7 +261,7 @@ local carblacklist = {
 	"trailersmall2",
 	"opressor",
 	"besra",
-	"cargoplane",
+	--"cargoplane",
 	"hydra",
 	"jet",
 	"lazer",
