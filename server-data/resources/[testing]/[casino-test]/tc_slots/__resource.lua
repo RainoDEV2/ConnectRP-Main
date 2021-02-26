@@ -1,4 +1,4 @@
-resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
+resource_manifest_version '05cfa83c-a124-4cfa-a768-c24a5811d8f9'
 
 ui_page 'html/ui.html'
 
@@ -25,7 +25,15 @@ files {
   'html/img/item6.png',
   'html/img/item7.png',
   'html/img/red.png',
+  'html/img/overlay.png',
+  'html/img/background.png',
+  'html/img/butbg.png',
+  'html/img/butbg-hover.png',
+  'html/img/paytable.png',
+  'html/img/table.png',
+  'html/img/table-hover.png',
   -- Audio
+  'html/audio/relstop.wav',
   'html/audio/alarma.wav',
   'html/audio/apasaButonul.wav',
   'html/audio/changeBet.wav',
