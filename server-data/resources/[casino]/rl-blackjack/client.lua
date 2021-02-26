@@ -248,7 +248,6 @@ RegisterCommand("bet", function(source, args, rawCommand)
 	end
 end, false)
 
-
 spawnedPeds = {}
 spawnedObjects = {}
 AddEventHandler("onResourceStop", function(r)
