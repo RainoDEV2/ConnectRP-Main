@@ -77,7 +77,8 @@ Citizen.CreateThread(function()
                         if IsControlJustReleased(0, 51) then
 
                             if v.x == 935.81481 then
-                                TriggerEvent("casino:client:enter")
+                                --TriggerEvent("casino:client:enter")
+                                RLCore.Functions.Notify('The casino is closed due to renovation')
                             else
                                 if k == 1 then
                                     SetEntityCoords(ped, Teleports.Locations[loc][2].x, Teleports.Locations[loc][2].y, Teleports.Locations[loc][2].z)
