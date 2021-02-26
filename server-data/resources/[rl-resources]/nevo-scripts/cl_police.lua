@@ -392,8 +392,9 @@ Vehicles = {
     --{ model = "2015POLSTANG", label = "2015 Mustang"}, --9
     { model = "predator", label = "Boat"}, --10
     { model = "code3gator", label = "Gator"}, --11
-    { model = "pol8", label = "Motorbike"}, --12
-    { model = "policeb2", label = "Dirt Bike"}, --12
+    { model = "pol8", label = "PD BMW 1200"}, --12
+    { model = "policeb2", label = "PD Dirt Bike"}, --12
+    { model = "policebretro", label = "PD Harley"}, --12
     { model = "sahpinsurgent", label = "SWAT Insurgent"}, --13
     { model = "onebeast", label = "SWAT Limo"}, --13
     { model = "sspres", label = "SWAT Suburban"}, --14
