@@ -53,15 +53,15 @@ vehicleCustomisationPrices =
     },
     headlights = 
     {
-        price = 400
+        price = 0
     },
     xenoncolours = 
     {
-        price = 500
+        price = 0
     },
     oldlivery = 
     {
-        price = 250
+        price = 0
     },
     plateindex = 
     {
