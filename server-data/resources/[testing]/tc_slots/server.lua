@@ -15,7 +15,7 @@ AddEventHandler("tc-slots:BetsAndMoney", function(bets)
     if xPlayer then 
         if bets % 50 == 0 and bets >= 50 then
             if money >= bets then
-                xPlayer.Functions.removeMoney('cash',bets)
+                xPlayer.Functions.RemoveMoney('cash',bets) 
                 TriggerClientEvent("tc-slots:UpdateSlots", _source, bets)
             else
                 TriggerClientEvent("RLCore:Notify",_source, "Not enought money")
@@ -34,7 +34,7 @@ AddEventHandler("tc-slots:PayOutRewards", function(amount)
     if xPlayer then
         amount = tonumber(amount)
         if amount > 0 then
-            xPlayer.Functions.addMoney('cash',amount)
+            xPlayer.Functions.AddMoney('cash',amount)
             TriggerClientEvent("RLCore:Notify",_source, "Slots: You won $"..amount.." not bad at all!")
         else
             TriggerClientEvent("RLCore:Notify",_source, "Slots: Unfortunately you've lost all the money, maybe next time.")
