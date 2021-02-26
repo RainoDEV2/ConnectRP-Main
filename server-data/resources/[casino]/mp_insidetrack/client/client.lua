@@ -149,7 +149,7 @@ function Utils:HandleControls()
                     if (Utils.CurrentBet < cash) then
                         Utils.CurrentBet = (Utils.CurrentBet + 100)
                         Utils.CurrentGain = (Utils.CurrentBet * 2)
-                        Utils:UpdateBetValues(Utils.CurrentHorse, Utils.CurrentBet, Utils.PlayerBalance, Utils.CurrentGain)
+                        Utils:UpdateBetValues(Utils.CurrentHorse, Utils.CurrentBet, Utils.CurrentGain)
                         TriggerServerEvent('rh:bank:balance')
                     end
                 end
@@ -158,7 +158,7 @@ function Utils:HandleControls()
                     if (Utils.CurrentBet > 100) then
                         Utils.CurrentBet = (Utils.CurrentBet - 100)
                         Utils.CurrentGain = (Utils.CurrentBet * 2)
-                        Utils:UpdateBetValues(Utils.CurrentHorse, Utils.CurrentBet, Utils.PlayerBalance, Utils.CurrentGain)
+                        Utils:UpdateBetValues(Utils.CurrentHorse, Utils.CurrentBet, Utils.CurrentGain)
                         
                     end
                 end
@@ -184,7 +184,7 @@ function Utils:HandleControls()
                             RLCore.Functions.Notify(Utils.CurrentGain)
                             --TriggerEvent("notification", Utils.CurrentGain, 2)
                             Utils.PlayerBalance = (Utils.PlayerBalance + Utils.CurrentGain)
-                            Utils:UpdateBetValues(Utils.CurrentHorse, Utils.CurrentBet, Utils.PlayerBalance, Utils.CurrentGain)
+                            Utils:UpdateBetValues(Utils.CurrentHorse, Utils.CurrentBet, Utils.CurrentGain)
                         else
                             RLCore.Functions.Notify("Better luck next time", "error")
                             --TriggerEvent("notification", 'Better luck next time! ', 2)
