@@ -13,7 +13,7 @@ function Utils:ShowMainScreen()
     BeginScaleformMovieMethod(self.Scaleform, 'SHOW_SCREEN')
     ScaleformMovieMethodAddParamInt(0)
     EndScaleformMovieMethod()
-
+    TriggerServerEvent('rh:bank:balance')
     BeginScaleformMovieMethod(Utils.Scaleform, 'SET_MAIN_EVENT_IN_PROGRESS')
     ScaleformMovieMethodAddParamBool(true)
     EndScaleformMovieMethod()

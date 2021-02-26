@@ -1,18 +1,3 @@
---[[ RLCore = nil
-
-Citizen.CreateThread(function() 
-    while true do
-        Citizen.Wait(10)
-        if RLCore == nil then
-            TriggerEvent("RLCore:GetObject", function(obj) RLCore = obj end)    
-            Citizen.Wait(200)
-        end
-    end
-end)
-
-
-local xPlayer = RLCore.Functions.GetPlayerData() ]]
-
 Utils = {
     Scaleform = -1,
     ChooseHorseVisible = false,
@@ -23,14 +8,13 @@ Utils = {
         {13560920, 15582764, 16770746, 7500402},
         {16558591, 5090807, 10446437, 7493977},
         {5090807, 16558591, 3815994, 9393493},
-        {16269415, 16767010, 10329501, 16777215} 
+        {16269415, 16767010, 10329501, 16777215}
     },
-    PlayerBalance = 500,
+    PlayerBalance = 9999,
     CurrentHorse = -1,
     CurrentBet = 100,
     CurrentGain = 1000,
-    HorsesPositions = {},
-    CurrentWiner = -1
+    HorsesPositions = {}
 }
 
 function Utils:GetMouseClickedButton()

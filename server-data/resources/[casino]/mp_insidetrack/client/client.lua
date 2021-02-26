@@ -1,3 +1,17 @@
+RLCore = nil
+
+Citizen.CreateThread(function() 
+    while true do
+        Citizen.Wait(10)
+        if RLCore == nil then
+            TriggerEvent("RLCore:GetObject", function(obj) RLCore = obj end)    
+            Citizen.Wait(200)
+        end
+    end
+end)
+
+
+
 local cooldown = 60
 local tick = 0
 local checkRaceStatus = false
@@ -121,9 +135,18 @@ function Utils:HandleControls()
 
                 -- Start race
                 if (clickedButton == 10) then
-                    Utils:StartRace()
-                    checkRaceStatus = true
+                    Utils:UpdateBetValues(Utils.CurrentHorse, Utils.CurrentBet, Utils.PlayerBalance, Utils.CurrentGain)
+                    TriggerServerEvent('rh:bank:balance')
+                    if (Utils.CurrentBet > Utils.PlayerBalance) then
+                        Utils:StartRace()
+                        checkRaceStatus = true
+                        TriggerServerEvent("delivery:rmoney",  Utils.CurrentBet)
+                        RLCore.Functions.Notify("You placed a bet of " ..Utils.CurrentBet)
+                    else
+                        print('Rut roe, a bug')
+                    end
                 end
+
 
                 -- Change bet
                 if (clickedButton == 8) then
@@ -131,6 +154,7 @@ function Utils:HandleControls()
                         Utils.CurrentBet = (Utils.CurrentBet + 100)
                         Utils.CurrentGain = (Utils.CurrentBet * 2)
                         Utils:UpdateBetValues(Utils.CurrentHorse, Utils.CurrentBet, Utils.PlayerBalance, Utils.CurrentGain)
+                        TriggerServerEvent('rh:bank:balance')
                     end
                 end
 
@@ -139,6 +163,7 @@ function Utils:HandleControls()
                         Utils.CurrentBet = (Utils.CurrentBet - 100)
                         Utils.CurrentGain = (Utils.CurrentBet * 2)
                         Utils:UpdateBetValues(Utils.CurrentHorse, Utils.CurrentBet, Utils.PlayerBalance, Utils.CurrentGain)
+                        
                     end
                 end
 
@@ -156,18 +181,24 @@ function Utils:HandleControls()
                         if (Utils.CurrentHorse == Utils.CurrentWinner) then
                             -- Here you can add money
                             -- Exemple
-                            TriggerServerEvent("tc-slots:PayOutRewards", Utils.CurrentGain)
                             -- TriggerServerEvent('myCoolEventWhoAddMoney', Utils.CurrentGain)
 
                             -- Refresh player balance
+                            TriggerServerEvent('delivery:success',  Utils.CurrentGain)
+                            RLCore.Functions.Notify(Utils.CurrentGain)
+                            --TriggerEvent("notification", Utils.CurrentGain, 2)
                             Utils.PlayerBalance = (Utils.PlayerBalance + Utils.CurrentGain)
                             Utils:UpdateBetValues(Utils.CurrentHorse, Utils.CurrentBet, Utils.PlayerBalance, Utils.CurrentGain)
+                        else
+                            RLCore.Functions.Notify("Better luck next time", "error")
+                            --TriggerEvent("notification", 'Better luck next time! ', 2)
                         end
+
 
                         Utils:ShowResults()
 
                         Utils.CurrentHorse = -1
-                        Utils.CurrentWinner = -1
+                        Utils.CurrentWiner = -1
                         Utils.HorsesPositions = {}
 
                         checkRaceStatus = false
