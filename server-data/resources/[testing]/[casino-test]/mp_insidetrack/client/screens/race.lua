@@ -25,6 +25,8 @@ end
 function Utils:StartRace()
     GenerateHorsesOrder()
 
+    self.CurrentWinner = self.HorsesPositions[1]
+
     BeginScaleformMovieMethod(self.Scaleform, 'START_RACE')
     ScaleformMovieMethodAddParamFloat(15000.0) -- Race duration (in MS)
     ScaleformMovieMethodAddParamInt(4)
@@ -40,4 +42,16 @@ function Utils:StartRace()
     ScaleformMovieMethodAddParamFloat(0.0) -- Unk
     ScaleformMovieMethodAddParamBool(false)
     EndScaleformMovieMethod()
+end
+
+function Utils:IsRaceFinished()
+    BeginScaleformMovieMethod(Utils.Scaleform, 'GET_RACE_IS_COMPLETE')
+
+    local raceReturnValue = EndScaleformMovieMethodReturnValue()
+
+    while not IsScaleformMovieMethodReturnValueReady(raceReturnValue) do
+        Wait(0)
+    end
+
+    return GetScaleformMovieMethodReturnValueBool(raceReturnValue)
 end

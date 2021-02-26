@@ -150,20 +150,24 @@ function Utils:HandleControls()
                 while checkRaceStatus do
                     Wait(0)
 
-                    BeginScaleformMovieMethod(Utils.Scaleform, 'GET_RACE_IS_COMPLETE')
-
-                    local raceReturnValue = EndScaleformMovieMethodReturnValue()
-
-                    while not IsScaleformMovieMethodReturnValueReady(raceReturnValue) do
-                        Wait(0)
-                    end
-
-                    local raceFinished = GetScaleformMovieMethodReturnValueBool(raceReturnValue)
+                    local raceFinished = Utils:IsRaceFinished()
 
                     if (raceFinished) then
-                        -- Here you can add money etc
+                        if (Utils.CurrentHorse == Utils.CurrentWinner) then
+                            -- Here you can add money
+                            -- Exemple
+                            TriggerServerEvent("tc-slots:PayOutRewards", Utils.CurrentGain)
+                            -- TriggerServerEvent('myCoolEventWhoAddMoney', Utils.CurrentGain)
+
+                            -- Refresh player balance
+                            Utils.PlayerBalance = (Utils.PlayerBalance + Utils.CurrentGain)
+                            Utils:UpdateBetValues(Utils.CurrentHorse, Utils.CurrentBet, Utils.PlayerBalance, Utils.CurrentGain)
+                        end
+
                         Utils:ShowResults()
+
                         Utils.CurrentHorse = -1
+                        Utils.CurrentWinner = -1
                         Utils.HorsesPositions = {}
 
                         checkRaceStatus = false
@@ -196,18 +200,18 @@ Citizen.CreateThread(function()
 end)
 
 DrawText3D = function(x, y, z, text)
-	local onScreen, _x,_y = World3dToScreen2d(x,y,z)
-	local px,py,pz=table.unpack(GetGameplayCamCoords())
-	local scale = 0.30
-	if onScreen then
-		SetTextScale(scale, scale)
-		SetTextFont(4)
-		SetTextProportional(1)
-		SetTextColour(255, 255, 255, 215)
-		SetTextOutline()
-		SetTextEntry("STRING")
-		SetTextCentre(1)
-		AddTextComponentString(text)
+    local onScreen, _x,_y = World3dToScreen2d(x,y,z)
+    local px,py,pz=table.unpack(GetGameplayCamCoords())
+    local scale = 0.30
+    if onScreen then
+        SetTextScale(scale, scale)
+        SetTextFont(4)
+        SetTextProportional(1)
+        SetTextColour(255, 255, 255, 215)
+        SetTextOutline()
+        SetTextEntry("STRING")
+        SetTextCentre(1)
+        AddTextComponentString(text)
         DrawText(_x,_y)
-	end
+    end
 end

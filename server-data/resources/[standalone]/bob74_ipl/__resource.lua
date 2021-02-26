@@ -102,5 +102,5 @@ client_scripts {
 
 -- DLC Diamond Casino
 	, "dlc_casino/casino.lua"
-	--, "dlc_casino/penthouse.lua"
+	, "dlc_casino/penthouse.lua"
 } 
