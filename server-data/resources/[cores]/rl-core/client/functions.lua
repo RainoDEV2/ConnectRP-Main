@@ -316,21 +316,6 @@ RLCore.Functions.IsSpawnPointClear = function(coords, radius)
 	return #vehicles == 0
 end
 
-function RLCore.Streaming.RequestAnimDict(animDict, cb)
-	if not HasAnimDictLoaded(animDict) then
-		RequestAnimDict(animDict)
-
-		while not HasAnimDictLoaded(animDict) do
-			Citizen.Wait(1)
-		end
-	end
-
-	if cb ~= nil then
-		cb()
-	end
-end
-
-
 RLCore.Functions.GetVehicleProperties = function(vehicle)
 	local color1, color2 = GetVehicleColours(vehicle)
 	local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
