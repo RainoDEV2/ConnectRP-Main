@@ -17,6 +17,8 @@ Utils = {
     HorsesPositions = {}
 }
 
+local PlayerB = 9999
+
 function Utils:GetMouseClickedButton()
     local returnValue = -1
 
@@ -38,3 +40,9 @@ function Utils.GetRandomHorseName()
     
     return randomName
 end
+
+
+RegisterNetEvent('cash2')
+AddEventHandler('cash2', function(balance)
+    PlayerB = balance
+end)

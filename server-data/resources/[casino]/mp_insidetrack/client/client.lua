@@ -133,24 +133,20 @@ function Utils:HandleControls()
                     Utils:ShowHorseSelection()
                 end
 
+                
+
                 -- Start race
                 if (clickedButton == 10) then
-                    Utils:UpdateBetValues(Utils.CurrentHorse, Utils.CurrentBet, Utils.PlayerBalance, Utils.CurrentGain)
-                    TriggerServerEvent('rh:bank:balance')
-                    if (Utils.CurrentBet > Utils.PlayerBalance) then
-                        Utils:StartRace()
-                        checkRaceStatus = true
-                        TriggerServerEvent("delivery:rmoney",  Utils.CurrentBet)
-                        RLCore.Functions.Notify("You placed a bet of " ..Utils.CurrentBet)
-                    else
-                        print('Rut roe, a bug')
-                    end
+                    Utils:StartRace()
+                    checkRaceStatus = true
+                    TriggerServerEvent("delivery:rmoney",  Utils.CurrentBet)
+                    RLCore.Functions.Notify("You placed a bet of " ..Utils.CurrentBet)
                 end
 
-
+            
                 -- Change bet
                 if (clickedButton == 8) then
-                    if (Utils.CurrentBet < Utils.PlayerBalance) then
+                    if (Utils.CurrentBet < cash) then
                         Utils.CurrentBet = (Utils.CurrentBet + 100)
                         Utils.CurrentGain = (Utils.CurrentBet * 2)
                         Utils:UpdateBetValues(Utils.CurrentHorse, Utils.CurrentBet, Utils.PlayerBalance, Utils.CurrentGain)
@@ -246,3 +242,10 @@ DrawText3D = function(x, y, z, text)
         DrawText(_x,_y)
     end
 end
+
+RegisterNetEvent('cash2')
+AddEventHandler('cash2', function(balance)
+    cash = balance
+end)
+
+RegisterCommand('itrack', OpenInsideTrack)
