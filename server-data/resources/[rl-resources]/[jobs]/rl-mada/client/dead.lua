@@ -72,6 +72,7 @@ Citizen.CreateThread(function()
             DisableControlAction(1, 141, true) --Disables Melee Actions
             DisableControlAction(1, 142, true) --Disables Melee Actions 
             DisableControlAction(1, 37, true) --Disables INPUT_SELECT_WEAPON (tab) Actions
+            DisableControlAction(1, 137, true) --CAPS LOCK
             DisablePlayerFiring(GetPlayerPed(-1), true) -- Disable weapon firing
             
             if isDead then
@@ -134,6 +135,7 @@ Citizen.CreateThread(function()
                 DisableControlAction(1, 141, true) --Disables Melee Actions
                 DisableControlAction(1, 142, true) --Disables Melee Actions 
                 DisableControlAction(1, 37, true) --Disables INPUT_SELECT_WEAPON (tab) Actions
+                DisableControlAction(1, 137, true) --CAPS LOCK
                 DisablePlayerFiring(GetPlayerPed(-1), true) -- Disable weapon firing
 
                 if LaststandTime > Laststand.MinimumRevive then
