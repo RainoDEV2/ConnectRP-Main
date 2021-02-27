@@ -38,7 +38,7 @@ local noFixMessagePos = ""
 
 
 --SetFueltank to pop and leak
-Citizen.CreateThread(function()
+--[[ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
@@ -48,7 +48,7 @@ Citizen.CreateThread(function()
             end
         end
     end
-end)
+end) ]]
 
 local function notification(msg)
 	SetNotificationTextEntry("STRING")

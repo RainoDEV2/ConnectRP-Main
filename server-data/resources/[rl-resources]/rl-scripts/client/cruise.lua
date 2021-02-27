@@ -237,7 +237,7 @@ Citizen.CreateThread(function()
                         
                     
                     --end
-                    --drawTxt("ENGINE", 2, EngineDrawColour, 0.4, screenPosX + 0.061, screenPosY + 0.048)
+                   -- drawTxt("ENGINE", 2, EngineDrawColour, 0.4, screenPosX + 0.061, screenPosY + 0.048)
                     if vehicleClass ~= 8 then
                         local seatbeltColor = seatbeltIsOn and seatbeltColorOn or seatbeltColorOff
                         drawTxt("SEATBELT", 2, seatbeltColor, 0.4, screenPosX + 0.061, screenPosY + 0.063)
@@ -622,6 +622,8 @@ end)
 
 function toggleEngine()
     local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
+    local engine = GetVehicleEngineHealth(vehicle)
+
     if vehicle ~= nil and vehicle ~= 0 then
 
         if (GetPedInVehicleSeat(vehicle, -1) == PlayerPedId()) then
@@ -630,8 +632,12 @@ function toggleEngine()
                 SetVehicleEngineOn(vehicle, false, false, true)
                 RLCore.Functions.Notify("Engine Halted")
             else
-                SetVehicleEngineOn(vehicle, true, false, true)
-                RLCore.Functions.Notify("Engine Started")
+                if engine >= 250.0 then
+                    SetVehicleEngineOn(vehicle, true, false, true)
+                    RLCore.Functions.Notify("Engine Started")
+                else
+                    RLCore.Functions.Notify("Your engine seems to have died, Call a mechanic!")
+                end
             end
         end
     end

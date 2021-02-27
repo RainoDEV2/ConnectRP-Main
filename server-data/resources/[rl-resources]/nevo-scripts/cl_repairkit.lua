@@ -70,19 +70,17 @@ AddEventHandler('nevo:repairing', function(advanced)
             end
 
             if advanced then
-                if GetVehicleEngineHealth(targetVehicle) < 900.0 then
-                    SetVehicleEngineHealth(targetVehicle, 900.0)
+                if GetVehicleEngineHealth(targetVehicle) < 750.0 then
+                    SetVehicleEngineHealth(targetVehicle, 750.0)
                 end
-                if GetVehicleBodyHealth(targetVehicle) < 945.0 then
-                    SetVehicleBodyHealth(targetVehicle, 945.0)
+                if GetVehicleBodyHealth(targetVehicle) < 500.0 then
+                    SetVehicleBodyHealth(targetVehicle, 500.0)
                 end
 
                 if fueltankhealth < 3800.0 then
                     SetVehiclePetrolTankHealth(targetVehicle, 3800.0)
                 end
 
-                SetVehicleEngineHealth(targetVehicle, 999.9)
-				SetVehicleBodyHealth(targetVehicle, 999.9)
 				SetVehicleTyreFixed(targetVehicle,0)
 				SetVehicleTyreFixed(targetVehicle,1)
 				SetVehicleTyreFixed(targetVehicle,2)
@@ -103,16 +101,9 @@ AddEventHandler('nevo:repairing', function(advanced)
                 end
 
 
-                if GetVehicleEngineHealth(targetVehicle) < 200.0 then
-                    SetVehicleEngineHealth(targetVehicle, 200.0)
-                end
-                if GetVehicleBodyHealth(targetVehicle) < 945.0 then
-                    SetVehicleBodyHealth(targetVehicle, 945.0)
-                end
-
-                if fueltankhealth < 2900.0 then
-                    SetVehiclePetrolTankHealth(targetVehicle, 2900.0)
-                end                        
+                if GetVehicleEngineHealth(targetVehicle) < 300.0 then
+                    SetVehicleEngineHealth(targetVehicle, 250.0)
+                end                    
 
                 if GetEntityModel(targetVehicle) == `BLAZER` then
                     SetVehicleEngineHealth(targetVehicle, 600.0)
