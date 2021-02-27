@@ -184,7 +184,7 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(1)
-		if IsPedShooting(PlayerPedId()) or IsPedDoingDriveby(PlayerPedId()) then
+		if IsPedShooting(PlayerPedId()) then
 			local weapon = GetSelectedPedWeapon(PlayerPedId())
 			if weapon ~= GetHashKey("WEAPON_UNARMED") and weapon ~= GetHashKey("WEAPON_SNOWBALL") and weapon ~= GetHashKey("WEAPON_STUNGUN") and weapon ~= GetHashKey("WEAPON_PETROLCAN") and weapon ~= GetHashKey("WEAPON_FIREEXTINGUISHER") then
 				shotAmount = shotAmount + 1
@@ -193,10 +193,10 @@ Citizen.CreateThread(function()
 						TriggerEvent("evidence:client:SetStatus", "gunpowder", 200)
 					--end
 				end
+				print("DROPPED CASING")
 				DropBulletCasing(weapon)
+				Citizen.Wait(500)
 			end
-		else
-			Wait(1500)
 		end
 	end
 end)
