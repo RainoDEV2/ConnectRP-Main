@@ -1,6 +1,6 @@
 Config = {}
 
-Config.MinCops = 3
+Config.MinCops = 2
 
 Config.RobbableItems = {
     [1] =  {chance = 8, id = 0, name = 'Cash', quantity = math.random(1, 1450)}, 

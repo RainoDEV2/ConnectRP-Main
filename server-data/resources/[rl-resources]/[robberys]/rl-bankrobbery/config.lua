@@ -19,9 +19,9 @@ Config.MinimumPacificPolice = 5
 Config.MinimumFleecaPolice = 5
 Config.MinimumThermitePolice = 5
 
-Config.FleecaLog = 'https://discord.com/api/webhooks/774095295889670175/ifVMB7phOv_vNcWZOojDIw7PNRo9TDCVZWp18uBFcpO4om0_E8pXWrrrnlCrKYGsa1FY'
-Config.PaletoLog = 'https://discord.com/api/webhooks/774097889911373874/TkExZzxEwLNWQctoVPIOfUbOg2yCo1w8J0DBJ-Tv505ztxe-y3dxEW-SKcttGOcuMFWj'
-Config.PacificLog = 'https://discord.com/api/webhooks/774098193222860800/KVZzzJEpPyEjcXt2kiSqomfjiU0OFiWh8ZkUScRefhqYzSmxrXkFk6grHvXft1PVdK9L'
+Config.FleecaLog = 'https://discord.com/api/webhooks/815275240401797220/yZWUYsgGqNZc8SASpUTNz2O4eno_S7iB94ZJLxWobfUrxRj0_8gcki2kcP7xcP530k5m'
+Config.PaletoLog = 'https://discord.com/api/webhooks/815275240401797220/yZWUYsgGqNZc8SASpUTNz2O4eno_S7iB94ZJLxWobfUrxRj0_8gcki2kcP7xcP530k5m'
+Config.PacificLog = 'https://discord.com/api/webhooks/815275240401797220/yZWUYsgGqNZc8SASpUTNz2O4eno_S7iB94ZJLxWobfUrxRj0_8gcki2kcP7xcP530k5m'
 
 Config.RewardTypes = {
     [1] = {

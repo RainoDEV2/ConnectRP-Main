@@ -4,7 +4,7 @@ Config.minEarn = 750
 Config.maxEarn = 1250
 Config.RegisterEarnings = math.random(Config.minEarn, Config.maxEarn)
 Config.MinimumStoreRobberyPolice = 2
-Config.DiscordWebhook = 'https://discord.com/api/webhooks/774089654520774666/-ef7mF17uaxEWAu1kstLsDsBmdUhPB7jOp0NAFw5y2EsQcg1ojFPfWnb8U1JRkjO4R6r'
+Config.DiscordWebhook = 'https://discord.com/api/webhooks/815275240401797220/yZWUYsgGqNZc8SASpUTNz2O4eno_S7iB94ZJLxWobfUrxRj0_8gcki2kcP7xcP530k5m'
 
 Config.Registers = {
     [1] = {x = -47.24, y = -1757.65, z = 29.53, robbed = false, time = 0, safeKey = 1, camId = 4},

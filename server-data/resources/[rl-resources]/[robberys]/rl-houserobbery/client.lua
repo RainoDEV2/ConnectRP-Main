@@ -102,7 +102,7 @@ AddEventHandler('lockpicks:UseLockpick', function(advanced)
               TriggerEvent('dispatch:houseRobbery')
             end
     
-            if math.random(1, 20) == 1 then 
+            if math.random(1, 20) <= 5 then 
               TriggerServerEvent('houseRobberies:removeLockpick')
             end
     

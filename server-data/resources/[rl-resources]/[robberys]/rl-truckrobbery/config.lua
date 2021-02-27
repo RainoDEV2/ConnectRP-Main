@@ -1,6 +1,6 @@
 Config = {}
 
-Config.DiscordWebhook = 'https://discord.com/api/webhooks/774088841925492736/QjrynleT9DqiEytBFp4RT3FDklDgFOaO1oObNf7UbDdvlYxtVUZmWaYFCSenyAR_PZwS'
+Config.DiscordWebhook = 'https://discord.com/api/webhooks/815275240401797220/yZWUYsgGqNZc8SASpUTNz2O4eno_S7iB94ZJLxWobfUrxRj0_8gcki2kcP7xcP530k5m'
 
 Config.Items = {
     [1] = {name = 'cashroll', count = math.random(3, 7)},
