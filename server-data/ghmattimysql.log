@@ -1,4 +1,5 @@
-[32m[ghmattimysql][0m Database server connection established.
-[ERROR] [MariaDB:10.4.17-MariaDB] [rl-core] An error happens on MySQL for query "SELECT * from juliet_bans : []": ER_NO_SUCH_TABLE: Table 'realisticlifev2.juliet_bans' doesn't exist
-[ERROR] [MariaDB:10.4.17-MariaDB] [phone] An error happens on MySQL for query "SELECT * FROM phone_contacts WHERE citizenid = ? : ["AVS48190"]": ER_BAD_FIELD_ERROR: Unknown column 'citizenid' in 'where clause'
-[ERROR] [MariaDB:10.4.17-MariaDB] [phone] An error happens on MySQL for query "SELECT * FROM phone_contacts WHERE citizenid = ? : ["AVS48190"]": ER_BAD_FIELD_ERROR: Unknown column 'citizenid' in 'where clause'
+[ERROR] connect ETIMEDOUT
+[ERROR] [MySQL] [phone] An error happens on MySQL for query "DELETE FROM phone_yp : []": connect ETIMEDOUT
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query "SELECT * from juliet_bans : []": ER_NO_SUCH_TABLE: Table 'realisticlifev2.juliet_bans' doesn't exist
+[ERROR] [MySQL] [phone] An error happens on MySQL for query "SELECT * FROM phone_contacts WHERE citizenid = ? : ["AVS48190"]": ER_BAD_FIELD_ERROR: Unknown column 'citizenid' in 'where clause'
+[ERROR] [MySQL] [phone] An error happens on MySQL for query "SELECT * FROM phone_contacts WHERE citizenid = ? : ["AVS48190"]": ER_BAD_FIELD_ERROR: Unknown column 'citizenid' in 'where clause'
