@@ -2101,10 +2101,6 @@
       <child>lp700r</child>
     </Item>
     <Item>
-      <parent>vehicles_dom_interior</parent>
-      <child>2015polstang</child>
-    </Item>
-    <Item>
     <parent>vehicles_poltax_interior</parent>
       <child>rmodmustang</child>
     </Item>
