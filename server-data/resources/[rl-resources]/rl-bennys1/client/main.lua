@@ -35,7 +35,7 @@ Citizen.CreateThread(function()
 end)
 
 function OpenCustoms(shop, k)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local veh = GetVehiclePedIsIn(ped)
     local repaircosts = nil
     SetVehicleModKit(veh, 0)
@@ -77,7 +77,7 @@ function OpenCustoms(shop, k)
 end
 
 RegisterNUICallback('CanRepairVehicle', function(data, cb)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local veh = GetVehiclePedIsIn(ped)
 
     RLCore.Functions.TriggerCallback('rl-bennys:server:CanPurchase', function(CanBuy)
@@ -128,7 +128,7 @@ function DrawText3Ds(x, y, z, text)
 end
 
 function GetAvailableMods()
-    local veh = GetVehiclePedIsIn(PlayerPedId())
+    local veh = GetVehiclePedIsIn(GetPlayerPed(-1))
 
     if RLCore.Shared.VehicleModels[GetEntityModel(veh)] ~= nil then
         model = RLCore.Shared.VehicleModels[GetEntityModel(veh)].model
@@ -383,7 +383,7 @@ end
 
 Citizen.CreateThread(function()
     while true do
-        local ped = PlayerPedId()
+        local ped = GetPlayerPed(-1)
         local pos = GetEntityCoords(ped)
         local inRange = false
 
@@ -459,7 +459,7 @@ function Draw3DText(x, y, z, str, r, g, b, a, font, scaleSize, enableProportiona
 end
 
 function OnIndexChange(id, data)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local veh = GetVehiclePedIsIn(ped)
 
     if data.modid ~= nil and id ~= nil then
@@ -523,7 +523,7 @@ end
 -- NUI Callback's
 
 RegisterNUICallback('CloseMenu', function()
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local veh = GetVehiclePedIsIn(ped)
 
     FreezeEntityPosition(veh, false)
@@ -573,7 +573,7 @@ AddEventHandler('onResourceStop', function(resource)
 end)
 
 RegisterNUICallback('GetCurrentMod', function(data, cb)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local veh = GetVehiclePedIsIn(ped, false)
     local currentmod = -1
 
@@ -676,7 +676,7 @@ function GetCartedColor(type)
 end
 
 RegisterNUICallback('CheckIfCartedItem', function(data, cb)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local veh = GetVehiclePedIsIn(ped, false)
 
     RLCore.Functions.SetVehicleProperties(veh, CurrentVehicleData)
@@ -783,7 +783,7 @@ RegisterNUICallback('PurchaseUpgrades', function(data, cb)
 
     RLCore.Functions.TriggerCallback('rl-bennys:server:CanPurchase', function(CanBuy)
         if CanBuy then
-            local ped = PlayerPedId()
+            local ped = GetPlayerPed(-1)
             local veh = GetVehiclePedIsIn(ped)
 
             FreezeEntityPosition(veh, false)
@@ -879,7 +879,7 @@ RegisterNUICallback('PurchaseUpgrades', function(data, cb)
 end)
 
 function GetTyreSmokeKey()
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local veh = GetVehiclePedIsIn(ped, false)
     local cur = table.pack(GetVehicleTyreSmokeColor(veh))
     local retval = -1
@@ -894,7 +894,7 @@ function GetTyreSmokeKey()
 end
 
 RegisterNUICallback('GetCartItem', function(data, cb)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local veh = GetVehiclePedIsIn(ped, false)
     local retval = -1
 

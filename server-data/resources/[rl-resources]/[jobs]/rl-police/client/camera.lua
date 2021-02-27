@@ -10,7 +10,7 @@ Citizen.CreateThread(function()
         local pedPos = GetEntityCoords(ped, false)
         local pedHead = GetEntityRotation(ped, 2)
         if IsControlJustReleased(0, Keys["H"]) then
-            print("Rotation: " ..GetEntityRotation(PlayerPedId()))
+            print("Rotation: " ..GetEntityRotation(GetPlayerPed(-1)))
         end
         if createdCamera ~= 0 then
             local instructions = CreateInstuctionScaleform("instructional_buttons")

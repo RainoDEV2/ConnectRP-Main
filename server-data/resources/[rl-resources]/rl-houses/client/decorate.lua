@@ -321,11 +321,11 @@ RegisterNUICallback("chooseobject", function(data, cb)
 end)
 
 function EnableEditMode()
-	local pos = GetEntityCoords(PlayerPedId(), true)
+	local pos = GetEntityCoords(GetPlayerPed(-1), true)
 	curPos = {x = pos.x, y = pos.y, z = pos.z}
-	SetEntityVisible(PlayerPedId(), false)
-	FreezeEntityPosition(PlayerPedId(), true)
-	SetEntityCollision(PlayerPedId(), false, false)
+	SetEntityVisible(GetPlayerPed(-1), false)
+	FreezeEntityPosition(GetPlayerPed(-1), true)
+	SetEntityCollision(GetPlayerPed(-1), false, false)
 	CreateEditCamera()
 	DecoMode = true
 	TriggerEvent('rl-anticheat:client:ToggleDecorate', true)
@@ -333,9 +333,9 @@ end
 
 function DisableEditMode()
 	SaveDecorations()
-	SetEntityVisible(PlayerPedId(), true)
-	FreezeEntityPosition(PlayerPedId(), false)
-	SetEntityCollision(PlayerPedId(), true, true)
+	SetEntityVisible(GetPlayerPed(-1), true)
+	FreezeEntityPosition(GetPlayerPed(-1), false)
+	SetEntityCollision(GetPlayerPed(-1), true, true)
 	SetDefaultCamera()
 	EnableAllControlActions(0)
 	ObjectList = nil
@@ -532,8 +532,8 @@ function CheckMovementInput()
 end
 
 function CreateEditCamera()
-	local rot = GetEntityRotation(PlayerPedId())
-	local pos = GetEntityCoords(PlayerPedId(), true)
+	local rot = GetEntityRotation(GetPlayerPed(-1))
+	local pos = GetEntityCoords(GetPlayerPed(-1), true)
 	MainCamera = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, 60.00, false, 0)
 	SetCamActive(MainCamera, true)
 	RenderScriptCams(true, false, 1, true, true)

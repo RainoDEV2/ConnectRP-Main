@@ -22,7 +22,7 @@ AddEventHandler("consumables:client:UseJoint", function()
     }, {}, {}, {}, function() -- Done
         TriggerEvent("debug", 'Consumables: Joint', 'success')
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["joint"], "remove")
-        if IsPedInAnyVehicle(PlayerPedId(), false) then
+        if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
             TriggerEvent('animations:client:EmoteCommandStart', {"smoke3"})
         else
             TriggerEvent('animations:client:EmoteCommandStart', {"smokeweed"})
@@ -43,7 +43,7 @@ end
 
 function EquipParachuteAnim()
     loadAnimDict("clothingshirt")        
-    TaskPlayAnim(PlayerPedId(), "clothingshirt", "try_shirt_positive_d", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
+    TaskPlayAnim(GetPlayerPed(-1), "clothingshirt", "try_shirt_positive_d", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
 end
 
 local ParachuteEquiped = false
@@ -57,7 +57,7 @@ AddEventHandler("consumables:client:UseParachute", function()
 		disableMouse = false,
 		disableCombat = true,
     }, {}, {}, {}, function() -- Done
-        local ped = PlayerPedId()
+        local ped = GetPlayerPed(-1)
         TriggerEvent("debug", 'Consumables: Parachute', 'success')
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["parachute"], "remove")
         GiveWeaponToPed(ped, GetHashKey("GADGET_PARACHUTE"), 1, false)
@@ -82,7 +82,7 @@ AddEventHandler("consumables:client:ResetParachute", function()
             disableMouse = false,
             disableCombat = true,
         }, {}, {}, {}, function() -- Done
-            local ped = PlayerPedId()
+            local ped = GetPlayerPed(-1)
             TriggerEvent("debug", 'Consumables: Reset Parachute', 'success')
             TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["parachute"], "add")
             local ParachuteRemoveData = { 
@@ -103,7 +103,7 @@ end)
 -- RegisterNetEvent("consumables:client:UseRedSmoke")
 -- AddEventHandler("consumables:client:UseRedSmoke", function()
 --     if ParachuteEquiped then
---         local ped = PlayerPedId()
+--         local ped = GetPlayerPed(-1)
 --         SetPlayerParachuteSmokeTrailColor(ped, 255, 0, 0)
 --         SetPlayerCanLeaveParachuteSmokeTrail(ped, true)
 --         TriggerEvent("inventory:client:Itembox", RLCore.Shared.Items["smoketrailred"], "remove")
@@ -124,7 +124,7 @@ AddEventHandler("consumables:client:UseArmor", function()
 		disableCombat = true,
     }, {}, {}, {}, function() -- Done
         TriggerServerEvent('hospital:server:SetArmor', 75)
-        SetPedArmour(PlayerPedId(), 75)
+        SetPedArmour(GetPlayerPed(-1), 75)
     end)
 end)
 
@@ -132,7 +132,7 @@ local currentVest = nil
 local currentVestTexture = nil
 RegisterNetEvent("consumables:client:UseHeavyArmor")
 AddEventHandler("consumables:client:UseHeavyArmor", function()
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local PlayerData = RLCore.Functions.GetPlayerData()
     TriggerServerEvent("RLCore:Server:RemoveItem", "heavyarmor", 1)
     TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["heavyarmor"], "remove")
@@ -151,7 +151,7 @@ end)
 
 RegisterNetEvent("consumables:client:ResetArmor")
 AddEventHandler("consumables:client:ResetArmor", function()
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     if currentVest ~= nil and currentVestTexture ~= nil then 
         RLCore.Functions.Progressbar("remove_armor", "Removing Armor", 2500, false, true, {
             disableMovement = false,
@@ -210,12 +210,12 @@ AddEventHandler('consumables:client:oxy', function()
 		flags = 49,
     }, {}, {}, function() -- Done
         TriggerEvent("debug", 'Consumables: Oxy', 'success')
-        StopAnimTask(PlayerPedId(), "mp_suicide", "pill", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "mp_suicide", "pill", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", "oxy", 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["oxy"], "remove")
         OxyEffect()
     end, function() -- Cancel
-        StopAnimTask(PlayerPedId(), "mp_suicide", "pill", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "mp_suicide", "pill", 1.0)
         RLCore.Functions.Notify("Failed", "error")
     end)
 end)
@@ -233,13 +233,13 @@ AddEventHandler("consumables:client:Cokebaggy", function()
         flags = 50,
     }, {}, {}, function() -- Done
         TriggerEvent("debug", 'Consumables: Coke Baggy', 'success')
-        StopAnimTask(PlayerPedId(), "anim@amb@nightclub@peds@", "missfbi3_party_snort_coke_b_male3", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "anim@amb@nightclub@peds@", "missfbi3_party_snort_coke_b_male3", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", "cokebaggy", 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["cokebaggy"], "remove")
         TriggerEvent("evidence:client:SetStatus", "widepupils", 200)
         CokeBaggyEffect()
     end, function() -- Cancel
-        StopAnimTask(PlayerPedId(), "anim@amb@nightclub@peds@", "missfbi3_party_snort_coke_b_male3", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "anim@amb@nightclub@peds@", "missfbi3_party_snort_coke_b_male3", 1.0)
         RLCore.Functions.Notify("Canceled..", "error")
     end)
 end)
@@ -257,13 +257,13 @@ AddEventHandler("consumables:client:Crackbaggy", function()
         flags = 49,
     }, {}, {}, function() -- Done
         TriggerEvent("debug", 'Consumables: Crack Baggy', 'success')
-        StopAnimTask(PlayerPedId(), "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", "crack_baggy", 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["crack_baggy"], "remove")
         TriggerEvent("evidence:client:SetStatus", "widepupils", 300)
         CrackBaggyEffect()
     end, function() -- Cancel
-        StopAnimTask(PlayerPedId(), "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 1.0)
         RLCore.Functions.Notify("Canceled..", "error")
     end)
 end)
@@ -281,12 +281,12 @@ AddEventHandler('consumables:client:EcstasyBaggy', function()
 		flags = 49,
     }, {}, {}, function() -- Done
         TriggerEvent("debug", 'Consumables: Ecstasy Baggy', 'success')
-        StopAnimTask(PlayerPedId(), "mp_suicide", "pill", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "mp_suicide", "pill", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", "xtcbaggy", 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["xtcbaggy"], "remove")
         EcstasyEffect()
     end, function() -- Cancel
-        StopAnimTask(PlayerPedId(), "mp_suicide", "pill", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "mp_suicide", "pill", 1.0)
         RLCore.Functions.Notify("Failed", "error")
     end)
 end)
@@ -341,7 +341,7 @@ function EcstasyEffect()
 end
 
 function OxyEffect()
-	local ped = PlayerPedId()
+	local ped = GetPlayerPed(-1)
 	local playerPed = PlayerId()
 	local maxHealth = GetEntityMaxHealth(PlayerPedId())
 	local health = GetEntityHealth(PlayerPedId())
@@ -350,7 +350,7 @@ function OxyEffect()
 end
 
 function JointEffect()
-	local ped = PlayerPedId()
+	local ped = GetPlayerPed(-1)
     AddArmourToPed(ped, 3)
     Citizen.Wait(3000)
     AddArmourToPed(ped, 3)

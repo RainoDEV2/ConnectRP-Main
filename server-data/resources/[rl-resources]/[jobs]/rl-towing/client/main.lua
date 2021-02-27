@@ -60,7 +60,7 @@ end)
 
 RegisterNetEvent('rl-tow:client:TowVehicle')
 AddEventHandler('rl-tow:client:TowVehicle', function()
-    local vehicle = GetVehiclePedIsIn(PlayerPedId(), true)
+    local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
     if isTowVehicle(vehicle) then 
         if CurrentTow == nil then 
             local playerped = PlayerPedId()
@@ -73,7 +73,7 @@ AddEventHandler('rl-tow:client:TowVehicle', function()
                     return
                 end
             end
-            if not IsPedInAnyVehicle(PlayerPedId()) then
+            if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
                 if vehicle ~= targetVehicle then
                     local towPos = GetEntityCoords(vehicle)
                     local targetPos = GetEntityCoords(targetVehicle)
@@ -88,13 +88,13 @@ AddEventHandler('rl-tow:client:TowVehicle', function()
                             anim = "fixing_a_ped",
                             flags = 16,
                         }, {}, {}, function() -- Done
-                            StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_ped", 1.0)
+                            StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_ped", 1.0)
                             AttachEntityToEntity(targetVehicle, vehicle, GetEntityBoneIndexByName(vehicle, 'bodyshell'), 0.0, -1.5 + -0.85, 0.0 + 1.15, 0, 0, 0, 1, 1, 0, 1, 0, 1)
                             FreezeEntityPosition(targetVehicle, true)
                             CurrentTow = targetVehicle
                             RLCore.Functions.Notify("Vehicle Towed!")
                         end, function() -- Cancel
-                            StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_ped", 1.0)
+                            StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_ped", 1.0)
                             RLCore.Functions.Notify("Failed!", "error")
                         end)
                     end
@@ -111,7 +111,7 @@ AddEventHandler('rl-tow:client:TowVehicle', function()
                 anim = "fixing_a_ped",
                 flags = 16,
             }, {}, {}, function() -- Done
-                StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_ped", 1.0)
+                StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_ped", 1.0)
                 FreezeEntityPosition(CurrentTow, false)
                 Citizen.Wait(250)
                 AttachEntityToEntity(CurrentTow, vehicle, 20, -0.0, -15.0, 1.0, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
@@ -125,7 +125,7 @@ AddEventHandler('rl-tow:client:TowVehicle', function()
                 CurrentTow = nil
                 RLCore.Functions.Notify("Vehicle tackled!")
             end, function() -- Cancel
-                StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_ped", 1.0)
+                StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_ped", 1.0)
                 RLCore.Functions.Notify("Failed!", "error")
             end)
         end

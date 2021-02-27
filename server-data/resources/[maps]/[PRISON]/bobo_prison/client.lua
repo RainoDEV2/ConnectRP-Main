@@ -11,8 +11,8 @@ end)
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(1)
-    local myCoords = GetEntityCoords(PlayerPedId())
-    if GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), 1772.5219726563,2483.5825195313,45.598968505859, true ) < 80 then
+    local myCoords = GetEntityCoords(GetPlayerPed(-1))
+    if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), 1772.5219726563,2483.5825195313,45.598968505859, true ) < 80 then
       ClearAreaOfPeds(1772.5219726563,2483.5825195313,45.598968505859, 58.0, 0)
     end
   end

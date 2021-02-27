@@ -39,14 +39,14 @@ AddEventHandler('hospital:client:isEscorted', function(bool)
 end)
 
 function SetLaststand(bool, spawn)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     if bool then
         Wait(1000)
-        local isincar = IsPedInAnyVehicle(PlayerPedId(), false)
+        local isincar = IsPedInAnyVehicle(GetPlayerPed(-1), false)
         if isincar then
             LaststandCarObject = {
-                ['obj'] = GetVehiclePedIsIn(PlayerPedId(), false),
-                ['seat'] = getSeat(GetVehiclePedIsIn(PlayerPedId(), false), ped)
+                ['obj'] = GetVehiclePedIsIn(GetPlayerPed(-1), false),
+                ['seat'] = getSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), ped)
             }
         end
 
@@ -146,7 +146,7 @@ end)
 
 RegisterNetEvent('hospital:client:HelpPerson')
 AddEventHandler('hospital:client:HelpPerson', function(targetId)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     isHealingPerson = true
     RLCore.Functions.Progressbar("hospital_revive", "Help person up..", math.random(30000, 60000), false, true, {
         disableMovement = false,

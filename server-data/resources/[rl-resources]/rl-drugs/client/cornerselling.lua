@@ -24,7 +24,7 @@ AddEventHandler('rl-drugs:client:cornerselling', function(data)
             if not cornerselling then
                 cornerselling = true
                 RLCore.Functions.Notify('You are corner selling drugs.')
-                startLocation = GetEntityCoords(PlayerPedId())
+                startLocation = GetEntityCoords(GetPlayerPed(-1))
             else
                 cornerselling = false
                 RLCore.Functions.Notify('Sales Ended.' , "error")
@@ -51,7 +51,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(4)
         if stealingPed ~= nil and stealData ~= nil then
             if IsEntityDead(stealingPed) then
-                local pos = GetEntityCoords(PlayerPedId())
+                local pos = GetEntityCoords(GetPlayerPed(-1))
                 local pedpos = GetEntityCoords(stealingPed)
                 if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, pedpos.x, pedpos.y, pedpos.z, true) < 1.5) then
                     DrawText3D(pedpos.x, pedpos.y, pedpos.z, "[E] Get stuff back")
@@ -60,9 +60,9 @@ Citizen.CreateThread(function()
                         while not HasAnimDictLoaded("pickup_object") do
                             Citizen.Wait(7)
                         end
-                        TaskPlayAnim(PlayerPedId(), "pickup_object" ,"pickup_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
+                        TaskPlayAnim(GetPlayerPed(-1), "pickup_object" ,"pickup_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
                         Citizen.Wait(2000)
-                        ClearPedTasks(PlayerPedId())
+                        ClearPedTasks(GetPlayerPed(-1))
                         TriggerServerEvent("RLCore:Server:AddItem", stealData.item, stealData.amount)
                         TriggerEvent('inventory:client:ItemBox', RLCore.Shared.Items[stealData.item], "add")
                         stealingPed = nil
@@ -80,7 +80,7 @@ Citizen.CreateThread(function()
     while true do
 
         if cornerselling then
-            local player = PlayerPedId()
+            local player = GetPlayerPed(-1)
             local coords = GetEntityCoords(player)
             if not hasTarget then
                 local PlayerPeds = {}
@@ -97,7 +97,7 @@ Citizen.CreateThread(function()
                 end
             end
 
-            local startDist = GetDistanceBetweenCoords(startLocation, GetEntityCoords(PlayerPedId()))
+            local startDist = GetDistanceBetweenCoords(startLocation, GetEntityCoords(GetPlayerPed(-1)))
 
             if startDist > 10 then
                 toFarAway()
@@ -130,7 +130,7 @@ function SellToPed(ped)
     local succesChance = math.random(1, 30)
 
     local scamChance = math.random(1, 5)
-    local player = PlayerPedId()
+    local player = GetPlayerPed(-1)
     local getRobbed = math.random(1, 20)
 
 
@@ -148,7 +148,7 @@ function SellToPed(ped)
     SetEntityAsNoLongerNeeded(ped)
     ClearPedTasks(ped)
 
-    local coords = GetEntityCoords(PlayerPedId(), true)
+    local coords = GetEntityCoords(GetPlayerPed(-1), true)
     local pedCoords = GetEntityCoords(ped)
     local pedDist = GetDistanceBetweenCoords(coords, pedCoords)
 
@@ -159,7 +159,7 @@ function SellToPed(ped)
     end
 
     while pedDist > 1.5 do
-        coords = GetEntityCoords(PlayerPedId(), true)
+        coords = GetEntityCoords(GetPlayerPed(-1), true)
         pedCoords = GetEntityCoords(ped)    
         if getRobbed == 18 or getRobbed == 9 then
             TaskGoStraightToCoord(ped, coords, 15.0, -1, 0.0, 0.0)
@@ -172,14 +172,14 @@ function SellToPed(ped)
         Citizen.Wait(100)
     end
 
-    TaskLookAtEntity(ped, PlayerPedId(), 5500.0, 2048, 3)
-    TaskTurnPedToFaceEntity(ped, PlayerPedId(), 5500)
+    TaskLookAtEntity(ped, GetPlayerPed(-1), 5500.0, 2048, 3)
+    TaskTurnPedToFaceEntity(ped, GetPlayerPed(-1), 5500)
     TaskStartScenarioInPlace(ped, "WORLD_HUMAN_STAND_IMPATIENT_UPRIGHT", 0, false)
     currentPed = ped
 
     if hasTarget then
         while pedDist < 1.5 do
-            coords = GetEntityCoords(PlayerPedId(), true)
+            coords = GetEntityCoords(GetPlayerPed(-1), true)
             pedCoords = GetEntityCoords(ped)
             pedDist = GetDistanceBetweenCoords(coords, pedCoords)
 
@@ -204,7 +204,7 @@ function SellToPed(ped)
                     rand2 = 0.0 - rand2
                 end
             
-                local moveto = GetEntityCoords(PlayerPedId())
+                local moveto = GetEntityCoords(GetPlayerPed(-1))
                 local movetoCoords = {x = moveto.x + math.random(100, 500), y = moveto.y + math.random(100, 500), z = moveto.z, }
                 ClearPedTasksImmediately(ped)
                 TaskGoStraightToCoord(ped, movetoCoords.x, movetoCoords.y, movetoCoords.z, 15.0, -1, 0.0, 0.0)
@@ -219,13 +219,13 @@ function SellToPed(ped)
                         hasTarget = false
 		
                         --loadAnimDict("gestures@f@standing@casual")
-                        --TaskPlayAnim(PlayerPedId(), "gestures@f@standing@casual", "gesture_point", 3.0, 3.0, -1, 49, 0, 0, 0, 0)
+                        --TaskPlayAnim(GetPlayerPed(-1), "gestures@f@standing@casual", "gesture_point", 3.0, 3.0, -1, 49, 0, 0, 0, 0)
                         loadAnimDict("mp_safehouselost@")
                         TaskPlayAnim(player, "mp_safehouselost@", "package_dropoff", 8.0, 1.0, -1, 16, 0, 0, 0, 0)
 						Citizen.Wait(1000)
                         TaskPlayAnim(ped, "mp_safehouselost@", "package_dropoff", 8.0, 1.0, -1, 16, 0, 0, 0, 0)
                         Citizen.Wait(1000)
-                        ClearPedTasks(PlayerPedId())
+                        ClearPedTasks(GetPlayerPed(-1))
                         SetPedKeepTask(ped, false)
                         SetEntityAsNoLongerNeeded(ped)
                         ClearPedTasksImmediately(ped)

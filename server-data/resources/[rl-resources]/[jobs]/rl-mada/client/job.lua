@@ -18,7 +18,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1)
         if isLoggedIn and RLCore ~= nil then
-            local pos = GetEntityCoords(PlayerPedId())
+            local pos = GetEntityCoords(GetPlayerPed(-1))
             if PlayerJob.name == "doctor" or PlayerJob.name == "ambulance" then
 
                 for k, v in pairs(Config.Locations["duty"]) do
@@ -59,14 +59,14 @@ Citizen.CreateThread(function()
                     if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 4.5) then
                         DrawMarker(2, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
                         if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.5) then
-                            if IsPedInAnyVehicle(PlayerPedId(), false) then
+                            if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
                                 DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Store the vehicle")
                             else
                                 DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Vehicles")
                             end
                             if IsControlJustReleased(0, Keys["E"]) then
-                                if IsPedInAnyVehicle(PlayerPedId(), false) then
-                                    RLCore.Functions.DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
+                                if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+                                    RLCore.Functions.DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
                                 else
                                     MenuGarage()
                                     currentGarage = k
@@ -83,14 +83,14 @@ Citizen.CreateThread(function()
                         if onDuty then
                             DrawMarker(2, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
                             if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.5) then
-                                if IsPedInAnyVehicle(PlayerPedId(), false) then
+                                if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
                                     DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Store the helicopter")
                                 else
                                     DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Spawn Helicopter")
                                 end
                                 if IsControlJustReleased(0, Keys["E"]) then
-                                    if IsPedInAnyVehicle(PlayerPedId(), false) then
-                                        RLCore.Functions.DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
+                                    if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+                                        RLCore.Functions.DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
                                     else
                                         local coords = Config.Locations["helicopter"][k]
                                         RLCore.Functions.SpawnVehicle(Config.Helicopter, function(veh)
@@ -99,7 +99,7 @@ Citizen.CreateThread(function()
                                             SetEntityHeading(veh, coords.h)
                                             exports['LegacyFuel']:SetFuel(veh, 100)
                                             closeMenuFull()
-                                            TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+                                            TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
                                             TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
                                             SetVehicleEngineOn(veh, true, true)
                                         end, coords, true)
@@ -189,9 +189,9 @@ Citizen.CreateThread(function()
         end
 
         if isHealingPerson then
-            if not IsEntityPlayingAnim(PlayerPedId(), healAnimDict, healAnim, 3) then
+            if not IsEntityPlayingAnim(GetPlayerPed(-1), healAnimDict, healAnim, 3) then
                 loadAnimDict(healAnimDict)	
-                TaskPlayAnim(PlayerPedId(), healAnimDict, healAnim, 3.0, 3.0, -1, 49, 0, 0, 0, 0)
+                TaskPlayAnim(GetPlayerPed(-1), healAnimDict, healAnim, 3.0, 3.0, -1, 49, 0, 0, 0, 0)
             end
         end
     end
@@ -210,7 +210,7 @@ AddEventHandler('hospital:client:AiCall', function()
         local ped = GetPlayerPed(player)
         table.insert(PlayerPeds, ped)
     end
-    local player = PlayerPedId()
+    local player = GetPlayerPed(-1)
     local coords = GetEntityCoords(player)
     local closestPed, closestDistance = RLCore.Functions.GetClosestPed(coords, PlayerPeds)
     local gender = RLCore.Functions.GetPlayerData().gender
@@ -224,7 +224,7 @@ function MakeCall(ped, male)
     local callAnim = "cellphone_call_listen_base"
     local rand = (math.random(6,9) / 100) + 0.3
     local rand2 = (math.random(6,9) / 100) + 0.3
-    local coords = GetEntityCoords(PlayerPedId())
+    local coords = GetEntityCoords(GetPlayerPed(-1))
     local blipsettings = {
         x = coords.x,
         y = coords.y,
@@ -243,7 +243,7 @@ function MakeCall(ped, male)
         rand2 = 0.0 - rand2
     end
 
-    local moveto = GetOffsetFromEntityInWorldCoords(PlayerPedId(), rand, rand2, 0.0)
+    local moveto = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), rand, rand2, 0.0)
 
     TaskGoStraightToCoord(ped, moveto, 2.5, -1, 0.0, 0.0)
     SetPedKeepTask(ped, true) 
@@ -257,8 +257,8 @@ function MakeCall(ped, male)
     end
 
     ClearPedTasksImmediately(ped)
-    TaskLookAtEntity(ped, PlayerPedId(), 5500.0, 2048, 3)
-    TaskTurnPedToFaceEntity(ped, PlayerPedId(), 5500)
+    TaskLookAtEntity(ped, GetPlayerPed(-1), 5500.0, 2048, 3)
+    TaskTurnPedToFaceEntity(ped, GetPlayerPed(-1), 5500)
 
     Citizen.Wait(3000)
 
@@ -295,12 +295,12 @@ AddEventHandler('hospital:client:RevivePlayer', function()
                     flags = 16,
                 }, {}, {}, function() -- Done
                     isHealingPerson = false
-                    StopAnimTask(PlayerPedId(), healAnimDict, "exit", 1.0)
+                    StopAnimTask(GetPlayerPed(-1), healAnimDict, "exit", 1.0)
                     RLCore.Functions.Notify("You helped the person!")
                     TriggerServerEvent("hospital:server:RevivePlayer", playerId)
                 end, function() -- Cancel
                     isHealingPerson = false
-                    StopAnimTask(PlayerPedId(), healAnimDict, "exit", 1.0)
+                    StopAnimTask(GetPlayerPed(-1), healAnimDict, "exit", 1.0)
                     RLCore.Functions.Notify("Failed!", "error")
                 end)
             end
@@ -340,12 +340,12 @@ AddEventHandler('hospital:client:TreatWounds', function()
                     flags = 16,
                 }, {}, {}, function() -- Done
                     isHealingPerson = false
-                    StopAnimTask(PlayerPedId(), healAnimDict, "exit", 1.0)
+                    StopAnimTask(GetPlayerPed(-1), healAnimDict, "exit", 1.0)
                     RLCore.Functions.Notify("You helped the person!")
                     TriggerServerEvent("hospital:server:TreatWounds", playerId)
                 end, function() -- Cancel
                     isHealingPerson = false
-                    StopAnimTask(PlayerPedId(), healAnimDict, "exit", 1.0)
+                    StopAnimTask(GetPlayerPed(-1), healAnimDict, "exit", 1.0)
                     RLCore.Functions.Notify("Failed!", "error")
                 end)
             end
@@ -354,7 +354,7 @@ AddEventHandler('hospital:client:TreatWounds', function()
 end)
 
 function MenuGarage(isDown)
-    ped = PlayerPedId();
+    ped = GetPlayerPed(-1);
     MenuTitle = "Garage"
     ClearMenu()
     Menu.addButton("Vehicles", "VehicleList", isDown)
@@ -362,7 +362,7 @@ function MenuGarage(isDown)
 end
 
 function VehicleList(isDown)
-    ped = PlayerPedId();
+    ped = GetPlayerPed(-1);
     MenuTitle = "Vehicles:"
     ClearMenu()
     for k, v in pairs(Config.Vehicles) do
@@ -385,7 +385,7 @@ function TakeOutVehicle(vehicleInfo)
         SetEntityHeading(veh, coords.h)
         exports['LegacyFuel']:SetFuel(veh, 100)
         closeMenuFull()
-        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
         SetVehicleEngineOn(veh, true, true)
         --SetVehicleFuelLevel(veh, 100.00)

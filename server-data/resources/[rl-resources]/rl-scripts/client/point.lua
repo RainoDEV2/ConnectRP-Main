@@ -2,7 +2,7 @@ local mp_pointing = false
 local keyPressed = false
 
 local function startPointing()
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     RequestAnimDict("anim@mp_point")
     while not HasAnimDictLoaded("anim@mp_point") do
         Wait(0)
@@ -14,7 +14,7 @@ local function startPointing()
 end
 
 local function stopPointing()
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     Citizen.InvokeNative(0xD01015C7316AE176, ped, "Stop")
     if not IsPedInjured(ped) then
         ClearPedSecondaryTask(ped)
@@ -69,7 +69,7 @@ Citizen.CreateThread(function()
             if not IsPedOnFoot(PlayerPedId()) then
                 stopPointing()
             else
-                local ped = PlayerPedId()
+                local ped = GetPlayerPed(-1)
                 local camPitch = GetGameplayCamRelativePitch()
                 if camPitch < -70.0 then
                     camPitch = -70.0

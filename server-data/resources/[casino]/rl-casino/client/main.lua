@@ -22,7 +22,7 @@ end)
 Citizen.CreateThread(function()
     while true do
         local InRange = false
-        local PlayerPed = PlayerPedId()
+        local PlayerPed = GetPlayerPed(-1)
         local PlayerPos = GetEntityCoords(PlayerPed)
         
             local dist = GetDistanceBetweenCoords(PlayerPos, 1116.2709, 218.53176, -49.43515)

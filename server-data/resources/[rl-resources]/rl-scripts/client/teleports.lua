@@ -61,7 +61,7 @@ end
 Citizen.CreateThread(function()
     while true do
         local inRange = false
-        local ped = PlayerPedId()
+        local ped = GetPlayerPed(-1)
         local pos = GetEntityCoords(ped)
 
         for loc,_ in pairs(Teleports.Locations) do

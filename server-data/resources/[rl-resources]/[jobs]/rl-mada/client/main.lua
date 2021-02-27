@@ -90,7 +90,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1)
         if RLCore ~= nil then
-            local pos = GetEntityCoords(PlayerPedId())
+            local pos = GetEntityCoords(GetPlayerPed(-1))
 
             if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["checking"].x, Config.Locations["checking"].y, Config.Locations["checking"].z, true) < 1.5) then
                 if doctorCount >= Config.MinimalDoctors then
@@ -179,7 +179,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(7)
         if RLCore ~= nil then
             if isInHospitalBed and canLeaveBed then
-                local pos = GetEntityCoords(PlayerPedId())
+                local pos = GetEntityCoords(GetPlayerPed(-1))
                 RLCore.Functions.DrawText3D(pos.x, pos.y, pos.z, "~g~E~w~ - To get out of bed..")
                 if IsControlJustReleased(0, Keys["E"]) then
                     LeaveBed()
@@ -202,25 +202,25 @@ AddEventHandler('hospital:client:Revive', function()
 		local playerPos = GetEntityCoords(player, true)
         NetworkResurrectLocalPlayer(playerPos, true, true, false)
         isDead = false
-        SetEntityInvincible(PlayerPedId(), false)
+        SetEntityInvincible(GetPlayerPed(-1), false)
     elseif InLaststand then
         local playerPos = GetEntityCoords(player, true)
         NetworkResurrectLocalPlayer(playerPos, true, true, false)
         isDead = false
-        SetEntityInvincible(PlayerPedId(), false)
+        SetEntityInvincible(GetPlayerPed(-1), false)
         SetLaststand(false)
     end
 
     if isInHospitalBed then
         loadAnimDict(inBedDict)
         TaskPlayAnim(player, inBedDict , inBedAnim, 8.0, 1.0, -1, 1, 0, 0, 0, 0 )
-        SetEntityInvincible(PlayerPedId(), true)
+        SetEntityInvincible(GetPlayerPed(-1), true)
         canLeaveBed = true
     end
 
     TriggerServerEvent("hospital:server:RestoreWeaponDamage")
 
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     SetEntityMaxHealth(ped, 200)
     SetEntityHealth(ped, 200)
     ClearPedBloodDamage(player)
@@ -239,7 +239,7 @@ end)
 
 RegisterNetEvent('hospital:client:KillPlayer')
 AddEventHandler('hospital:client:KillPlayer', function()
-    SetEntityHealth(PlayerPedId(), 0)
+    SetEntityHealth(GetPlayerPed(-1), 0)
 end)
 
 RegisterNetEvent('hospital:client:HealInjuries')
@@ -324,7 +324,7 @@ Citizen.CreateThread(function()
     end
 
     exports.spawnmanager:setAutoSpawn(false)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     SetEntityMaxHealth(ped, 200)
     SetEntityHealth(ped, 200)
     isLoggedIn = true
@@ -334,7 +334,7 @@ Citizen.CreateThread(function()
         RLCore.Functions.GetPlayerData(function(PlayerData)
             PlayerJob = PlayerData.job
             onDuty = PlayerData.job.onduty
-            SetPedArmour(PlayerPedId(), PlayerData.metadata["armor"])
+            SetPedArmour(GetPlayerPed(-1), PlayerData.metadata["armor"])
             if (not PlayerData.metadata["inlaststand"] and PlayerData.metadata["isdead"]) then
                 local player = PlayerId()
                 local playerPed = PlayerPedId()
@@ -367,18 +367,18 @@ AddEventHandler('RLCore:Client:OnPlayerUnload', function()
     isLoggedIn = false
     TriggerServerEvent("hospital:server:SetDeathStatus", false)
     TriggerServerEvent('hospital:server:SetLaststandStatus', false)
-    TriggerServerEvent("hospital:server:SetArmor", GetPedArmour(PlayerPedId()))
+    TriggerServerEvent("hospital:server:SetArmor", GetPedArmour(GetPlayerPed(-1)))
     if bedOccupying ~= nil then 
         TriggerServerEvent("hospital:server:LeaveBed", bedOccupying)
     end
     isDead = false
     deathTime = 0
-    SetEntityInvincible(PlayerPedId(), false)
-    SetPedArmour(PlayerPedId(), 0)
+    SetEntityInvincible(GetPlayerPed(-1), false)
+    SetPedArmour(GetPlayerPed(-1), 0)
 end)
 
 function SetClosestBed() 
-    local pos = GetEntityCoords(PlayerPedId(), true)
+    local pos = GetEntityCoords(GetPlayerPed(-1), true)
     local current = nil
     local dist = nil
     for k, v in pairs(Config.Locations["beds"]) do
@@ -467,7 +467,7 @@ function LeaveBed()
 end
 
 function MenuOutfits()
-    ped = PlayerPedId();
+    ped = GetPlayerPed(-1);
     MenuTitle = "Outfits"
     ClearMenu()
     Menu.addButton("My Outfits", "OutfitsLijst", nil)
@@ -477,14 +477,14 @@ end
 function changeOutfit()
 	Wait(200)
     loadAnimDict("clothingshirt")    	
-	TaskPlayAnim(PlayerPedId(), "clothingshirt", "try_shirt_positive_d", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
+	TaskPlayAnim(GetPlayerPed(-1), "clothingshirt", "try_shirt_positive_d", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
 	Wait(3100)
-	TaskPlayAnim(PlayerPedId(), "clothingshirt", "exit", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
+	TaskPlayAnim(GetPlayerPed(-1), "clothingshirt", "exit", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
 end
 
 function OutfitsLijst()
     RLCore.Functions.TriggerCallback('apartments:GetOutfits', function(outfits)
-        ped = PlayerPedId();
+        ped = GetPlayerPed(-1);
         MenuTitle = "My Outfits :"
         ClearMenu()
 
@@ -501,7 +501,7 @@ function OutfitsLijst()
 end
 
 function optionMenu(outfitData)
-    ped = PlayerPedId();
+    ped = GetPlayerPed(-1);
     MenuTitle = "What now?"
     ClearMenu()
 
@@ -533,7 +533,7 @@ function GetClosestPlayer()
     local closestPlayers = RLCore.Functions.GetPlayersFromCoords()
     local closestDistance = -1
     local closestPlayer = -1
-    local coords = GetEntityCoords(PlayerPedId())
+    local coords = GetEntityCoords(GetPlayerPed(-1))
 
     for i=1, #closestPlayers, 1 do
         if closestPlayers[i] ~= PlayerId() then

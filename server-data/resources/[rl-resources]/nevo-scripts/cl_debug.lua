@@ -39,7 +39,7 @@ function DrawText3Ds(x,y,z, text)
 end
 
 function GetVehicle()
-    local playerped = PlayerPedId()
+    local playerped = GetPlayerPed(-1)
     local playerCoords = GetEntityCoords(playerped)
     local handle, ped = FindFirstVehicle()
     local success
@@ -60,7 +60,7 @@ function GetVehicle()
 end
 
 function GetObject()
-    local playerped = PlayerPedId()
+    local playerped = GetPlayerPed(-1)
     local playerCoords = GetEntityCoords(playerped)
     local handle, ped = FindFirstObject()
     local success
@@ -82,7 +82,7 @@ function GetObject()
 end
 
 function GetPed()
-    local playerped = PlayerPedId()
+    local playerped = GetPlayerPed(-1)
     local playerCoords = GetEntityCoords(playerped)
     local handle, ped = FindFirstPed()
     local success
@@ -107,7 +107,7 @@ function canPedBeUsed(ped)
     if ped == nil then
         return false
     end
-    if ped == PlayerPedId() then
+    if ped == GetPlayerPed(-1) then
         return false
     end
     if not DoesEntityExist(ped) then

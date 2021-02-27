@@ -236,7 +236,7 @@ AddEventHandler("initializeVoip", function()
 	refreshAllPlayerData();
 
 	-- Set targetped (used for spectator mod for admins)
-	targetPed = PlayerPedId();
+	targetPed = GetPlayerPed(-1);
 
 	-- Request this stuff here only one time
 	if (GetConvar("gametype") == "gta5") then

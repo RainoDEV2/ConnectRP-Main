@@ -416,7 +416,7 @@ Citizen.CreateThread(function()
             BikerGang.Clubhouse.Members.Enforcer.needToLoad or
             BikerGang.Clubhouse.Members.SergeantAtArms.needToLoad) then
 
-            interiorId = GetInteriorAtCoords(GetEntityCoords(PlayerPedId()))
+            interiorId = GetInteriorAtCoords(GetEntityCoords(GetPlayerPed(-1)))
 
             -- If we are inside a clubhouse, then we load
             if (interiorId == BikerGang.Clubhouse.interiorId1 or interiorId == BikerGang.Clubhouse.interiorId2) then

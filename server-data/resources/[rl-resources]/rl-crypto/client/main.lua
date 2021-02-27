@@ -33,7 +33,7 @@ Citizen.CreateThread(function()
 				[1] = {name = RLCore.Shared.Items["cryptostick"]["name"], image = RLCore.Shared.Items["cryptostick"]["image"]},
 			}
 			if isLoggedIn then
-				local ped = PlayerPedId()
+				local ped = GetPlayerPed(-1)
 				local pos = GetEntityCoords(ped)
 				local dist = GetDistanceBetweenCoords(pos, Crypto.Exchange.coords.x, Crypto.Exchange.coords.y, Crypto.Exchange.coords.z, true)
 

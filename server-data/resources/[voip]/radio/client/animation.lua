@@ -79,7 +79,7 @@ function RadioPlayAnim (status, freeze, force)
 		return
 	end
 
-	myPedId = PlayerPedId()
+	myPedId = GetPlayerPed(-1)
 	local freeze = freeze or false
 
 	local dict = "cellphone@"

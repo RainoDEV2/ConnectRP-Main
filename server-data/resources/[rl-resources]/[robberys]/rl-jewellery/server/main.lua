@@ -15,7 +15,7 @@ RegisterServerEvent('rl-jewellery:server:vitrineReward')
 AddEventHandler('rl-jewellery:server:vitrineReward', function()
     local src = source
     local Player = RLCore.Functions.GetPlayer(src)
-    if Player.Functions.AddItem("rolex", math.random(4, 6)) then
+    if Player.Functions.AddItem("rolex", math.random(1, 3)) then
         TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items["rolex"], 'add')
 		dclog(Player, 'Jewelery Store: Glass deck broke.')
     else

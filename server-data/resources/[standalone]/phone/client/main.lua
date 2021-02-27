@@ -1717,7 +1717,7 @@ Citizen.CreateThread(function()
 
     if creatingMap then
 
-      local plycoords = GetEntityCoords(PlayerPedId())
+      local plycoords = GetEntityCoords(GetPlayerPed(-1))
 
       DrawMarker(27,plycoords.x,plycoords.y,plycoords.z,0,0,0,0,0,0,dst,dst,0.3001,255,255,255,255,0,0,0,0)
       
@@ -3013,7 +3013,7 @@ function RadioPlayAnim (status, freeze, force)
 		return
 	end
 
-	myPedId = PlayerPedId()
+	myPedId = GetPlayerPed(-1)
 	local freeze = freeze or false
 
 	local dict = "cellphone@"
@@ -3309,7 +3309,7 @@ local currentMap = {}
      return
    end
  
-   local ped = PlayerPedId()
+   local ped = GetPlayerPed(-1)
    local plyCoords = GetEntityCoords(ped)
    local dist = Vdist(customMaps[map]["checkpoints"][1]["x"],customMaps[map]["checkpoints"][1]["y"],customMaps[map]["checkpoints"][1]["z"], plyCoords.x,plyCoords.y,plyCoords.z)
  
@@ -3368,7 +3368,7 @@ local currentMap = {}
    
    local checkpoints = #customMaps[map]["checkpoints"]
    local mycheckpoint = 1
-   local ped = PlayerPedId()
+   local ped = GetPlayerPed(-1)
  
    SetBlipColour(SetBlips[1], 3)
    SetBlipScale(SetBlips[1], 1.6)
@@ -3551,7 +3551,7 @@ local currentMap = {}
  RegisterNUICallback('racing:event:join', function(data)
    RemoveCheckpoints()
    local id = data.identifier
-   local ped = PlayerPedId()
+   local ped = GetPlayerPed(-1)
    local plyCoords = GetEntityCoords(ped)
  
    if Vdist(customMaps[currentRaces[id]["map"]]["checkpoints"][1]["x"], customMaps[currentRaces[id]["map"]]["checkpoints"][1]["y"], customMaps[currentRaces[id]["map"]]["checkpoints"][1]["z"],plyCoords.x,plyCoords.y,plyCoords.z) < 40 then
@@ -3705,7 +3705,7 @@ local PayPhoneHex = {
 
 function checkForPayPhone()
   for i = 1, #PayPhoneHex do
-    local objFound = GetClosestObjectOfType( GetEntityCoords(PlayerPedId()), 5.0, PayPhoneHex[i], 0, 0, 0)
+    local objFound = GetClosestObjectOfType( GetEntityCoords(GetPlayerPed(-1)), 5.0, PayPhoneHex[i], 0, 0, 0)
     if DoesEntityExist(objFound) then
       return true
     end

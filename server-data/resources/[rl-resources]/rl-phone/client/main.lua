@@ -603,7 +603,7 @@ RegisterNUICallback('SendMessage', function(data, cb)
     local ChatTime = data.ChatTime
     local ChatType = data.ChatType
 
-    local Ped = PlayerPedId()
+    local Ped = GetPlayerPed(-1)
     local Pos = GetEntityCoords(Ped)
     local NumberKey = GetKeyByNumber(ChatNumber)
     local ChatKey = GetKeyByDate(NumberKey, ChatDate)
@@ -1809,7 +1809,7 @@ function GetClosestPlayer()
     local closestPlayers = RLCore.Functions.GetPlayersFromCoords()
     local closestDistance = -1
     local closestPlayer = -1
-    local coords = GetEntityCoords(PlayerPedId())
+    local coords = GetEntityCoords(GetPlayerPed(-1))
 
     for i=1, #closestPlayers, 1 do
         if closestPlayers[i] ~= PlayerId() then
@@ -1828,7 +1828,7 @@ end
 
 RegisterNetEvent('rl-phone:client:GiveContactDetails')
 AddEventHandler('rl-phone:client:GiveContactDetails', function()
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
 
     local player, distance = GetClosestPlayer()
     if player ~= -1 and distance < 2.5 then
@@ -2120,7 +2120,7 @@ end)
 RegisterNUICallback('RaceDistanceCheck', function(data, cb)
     TriggerEvent("debug", 'Phone: Get Racing Data', 'success')
     RLCore.Functions.TriggerCallback('rl-lapraces:server:GetRacingData', function(RaceData)
-        local ped = PlayerPedId()
+        local ped = GetPlayerPed(-1)
         local coords = GetEntityCoords(ped)
         local checkpointcoords = RaceData.Checkpoints[1].coords
         local dist = GetDistanceBetweenCoords(coords, checkpointcoords.x, checkpointcoords.y, checkpointcoords.z, true)
@@ -2200,7 +2200,7 @@ end)
 
 RegisterNUICallback('SetGPSLocation', function(data, cb)
     TriggerEvent("debug", 'Phone: Set GPS Location', 'success')
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
 
     SetNewWaypoint(data.coords.x, data.coords.y)
     RLCore.Functions.Notify('GPS is set!', 'success')

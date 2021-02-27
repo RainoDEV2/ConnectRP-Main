@@ -6,7 +6,7 @@ local currentGate = 0
 
 Citizen.CreateThread(function()
     while true do
-        local ped = PlayerPedId()
+        local ped = GetPlayerPed(-1)
         local pos = GetEntityCoords(ped)
         local dist
 
@@ -37,7 +37,7 @@ Citizen.CreateThread(function()
         [1] = {name = RLCore.Shared.Items["thermite"]["name"], image = RLCore.Shared.Items["thermite"]["image"]},
     }
     while true do
-        local ped = PlayerPedId()
+        local ped = GetPlayerPed(-1)
         local pos = GetEntityCoords(ped)
 
         if RLCore ~= nil then
@@ -73,7 +73,7 @@ end)
 
 RegisterNetEvent("thermite:StartFire")
 AddEventHandler("thermite:StartFire", function(coords, maxChildren, isGasFire)
-    if GetDistanceBetweenCoords(coords.x, coords.y, coords.z, GetEntityCoords(PlayerPedId())) < 100 then
+    if GetDistanceBetweenCoords(coords.x, coords.y, coords.z, GetEntityCoords(GetPlayerPed(-1))) < 100 then
         local pos = {
             x = coords.x, 
             y = coords.y,
@@ -94,7 +94,7 @@ end)
 
 RegisterNetEvent('thermite:UseThermite')
 AddEventHandler('thermite:UseThermite', function()
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local pos = GetEntityCoords(ped)
     if closestStation ~= 0 then
         if math.random(1, 100) <= 85 and not IsWearingHandshoes() then
@@ -105,7 +105,7 @@ AddEventHandler('thermite:UseThermite', function()
             if CurrentCops >= Config.MinimumThermitePolice then
                 if not Config.PowerStations[closestStation].hit then
                     loadAnimDict("weapon@w_sp_jerrycan")
-                    TaskPlayAnim(PlayerPedId(), "weapon@w_sp_jerrycan", "fire", 3.0, 3.9, 180, 49, 0, 0, 0, 0)
+                    TaskPlayAnim(GetPlayerPed(-1), "weapon@w_sp_jerrycan", "fire", 3.0, 3.9, 180, 49, 0, 0, 0, 0)
                     TriggerEvent('inventory:client:requiredItems', requiredItems, false)
                     SetNuiFocus(true, true)
                     SendNUIMessage({
@@ -127,7 +127,7 @@ AddEventHandler('thermite:UseThermite', function()
         if CurrentCops >= Config.MinimumThermitePolice then
             currentGate = currentThermiteGate
             loadAnimDict("weapon@w_sp_jerrycan")
-            TaskPlayAnim(PlayerPedId(), "weapon@w_sp_jerrycan", "fire", 3.0, 3.9, -1, 49, 0, 0, 0, 0)
+            TaskPlayAnim(GetPlayerPed(-1), "weapon@w_sp_jerrycan", "fire", 3.0, 3.9, -1, 49, 0, 0, 0, 0)
             TriggerEvent('inventory:client:requiredItems', requiredItems, false)
             SetNuiFocus(true, true)
             SendNUIMessage({
@@ -153,16 +153,16 @@ RegisterNUICallback('thermitefailed', function()
     PlaySound(-1, "Place_Prop_Fail", "DLC_Dmod_Prop_Editor_Sounds", 0, 0, 1)
     TriggerServerEvent("RLCore:Server:RemoveItem", "thermite", 1)
     TriggerEvent('inventory:client:ItemBox', RLCore.Shared.Items["thermite"], "remove")
-    ClearPedTasks(PlayerPedId())
-    local coords = GetEntityCoords(PlayerPedId())
+    ClearPedTasks(GetPlayerPed(-1))
+    local coords = GetEntityCoords(GetPlayerPed(-1))
     local randTime = math.random(10000, 15000)
     CreateFire(coords, randTime)
 end)
 
 RegisterNUICallback('thermitesuccess', function()
-    ClearPedTasks(PlayerPedId())
+    ClearPedTasks(GetPlayerPed(-1))
     local time = 3
-    local coords = GetEntityCoords(PlayerPedId())
+    local coords = GetEntityCoords(GetPlayerPed(-1))
     while time > 0 do 
         RLCore.Functions.Notify("Burning over " .. time .. "..")
         Citizen.Wait(1000)

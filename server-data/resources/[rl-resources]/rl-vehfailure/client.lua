@@ -57,7 +57,7 @@ local function notification(msg)
 end
 
 local function isPedDrivingAVehicle()
-	local ped = PlayerPedId()
+	local ped = GetPlayerPed(-1)
 	vehicle = GetVehiclePedIsIn(ped, false)
 	if IsPedInAnyVehicle(ped, false) then
 		-- Check if ped is in driver seat
@@ -73,7 +73,7 @@ local function isPedDrivingAVehicle()
 end
 
 local function IsNearMechanic()
-	local ped = PlayerPedId()
+	local ped = GetPlayerPed(-1)
 	local pedLocation = GetEntityCoords(ped, 0)
 	for _, item in pairs(repairCfg.mechanics) do
 		local distance = GetDistanceBetweenCoords(item.x, item.y, item.z,  pedLocation["x"], pedLocation["y"], pedLocation["z"], true)
@@ -244,7 +244,7 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(50)
-		local ped = PlayerPedId()
+		local ped = GetPlayerPed(-1)
 		if isPedDrivingAVehicle() then
 			vehicle = GetVehiclePedIsIn(ped, false)
 			vehicleClass = GetVehicleClass(vehicle)

@@ -75,7 +75,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
 
                         SetVehicleNumberPlateText(veh, vehicle.plate)
                         SetEntityHeading(veh, Depots[currentGarage].takeVehicle.h)
-                        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+                        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
                         exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                         SetEntityAsMissionEntity(veh, true, true)
                         TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate, vehicle)
@@ -115,7 +115,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
     
                             SetVehicleNumberPlateText(veh, vehicle.plate)
                             SetEntityHeading(veh, Depots[currentGarage].takeVehicle.h)
-                            TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+                            TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
                             exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                             SetEntityAsMissionEntity(veh, true, true)
                             TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate, vehicle)
@@ -151,7 +151,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
 
                     SetVehicleNumberPlateText(veh, vehicle.plate)
                     SetEntityHeading(veh, Depots[currentGarage].takeVehicle.h)
-                    TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+                    TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
                     exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                     SetEntityAsMissionEntity(veh, true, true)
                     TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
@@ -188,7 +188,7 @@ AddEventHandler('rl-garages:client:takeOutDepot', function(vehicle)
 
                 SetVehicleNumberPlateText(veh, vehicle.plate)
                 SetEntityHeading(veh, Depots[currentGarage].takeVehicle.h)
-                TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+                TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
                 exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                 SetEntityAsMissionEntity(veh, true, true)
                 TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
@@ -271,7 +271,7 @@ Citizen.CreateThread(function()
 end)
 
 function MenuGarage()
-    ped = PlayerPedId();
+    ped = GetPlayerPed(-1);
     MenuTitle = "Garage"
     ClearMenu()
     Menu.addButton("My Vehicles", "VehicleList", nil)
@@ -279,7 +279,7 @@ function MenuGarage()
 end
 
 function MenuDepot()
-    ped = PlayerPedId();
+    ped = GetPlayerPed(-1);
     MenuTitle = "Depot"
     ClearMenu()
     Menu.addButton("Depot Vehicle", "DepotList", nil)
@@ -287,7 +287,7 @@ function MenuDepot()
 end
 
 function MenuHouseGarage(house)
-    ped = PlayerPedId();
+    ped = GetPlayerPed(-1);
     MenuTitle = HouseGarages[house].label
     ClearMenu()
     Menu.addButton("My Vehicles", "HouseGarage", house)
@@ -300,7 +300,7 @@ end
 
 function HouseGarage(house)
     RLCore.Functions.TriggerCallback("rl-garage:server:GetHouseVehicles", function(result)
-        ped = PlayerPedId();
+        ped = GetPlayerPed(-1);
         MenuTitle = "Depot Vehicles :"
         ClearMenu()
 
@@ -347,7 +347,7 @@ end
 
 function DepotList()
     RLCore.Functions.TriggerCallback("rl-garage:server:GetDepotVehicles", function(result)
-        ped = PlayerPedId();
+        ped = GetPlayerPed(-1);
         MenuTitle = "Depot Vehicles :"
         ClearMenu()
 
@@ -390,7 +390,7 @@ end
 
 function VehicleList()
     RLCore.Functions.TriggerCallback("rl-garage:server:GetUserVehicles", function(result)
-        ped = PlayerPedId();
+        ped = GetPlayerPed(-1);
         MenuTitle = "My Vehicles :"
         ClearMenu()
 
@@ -478,7 +478,7 @@ function TakeOutVehicle(vehicle)
                 TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                 RLCore.Functions.Notify("Vehicle Off: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "%", "primary", 4500)
                 closeMenuFull()
-                TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+                TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
                 TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate, vehicle)
                 SetVehicleEngineOn(veh, true, true)
                 Citizen.Wait(500)
@@ -532,7 +532,7 @@ function TakeOutGarageVehicle(vehicle)
 
                 SetVehicleNumberPlateText(veh, vehicle.plate)
                 SetEntityHeading(veh, HouseGarages[currentHouseGarage].takeVehicle.h)
-                TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+                TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
                 exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                 SetEntityAsMissionEntity(veh, true, true) 
                 TriggerServerEvent('rl-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
@@ -568,7 +568,7 @@ Citizen.CreateThread(function()
     Citizen.Wait(1000)
     while true do
         Citizen.Wait(5)
-        local ped = PlayerPedId()
+        local ped = GetPlayerPed(-1)
         local pos = GetEntityCoords(ped)
         local inGarageRange = false
 
@@ -646,7 +646,7 @@ Citizen.CreateThread(function()
     Citizen.Wait(2000)
     while true do
         Citizen.Wait(5)
-        local ped = PlayerPedId()
+        local ped = GetPlayerPed(-1)
         local pos = GetEntityCoords(ped)
         local inGarageRange = false
 
@@ -713,7 +713,7 @@ Citizen.CreateThread(function()
     Citizen.Wait(1000)
     while true do
         Citizen.Wait(5)
-        local ped = PlayerPedId()
+        local ped = GetPlayerPed(-1)
         local pos = GetEntityCoords(ped)
         local inGarageRange = false
 

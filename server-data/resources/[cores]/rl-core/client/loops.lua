@@ -53,7 +53,7 @@ Citizen.CreateThread(function()
 		Citizen.Wait(math.random(3000, 5000))
 		if isLoggedIn then
 			if RLCore.Functions.GetPlayerData().metadata["hunger"] <= 0 or RLCore.Functions.GetPlayerData().metadata["thirst"] <= 0 then
-				local ped = PlayerPedId()
+				local ped = GetPlayerPed(-1)
 				local currentHealth = GetEntityHealth(ped)
 
 				SetEntityHealth(ped, currentHealth - math.random(5, 10))

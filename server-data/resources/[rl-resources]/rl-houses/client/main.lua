@@ -82,7 +82,7 @@ end)
 
 RegisterNetEvent('rl-houses:client:EnterHouse')
 AddEventHandler('rl-houses:client:EnterHouse', function(god)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local pos = GetEntityCoords(ped)
 
     if closesthouse ~= nil then
@@ -106,7 +106,7 @@ end)
 
 RegisterNetEvent('rl-houses:client:RequestRing')
 AddEventHandler('rl-houses:client:RequestRing', function()
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local pos = GetEntityCoords(ped)
 
     if closesthouse ~= nil then
@@ -176,8 +176,8 @@ end)
 
 RegisterNetEvent('rl-houses:client:createHouses')
 AddEventHandler('rl-houses:client:createHouses', function(price, tier)
-    local pos = GetEntityCoords(PlayerPedId())
-    local heading = GetEntityHeading(PlayerPedId())
+    local pos = GetEntityCoords(GetPlayerPed(-1))
+    local heading = GetEntityHeading(GetPlayerPed(-1))
     local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
     local street = GetStreetNameFromHashKey(s1)
     local coords = {
@@ -191,8 +191,8 @@ end)
 RegisterNetEvent('rl-houses:client:addGarage')
 AddEventHandler('rl-houses:client:addGarage', function()
     if closesthouse ~= nil then 
-        local pos = GetEntityCoords(PlayerPedId())
-        local heading = GetEntityHeading(PlayerPedId())
+        local pos = GetEntityCoords(GetPlayerPed(-1))
+        local heading = GetEntityHeading(GetPlayerPed(-1))
         local coords = {
             x = pos.x,
             y = pos.y,
@@ -207,7 +207,7 @@ end)
 
 RegisterNetEvent('rl-houses:client:toggleDoorlock')
 AddEventHandler('rl-houses:client:toggleDoorlock', function()
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local pos = GetEntityCoords(ped)
     
     if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, true) < 1.5)then
@@ -247,7 +247,7 @@ end
 Citizen.CreateThread(function()
     while true do
 
-        local pos = GetEntityCoords(PlayerPedId(), true)
+        local pos = GetEntityCoords(GetPlayerPed(-1), true)
         local inRange = false
  
         if closesthouse ~= nil then
@@ -435,8 +435,8 @@ Citizen.CreateThread(function()
                                     showClothing = false
                                     exports['rl-interior']:DespawnInterior(houseObj, function()
                                         TriggerEvent('rl-weathersync:client:EnableSync')
-                                        SetEntityCoords(PlayerPedId(), Config.Houses[CurrentHouse].coords.enter.x, Config.Houses[CurrentHouse].coords.enter.y, Config.Houses[CurrentHouse].coords.enter.z + 0.5)
-                                        SetEntityHeading(PlayerPedId(), Config.Houses[CurrentHouse].coords.enter.h)
+                                        SetEntityCoords(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.x, Config.Houses[CurrentHouse].coords.enter.y, Config.Houses[CurrentHouse].coords.enter.z + 0.5)
+                                        SetEntityHeading(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.h)
                                         inOwned = false
                                         inside = false
                                         TriggerServerEvent('rl-houses:server:LogoutLocation')
@@ -469,9 +469,9 @@ end)
 
 function openHouseAnim()
     loadAnimDict("anim@heists@keycard@") 
-    TaskPlayAnim( PlayerPedId(), "anim@heists@keycard@", "exit", 5.0, 1.0, -1, 16, 0, 0, 0, 0 )
+    TaskPlayAnim( GetPlayerPed(-1), "anim@heists@keycard@", "exit", 5.0, 1.0, -1, 16, 0, 0, 0, 0 )
     Citizen.Wait(400)
-    ClearPedTasks(PlayerPedId())
+    ClearPedTasks(GetPlayerPed(-1))
 end
 
 RegisterNetEvent('rl-houses:client:RingDoor')
@@ -487,7 +487,7 @@ function GetClosestPlayer()
     local closestPlayers = RLCore.Functions.GetPlayersFromCoords()
     local closestDistance = -1
     local closestPlayer = -1
-    local coords = GetEntityCoords(PlayerPedId())
+    local coords = GetEntityCoords(GetPlayerPed(-1))
 
     for i=1, #closestPlayers, 1 do
         if closestPlayers[i] ~= PlayerId() then
@@ -509,7 +509,7 @@ AddEventHandler('rl-houses:client:giveHouseKey', function(data)
     local player, distance = GetClosestPlayer()
     if player ~= -1 and distance < 2.5 and closesthouse ~= nil then
         local playerId = GetPlayerServerId(player)
-        local housedist = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z)
+        local housedist = GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z)
         
         if housedist < 10 then
             TriggerServerEvent('rl-houses:server:giveHouseKey', playerId, closesthouse)
@@ -526,7 +526,7 @@ end)
 RegisterNetEvent('rl-houses:client:removeHouseKey')
 AddEventHandler('rl-houses:client:removeHouseKey', function(data)
     if closesthouse ~= nil then 
-        local housedist = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z)
+        local housedist = GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z)
         if housedist < 5 then
             RLCore.Functions.TriggerCallback('rl-houses:server:getHouseOwner', function(result)
                 if RLCore.Functions.GetPlayerData().citizenid == result then
@@ -554,7 +554,7 @@ end)
 
 RegisterNetEvent('rl-houses:client:SpawnInApartment')
 AddEventHandler('rl-houses:client:SpawnInApartment', function(house)
-    local pos = GetEntityCoords(PlayerPedId())
+    local pos = GetEntityCoords(GetPlayerPed(-1))
     if rangDoorbell ~= nil then
         if(GetDistanceBetweenCoords(pos, Config.Houses[house].coords.enter.x, Config.Houses[house].coords.enter.y, Config.Houses[house].coords.enter.z, true) > 5)then
             return
@@ -572,11 +572,11 @@ function loadAnimDict(dict)
 end 
 
 function HouseKeysMenu()
-    ped = PlayerPedId();
+    ped = GetPlayerPed(-1);
     MenuTitle = "Keys"
     ClearMenu()
     RLCore.Functions.TriggerCallback('rl-houses:server:getHouseKeyHolders', function(holders)
-        ped = PlayerPedId();
+        ped = GetPlayerPed(-1);
         MenuTitle = "Key holders:"
         ClearMenu()
         if holders == nil or next(holders) == nil then
@@ -594,13 +594,13 @@ end
 function changeOutfit()
 	Wait(200)
     loadAnimDict("clothingshirt")    	
-	TaskPlayAnim(PlayerPedId(), "clothingshirt", "try_shirt_positive_d", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
+	TaskPlayAnim(GetPlayerPed(-1), "clothingshirt", "try_shirt_positive_d", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
 	Wait(3100)
-	TaskPlayAnim(PlayerPedId(), "clothingshirt", "exit", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
+	TaskPlayAnim(GetPlayerPed(-1), "clothingshirt", "exit", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
 end
 
 function optionMenu(citizenData)
-    ped = PlayerPedId();
+    ped = GetPlayerPed(-1);
     MenuTitle = "What now?"
     ClearMenu()
     Menu.addButton("Remove Key", "removeHouseKey", citizenData) 
@@ -733,8 +733,8 @@ function leaveOwnedHouse(house)
             TriggerEvent('rl-weathersync:client:EnableSync')
             Citizen.Wait(250)
             DoScreenFadeIn(250)
-            SetEntityCoords(PlayerPedId(), Config.Houses[CurrentHouse].coords.enter.x, Config.Houses[CurrentHouse].coords.enter.y, Config.Houses[CurrentHouse].coords.enter.z + 0.2)
-            SetEntityHeading(PlayerPedId(), Config.Houses[CurrentHouse].coords.enter.h)
+            SetEntityCoords(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.x, Config.Houses[CurrentHouse].coords.enter.y, Config.Houses[CurrentHouse].coords.enter.z + 0.2)
+            SetEntityHeading(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.h)
             TriggerEvent('rl-weed:client:leaveHouse')
             TriggerServerEvent('rl-houses:server:SetInsideMeta', house, false)
             CurrentHouse = nil
@@ -807,8 +807,8 @@ function leaveNonOwnedHouse(house)
             TriggerEvent('rl-weathersync:client:EnableSync')
             Citizen.Wait(250)
             DoScreenFadeIn(250)
-            SetEntityCoords(PlayerPedId(), Config.Houses[CurrentHouse].coords.enter.x, Config.Houses[CurrentHouse].coords.enter.y, Config.Houses[CurrentHouse].coords.enter.z + 0.2)
-            SetEntityHeading(PlayerPedId(), Config.Houses[CurrentHouse].coords.enter.h)
+            SetEntityCoords(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.x, Config.Houses[CurrentHouse].coords.enter.y, Config.Houses[CurrentHouse].coords.enter.z + 0.2)
+            SetEntityHeading(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.h)
             inOwned = false
             TriggerEvent('rl-weed:client:leaveHouse')
             TriggerServerEvent('rl-houses:server:SetInsideMeta', house, false)
@@ -897,7 +897,7 @@ function FrontDoorCam(coords)
     SetCamActive(cam, true)
     RenderScriptCams(true, true, 500, true, true)
     FrontCam = true
-    FreezeEntityPosition(PlayerPedId(), true)
+    FreezeEntityPosition(GetPlayerPed(-1), true)
     Citizen.Wait(500)
     DoScreenFadeIn(150)
     SendNUIMessage({
@@ -921,7 +921,7 @@ function FrontDoorCam(coords)
                 })
                 Citizen.Wait(500)
                 RenderScriptCams(false, true, 500, true, true)
-                FreezeEntityPosition(PlayerPedId(), false)
+                FreezeEntityPosition(GetPlayerPed(-1), false)
                 SetCamActive(cam, false)
                 DestroyCam(cam, true)
                 ClearTimecycleModifier("scanline_cam_cheap")
@@ -1042,7 +1042,7 @@ AddEventHandler('rl-houses:client:viewHouse', function(houseprice, brokerfee, ba
 end) 
 
 function SetClosestHouse()
-    local pos = GetEntityCoords(PlayerPedId(), true)
+    local pos = GetEntityCoords(GetPlayerPed(-1), true)
     local current = nil
     local dist = nil
     if not inside then
@@ -1094,7 +1094,7 @@ end
 
 RegisterNetEvent('rl-houses:client:setLocation')
 AddEventHandler('rl-houses:client:setLocation', function(data)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local pos = GetEntityCoords(ped)
     local coords = {x = pos.x, y = pos.y, z = pos.z}
 
@@ -1117,7 +1117,7 @@ end)
 
 RegisterNetEvent('rl-houses:client:refreshLocations')
 AddEventHandler('rl-houses:client:refreshLocations', function(house, location, type)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local pos = GetEntityCoords(ped)
 
     if closesthouse == house then
@@ -1136,7 +1136,7 @@ end)
 local RamsDone = 0
 
 function DoRamAnimation(bool)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local dict = "missheistfbi3b_ig7"
     local anim = "lift_fibagent_loop"
 
@@ -1157,7 +1157,7 @@ end
 
 RegisterNetEvent('rl-houses:client:HomeInvasion')
 AddEventHandler('rl-houses:client:HomeInvasion', function()
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local pos = GetEntityCoords(ped)
     local Skillbar = exports['rl-skillbar']:GetSkillbarObject()
 
@@ -1223,7 +1223,7 @@ end)
 
 RegisterNetEvent('rl-houses:client:ResetHouse')
 AddEventHandler('rl-houses:client:ResetHouse', function()
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
 
     if closesthouse ~= nil then
         if Config.Houses[closesthouse].IsRammed == nil then

@@ -72,7 +72,7 @@ function MechanicUpdate()
 			closestDist = false
 			closestRepo = false
 
-			local plyPos = GetEntityCoords(PlayerPedId())
+			local plyPos = GetEntityCoords(GetPlayerPed(-1))
 			local allVehicles = RLCore.Functions.GetVehiclesInArea(plyPos, 800000.0) 
 
 			for k,v in pairs(allVehicles) do
@@ -157,7 +157,7 @@ end
 local RepoPoint = vector3(421.850, -1149.630, 28)
 
 function DrawRepoMarker(closestRepo, timer)
-	local plyPos = GetEntityCoords(PlayerPedId())
+	local plyPos = GetEntityCoords(GetPlayerPed(-1))
 	local dist = GetVecDist(RepoPoint, plyPos)
 	if dist < 30.0 then
 		DrawMarker(2, RepoPoint.x, RepoPoint.y, RepoPoint.z+1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
@@ -281,7 +281,7 @@ Citizen.CreateThread(function(...) Start(); end)
 
 
 RegisterCommand('checkRepay', function(source, args)
-	local plyPed = PlayerPedId()
+	local plyPed = GetPlayerPed(-1)
 	if not IsPedInAnyVehicle(plyPed, false) then RLCore.Functions.Notify('Get in a vehicle first.')
 		return
 	end
@@ -327,7 +327,7 @@ function round(num)
 end
 
 --[[ RegisterCommand('doRepay', function(source, args)
-	if not IsPedInAnyVehicle(PlayerPedId(), false) then 
+	if not IsPedInAnyVehicle(GetPlayerPed(-1), false) then 
 		RLCore.Functions.Notify("Get in a vehicle first")
 		return
 	end
@@ -340,7 +340,7 @@ end
 		RLCore.Functions.Notify("You need to enter a valid amount", 'error')
 	end
 	
-	local plyPed = PlayerPedId()
+	local plyPed = GetPlayerPed(-1)
 	local plyVeh = GetVehiclePedIsIn(plyPed, true)
 	local vehProps = RLCore.Functions.GetVehicleProperties(plyVeh)
 

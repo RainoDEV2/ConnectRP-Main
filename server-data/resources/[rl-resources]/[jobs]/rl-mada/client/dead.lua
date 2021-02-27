@@ -72,7 +72,7 @@ Citizen.CreateThread(function()
             DisableControlAction(1, 141, true) --Disables Melee Actions
             DisableControlAction(1, 142, true) --Disables Melee Actions 
             DisableControlAction(1, 37, true) --Disables INPUT_SELECT_WEAPON (tab) Actions
-            DisablePlayerFiring(PlayerPedId(), true) -- Disable weapon firing
+            DisablePlayerFiring(GetPlayerPed(-1), true) -- Disable weapon firing
             
             if isDead then
                 if not isInHospitalBed then 
@@ -83,7 +83,7 @@ Citizen.CreateThread(function()
                     end
                 end
 
-                if IsPedInAnyVehicle(PlayerPedId(), false) then
+                if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
                     loadAnimDict("veh@low@front_ps@idle_duck")
                     if not IsEntityPlayingAnim(PlayerPedId(), "veh@low@front_ps@idle_duck", "sit", 3) then
                         TaskPlayAnim(PlayerPedId(), "veh@low@front_ps@idle_duck", "sit", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
@@ -134,7 +134,7 @@ Citizen.CreateThread(function()
                 DisableControlAction(1, 141, true) --Disables Melee Actions
                 DisableControlAction(1, 142, true) --Disables Melee Actions 
                 DisableControlAction(1, 37, true) --Disables INPUT_SELECT_WEAPON (tab) Actions
-                DisablePlayerFiring(PlayerPedId(), true) -- Disable weapon firing
+                DisablePlayerFiring(GetPlayerPed(-1), true) -- Disable weapon firing
 
                 if LaststandTime > Laststand.MinimumRevive then
                     DrawTxt(0.94, 1.44, 1.0, 1.0, 0.5, "BLEED OUT IN ~r~" .. math.ceil(LaststandTime) .. "~w~ SECONDS", 255, 255, 255, 255)
@@ -143,7 +143,7 @@ Citizen.CreateThread(function()
                 end
 
                 if not isEscorted and not inCarry then
-                    if IsPedInAnyVehicle(PlayerPedId(), false) then
+                    if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
                         loadAnimDict("veh@low@front_ps@idle_duck")
                         if not IsEntityPlayingAnim(PlayerPedId(), "veh@low@front_ps@idle_duck", "sit", 3) then
                             TaskPlayAnim(PlayerPedId(), "veh@low@front_ps@idle_duck", "sit", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
@@ -155,7 +155,7 @@ Citizen.CreateThread(function()
                         end
                     end
                 elseif not inCarry then
-                    if IsPedInAnyVehicle(PlayerPedId(), false) then
+                    if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
                         loadAnimDict("veh@low@front_ps@idle_duck")
                         if IsEntityPlayingAnim(PlayerPedId(), "veh@low@front_ps@idle_duck", "sit", 3) then
                             StopAnimTask(PlayerPedId(), "veh@low@front_ps@idle_duck", "sit", 3)
@@ -180,18 +180,18 @@ function OnDeath(spawn)
         isDead = true
         TriggerServerEvent("hospital:server:SetDeathStatus", true)
         TriggerServerEvent("InteractSound_SV:PlayOnSource", "demo", 0.1)
-        local player = PlayerPedId()
+        local player = GetPlayerPed(-1)
 
         while GetEntitySpeed(player) > 0.5 or IsPedRagdoll(player) do
             Citizen.Wait(10)
         end
 
         if isDead then
-            local isincar = IsPedInAnyVehicle(PlayerPedId(), false)
+            local isincar = IsPedInAnyVehicle(GetPlayerPed(-1), false)
             if isincar then
                 LaststandCarObject = {
-                    ['obj'] = GetVehiclePedIsIn(PlayerPedId(), false),
-                    ['seat'] = getSeat(GetVehiclePedIsIn(PlayerPedId(), false), player)
+                    ['obj'] = GetVehiclePedIsIn(GetPlayerPed(-1), false),
+                    ['seat'] = getSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), player)
                 }
             end
 
@@ -199,7 +199,7 @@ function OnDeath(spawn)
             local heading = GetEntityHeading(player)
             NetworkResurrectLocalPlayer(pos.x, pos.y, pos.z, heading, true, false)
             SetEntityInvincible(player, true)
-            SetEntityHealth(player, GetEntityMaxHealth(PlayerPedId()))
+            SetEntityHealth(player, GetEntityMaxHealth(GetPlayerPed(-1)))
             if isincar then
                 TaskWarpPedIntoVehicle(player, LaststandCarObject['obj'], LaststandCarObject['seat'])
                 LoadAnimation("veh@low@front_ps@idle_duck")

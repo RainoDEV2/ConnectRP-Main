@@ -35,7 +35,7 @@ RegisterNUICallback("NUIFocusOff", function(data, cb)
 end)
 
 RegisterNUICallback("playATMAnim", function(data, cb)
-    local playerPed = PlayerPedId()
+    local playerPed = GetPlayerPed(-1)
     local anim = 'amb@prop_human_atm@male@idle_a'
     RequestAnimDict(anim)
     while not HasAnimDictLoaded(anim) do
@@ -43,7 +43,7 @@ RegisterNUICallback("playATMAnim", function(data, cb)
     end
 
     if HasAnimDictLoaded(anim) then 
-        TaskPlayAnim(PlayerPedId(), anim, "idle_a", 1.0,-1.0, 3000, 1, 1, true, true, true)
+        TaskPlayAnim(GetPlayerPed(-1), anim, "idle_a", 1.0,-1.0, 3000, 1, 1, true, true, true)
     end
 end)
 
@@ -116,7 +116,7 @@ end)
 RegisterNetEvent('rl-atms:client:loadATM')
 AddEventHandler('rl-atms:client:loadATM', function(cards)
     if cards ~= nil and cards[1] ~= nil then
-        local playerPed = PlayerPedId()
+        local playerPed = GetPlayerPed(-1)
         local playerCoords = GetEntityCoords(playerPed, true)
         for k, v in pairs(Config.ATMModels) do
             local hash = GetHashKey(v)

@@ -46,7 +46,7 @@ end)
 
 RegisterNetEvent('rl-pings:client:AcceptPing')
 AddEventHandler('rl-pings:client:AcceptPing', function(PingData, SenderData)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local pos = GetEntityCoords(ped)
 
     if not exports['rl-police']:IsHandcuffed() then

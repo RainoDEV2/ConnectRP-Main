@@ -37,7 +37,7 @@ function getEntity(player)
 end
 
 function bulletCoords()
-local result, coord = GetPedLastWeaponImpactCoord(PlayerPedId())
+local result, coord = GetPedLastWeaponImpactCoord(GetPlayerPed(-1))
 return coord
 end
 
@@ -57,7 +57,7 @@ end
 function turnNoClipOff()
     local playerPed = PlayerPedId()
     local inVehicle = IsPedInAnyVehicle( playerPed, false )
-    ResetEntityAlpha(PlayerPedId())
+    ResetEntityAlpha(GetPlayerPed(-1))
 
     if ( inVehicle ) then
         local veh = GetVehiclePedIsUsing( playerPed )
@@ -83,7 +83,7 @@ function turnNoClipOn()
     blockinput = true -- Prevent Trainer access while in noclip mode.
     local playerPed = PlayerPedId()
     local inVehicle = IsPedInAnyVehicle( playerPed, false )
-    SetEntityAlpha(PlayerPedId(), 127, false)
+    SetEntityAlpha(GetPlayerPed(-1), 127, false)
 
     if ( not inVehicle ) then
         LoadAnimDict("mp_sleep")

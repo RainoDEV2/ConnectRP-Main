@@ -73,7 +73,7 @@ Citizen.CreateThread(function()
 			DisableControlAction(0,25,true) -- disable aim
 			DisableControlAction(0, 44,  true) -- INPUT_COVER
 			DisableControlAction(0,37,true) -- INPUT_SELECT_WEAPON
-			SetCurrentPedWeapon(PlayerPedId(), GetHashKey("WEAPON_UNARMED"), true)
+			SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey("WEAPON_UNARMED"), true)
 		end
 	end
 end)
@@ -100,7 +100,7 @@ Citizen.CreateThread(function()
 
 		Citizen.Wait(10)
 
-		local lPed = PlayerPedId()
+		local lPed = GetPlayerPed(-1)
 		local vehicle = GetVehiclePedIsIn(lPed)
 
 		if holdingCam and IsControlJustReleased(1, 38) then
@@ -174,8 +174,8 @@ Citizen.CreateThread(function()
 				end
 				camHeading = (camHeading + 180.0) / 360.0
 				
-				Citizen.InvokeNative(0xD5BB4025AE449A4E, PlayerPedId(), "Pitch", camPitch)
-				Citizen.InvokeNative(0xD5BB4025AE449A4E, PlayerPedId(), "Heading", camHeading * -1.0 + 1.0)
+				Citizen.InvokeNative(0xD5BB4025AE449A4E, GetPlayerPed(-1), "Pitch", camPitch)
+				Citizen.InvokeNative(0xD5BB4025AE449A4E, GetPlayerPed(-1), "Heading", camHeading * -1.0 + 1.0)
 				
 				Citizen.Wait(0)
 			end
@@ -234,7 +234,7 @@ function CheckInputRotation(cam, zoomvalue)
 end
 
 function HandleZoom(cam)
-	local lPed = PlayerPedId()
+	local lPed = GetPlayerPed(-1)
 	if not ( IsPedSittingInAnyVehicle( lPed ) ) then
 
 		if IsControlJustPressed(0,241) then
@@ -353,10 +353,10 @@ Citizen.CreateThread(function()
 			DisableControlAction(0,25,true) -- disable aim
 			DisableControlAction(0, 44,  true) -- INPUT_COVER
 			DisableControlAction(0,37,true) -- INPUT_SELECT_WEAPON
-			SetCurrentPedWeapon(PlayerPedId(), GetHashKey("WEAPON_UNARMED"), true)
+			SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey("WEAPON_UNARMED"), true)
 			
-			if (IsPedInAnyVehicle(PlayerPedId(), -1) and GetPedVehicleSeat(PlayerPedId()) == -1) or IsPedCuffed(PlayerPedId()) or holdingMic then
-				ClearPedSecondaryTask(PlayerPedId())
+			if (IsPedInAnyVehicle(GetPlayerPed(-1), -1) and GetPedVehicleSeat(GetPlayerPed(-1)) == -1) or IsPedCuffed(GetPlayerPed(-1)) or holdingMic then
+				ClearPedSecondaryTask(GetPlayerPed(-1))
 				DetachEntity(NetToObj(bmic_net), 1, 1)
 				DeleteEntity(NetToObj(bmic_net))
 				bmic_net = nil

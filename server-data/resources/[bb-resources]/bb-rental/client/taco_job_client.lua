@@ -56,9 +56,9 @@ Citizen.CreateThread(function()
 while true do
 	Citizen.Wait(0)
 		for k,v in pairs(Config.JobStart) do
-			local pos = GetEntityCoords(PlayerPedId(), false)
+			local pos = GetEntityCoords(GetPlayerPed(-1), false)
             local Gebied = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, v.x, v.y, v.z, false)
-				if Gebied <= 1.5  and JobBusy == false and not IsPedInAnyVehicle(PlayerPedId(), false) then
+				if Gebied <= 1.5  and JobBusy == false and not IsPedInAnyVehicle(GetPlayerPed(-1), false) then
 					if Config.JobData['tacos'] >= 1 then
 					DrawText3D(v.x, v.y, v.z + 0.15, '~g~E~s~ - Work\n Taco\'s Available: ~g~' ..Config.JobData['tacos']..'x')
 					DrawMarker(2, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 0, 255, 0, 155, false, false, false, true, false, false, false)
@@ -74,7 +74,7 @@ while true do
 				elseif Gebied <= 3.0 and JobBusy == true then
 				 DrawText3D(v.x, v.y, v.z + 0.15, '~r~You\'re already working..\n ~s~Taco\'s Available: ~g~' ..Config.JobData['tacos']..'x')
 				 DrawMarker(2, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 0, 0, 155, false, false, false, true, false, false, false)
-				elseif Gebied <= 3.0 and IsPedInAnyVehicle(PlayerPedId(), false) then
+				elseif Gebied <= 3.0 and IsPedInAnyVehicle(GetPlayerPed(-1), false) then
 					DrawText3D(v.x, v.y, v.z + 0.15, '~o~You are in a vehicle..\n ~s~Taco\'s Available: ~g~' ..Config.JobData['tacos']..'x')
 					DrawMarker(2, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 230, 166, 78, 155, false, false, false, true, false, false, false)
 				else
@@ -88,9 +88,9 @@ Citizen.CreateThread(function()
 	while true do 
 		Citizen.Wait(1)
 		for k,v in pairs(Config.PickUpStuff) do
-		local pos = GetEntityCoords(PlayerPedId(), false)
+		local pos = GetEntityCoords(GetPlayerPed(-1), false)
 		local Gebied = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, v.x, v.y, v.z, false)
-		if Gebied <= 1.5  and Config.JobBusy == false and not IsPedInAnyVehicle(PlayerPedId(), false) then
+		if Gebied <= 1.5  and Config.JobBusy == false and not IsPedInAnyVehicle(GetPlayerPed(-1), false) then
 			DrawText3D(v.x, v.y, v.z + 0.15, '~g~E~s~ - Grab a box')
 			DrawMarker(2, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 0, 255, 0, 155, false, false, false, true, false, false, false)  
 			if IsControlJustPressed(0, Keys['E']) then
@@ -120,13 +120,13 @@ AddEventHandler('rl-taco:start:black:job', function()
 	Tasks = true
 	while Tasks do
 		Citizen.Wait(1)
-		local pos = GetEntityCoords(PlayerPedId(), false)
+		local pos = GetEntityCoords(GetPlayerPed(-1), false)
 		local Gebied = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, DropOffs[rnd]["x"], DropOffs[rnd]["y"], DropOffs[rnd]["z"], false)
 		if Gebied <= 5.0 then
 			DrawText3D(DropOffs[rnd]["x"], DropOffs[rnd]["y"], DropOffs[rnd]["z"]+0.1, '~g~E~s~ - Deliver') 
 			DrawMarker(2, DropOffs[rnd]["x"], DropOffs[rnd]["y"], DropOffs[rnd]["z"], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 155, false, false, false, true, false, false, false)
 				if IsControlJustReleased(0,38) then
-					if not IsPedInAnyVehicle(PlayerPedId(), false) then
+					if not IsPedInAnyVehicle(GetPlayerPed(-1), false) then
 						EndJob()
 					else
 			        	RLCore.Functions.Notify("You can\'t deliver in your vehicle..", "error")

@@ -2,7 +2,7 @@
 RegisterNetEvent('RLCore:Command:TeleportToPlayer')
 AddEventHandler('RLCore:Command:TeleportToPlayer', function(othersource)
 	local coords = RLCore.Functions.GetCoords(GetPlayerPed(GetPlayerFromServerId(othersource)))
-	local entity = PlayerPedId()
+	local entity = GetPlayerPed(-1)
 	if IsPedInAnyVehicle(Entity, false) then
 		entity = GetVehiclePedIsUsing(entity)
 	end
@@ -12,7 +12,7 @@ end)
 
 RegisterNetEvent('RLCore:Command:TeleportToCoords')
 AddEventHandler('RLCore:Command:TeleportToCoords', function(x, y, z)
-	local entity = PlayerPedId()
+	local entity = GetPlayerPed(-1)
 	if IsPedInAnyVehicle(entity, false) then
 		entity = GetVehiclePedIsUsing(entity)
 	end
@@ -22,7 +22,7 @@ end)
 RegisterNetEvent('RLCore:Command:SpawnVehicle')
 AddEventHandler('RLCore:Command:SpawnVehicle', function(model)
 	RLCore.Functions.SpawnVehicle(model, function(vehicle)
-		TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
+		TaskWarpPedIntoVehicle(GetPlayerPed(-1), vehicle, -1)
 		TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle), vehicle)
 	end)
 end)
@@ -30,17 +30,17 @@ end)
 RegisterNetEvent('RLCore:Command:DeleteVehicle')
 AddEventHandler('RLCore:Command:DeleteVehicle', function()
 	local vehicle = RLCore.Functions.GetClosestVehicle()
-	if IsPedInAnyVehicle(PlayerPedId()) then vehicle = GetVehiclePedIsIn(PlayerPedId(), false) else vehicle = RLCore.Functions.GetClosestVehicle() end
+	if IsPedInAnyVehicle(GetPlayerPed(-1)) then vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false) else vehicle = RLCore.Functions.GetClosestVehicle() end
 	-- TriggerServerEvent('RLCore:Command:CheckOwnedVehicle', GetVehicleNumberPlateText(vehicle))
 	RLCore.Functions.DeleteVehicle(vehicle)
 end)
 
 RegisterNetEvent('RLCore:Command:Revive')
 AddEventHandler('RLCore:Command:Revive', function()
-	local coords = RLCore.Functions.GetCoords(PlayerPedId())
+	local coords = RLCore.Functions.GetCoords(GetPlayerPed(-1))
 	NetworkResurrectLocalPlayer(coords.x, coords.y, coords.z+0.2, coords.a, true, false)
-	SetPlayerInvincible(PlayerPedId(), false)
-	ClearPedBloodDamage(PlayerPedId())
+	SetPlayerInvincible(GetPlayerPed(-1), false)
+	ClearPedBloodDamage(GetPlayerPed(-1))
 end)
 
 RegisterCommand("jobstats", function()
@@ -126,20 +126,20 @@ end)
 RegisterNetEvent('RLCore:Player:UpdatePlayerData')
 AddEventHandler('RLCore:Player:UpdatePlayerData', function()
 	local data = {}
-	data.position = RLCore.Functions.GetCoords(PlayerPedId())
+	data.position = RLCore.Functions.GetCoords(GetPlayerPed(-1))
 	TriggerServerEvent('RLCore:UpdatePlayer', data)
 end)
 
 RegisterNetEvent('RLCore:Player:UpdatePlayerPosition')
 AddEventHandler('RLCore:Player:UpdatePlayerPosition', function()
-	local position = RLCore.Functions.GetCoords(PlayerPedId())
+	local position = RLCore.Functions.GetCoords(GetPlayerPed(-1))
 	TriggerServerEvent('RLCore:UpdatePlayerPosition', position)
 end)
 
 RegisterNetEvent('RLCore:Client:LocalOutOfCharacter')
 AddEventHandler('RLCore:Client:LocalOutOfCharacter', function(playerId, playerName, message)
 	local sourcePos = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(playerId)), false)
-    local pos = GetEntityCoords(PlayerPedId(), false)
+    local pos = GetEntityCoords(GetPlayerPed(-1), false)
     if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, sourcePos.x, sourcePos.y, sourcePos.z, true) < 20.0) then
 		TriggerEvent("chatMessage", "OOC " .. playerName, "normal", message)
     end

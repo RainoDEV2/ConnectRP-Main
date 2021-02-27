@@ -137,7 +137,7 @@ Citizen.CreateThread(function()
                                 }, {}, {}, {}, function() -- Done
                                     
                                     TriggerEvent('animations:client:EmoteCommandStart', {"c"})
-                                    StopAnimTask(PlayerPedId(), "amb@prop_human_bum_bin@idle_b", "idle_d", 1.0)
+                                    StopAnimTask(GetPlayerPed(-1), "amb@prop_human_bum_bin@idle_b", "idle_d", 1.0)
                                     RLCore.Functions.Progressbar("grandmas_house", "Treating", 60000, false, false, {
                                         disableMovement = true,
                                         disableCarMovement = true,

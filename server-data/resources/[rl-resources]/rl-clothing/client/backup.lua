@@ -63,7 +63,7 @@ RegisterNUICallback('getPlayerFace', function(data, cb)
 end)
 
 RegisterNUICallback('setPlayerFace', function(data, cb)
-    player = PlayerPedId()
+    player = GetPlayerPed(-1)
     LoadPlayerFace(data.face)
 
     cb('ok')

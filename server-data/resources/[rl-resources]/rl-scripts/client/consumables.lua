@@ -24,7 +24,7 @@ AddEventHandler("consumables:client:UseJoint", function()
     }, {}, {}, {}, function() -- Done
         TriggerEvent("debug", 'Consumables: Joint', 'success')
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["joint"], "remove")
-        if IsPedInAnyVehicle(PlayerPedId(), false) then
+        if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
             TriggerEvent('animations:client:EmoteCommandStart', {"smoke3"})
         else
             TriggerEvent('animations:client:EmoteCommandStart', {"weed"})
@@ -84,7 +84,7 @@ end
 
 function EquipParachuteAnim()
     loadAnimDict("clothingshirt")        
-    TaskPlayAnim(PlayerPedId(), "clothingshirt", "try_shirt_positive_d", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
+    TaskPlayAnim(GetPlayerPed(-1), "clothingshirt", "try_shirt_positive_d", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
 end
 
 local ParachuteEquiped = false
@@ -98,7 +98,7 @@ AddEventHandler("consumables:client:UseParachute", function()
 		disableMouse = false,
 		disableCombat = true,
     }, {}, {}, {}, function() -- Done
-        local ped = PlayerPedId()
+        local ped = GetPlayerPed(-1)
         TriggerEvent("debug", 'Consumables: Parachute', 'success')
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["parachute"], "remove")
         GiveWeaponToPed(ped, GetHashKey("GADGET_PARACHUTE"), 1, false)
@@ -123,7 +123,7 @@ AddEventHandler("consumables:client:ResetParachute", function()
             disableMouse = false,
             disableCombat = true,
         }, {}, {}, {}, function() -- Done
-            local ped = PlayerPedId()
+            local ped = GetPlayerPed(-1)
             TriggerEvent("debug", 'Consumables: Reset Parachute', 'success')
             TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["parachute"], "add")
             local ParachuteRemoveData = { 
@@ -144,7 +144,7 @@ end)
 -- RegisterNetEvent("consumables:client:UseRedSmoke")
 -- AddEventHandler("consumables:client:UseRedSmoke", function()
 --     if ParachuteEquiped then
---         local ped = PlayerPedId()
+--         local ped = GetPlayerPed(-1)
 --         SetPlayerParachuteSmokeTrailColor(ped, 255, 0, 0)
 --         SetPlayerCanLeaveParachuteSmokeTrail(ped, true)
 --         TriggerEvent("inventory:client:Itembox", RLCore.Shared.Items["smoketrailred"], "remove")
@@ -165,7 +165,7 @@ AddEventHandler("consumables:client:UseArmor", function()
 		disableCombat = true,
     }, {}, {}, {}, function() -- Done
         TriggerServerEvent('hospital:server:SetArmor', 75)
-        SetPedArmour(PlayerPedId(), 75)
+        SetPedArmour(GetPlayerPed(-1), 75)
     end)
 end)
 
@@ -173,7 +173,7 @@ local currentVest = nil
 local currentVestTexture = nil
 RegisterNetEvent("consumables:client:UseHeavyArmor")
 AddEventHandler("consumables:client:UseHeavyArmor", function()
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local PlayerData = RLCore.Functions.GetPlayerData()
     TriggerServerEvent("RLCore:Server:RemoveItem", "heavyarmor", 1)
     TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["heavyarmor"], "remove")
@@ -192,7 +192,7 @@ end)
 
 RegisterNetEvent("consumables:client:ResetArmor")
 AddEventHandler("consumables:client:ResetArmor", function()
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     if currentVest ~= nil and currentVestTexture ~= nil then 
         RLCore.Functions.Progressbar("remove_armor", "Removing Armor", 2500, false, true, {
             disableMovement = false,
@@ -267,13 +267,13 @@ AddEventHandler('consumables:client:oxy', function()
 		flags = 49,
     }, {}, {}, function() -- Done
         TriggerEvent("debug", 'Consumables: Oxy', 'success')
-        StopAnimTask(PlayerPedId(), "mp_suicide", "pill", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "mp_suicide", "pill", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", "oxy", 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["oxy"], "remove")
         ClearPedBloodDamage(PlayerPedId())
 		HealOxy()
     end, function() -- Cancel
-        StopAnimTask(PlayerPedId(), "mp_suicide", "pill", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "mp_suicide", "pill", 1.0)
         RLCore.Functions.Notify("Canceled", "error")
     end)
 end)
@@ -290,13 +290,13 @@ AddEventHandler('consumables:client:ifak', function()
 		anim = "idle_c",
 		flags = 50,
     }, {}, {}, function() -- Done
-        StopAnimTask(PlayerPedId(), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", "ifak", 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["ifak"], "remove")
         ClearPedBloodDamage(PlayerPedId())
 		HealOxy()
     end, function() -- Cancel
-        StopAnimTask(PlayerPedId(), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
         RLCore.Functions.Notify("Canceled", "error")
     end)
 end)
@@ -314,13 +314,13 @@ AddEventHandler("consumables:client:Cokebaggy", function()
         flags = 50,
     }, {}, {}, function() -- Done
         TriggerEvent("debug", 'Consumables: Coke Baggy', 'success')
-        StopAnimTask(PlayerPedId(), "anim@amb@nightclub@peds@", "missfbi3_party_snort_coke_b_male3", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "anim@amb@nightclub@peds@", "missfbi3_party_snort_coke_b_male3", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", "cokebaggy", 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["cokebaggy"], "remove")
         TriggerEvent("evidence:client:SetStatus", "widepupils", 200)
         CokeBaggyEffect()
     end, function() -- Cancel
-        StopAnimTask(PlayerPedId(), "anim@amb@nightclub@peds@", "missfbi3_party_snort_coke_b_male3", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "anim@amb@nightclub@peds@", "missfbi3_party_snort_coke_b_male3", 1.0)
         RLCore.Functions.Notify("Canceled..", "error")
     end)
 end)
@@ -338,13 +338,13 @@ AddEventHandler("consumables:client:Crackbaggy", function()
         flags = 49,
     }, {}, {}, function() -- Done
         TriggerEvent("debug", 'Consumables: Crack Baggy', 'success')
-        StopAnimTask(PlayerPedId(), "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", "crack_baggy", 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["crack_baggy"], "remove")
         TriggerEvent("evidence:client:SetStatus", "widepupils", 300)
         CrackBaggyEffect()
     end, function() -- Cancel
-        StopAnimTask(PlayerPedId(), "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 1.0)
         RLCore.Functions.Notify("Canceled..", "error")
     end)
 end)
@@ -364,14 +364,14 @@ AddEventHandler("consumables:client:methbag", function()
         flags = 49,
     }, {}, {}, function() -- Done
         TriggerEvent("debug", 'Consumables: Crack Baggy', 'success')
-        StopAnimTask(PlayerPedId(), "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", "methbag", 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["methbag"], "remove")
         TriggerEvent("evidence:client:SetStatus", "widepupils", 300)
 		TriggerEvent("evidence:client:SetStatus", "agitated", 300)
         MethBagEffect()
     end, function() -- Cancel
-        StopAnimTask(PlayerPedId(), "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 1.0)
         RLCore.Functions.Notify("Canceled..", "error")
 		end)
 	end
@@ -390,12 +390,12 @@ AddEventHandler('consumables:client:EcstasyBaggy', function()
 		flags = 49,
     }, {}, {}, function() -- Done
         TriggerEvent("debug", 'Consumables: Ecstasy Baggy', 'success')
-        StopAnimTask(PlayerPedId(), "mp_suicide", "pill", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "mp_suicide", "pill", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", "xtcbaggy", 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["xtcbaggy"], "remove")
         EcstasyEffect()
     end, function() -- Cancel
-        StopAnimTask(PlayerPedId(), "mp_suicide", "pill", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "mp_suicide", "pill", 1.0)
         RLCore.Functions.Notify("Failed", "error")
     end)
 end)
@@ -501,37 +501,37 @@ function CrackBaggyEffect()
         RLCore.Functions.Notify('You felt your heart skip a beat....', 'error')
         TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 0.5, 'heartrate', 1.0)
         Citizen.Wait(8000)
-        SetPedToRagdoll(PlayerPedId(),1000,1000, 3, 0, 0, 0)
+        SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
         DoScreenFadeOut(500)
         Citizen.Wait(500)
         DoScreenFadeIn(500)
         Citizen.Wait(8000)
         RequestAnimSet("MOVE_M@DRUNK@VERYDRUNK")
-        ResetPedMovementClipset(PlayerPedId())
-        SetPedMovementClipset(PlayerPedId(),"MOVE_M@DRUNK@VERYDRUNK", 0.8)
-        SetPedToRagdoll(PlayerPedId(),1000,1000, 3, 0, 0, 0)
+        ResetPedMovementClipset(GetPlayerPed(-1))
+        SetPedMovementClipset(GetPlayerPed(-1),"MOVE_M@DRUNK@VERYDRUNK", 0.8)
+        SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
         StartScreenEffect("DrugsTrevorClownsFight", 3.0, 0)
         Citizen.Wait(8000)
-        SetPedToRagdoll(PlayerPedId(),1000,1000, 3, 0, 0, 0)
+        SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
         DoScreenFadeOut(500)
         Citizen.Wait(500)
         DoScreenFadeIn(500)
         Citizen.Wait(8000) 
-        SetPedToRagdoll(PlayerPedId(),1000,1000, 3, 0, 0, 0)
+        SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
         Citizen.Wait(8000)
-        SetPedToRagdoll(PlayerPedId(),1000,1000, 3, 0, 0, 0)
+        SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
         DoScreenFadeOut(500)
         Citizen.Wait(500)
         DoScreenFadeIn(500)
         RLCore.Functions.Notify('YOU NEED MEDICAL ATTENTION', 'error')
         Citizen.Wait(6000)
-        SetPedToRagdoll(PlayerPedId(),1000,1000, 3, 0, 0, 0)
+        SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
         Citizen.Wait(15000)
         RLCore.Functions.Notify('CARDIAC ARREST....', 'error')
-        SetPedToRagdoll(PlayerPedId(),1000,1000, 3, 0, 0, 0)
+        SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
         Citizen.Wait(500)
-        SetEntityHealth(PlayerPedId(), 0)
-        ResetPedMovementClipset(PlayerPedId())
+        SetEntityHealth(GetPlayerPed(-1), 0)
+        ResetPedMovementClipset(GetPlayerPed(-1))
         StopScreenEffect("DrugsTrevorClownsFight")
       else
 
@@ -542,7 +542,7 @@ function CrackBaggyEffect()
           Drugs2()
       end
 
-      SetPedArmour( PlayerPedId(), 100 )
+      SetPedArmour( GetPlayerPed(-1), 100 )
 
       if stresslevel > 500 then
           SetRunSprintMultiplierForPlayer(PlayerId(), 1.08)
@@ -558,8 +558,8 @@ function CrackBaggyEffect()
           RestorePlayerStamina(PlayerId(), 1.0)
           dstamina = dstamina - 1
 
-          if IsPedRagdoll(PlayerPedId()) then
-              SetPedToRagdoll(PlayerPedId(), math.random(5), math.random(5), 3, 0, 0, 0)
+          if IsPedRagdoll(GetPlayerPed(-1)) then
+              SetPedToRagdoll(GetPlayerPed(-1), math.random(5), math.random(5), 3, 0, 0, 0)
           end
 
           if math.random(500) < 3 then
@@ -571,16 +571,16 @@ function CrackBaggyEffect()
               Citizen.Wait(math.random(30000))
           end
 
-          if math.random(100) > 75 and IsPedRunning(PlayerPedId()) then
-              SetPedToRagdoll(PlayerPedId(), math.random(1000), math.random(1000), 3, 0, 0, 0)
+          if math.random(100) > 75 and IsPedRunning(GetPlayerPed(-1)) then
+              SetPedToRagdoll(GetPlayerPed(-1), math.random(1000), math.random(1000), 3, 0, 0, 0)
           end
 
       end
 
       dstamina = 0
 
-      if IsPedRunning(PlayerPedId()) then
-          SetPedToRagdoll(PlayerPedId(),1000,1000, 3, 0, 0, 0)
+      if IsPedRunning(GetPlayerPed(-1)) then
+          SetPedToRagdoll(GetPlayerPed(-1),1000,1000, 3, 0, 0, 0)
       end
 
       SetRunSprintMultiplierForPlayer(PlayerId(), 1.0)
@@ -682,8 +682,8 @@ AddEventHandler('oxygenmaskclient:UseGear', function(bool)
                 Citizen.Wait(1)
             end
             TankObject = CreateObject(tankModel, 1.0, 1.0, 1.0, 1, 1, 0)
-            local bone1 = GetPedBoneIndex(PlayerPedId(), 24818)
-            AttachEntityToEntity(TankObject, PlayerPedId(), bone1, -0.25, -0.25, 0.0, 180.0, 90.0, 0.0, 1, 1, 0, 0, 2, 1)
+            local bone1 = GetPedBoneIndex(GetPlayerPed(-1), 24818)
+            AttachEntityToEntity(TankObject, GetPlayerPed(-1), bone1, -0.25, -0.25, 0.0, 180.0, 90.0, 0.0, 1, 1, 0, 0, 2, 1)
             currentGear.tank = TankObject
     
             RequestModel(maskModel)
@@ -692,15 +692,15 @@ AddEventHandler('oxygenmaskclient:UseGear', function(bool)
             end
             
             MaskObject = CreateObject(maskModel, 1.0, 1.0, 1.0, 1, 1, 0)
-            local bone2 = GetPedBoneIndex(PlayerPedId(), 12844)
-            AttachEntityToEntity(MaskObject, PlayerPedId(), bone2, 0.0, 0.0, 0.0, 180.0, 90.0, 0.0, 1, 1, 0, 0, 2, 1)
+            local bone2 = GetPedBoneIndex(GetPlayerPed(-1), 12844)
+            AttachEntityToEntity(MaskObject, GetPlayerPed(-1), bone2, 0.0, 0.0, 0.0, 180.0, 90.0, 0.0, 1, 1, 0, 0, 2, 1)
             currentGear.mask = MaskObject
     
-            SetEnableScuba(PlayerPedId(), true)
-            SetPedMaxTimeUnderwater(PlayerPedId(), 2000.00)
+            SetEnableScuba(GetPlayerPed(-1), true)
+            SetPedMaxTimeUnderwater(GetPlayerPed(-1), 2000.00)
             currentGear.enabled = true
             TriggerServerEvent('oxygengear:RemoveGear')
-            ClearPedTasks(PlayerPedId())
+            ClearPedTasks(GetPlayerPed(-1))
 			RLCore.Functions.Notify('/divingsuit to take off your diving suit!', 'error')
         end)
     else
@@ -709,11 +709,11 @@ AddEventHandler('oxygenmaskclient:UseGear', function(bool)
             RLCore.Functions.Progressbar("remove_gear", "Oxygen Tank", 10000, false, true, {}, {}, {}, {}, function() -- Done
                 DeleteGear()
 
-                SetEnableScuba(PlayerPedId(), false)
-                SetPedMaxTimeUnderwater(PlayerPedId(), 1.00)
+                SetEnableScuba(GetPlayerPed(-1), false)
+                SetPedMaxTimeUnderwater(GetPlayerPed(-1), 1.00)
                 currentGear.enabled = false
                 TriggerServerEvent('oxygengear:GiveBackGear')
-                ClearPedTasks(PlayerPedId())
+                ClearPedTasks(GetPlayerPed(-1))
             end)
         else
             RLCore.Functions.Notify('You are not wearing an oxygen tank.', 'error')
@@ -723,7 +723,7 @@ end) ]]
 
 function GearAnim()
     loadAnimDict("clothingshirt")    	
-	TaskPlayAnim(PlayerPedId(), "clothingshirt", "try_shirt_positive_d", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
+	TaskPlayAnim(GetPlayerPed(-1), "clothingshirt", "try_shirt_positive_d", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
 end
 
 --Bandanas
@@ -742,14 +742,14 @@ AddEventHandler('qb_bandana:bloodsbandana', function()
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
 	bandana = true
-	SetPedPropIndex(PlayerPedId(), 0, 14, 3, 2)
+	SetPedPropIndex(GetPlayerPed(-1), 0, 14, 3, 2)
 	elseif bandana then
 	bandana = false
 	RequestAnimDict(dict)
 	TaskPlayAnim( player, ad, "take_off_helmet_stand", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
-	ClearPedProp(PlayerPedId(), 0, -1, 0, 2)
+	ClearPedProp(GetPlayerPed(-1), 0, -1, 0, 2)
 	end
 end)
 
@@ -766,14 +766,14 @@ AddEventHandler('qb_bandana:greenbandana', function()
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
 	bandana = true
-	SetPedPropIndex(PlayerPedId(), 0, 14, 0, 2)
+	SetPedPropIndex(GetPlayerPed(-1), 0, 14, 0, 2)
 	elseif bandana then
 	bandana = false
 	RequestAnimDict(dict)
 	TaskPlayAnim( player, ad, "take_off_helmet_stand", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
-	ClearPedProp(PlayerPedId(), 0, -1, 0, 2)
+	ClearPedProp(GetPlayerPed(-1), 0, -1, 0, 2)
 	end
 end)
 
@@ -790,14 +790,14 @@ AddEventHandler('qb_bandana:ballasbandana', function()
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
 	bandana = true
-	SetPedPropIndex(PlayerPedId(), 0, 14, 4, 2)
+	SetPedPropIndex(GetPlayerPed(-1), 0, 14, 4, 2)
 	elseif bandana then
 	bandana = false
 	RequestAnimDict(dict)
 	TaskPlayAnim( player, ad, "take_off_helmet_stand", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
-	ClearPedProp(PlayerPedId(), 0, -1, 0, 2)
+	ClearPedProp(GetPlayerPed(-1), 0, -1, 0, 2)
 	end
 end)
 
@@ -814,14 +814,14 @@ AddEventHandler('qb_bandana:vagosbandana', function()
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
 	bandana = true
-	SetPedPropIndex(PlayerPedId(), 0, 14, 7, 2)
+	SetPedPropIndex(GetPlayerPed(-1), 0, 14, 7, 2)
 	elseif bandana then
 	bandana = false
 	RequestAnimDict(dict)
 	TaskPlayAnim( player, ad, "take_off_helmet_stand", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
-	ClearPedProp(PlayerPedId(), 0, -1, 0, 2)
+	ClearPedProp(GetPlayerPed(-1), 0, -1, 0, 2)
 	end
 end)
 
@@ -838,14 +838,14 @@ AddEventHandler('qb_bandana:cripsbandana', function()
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
 	bandana = true
-	SetPedPropIndex(PlayerPedId(), 0, 14, 2, 2)
+	SetPedPropIndex(GetPlayerPed(-1), 0, 14, 2, 2)
 	elseif bandana then
 	bandana = false
 	RequestAnimDict(dict)
 	TaskPlayAnim( player, ad, "take_off_helmet_stand", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
-	ClearPedProp(PlayerPedId(), 0, -1, 0, 2)
+	ClearPedProp(GetPlayerPed(-1), 0, -1, 0, 2)
 	end
 end)
 
@@ -862,14 +862,14 @@ AddEventHandler('qb_bandana:whitebandana', function()
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
 	bandana = true
-	SetPedPropIndex(PlayerPedId(), 0, 14, 1, 2)
+	SetPedPropIndex(GetPlayerPed(-1), 0, 14, 1, 2)
 	elseif bandana then
 	bandana = false
 	RequestAnimDict(dict)
 	TaskPlayAnim( player, ad, "take_off_helmet_stand", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
-	ClearPedProp(PlayerPedId(), 0, -1, 0, 2)
+	ClearPedProp(GetPlayerPed(-1), 0, -1, 0, 2)
 	end
 end)
 
@@ -886,14 +886,14 @@ AddEventHandler('qb_bandana:blackbandana', function()
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
 	bandana = true
-	SetPedPropIndex(PlayerPedId(), 0, 14, 3, 2)
+	SetPedPropIndex(GetPlayerPed(-1), 0, 14, 3, 2)
 	elseif bandana then
 	bandana = false
 	RequestAnimDict(dict)
 	TaskPlayAnim( player, ad, "take_off_helmet_stand", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
-	ClearPedProp(PlayerPedId(), 0, -1, 0, 2)
+	ClearPedProp(GetPlayerPed(-1), 0, -1, 0, 2)
 	end
 end)
 
@@ -910,14 +910,14 @@ AddEventHandler('qb_bandana:orangebandana', function()
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
 	bandana = true
-	SetPedPropIndex(PlayerPedId(), 0, 14, 6, 2)
+	SetPedPropIndex(GetPlayerPed(-1), 0, 14, 6, 2)
 	elseif bandana then
 	bandana = false
 	RequestAnimDict(dict)
 	TaskPlayAnim( player, ad, "take_off_helmet_stand", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
 	Wait (600)
 	ClearPedSecondaryTask(PlayerPedId())
-	ClearPedProp(PlayerPedId(), 0, -1, 0, 2)
+	ClearPedProp(GetPlayerPed(-1), 0, -1, 0, 2)
 	end
 end)
 

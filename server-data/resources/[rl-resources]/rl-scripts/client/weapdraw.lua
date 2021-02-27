@@ -134,18 +134,18 @@ Citizen.CreateThread(function()
 						if RLCore.Functions.GetPlayerData().job.name == "police" then
 							--TaskPlayAnim(ped, "rcmjosh4", "josh_leadout_cop2", 8.0, 2.0, -1, 48, 10, 0, 0, 0 )
 							canFire = false
-							currentHoldster = GetPedDrawableVariation(PlayerPedId(), 7)
+							currentHoldster = GetPedDrawableVariation(GetPlayerPed(-1), 7)
 							TaskPlayAnimAdvanced(PlayerPedId(), "rcmjosh4", "josh_leadout_cop2", GetEntityCoords(PlayerPedId(), true), 0, 0, rot, 3.0, 3.0, -1, 50, 0, 0, 0)
 							Citizen.Wait(300)
 							SetCurrentPedWeapon(PlayerPedId(), newWeap, true)
 
 							if IsWeaponHolsterable(newWeap) then
 								if currentHoldster == 8 then
-									SetPedComponentVariation(PlayerPedId(), 7, 2, 0, 2)
+									SetPedComponentVariation(GetPlayerPed(-1), 7, 2, 0, 2)
 								elseif currentHoldster == 1 then
-									SetPedComponentVariation(PlayerPedId(), 7, 3, 0, 2)
+									SetPedComponentVariation(GetPlayerPed(-1), 7, 3, 0, 2)
 								elseif currentHoldster == 6 then
-									SetPedComponentVariation(PlayerPedId(), 7, 5, 0, 2)
+									SetPedComponentVariation(GetPlayerPed(-1), 7, 5, 0, 2)
 								end
 							end
 							currWeapon = newWeap
@@ -172,11 +172,11 @@ Citizen.CreateThread(function()
 							Citizen.Wait(500)
 
 							if IsWeaponHolsterable(currWeapon) then
-								SetPedComponentVariation(PlayerPedId(), 7, currentHoldster, 0, 2)
+								SetPedComponentVariation(GetPlayerPed(-1), 7, currentHoldster, 0, 2)
 							end
 
 							SetCurrentPedWeapon(PlayerPedId(), GetHashKey('WEAPON_UNARMED'), true)
-							currentHoldster = GetPedDrawableVariation(PlayerPedId(), 7)
+							currentHoldster = GetPedDrawableVariation(GetPlayerPed(-1), 7)
 
 							TaskPlayAnimAdvanced(PlayerPedId(), "rcmjosh4", "josh_leadout_cop2", GetEntityCoords(PlayerPedId(), true), 0, 0, rot, 3.0, 3.0, -1, 50, 0, 0, 0)
 							Citizen.Wait(300)
@@ -184,11 +184,11 @@ Citizen.CreateThread(function()
 
 							if IsWeaponHolsterable(newWeap) then
 								if currentHoldster == 8 then
-									SetPedComponentVariation(PlayerPedId(), 7, 2, 0, 2)
+									SetPedComponentVariation(GetPlayerPed(-1), 7, 2, 0, 2)
 								elseif currentHoldster == 1 then
-									SetPedComponentVariation(PlayerPedId(), 7, 3, 0, 2)
+									SetPedComponentVariation(GetPlayerPed(-1), 7, 3, 0, 2)
 								elseif currentHoldster == 6 then
-									SetPedComponentVariation(PlayerPedId(), 7, 5, 0, 2)
+									SetPedComponentVariation(GetPlayerPed(-1), 7, 5, 0, 2)
 								end
 							end
 
@@ -214,18 +214,18 @@ Citizen.CreateThread(function()
 					else
 						if RLCore.Functions.GetPlayerData().job.name == "police" then
 							SetCurrentPedWeapon(PlayerPedId(), GetHashKey('WEAPON_UNARMED'), true)
-							currentHoldster = GetPedDrawableVariation(PlayerPedId(), 7)
+							currentHoldster = GetPedDrawableVariation(GetPlayerPed(-1), 7)
 							TaskPlayAnimAdvanced(PlayerPedId(), "rcmjosh4", "josh_leadout_cop2", GetEntityCoords(PlayerPedId(), true), 0, 0, rot, 3.0, 3.0, -1, 50, 0, 0, 0)
 							Citizen.Wait(300)
 							SetCurrentPedWeapon(PlayerPedId(), newWeap, true)
 
 							if IsWeaponHolsterable(newWeap) then
 								if currentHoldster == 8 then
-									SetPedComponentVariation(PlayerPedId(), 7, 2, 0, 2)
+									SetPedComponentVariation(GetPlayerPed(-1), 7, 2, 0, 2)
 								elseif currentHoldster == 1 then
-									SetPedComponentVariation(PlayerPedId(), 7, 3, 0, 2)
+									SetPedComponentVariation(GetPlayerPed(-1), 7, 3, 0, 2)
 								elseif currentHoldster == 6 then
-									SetPedComponentVariation(PlayerPedId(), 7, 5, 0, 2)
+									SetPedComponentVariation(GetPlayerPed(-1), 7, 5, 0, 2)
 								end
 							end
 
@@ -254,7 +254,7 @@ Citizen.CreateThread(function()
 							Citizen.Wait(500)
 							
 							if IsWeaponHolsterable(currWeapon) then
-								SetPedComponentVariation(PlayerPedId(), 7, currentHoldster, 0, 2)
+								SetPedComponentVariation(GetPlayerPed(-1), 7, currentHoldster, 0, 2)
 							end
 
 							SetCurrentPedWeapon(PlayerPedId(), GetHashKey('WEAPON_UNARMED'), true)

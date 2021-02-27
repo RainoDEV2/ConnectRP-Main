@@ -45,7 +45,7 @@ Citizen.CreateThread(function()
 			Citizen.Wait(10)
 			closestPlayer, distance = RLCore.Functions.GetClosestPlayer()
 
-			if not IsPedInAnyVehicle(PlayerPedId()) and not IsPedInAnyVehicle(GetPlayerPed(closestPlayer)) and not IsPedRagdoll(PlayerPedId()) then
+			if not IsPedInAnyVehicle(GetPlayerPed(-1)) and not IsPedInAnyVehicle(GetPlayerPed(closestPlayer)) and not IsPedRagdoll(PlayerPedId()) then
 				TryTackle()
 			end
 		end

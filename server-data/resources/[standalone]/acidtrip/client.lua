@@ -134,23 +134,23 @@ DoAcid = function(time)
 
   local step = 0
   local timer = GetGameTimer() 
-  local ped = PlayerPedId()
+  local ped = GetPlayerPed(-1)
   local lastPos = GetEntityCoords(ped)
 
   while GetGameTimer() - timer < time do
-    local plyPos = GetEntityCoords(PlayerPedId())
+    local plyPos = GetEntityCoords(GetPlayerPed(-1))
     local dist = GetVecDist(lastPos,plyPos)
     if dist > 1.0 then
       step = step + 1
       if step == 5 then
         step = 0
         local dir = (lastPos - plyPos)
-        local vel = GetEntityVelocity(PlayerPedId())
-        SetEntityCoordsNoOffset(PlayerPedId(),plyPos.x + dir.x, plyPos.y + dir.y,plyPos.z)
-        ForcePedMotionState(PlayerPedId(), -1115154469, 1, 1, 0)
-        SetEntityVelocity(PlayerPedId(), vel.x,vel.y,vel.z)
+        local vel = GetEntityVelocity(GetPlayerPed(-1))
+        SetEntityCoordsNoOffset(GetPlayerPed(-1),plyPos.x + dir.x, plyPos.y + dir.y,plyPos.z)
+        ForcePedMotionState(GetPlayerPed(-1), -1115154469, 1, 1, 0)
+        SetEntityVelocity(GetPlayerPed(-1), vel.x,vel.y,vel.z)
       end
-      lastPos = GetEntityCoords(PlayerPedId())
+      lastPos = GetEntityCoords(GetPlayerPed(-1))
     end
 
     DrawToons()
@@ -165,7 +165,7 @@ DoAcid = function(time)
 
   ClearTimecycleModifier()
   ShakeGameplayCam('DRUNK_SHAKE', 0.0)  
-  SetPedMotionBlur(PlayerPedId(), false)
+  SetPedMotionBlur(GetPlayerPed(-1), false)
 
   SetEntityAsMissionEntity(EvilPed,true,true)
   DeleteEntity(EvilPed)
@@ -190,7 +190,7 @@ DoAcid = function(time)
 end
 
 InitPed = function()
-  local plyPed = PlayerPedId()
+  local plyPed = GetPlayerPed(-1)
   local pos = GetEntityCoords(plyPed)
 
   local randomAlt     = math.random(0,359)
@@ -200,7 +200,7 @@ InitPed = function()
   while World3dToScreen2d(spawnPos.x,spawnPos.y,spawnPos.z) and not IsPointOnRoad(spawnPos.x,spawnPos.y,spawnPos.z) do 
     randomAlt   = math.random(0,359)
     randomDist  = math.random(50,80)
-    spawnPos    = GetEntityCoords(PlayerPedId()) + PointOnSphere(0.0,randomAlt,randomSphere)
+    spawnPos    = GetEntityCoords(GetPlayerPed(-1)) + PointOnSphere(0.0,randomAlt,randomSphere)
     Citizen.Wait(0)
   end 
 
@@ -217,9 +217,9 @@ end
 
 TrackEnt = function()
   while true do
-    local dist = GetVecDist(GetEntityCoords(PlayerPedId()), GetEntityCoords(EvilPed))
+    local dist = GetVecDist(GetEntityCoords(GetPlayerPed(-1)), GetEntityCoords(EvilPed))
     if dist > 5.0 then
-      TaskGoToEntity(EvilPed, PlayerPedId(), -1, 4.0, 100.0, 1073741824, 0)
+      TaskGoToEntity(EvilPed, GetPlayerPed(-1), -1, 4.0, 100.0, 1073741824, 0)
       Wait(1000)
     else       
       if not IsTaskMoveNetworkActive(EvilPed) then
@@ -232,7 +232,7 @@ TrackEnt = function()
 
       if not LastPedTurn or (GetGameTimer() - LastPedTurn) > 1000 then
         LastPedTurn = GetGameTimer()
-        TaskTurnPedToFaceEntity(EvilPed, PlayerPedId(), -1)
+        TaskTurnPedToFaceEntity(EvilPed, GetPlayerPed(-1), -1)
       end
 
       SetTaskMoveNetworkSignalFloat (EvilPed, "Pitch",          0.4)
@@ -267,13 +267,13 @@ InitCubes = function()
   ShakeGameplayCam('DRUNK_SHAKE', 0.0) 
   SetTimecycleModifierStrength(0.0) 
   SetTimecycleModifier("BikerFilter")
-  SetPedMotionBlur(PlayerPedId(), true)
+  SetPedMotionBlur(GetPlayerPed(-1), true)
 
   local counter = 4000
   local tick = 0
   while tick < counter do
     tick = tick + 1
-    local plyPos = GetEntityCoords(PlayerPedId())
+    local plyPos = GetEntityCoords(GetPlayerPed(-1))
     local adder = 0.1 * (tick/40)
     SetTimecycleModifierStrength(math.min(0.1 * (tick/(counter/40)),1.5))
     ShakeGameplayCam('DRUNK_SHAKE', math.min(0.1 * (tick/(counter/40)),1.5))  
@@ -289,7 +289,7 @@ InitCubes = function()
 end
 
 DrawCubes = function()
-  local position = GetEntityCoords(PlayerPedId())
+  local position = GetEntityCoords(GetPlayerPed(-1))
   local adder = 10
   for k,v in pairs(Cubes) do
     local addX = 0.1
@@ -313,7 +313,7 @@ DrawCubes = function()
 end
 
 DrawToons = function()
-  local plyPed = PlayerPedId()
+  local plyPed = GetPlayerPed(-1)
   local plyPos = GetEntityCoords(plyPed)
 
   local infront = vector3(plyPos.x+35.0, plyPos.y-8.0,plyPos.z)

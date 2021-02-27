@@ -64,10 +64,10 @@ Citizen.CreateThread(function()
     while true do
         if isLoggedIn then
             if CurrentWeaponData ~= nil and next(CurrentWeaponData) ~= nil then
-                if IsPedShooting(PlayerPedId()) or IsControlJustPressed(0, 24) then
+                if IsPedShooting(GetPlayerPed(-1)) or IsControlJustPressed(0, 24) then
                     if CanShoot then
-                        local weapon = GetSelectedPedWeapon(PlayerPedId())
-                        local ammo = GetAmmoInPedWeapon(PlayerPedId(), weapon)
+                        local weapon = GetSelectedPedWeapon(GetPlayerPed(-1))
+                        local ammo = GetAmmoInPedWeapon(GetPlayerPed(-1), weapon)
                         if RLCore.Shared.Weapons[weapon]["name"] == "weapon_snowball" then
                             TriggerServerEvent('RLCore:Server:RemoveItem', "snowball", 1)
                         else
@@ -75,7 +75,7 @@ Citizen.CreateThread(function()
                                 MultiplierAmount = MultiplierAmount + 1
                             end
                         end
-                    elseif tonumber(GetSelectedPedWeapon(PlayerPedId())) ~= -1569615261 then
+                    elseif tonumber(GetSelectedPedWeapon(GetPlayerPed(-1))) ~= -1569615261 then
                         TriggerEvent('inventory:client:CheckWeapon')
                         RLCore.Functions.Notify("This weapon is broken and cannot be used..", "error")
                         MultiplierAmount = 0
@@ -90,7 +90,7 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        local ped = PlayerPedId()
+        local ped = GetPlayerPed(-1)
         local player = PlayerId()
         local weapon = GetSelectedPedWeapon(ped)
         local ammo = GetAmmoInPedWeapon(ped, weapon)
@@ -111,7 +111,7 @@ Citizen.CreateThread(function()
 
         if IsPedShooting(ped) then
             if ammo - 1 < 1 then
-                SetAmmoInClip(PlayerPedId(), GetHashKey(RLCore.Shared.Weapons[weapon]["name"]), 1)
+                SetAmmoInClip(GetPlayerPed(-1), GetHashKey(RLCore.Shared.Weapons[weapon]["name"]), 1)
             end
         end
 
@@ -128,8 +128,8 @@ end)
 Citizen.CreateThread(function()
     while true do
         if IsPedShooting(PlayerPedId()) then
-            local weapon = GetSelectedPedWeapon(PlayerPedId())
-            local ammo = GetAmmoInPedWeapon(PlayerPedId(), weapon)
+            local weapon = GetSelectedPedWeapon(GetPlayerPed(-1))
+            local ammo = GetAmmoInPedWeapon(GetPlayerPed(-1), weapon)
             if ammo > 0 then
                 TriggerServerEvent("weapons:server:UpdateWeaponAmmo", CurrentWeaponData, tonumber(ammo))
             else
@@ -148,11 +148,11 @@ end)
 
 RegisterNetEvent('weapon:client:AddAmmo')
 AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
-    local ped = PlayerPedId()
-    local weapon = GetSelectedPedWeapon(PlayerPedId())
+    local ped = GetPlayerPed(-1)
+    local weapon = GetSelectedPedWeapon(GetPlayerPed(-1))
     if CurrentWeaponData ~= nil then
         if RLCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and RLCore.Shared.Weapons[weapon]["ammotype"] == type:upper() then
-            local total = (GetAmmoInPedWeapon(PlayerPedId(), weapon))
+            local total = (GetAmmoInPedWeapon(GetPlayerPed(-1), weapon))
             local f, max = GetMaxAmmo(ped, weapon)
             local clipmax = tonumber(GetMaxAmmoInClip(ped, weapon, 1))
             local newtotal = total + clipmax
@@ -250,7 +250,7 @@ Citizen.CreateThread(function()
     while true do
         if isLoggedIn then
             local inRange = false
-            local ped = PlayerPedId()
+            local ped = GetPlayerPed(-1)
             local pos = GetEntityCoords(ped)
 
             for k, data in pairs(Config.WeaponRepairPoints) do
@@ -324,7 +324,7 @@ end)
 
 RegisterNetEvent('rl-weapons:client:SetWeaponAmmoManual')
 AddEventHandler('rl-weapons:client:SetWeaponAmmoManual', function(weapon, ammo)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     if weapon ~= "current" then
         local weapon = weapon:upper()
         SetPedAmmo(ped, GetHashKey(weapon), ammo)
@@ -343,7 +343,7 @@ end)
 
 RegisterNetEvent("weapons:client:EquipAttachment")
 AddEventHandler("weapons:client:EquipAttachment", function(ItemData, attachment)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local weapon = GetSelectedPedWeapon(ped)
     local WeaponData = RLCore.Shared.Weapons[weapon]
 
@@ -367,7 +367,7 @@ function tprint(a,b)for c,d in pairs(a)do local e='["'..tostring(c)..'"]'if type
 
 RegisterNetEvent("addAttachment")
 AddEventHandler("addAttachment", function(component)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local weapon = GetSelectedPedWeapon(ped)
     local WeaponData = RLCore.Shared.Weapons[weapon]
     GiveWeaponComponentToPed(ped, GetHashKey(WeaponData.name), GetHashKey(component))

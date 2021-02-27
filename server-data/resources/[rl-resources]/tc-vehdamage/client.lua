@@ -8,7 +8,7 @@ local carsEnabled = {}
 local airtime = 0
 
 local offroadTimer = 0
-local airtimeCoords = GetEntityCoords(PlayerPedId())
+local airtimeCoords = GetEntityCoords(GetPlayerPed(-1))
 local heightPeak = 0
 local lasthighPeak = 0
 local highestPoint = 0
@@ -603,8 +603,8 @@ end)
 RegisterNetEvent('veh:requestUpdate')
 AddEventHandler('veh:requestUpdate', function()
   --print("Come here? In REquest Update")
- -- print(PlayerPedId())
-	local playerped = PlayerPedId()   
+ -- print(GetPlayerPed(-1))
+	local playerped = GetPlayerPed(-1)   
 	local coordA = GetEntityCoords(playerped, 1)
 	local coordB = GetOffsetFromEntityInWorldCoords(playerped, 0.0, 5.0, 0.0)
 	local targetVehicle = getVehicleInDirection(coordA, coordB)

@@ -150,7 +150,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(1)
         letSleep = true
         if playerLoaded and RLCore ~= nil and not InBank then 
-            local playerPed = PlayerPedId()
+            local playerPed = GetPlayerPed(-1)
             local playerCoords = GetEntityCoords(playerPed, true)
             if banks ~= nil then
                 for k, v in pairs(banks) do 

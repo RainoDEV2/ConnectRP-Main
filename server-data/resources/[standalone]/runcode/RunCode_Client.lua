@@ -1,8 +1,8 @@
 --[[
 	Example Commands
-	/crun SetVehicleCustomPrimaryColour(GetVehiclePedIsUsing(PlayerPedId()), 255, 70, 0)
-	/crun SetVehicleFixed(GetVehiclePedIsUsing(PlayerPedId()))
-	/crun GetEntityCoords(PlayerPedId())
+	/crun SetVehicleCustomPrimaryColour(GetVehiclePedIsUsing(GetPlayerPed(-1)), 255, 70, 0)
+	/crun SetVehicleFixed(GetVehiclePedIsUsing(GetPlayerPed(-1)))
+	/crun GetEntityCoords(GetPlayerPed(-1))
 ]]
 
 local function RunStringLocally_Handler(stringToRun)

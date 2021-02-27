@@ -86,13 +86,13 @@ AddEventHandler("fireworks:client:UseFirework", function(itemName, assetName)
         anim = "drop_front",
         flags = 16,
     }, {}, {}, function() -- Done
-        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "anim@narcotics@trash", "drop_front", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", itemName, 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items[itemName], "remove")
-        local pos = GetEntityCoords(PlayerPedId())
+        local pos = GetEntityCoords(GetPlayerPed(-1))
         DoFireWork(assetName, pos)
     end, function() -- Cancel
-        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
+        StopAnimTask(GetPlayerPed(-1), "anim@narcotics@trash", "drop_front", 1.0)
         RLCore.Functions.Notify("Cancelled..", "error")
     end)
 end)

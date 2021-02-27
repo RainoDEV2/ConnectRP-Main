@@ -26,7 +26,7 @@ end
 Citizen.CreateThread(function()
     while true do
         local inRange = false
-        local PlayerPed = PlayerPedId()
+        local PlayerPed = GetPlayerPed(-1)
         local PlayerPos = GetEntityCoords(PlayerPed)
         local PedVehicle = GetVehiclePedIsIn(PlayerPed)
         local Driver = GetPedInVehicleSeat(PedVehicle, -1)
@@ -64,7 +64,7 @@ end)
 
 RegisterNetEvent('rl-carwash:client:washCar')
 AddEventHandler('rl-carwash:client:washCar', function()
-    local PlayerPed = PlayerPedId()
+    local PlayerPed = GetPlayerPed(-1)
     local PedVehicle = GetVehiclePedIsIn(PlayerPed)
     local Driver = GetPedInVehicleSeat(PedVehicle, -1)
 
@@ -88,7 +88,7 @@ end)
 
 RegisterNetEvent('clean:kit')
 AddEventHandler('clean:kit', function()
-	local ply = PlayerPedId()
+	local ply = GetPlayerPed(-1)
 	local ped = PlayerPedId()
     local coords = GetEntityCoords(ped)
     local vehicle = nil

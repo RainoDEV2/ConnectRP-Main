@@ -20,9 +20,9 @@ Citizen.CreateThread(function()
         Citizen.Wait(5)
 
         if RLCore ~= nil then
-            if IsPedInAnyVehicle(PlayerPedId(), false) and GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), true), -1) == PlayerPedId() then
-                local plate = GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId(), true))
-                if LastVehicle ~= GetVehiclePedIsIn(PlayerPedId(), false) then
+            if IsPedInAnyVehicle(GetPlayerPed(-1), false) and GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), true), -1) == GetPlayerPed(-1) then
+                local plate = GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), true))
+                if LastVehicle ~= GetVehiclePedIsIn(GetPlayerPed(-1), false) then
                     RLCore.Functions.TriggerCallback('vehiclekeys:CheckHasKey', function(result)
                         if result then
                             HasKey = true
@@ -31,7 +31,7 @@ Citizen.CreateThread(function()
                             HasKey = false
                             SetVehicleEngineOn(veh, false, false, true)
                         end
-                        LastVehicle = GetVehiclePedIsIn(PlayerPedId(), false)
+                        LastVehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
                     end, plate)
                 end
             else
@@ -47,10 +47,10 @@ Citizen.CreateThread(function()
             end
         end
 
-        if not HasKey and IsPedInAnyVehicle(PlayerPedId(), false) and GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), -1) == PlayerPedId() and RLCore ~= nil and not IsHotwiring then
-            local veh = GetVehiclePedIsIn(PlayerPedId(), false)
+        if not HasKey and IsPedInAnyVehicle(GetPlayerPed(-1), false) and GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), -1) == GetPlayerPed(-1) and RLCore ~= nil and not IsHotwiring then
+            local veh = GetVehiclePedIsIn(GetPlayerPed(-1), false)
             SetVehicleEngineOn(veh, false, false, true)
-            local veh = GetVehiclePedIsIn(PlayerPedId(), false)
+            local veh = GetVehiclePedIsIn(GetPlayerPed(-1), false)
             local vehpos = GetOffsetFromEntityInWorldCoords(veh, 0.0, 2.0, 1.0)
             RLCore.Functions.DrawText3D(vehpos.x, vehpos.y, vehpos.z, "[G] Search / [H] Hotwire" )
             SetVehicleEngineOn(veh, false, false, true)
@@ -74,8 +74,8 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(7)
         if not IsRobbing and isLoggedIn and RLCore ~= nil then
-            if GetVehiclePedIsTryingToEnter(PlayerPedId()) ~= nil and GetVehiclePedIsTryingToEnter(PlayerPedId()) ~= 0 then
-                local vehicle = GetVehiclePedIsTryingToEnter(PlayerPedId())
+            if GetVehiclePedIsTryingToEnter(GetPlayerPed(-1)) ~= nil and GetVehiclePedIsTryingToEnter(GetPlayerPed(-1)) ~= 0 then
+                local vehicle = GetVehiclePedIsTryingToEnter(GetPlayerPed(-1))
                 local driver = GetPedInVehicleSeat(vehicle, -1)
                 if driver ~= 0 and not IsPedAPlayer(driver) then
                     if IsEntityDead(driver) then
@@ -112,12 +112,12 @@ RegisterNetEvent('vehiclekeys:client:SetOwner')
 AddEventHandler('vehiclekeys:client:SetOwner', function(plate, vehicle)
     local VehPlate = plate
     if VehPlate == nil then
-        VehPlate = GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId(), true))
+        VehPlate = GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), true))
     end
 
     TriggerServerEvent('vehiclekeys:server:SetVehicleOwner', VehPlate, vehicle)
-    if IsPedInAnyVehicle(PlayerPedId()) and plate == GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId(), true)) then
-        SetVehicleEngineOn(GetVehiclePedIsIn(PlayerPedId(), true), true, false, true)
+    if IsPedInAnyVehicle(GetPlayerPed(-1)) and plate == GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), true)) then
+        SetVehicleEngineOn(GetVehiclePedIsIn(GetPlayerPed(-1), true), true, false, true)
     end
     HasKey = true
 end)
@@ -178,8 +178,8 @@ function getVehicleInDirection(coordFrom, coordTo)
 
 RegisterNetEvent('vehiclekeys:client:ToggleEngine')
 AddEventHandler('vehiclekeys:client:ToggleEngine', function()
-    local EngineOn = IsVehicleEngineOn(GetVehiclePedIsIn(PlayerPedId()))
-    local veh = GetVehiclePedIsIn(PlayerPedId(), true)
+    local EngineOn = IsVehicleEngineOn(GetVehiclePedIsIn(GetPlayerPed(-1)))
+    local veh = GetVehiclePedIsIn(GetPlayerPed(-1), true)
     if HasKey then
         if EngineOn then
             SetVehicleEngineOn(veh, false, false, true)
@@ -191,7 +191,7 @@ end)
 
 RegisterNetEvent('lockpicks:UseLockpick')
 AddEventHandler('lockpicks:UseLockpick', function(isAdvanced)
-    if (IsPedInAnyVehicle(PlayerPedId())) then
+    if (IsPedInAnyVehicle(GetPlayerPed(-1))) then
         if not HasKey then
             LockpickIgnition(isAdvanced)
         end
@@ -212,11 +212,11 @@ function RobVehicle(target)
             ClearPedTasksImmediately(target)
 
             TaskStandStill(target, RandWait)
-            TaskHandsUp(target, RandWait, PlayerPedId(), 0, false)
+            TaskHandsUp(target, RandWait, GetPlayerPed(-1), 0, false)
 
             Citizen.Wait(RandWait)
 
-            --TaskReactAndFleePed(target, PlayerPedId())
+            --TaskReactAndFleePed(target, GetPlayerPed(-1))
             IsRobbing = false
         end
     end)
@@ -224,12 +224,12 @@ end
 
 function LockVehicle()
     local veh = RLCore.Functions.GetClosestVehicle()
-    local coordA = GetEntityCoords(PlayerPedId(), true)
-    local coordB = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 255.0, 0.0)
+    local coordA = GetEntityCoords(GetPlayerPed(-1), true)
+    local coordB = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 255.0, 0.0)
     local veh = GetClosestVehicleInDirection(coordA, coordB)
-    local pos = GetEntityCoords(PlayerPedId(), true)
-    if IsPedInAnyVehicle(PlayerPedId()) then
-        veh = GetVehiclePedIsIn(PlayerPedId())
+    local pos = GetEntityCoords(GetPlayerPed(-1), true)
+    if IsPedInAnyVehicle(GetPlayerPed(-1)) then
+        veh = GetVehiclePedIsIn(GetPlayerPed(-1))
     end
     local plate = GetVehicleNumberPlateText(veh)
     local vehpos = GetEntityCoords(veh, false)
@@ -241,11 +241,11 @@ function LockVehicle()
                     if HasKey then
                         local vehLockStatus = GetVehicleDoorLockStatus(veh)
                         loadAnimDict("anim@mp_player_intmenu@key_fob@")
-                        TaskPlayAnim(PlayerPedId(), 'anim@mp_player_intmenu@key_fob@', 'fob_click' ,3.0, 3.0, -1, 49, 0, false, false, false)
+                        TaskPlayAnim(GetPlayerPed(-1), 'anim@mp_player_intmenu@key_fob@', 'fob_click' ,3.0, 3.0, -1, 49, 0, false, false, false)
                     
                         if vehLockStatus == 1 then
                             Citizen.Wait(750)
-                            ClearPedTasks(PlayerPedId())
+                            ClearPedTasks(GetPlayerPed(-1))
                             TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "lock", 0.3)
                             SetVehicleDoorsLocked(veh, 2)
                             if(GetVehicleDoorLockStatus(veh) == 2)then
@@ -255,7 +255,7 @@ function LockVehicle()
                             end
                         else
                             Citizen.Wait(750)
-                            ClearPedTasks(PlayerPedId())
+                            ClearPedTasks(GetPlayerPed(-1))
                             TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "unlock", 0.3)
                             SetVehicleDoorsLocked(veh, 1)
                             if(GetVehicleDoorLockStatus(veh) == 1)then
@@ -265,7 +265,7 @@ function LockVehicle()
                             end
                         end
                     
-                        if not IsPedInAnyVehicle(PlayerPedId()) then
+                        if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
                             SetVehicleInteriorlight(veh, true)
                             SetVehicleIndicatorLights(veh, 0, true)
                             SetVehicleIndicatorLights(veh, 1, true)
@@ -298,7 +298,7 @@ function LockpickDoor(isAdvanced)
     local isParked = isParked(GetVehicleNumberPlateText(vehicle))
     if vehicle ~= nil and vehicle ~= 0 and not isParked then
         local vehpos = GetEntityCoords(vehicle)
-        local pos = GetEntityCoords(PlayerPedId())
+        local pos = GetEntityCoords(GetPlayerPed(-1))
         if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 1.5 then
             local vehLockStatus = GetVehicleDoorLockStatus(vehicle)
             if (vehLockStatus > 1) then
@@ -317,7 +317,7 @@ function LockpickDoor(isAdvanced)
                     disableCombat = true,
                 }, {}, {}, {}, function() -- Done
                     openingDoor = false
-                    StopAnimTask(PlayerPedId(), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0)
+                    StopAnimTask(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0)
                     IsHotwiring = false
                     if math.random(1, 100) <= 90 then
                         TriggerEvent("debug", 'Lockpick: Success', 'success')
@@ -330,7 +330,7 @@ function LockpickDoor(isAdvanced)
                     end
                 end, function() -- Cancel
                     openingDoor = false
-                    StopAnimTask(PlayerPedId(), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0)
+                    StopAnimTask(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0)
                     RLCore.Functions.Notify("Failed!", "error")
                     TriggerEvent("debug", 'Lockpick: Canceled', 'error')
                     IsHotwiring = false
@@ -345,7 +345,7 @@ end
 function LockpickDoorAnim(time)
     time = time / 1000
     loadAnimDict("veh@break_in@0h@p_m_one@")
-    TaskPlayAnim(PlayerPedId(), "veh@break_in@0h@p_m_one@", "low_force_entry_ds" ,3.0, 3.0, -1, 16, 0, false, false, false)
+    TaskPlayAnim(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds" ,3.0, 3.0, -1, 16, 0, false, false, false)
     openingDoor = true
     Citizen.CreateThread(function()
         while openingDoor do
@@ -354,7 +354,7 @@ function LockpickDoorAnim(time)
             time = time - 1
             if time <= 0 then
                 openingDoor = false
-                StopAnimTask(PlayerPedId(), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0)
+                StopAnimTask(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0)
             end
         end
     end)
@@ -362,9 +362,9 @@ end
 
 function LockpickIgnition(isAdvanced)
     if not HasKey then 
-        local vehicle = GetVehiclePedIsIn(PlayerPedId(), true)
+        local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
         if vehicle ~= nil and vehicle ~= 0 then
-            if GetPedInVehicleSeat(vehicle, -1) == PlayerPedId() then
+            if GetPedInVehicleSeat(vehicle, -1) == GetPlayerPed(-1) then
                 IsHotwiring = true
 
                 local dict = "anim@amb@clubhouse@tutorial@bkr_tut_ig3@"
@@ -378,7 +378,7 @@ function LockpickIgnition(isAdvanced)
                 end
 
                 if exports["rl-taskbarskill"]:taskBar(math.random(5000,25000),math.random(10,20)) ~= 100 then             
-					StopAnimTask(PlayerPedId(), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
+					StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
                     HasKey = false
                     SetVehicleEngineOn(vehicle, false, false, true)
                     RLCore.Functions.Notify("Lockpicking failed!", "error")
@@ -392,7 +392,7 @@ function LockpickIgnition(isAdvanced)
                 end
     
                 if exports["rl-taskbarskill"]:taskBar(math.random(5000,25000),math.random(10,20)) ~= 100 then
-                    StopAnimTask(PlayerPedId(), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
+                    StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
                     HasKey = false
                     SetVehicleEngineOn(vehicle, false, false, true)
                     RLCore.Functions.Notify("Lockpicking failed!", "error")
@@ -406,7 +406,7 @@ function LockpickIgnition(isAdvanced)
                 end
 
                 if exports["rl-taskbarskill"]:taskBar(1500,math.random(5,15)) ~= 100 then
-                    StopAnimTask(PlayerPedId(), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
+                    StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
                     HasKey = false
                     SetVehicleEngineOn(vehicle, false, false, true)
                     RLCore.Functions.Notify("Lockpicking failed!", "error")
@@ -420,7 +420,7 @@ function LockpickIgnition(isAdvanced)
                 end 
 
                 TriggerEvent("debug", 'Hotwire: Success', 'success')
-                StopAnimTask(PlayerPedId(), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
+                StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
                 RLCore.Functions.Notify("Ignition Working.")
                 HasKey = true
                 TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle))
@@ -434,7 +434,7 @@ end
 
 function Search()
     if not HasKey then 
-        local vehicle = GetVehiclePedIsIn(PlayerPedId(), true)
+        local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
 
         if vehicleSearched[GetVehicleNumberPlateText(vehicle)] then
             RLCore.Functions.Notify('You have already searched this vehicle.', "error")
@@ -454,7 +454,7 @@ function Search()
             anim = "machinic_loop_mechandplayer",
             flags = 16,
         }, {}, {}, function() -- Done
-            StopAnimTask(PlayerPedId(), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
+            StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
             if (math.random(0, 100) < 10) then
                 HasKey = true
                 TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle))
@@ -467,7 +467,7 @@ function Search()
             IsHotwiring = false
         end, function() -- Cancel
             TriggerEvent("debug", 'Keys: Canceled', 'error')
-            StopAnimTask(PlayerPedId(), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
+            StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
             HasKey = false
             SetVehicleEngineOn(veh, false, false, true)
             IsHotwiring = false
@@ -477,7 +477,7 @@ end
 
 function Hotwire()
     if not HasKey then 
-        local vehicle = GetVehiclePedIsIn(PlayerPedId(), true)
+        local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
         local isParked = isParked(GetVehicleNumberPlateText(vehicle))
         if not isParked then
             if vehicleHotwired[GetVehicleNumberPlateText(vehicle)] then
@@ -501,7 +501,7 @@ function Hotwire()
                 anim = "machinic_loop_mechandplayer",
                 flags = 16,
             }, {}, {}, function() -- Done
-                StopAnimTask(PlayerPedId(), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
+                StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
                 if (math.random(0, 100) < 35) then
                     HasKey = true
                     TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle))
@@ -516,7 +516,7 @@ function Hotwire()
                 end
                 IsHotwiring = false
             end, function() -- Cancel
-                StopAnimTask(PlayerPedId(), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
+                StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
                 HasKey = false
                 SetVehicleEngineOn(veh, false, false, true)
                 RLCore.Functions.Notify("You can not work out this hotwire.", "error")
@@ -564,7 +564,7 @@ Citizen.CreateThread(function()
         
                             SetPedDropsWeaponsWhenDead(targetPed,false)
                             ClearPedTasks(targetPed)
-                            TaskTurnPedToFaceEntity(targetPed, PlayerPedId(), 3.0)
+                            TaskTurnPedToFaceEntity(targetPed, GetPlayerPed(-1), 3.0)
                             TaskSetBlockingOfNonTemporaryEvents(targetPed, true)
                             SetPedFleeAttributes(targetPed, 0, 0)
                             SetPedCombatAttributes(targetPed, 17, 1)
@@ -583,16 +583,16 @@ Citizen.CreateThread(function()
                             RLCore.Functions.Notify('You just recieved keys to a vehicle!')
                             TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle), vehicle)
                             Citizen.Wait(500)
-                            TaskReactAndFleePed(targetPed, PlayerPedId())
+                            TaskReactAndFleePed(targetPed, GetPlayerPed(-1))
                             SetPedKeepTask(targetPed, true)
                             Wait(2500)
-                            TaskReactAndFleePed(targetPed, PlayerPedId())
+                            TaskReactAndFleePed(targetPed, GetPlayerPed(-1))
                             SetPedKeepTask(targetPed, true)
                             Wait(2500)
-                            TaskReactAndFleePed(targetPed, PlayerPedId())
+                            TaskReactAndFleePed(targetPed, GetPlayerPed(-1))
                             SetPedKeepTask(targetPed, true)
                             Wait(2500)
-                            TaskReactAndFleePed(targetPed, PlayerPedId())
+                            TaskReactAndFleePed(targetPed, GetPlayerPed(-1))
                             SetPedKeepTask(targetPed, true)
                         end
                     end
@@ -609,7 +609,7 @@ function GetClosestVehicleInDirection(coordFrom, coordTo)
 	local vehicle
 
 	for i = 0, 100 do
-		rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z + offset, 10, PlayerPedId(), 0)	
+		rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z + offset, 10, GetPlayerPed(-1), 0)	
 		a, b, c, d, vehicle = GetRaycastResult(rayHandle)
 		
 		offset = offset - 1

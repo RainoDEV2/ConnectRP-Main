@@ -68,16 +68,16 @@ end
 local cam = nil
 
 function getNearestVeh()
-    local pos = GetEntityCoords(PlayerPedId())
-    local entityWorld = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 20.0, 0.0)
+    local pos = GetEntityCoords(GetPlayerPed(-1))
+    local entityWorld = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 20.0, 0.0)
 
-    local rayHandle = CastRayPointToPoint(pos.x, pos.y, pos.z, entityWorld.x, entityWorld.y, entityWorld.z, 10, PlayerPedId(), 0)
+    local rayHandle = CastRayPointToPoint(pos.x, pos.y, pos.z, entityWorld.x, entityWorld.y, entityWorld.z, 10, GetPlayerPed(-1), 0)
     local _, _, _, _, vehicleHandle = GetRaycastResult(rayHandle)
     return vehicleHandle
 end
 
 function TrunkCam(bool)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local vehicle = GetEntityAttachedTo(PlayerPedId())
     local drawPos = GetOffsetFromEntityInWorldCoords(vehicle, 0, -5.5, 0)
 
@@ -102,7 +102,7 @@ end
 
 Citizen.CreateThread(function()
     while true do
-        local ped = PlayerPedId()
+        local ped = GetPlayerPed(-1)
         local vehicle = GetEntityAttachedTo(PlayerPedId())
         local drawPos = GetOffsetFromEntityInWorldCoords(vehicle, 0, -5.5, 0)
     
@@ -140,7 +140,7 @@ end)
 
 RegisterNetEvent('rl-trunk:client:KidnapGetIn')
 AddEventHandler('rl-trunk:client:KidnapGetIn', function(veh)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local closestVehicle = veh
     local vehClass = GetVehicleClass(closestVehicle)
     local plate = GetVehicleNumberPlateText(closestVehicle)
@@ -168,7 +168,7 @@ AddEventHandler('rl-trunk:client:KidnapGetIn', function(veh)
 
                             isKidnapped = true
                         else
-                            local ped = PlayerPedId()
+                            local ped = GetPlayerPed(-1)
                             local vehicle = GetEntityAttachedTo(PlayerPedId())
                             local plate = GetVehicleNumberPlateText(vehicle)
             
@@ -202,7 +202,7 @@ end)
 
 RegisterNetEvent('rl-trunk:client:GetIn')
 AddEventHandler('rl-trunk:client:GetIn', function(isKidnapped)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     local closestVehicle = getNearestVeh()
 
     if closestVehicle ~= 0 then
@@ -255,7 +255,7 @@ Citizen.CreateThread(function()
 
         if inTrunk then
             if not isKidnapped then
-                local ped = PlayerPedId()
+                local ped = GetPlayerPed(-1)
                 local vehicle = GetEntityAttachedTo(PlayerPedId())
                 local drawPos = GetOffsetFromEntityInWorldCoords(vehicle, 0, -2.5, 0)
                 local plate = GetVehicleNumberPlateText(vehicle)

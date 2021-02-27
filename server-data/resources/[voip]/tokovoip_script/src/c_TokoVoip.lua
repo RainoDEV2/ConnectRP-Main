@@ -143,7 +143,7 @@ function TokoVoip.initialize(self)
 
 
 			if (IsControlPressed(0, self.radioKey) and self.plugin_data.radioChannel ~= -1 and self.config.radioEnabled) then -- Talk on radio
-				if not IsEntityPlayingAnim(PlayerPedId(), 'dead', 'dead_a', 3) and not IsEntityPlayingAnim(PlayerPedId(), 'mp_arresting', 'idle', 3) then
+				if not IsEntityPlayingAnim(GetPlayerPed(-1), 'dead', 'dead_a', 3) and not IsEntityPlayingAnim(GetPlayerPed(-1), 'mp_arresting', 'idle', 3) then
 				self.plugin_data.radioTalking = true;
 				self.plugin_data.localRadioClicks = true;
 				if (self.plugin_data.radioChannel > self.config.radioClickMaxChannel) then

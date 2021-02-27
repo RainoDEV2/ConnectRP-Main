@@ -36,12 +36,12 @@ end)
 
 RegisterNetEvent('smallresource:client:LoadNitrous')
 AddEventHandler('smallresource:client:LoadNitrous', function()
-    local IsInVehicle = IsPedInAnyVehicle(PlayerPedId())
-    local ped = PlayerPedId()
+    local IsInVehicle = IsPedInAnyVehicle(GetPlayerPed(-1))
+    local ped = GetPlayerPed(-1)
 
     if not NitrousActivated then
         if IsInVehicle and not IsThisModelABike(GetEntityModel(GetVehiclePedIsIn(ped))) then
-            local CurrentVehicle = GetVehiclePedIsIn(PlayerPedId())
+            local CurrentVehicle = GetVehiclePedIsIn(GetPlayerPed(-1))
             FreezeEntityPosition(CurrentVehicle, true)
             RLCore.Functions.Progressbar("nitrossz", "Nitrous", 20000, false, true, {
                 disableMovement = true,
@@ -69,15 +69,15 @@ local useTimeout = 0
 
 Citizen.CreateThread(function()
     while true do
-        local IsInVehicle = IsPedInAnyVehicle(PlayerPedId())
-        local CurrentVehicle = GetVehiclePedIsIn(PlayerPedId())
+        local IsInVehicle = IsPedInAnyVehicle(GetPlayerPed(-1))
+        local CurrentVehicle = GetVehiclePedIsIn(GetPlayerPed(-1))
         if IsInVehicle then
             local Plate = GetVehicleNumberPlateText(CurrentVehicle)
             if VehicleNitrous[Plate] ~= nil then
                 if VehicleNitrous[Plate].hasnitro then
                     if IsControlJustPressed(0, Keys["LEFTSHIFT"]) and NitrousActivated == false then
                         if GetGameTimer() > useTimeout then
-                            local speed = GetEntitySpeed(GetVehiclePedIsIn(PlayerPedId(), false)) * 3.6
+                            local speed = GetEntitySpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false)) * 3.6
                             SetVehicleEnginePowerMultiplier(CurrentVehicle, NitrousBoost)
                             SetVehicleEngineTorqueMultiplier(CurrentVehicle, NitrousBoost)
                             NitrousActivated = true
@@ -218,7 +218,7 @@ ParticleSize = 1.4
 Citizen.CreateThread(function()
     while true do
         if NitrousActivated == true then
-            local veh = GetVehiclePedIsIn(PlayerPedId())
+            local veh = GetVehiclePedIsIn(GetPlayerPed(-1))
             TriggerServerEvent('nitrous:server:SyncFlames', VehToNet(veh))
             SetVehicleBoostActive(veh, 1)
 
@@ -271,12 +271,12 @@ end)
 
 RegisterNetEvent('nitrous:client:fillVehicle')
 AddEventHandler('nitrous:client:fillVehicle', function(plate)
-    local IsInVehicle = IsPedInAnyVehicle(PlayerPedId())
-    local ped = PlayerPedId()
+    local IsInVehicle = IsPedInAnyVehicle(GetPlayerPed(-1))
+    local ped = GetPlayerPed(-1)
 
     if not NitrousActivated then
         if IsInVehicle and not IsThisModelABike(GetEntityModel(GetVehiclePedIsIn(ped))) then
-            local CurrentVehicle = GetVehiclePedIsIn(PlayerPedId())
+            local CurrentVehicle = GetVehiclePedIsIn(GetPlayerPed(-1))
             local Plate = GetVehicleNumberPlateText(CurrentVehicle)
             TriggerServerEvent('nitrous:server:LoadNitrous', Plate)
         else
@@ -306,8 +306,8 @@ AddEventHandler('nitrous:client:LoadNitrous', function(Plate)
         hasnitro = true,
         level = 100,
     }
-    local IsInVehicle = IsPedInAnyVehicle(PlayerPedId())
-    local CurrentVehicle = GetVehiclePedIsIn(PlayerPedId())
+    local IsInVehicle = IsPedInAnyVehicle(GetPlayerPed(-1))
+    local CurrentVehicle = GetVehiclePedIsIn(GetPlayerPed(-1))
     local CPlate = GetVehicleNumberPlateText(CurrentVehicle)
     if CPlate == Plate then
         TriggerEvent('rl-hud:nitro', 100)
@@ -318,7 +318,7 @@ RegisterNetEvent('nitrous:client:UnloadNitrous')
 AddEventHandler('nitrous:client:UnloadNitrous', function(Plate)
     VehicleNitrous[Plate] = nil
     
-    local CurrentVehicle = GetVehiclePedIsIn(PlayerPedId())
+    local CurrentVehicle = GetVehiclePedIsIn(GetPlayerPed(-1))
     local CPlate = GetVehicleNumberPlateText(CurrentVehicle)
     if CPlate == Plate then
         NitrousActivated = false

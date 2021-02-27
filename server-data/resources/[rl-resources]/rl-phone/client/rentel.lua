@@ -90,7 +90,7 @@ AddEventHandler('rl-phone:client:spawnVehicle', function(data)
 
      RLCore.Functions.SpawnVehicle(data.model, function(veh)
         SetEntityHeading(veh, data.coords.h)
-        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
         SetVehicleNumberPlateText(veh, data.plate)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
     end, data.coords, true)

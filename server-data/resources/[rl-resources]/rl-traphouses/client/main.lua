@@ -56,7 +56,7 @@ AddEventHandler('RLCore:Client:OnPlayerLoaded', function()
 end)
 
 function SetClosestTraphouse()
-    local pos = GetEntityCoords(PlayerPedId(), true)
+    local pos = GetEntityCoords(GetPlayerPed(-1), true)
     local current = nil
     local dist = nil
     for id, traphouse in pairs(Config.TrapHouses) do
@@ -172,7 +172,7 @@ Citizen.CreateThread(function()
     while true do
         local aiming, targetPed = GetEntityPlayerIsFreeAimingAt(PlayerId(-1))
         if targetPed ~= 0 and not IsPedAPlayer(targetPed) then
-            local ped = PlayerPedId()
+            local ped = GetPlayerPed(-1)
             local pos = GetEntityCoords(ped)
             if ClosestTraphouse ~= nil then
                 local data = Config.TrapHouses[ClosestTraphouse]
@@ -243,7 +243,7 @@ end)
 Citizen.CreateThread(function()
     while true do
         
-        local ped = PlayerPedId()
+        local ped = GetPlayerPed(-1)
         local pos = GetEntityCoords(ped)
         local inRange = false
 
@@ -345,7 +345,7 @@ function EnterTraphouse(data)
 end
 
 function LeaveTraphouse(data)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
     TriggerServerEvent("InteractSound_SV:PlayOnSource", "houses_door_open", 0.25)
     DoScreenFadeOut(250)
     Citizen.Wait(250)
@@ -365,7 +365,7 @@ end
 
 RegisterNetEvent('rl-traphouses:client:TakeoverHouse')
 AddEventHandler('rl-traphouses:client:TakeoverHouse', function(TraphouseId)
-    local ped = PlayerPedId()
+    local ped = GetPlayerPed(-1)
 
     RLCore.Functions.Progressbar("takeover_traphouse", "Taking over the traphouse", math.random(1000, 3000), false, true, {
         disableMovement = true,

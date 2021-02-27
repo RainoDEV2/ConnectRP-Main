@@ -833,7 +833,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1)
         if PlayerData.job and PlayerData.job.name == "cardealer" then
-            local pos = GetEntityCoords(PlayerPedId())
+            local pos = GetEntityCoords(GetPlayerPed(-1))
             local boss = GetDistanceBetweenCoords(pos, Config.Locations['boss'].x, Config.Locations['boss'].y, Config.Locations['boss'].z, true)
             local stash = GetDistanceBetweenCoords(pos, Config.Locations['stash'].x, Config.Locations['stash'].y, Config.Locations['stash'].z, true)
 

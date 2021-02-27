@@ -10,7 +10,7 @@ Citizen.CreateThread(function()
                 if not DoesBlipExist(currentBlip) then
                     CreateJobBlip()
                 end
-                local pos = GetEntityCoords(PlayerPedId())
+                local pos = GetEntityCoords(GetPlayerPed(-1))
                 if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations.jobs[currentJob][currentLocation].coords.x, Config.Locations.jobs[currentJob][currentLocation].coords.y, Config.Locations.jobs[currentJob][currentLocation].coords.z, true) < 10.0) and not isWorking then
                     DrawMarker(2, Config.Locations.jobs[currentJob][currentLocation].coords.x, Config.Locations.jobs[currentJob][currentLocation].coords.y, Config.Locations.jobs[currentJob][currentLocation].coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 150, 200, 50, 222, false, false, false, true, false, false, false)
                     if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations.jobs[currentJob][currentLocation].coords.x, Config.Locations.jobs[currentJob][currentLocation].coords.y, Config.Locations.jobs[currentJob][currentLocation].coords.z, true) < 1.0) and not isWorking then
@@ -26,12 +26,12 @@ Citizen.CreateThread(function()
                             flags = 16,
                         }, {}, {}, function()
                             isWorking = false
-                            StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                            StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
                             JobDone()
 							TriggerServerEvent("electricity:reward")
                         end, function()
                             isWorking = false
-                            StopAnimTask(PlayerPedId(), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                            StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
                             RLCore.Functions.Notify("Canceled", "error")
                         end)
                     end

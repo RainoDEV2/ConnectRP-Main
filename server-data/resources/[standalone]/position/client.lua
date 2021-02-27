@@ -11,10 +11,10 @@ POSITIONS.marker.r = 1.0
 POSITIONS.start = function () 
     if POSITIONS.marker.active then return end
 
-    POSITIONS.marker.x = (Floor((GetEntityCoords(PlayerPedId(), true).x)*100))/100
-    POSITIONS.marker.y = (Floor((GetEntityCoords(PlayerPedId(), true).y)*100))/100
-    POSITIONS.marker.z = (Floor((GetEntityCoords(PlayerPedId(), true).z)*100))/100
-    POSITIONS.marker.h = Floor(GetEntityHeading(PlayerPedId()))
+    POSITIONS.marker.x = (Floor((GetEntityCoords(GetPlayerPed(-1), true).x)*100))/100
+    POSITIONS.marker.y = (Floor((GetEntityCoords(GetPlayerPed(-1), true).y)*100))/100
+    POSITIONS.marker.z = (Floor((GetEntityCoords(GetPlayerPed(-1), true).z)*100))/100
+    POSITIONS.marker.h = Floor(GetEntityHeading(GetPlayerPed(-1)))
     POSITIONS.marker.r = 1.0
 
     POSITIONS.marker.h = POSITIONS.marker.h + 0.5

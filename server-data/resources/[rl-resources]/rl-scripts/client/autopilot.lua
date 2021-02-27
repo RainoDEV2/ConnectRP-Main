@@ -37,7 +37,7 @@ Citizen.CreateThread(function()
 	while true do
 		Wait(0)
 		if autop then
-			local pedcoords = GetEntityCoords(PlayerPedId())
+			local pedcoords = GetEntityCoords(GetPlayerPed(-1))
         	local distance = GetDistanceBetweenCoords(idcoord.x, idcoord.y, idcoord.z, pedcoords["x"], pedcoords["y"], pedcoords["z"], true)
         	if distance <= 35 then
         		SetVehicleBrake(pedveh, true)
@@ -72,7 +72,7 @@ function auto(speed)
 		pedspeed = tonumber(100.0)
 	end
 
-	local player = PlayerPedId()
+	local player = GetPlayerPed(-1)
 	local blipI = GetBlipInfoIdIterator(8)
 	local blipInfo = GetFirstBlipInfoId(8, blipI)
 	idcoord = Citizen.InvokeNative(0xFA7C7F0AADF25D09, blipInfo, Citizen.ResultAsVector())
@@ -85,13 +85,13 @@ function auto(speed)
 		TaskVehicleDriveToCoord(player, pedveh, idcoord.x, idcoord.y, idcoord.z, pedspeed, 156, pedveh, drivestyle, 5.5, true)
 	else
 		RLCore.Functions.Notify("Autopilot Disabled", "error")
-		ClearPedTasks(PlayerPedId())
+		ClearPedTasks(GetPlayerPed(-1))
 	end
 end
 
 RegisterCommand("autopilot", function(source, args, rawCommand)
 	local input = args[1]
-	local player = PlayerPedId()
+	local player = GetPlayerPed(-1)
 	local canStart = false
 
 	if IsPedInAnyVehicle(player) then

@@ -348,7 +348,7 @@ function createCamera(typ, pedData)
 
     if typ == 'create' then
         DoScreenFadeIn(1000)
-        FreezeEntityPosition(PlayerPedId(), false)
+        FreezeEntityPosition(GetPlayerPed(-1), false)
         cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", 103.20265, -1715.479, 31.362436, -15.0, 0.5, 50.542221, 60.00, false, 0)
         SetCamActive(cam, true)
         RenderScriptCams(true, false, 1, true, true)
@@ -356,7 +356,7 @@ function createCamera(typ, pedData)
         SetCamActive(cam, false)
         DestroyCam(cam, true)
         RenderScriptCams(false, false, 1, true, true)
-        FreezeEntityPosition(PlayerPedId(), false)
+        FreezeEntityPosition(GetPlayerPed(-1), false)
     elseif typ == 'char' then
         local coords = GetOffsetFromEntityInWorldCoords(pedData, 0, 2.0, 0)
         RenderScriptCams(false, false, 0, 1, 0)
@@ -426,12 +426,12 @@ AddEventHandler('bb-multicharacter:client:chooseChar', function()
 
     CreatePeds()
     ShutdownLoadingScreenNui()
-    SetEntityCoords(PlayerPedId(), vector3(103.20265, -1715.479, 29.362436))
-    SetEntityVisible(PlayerPedId(), false, false)
-    FreezeEntityPosition(PlayerPedId(), true)
+    SetEntityCoords(GetPlayerPed(-1), vector3(103.20265, -1715.479, 29.362436))
+    SetEntityVisible(GetPlayerPed(-1), false, false)
+    FreezeEntityPosition(GetPlayerPed(-1), true)
     Citizen.CreateThread(function()
         RequestCollisionAtCoord(Config.spawns[1].coords)
-        while not HasCollisionLoadedAroundEntity(PlayerPedId()) do
+        while not HasCollisionLoadedAroundEntity(GetPlayerPed(-1)) do
             print('[bb-multicharacter] Loading spawn collision.')
             Wait(0)
         end

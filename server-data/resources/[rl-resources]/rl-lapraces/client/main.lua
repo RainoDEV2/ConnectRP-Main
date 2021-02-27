@@ -76,7 +76,7 @@ function DrawText3Ds(x, y, z, text)
 end
 
 function GetClosestCheckpoint()
-    local pos = GetEntityCoords(PlayerPedId(), true)
+    local pos = GetEntityCoords(GetPlayerPed(-1), true)
     local current = nil
     local dist = nil
     for id, house in pairs(CreatorData.Checkpoints) do
@@ -122,7 +122,7 @@ end
 function CreatorLoop()
     Citizen.CreateThread(function()
         while RaceData.InCreator do
-            local PlayerPed = PlayerPedId()
+            local PlayerPed = GetPlayerPed(-1)
             local PlayerVeh = GetVehiclePedIsIn(PlayerPed)
 
             if PlayerVeh ~= 0 then
@@ -162,7 +162,7 @@ function CreatorLoop()
                     end
                 end
             else
-                local coords = GetEntityCoords(PlayerPedId())
+                local coords = GetEntityCoords(GetPlayerPed(-1))
                 DrawText3Ds(coords.x, coords.y, coords.z, 'You must be in a vehicle.')
             end
 
@@ -252,7 +252,7 @@ function SaveRace()
 end
 
 function AddCheckpoint()
-    local PlayerPed = PlayerPedId()
+    local PlayerPed = GetPlayerPed(-1)
     local PlayerPos = GetEntityCoords(PlayerPed)
     local PlayerVeh = GetVehiclePedIsIn(PlayerPed)
     local Offset = {
@@ -345,7 +345,7 @@ end)
 Citizen.CreateThread(function()
     while true do
         if RaceData.InCreator then
-            local PlayerPed = PlayerPedId()
+            local PlayerPed = GetPlayerPed(-1)
             local PlayerVeh = GetVehiclePedIsIn(PlayerPed)
 
             if PlayerVeh ~= 0 then
@@ -475,7 +475,7 @@ AddEventHandler('rl-lapraces:client:LeaveRace', function(data)
     CurrentRaceData.BestLap = 0
     CurrentRaceData.RaceId = nil
     RaceData.InRace = false
-    FreezeEntityPosition(GetVehiclePedIsIn(PlayerPedId(), false), false)
+    FreezeEntityPosition(GetVehiclePedIsIn(GetPlayerPed(-1), false), false)
 end)
 
 local FinishedUITimeout = false
@@ -610,7 +610,7 @@ AddEventHandler('rl-lapraces:client:RaceCountdown', function()
                     PlaySound(-1, "slow", "SHORT_PLAYER_SWITCH_SOUND_SET", 0, 0, 1)
                 end
                 Countdown = Countdown - 1
-                FreezeEntityPosition(GetVehiclePedIsIn(PlayerPedId(), true), true)
+                FreezeEntityPosition(GetVehiclePedIsIn(GetPlayerPed(-1), true), true)
             else
                 break
             end
@@ -620,12 +620,12 @@ AddEventHandler('rl-lapraces:client:RaceCountdown', function()
             SetNewWaypoint(CurrentRaceData.Checkpoints[CurrentRaceData.CurrentCheckpoint + 1].coords.x, CurrentRaceData.Checkpoints[CurrentRaceData.CurrentCheckpoint + 1].coords.y)
             RLCore.Functions.Notify('GO!', 'success', 1000)
             SetBlipScale(CurrentRaceData.Checkpoints[CurrentRaceData.CurrentCheckpoint + 1].blip, 1.0)
-            FreezeEntityPosition(GetVehiclePedIsIn(PlayerPedId(), true), false)
+            FreezeEntityPosition(GetVehiclePedIsIn(GetPlayerPed(-1), true), false)
             DoPilePfx()
             CurrentRaceData.Started = true
             Countdown = 10
         else
-            FreezeEntityPosition(GetVehiclePedIsIn(PlayerPedId(), true), false)
+            FreezeEntityPosition(GetVehiclePedIsIn(GetPlayerPed(-1), true), false)
             Countdown = 10
         end
     else
@@ -655,7 +655,7 @@ end
 Citizen.CreateThread(function()
     while true do
 
-        local ped = PlayerPedId()
+        local ped = GetPlayerPed(-1)
         local pos = GetEntityCoords(ped)
 
         if CurrentRaceData.RaceName ~= nil then
@@ -820,7 +820,7 @@ AddEventHandler('rl-lapraces:client:WaitingDistanceCheck', function()
     Citizen.CreateThread(function()
         while true do
             if not CurrentRaceData.Started then
-                local ped = PlayerPedId()
+                local ped = GetPlayerPed(-1)
                 local pos = GetEntityCoords(ped)
                 if CurrentRaceData.Checkpoints[1] ~= nil then
                     local cpcoords = CurrentRaceData.Checkpoints[1].coords

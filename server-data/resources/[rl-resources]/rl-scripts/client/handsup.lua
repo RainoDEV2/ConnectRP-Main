@@ -75,7 +75,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(5)
 		if ragdoll then
-			SetPedToRagdoll(PlayerPedId(), 1000, 1000, 0, 0, 0, 0)
+			SetPedToRagdoll(GetPlayerPed(-1), 1000, 1000, 0, 0, 0, 0)
 		end
 	end
 end)

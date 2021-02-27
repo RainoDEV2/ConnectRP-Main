@@ -48,9 +48,9 @@ Citizen.CreateThread(function()
 
             DisableControlAction(0, 82, true) -- comma - ragdoll
 
-            if (not IsEntityPlayingAnim(PlayerPedId(), "mp_arresting", "idle", 3) and not IsEntityPlayingAnim(PlayerPedId(), "mp_arrest_paired", "crook_p2_back_right", 3)) and not RLCore.Functions.GetPlayerData().metadata["isdead"] then
+            if (not IsEntityPlayingAnim(GetPlayerPed(-1), "mp_arresting", "idle", 3) and not IsEntityPlayingAnim(GetPlayerPed(-1), "mp_arrest_paired", "crook_p2_back_right", 3)) and not RLCore.Functions.GetPlayerData().metadata["isdead"] then
                 loadAnimDict("mp_arresting")
-                TaskPlayAnim(PlayerPedId(), "mp_arresting", "idle", 8.0, -8, -1, cuffType, 0, 0, 0, 0)
+                TaskPlayAnim(GetPlayerPed(-1), "mp_arresting", "idle", 8.0, -8, -1, cuffType, 0, 0, 0, 0)
             end
         end
         if not isHandcuffed and not isEscorted then
@@ -61,9 +61,9 @@ end)
 
 RegisterNetEvent('police:client:SetOutVehicle')
 AddEventHandler('police:client:SetOutVehicle', function()
-    if IsPedInAnyVehicle(PlayerPedId(), false) then
-        local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
-        TaskLeaveVehicle(PlayerPedId(), vehicle, 16)
+    if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+        local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+        TaskLeaveVehicle(GetPlayerPed(-1), vehicle, 16)
     end
 end)
 
@@ -200,17 +200,17 @@ AddEventHandler('police:client:RobPlayer', function()
                 flags = 16,
             }, {}, {}, function() -- Done
                 local plyCoords = GetEntityCoords(playerPed)
-                local pos = GetEntityCoords(PlayerPedId())
+                local pos = GetEntityCoords(GetPlayerPed(-1))
                 local dist = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, plyCoords.x, plyCoords.y, plyCoords.z, true)
                 if dist < 2.5 then
-                    StopAnimTask(PlayerPedId(), "random@shop_robbery", "robbery_action_b", 1.0)
+                    StopAnimTask(GetPlayerPed(-1), "random@shop_robbery", "robbery_action_b", 1.0)
                     TriggerServerEvent("inventory:server:OpenInventory", "otherplayer", playerId)
                     TriggerEvent("inventory:server:RobPlayer", playerId)
                 else
                     RLCore.Functions.Notify("No one around!", "error")
                 end
             end, function() -- Cancel
-                StopAnimTask(PlayerPedId(), "random@shop_robbery", "robbery_action_b", 1.0)
+                StopAnimTask(GetPlayerPed(-1), "random@shop_robbery", "robbery_action_b", 1.0)
                 RLCore.Functions.Notify("Canceled..", "error")
             end)
         end
@@ -336,11 +336,11 @@ AddEventHandler('police:client:GetEscorted', function(playerId)
                 draggerId = playerId
                 local dragger = GetPlayerPed(GetPlayerFromServerId(playerId))
                 local heading = GetEntityHeading(dragger)
-                SetEntityCoords(PlayerPedId(), GetOffsetFromEntityInWorldCoords(dragger, 0.0, 0.45, 0.0))
-                AttachEntityToEntity(PlayerPedId(), dragger, 11816, 0.45, 0.45, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
+                SetEntityCoords(GetPlayerPed(-1), GetOffsetFromEntityInWorldCoords(dragger, 0.0, 0.45, 0.0))
+                AttachEntityToEntity(GetPlayerPed(-1), dragger, 11816, 0.45, 0.45, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
             else
                 isEscorted = false
-                DetachEntity(PlayerPedId(), true, false)
+                DetachEntity(GetPlayerPed(-1), true, false)
             end
             TriggerEvent('hospital:client:isEscorted', isEscorted)
         --end
@@ -351,7 +351,7 @@ RegisterNetEvent('police:client:DeEscort')
 AddEventHandler('police:client:DeEscort', function()
     isEscorted = false
     TriggerEvent('hospital:client:isEscorted', isEscorted)
-    DetachEntity(PlayerPedId(), true, false)
+    DetachEntity(GetPlayerPed(-1), true, false)
 end)
 
 RegisterNetEvent('police:client:GetKidnappedTarget')
@@ -368,13 +368,13 @@ AddEventHandler('police:client:GetKidnappedTarget', function(playerId)
                 while not HasAnimDictLoaded("nm") do
                     Citizen.Wait(10)
                 end
-                -- AttachEntityToEntity(PlayerPedId(), dragger, 11816, 0.45, 0.45, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
-                AttachEntityToEntity(PlayerPedId(), dragger, 0, 0.27, 0.15, 0.63, 0.5, 0.5, 0.0, false, false, false, false, 2, false)
-                TaskPlayAnim(PlayerPedId(), "nm", "firemans_carry", 8.0, -8.0, 100000, 33, 0, false, false, false)
+                -- AttachEntityToEntity(GetPlayerPed(-1), dragger, 11816, 0.45, 0.45, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
+                AttachEntityToEntity(GetPlayerPed(-1), dragger, 0, 0.27, 0.15, 0.63, 0.5, 0.5, 0.0, false, false, false, false, 2, false)
+                TaskPlayAnim(GetPlayerPed(-1), "nm", "firemans_carry", 8.0, -8.0, 100000, 33, 0, false, false, false)
             else
                 isEscorted = false
-                DetachEntity(PlayerPedId(), true, false)
-                ClearPedTasksImmediately(PlayerPedId())
+                DetachEntity(GetPlayerPed(-1), true, false)
+                ClearPedTasksImmediately(GetPlayerPed(-1))
             end
             TriggerEvent('hospital:client:isEscorted', isEscorted)
         end
@@ -388,7 +388,7 @@ AddEventHandler('police:client:GetKidnappedDragger', function(playerId)
     RLCore.Functions.GetPlayerData(function(PlayerData)
         if not isEscorting then
             draggerId = playerId
-            local dragger = PlayerPedId()
+            local dragger = GetPlayerPed(-1)
             RequestAnimDict("missfinale_c2mcs_1")
 
             while not HasAnimDictLoaded("missfinale_c2mcs_1") do
@@ -397,7 +397,7 @@ AddEventHandler('police:client:GetKidnappedDragger', function(playerId)
             TaskPlayAnim(dragger, "missfinale_c2mcs_1", "fin_c2_mcs_1_camman", 8.0, -8.0, 100000, 49, 0, false, false, false)
             isEscorting = true
         else
-            local dragger = PlayerPedId()
+            local dragger = GetPlayerPed(-1)
             ClearPedSecondaryTask(dragger)
             ClearPedTasksImmediately(dragger)
             isEscorting = false
@@ -409,7 +409,7 @@ end)
 
 RegisterNetEvent('police:client:CuffPlayer')
 AddEventHandler('police:client:CuffPlayer', function(softCuff)
-    if not IsPedRagdoll(PlayerPedId()) then
+    if not IsPedRagdoll(GetPlayerPed(-1)) then
         local player, distance = GetClosestPlayer()
         if player ~= -1 and distance < 1.5 then
             RLCore.Functions.TriggerCallback('RLCore:HasItem', function(hasCuffs)
@@ -534,9 +534,9 @@ AddEventHandler('police:client:Uncuffed', function()
     isEscorted = false
     TriggerEvent("tokovoip_script:ToggleRadioTalk", false)
     TriggerEvent('hospital:client:isEscorted', isEscorted)
-    DetachEntity(PlayerPedId(), true, false)
+    DetachEntity(GetPlayerPed(-1), true, false)
     TriggerServerEvent("police:server:SetHandcuffStatus", false)
-    ClearPedTasksImmediately(PlayerPedId())
+    ClearPedTasksImmediately(GetPlayerPed(-1))
     RLCore.Functions.Notify("You are untied!")
 end)
 
@@ -570,9 +570,9 @@ end
 function HandCuffAnimation()
     loadAnimDict("mp_arrest_paired")
     Citizen.Wait(100)
-    TaskPlayAnim(PlayerPedId(), "mp_arrest_paired", "cop_p2_back_right", 3.0, 3.0, -1, 48, 0, 0, 0, 0)
+    TaskPlayAnim(GetPlayerPed(-1), "mp_arrest_paired", "cop_p2_back_right", 3.0, 3.0, -1, 48, 0, 0, 0, 0)
     Citizen.Wait(3500)
-    TaskPlayAnim(PlayerPedId(), "mp_arrest_paired", "exit", 3.0, 3.0, -1, 48, 0, 0, 0, 0)
+    TaskPlayAnim(GetPlayerPed(-1), "mp_arrest_paired", "exit", 3.0, 3.0, -1, 48, 0, 0, 0, 0)
 end
 
 function GetCuffedAnimation(playerId)
