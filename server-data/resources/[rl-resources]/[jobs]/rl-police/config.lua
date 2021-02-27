@@ -179,6 +179,7 @@ Config.Vehicles = {
     ["POLVIC2"] = "2011 Crown Vic",
     ["POLTAURUS"] = "2016 Taurus",
     ["POLTAH"] = "2015 Tahoe",
+    ["tahoe"] = "2020 Tahoe",
     --["pol8"] = "Motorbike",
     ["POLRAPTOR"] = "2020 Raptor",
     ["expleo"] = "2016 Explorer",

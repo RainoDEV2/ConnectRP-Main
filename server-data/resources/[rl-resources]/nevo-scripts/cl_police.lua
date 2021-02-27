@@ -386,7 +386,7 @@ Vehicles = {
     --{ model = "POLCHAR", label = "2014 Charger"}, --3
     --{ model = "18chgrleo", label = "2018 Charger"}, --4
     --{ model = "expleo", label = "2016 Explorer"}, --5
-    --{ model = "POLTAH", label = "2015 Tahoe"}, --6
+    --{ model = "tahoe", label = "2020 Tahoe"}, --6
     --{ model = "duranleo", label = "Dodge Durango"}, --7
     { model = "POLRAPTOR", label = "S.A.L.E. Raptor"}, --8
     --{ model = "2015POLSTANG", label = "2015 Mustang"}, --9
@@ -399,6 +399,7 @@ Vehicles = {
     { model = "onebeast", label = "SWAT Limo"}, --13
     { model = "sspres", label = "SWAT Suburban"}, --14
     { model = "pbus2", label = "Prison Bus"}, --15
+    { model = "poltah", label = "2015 Tahoe"},
     { model = "policet", label = "Armored Van"}, --16
     { model = "fbi", label = "FBI Buffalo"}, --17
     { model = "fbi2", label = "TFBI Granger"}, --18

@@ -7,7 +7,7 @@ local carorder = {
 
     [6] = {name = 'EXPLEO', x = 425.68551, y = -991.8132, z = 25.699806, h = 271.07153, handel = nil},
     [7] = {name = 'TRHAWK', x = 425.72311, y = -994.5032, z = 25.699806, h = 271.07153, handel = nil},
-    [8] = {name = 'POLTAH', x = 425.74923, y = -997.1234, z = 25.699813, h = 271.07153, handel = nil},
+    [8] = {name = 'TAHOE', x = 425.74923, y = -997.1234, z = 25.699813, h = 271.07153, handel = nil},
 
 }
 
