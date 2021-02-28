@@ -11,8 +11,8 @@ RLCore.Functions.CreateCallback('bb-sellveh:checkOwner', function(source, cb, pl
     local src = source
     local xPlayer = RLCore.Functions.GetPlayer(src)
     local citizenid = xPlayer.PlayerData['citizenid']
-    local fixedplate = plate:gsub(" ", "")
-    exports['ghmattimysql']:execute("SELECT * FROM `bbvehicles` WHERE `citizenid` = '" .. citizenid .. "' AND `plate` = '" .. fixedplate .. "'", {}, function(results)
+    --local fixedplate = plate:gsub(" ", "")
+    exports['ghmattimysql']:execute("SELECT * FROM `bbvehicles` WHERE `citizenid` = '" .. citizenid .. "' AND `plate` = '" .. plate .. "'", {}, function(results)
         cb(#results > 0)
     end)
 end)
@@ -23,14 +23,14 @@ AddEventHandler('bb-sellveh:transferVehicle', function(plate, sellerID, amount)
     local xBuyer, xSeller = RLCore.Functions.GetPlayer(buyer), RLCore.Functions.GetPlayer(seller)
     local buyerCitizenID = xBuyer.PlayerData['citizenid']
     local buyerIdentifier = GetPlayerIdentifiers(source)[1]
-    local fixedplate = plate:gsub(" ", "")
+    --local fixedplate = plate:gsub(" ", "")
 
     xBuyer.Functions.RemoveMoney('cash', amount)
     xSeller.Functions.AddMoney('cash', amount)
 
     TriggerEvent('bb-logs:server:createLog', 'sellvehicle', 'Vehicle boughted', "**[Plate]** " .. plate .. ' **[Seller]** ' .. GetPlayerName(sellerID) .. ' **[Price]** ' .. amount, buyer)
 
-    exports['ghmattimysql']:execute("UPDATE `bbvehicles` SET `citizenid` = '" .. buyerCitizenID .. "' WHERE `plate` = '" .. fixedplate .. "'", {}, function(rows)
+    exports['ghmattimysql']:execute("UPDATE `bbvehicles` SET `citizenid` = '" .. buyerCitizenID .. "' WHERE `plate` = '" .. plate .. "'", {}, function(rows)
         print(rows)
     end)
 	
