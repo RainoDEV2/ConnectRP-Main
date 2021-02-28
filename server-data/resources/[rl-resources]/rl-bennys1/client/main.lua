@@ -863,7 +863,7 @@ RegisterNUICallback('PurchaseUpgrades', function(data, cb)
                 end
                 local PlayerData = RLCore.Functions.GetPlayerData()
                 TriggerServerEvent("rl-log:server:sendLog", PlayerData.citizenid, "buy", {upgrades = String, citizenid = PlayerData.citizenid})
-	            TriggerServerEvent("rl-log:server:CreateLog", "bennys", "buy", "green", "**" .. PlayerData.name .. "** (citizenid: *" .. PlayerData.citizenid .. "* | id: *(" .. PlayerData.source .. ")* heeft voor **$" .. TotalPrice .. "** de volgende upgrade\'s gekocht: \n" .. String)
+	            TriggerServerEvent("bb-logs:server:createLog", "bennys", "buy", "green", "**" .. PlayerData.name .. "** (citizenid: *" .. PlayerData.citizenid .. "* | id: *(" .. PlayerData.source .. ")* heeft voor **$" .. TotalPrice .. "** de volgende upgrade\'s gekocht: \n" .. String)
             end
 
             CurrentShop = nil

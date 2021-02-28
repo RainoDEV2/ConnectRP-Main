@@ -52,7 +52,7 @@ RegisterServerEvent('rl-weathersync:server:setWeather')
 AddEventHandler('rl-weathersync:server:setWeather', function(type)
     local src = source
     if src ~= nil then
-        TriggerEvent("rl-log:server:CreateLog", "weather", "Changed weather", "red", "**".. GetPlayerName(src) .. "**")
+        TriggerEvent("bb-logs:server:createLog", "weather", "Changed weather", "red", "**".. GetPlayerName(src) .. "**")
     end
     CurrentWeather = string.upper(type)
     TriggerEvent('rl-weathersync:server:RequestStateSync')

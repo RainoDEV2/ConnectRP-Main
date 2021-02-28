@@ -7,7 +7,7 @@ end)
 AddEventHandler('playerDropped', function(reason) 
 	local src = source
 	print("^1[player-dropped]^7 "..GetPlayerName(src) .. '.')
-	TriggerEvent("RL-log:server:CreateLog", "joinleave", "Dropped", "red", "**".. GetPlayerName(src) .. "** ("..GetPlayerIdentifiers(src)[1]..") left..")
+	TriggerEvent("bb-logs:server:createLog", "joinleave", "Dropped", "red", "**".. GetPlayerName(src) .. "** ("..GetPlayerIdentifiers(src)[1]..") left..")
 	TriggerEvent("RL-log:server:sendLog", GetPlayerIdentifiers(src)[1], "joined", {})
 	if reason ~= "Reconnecting" and src > 60000 then return false end
 	if(src==nil or (RLCore.Players[src] == nil)) then return false end

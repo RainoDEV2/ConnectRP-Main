@@ -21,7 +21,7 @@ AddEventHandler("rl-casino:sharlock:sell", function()
         end
         Player.Functions.AddMoney("cash", price, "sold-casino-chips")
         TriggerClientEvent('RLCore:Notify', src, "You sold your chips")
-        TriggerEvent("rl-log:server:CreateLog", "casino", "Chips", "blue", "**"..GetPlayerName(src) .. "** got $"..price.." for selling the Chips")
+        TriggerEvent("bb-logs:server:createLog", "casino", "Chips", "blue", "**"..GetPlayerName(src) .. "** got $"..price.." for selling the Chips")
         else
         TriggerClientEvent('RLCore:Notify', src, "You have no chips..")
     end
@@ -45,7 +45,7 @@ end)
         if Player ~= nil then
             Player.Functions.RemoveItem("casinochips", amount)
             TriggerClientEvent('inventory:client:ItemBox', source, RLCore.Shared.Items['casinochips'], "remove")
-            TriggerEvent("rl-log:server:CreateLog", "casino", "Chips", "yellow", "**"..GetPlayerName(source) .. "** put $"..amount.." in table")
+            TriggerEvent("bb-logs:server:createLog", "casino", "Chips", "yellow", "**"..GetPlayerName(source) .. "** put $"..amount.." in table")
         end
     end)
 
@@ -55,7 +55,7 @@ end)
         if Player ~= nil then
             Player.Functions.AddItem("casinochips", amount)
             TriggerClientEvent('inventory:client:ItemBox', source, RLCore.Shared.Items['casinochips'], "add")
-            TriggerEvent("rl-log:server:CreateLog", "casino", "Chips", "red", "**"..GetPlayerName(source) .. "** got $"..amount.." from table table and he won the double")
+            TriggerEvent("bb-logs:server:createLog", "casino", "Chips", "red", "**"..GetPlayerName(source) .. "** got $"..amount.." from table table and he won the double")
         end
     end)
 end

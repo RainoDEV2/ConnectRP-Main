@@ -20,7 +20,7 @@ AddEventHandler('rl-multicharacter:server:loadUserData', function(cData)
         
         TriggerClientEvent('apartments:client:setupSpawnUI', src, cData)
         TriggerEvent("rl-log:server:sendLog", cData.citizenid, "characterloaded", {})
-        TriggerEvent("rl-log:server:CreateLog", "joinleave", "Loaded", "green", "**".. GetPlayerName(src) .. "** ("..cData.citizenid.." | "..src..") loaded..")
+        TriggerEvent("bb-logs:server:createLog", "joinleave", "Loaded", "green", "**".. GetPlayerName(src) .. "** ("..cData.citizenid.." | "..src..") loaded..")
 	end
 end)
 

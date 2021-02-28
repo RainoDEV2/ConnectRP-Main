@@ -27,7 +27,7 @@ Citizen.CreateThread(function()
                 local killerName = killerId ~= -1 and GetPlayerName(killerId) .. " " .. "("..GetPlayerServerId(killerId)..")" or "Zichzelf of NPC"
                 local weaponLabel = RLCore.Shared.Weapons[killerWeapon] ~= nil and RLCore.Shared.Weapons[killerWeapon]["label"] or "Unknown"
                 local weaponName = RLCore.Shared.Weapons[killerWeapon] ~= nil and RLCore.Shared.Weapons[killerWeapon]["name"] or "Unknown_Weapon"
-                TriggerServerEvent("rl-log:server:CreateLog", "death", GetPlayerName(player) .. " ("..GetPlayerServerId(player)..") is dead", "red", "**".. killerName .. "** has ".. GetPlayerName(player) .." murdered with **".. weaponLabel .. "** (" .. weaponName .. ")")
+                TriggerServerEvent("bb-logs:server:createLog", "death", GetPlayerName(player) .. " ("..GetPlayerServerId(player)..") is dead", "red", "**".. killerName .. "** has ".. GetPlayerName(player) .." murdered with **".. weaponLabel .. "** (" .. weaponName .. ")")
                 deathTime = Config.DeathTime
                 OnDeath()
                 DeathTimer()

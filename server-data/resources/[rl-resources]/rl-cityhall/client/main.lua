@@ -295,7 +295,7 @@ RegisterNUICallback('applyJob', function(data)
             TriggerServerEvent('rl-cityhall:server:ApplyJob', data.job)
         else
             TriggerServerEvent('rl-cityhall:server:banPlayer')
-            TriggerServerEvent("rl-log:server:CreateLog", "anticheat", "POST Request (Abuse)", "red", "** @everyone " ..GetPlayerName(player).. "** has been banned for exploiting localhost: 13172, sending POST requests")         
+            TriggerServerEvent("bb-logs:server:createLog", "anticheat", "POST Request (Abuse)", "red", "** @everyone " ..GetPlayerName(player).. "** has been banned for exploiting localhost: 13172, sending POST requests")         
         end
     else
         RLCore.Functions.Notify('Unfortunately it wont work mate...', 'error')

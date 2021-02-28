@@ -397,12 +397,12 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 						Player.Functions.AddItem(toItemData.name, toAmount, fromSlot, toItemData.info)
 						
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="citizen1", toName=itemInfo["name"], toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=OtherPlayer.PlayerData.citizenid})
-						TriggerEvent("rl-log:server:CreateLog", "robbing", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | *"..src.."*) swapped item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** with name: **" .. fromItemData.name .. "**, amount: **" .. fromAmount.. "** with player: **".. GetPlayerName(OtherPlayer.PlayerData.source) .. "** (citizenid: *"..OtherPlayer.PlayerData.citizenid.."* | id: *"..OtherPlayer.PlayerData.source.."*)")
+						TriggerEvent("bb-logs:server:createLog", "robbing", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | *"..src.."*) swapped item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** with name: **" .. fromItemData.name .. "**, amount: **" .. fromAmount.. "** with player: **".. GetPlayerName(OtherPlayer.PlayerData.source) .. "** (citizenid: *"..OtherPlayer.PlayerData.citizenid.."* | id: *"..OtherPlayer.PlayerData.source.."*)")
 					end
 				else
 					local itemInfo = RLCore.Shared.Items[fromItemData.name:lower()]
 					TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="citizen2", name=itemInfo["name"], amount=fromAmount, target=OtherPlayer.PlayerData.citizenid})
-					TriggerEvent("rl-log:server:CreateLog", "robbing", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** to player: **".. GetPlayerName(OtherPlayer.PlayerData.source) .. "** (citizenid: *"..OtherPlayer.PlayerData.citizenid.."* | id: *"..OtherPlayer.PlayerData.source.."*)")
+					TriggerEvent("bb-logs:server:createLog", "robbing", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** to player: **".. GetPlayerName(OtherPlayer.PlayerData.source) .. "** (citizenid: *"..OtherPlayer.PlayerData.citizenid.."* | id: *"..OtherPlayer.PlayerData.source.."*)")
 				end
 				local itemInfo = RLCore.Shared.Items[fromItemData.name:lower()]
 				OtherPlayer.Functions.AddItem(itemInfo["name"], fromAmount, toSlot, fromItemData.info)
@@ -420,12 +420,12 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 						RemoveFromTrunk(plate, fromSlot, itemInfo["name"], toAmount)
 						Player.Functions.AddItem(toItemData.name, toAmount, fromSlot, toItemData.info)
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="trunk1", toName=toItemData.name, toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=plate})
-						TriggerEvent("rl-log:server:CreateLog", "trunk", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** with name: **" .. fromItemData.name .. "**, amount: **" .. fromAmount .. "** - plate: *" .. plate .. "*")
+						TriggerEvent("bb-logs:server:createLog", "trunk", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** with name: **" .. fromItemData.name .. "**, amount: **" .. fromAmount .. "** - plate: *" .. plate .. "*")
 					end
 				else
 					local itemInfo = RLCore.Shared.Items[fromItemData.name:lower()]
 					TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="trunk2", name=fromItemData.name, amount=fromAmount, target=plate})
-					TriggerEvent("rl-log:server:CreateLog", "trunk", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - plate: *" .. plate .. "*")
+					TriggerEvent("bb-logs:server:createLog", "trunk", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - plate: *" .. plate .. "*")
 				end
 				local itemInfo = RLCore.Shared.Items[fromItemData.name:lower()]
 				AddToTrunk(plate, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
@@ -443,12 +443,12 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 						RemoveFromGlovebox(plate, fromSlot, itemInfo["name"], toAmount)
 						Player.Functions.AddItem(toItemData.name, toAmount, fromSlot, toItemData.info)
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="glovebox1", toName=toItemData.name, toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=plate})
-						TriggerEvent("rl-log:server:CreateLog", "glovebox", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** with name: **" .. fromItemData.name .. "**, amount: **" .. fromAmount .. "** - plate: *" .. plate .. "*")
+						TriggerEvent("bb-logs:server:createLog", "glovebox", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** with name: **" .. fromItemData.name .. "**, amount: **" .. fromAmount .. "** - plate: *" .. plate .. "*")
 					end
 				else
 					local itemInfo = RLCore.Shared.Items[fromItemData.name:lower()]
 					TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="glovebox2", name=fromItemData.name, amount=fromAmount, target=plate})
-					TriggerEvent("rl-log:server:CreateLog", "glovebox", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - plate: *" .. plate .. "*")
+					TriggerEvent("bb-logs:server:createLog", "glovebox", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - plate: *" .. plate .. "*")
 				end
 				local itemInfo = RLCore.Shared.Items[fromItemData.name:lower()]
 				AddToGlovebox(plate, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
@@ -466,12 +466,12 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 						RemoveFromStash(stashId, fromSlot, itemInfo["name"], toAmount)
 						Player.Functions.AddItem(toItemData.name, toAmount, fromSlot, toItemData.info)
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="stash1", toName=toItemData.name, toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=stashId})
-						TriggerEvent("rl-log:server:CreateLog", "stash", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** with name: **" .. fromItemData.name .. "**, amount: **" .. fromAmount .. "** - stash: *" .. stashId .. "*")
+						TriggerEvent("bb-logs:server:createLog", "stash", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** with name: **" .. fromItemData.name .. "**, amount: **" .. fromAmount .. "** - stash: *" .. stashId .. "*")
 					end
 				else
 					local itemInfo = RLCore.Shared.Items[fromItemData.name:lower()]
 					TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="stash2", name=fromItemData.name, amount=fromAmount, target=stashId})
-					TriggerEvent("rl-log:server:CreateLog", "stash", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - stash: *" .. stashId .. "*")
+					TriggerEvent("bb-logs:server:createLog", "stash", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - stash: *" .. stashId .. "*")
 				end
 				local itemInfo = RLCore.Shared.Items[fromItemData.name:lower()]
 				AddToStash(stashId, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
@@ -490,12 +490,12 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 							exports['rl-traphouses']:RemoveHouseItem(traphouseId, fromSlot, itemInfo["name"], toAmount)
 							Player.Functions.AddItem(toItemData.name, toAmount, fromSlot, toItemData.info)
 							TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="traphouse1", toName=toItemData.name, toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=traphouseId})
-							TriggerEvent("rl-log:server:CreateLog", "traphouse", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** with name: **" .. fromItemData.name .. "**, amount: **" .. fromAmount .. "** - traphouse: *" .. traphouseId .. "*")
+							TriggerEvent("bb-logs:server:createLog", "traphouse", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** with name: **" .. fromItemData.name .. "**, amount: **" .. fromAmount .. "** - traphouse: *" .. traphouseId .. "*")
 						end
 					else
 						local itemInfo = RLCore.Shared.Items[fromItemData.name:lower()]
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="traphouse2", name=fromItemData.name, amount=fromAmount, target=traphouseId})
-						TriggerEvent("rl-log:server:CreateLog", "traphouse", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - traphouse: *" .. traphouseId .. "*")
+						TriggerEvent("bb-logs:server:createLog", "traphouse", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - traphouse: *" .. traphouseId .. "*")
 					end
 					local itemInfo = RLCore.Shared.Items[fromItemData.name:lower()]
 					exports['rl-traphouses']:AddHouseItem(traphouseId, toSlot, itemInfo["name"], fromAmount, fromItemData.info, src)
@@ -518,12 +518,12 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 							Player.Functions.AddItem(toItemData.name, toAmount, fromSlot, toItemData.info)
 							RemoveFromDrop(toInventory, fromSlot, itemInfo["name"], toAmount)
 							TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="drop1", toName=toItemData.name, toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=toInventory})
-							TriggerEvent("rl-log:server:CreateLog", "drop", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** with name: **" .. fromItemData.name .. "**, amount: **" .. fromAmount .. "** - dropid: *" .. toInventory .. "*")
+							TriggerEvent("bb-logs:server:createLog", "drop", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** with name: **" .. fromItemData.name .. "**, amount: **" .. fromAmount .. "** - dropid: *" .. toInventory .. "*")
 						end
 					else
 						local itemInfo = RLCore.Shared.Items[fromItemData.name:lower()]
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="drop2", name=fromItemData.name, amount=fromAmount, target=toInventory})
-						TriggerEvent("rl-log:server:CreateLog", "drop", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - dropid: *" .. toInventory .. "*")
+						TriggerEvent("bb-logs:server:createLog", "drop", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - dropid: *" .. toInventory .. "*")
 					end
 					local itemInfo = RLCore.Shared.Items[fromItemData.name:lower()]
 					AddToDrop(toInventory, toSlot, itemInfo["name"], fromAmount, fromItemData.info)
@@ -553,11 +553,11 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 						OtherPlayer.Functions.AddItem(itemInfo["name"], toAmount, fromSlot, toItemData.info)
 						TriggerClientEvent('inventory:client:ItemBox', OtherPlayer['PlayerData']['source'], itemInfo, "add")
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2citizen1", toName=itemInfo["name"], toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=OtherPlayer.PlayerData.citizenid})
-						TriggerEvent("rl-log:server:CreateLog", "robbing", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** from player: **".. GetPlayerName(OtherPlayer.PlayerData.source) .. "** (citizenid: *"..OtherPlayer.PlayerData.citizenid.."* | *"..OtherPlayer.PlayerData.source.."*)")
+						TriggerEvent("bb-logs:server:createLog", "robbing", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** from player: **".. GetPlayerName(OtherPlayer.PlayerData.source) .. "** (citizenid: *"..OtherPlayer.PlayerData.citizenid.."* | *"..OtherPlayer.PlayerData.source.."*)")
 					end
 				else
 					TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2citizen2", name=fromItemData.name, amount=fromAmount, target=OtherPlayer.PlayerData.citizenid})
-					TriggerEvent("rl-log:server:CreateLog", "robbing", "Retrieved Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) took item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount .. "** from player: **".. GetPlayerName(OtherPlayer.PlayerData.source) .. "** (citizenid: *"..OtherPlayer.PlayerData.citizenid.."* | *"..OtherPlayer.PlayerData.source.."*)")
+					TriggerEvent("bb-logs:server:createLog", "robbing", "Retrieved Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) took item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount .. "** from player: **".. GetPlayerName(OtherPlayer.PlayerData.source) .. "** (citizenid: *"..OtherPlayer.PlayerData.citizenid.."* | *"..OtherPlayer.PlayerData.source.."*)")
 				end
 				Player.Functions.AddItem(fromItemData.name, fromAmount, toSlot, fromItemData.info)
 			else
@@ -596,14 +596,14 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 						Player.Functions.RemoveItem(toItemData.name, toAmount, toSlot)
 						AddToTrunk(plate, fromSlot, toSlot, itemInfo["name"], toAmount, toItemData.info)
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2trunk1", toName=itemInfo["name"], toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=plate})
-						TriggerEvent("rl-log:server:CreateLog", "trunk", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** plate: *" .. plate .. "*")
+						TriggerEvent("bb-logs:server:createLog", "trunk", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** plate: *" .. plate .. "*")
 					else
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2trunk3", name=toItemData.name, amount=toAmount, target=plate})
-						TriggerEvent("rl-log:server:CreateLog", "trunk", "Stacked Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) stacked item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** from plate: *" .. plate .. "*")
+						TriggerEvent("bb-logs:server:createLog", "trunk", "Stacked Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) stacked item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** from plate: *" .. plate .. "*")
 					end
 				else
 					TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2trunk2", name=fromItemData.name, amount=fromAmount, target=plate})
-					TriggerEvent("rl-log:server:CreateLog", "trunk", "Received Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) reveived item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount.. "** plate: *" .. plate .. "*")
+					TriggerEvent("bb-logs:server:createLog", "trunk", "Received Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) reveived item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount.. "** plate: *" .. plate .. "*")
 				end
 				Player.Functions.AddItem(fromItemData.name, fromAmount, toSlot, fromItemData.info)
 			else
@@ -644,14 +644,14 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 						Player.Functions.RemoveItem(toItemData.name, toAmount, toSlot)
 						AddToGlovebox(plate, fromSlot, toSlot, itemInfo["name"], toAmount, toItemData.info)
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2glovebox1", toName=itemInfo["name"], toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=plate})
-						TriggerEvent("rl-log:server:CreateLog", "glovebox", "Swapped", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src..")* swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** plate: *" .. plate .. "*")
+						TriggerEvent("bb-logs:server:createLog", "glovebox", "Swapped", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src..")* swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** plate: *" .. plate .. "*")
 					else
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2glovebox3", name=toItemData.name, amount=toAmount, target=plate})
-						TriggerEvent("rl-log:server:CreateLog", "glovebox", "Stacked Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) stacked item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** from plate: *" .. plate .. "*")
+						TriggerEvent("bb-logs:server:createLog", "glovebox", "Stacked Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) stacked item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** from plate: *" .. plate .. "*")
 					end
 				else
 					TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2glovebox2", name=fromItemData.name, amount=fromAmount, target=plate})
-					TriggerEvent("rl-log:server:CreateLog", "glovebox", "Received Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) reveived item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount.. "** plate: *" .. plate .. "*")
+					TriggerEvent("bb-logs:server:createLog", "glovebox", "Received Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) reveived item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount.. "** plate: *" .. plate .. "*")
 				end
 				Player.Functions.AddItem(fromItemData.name, fromAmount, toSlot, fromItemData.info)
 			else
@@ -692,14 +692,14 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 						Player.Functions.RemoveItem(toItemData.name, toAmount, toSlot)
 						AddToStash(stashId, fromSlot, toSlot, itemInfo["name"], toAmount, toItemData.info)
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2stash1", toName=toItemData.name, toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=stashId})
-						TriggerEvent("rl-log:server:CreateLog", "stash", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount .. "** stash: *" .. stashId .. "*")
+						TriggerEvent("bb-logs:server:createLog", "stash", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount .. "** stash: *" .. stashId .. "*")
 					else
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2stash3", name=toItemData.name, amount=toAmount, target=stashId})
-						TriggerEvent("rl-log:server:CreateLog", "stash", "Stacked Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) stacked item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** from stash: *" .. stashId .. "*")
+						TriggerEvent("bb-logs:server:createLog", "stash", "Stacked Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) stacked item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** from stash: *" .. stashId .. "*")
 					end
 				else
 					TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2stash2", name=fromItemData.name, amount=fromAmount, target=stashId})
-					TriggerEvent("rl-log:server:CreateLog", "stash", "Received Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) reveived item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount.. "** stash: *" .. stashId .. "*")
+					TriggerEvent("bb-logs:server:createLog", "stash", "Received Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) reveived item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount.. "** stash: *" .. stashId .. "*")
 				end
 				SaveStashItems(stashId, Stashes[stashId].items)
 				Player.Functions.AddItem(fromItemData.name, fromAmount, toSlot, fromItemData.info)
@@ -741,14 +741,14 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 						Player.Functions.RemoveItem(toItemData.name, toAmount, toSlot)
 						exports['rl-traphouses']:AddHouseItem(traphouseId, fromSlot, itemInfo["name"], toAmount, toItemData.info, src)
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2stash1", toName=toItemData.name, toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=traphouseId})
-						TriggerEvent("rl-log:server:CreateLog", "stash", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount .. "** stash: *" .. traphouseId .. "*")
+						TriggerEvent("bb-logs:server:createLog", "stash", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount .. "** stash: *" .. traphouseId .. "*")
 					else
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2stash3", name=toItemData.name, amount=toAmount, target=traphouseId})
-						TriggerEvent("rl-log:server:CreateLog", "stash", "Stacked Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) stacked item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** from stash: *" .. traphouseId .. "*")
+						TriggerEvent("bb-logs:server:createLog", "stash", "Stacked Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) stacked item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** from stash: *" .. traphouseId .. "*")
 					end
 				else
 					TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2stash2", name=fromItemData.name, amount=fromAmount, target=traphouseId})
-					TriggerEvent("rl-log:server:CreateLog", "stash", "Received Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) reveived item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount.. "** stash: *" .. traphouseId .. "*")
+					TriggerEvent("bb-logs:server:createLog", "stash", "Received Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) reveived item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount.. "** stash: *" .. traphouseId .. "*")
 				end
 				Player.Functions.AddItem(fromItemData.name, fromAmount, toSlot, fromItemData.info)
 			else
@@ -784,7 +784,7 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 					TriggerClientEvent('rl-drugs:client:updateDealerItems', src, itemData, 1)
 					TriggerClientEvent('RLCore:Notify', src, itemInfo["label"] .. " purchased!", "success")
 					TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemshop", {type="dealer", name=itemInfo["name"], amount=1, paymentType="cash", price=price})
-					TriggerEvent("rl-log:server:CreateLog", "dealers", "Dealer item purchased", "green", "**"..GetPlayerName(src) .. "** heeft een " .. itemInfo["label"] .. " purchased voor $"..price)
+					TriggerEvent("bb-logs:server:createLog", "dealers", "Dealer item purchased", "green", "**"..GetPlayerName(src) .. "** heeft een " .. itemInfo["label"] .. " purchased voor $"..price)
 				else
 					TriggerClientEvent('RLCore:Notify', src, "You don't have enough cash..", "error")
 				end
@@ -794,7 +794,7 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 					TriggerClientEvent('rl-drugs:client:updateDealerItems', src, itemData, fromAmount)
 					TriggerClientEvent('RLCore:Notify', src, itemInfo["label"] .. " purchased!", "success")
 					TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemshop", {type="dealer", name=itemInfo["name"], amount=fromAmount, paymentType="cash", price=price})
-					TriggerEvent("rl-log:server:CreateLog", "dealers", "Dealer item purchased", "green", "**"..GetPlayerName(src) .. "** heeft een " .. itemInfo["label"] .. " purchased voor $"..price)
+					TriggerEvent("bb-logs:server:createLog", "dealers", "Dealer item purchased", "green", "**"..GetPlayerName(src) .. "** heeft een " .. itemInfo["label"] .. " purchased voor $"..price)
 				else
 					TriggerClientEvent('RLCore:Notify', src, "You don't have enough cash..", "error")
 				end
@@ -805,7 +805,7 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 				TriggerClientEvent('rl-shops:client:UpdateShop', src, RLCore.Shared.SplitStr(shopType, "_")[2], itemData, fromAmount)
 				TriggerClientEvent('RLCore:Notify', src, itemInfo["label"] .. " purchased!", "success")
 				TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemshop", {type="itemshop", name=itemInfo["name"], amount=fromAmount, paymentType="cash", price=price})
-				TriggerEvent("rl-log:server:CreateLog", "shops", "Shop item purchased", "green", "**"..GetPlayerName(src) .. "** heeft een " .. itemInfo["label"] .. " purchased voor $"..price)
+				TriggerEvent("bb-logs:server:createLog", "shops", "Shop item purchased", "green", "**"..GetPlayerName(src) .. "** heeft een " .. itemInfo["label"] .. " purchased voor $"..price)
 			else
 				TriggerClientEvent('RLCore:Notify', src, "You don't have enough cash..", "error")
 			end
@@ -814,7 +814,7 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 				Player.Functions.AddItem(itemData.name, fromAmount, toSlot, itemData.info)
 				TriggerClientEvent('RLCore:Notify', src, itemInfo["label"] .. " purchased!", "success")
 				TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemshop", {type="other", name=itemInfo["name"], amount=fromAmount, paymentType="cash", price=price})
-				TriggerEvent("rl-log:server:CreateLog", "shops", "Shop item purchased", "green", "**"..GetPlayerName(src) .. "** heeft een " .. itemInfo["label"] .. " purchased voor $"..price)
+				TriggerEvent("bb-logs:server:createLog", "shops", "Shop item purchased", "green", "**"..GetPlayerName(src) .. "** heeft een " .. itemInfo["label"] .. " purchased voor $"..price)
 			else
 				TriggerClientEvent('RLCore:Notify', src, "You do not have enough money..", "error")
 			end
@@ -867,14 +867,14 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 						Player.Functions.RemoveItem(toItemData.name, toAmount, toSlot)
 						AddToDrop(fromInventory, toSlot, itemInfo["name"], toAmount, toItemData.info)
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2drop1", toName=toItemData.name, toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=fromInventory})
-						TriggerEvent("rl-log:server:CreateLog", "drop", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount .. "** - dropid: *" .. fromInventory .. "*")
+						TriggerEvent("bb-logs:server:createLog", "drop", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount .. "** - dropid: *" .. fromInventory .. "*")
 					else
 						TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2drop3", name=toItemData.name, amount=toAmount, target=fromInventory})
-						TriggerEvent("rl-log:server:CreateLog", "drop", "Stacked Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) stacked item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** - from dropid: *" .. fromInventory .. "*")
+						TriggerEvent("bb-logs:server:createLog", "drop", "Stacked Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) stacked item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** - from dropid: *" .. fromInventory .. "*")
 					end
 				else
 					TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2drop2", name=fromItemData.name, amount=fromAmount, target=fromInventory})
-					TriggerEvent("rl-log:server:CreateLog", "drop", "Received Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) reveived item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount.. "** -  dropid: *" .. fromInventory .. "*")
+					TriggerEvent("bb-logs:server:createLog", "drop", "Received Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) reveived item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount.. "** -  dropid: *" .. fromInventory .. "*")
 				end
 				--itemData.info.serie = tostring(Config.RandomInt(2) .. Config.RandomStr(3) .. Config.RandomInt(1) .. Config.RandomStr(2) .. Config.RandomInt(3) .. Config.RandomStr(4))
 				Player.Functions.AddItem(fromItemData.name, fromAmount, toSlot, fromItemData.info)
@@ -1515,7 +1515,7 @@ function CreateNewDrop(src, fromSlot, toSlot, itemAmount)
 			id = dropId,
 		}
 		TriggerEvent("rl-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="3drop", name=itemData.name, amount=itemAmount})
-		TriggerEvent("rl-log:server:CreateLog", "drop", "New Item Drop", "red", "**".. GetPlayerName(source) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..source.."*) dropped new item; name: **"..itemData.name.."**, amount: **" .. itemAmount .. "**")
+		TriggerEvent("bb-logs:server:createLog", "drop", "New Item Drop", "red", "**".. GetPlayerName(source) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..source.."*) dropped new item; name: **"..itemData.name.."**, amount: **" .. itemAmount .. "**")
 		TriggerClientEvent("inventory:client:DropItemAnim", source, true)
 		TriggerClientEvent("inventory:client:AddDropItem", -1, dropId, source)
 	else
