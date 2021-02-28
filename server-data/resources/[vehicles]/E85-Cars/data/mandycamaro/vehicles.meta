@@ -4,10 +4,10 @@
   <residentAnims />
   <InitDatas>
     <Item>
-      <modelName>camaro_ss</modelName>
-      <txdName>camaro_ss</txdName>
-      <handlingId>CAMARO_SS</handlingId>
-      <gameName>camaro_ss</gameName>
+      <modelName>camaross</modelName>
+      <txdName>camaross</txdName>
+      <handlingId>CAMAROSS</handlingId>
+      <gameName>camaross</gameName>
       <vehicleMakeName />
       <expressionDictName>null</expressionDictName>
       <expressionName>null</expressionName>
@@ -85,7 +85,7 @@
       <type>VEHICLE_TYPE_CAR</type>
       <plateType>VPT_BACK_PLATES</plateType>
 	  <dashboardType>VDT_DUKES</dashboardType>
-      <vehicleClass>VC_MUSCEL</vehicleClass>
+      <vehicleClass>VC_MUSCLE</vehicleClass>
       <wheelType>VWT_HIEND</wheelType>
       <trailers />
       <additionalTrailers />
@@ -95,7 +95,7 @@
       <driveableDoors />
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
-      <requiredExtras>EXTRA_1 EXTRA_2 EXTRA_3 EXTRA_4 EXTRA_5 EXTRA_6 EXTRA_7 EXTRA_11 EXTRA_TEN EXTRA_10</requiredExtras>
+      <requiredExtras />
       <rewards />
       <cinematicPartCamera>
         <Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
@@ -116,7 +116,7 @@
   <txdRelationships>
     <Item>
       <parent>vehicles_banshee_interior</parent>
-      <child>camaro_ss</child>
+      <child>camaross</child>
     </Item>
   </txdRelationships>
 </CVehicleModelInfo__InitDataList>
