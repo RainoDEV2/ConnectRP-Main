@@ -323,7 +323,7 @@ local currentArmour = {}
 	end
 end)	
  ]]
-RegisterNetEvent('drp-framework:updateArmour')
+--[[ RegisterNetEvent('drp-framework:updateArmour')
 AddEventHandler('drp-framework:updateArmour', function(updateArmour)
 	local src = source
 	currentArmour[src] = updateArmour
@@ -376,7 +376,7 @@ AddEventHandler('playerDropped', function(playerId)
 		}, function ()
 		end)
 	end
-end)
+end) ]]
 
 --[[ RegisterCommand("testa", function(source, args, raw)
     local src = source

@@ -1018,9 +1018,9 @@ RegisterCommand("try", function(source, args, rawCommand)
                 Citizen.Wait(1500)
                 SetEntityHealth(PlayerPedId(), health)
                 SetPedArmour(PlayerPedId(), armor)
-                TriggerServerEvent('drp-framework:updatearmour', armor)
-                Citizen.Wait(1500)
-                TriggerServerEvent('drp-framework:loadArmour')
+                --TriggerServerEvent('drp-framework:updatearmour', armor)
+                --Citizen.Wait(1500)
+                --TriggerServerEvent('drp-framework:loadArmour')
             end)
         else
             RLCore.Functions.Notify("You cant do this right now.", "error")
@@ -1138,10 +1138,14 @@ end, false)
 RegisterCommand("outfituse", function(source, args, rawCommand)
     if exports["rl-houses"]:imClosesToRoom2() or exports["rl-apartments"]:imClosesToRoom3() or (IsNearShop(clothingShops) < 9.0) then
         if args[1] then
-            TriggerServerEvent('drp-framework:updatearmour', GetPedArmour(PlayerPedId()))
+
+            local health = GetEntityHealth(PlayerPedId())
+            local armor = GetPedArmour(PlayerPedId())
+
             TriggerEvent('raid_clothes:outfits', 3, args[1])
             Citizen.Wait(3000)
-            TriggerServerEvent('drp-framework:loadArmour')
+            SetEntityHealth(PlayerPedId(), health)
+            SetPedArmour(PlayerPedId(), armor)
         else
             RLCore.Functions.Notify("You need to do something like /outfituse 1 <br/ > <br/ > 1 being the slot id that you will have had previously saved.!")
         end

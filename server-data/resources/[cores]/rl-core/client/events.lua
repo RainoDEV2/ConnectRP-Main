@@ -163,7 +163,7 @@ AddEventHandler('RLCore:Client:UseItem', function(item)
 	TriggerServerEvent("RLCore:Server:UseItem", item)
 end)
 
-RegisterNetEvent('drp-framework:setArmour')
+--[[ RegisterNetEvent('drp-framework:setArmour')
 AddEventHandler('drp-framework:setArmour', function(armour)
     Citizen.Wait(6000)  -- Give ESX time to load their stuff. Because some how ESX remove the armour when load the ped.
                         -- If there is a better way to do this, make an pull request with 'Tu eres una papa' (you are a potato) as a subject
@@ -181,4 +181,4 @@ Citizen.CreateThread(function()
         TriggerServerEvent('drp-framework:updateArmour', GetPedArmour(PlayerPedId()))
         Citizen.Wait(3500)
     end
-end)
+end) ]]
