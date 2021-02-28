@@ -185,3 +185,10 @@ RLCore.Functions.CreateCallback('bb-garages:server:hasFines', function(source, c
         end
     end)
 end)
+
+RegisterServerEvent('bb-garages:server:setVehicleOwned')
+AddEventHandler('bb-garages:server:setVehicleOwned', function(props, stats, model)
+    local src = source
+    local xPlayer = RLCore.Functions.GetPlayer(src)
+    RLCore.Functions.ExecuteSql(false, "INSERT INTO `bbvehicles` (`citizenid`, `plate`, `model`, `props`, `stats`, `state`) VALUES ('" .. xPlayer.PlayerData.citizenid .. "', '" .. props.plate .. "', '" .. model .. "', '" .. json.encode(props) .. "', '" .. json.encode(stats) .. "', 'unknown')")
+end)
