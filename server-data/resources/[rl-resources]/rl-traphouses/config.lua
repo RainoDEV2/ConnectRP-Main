@@ -92,7 +92,7 @@ Config.AllowedItems = {
     ["phone"] = {
         name = "phone",
         wait = 2000,
-        reward = 750,
+        reward = 400, 
     },
     ["radio"] = {
         name = "radio",
