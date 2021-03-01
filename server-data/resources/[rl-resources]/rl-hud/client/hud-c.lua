@@ -91,7 +91,7 @@ Citizen.CreateThread(function()
             thirst = thirst,
             stress = stress,
         })
-        Citizen.Wait(5000)
+        Citizen.Wait(2500)
     end
 end)
 
