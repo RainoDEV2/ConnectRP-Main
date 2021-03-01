@@ -68,7 +68,7 @@ AddEventHandler('rl-houses:client:sellHouse', function()
 end)
 
 --------------------------------------------------------------
-Citizen.CreateThread(function()
+--[[ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(5000)
 
@@ -78,7 +78,7 @@ Citizen.CreateThread(function()
             end
         end
     end
-end)
+end) ]]
 
 RegisterNetEvent('rl-houses:client:EnterHouse')
 AddEventHandler('rl-houses:client:EnterHouse', function(god)
