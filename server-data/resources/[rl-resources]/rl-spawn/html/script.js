@@ -31,15 +31,14 @@ $(document).on('click', '.location', function(evt){
     var type = $(this).data('type'); //get the text
     var label = $(this).data('label'); //get the text
     if (type !== "lab") {
-        $("#spawn-label").html("Spawn")
+        $("#spawn-label").html("Confirm")
         $("#submit-spawn").attr("data-location", location);
         $("#submit-spawn").attr("data-type", type);
         $("#submit-spawn").fadeIn(100)
-        /*
         $.post('http://rl-spawn/setCam', JSON.stringify({
             posname: location,
             type: type,
-        }));*/
+        }));
         if (currentLocation !== null) {
             $(currentLocation).removeClass('selected');
         }
@@ -73,7 +72,7 @@ function setupLocations(locations, myHouses) {
     var parent = $('.spawn-locations')
     $(parent).html("");
 
-    $(parent).append('<div class="loclabel" id="location" data-location="null" data-type="lab" data-label="Spawn Location"><p><span id="null">Where do you want to start?</span></p></div>')
+    $(parent).append('<div class="loclabel" id="location" data-location="null" data-type="lab" data-label="Where do you want to start?"><p><span id="null">Where do you want to start?</span></p></div>')
     
     setTimeout(function(){
         $(parent).append('<div class="location" id="location" data-location="current" data-type="current" data-label="Last Location"><p><span id="current-location">Last Location</span></p></div>');

@@ -17,9 +17,23 @@ local pointCamCoords = 75
 local pointCamCoords2 = 0
 local cam1Time = 500
 local cam2Time = 1000
-local timer = 0
 
 local choosingSpawn = false
+
+RegisterNetEvent('rl-spawn:client:openUI')
+AddEventHandler('rl-spawn:client:openUI', function(value, new)
+    SetEntityVisible(GetPlayerPed(-1), false)
+    DoScreenFadeOut(250)
+    Citizen.Wait(1000)
+    DoScreenFadeIn(250)
+    RLCore.Functions.GetPlayerData(function(PlayerData)     
+        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", PlayerData.position.x, PlayerData.position.y, PlayerData.position.z + camZPlus1, -85.00, 0.00, 0.00, 100.00, false, 0)
+        SetCamActive(cam, true)
+        RenderScriptCams(true, false, 1, true, true)
+    end)
+    Citizen.Wait(500)
+    SetDisplay(value)
+end)
 
 RegisterNUICallback("exit", function(data)
     SetNuiFocus(false, false)
@@ -30,21 +44,104 @@ RegisterNUICallback("exit", function(data)
     choosingSpawn = false
 end)
 
+local cam = nil
+local cam2 = nil
+
+RegisterNUICallback('setCam', function(data)
+    local location = tostring(data.posname)
+    local type = tostring(data.type)
+
+    DoScreenFadeOut(200)
+    Citizen.Wait(500)
+    DoScreenFadeIn(200)
+
+    if DoesCamExist(cam) then
+        DestroyCam(cam, true)
+    end
+
+    if DoesCamExist(cam2) then
+        DestroyCam(cam2, true)
+    end
+
+    if type == "current" then
+        RLCore.Functions.GetPlayerData(function(PlayerData)
+            cam2 = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", PlayerData.position.x, PlayerData.position.y, PlayerData.position.z + camZPlus1, 300.00,0.00,0.00, 110.00, false, 0)
+            PointCamAtCoord(cam2, PlayerData.position.x, PlayerData.position.y, PlayerData.position.z + pointCamCoords)
+            SetCamActiveWithInterp(cam2, cam, cam1Time, true, true)
+            if DoesCamExist(cam) then
+                DestroyCam(cam, true)
+            end
+            Citizen.Wait(cam1Time)
+
+            cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", PlayerData.position.x, PlayerData.position.y, PlayerData.position.z + camZPlus2, 300.00,0.00,0.00, 110.00, false, 0)
+            PointCamAtCoord(cam, PlayerData.position.x, PlayerData.position.y, PlayerData.position.z + pointCamCoords2)
+            SetCamActiveWithInterp(cam, cam2, cam2Time, true, true)
+            SetEntityCoords(GetPlayerPed(-1), PlayerData.position.x, PlayerData.position.y, PlayerData.position.z)
+        end)
+    elseif type == "house" then
+        local campos = Config.Houses[location].coords.enter
+
+        cam2 = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", campos.x, campos.y, campos.z + camZPlus1, 300.00,0.00,0.00, 110.00, false, 0)
+        PointCamAtCoord(cam2, campos.x, campos.y, campos.z + pointCamCoords)
+        SetCamActiveWithInterp(cam2, cam, cam1Time, true, true)
+        if DoesCamExist(cam) then
+            DestroyCam(cam, true)
+        end
+        Citizen.Wait(cam1Time)
+
+        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", campos.x, campos.y, campos.z + camZPlus2, 300.00,0.00,0.00, 110.00, false, 0)
+        PointCamAtCoord(cam, campos.x, campos.y, campos.z + pointCamCoords2)
+        SetCamActiveWithInterp(cam, cam2, cam2Time, true, true)
+        SetEntityCoords(GetPlayerPed(-1), campos.x, campos.y, campos.z)
+    elseif type == "normal" then
+        local campos = Config.Spawns[location].coords
+
+        cam2 = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", campos.x, campos.y, campos.z + camZPlus1, 300.00,0.00,0.00, 110.00, false, 0)
+        PointCamAtCoord(cam2, campos.x, campos.y, campos.z + pointCamCoords)
+        SetCamActiveWithInterp(cam2, cam, cam1Time, true, true)
+        if DoesCamExist(cam) then
+            DestroyCam(cam, true)
+        end
+        Citizen.Wait(cam1Time)
+
+        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", campos.x, campos.y, campos.z + camZPlus2, 300.00,0.00,0.00, 110.00, false, 0)
+        PointCamAtCoord(cam, campos.x, campos.y, campos.z + pointCamCoords2)
+        SetCamActiveWithInterp(cam, cam2, cam2Time, true, true)
+        SetEntityCoords(GetPlayerPed(-1), campos.x, campos.y, campos.z)
+    elseif type == "appartment" then
+        local campos = Apartments.Locations[location].coords.enter
+
+        cam2 = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", campos.x, campos.y, campos.z + camZPlus1, 300.00,0.00,0.00, 110.00, false, 0)
+        PointCamAtCoord(cam2, campos.x, campos.y, campos.z + pointCamCoords)
+        SetCamActiveWithInterp(cam2, cam, cam1Time, true, true)
+        if DoesCamExist(cam) then
+            DestroyCam(cam, true)
+        end
+        Citizen.Wait(cam1Time)
+
+        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", campos.x, campos.y, campos.z + camZPlus2, 300.00,0.00,0.00, 110.00, false, 0)
+        PointCamAtCoord(cam, campos.x, campos.y, campos.z + pointCamCoords2)
+        SetCamActiveWithInterp(cam, cam2, cam2Time, true, true)
+        SetEntityCoords(GetPlayerPed(-1), campos.x, campos.y, campos.z)
+    end
+end)
+
 RegisterNUICallback('chooseAppa', function(data)
     local appaYeet = data.appType
 
     SetDisplay(false)
-    DoScreenFadeOut(250)
-    Citizen.Wait(250)
+    DoScreenFadeOut(500)
+    Citizen.Wait(5000)
     TriggerServerEvent("apartments:server:CreateApartment", appaYeet, Apartments.Locations[appaYeet].label)
-    FreezeEntityPosition(GetPlayerPed(-1), false)
-    SetEntityVisible(GetPlayerPed(-1), true)
     TriggerServerEvent('RLCore:Server:OnPlayerLoaded')
     TriggerEvent('RLCore:Client:OnPlayerLoaded')
-    DoScreenFadeOut(500)
-        Citizen.Wait(2000)
-        StopPlayerSwitch()
-        DoScreenFadeIn(500)
+    FreezeEntityPosition(ped, false)
+    RenderScriptCams(false, true, 500, true, true)
+    SetCamActive(cam, false)
+    DestroyCam(cam, true)
+    SetCamActive(cam2, false)
+    DestroyCam(cam2, true)
+    SetEntityVisible(GetPlayerPed(-1), true)
 end)
 
 RegisterNUICallback('spawnplayer', function(data)
@@ -54,11 +151,11 @@ RegisterNUICallback('spawnplayer', function(data)
     local PlayerData = RLCore.Functions.GetPlayerData()
     local insideMeta = PlayerData.metadata["inside"]
 
-    if type == "current" then
-        TriggerEvent("debug", 'Spawn: Last Location', 'success')
 
+    if type == "current" then
         SetDisplay(false)
-        Citizen.Wait(250)
+        DoScreenFadeOut(500)
+        Citizen.Wait(2000)
         RLCore.Functions.GetPlayerData(function(PlayerData)
             SetEntityCoords(GetPlayerPed(-1), PlayerData.position.x, PlayerData.position.y, PlayerData.position.z)
             SetEntityHeading(GetPlayerPed(-1), PlayerData.position.a)
@@ -72,56 +169,63 @@ RegisterNUICallback('spawnplayer', function(data)
             local apartmentId = insideMeta.apartment.apartmentId
             TriggerEvent('rl-apartments:client:LastLocationHouse', apartmentType, apartmentId)
         end
-        FreezeEntityPosition(ped, false)
-        SetEntityVisible(GetPlayerPed(-1), true)
         TriggerServerEvent('RLCore:Server:OnPlayerLoaded')
         TriggerEvent('RLCore:Client:OnPlayerLoaded')
-        DoScreenFadeOut(500)
+        FreezeEntityPosition(ped, false)
+        RenderScriptCams(false, true, 500, true, true)
+        SetCamActive(cam, false)
+        DestroyCam(cam, true)
+        SetCamActive(cam2, false)
+        DestroyCam(cam2, true) 
+        SetEntityVisible(GetPlayerPed(-1), true)
+        Citizen.Wait(500)
+        DoScreenFadeIn(250)
         Citizen.Wait(2000)
         TriggerEvent("rl-hud-player:client:SpawnedIn", true)
-        StopPlayerSwitch()
-        DoScreenFadeIn(4500)
-        SwitchIN()
     elseif type == "house" then
-        TriggerEvent("debug", 'Spawn: Owned House', 'success')
-
         SetDisplay(false)
-        Citizen.Wait(250)
+        DoScreenFadeOut(500)
+        Citizen.Wait(2000)
         TriggerEvent('rl-houses:client:enterOwnedHouse', location)
+        TriggerServerEvent('RLCore:Server:OnPlayerLoaded')
+        TriggerEvent('RLCore:Client:OnPlayerLoaded')
         TriggerServerEvent('rl-houses:server:SetInsideMeta', 0, false)
         TriggerServerEvent('rl-apartments:server:SetInsideMeta', 0, 0, false)
         FreezeEntityPosition(ped, false)
-        TriggerServerEvent('RLCore:Server:OnPlayerLoaded')
-        TriggerEvent('RLCore:Client:OnPlayerLoaded')
+        RenderScriptCams(false, true, 500, true, true)
+        SetCamActive(cam, false)
+        DestroyCam(cam, true)
+        SetCamActive(cam2, false)
+        DestroyCam(cam2, true)
         SetEntityVisible(GetPlayerPed(-1), true)
-        DoScreenFadeOut(500)
+        Citizen.Wait(500)
+        DoScreenFadeIn(250)
         Citizen.Wait(2000)
         TriggerEvent("rl-hud-player:client:SpawnedIn", true)
-        StopPlayerSwitch()
-        DoScreenFadeIn(4500)
-        SwitchIN()
     elseif type == "normal" then
-        TriggerEvent("debug", 'Spawn: ' .. Config.Spawns[location].label, 'success')
-
         local pos = Config.Spawns[location].coords
         SetDisplay(false)
-        Citizen.Wait(250)
+        DoScreenFadeOut(500)
+        Citizen.Wait(2000)
         SetEntityCoords(ped, pos.x, pos.y, pos.z)
+        TriggerServerEvent('RLCore:Server:OnPlayerLoaded')
+        TriggerEvent('RLCore:Client:OnPlayerLoaded')
         TriggerServerEvent('rl-houses:server:SetInsideMeta', 0, false)
         TriggerServerEvent('rl-apartments:server:SetInsideMeta', 0, 0, false)
-        Citizen.Wait(250)
+        Citizen.Wait(500)
         SetEntityCoords(ped, pos.x, pos.y, pos.z)
         SetEntityHeading(ped, pos.h)
         FreezeEntityPosition(ped, false)
+        RenderScriptCams(false, true, 500, true, true)
+        SetCamActive(cam, false)
+        DestroyCam(cam, true)
+        SetCamActive(cam2, false)
+        DestroyCam(cam2, true)
         SetEntityVisible(GetPlayerPed(-1), true)
-        TriggerServerEvent('RLCore:Server:OnPlayerLoaded')
-        TriggerEvent('RLCore:Client:OnPlayerLoaded')
-        DoScreenFadeOut(500)
+        Citizen.Wait(500)
+        DoScreenFadeIn(250)
         Citizen.Wait(2000)
         TriggerEvent("rl-hud-player:client:SpawnedIn", true)
-        StopPlayerSwitch()
-        DoScreenFadeIn(4500)
-        SwitchIN()
     end
 end)
 
@@ -154,49 +258,23 @@ end)
 RegisterNetEvent('rl-spawn:client:setupSpawns')
 AddEventHandler('rl-spawn:client:setupSpawns', function(cData, new, apps)
     if not new then
-        RLCore.Functions.TriggerCallback('rl-spawn:server:isJailed', function(lmfao, tt)
-            print(lmfao)
-            print(tt)
-            print('+++++++++++++++++++++++++++++++++++++++++++')
-            if lmfao == false then  
-                RLCore.Functions.TriggerCallback('rl-spawn:server:getOwnedHouses', function(houses)
-                    local myHouses = {}
-                    if houses ~= nil then
-                        for i = 1, (#houses), 1 do
-                            table.insert(myHouses, {
-                                house = houses[i].house,
-                                label = Config.Houses[houses[i].house].adress,
-                            })
-                        end
-                    end
-
-                    Citizen.Wait(250)
-                    SendNUIMessage({
-                        action = "setupLocations",
-                        locations = Config.Spawns,
-                        houses = myHouses,
+        RLCore.Functions.TriggerCallback('rl-spawn:server:getOwnedHouses', function(houses)
+            local myHouses = {}
+            if houses ~= nil then
+                for i = 1, (#houses), 1 do
+                    table.insert(myHouses, {
+                        house = houses[i].house,
+                        label = Config.Houses[houses[i].house].adress,
                     })
-                end, cData.citizenid)
-            else
-                SetDisplay(false)
-                Citizen.Wait(250)
-                SetEntityCoords(PlayerPedId(), 1769.14, 257709, 45.72)
-                TriggerServerEvent('rl-houses:server:SetInsideMeta', 0, false)
-                TriggerServerEvent('rl-apartments:server:SetInsideMeta', 0, 0, false)
-                Citizen.Wait(250)
-                SetEntityCoords(PlayerPedId(), 1769.14, 257709, 45.72)
-                SetEntityHeading(PlayerPedId(), 269.01)
-                FreezeEntityPosition(PlayerPedId(), false)
-                SetEntityVisible(GetPlayerPed(-1), true)
-                TriggerServerEvent('RLCore:Server:OnPlayerLoaded')
-                TriggerEvent('RLCore:Client:OnPlayerLoaded')
-                DoScreenFadeOut(500)
-                Citizen.Wait(2000)
-                StopPlayerSwitch()
-                DoScreenFadeIn(4500)
-                SwitchIN()
-                TriggerEvent('beginJail', tt)
+                end
             end
+
+            Citizen.Wait(500)
+            SendNUIMessage({
+                action = "setupLocations",
+                locations = Config.Spawns,
+                houses = myHouses,
+            })
         end, cData.citizenid)
     elseif new then
         SendNUIMessage({
@@ -204,71 +282,4 @@ AddEventHandler('rl-spawn:client:setupSpawns', function(cData, new, apps)
             locations = apps,
         })
     end
-
-    TriggerEvent("debug", 'Spawn: Setup', 'success')
-end)
-
-
--- Gta V Switch
-local cloudOpacity = 0.01
-local muteSound = true
-
-function SwitchIN()
-    --[[ local timer = GetGameTimer()
-    while true do
-        ClearScreen()
-        Citizen.Wait(0)
-        if GetGameTimer() - timer > 5000 then
-            SwitchInPlayer(PlayerPedId())
-            ClearScreen()
-            while GetPlayerSwitchState() ~= 12 do
-                Citizen.Wait(0)
-                ClearScreen()
-            end
-            
-            break
-        end
-    end ]]
-
-    TriggerServerEvent('mumble:infinity:server:unmutePlayer')
-    TriggerEvent('rl-weathersync:client:EnableSync')
-	SetEntityHealth(PlayerPedId(), 200.0)
-end
-
-function ToggleSound(state)
-    if state then
-        StartAudioScene("MP_LEADERBOARD_SCENE");
-    else
-        StopAudioScene("MP_LEADERBOARD_SCENE");
-    end
-end
-
-function ClearScreen()
-    SetCloudHatOpacity(cloudOpacity)
-    HideHudAndRadarThisFrame()
-    SetDrawOrigin(0.0, 0.0, 0.0, 0)
-end
-
-RegisterNetEvent('rl-spawn:client:openUI')
-AddEventHandler('rl-spawn:client:openUI', function(value)
-    SetEntityVisible(GetPlayerPed(-1), false)
-    ToggleSound(muteSound)
-    if not IsPlayerSwitchInProgress() then
-        CreateThread(function()
-            Wait(250)
-            DoScreenFadeIn(250)
-        end)
-        SwitchOutPlayer(PlayerPedId(), 1, 1)
-    end
-    while GetPlayerSwitchState() ~= 5 do
-        Citizen.Wait(0)
-        ClearScreen()
-    end
-    ClearScreen()
-    Citizen.Wait(0)
-    
-    ToggleSound(false)
-    SetDisplay(value)
-
-    TriggerEvent("debug", 'Spawn: Open UI', 'success')
 end)
