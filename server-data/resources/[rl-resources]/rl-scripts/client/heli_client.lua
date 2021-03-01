@@ -21,7 +21,7 @@ local radiusdown_key = 21 -- control id to decrease spotlight radius. Default: I
 local maxtargetdistance = 250 -- max distance at which target lock is maintained 
 local brightness = 1.0 -- default spotlight brightness
 local spotradius = 4.0 -- default manual spotlight radius
-local speed_measure = "Km/h" -- default unit to measure vehicle speed but can be changed to "MPH". Use either exact string, "Km/h" or "MPH", or else functions break.
+local speed_measure = "MPH" -- default unit to measure vehicle speed but can be changed to "MPH". Use either exact string, "Km/h" or "MPH", or else functions break.
 
 -- Script starts here
 local target_vehicle = nil

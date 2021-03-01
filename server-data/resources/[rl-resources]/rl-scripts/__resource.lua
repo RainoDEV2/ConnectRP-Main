@@ -14,7 +14,6 @@ server_scripts {
 
 client_scripts {
 	"config.lua",
-	"client/autopilot.lua",
 	"client/binoculars.lua",
 	"client/blips.lua",
 	"client/clothes.lua",
