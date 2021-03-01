@@ -17,14 +17,14 @@ local PtfxPrompt = false
 local PtfxWait = 500
 local PtfxNoProp = false
 
-Citizen.CreateThread(function()
+--[[ Citizen.CreateThread(function()
   while true do
 
     if IsPedShooting(PlayerPedId()) and IsInAnimation then
       EmoteCancel()
     end
 
-    --[[
+    
     if PtfxPrompt then
       if not PtfxNotif then
           SimpleNotify(PtfxInfo)
@@ -35,13 +35,13 @@ Citizen.CreateThread(function()
         Wait(PtfxWait)
         PtfxStop()
       end
-    end]]
+    end
 
     if Config.MenuKeybindEnabled then if IsControlPressed(0, Config.MenuKeybind) and IsInputDisabled(2) then OpenEmoteMenu() end end
     if Config.EnableXtoCancel then if IsControlPressed(0, 73) then EmoteCancel() end end
     Citizen.Wait(1)
   end
-end)
+end) ]]
 
 -----------------------------------------------------------------------------------------------------
 -- Commands / Events --------------------------------------------------------------------------------
