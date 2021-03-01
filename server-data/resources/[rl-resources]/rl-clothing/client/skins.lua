@@ -47,7 +47,7 @@ custom_skins = {
     "a_m_o_bill",
     "ramee",
     "u_m_y_coop_cop",
-    "a_c_cat_01"
+    "a_c_shepherd"
 }
 
 whitelisted_to_use_custom_skins = {
