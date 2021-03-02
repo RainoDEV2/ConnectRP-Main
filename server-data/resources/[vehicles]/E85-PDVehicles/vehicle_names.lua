@@ -17,4 +17,6 @@ Citizen.CreateThread(function()
 	AddTextEntry('sahpinsurgent', 'Swat Insurgent')
 	AddTextEntry('pbus2', 'Prison Party Bus')
 	AddTextEntry('tahoe', '2020 Chevrolet Tahoe')
+	AddTextEntry('code3cap', '2013 Chevrolet Caprice')
+
 end) 
