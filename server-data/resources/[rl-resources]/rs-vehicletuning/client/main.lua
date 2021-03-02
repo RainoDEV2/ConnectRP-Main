@@ -608,16 +608,19 @@ AddEventHandler('vehiclemod:client:setPartLevel', function(part, level)
                 SetVehicleEngineHealth(veh, level)
                 RLCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
                 end, plate, "engine", GetVehicleEngineHealth(veh))
-                -- TriggerServerEvent("vehiclemod:server:updatePart", plate, "engine", GetVehicleEngineHealth(veh))
+                TriggerServerEvent("vehiclemod:server:saveStatus", plate)
+                print("UPDATING")
             elseif part == "body" then
                 SetVehicleBodyHealth(veh, level)
                 RLCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
                 end, plate, "body", GetVehicleBodyHealth(veh))
-                -- TriggerServerEvent("vehiclemod:server:updatePart", plate, "body", GetVehicleBodyHealth(veh))
+                TriggerServerEvent("vehiclemod:server:saveStatus", plate)
+                print("UPDATING")
             else
                 RLCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
                 end, plate, part, level)
-                -- TriggerServerEvent("vehiclemod:server:updatePart", plate, part, level)
+                TriggerServerEvent("vehiclemod:server:saveStatus", plate)
+                print("UPDATING")
             end
         else
             RLCore.Functions.Notify("Je bent geen bestuurder of zit op een fiets..", "error")
@@ -668,7 +671,7 @@ AddEventHandler('vehiclemod:client:repairPart', function(part, level, needAmount
                                 elseif part ~= "engine" then
                                     RLCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
                                     end, plate, part, GetVehicleStatus(plate, part) + level)
-                                    -- TriggerServerEvent("vehiclemod:server:updatePart", plate, part, GetVehicleStatus(plate, part) + level)
+                                    
                                     TriggerServerEvent("RLCore:Server:RemoveItem", Config.RepairCost[part], level)
                                     TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items[Config.RepairCost[part]], "remove")
                                 end
