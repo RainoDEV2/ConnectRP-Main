@@ -158,21 +158,21 @@ end)
 
 
 
-local throwMoneyZone1 = BoxZone:Create(vector3(114.77, -1285.88, 28.26), 1.8, 1.4, {
+local throwMoneyZone1 = BoxZone:Create(vector3(110.83074, -1288.252, 28.260231), 1.8, 1.4, {
     name="ThrowMoney1",
     heading=30,
     minZ=25.46,
     maxZ=29.46
 })
 
-local throwMoneyZone2 = BoxZone:Create(vector3(114.23, -1290.07, 28.26), 1.6, 1.6, {
+local throwMoneyZone2 = BoxZone:Create(vector3(107.0752, -1295.063, 28.260231), 1.6, 1.6, {
     name="ThrowMoney2",
     heading=30,
     minZ=25.46,
     maxZ=29.46
 })
 
-local throwMoneyZone3 = BoxZone:Create(vector3(111.01, -1284.12, 28.26), 1.6, 1.8, {
+local throwMoneyZone3 = BoxZone:Create(vector3(102.90673, -1287.95, 28.260248), 1.6, 1.8, {
     name="ThrowMoney3",
     heading=29,
     minZ=25.26,
