@@ -383,10 +383,10 @@ end
 Vehicles = {
     { model = "POLVIC2", label = "S.A.L.E. CVPI"}, --1
     { model = "POLTAURUS", label = "S.A.L.E. Taurus"}, --2
-    { model = "POLCHAR", label = "2014 Charger"}, --3
+    { model = "code3cap", label = "Chevrolet Caprice"}, --3
+    { model = "POLCHAR", label = "2014 Charger"}, --4
     { model = "18chgrleo", label = "2018 Charger"}, --4
     { model = "expleo", label = "2016 Explorer"}, --5
-    { model = "poltah", label = "2015 Tahoe"}, --5
     { model = "tahoe", label = "2020 Tahoe"}, --6
     { model = "trhawk", label = "PD Track Hawk"}, --7
     { model = "POLRAPTOR", label = "S.A.L.E. Raptor"}, --8
