@@ -382,8 +382,8 @@ end
 
 Vehicles = {
     { model = "POLVIC2", label = "S.A.L.E. CVPI"}, --1
-    { model = "POLTAURUS", label = "S.A.L.E. Taurus"}, --2
     { model = "code3cap", label = "Chevrolet Caprice"}, --3
+    { model = "POLTAURUS", label = "S.A.L.E. Taurus"}, --2
     { model = "POLCHAR", label = "2014 Charger"}, --4
     { model = "18chgrleo", label = "2018 Charger"}, --4
     { model = "expleo", label = "2016 Explorer"}, --5
