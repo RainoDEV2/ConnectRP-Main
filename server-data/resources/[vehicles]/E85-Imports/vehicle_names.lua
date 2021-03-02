@@ -89,6 +89,7 @@ Citizen.CreateThread(function()
 	AddTextEntry('golfp', 'Volkswagen Golf')
 	AddTextEntry('r1', 'Yamaha R1')
 	AddTextEntry('bnr32', 'Nissan Skyline GTR R32')
+	AddTextEntry('mlec', 'Mitsubishi Evolution IX Clinched')
 	
 end) 
 
