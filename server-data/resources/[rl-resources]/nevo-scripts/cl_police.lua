@@ -382,24 +382,24 @@ end
 
 Vehicles = {
     { model = "POLVIC2", label = "S.A.L.E. CVPI"}, --1
-    { model = "code3cap", label = "Chevrolet Caprice"}, --3
-    { model = "POLTAURUS", label = "S.A.L.E. Taurus"}, --2
+    { model = "code3cap", label = "Chevrolet Caprice"}, --2
+    { model = "POLTAURUS", label = "S.A.L.E. Taurus"}, --3
     { model = "POLCHAR", label = "2014 Charger"}, --4
-    { model = "18chgrleo", label = "2018 Charger"}, --4
-    { model = "expleo", label = "2016 Explorer"}, --5
-    { model = "tahoe", label = "2020 Tahoe"}, --6
-    { model = "trhawk", label = "PD Track Hawk"}, --7
-    { model = "POLRAPTOR", label = "S.A.L.E. Raptor"}, --8
-    { model = "2015POLSTANG", label = "2015 Mustang"}, --9
-    { model = "predator", label = "Boat"}, --10
-    { model = "code3gator", label = "Gator"}, --11
-    { model = "pol8", label = "PD BMW 1200"}, --12
-    { model = "policeb2", label = "PD Dirt Bike"}, --13
-    { model = "policebretro", label = "PD Harley"}, --14
-    { model = "sahpinsurgent", label = "SWAT Insurgent"}, --15
-    { model = "onebeast", label = "SWAT Limo"}, --16
-    { model = "sspres", label = "SWAT Suburban"}, --17
-    { model = "pbus2", label = "Prison Bus"}, --18
+    { model = "18chgrleo", label = "2018 Charger"}, --5
+    { model = "expleo", label = "2016 Explorer"}, --6
+    { model = "tahoe", label = "2020 Tahoe"}, --7
+    { model = "trhawk", label = "PD Track Hawk"}, --8
+    { model = "POLRAPTOR", label = "S.A.L.E. Raptor"}, --9
+    { model = "2015POLSTANG", label = "2015 Mustang"}, --10
+    { model = "predator", label = "Boat"}, --11
+    { model = "code3gator", label = "Gator"}, --12
+    { model = "pol8", label = "PD BMW 1200"}, --13
+    { model = "policeb2", label = "PD Dirt Bike"}, --14
+    { model = "policebretro", label = "PD Harley"}, --15
+    { model = "sahpinsurgent", label = "SWAT Insurgent"}, --16
+    { model = "onebeast", label = "SWAT Limo"}, --17
+    { model = "sspres", label = "SWAT Suburban"}, --18
+    { model = "pbus2", label = "Prison Bus"}, --19
     { model = "policet", label = "Armored Van"}, --20
     { model = "fbi", label = "FBI Buffalo"}, --21
     { model = "fbi2", label = "TFBI Granger"}, --22
