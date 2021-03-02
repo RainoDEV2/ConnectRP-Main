@@ -381,37 +381,37 @@ function GetClosestPlayer()
 end
 
 Vehicles = {
-    --{ model = "POLVIC2", label = "S.A.L.E. CVPI"}, --1
-    --{ model = "POLTAURUS", label = "S.A.L.E. Taurus"}, --2
-    --{ model = "POLCHAR", label = "2014 Charger"}, --3
-    --{ model = "18chgrleo", label = "2018 Charger"}, --4
-    --{ model = "expleo", label = "2016 Explorer"}, --5
-    --{ model = "tahoe", label = "2020 Tahoe"}, --6
-    --{ model = "duranleo", label = "Dodge Durango"}, --7
+    { model = "POLVIC2", label = "S.A.L.E. CVPI"}, --1
+    { model = "POLTAURUS", label = "S.A.L.E. Taurus"}, --2
+    { model = "POLCHAR", label = "2014 Charger"}, --3
+    { model = "18chgrleo", label = "2018 Charger"}, --4
+    { model = "expleo", label = "2016 Explorer"}, --5
+    { model = "poltah", label = "2015 Tahoe"}, --5
+    { model = "tahoe", label = "2020 Tahoe"}, --6
+    { model = "trhawk", label = "PD Track Hawk"}, --7
     { model = "POLRAPTOR", label = "S.A.L.E. Raptor"}, --8
-    --{ model = "2015POLSTANG", label = "2015 Mustang"}, --9
+    { model = "2015POLSTANG", label = "2015 Mustang"}, --9
     { model = "predator", label = "Boat"}, --10
     { model = "code3gator", label = "Gator"}, --11
     { model = "pol8", label = "PD BMW 1200"}, --12
-    { model = "policeb2", label = "PD Dirt Bike"}, --12
-    { model = "policebretro", label = "PD Harley"}, --12
-    { model = "sahpinsurgent", label = "SWAT Insurgent"}, --13
-    { model = "onebeast", label = "SWAT Limo"}, --13
-    { model = "sspres", label = "SWAT Suburban"}, --14
-    { model = "pbus2", label = "Prison Bus"}, --15
-    { model = "poltah", label = "2015 Tahoe"},
-    { model = "policet", label = "Armored Van"}, --16
-    { model = "fbi", label = "FBI Buffalo"}, --17
-    { model = "fbi2", label = "TFBI Granger"}, --18
-    { model = "polschafter3", label = "UC Schafter"}, --19
-    { model = "ucballer", label = "UC Baller"}, --20
-    { model = "uccomet", label = "UC Comet"}, --21
-    { model = "ucwashington", label = "UC Washington"}, --22
-    { model = "ucbanshee", label = "UC Banshee"}, --23
-    { model = "ucrancher", label = "UC Rancher"}, --24
-    { model = "ucprimo", label = "UC Primo"}, --25
-    { model = "uccoquette", label = "UC Coquette"}, --26
-    { model = "ucbuffalo", label = "UC Buffalo"}, --27
+    { model = "policeb2", label = "PD Dirt Bike"}, --13
+    { model = "policebretro", label = "PD Harley"}, --14
+    { model = "sahpinsurgent", label = "SWAT Insurgent"}, --15
+    { model = "onebeast", label = "SWAT Limo"}, --16
+    { model = "sspres", label = "SWAT Suburban"}, --17
+    { model = "pbus2", label = "Prison Bus"}, --18
+    { model = "policet", label = "Armored Van"}, --20
+    { model = "fbi", label = "FBI Buffalo"}, --21
+    { model = "fbi2", label = "TFBI Granger"}, --22
+    { model = "polschafter3", label = "UC Schafter"}, --23
+    { model = "ucballer", label = "UC Baller"}, --24
+    { model = "uccomet", label = "UC Comet"}, --25
+    { model = "ucwashington", label = "UC Washington"}, --26
+    { model = "ucbanshee", label = "UC Banshee"}, --27
+    { model = "ucrancher", label = "UC Rancher"}, --28
+    { model = "ucprimo", label = "UC Primo"}, --29
+    { model = "uccoquette", label = "UC Coquette"}, --30
+    { model = "ucbuffalo", label = "UC Buffalo"}, --31
     --{ model = "POLVIC", label = "LSPD Vic"},
 	--{ model = "psp_bmwgs", label = "Motorcycle"},
 }
