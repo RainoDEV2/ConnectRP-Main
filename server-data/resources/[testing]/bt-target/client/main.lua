@@ -234,14 +234,9 @@ Citizen.CreateThread(function()
     }, {
         options = {
             {
-                event = "signon",
+                event = "RLCore:ToggleDuty",
                 icon = "far fa-clipboard",
-                label = "Sign On",
-            },
-            {
-                event = "signoff",
-                icon = "far fa-clipboard",
-                label = "Sign Off",
+                label = "Toggle Duty",
             },
         },
         distance = 1.5
