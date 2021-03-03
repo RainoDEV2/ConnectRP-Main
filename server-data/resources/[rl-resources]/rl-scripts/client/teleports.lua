@@ -82,7 +82,7 @@ Citizen.CreateThread(function()
 
                 if dist < 2 then
                     inRange = true
-                    DrawMarker(2, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.15, 255, 255, 255, 255, 0, 0, 0, 1, 0, 0, 0)
+                    --DrawMarker(2, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.15, 255, 255, 255, 255, 0, 0, 0, 1, 0, 0, 0)
 
                     if dist < 1 then
                         DrawText3Ds(v.x, v.y, v.z, '[E] to Enter/Exit')
