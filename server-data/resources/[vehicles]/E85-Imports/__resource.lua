@@ -121,6 +121,26 @@ files {
     'audioconfig/m297zonda_sounds.dat54.rel',
     'sfx/dlc_m297zonda/m297zonda.awc',
     'sfx/dlc_m297zonda/m297zonda_npc.awc',
+    'audioconfig/demonv8_game.dat151.nametable',
+    'audioconfig/demonv8_game.dat151.rel',
+    'audioconfig/demonv8_sounds.dat54.nametable',
+    'audioconfig/demonv8_sounds.dat54.rel',
+    'sfx/dlc_demonv8/demonv8.awc',
+    'sfx/dlc_demonv8/demonv8_npc.awc',
+    'audioconfig/nfsv8_game.dat151.nametable',
+    'audioconfig/nfsv8_game.dat151.rel',
+    'audioconfig/nfsv8_sounds.dat54.nametable',
+    'audioconfig/nfsv8_sounds.dat54.rel',
+    'sfx/dlc_nfsv8/nfsv8.awc',
+    'sfx/dlc_nfsv8/nfsv8_npc.awc',
+    'audioconfig/m158huayra_amp.dat10.nametable',
+    'audioconfig/m158huayra_amp.dat10.rel',
+    'audioconfig/m158huayra_game.dat151.nametable',
+    'audioconfig/m158huayra_game.dat151.rel',
+    'audioconfig/m158huayra_sounds.dat54.nametable',
+    'audioconfig/m158huayra_sounds.dat54.rel',
+    'sfx/dlc_m158huayra/m158huayra.awc',
+    'sfx/dlc_m158huayra/m158huayra_npc.awc'
 }
 
 
@@ -185,6 +205,16 @@ data_file 'AUDIO_SYNTHDATA' 'audioconfig/m297zonda_amp.dat'
 data_file 'AUDIO_GAMEDATA' 'audioconfig/m297zonda_game.dat'
 data_file 'AUDIO_SOUNDDATA' 'audioconfig/m297zonda_sounds.dat'
 data_file 'AUDIO_WAVEPACK' 'sfx/dlc_m297zonda'
+data_file 'AUDIO_GAMEDATA' 'audioconfig/demonv8_game.dat'
+data_file 'AUDIO_SOUNDDATA' 'audioconfig/demonv8_sounds.dat'
+data_file 'AUDIO_WAVEPACK' 'sfx/dlc_demonv8'
+data_file 'AUDIO_GAMEDATA' 'audioconfig/nfsv8_game.dat'
+data_file 'AUDIO_SOUNDDATA' 'audioconfig/nfsv8_sounds.dat'
+data_file 'AUDIO_WAVEPACK' 'sfx/dlc_nfsv8'
+data_file 'AUDIO_SYNTHDATA' 'audioconfig/m158huayra_amp.dat'
+data_file 'AUDIO_GAMEDATA' 'audioconfig/m158huayra_game.dat'
+data_file 'AUDIO_SOUNDDATA' 'audioconfig/m158huayra_sounds.dat'
+data_file 'AUDIO_WAVEPACK' 'sfx/dlc_m158huayra'
 
 client_script 'data/**/vehicle_names.lua'
 client_script 'vehicle_names.lua'
