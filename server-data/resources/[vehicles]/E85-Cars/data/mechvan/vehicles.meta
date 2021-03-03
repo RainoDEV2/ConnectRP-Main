@@ -7,8 +7,8 @@
       <modelName>polnspeedo</modelName>
       <txdName>polnspeedo</txdName>
       <handlingId>PNSPEEDO</handlingId>
-      <gameName>UTILLITRUCK3</gameName>
-      <vehicleMakeName />
+      <gameName>SPEEDO</gameName>
+      <vehicleMakeName>VAPID</vehicleMakeName>
       <expressionDictName>null</expressionDictName>
       <expressionName>null</expressionName>
       <animConvRoofDictName>null</animConvRoofDictName>

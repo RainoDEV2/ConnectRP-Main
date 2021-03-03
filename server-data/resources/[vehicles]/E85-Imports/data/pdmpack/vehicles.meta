@@ -125,7 +125,7 @@
       <animConvRoofWindowsAffected />
       <ptfxAssetName>null</ptfxAssetName>
       <audioNameHash>toysupmk4</audioNameHash>
-      <layout>LAYOUT_LOW</layout>
+      <layout>LAYOUT_LOW_RHD</layout>
       <coverBoundOffsets>BLISTA_COVER_OFFSET_INFO</coverBoundOffsets>
       <explosionInfo>EXPLOSION_INFO_DEFAULT</explosionInfo>
       <scenarioLayout />

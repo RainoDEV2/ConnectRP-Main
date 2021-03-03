@@ -1,13 +1,7 @@
-resource_manifest_version '77731fab-63ca-442c-a67b-abc70f28dfa5'
+resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
  
 files {
-    'data/**/vehiclelayouts.meta',
-    'data/**/handling.meta',
-    'data/**/vehicles.meta',
-    'data/**/carcols.meta',
-    'data/**/carvariations.meta',
-    'data/**/dlctext.meta',
-    'data/**/caraddoncontentunlocks.meta',
+    'data/**/*.meta',
     'audioconfig/sultanrsv8_game.dat151',
     'audioconfig/sultanrsv8_game.dat151.nametable',
     'audioconfig/sultanrsv8_game.dat151.rel',
@@ -143,13 +137,12 @@ files {
     'sfx/dlc_m158huayra/m158huayra_npc.awc'
 }
 
-
-data_file 'VEHICLE_LAYOUTS_FILE' 'data/**/vehiclelayouts.META'
-data_file 'HANDLING_FILE' 'data/**/handling.meta'
-data_file 'VEHICLE_METADATA_FILE' 'data/**/vehicles.meta'
-data_file 'CARCOLS_FILE' 'data/**/carcols.meta'
-data_file 'VEHICLE_VARIATION_FILE' 'data/**/carvariations.meta'
-data_file 'DLC_TEXT' 'data/**/dlctext.meta'
+data_file 'HANDLING_FILE'			'data/**/handling.meta'
+data_file 'VEHICLE_LAYOUTS_FILE'	'data/**/vehiclelayouts.meta'
+data_file 'VEHICLE_METADATA_FILE'	'data/**/vehicles.meta'
+data_file 'CARCOLS_FILE'			'data/**/carcols.meta'
+data_file 'VEHICLE_VARIATION_FILE'	'data/**/carvariations.meta'
+data_file 'DLCTEXT_FILE'            'data/**/dlctext.meta'
 data_file 'CONTENT_UNLOCKING_META_FILE' 'data/**/contentunlocks.meta'
 data_file 'AUDIO_GAMEDATA' 'audioconfig/sentinelsg4_game.dat'
 data_file 'AUDIO_SOUNDDATA' 'audioconfig/sentinelsg4_sounds.dat'
