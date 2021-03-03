@@ -22,7 +22,7 @@ Citizen.CreateThread(function()
         if isLoggedIn then
             if PlayerJob.name == "police" then
                 local pos = GetEntityCoords(GetPlayerPed(-1))
-                for k, v in pairs(Config.Locations["duty"]) do
+                --[[ for k, v in pairs(Config.Locations["duty"]) do
                     if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 5) then
                         if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 2) then
                             if not onDuty then
@@ -39,7 +39,7 @@ Citizen.CreateThread(function()
                             end
                         end
                     end
-                end
+                end ]]
                 
                 for k, v in pairs(Config.Locations["evidence"]) do
                     if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 2) then
