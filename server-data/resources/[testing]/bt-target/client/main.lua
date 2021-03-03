@@ -234,7 +234,7 @@ Citizen.CreateThread(function()
     }, {
         options = {
             {
-                event = "RLCore:ToggleDuty",
+                event = "PDClockIn",
                 icon = "far fa-clipboard",
                 label = "Toggle Duty",
             },
@@ -294,3 +294,7 @@ AddEventHandler("inventory:OpenInventoryTaco", function()
     TriggerEvent("inventory:client:SetCurrentStash", "taco")
 end)
 
+RegisterNetEvent("PDClockIn")
+AddEventHandler("PDClockIn", function()
+    TriggerServerEvent('RLCore:ToggleDuty')
+end)
