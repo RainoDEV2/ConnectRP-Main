@@ -656,10 +656,10 @@ Citizen.CreateThread(function ()
                                 clientcooldown = true
                                 end
                                 if clientcooldown and not chopstarted then
-                                    exports['mythic_notify']:SendAlert('error', 'There is currently a cooldown for you, You must wait longer before doing this again.')
+									RLCore.Functions.Notify('There is currently a cooldown for you, You must wait longer before doing this again.', 'error')
                                 end
                             else
-                                exports['mythic_notify']:SendAlert('error', 'You need to be the driver.')
+								RLCore.Functions.Notify('You need to be the driver.', 'error')
                                 print("no")
                             end
                         end
@@ -705,7 +705,7 @@ function FinishedChopping()
 	chopstarted = false
 	SetEntityAsNoLongerNeeded(vehchopping)
 	DeleteEntity(vehchopping)
-	exports['mythic_notify']:SendAlert('success', 'Sucessfully Chopped The Vehicle')
+	RLCore.Functions.Notify('Sucessfully Chopped The Vehicle.', 'success')
 	ResetChopping()
 end
 
@@ -745,7 +745,7 @@ function tofaraway()
 	local vehchopping = GetClosestVehicle(ChopCarLocation[1]["x"], ChopCarLocation[1]["y"], ChopCarLocation[1]["z"], 4.001, 0, 70)
 	chopstarted = false
 	DeleteEntity(vehchopping)
-	exports['mythic_notify']:SendAlert('error', 'You moved to far away')
+	RLCore.Functions.Notify('You moved to far away.', 'error')
 end
 
 
