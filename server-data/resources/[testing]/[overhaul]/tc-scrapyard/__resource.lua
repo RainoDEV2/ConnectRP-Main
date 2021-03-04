@@ -9,5 +9,3 @@ client_scripts {
     'client/main.lua',
     'config.lua'
 }
-
-export "taskBar"
