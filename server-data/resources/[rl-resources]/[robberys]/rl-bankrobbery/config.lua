@@ -90,7 +90,7 @@ Config.PowerStations = {
 
 Config.LockerRewards = {
     ["tier1"] = {
-        [1] = {item = "goldbar", maxAmount = 20},
+        [1] = {item = "goldbar", maxAmount = 22},
     },
 }
 

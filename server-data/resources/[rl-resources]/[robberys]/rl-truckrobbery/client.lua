@@ -232,9 +232,9 @@ AddEventHandler('truckrobbery:AddPeds', function(veh)
     GiveWeaponToPed(ped3, GetHashKey('WEAPON_SPECIALCARBINE'), 420, 0, 1)
     GiveWeaponToPed(ped4, GetHashKey('WEAPON_SPECIALCARBINE'), 420, 0, 1)
 
-    SetPedMaxHealth(ped2, 350)
-    SetPedMaxHealth(ped3, 350)
-    SetPedMaxHealth(ped4, 350)
+    SetPedMaxHealth(ped2, 850)
+    SetPedMaxHealth(ped3, 850)
+    SetPedMaxHealth(ped4, 850)
 
     SetPedDropsWeaponsWhenDead(ped2, false)
     SetPedRelationshipGroupDefaultHash(ped2, GetHashKey('COP'))

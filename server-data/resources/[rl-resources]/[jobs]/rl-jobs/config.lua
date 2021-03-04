@@ -641,34 +641,34 @@ Config.FishingItems = {
         ["label"] = "Fishing Bait"
     },
     ["fish"] = {
-        ["price"] = 25 
+        ["price"] = 65 
     },
     ["stripedbass"] = {
-        ["price"] = 50
+        ["price"] = 95
     },
     ["bluefish"] = {
-        ["price"] = 50
+        ["price"] = 95
     },
     ["redfish"] = {
-        ["price"] = 100 
+        ["price"] = 150 
     },
     ["pacifichalibut"] = {
-        ["price"] = 100 
+        ["price"] = 150 
     },
     ["goldfish"] = {
-        ["price"] = 100
+        ["price"] = 150
     },
     ["largemouthbass"] = {
-        ["price"] = 350
+        ["price"] = 450
     },
     ["salmon"] = {
-        ["price"] = 400
+        ["price"] = 450
     },
     ["catfish"] = {
-        ["price"] = 500
+        ["price"] = 600
     },
     ["tigersharkmeat"] = {
-        ["price"] = 500
+        ["price"] = 600
     },
     ["stingraymeat"] = {
         ["price"] = 1000
