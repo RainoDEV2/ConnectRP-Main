@@ -11,6 +11,9 @@
   "citizen:server:instance",
   "citizen:server:monitor",
   "citizen:server:impl",
+  "citizen:server:state:fivesv",
+  "citizen:server:state:rdr3sv",
+  "citizen:server:fxdk",
   "citizen:devtools",
   "citizen:resources:core",
   "citizen:resources:metadata:lua",
@@ -20,5 +23,7 @@
   "svadhesive",
   "citizen:scripting:mono",
   "citizen:scripting:v8",
-  "http-client"
+  "voip-server:mumble",
+  "http-client",
+  "citizen:server:gui"
 ]
