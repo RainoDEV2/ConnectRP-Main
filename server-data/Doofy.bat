@@ -1,1 +1,2 @@
-D:\FiveM-Servers\TwitchCityRP\FXServer.exe +exec server.cfg +set onesync_population true +set onesync_enableBeyond true +set sv_enforceGameBuild 2189
+C:\TwitchCityRP-V1\FXServer.exe +exec server.cfg +set onesync_population true +set onesync_enableBeyond true +set sv_enforceGameBuild 2189
+
