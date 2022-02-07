@@ -1,2 +1,1 @@
 [ERROR] connect ETIMEDOUT
-[ERROR] [MySQL] [phone] An error happens on MySQL for query "DELETE FROM phone_yp : []": connect ETIMEDOUT
