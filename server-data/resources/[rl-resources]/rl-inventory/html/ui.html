@@ -18,58 +18,25 @@
         <div id="qbus-inventory">
             <div class="inventory-info">
                 <div class="player-inv-info">
-                    <span id="player-inv-label">Player Inventory</span><br>
+                    <span id="player-inv-bar"></span>
+                    <span id="player-inv-label">Personal Inventory</span><br>
                     <span id="player-inv-weight"></span>
                 </div>
                 <div class="other-inv-info">
+                    <span id="other-inv-bar"></span>
                     <span id="other-inv-label"></span><br>
                     <span id="other-inv-weight"></span>
                 </div>
             </div>
-            <!-- <div class="ammo-container">
-                <div class="ammo-container-header">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <div class="ammo-box" id="pistol_ammo">
-                    <div class="ammo-box-amount"></div>
-                    <img src="./ammo_images/pistol_ammo.png">
-                    <span>0x</span>
-                </div>
-                <div class="ammo-box" id="smg_ammo">
-                    <div class="ammo-box-amount"></div>
-                    <img src="./ammo_images/smg_ammo.png">
-                    <span>0x</span>
-                </div>
-                <div class="ammo-box" id="shotgun_ammo">
-                    <div class="ammo-box-amount"></div>
-                    <img src="./ammo_images/shotgun_ammo.png">
-                    <span>0x</span>
-                </div>
-                <div class="ammo-box" id="rifle_ammo">
-                    <div class="ammo-box-amount"></div>
-                    <img src="./ammo_images/rifle_ammo.png">
-                    <span>0x</span>
-                </div>
-            </div> -->
             <div class="inv-container">
                 <div class="ply-inv-container">
-                    <div class="player-inventory" data-inventory="player">
-                        <!-- <div class="item-slot" data-slot="' + i + '"><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>
-                        <div class="item-slot" data-slot="' + i + '"><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>
-                        <div class="item-slot" data-slot="' + i + '"><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>
-                        <div class="item-slot" data-slot="' + i + '"><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>
-                        <div class="item-slot" data-slot="' + i + '"><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>
-                        <div class="item-slot" data-slot="' + i + '"><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>
-                        <div class="item-slot" data-slot="' + i + '"><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>
-                        <div class="item-slot" data-slot="' + i + '"><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div> -->
-                    </div>
+                    <div class="player-inventory" data-inventory="player"></div>
                 </div>
-                <div class="inv-options">
-                    <div class="inv-options-list">
-                        <input type="number" id="item-amount" class="inv-option-item" min=0 value="0" oninput="validity.valid||(value='');"></input>
-                        <div class="inv-option-item" id="item-use"><p>USE</p></div>
-                        <!-- <div class="inv-option-item" id="rob-money"><p>NEEM GELD</p></div> -->
-                        <!-- <div class="inv-option-item" id="weapon-attachments"><p>ATTACHMENTS</p></div> -->
+                <div class="move-form" id="inventory-wrapper">
+                    <div class="move-center" id="usearea">
+                        <input type="number" id="move-amount" class="inv-option-item" min=0 value="1" oninput="validity.valid||(value='');"></input>
+                        <img src="./hand-holding-solid.png" class="Use" id="usearea" />
+                        <div id="CloseInv" class="buttondude CloseInv">Close</div>
                     </div>
                 </div>
                 <div class="oth-inv-container">
@@ -94,7 +61,7 @@
         </div>
         <div class="weapon-attachments-container">
             <div class="weapon-attachments-container-title">Pistol | <span style="font-size: 2vh;">9mm</span></div>
-            <div class="weapon-attachments-container-description">This is a yeey water gun...</div>
+            <div class="weapon-attachments-container-description">This is a water gun yaay ...</div>
             <div class="weapon-attachments-container-details"><span style="font-weight: bold; letter-spacing: .1vh;">Serial Number</span><br> 12345678<br><br><span style="font-weight: bold; letter-spacing: .1vh;">Durability</span> <div class="weapon-attachments-container-detail-durability"><div class="weapon-attachments-container-detail-durability-total"></div></div></div>
             <img src="./attachment_images/weapon_pistol.png" class="weapon-attachments-container-image">
         
@@ -110,11 +77,11 @@
 
             <div class="weapon-attachments-remove"><i class="fas fa-trash"></i></div>
 
-            <div class="weapon-attachments-back"><p>BACK</p></div>
+            <div class="weapon-attachments-back"><p>Return</p></div>
         </div>
         <div class="combine-option-container">
-            <div class="btn-combine CombineItem"><p>To combine</p></div>
-            <div class="btn-combine SwitchItem"><p>Exchange</p></div>
+            <div class="btn-combine CombineItem"><p>Combine</p></div>
+            <div class="btn-combine SwitchItem"><p>Switch</p></div>
         </div>
         <div class="itemboxes-container">
             <!-- <div class="itembox-container"> -->
@@ -135,9 +102,3 @@
         <script src="js/app.js" type="text/javascript"></script>
     </body>
 </html>
-<!-- 
-<div class="item-slot-key"><p>[1]</p></div>
-<div class="item-slot-key"><p>[2]</p></div>
-<div class="item-slot-key"><p>[3]</p></div>
-<div class="item-slot-key"><p>[4]</p></div>
-<div class="item-slot-key"><p>[5]</p></div> -->
