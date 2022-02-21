@@ -353,10 +353,9 @@
     margin-left: auto;
     margin-right: auto;
     left: 32px;
-    background-color: rgba(0, 0, 0, 0.7);
-    box-shadow: 0px 0px 19px 1px rgba(0,0,0,0.54);
+    background-color: rgba(72, 112, 158, 0.7);
     font-family: 'Lato', monospace;
-    border-bottom: 4px solid #b12424;
+    border-bottom: 4px solid rgba(72, 112, 158,0.54);
 }
 
 .characters-register-block-header {
