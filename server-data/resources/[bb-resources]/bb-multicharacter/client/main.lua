@@ -1,32 +1,48 @@
 RLCore = nil
 
+
 Config = {
-    PedCoords = {x = 103.20265, y = -1715.479, z = 31.362436, h = 48.542221, r = 1.0}, 
+    PedCoords = {x = -3968.05, y = 2015.41, z = 502.3}, 
 
     spawns = {
         --[[middle]][1] = {
-            coords = vector3(99.210258, -1712.209, 30.112476),
-            heading = 230.0
+            coords = vector3(-3962.39,2016.98, 501.0),
+            heading = 135.93
         },
 
         --[[right1]][2] = {
-            coords = vector3(100.45861, -1711.265, 30.120094),
-            heading = 200.0
+            coords = vector3(-3961.72,2015.95,501.0),
+            heading = 116.3
         },
 
         --[[left1]][3] = {
-            coords = vector3(98.568862, -1713.697, 30.11063),
-            heading = 270.0
+            coords = vector3(-3961.34,2014.76, 501.0),
+            heading = 99.31
         },
 
         --[[left2]][4] = {
-            coords = vector3(99.394676, -1714.851, 30.110197),
-            heading = 270.0
+            coords = vector3(-3961.44,2013.62, 501.0),
+            heading = 70.8
         },
 
-        --[[right2]][5] = {
-            coords = vector3(101.87945, -1711.992, 30.114706),
-            heading = 200.0
+        --[[left2]][5] = {
+            coords = vector3(-3961.79,2012.71, 501.0),
+            heading = 71.44
+        },
+
+        --[[left2]][6] = {
+            coords = vector3(-3962.47,2011.84, 501.0),
+            heading = 50.23
+        },
+
+        --[[left2]][7] = {
+            coords = vector3(-3963.5, 2011.16,501.0),
+            heading = 25.5
+        },
+
+        --[[right2]][8] = {
+            coords = vector3(-3964.55, 2011.02, 501.0),
+            heading = 355.56
         }
     },
 
@@ -79,7 +95,7 @@ function openCharMenu(bool)
         local html = ""
         for k, v in ipairs(createdChars) do
             local pedCoords = GetPedBoneCoords(v.ped, 0x2e28, 0.0, 0.0, 0.0)
-            local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(pedCoords.x, pedCoords.y, pedCoords.z + 0.3)
+            local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(pedCoords.x, pedCoords.y, pedCoords.z)
             if v.isreg then
                 html = html .. "<div id=\"" .. v.key .. "\" onmouseover=\"update_char_marker(this.id)\" onClick=\"select_character(this.id)\"><p style=\"left: ".. xxx * 100 .."%;top: ".. yyy * 90 .."%;-webkit-transform: translate(-50%, 0%);max-width: 100%; position: absolute; padding-top: 170px; padding-right: 30px; padding-bottom: 100px; padding-left: 80px;;\"></p></div>"
             else
@@ -140,10 +156,11 @@ function CreatePeds()
                 while not HasModelLoaded(model) do
                     Citizen.Wait(0)
                 end
+                print("GetChars-then Freeze")
                 local charPed = CreatePed(3, model, Config.spawns[v].coords.x, Config.spawns[v].coords.y, Config.spawns[v].coords.z - 0.98, Config.spawns[v].heading, false, true)
                 SetEntityAlpha(charPed, 100)
                 SetPedComponentVariation(charPed, 0, 0, 0, 2)
-                FreezeEntityPosition(charPed, false)
+                FreezeEntityPosition(charPed, true)
                 SetEntityInvincible(charPed, true)
                 PlaceObjectOnGroundProperly(charPed)
                 SetBlockingOfNonTemporaryEvents(charPed, true)
@@ -170,10 +187,12 @@ function CreatePeds()
                         while not HasModelLoaded(model) do
                             Citizen.Wait(0)
                         end
+
+                        print("GetSkins-then Freeze")
         
                         local charPed = CreatePed(3, model, Config.spawns[cid].coords.x, Config.spawns[cid].coords.y, Config.spawns[cid].coords.z - 0.98, Config.spawns[cid].heading, false, true)
                         SetPedComponentVariation(charPed, 0, 0, 0, 2)
-                        FreezeEntityPosition(charPed, false)
+                        FreezeEntityPosition(charPed, true)
                         SetEntityInvincible(charPed, true)
                         PlaceObjectOnGroundProperly(charPed)
                         SetBlockingOfNonTemporaryEvents(charPed, true)
@@ -194,7 +213,7 @@ function CreatePeds()
                         end
                         local charPed = CreatePed(3, model, Config.spawns[cid].coords.x, Config.spawns[cid].coords.y, Config.spawns[cid].coords.z - 0.98, Config.spawns[cid].heading, false, true)
                         SetPedComponentVariation(charPed, 0, 0, 0, 2)
-                        FreezeEntityPosition(charPed, false)
+                        FreezeEntityPosition(charPed, true)
                         SetEntityInvincible(charPed, true)
                         PlaceObjectOnGroundProperly(charPed)
                         SetBlockingOfNonTemporaryEvents(charPed, true)
@@ -246,6 +265,7 @@ RegisterNUICallback('disconnectButton', function()
     DeleteEntity(charPed)
     TriggerServerEvent('bb-multicharacter:server:disconnect')
 end)
+
 
 RegisterNUICallback('selectCharacter', function()
     deletePeds()
@@ -343,13 +363,15 @@ RegisterNUICallback('setBlur', function()
     SetTimecycleModifier('hud_def_blur')
 end)
 
+
+
 function createCamera(typ, pedData)
     SetRainFxIntensity(0.0)
 
     if typ == 'create' then
         DoScreenFadeIn(1000)
         FreezeEntityPosition(GetPlayerPed(-1), false)
-        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", 103.20265, -1715.479, 31.362436, -15.0, 0.5, 50.542221, 60.00, false, 0)
+        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -3968.05, 2015.41, 502.3, -14.0, 0.0, 250.0, 53.00, false, 0)
         SetCamActive(cam, true)
         RenderScriptCams(true, false, 1, true, true)
     elseif typ == 'exit' then
@@ -426,7 +448,7 @@ AddEventHandler('bb-multicharacter:client:chooseChar', function()
 
     CreatePeds()
     ShutdownLoadingScreenNui()
-    SetEntityCoords(GetPlayerPed(-1), vector3(103.20265, -1715.479, 29.362436))
+    SetEntityCoords(GetPlayerPed(-1), vector3(-3968.05, 2015.41, 502.3))
     SetEntityVisible(GetPlayerPed(-1), false, false)
     FreezeEntityPosition(GetPlayerPed(-1), true)
     Citizen.CreateThread(function()
@@ -436,6 +458,7 @@ AddEventHandler('bb-multicharacter:client:chooseChar', function()
             Wait(0)
         end
     end)
+
 
     --DoScreenFadeIn(250)
     while true do
@@ -453,13 +476,38 @@ AddEventHandler('bb-multicharacter:client:chooseChar', function()
                 Citizen.Wait(0)
                 ClearScreen()
             end
+
             
             break
         end
     end
 
+    print("Spawning choo choo")
+
+
+    SetEntityCoordsNoOffset(PlayerPedId(), vector3(-3972.28, 2017.22, 500.92), false, false, false, false)
+    FreezeEntityPosition(PlayerPedId(), true)
+
+    while not HasCollisionLoadedAroundEntity(PlayerPedId()) do
+        Wait(0)
+    end
+
+    while not HasCollisionForModelLoaded(GetHashKey("sp_01_station")) do
+        Wait(0)
+    end
+
+    while not HasModelLoaded(GetHashKey("sp_01_station")) do
+        Wait(100)
+    end
+    Wait(2500)
+
+    spawnTrain()
+
+
     NetworkSetTalkerProximity(0.0)
     openCharMenu(true)
+
+    
 end)
 
 local drawable_names = {"face", "masks", "hair", "torsos", "legs", "bags", "shoes", "neck", "undershirts", "vest", "decals", "jackets"}
@@ -536,4 +584,74 @@ function SetFace(player, head, haircolor, headStructure, headOverlay)
             SetPedHeadOverlayColor(player, 11, 0, tonumber(headOverlay[12].firstColour), tonumber(headOverlay[12].secondColour))
         end
     end
+end
+
+function VecLerp(x1, y1, z1, x2, y2, z2, l, clamp)
+    if clamp then
+        if l < 0.0 then l = 0.0 end
+        if l > 1.0 then l = 1.0 end
+    end
+    local x = Lerp(x1, x2, l)
+    local y = Lerp(y1, y2, l)
+    local z = Lerp(z1, z2, l)
+    return vector3(x, y, z)
+end
+
+function Lerp(a, b, t)
+    return a + (b - a) * t
+end
+
+function LocationInWorld(coords,camera)
+
+    local position = GetCamCoord(camera)
+
+    --- Getting Object using raycast
+    local ped = PlayerPedId()
+    local raycast = StartShapeTestRay(position.x,position.y,position.z, coords.x,coords.y,coords.z, 8, ped, 0)
+    local retval, hit, endCoords, surfaceNormal, entity = GetShapeTestResult(raycast)
+    
+    return entity
+
+end
+
+local isTrainMoving = false
+
+function spawnTrain()
+
+	local tempmodel = GetHashKey("metrotrain")
+	RequestModel(tempmodel)
+	while not HasModelLoaded(tempmodel) do
+		RequestModel(tempmodel)
+		Citizen.Wait(0)
+	end 
+
+    local coords = vector3(-3948.49,2036.35,499.1)
+    vehicle = CreateVehicle(tempmodel, coords, 160.0, false, false)
+    FreezeEntityPosition(vehicle, true)
+     
+    local heading = GetEntityHeading(vehicle)
+    local coords = GetOffsetFromEntityInWorldCoords(vehicle, 0.0, -11.0, 0.0)
+
+    vehicleBack = CreateVehicle(tempmodel, coords, 158.0, false, false)
+    FreezeEntityPosition(vehicleBack, true)
+    AttachEntityToEntity(vehicleBack , vehicle , 51 , 0.0, -11.0, 0.0, 180.0, 180.0, 0.0, false, false, false, false, 0, true)
+
+    Citizen.CreateThread(function()
+        print("CHOOCHOO")
+    	isTrainMoving = true
+	    for i=1,100 do
+	    	local posoffset = GetOffsetFromEntityInWorldCoords(vehicle, 0.0, 0.0, 0.0)
+	    	local setpos = VecLerp(-3948.49,2036.35,499.1, -3957.58,2008.75, 499.1, i/100, true)
+	    	SetEntityCoords(vehicle,setpos)
+	  		Wait(15)
+	    end
+	    isTrainMoving = false
+	end)
+end
+
+function deleteTrain()
+	if vehicle ~= nil then
+		DeleteEntity(vehicle)
+		DeleteEntity(vehicleBack)
+	end
 end
