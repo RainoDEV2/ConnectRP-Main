@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 game 'gta5'
 
-description 'qb-loading'
+description 'crp-loading'
 version '1.0'
 
 lua54 'yes'
