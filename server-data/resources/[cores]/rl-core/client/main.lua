@@ -10,6 +10,10 @@ function GetCoreObject()
 	return RLCore
 end
 
+exports('GetCoreObject', function()
+    return RLCore
+end)
+
 RegisterNetEvent('RLCore:GetObject')
 AddEventHandler('RLCore:GetObject', function(cb)
 	cb(GetCoreObject())
