@@ -1,4 +1,6 @@
 local RLCore = exports['rl-core']:GetCoreObject()
+
+
 local PlayerData = RLCore.Functions.GetPlayerData()
 local config = Config
 local speedMultiplier = config.UseMPH and 2.23694 or 3.6

@@ -5,8 +5,8 @@ description 'qb-hud'
 version '2.1.0'
 
 shared_scripts {
-    --'@rl-core/shared/locale.lua',
-    --'locales/en.lua',
+    '@rl-core/shared/locale.lua',
+    'locales/en.lua',
     'config.lua'
 }
 
