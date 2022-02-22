@@ -42,17 +42,17 @@ body {
 }
 
 .location:hover {
-    background-color: #1f9bdc;
+    background-color: rgb(72, 112, 158);
     transition: 0.2s;
 }
 
 .selected {
-    background-color: #1f9bdc;
+    background-color: rgb(72, 112, 158);
 }
 
 .submit-spawn {
     border-radius: 0.4rem;
-    background-color: #008cffce;
+    background-color: rgb(72, 112, 158);
     width: 28vh;
     height: 4.5vh;
     margin-bottom: .75vh;
@@ -75,7 +75,7 @@ body {
 }
 
 .submit-spawn:hover {
-    background-color: #008cff;
+    background-color: rgb(72, 112, 158);
     transition: 0.2s;
 }
 
