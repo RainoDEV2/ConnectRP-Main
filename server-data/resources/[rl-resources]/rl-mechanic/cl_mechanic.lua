@@ -222,7 +222,7 @@ function SpawnListVehicle(model)
     RLCore.Functions.SpawnVehicle(model, function(veh)
         SetVehicleNumberPlateText(veh, "Mech-"..tostring(math.random(1, 30)))
         SetEntityHeading(veh, coords.h)
-        exports['LegacyFuel']:SetFuel(veh, 100.0)
+        exports['lj-fuel']:SetFuel(veh, 100.0)
         Menu.hidden = true
         TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)

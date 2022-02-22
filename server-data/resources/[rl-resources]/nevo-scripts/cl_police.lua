@@ -470,7 +470,7 @@ AddEventHandler('police:sv', function(index)
 		SetVehicleExtra(veh, 12, true)
 		SetVehicleDirtLevel(veh, 0.0)
 		WashDecalsFromVehicle(veh, 1.0)
-		exports['LegacyFuel']:SetFuel(veh, 99)
+		exports['lj-fuel']:SetFuel(veh, 99)
         SetVehicleEngineOn(veh, true, true)
     end
 end)

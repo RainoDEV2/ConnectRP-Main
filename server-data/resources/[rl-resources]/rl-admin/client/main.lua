@@ -734,7 +734,7 @@ Citizen.CreateThread(function()
 
             if WarMenu.MenuButton('Fill Fuel', 'vehOptions') then
                 local vehicle = (GetVehiclePedIsIn(PlayerPedId()))
-                exports['LegacyFuel']:SetFuel(vehicle, 100)
+                exports['lj-fuel']:SetFuel(vehicle, 100)
             end
 
             if WarMenu.MenuButton('Fill Nitros', 'vehOptions') then

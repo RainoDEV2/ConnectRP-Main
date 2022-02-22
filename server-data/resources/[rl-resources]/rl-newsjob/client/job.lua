@@ -151,7 +151,7 @@ function TakeOutVehicle(vehicleInfo, coords)
 
     RLCore.Functions.SpawnVehicle(vehicleInfo, function(veh)
         SetVehicleNumberPlateText(veh, "NEWS"..tostring(math.random(1000, 9999)))
-        exports["LegacyFuel"]:SetFuel(veh, 100)
+        exports["lj-fuel"]:SetFuel(veh, 100)
         closeMenuFull()
         TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
