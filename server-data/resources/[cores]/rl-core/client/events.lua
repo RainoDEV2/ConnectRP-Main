@@ -1,4 +1,12 @@
 -- RLCore Command Events
+RegisterNetEvent('RLCore:Client:OnPlayerLoaded', function()
+	LocalPlayer.state:set('isLoggedIn', true, false)
+end)
+
+RegisterNetEvent('RLCore:Client:OnPlayerUnload', function()
+    LocalPlayer.state:set('isLoggedIn', false, false)
+end)
+
 RegisterNetEvent('RLCore:Command:TeleportToPlayer')
 AddEventHandler('RLCore:Command:TeleportToPlayer', function(othersource)
 	local coords = RLCore.Functions.GetCoords(GetPlayerPed(GetPlayerFromServerId(othersource)))

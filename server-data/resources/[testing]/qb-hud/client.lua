@@ -652,7 +652,7 @@ end
 
 -- HUD Update loop
 
-CreateThread(function()
+CreateThread(function() 
     local wasInVehicle = false
     while true do
         if Menu.isChangeFPSChecked then
