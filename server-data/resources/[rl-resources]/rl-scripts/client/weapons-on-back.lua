@@ -1,0 +1,189 @@
+local RLCore = exports['rl-core']:GetCoreObject()
+local slots = 41 -- Range for the inventory check, begins in 1 an finish on slots value, hotbar's slots are 1-5
+local s = {}
+local sa = {}
+local k = 0
+local m = 0
+local back_bone = 24818
+local x = 0.11
+local y = -0.155
+local z = 0.05
+local x_rotation = 0.0
+local y_rotation = 0.0
+local z_rotation = 0.0
+local selectwep = nil
+local valid = false
+local weaps = {}
+local current = nil
+
+local rifles = {
+    ["weapon_microsmg"] = "weapon_microsmg",
+    ["weapon_smg"] = "weapon_smg",
+    ["weapon_assaultsmg"] = "weapon_assaultsmg",
+    ["weapon_combatpdw"] = "weapon_combatpdw",
+    ["weapon_gusenberg"] = "weapon_gusenberg",
+    ["weapon_assaultshotgun"] = "weapon_assaultshotgun",
+    ["weapon_bullpupshotgun"] = "weapon_bullpupshotgun",
+    ["weapon_heavyshotgun"] = "weapon_heavyshotgun",
+    ["weapon_pumpshotgun"] = "weapon_pumpshotgun",
+    ["weapon_sawnoffshotgun"] = "weapon_sawnoffshotgun",
+    ["weapon_musket"] = "weapon_musket",
+    ["weapon_railgun"] = "weapon_railgun",
+    ["WEAPON_RPG"] = "WEAPON_RPG",
+    ["weapon_advancedrifle"] = "weapon_advancedrifle",
+    ["weapon_assaultrifle"] = "weapon_assaultrifle",
+    ["weapon_bullpuprifle"] = "weapon_bullpuprifle",
+    ["weapon_carbinerifle"] = "weapon_carbinerifle",
+    ["weapon_specialcarbine"] = "weapon_specialcarbine",
+    ["weapon_specialcarbine_mk2"] = "weapon_specialcarbine_mk2",
+    ["weapon_carbinerifle_mk2"] = "weapon_carbinerifle_mk2",
+    ["weapon_assaultrifle2"] = "weapon_assaultrifle2",
+}
+
+local katana = {
+    ["weapon_katana"] = "w_me_katana",
+    ["weapon_katanas"] = "katana_sheath",
+}
+
+local melee = {
+    ["weapon_bat"] = "weapon_bat",
+    ["weapon_golfclub"] = "weapon_golfclub",
+    ["weapon_bats"] = "w_me_baseball_bat_metal",
+}
+
+local function GiveWeap(wep)
+    if rifles[wep] then
+        back_bone = 24818
+        x = 0.11
+        y = -0.155
+        z = 0.05
+        x_rotation = 0.0
+        y_rotation = 0.0
+        z_rotation = 0.0
+        valid = true
+        selectwep = rifles[wep]
+    elseif katana[wep] then
+        back_bone = 24817
+        x = 0.0
+        y = -0.135
+        z = 0.51-0.4
+        x_rotation = 225.0
+        y_rotation = 8.0
+        z_rotation = 90.0
+        valid = true
+        selectwep = katana[wep]
+    elseif melee[wep] then
+        back_bone = 24817
+        x = 0.3
+        y = -0.15
+        z = -0.1
+        x_rotation = 0.0
+        y_rotation = 300.0
+        z_rotation = 0.0
+        valid = true
+        selectwep = melee[wep]
+    end
+
+    if valid then
+        valid = false
+        RequestModel(selectwep)
+        local rst = 0
+        while not HasModelLoaded(selectwep) and rst < 10 do
+            Wait(100)
+            rst = rst + 1
+        end
+        local bone = GetPedBoneIndex(PlayerPedId(), back_bone)
+        weaps[wep] = CreateObject(GetHashKey(selectwep), 1.0 ,1.0 ,1.0, 1, 1, 0)
+        AttachEntityToEntity(weaps[wep], PlayerPedId(), bone, x, y, z, x_rotation, y_rotation, z_rotation, 0, 1, 0, 1, 0, 1)
+    end
+end
+
+local function DeleteWeapon(wep)
+    DeleteObject(weaps[wep])
+end
+
+local function check()
+    for i = 1, slots do
+        k = 0
+        if sa[i] then
+            for j = 1, slots do
+                if s[j] then
+                    if sa[i].name == s[j].name then
+                        k = 1
+                        break
+                    end
+                end
+            end
+        else
+            k = 1
+        end
+        if k == 0 then
+            if sa[i] then
+                if sa[i].type == "weapon" then
+                    DeleteWeapon(sa[i].name)
+                end
+            end
+        end
+    end
+    for i = 1, slots do
+        m = 0
+        if s[i] then
+            for j = 1, slots do
+                if sa[j] then
+                    if s[i].name == sa[j].name then
+                        m = 1
+                        break
+                    end
+                end
+            end
+        else
+            m = 1
+        end
+        if m == 0 then
+            if s[i] then
+                if s[i].type == "weapon" then
+                    if IsPedArmed(PlayerPedId()) then
+                        local wp = GetHashKey(s[i].name)
+                        local aw = GetSelectedPedWeapon(PlayerPedId())
+                        if wp ~= aw then
+                            GiveWeap(s[i].name)
+                        end
+                    else
+                        GiveWeap(s[i].name)
+                    end
+                end
+            end
+        end
+    end
+end
+
+RegisterNetEvent('weapons:client:SetCurrentWeapon', function(weap, shootbool)
+    if weap == nil then
+        GiveWeap(current)
+        current = nil
+    else
+        if current then
+            GiveWeap(current)
+            current = nil
+        end
+        current = tostring(weap.name)
+        DeleteWeapon(current)
+    end
+end)
+
+
+CreateThread(function()
+    while true do
+        if LocalPlayer.state.isLoggedIn then
+            local xPlayer = RLCore.Functions.GetPlayerData()
+            for i = 1, slots do
+                sa[i] = s[i]
+                s[i] = xPlayer.items[i]
+            end
+            check()
+            Wait(500)
+        else
+            Wait(1000)
+        end
+    end
+end)

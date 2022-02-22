@@ -20,6 +20,7 @@ client_scripts {
 	"client/consumables.lua",
 	"client/crouchprone.lua",
 	--"client/cruise.lua",
+	"client/weapons-on-back.lua",
 	"client/damage.lua",
 	"client/discord.lua",
 	"client/dvall.lua",
