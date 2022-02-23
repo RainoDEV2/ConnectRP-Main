@@ -108,7 +108,7 @@ RegisterNetEvent('garage:menu', function()
             params = {
                 event = "dox:garage",
                 args = {
-                    vehicle = 'polchar',
+                    vehicle = 'npolchar',
                     
                 }
             }
@@ -120,31 +120,31 @@ RegisterNetEvent('garage:menu', function()
             params = {
                 event = "dox:garage",
                 args = {
-                    vehicle = 'polvic',
+                    vehicle = 'npolvic',
                     
                 }
             }
         },
         {
             id = 4,
-            header = "Raptor",
-            txt = "Police Raptor",
+            header = "Explorer",
+            txt = "Police Explorer",
             params = {
                 event = "dox:garage",
                 args = {
-                    vehicle = 'polraptor',
+                    vehicle = 'npolexp',
                     
                 }
             }
         },
         {
             id = 5,
-            header = "Taurus",
-            txt = "Police Taurus",
+            header = "Challenger",
+            txt = "Pursuit Challenger",
             params = {
                 event = "dox:garage",
                 args = {
-                    vehicle = 'poltaurus',
+                    vehicle = 'npolchal',
                     
                 }
             }
@@ -152,17 +152,65 @@ RegisterNetEvent('garage:menu', function()
         {
             id = 6,
             header = "Mustang",
-            txt = "Police Mustang",
+            txt = "Pursuit Mustang",
             params = {
                 event = "dox:garage",
                 args = {
-                    vehicle = '2015polstang',
+                    vehicle = 'npolstang',
                     
                 }
             }
         },
         {
-            id = 9,
+            id = 7,
+            header = "Corvette",
+            txt = "Pursuit Corvette",
+            params = {
+                event = "dox:garage",
+                args = {
+                    vehicle = 'npolvette',
+                    
+                }
+            }
+        },
+        {
+            id = 8,
+            header = "Undercover",
+            txt = "Tuner Undercover",
+            params = {
+                event = "dox:garage",
+                args = {
+                    vehicle = 'npolretinue',
+                    
+                }
+            }
+        },
+        {
+            id = 9, 
+            header = "Quad",
+            txt = "Ranger Quadbike",
+            params = {
+                event = "dox:garage",
+                args = {
+                    vehicle = 'npolblazer',
+                    
+                }
+            }
+        },
+        {
+            id = 10,
+            header = "Motobike",
+            txt = "Police Bike",
+            params = {
+                event = "dox:garage",
+                args = {
+                    vehicle = 'npolmm',
+                    
+                }
+            }
+        },
+        {
+            id = 11,
             header = "Store Vehicle",
             txt = "Store Vehicle Inside Garage",
             params = {
@@ -175,5 +223,3 @@ RegisterNetEvent('garage:menu', function()
         
     })
 end)
-
-
