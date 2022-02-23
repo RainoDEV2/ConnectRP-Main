@@ -72,7 +72,7 @@ AddEventHandler('dox:garage', function(pd)
     local vehicle = pd.vehicle
     local coords = { ['x'] = 458.95, ['y'] = -993.23, ['z'] = 25.377454, ['h'] = 0 }
     RLCore.Functions.SpawnVehicle(vehicle, function(veh)
-        SetVehicleNumberPlateText(veh, "ZULU"..tostring(math.random(1000, 9999)))
+        SetVehicleNumberPlateText(veh, "GOV"..tostring(math.random(10000, 99999)))
         exports['lj-fuel']:SetFuel(veh, 100.0)
         SetEntityHeading(veh, coords.h)
         TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
