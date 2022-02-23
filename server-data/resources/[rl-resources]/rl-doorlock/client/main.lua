@@ -176,7 +176,7 @@ end
 
 function setDoorLocking(doorId, key)
 	doorId.locking = true
-	openDoorAnim()
+	--openDoorAnim()
     SetTimeout(400, function()
 		doorId.locking = false
 		doorId.locked = not doorId.locked

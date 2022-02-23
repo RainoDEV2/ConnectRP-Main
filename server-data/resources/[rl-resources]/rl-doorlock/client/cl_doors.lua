@@ -72,7 +72,7 @@ end)
 
 RegisterNetEvent( 'cell:doors' )
 AddEventHandler( 'cell:doors', function(num)
-    TriggerEvent("dooranim")
+    --TriggerEvent("dooranim")
     TriggerServerEvent("urp-doors:alterlockstate",tonumber(num))
 end)
 
@@ -387,7 +387,7 @@ Citizen.CreateThread(function()
                             -- dont work til close enough
                         else
 
-                            TriggerEvent("dooranim")
+                            --TriggerEvent("dooranim")
 
                             if isKeyDoor(curClosestNum) then
                                 TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 3.0, 'keydoors', 0.4)
