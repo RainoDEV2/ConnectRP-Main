@@ -352,3 +352,29 @@ Citizen.CreateThread(function()
         ClearAreaOfPeds(969.40423, -124.5897, 74.031448, 50.0, 1)
     end
 end)
+
+
+local shot = false
+local check = false
+local check2 = false
+local count = 0
+
+Citizen.CreateThread(function()
+	while true do
+		SetBlackout(false)
+		Citizen.Wait( 1 )
+		if IsPlayerFreeAiming(PlayerId()) then
+		    if GetFollowPedCamViewMode() == 4 and check == false then
+			    check = false
+			else
+			    SetFollowVehicleCamViewMode(4)
+			    check = true
+			end
+		else
+		    if check == true then
+		        SetFollowVehicleCamViewMode(1)
+				check = false
+			end
+		end
+	end
+end )
