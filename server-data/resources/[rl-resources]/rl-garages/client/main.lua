@@ -648,13 +648,11 @@ end)
 
 RegisterNetEvent('rl-garages:client:garageClose')
 AddEventHandler('rl-garages:client:garageClose', function()
-    print("WHAT")
     local ped = GetPlayerPed(-1)
         local pos = GetEntityCoords(ped)
         local inGarageRange = false
 
         for k, v in pairs(Garages) do
-            print("HEER")
             
             local putDist = GetDistanceBetweenCoords(pos, Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z)
 
@@ -663,7 +661,7 @@ AddEventHandler('rl-garages:client:garageClose', function()
                 TriggerEvent('menu:garageClose')
 
                     DrawText3Ds(Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z + 0.5, '[E] Park Vehicle')
-                    --if IsControlJustPressed(0, 38) then
+                    --if IsControlJustPressed(0, 38) then 
                         --
                         local curVeh = GetVehiclePedIsIn(ped)
                         local plate = GetVehicleNumberPlateText(curVeh)
