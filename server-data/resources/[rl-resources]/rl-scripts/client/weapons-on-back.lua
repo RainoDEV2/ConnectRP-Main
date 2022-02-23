@@ -17,27 +17,28 @@ local weaps = {}
 local current = nil
 
 local rifles = {
-    ["weapon_microsmg"] = "weapon_microsmg",
-    ["weapon_smg"] = "weapon_smg",
-    ["weapon_assaultsmg"] = "weapon_assaultsmg",
-    ["weapon_combatpdw"] = "weapon_combatpdw",
-    ["weapon_gusenberg"] = "weapon_gusenberg",
-    ["weapon_assaultshotgun"] = "weapon_assaultshotgun",
-    ["weapon_bullpupshotgun"] = "weapon_bullpupshotgun",
-    ["weapon_heavyshotgun"] = "weapon_heavyshotgun",
-    ["weapon_pumpshotgun"] = "weapon_pumpshotgun",
-    ["weapon_sawnoffshotgun"] = "weapon_sawnoffshotgun",
-    ["weapon_musket"] = "weapon_musket",
-    ["weapon_railgun"] = "weapon_railgun",
-    ["weapon_rpg"] = "weapon_rpg",
-    ["weapon_advancedrifle"] = "weapon_advancedrifle",
-    ["weapon_assaultrifle"] = "weapon_assaultrifle",
-    ["weapon_bullpuprifle"] = "weapon_bullpuprifle",
-    ["weapon_carbinerifle"] = "weapon_carbinerifle",
-    ["weapon_specialcarbine"] = "weapon_specialcarbine",
-    ["weapon_specialcarbine_mk2"] = "weapon_specialcarbine_mk2",
-    ["weapon_carbinerifle_mk2"] = "weapon_carbinerifle_mk2",
-    ["weapon_assaultrifle2"] = "weapon_assaultrifle2",
+    ["weapon_microsmg"] = "w_sb_microsmg",
+    ["weapon_smg"] = "w_sb_mp5",
+    ["weapon_assaultsmg"] = "w_sb_assaultsmg",
+    ["weapon_combatpdw"] = "W_SB_MPX",
+    ["weapon_gusenberg"] = "w_sb_gusenberg",
+    ["weapon_assaultshotgun"] = "w_sg_assaultshotgun",
+    ["weapon_bullpupshotgun"] = "w_sg_bullpupshotgun",
+    ["weapon_heavyshotgun"] = "w_sg_heavyshotgun",
+    ["weapon_pumpshotgun"] = "w_sg_pumpshotgun",
+    ["weapon_sawnoffshotgun"] = "w_sg_sawnoff",
+    ["weapon_musket"] = "w_ar_musket",
+    ["weapon_railgun"] = "w_ar_railgun",
+    ["WEAPON_RPG"] = "w_lr_rpg",
+    ["weapon_advancedrifle"] = "w_ar_groza",
+    ["weapon_assaultrifle"] = "w_ar_assaultrifle",
+    ["weapon_bullpuprifle"] = "w_ar_bullpuprifle",
+    ["weapon_carbinerifle"] = "w_ar_carbinerifle",
+    ["weapon_specialcarbine"] = "w_ar_specialcarbine",
+    ["weapon_specialcarbine_mk2"] = "w_ar_scar",
+    ["weapon_carbinerifle_mk2"] = "w_ar_carbineriflemk2",
+    ["weapon_m4"] = "w_ar_M4",
+    ["weapon_assaultrifle2"] = "W_AR_ASSAULTRIFLE2",
 }
 
 local katana = {
@@ -46,8 +47,8 @@ local katana = {
 }
 
 local melee = {
-    ["weapon_bat"] = "weapon_bat",
-    ["weapon_golfclub"] = "weapon_golfclub",
+    ["weapon_bat"] = "w_me_bat",
+    ["weapon_golfclub"] = "w_me_gclub",
     ["weapon_bats"] = "w_me_baseball_bat_metal",
 }
 
