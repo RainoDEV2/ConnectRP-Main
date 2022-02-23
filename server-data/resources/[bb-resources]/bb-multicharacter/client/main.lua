@@ -7,17 +7,17 @@ Config = {
     spawns = {
         --[[middle]][1] = {
             coords = vector3(-3962.39,2016.98, 501.0),
-            heading = 135.93
+            heading = 70.8
         },
 
         --[[right1]][2] = {
             coords = vector3(-3961.72,2015.95,501.0),
-            heading = 116.3
+            heading = 70.8
         },
 
         --[[left1]][3] = {
             coords = vector3(-3961.34,2014.76, 501.0),
-            heading = 99.31
+            heading = 70.8
         },
 
         --[[left2]][4] = {
@@ -27,22 +27,22 @@ Config = {
 
         --[[left2]][5] = {
             coords = vector3(-3961.79,2012.71, 501.0),
-            heading = 71.44
+            heading = 70.8
         },
 
         --[[left2]][6] = {
             coords = vector3(-3962.47,2011.84, 501.0),
-            heading = 50.23
+            heading = 70.8
         },
 
         --[[left2]][7] = {
             coords = vector3(-3963.5, 2011.16,501.0),
-            heading = 25.5
+            heading = 70.8
         },
 
         --[[right2]][8] = {
             coords = vector3(-3964.55, 2011.02, 501.0),
-            heading = 355.56
+            heading = 70.8
         }
     },
 
