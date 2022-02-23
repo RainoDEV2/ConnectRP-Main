@@ -93,8 +93,6 @@ end)
 
 
 RegisterNetEvent('garage:menu', function()
-    print("IM TRIG")
-
     exports['qb-menu']:openMenu({
         {
             id = 1,
