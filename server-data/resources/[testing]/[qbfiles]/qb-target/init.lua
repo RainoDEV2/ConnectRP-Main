@@ -53,6 +53,25 @@ Config.CircleZones = {
 }
 
 Config.BoxZones = {
+	--[[ ["boxzone1"] = {
+        name = "IntegrityLiftOne",
+        coords = vector3(282.06, -651.09, 41.10),
+        length = 0.45,
+        width = 0.35,
+        heading = 252,
+        debugPoly = true,
+        minZ=42.12,
+  		maxZ=42.70,
+        options = { 
+            {
+                type = "client", 
+                event = "qb-policejob:ToggleDuty",
+                icon = "fas fa-arrow-circle-up", 
+                label = "Go To Your Room",
+            },
+        },
+        distance = 2.5
+    }, ]]
 
 }
 
@@ -92,6 +111,7 @@ Config.TargetModels = {
         },
         distance = 2.5,
     },
+	
 }
 
 Config.GlobalPedOptions = {

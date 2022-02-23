@@ -1,0 +1,9 @@
+--Name: lifttest | 2022-02-23T19:15:32Z
+BoxZone:Create(vector3(282.06, -651.09, 42.02), 0.45, 0.4, {
+  name="lifttest",
+  heading=252,
+  --debugPoly=true,
+  minZ=42.42,
+  maxZ=42.82
+})
+

@@ -23,7 +23,7 @@ Apartments.Locations = {
         name = "apartment3",
         label = "Integrity Way",
         coords = {
-            enter = {x = 269.075, y = -640.672, z = 42.02, h = 70.01},
+            enter = {x = 280.445, y = -649.549, z = 42.0186, h = 168.404},
             doorbell = {x = -667.682, y = -1105.876, z = 14.629, h = 65.033},
         }
     },
