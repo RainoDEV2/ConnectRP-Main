@@ -118,6 +118,7 @@ exports['qb-target']:AddTargetModel(Config.Peds, {
 	},
 	distance = 2.5,
 })
+
 ```
 
 This is an example using the provided **config**

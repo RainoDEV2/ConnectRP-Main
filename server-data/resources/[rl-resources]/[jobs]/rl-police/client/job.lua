@@ -131,7 +131,7 @@ Citizen.CreateThread(function()
                     end
                 end
 
-                for k, v in pairs(Config.Locations["vehicle"]) do
+                --[[ for k, v in pairs(Config.Locations["vehicle"]) do
                     if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 7.5) then
                          if onDuty then
                              DrawMarker(2, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
@@ -154,7 +154,7 @@ Citizen.CreateThread(function()
                              end  
                          end
                      end
-                end
+                end ]]
 
                 for k, v in pairs(Config.Locations["impound"]) do
                     if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 7.5) then

@@ -69,7 +69,29 @@ Config.TargetEntities = {
 }
 
 Config.TargetModels = {
-
+    ["targetmodel1"] = {
+        models = {
+            "ig_trafficwarden"
+        },
+        options = {
+			{
+                type = "client",
+                event = "dox:storecar",
+                icon = "fas fa-car",
+                label = "Park Vehicle",
+                job = "police",
+            },
+            {
+                type = "client",
+                event = "garage:menu",
+                icon = "fas fa-car",
+                label = "Police Garage",
+                job = "police",
+            },
+			
+        },
+        distance = 2.5,
+    },
 }
 
 Config.GlobalPedOptions = {
@@ -183,3 +205,33 @@ function CheckOptions(data, entity, distance)
 	if data.canInteract and not data.canInteract(entity, distance, data) then return false end
 	return true
 end
+
+--EXAMPLE SCRIPT
+
+--[[
+    exports['qb-target']:AddBoxZone("MissionRowDutyClipboard", vector3(441.7989, -982.0529, 30.67834), 0.45, 0.35, {
+        name = "MissionRowDutyClipboard",
+        heading = 11.0,
+        debugPoly = true,
+        minZ = 30.77834,
+        maxZ = 30.87834,
+        }, {
+            options = {
+                {
+                    type = "client",
+                    event = "Toggle:Duty",
+                    icon = "fas fa-clipboard",
+                    label = "Go On/Off Duty",
+                    job = "police",
+                },
+            },
+            distance = 1.0
+    })
+    
+    RegisterNetEvent('Toggle:Duty', function()
+        onDuty = not onDuty
+        TriggerServerEvent("police:server:UpdateCurrentCops")
+        TriggerServerEvent("QBCore:ToggleDuty")
+        TriggerServerEvent("police:server:UpdateBlips")
+    end)
+]]--
