@@ -860,3 +860,40 @@ end )
 RegisterKeyMapping( "unseat_nearest_player", "Unseat nearest (EMERGENCY)", "keyboard", "")
 RegisterKeyMapping( "seat_nearest_player", "Seat nearest (EMERGENCY)", "keyboard", "")
 RegisterKeyMapping( "escort_nearest_player", "Escort Nearest (EMERGENCY)", "keyboard", "")
+
+
+RegisterNetEvent('police:duty', function()
+    exports['qb-menu']:openMenu({ 
+        {
+            id = 1,
+            header = "Set Your Status",
+            txt = ""
+        },
+        {
+            id = 2,
+            header = "Go On Duty",
+            txt = "Time To Patrol",
+            params = {
+                event = "police:client:on",
+            }
+        },
+        {
+            id = 3,
+            header = "Go Off Duty",
+            txt = "Time For Some Netflix",
+            params = {
+                event = "police:client:off",
+            }
+        },        
+    })
+end)
+
+RegisterNetEvent('police:client:on')
+AddEventHandler('police:client:on', function()
+    TriggerServerEvent('RLCore:ToggleDuty:on')
+end)
+
+RegisterNetEvent('police:client:off')
+AddEventHandler('police:client:off', function()
+    TriggerServerEvent('RLCore:ToggleDuty:off')
+end)

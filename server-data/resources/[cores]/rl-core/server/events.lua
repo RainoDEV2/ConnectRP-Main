@@ -262,6 +262,30 @@ AddEventHandler('RLCore:ToggleDuty', function()
 	TriggerClientEvent("RLCore:Client:SetDuty", src, Player.PlayerData.job.onduty)
 end)
 
+RegisterServerEvent("RLCore:ToggleDuty:on")
+AddEventHandler('RLCore:ToggleDuty:on', function()  
+	local src = source
+	local Player = RLCore.Functions.GetPlayer(src)
+
+		Player.Functions.SetJobDuty(true)
+		TriggerClientEvent('RLCore:Notify', src, "You went on duty!")
+		TriggerClientEvent("debug", src, 'RLCore: You went on duty!', 'success')
+
+	TriggerClientEvent("RLCore:Client:SetDuty", src, Player.PlayerData.job.onduty)
+end)
+
+RegisterServerEvent("RLCore:ToggleDuty:off")
+AddEventHandler('RLCore:ToggleDuty:off', function()
+	local src = source
+	local Player = RLCore.Functions.GetPlayer(src)
+	
+		Player.Functions.SetJobDuty(false)
+		TriggerClientEvent('RLCore:Notify', src, "You went off duty!")
+		TriggerClientEvent("debug", src, 'RLCore: You went off duty!', 'error')
+
+	TriggerClientEvent("RLCore:Client:SetDuty", src, Player.PlayerData.job.onduty)
+end)
+
 Citizen.CreateThread(function()
 	RLCore.Functions.ExecuteSql(true, "SELECT * FROM `permissions`", function(result)
 		if result[1] ~= nil then

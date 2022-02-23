@@ -72,6 +72,26 @@ Config.BoxZones = {
         },
         distance = 2.5
     }, ]]
+	["boxzone1"] = {
+        name = "MissionRowDutyClipboard",
+        coords = vector3(441.7989, -982.0529, 30.67834),
+        length = 0.45,
+        width = 0.35,
+        heading = 11.0,
+        debugPoly = false,
+        minZ = 30.77834,
+        maxZ = 30.87834,
+        options = { 
+            {
+                type = "client",
+                event = "police:duty",
+                icon = "fas fa-sign-in-alt",
+                label = "Toggle Duty",
+                job = "police", 
+            }, 
+        },
+        distance = 2.5
+    },
 
 }
 
