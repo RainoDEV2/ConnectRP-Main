@@ -18,6 +18,7 @@ local myJob = "unemployed"
 local isHandcuffed = false
 local isHandcuffedAndWalking = false
 local hasOxygenTankOn = false
+local garageClose = false
 local gangNum = 0
 local cuffStates = {}
 
@@ -34,6 +35,17 @@ rootMenuConfig =  {
             return (Data.metadata["isdead"] or Data.metadata["inlaststand"]) and (Data.job.name == 'police' and Data.job.onduty)
         end
     },
+    {
+        id = "policeDeadA",
+        displayName = "Park",
+        icon = "#parking",
+        functionName = "rl-garages:client:garageClose",
+        enableMenu = function()
+            local Data = RLCore.Functions.GetPlayerData()
+            return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and IsPedInAnyVehicle(PlayerPedId(), false) and garageClose)
+        end
+    },
+
     {
         id = "emsDeadA",
         displayName = "10-14A",
@@ -285,6 +297,8 @@ rootMenuConfig =  {
         subMenus = { 'police:drag', "ems:revive", 'ems:heal',  'ems:putinvehicle','ems:unseatvehicle'}
     }
 }
+
+
 
 newSubMenus = {
 
@@ -1183,6 +1197,18 @@ RegisterNetEvent("menu:hasOxygenTank")
 AddEventHandler("menu:hasOxygenTank", function(pHasOxygenTank)
     hasOxygenTankOn = pHasOxygenTank
 end)
+
+RegisterNetEvent("menu:garageClose")
+AddEventHandler("menu:garageClose", function()
+    garageClose = true
+end)
+ 
+RegisterNetEvent("menu:garageCloseF")
+AddEventHandler("menu:garageCloseF", function()
+    garageClose = false
+end)
+
+
 
 
 function GetPlayers()

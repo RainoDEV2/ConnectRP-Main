@@ -611,10 +611,12 @@ Citizen.CreateThread(function()
 
             if putDist <= 25 and IsPedInAnyVehicle(ped) then
                 inGarageRange = true
-                DrawMarker(2, Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 255, 255, 255, 255, false, false, false, true, false, false, false)
+                TriggerEvent('menu:garageClose')
+                --[[ DrawMarker(2, Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 255, 255, 255, 255, false, false, false, true, false, false, false)
                 if putDist <= 1.5 then
                     DrawText3Ds(Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z + 0.5, '[E] Park Vehicle')
                     if IsControlJustPressed(0, 38) then
+                        --
                         local curVeh = GetVehiclePedIsIn(ped)
                         local plate = GetVehicleNumberPlateText(curVeh)
                         RLCore.Functions.TriggerCallback('rl-garage:server:checkVehicleOwner', function(owned)
@@ -631,16 +633,69 @@ Citizen.CreateThread(function()
                             else
                                 RLCore.Functions.Notify("Nobody owns this vehicle..", "error", 3500)
                             end
-                        end, plate)
+                        end, plate) 
+                        --
                     end
-                end
+                end ]]
             end
         end
         if not inGarageRange then
+            TriggerEvent('menu:garageCloseF')
             Citizen.Wait(1000)
         end
     end
 end)
+
+RegisterNetEvent('rl-garages:client:garageClose')
+AddEventHandler('rl-garages:client:garageClose', function()
+    print("WHAT")
+    local ped = GetPlayerPed(-1)
+        local pos = GetEntityCoords(ped)
+        local inGarageRange = false
+
+        for k, v in pairs(Garages) do
+            print("HEER")
+            
+            local putDist = GetDistanceBetweenCoords(pos, Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z)
+
+            if putDist <= 25 and IsPedInAnyVehicle(ped) then
+                --inGarageRange = true
+                TriggerEvent('menu:garageClose')
+
+                    DrawText3Ds(Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z + 0.5, '[E] Park Vehicle')
+                    --if IsControlJustPressed(0, 38) then
+                        --
+                        local curVeh = GetVehiclePedIsIn(ped)
+                        local plate = GetVehicleNumberPlateText(curVeh)
+                        RLCore.Functions.TriggerCallback('rl-garage:server:checkVehicleOwner', function(owned)
+                            if owned then
+                                TriggerServerEvent('rl-garage:server:updateComponents', GetVehicleProperties(curVeh), plate, k)
+                                TriggerServerEvent('rl-garage:server:updateVehicleState', 1, plate, k)
+                                TriggerServerEvent('vehiclemod:server:saveStatus', plate)
+                                RLCore.Functions.DeleteVehicle(curVeh)
+                                if plate ~= nil then
+                                    OutsideVehicles[plate] = veh
+                                    TriggerServerEvent('rl-garages:server:UpdateOutsideVehicles', OutsideVehicles)
+                                end
+                                RLCore.Functions.Notify("Vehicle parked in, "..Garages[k].label, "primary", 4500)
+                                Citizen.Wait(3500)
+                                TriggerEvent('menu:garageCloseF')
+                            else
+                                RLCore.Functions.Notify("Nobody owns this vehicle..", "error", 3500)
+                            end
+                        end, plate) 
+
+            end
+        end
+        if not inGarageRange then
+            TriggerEvent('menu:garageCloseF')
+            Citizen.Wait(1000)
+        end
+end)
+
+
+
+
 
 Citizen.CreateThread(function()
     Citizen.Wait(2000)
