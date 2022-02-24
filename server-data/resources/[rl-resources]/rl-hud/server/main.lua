@@ -37,8 +37,8 @@ AddEventHandler('rl-hud:Server:UpdateStress', function(StressGain)
 	end
 end)
 
-RegisterServerEvent('rl-hud:Server:GainStress')
-AddEventHandler('rl-hud:Server:GainStress', function(amount)
+RegisterServerEvent('hud:server:GainStress')
+AddEventHandler('hud:server:GainStress', function(amount)
     local src = source 
     local Player = RLCore.Functions.GetPlayer(src)
     local newStress
@@ -61,8 +61,8 @@ AddEventHandler('rl-hud:Server:GainStress', function(amount)
 	end
 end)
 
-RegisterServerEvent('rl-hud:Server:RelieveStress')
-AddEventHandler('rl-hud:Server:RelieveStress', function(amount)
+RegisterServerEvent('hud:server:RelieveStress')
+AddEventHandler('hud:server:RelieveStress', function(amount)
     local src = source
     local Player = RLCore.Functions.GetPlayer(src)
     local newStress

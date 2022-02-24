@@ -304,7 +304,7 @@ AddEventHandler("consumables:client:Eat", function(itemName)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items[itemName], "remove")
         TriggerEvent('animations:client:EmoteCommandStart', {"c"})
         TriggerServerEvent("RLCore:Server:SetMetaData", "hunger", RLCore.Functions.GetPlayerData().metadata["hunger"] + Consumeables[itemName])
-        TriggerServerEvent('rl-hud:Server:RelieveStress', math.random(2, 4))
+        TriggerServerEvent('hud:server:RelieveStress', math.random(2, 4))
     end)
 end)
 

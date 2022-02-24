@@ -241,7 +241,7 @@ Citizen.CreateThread(function() -- While shooting
         local silenced = IsPedCurrentWeaponSilenced(ped)
 
         if status and not silenced then
-            TriggerServerEvent('rl-hud:Server:GainStress', math.random(2, 6))
+            TriggerServerEvent('hud:server:GainStress', math.random(2, 6))
             Citizen.Wait(2000)
         else
             Citizen.Wait(5)
@@ -255,7 +255,7 @@ Citizen.CreateThread(function() -- Aiming with a melee, hitting with a melee or 
         local status = IsPedInMeleeCombat(ped)
 
         if status then
-            TriggerServerEvent('rl-hud:Server:GainStress', math.random(2, 6))
+            TriggerServerEvent('hud:server:GainStress', math.random(2, 6))
             Citizen.Wait(5000)
         else
             Citizen.Wait(5)
@@ -273,11 +273,11 @@ end)
 
         if status and not status_w and not status_v and not GetPedStealthMovement(ped) then -- durmak // still
             Citizen.Wait(15000)
-            TriggerServerEvent('rl-hud:Server:RelieveStress', math.random(2, 4))
+            TriggerServerEvent('hud:server:RelieveStress', math.random(2, 4))
             Citizen.Wait(15000)
         elseif status2 and not status_w and not GetPedStealthMovement(ped) then -- walking
             Citizen.Wait(15000)
-            TriggerServerEvent('rl-hud:Server:RelieveStress', math.random(2, 6))
+            TriggerServerEvent('hud:server:RelieveStress', math.random(2, 6))
             Citizen.Wait(15000)
         else
             Citizen.Wait(5)
@@ -291,10 +291,10 @@ Citizen.CreateThread(function() -- Skydiving with parachute
         local status = GetPedParachuteState(ped)
 
         if status == 0 then -- paraşütle dalış // freefall with chute (not falling without it)
-            TriggerServerEvent('rl-hud:Server:GainStress', math.random(2, 6))
+            TriggerServerEvent('hud:server:GainStress', math.random(2, 6))
             Citizen.Wait(5000)
         elseif status == 1 or status == 2 then -- paraşüt açık // opened chute
-            TriggerServerEvent('rl-hud:Server:GainStress', math.random(2, 4))
+            TriggerServerEvent('hud:server:GainStress', math.random(2, 4))
             Citizen.Wait(5000)
         else
             Citizen.Wait(5000) -- refresh rate is low on this one since it's not so common to skydive in RP servers
@@ -308,7 +308,7 @@ Citizen.CreateThread(function() -- Stealth mode
         local status = GetPedStealthMovement(ped)
 
         if status then
-            TriggerServerEvent('rl-hud:Server:GainStress', math.random(1, 4))
+            TriggerServerEvent('hud:server:GainStress', math.random(1, 4))
             Citizen.Wait(8000)
         else
             Citizen.Wait(5) -- refresh rate
@@ -323,7 +323,7 @@ Citizen.CreateThread(function() -- You can use this as a template if you want to
 
         if status then
             Citizen.Wait(20000)
-            TriggerServerEvent('rl-hud:Server:RelieveStress', math.random(2, 4))
+            TriggerServerEvent('hud:server:RelieveStress', math.random(2, 4))
         else
             Citizen.Wait(5) -- refresh rate
         end
@@ -337,10 +337,10 @@ Citizen.CreateThread(function()
     local vehicle = GetVehiclePedIsIn(ped)
     local speed = GetEntitySpeed(vehicle)
         if IsPedInAnyVehicle(ped) and speed > 57 and speed < 65 then --130MPH
-            TriggerServerEvent('rl-hud:Server:GainStress', math.random(1, 10))
+            TriggerServerEvent('hud:server:GainStress', math.random(1, 10))
         end
         if IsPedInAnyVehicle(ped) and speed >= 66 then --150MPH
-            TriggerServerEvent('rl-hud:Server:GainStress', math.random(1, 14))
+            TriggerServerEvent('hud:server:GainStress', math.random(1, 14))
         end
     end
 end)

@@ -386,7 +386,7 @@ function LockpickIgnition(isAdvanced)
                     local c = math.random(2)
                     local o = math.random(2)
                     if c == o then
-                        TriggerServerEvent('rl-hud:Server:GainStress', math.random(1, 4))
+                        TriggerServerEvent('hud:server:GainStress', math.random(1, 4))
                     end
                     return
                 end
@@ -400,7 +400,7 @@ function LockpickIgnition(isAdvanced)
                     local c = math.random(2)
                     local o = math.random(2)
                     if c == o then
-                        TriggerServerEvent('rl-hud:Server:GainStress', math.random(1, 4))
+                        TriggerServerEvent('hud:server:GainStress', math.random(1, 4))
                     end
                     return
                 end
@@ -414,7 +414,7 @@ function LockpickIgnition(isAdvanced)
                     local c = math.random(2)
                     local o = math.random(2)
                     if c == o then
-                        TriggerServerEvent('rl-hud:Server:GainStress', math.random(1, 4))
+                        TriggerServerEvent('hud:server:GainStress', math.random(1, 4))
                     end
                     return
                 end 
@@ -425,7 +425,7 @@ function LockpickIgnition(isAdvanced)
                 HasKey = true
                 TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle))
                 IsHotwiring = false
-                TriggerServerEvent('rl-hud:Server:GainStress', math.random(2, 4))
+                TriggerServerEvent('hud:server:GainStress', math.random(2, 4))
 
             end
         end

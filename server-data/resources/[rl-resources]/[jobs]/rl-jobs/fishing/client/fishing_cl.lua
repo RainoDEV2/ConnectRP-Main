@@ -207,7 +207,7 @@ CastBait = function(rodHandle, castLocation)
 
     if caughtFish then
         TriggerServerEvent("rl-fishing:receiveFish", castLocation, function(received) end)
-        TriggerServerEvent('rl-hud:Server:RelieveStress', 1)
+        TriggerServerEvent('hud:server:RelieveStress', 1)
     else
         RLCore.Functions.Notify("The fish got loose.", "error")
     end

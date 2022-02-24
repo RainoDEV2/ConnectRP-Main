@@ -228,7 +228,7 @@ AddEventHandler('hospital:client:Revive', function()
     ResetPedMovementClipset(PlayerPedId())
     TriggerEvent("dpemotes:WalkCommandStart")
 
-    TriggerServerEvent('rl-hud:Server:RelieveStress', 100)
+    TriggerServerEvent('hud:server:RelieveStress', 100)
     TriggerServerEvent("hospital:server:SetDeathStatus", false)
     TriggerServerEvent("hospital:server:SetLaststandStatus", false)
 
