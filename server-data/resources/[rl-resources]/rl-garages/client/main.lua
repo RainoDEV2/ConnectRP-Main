@@ -660,7 +660,7 @@ AddEventHandler('rl-garages:client:garageClose', function()
                 --inGarageRange = true
                 TriggerEvent('menu:garageClose')
 
-                    DrawText3Ds(Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z + 0.5, '[E] Park Vehicle')
+                    --DrawText3Ds(Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z + 0.5, '[E] Park Vehicle')
                     --if IsControlJustPressed(0, 38) then 
                         --
                         local curVeh = GetVehiclePedIsIn(ped)
