@@ -38,7 +38,7 @@ RegisterNetEvent('hud:server:GainStress', function(amount)
     end
     Player.Functions.SetMetaData('stress', newStress)
     TriggerClientEvent('hud:client:UpdateStress', src, newStress)
-    TriggerClientEvent('RLCore:Notify', src, ("Feeling More Stressed!"), 'error', 1500)
+    --TriggerClientEvent('RLCore:Notify', src, ("Feeling More Stressed!"), 'error', 1500)
 end)
 
 RegisterNetEvent('hud:server:RelieveStress', function(amount)
