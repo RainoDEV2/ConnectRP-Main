@@ -1,4 +1,4 @@
-Citizen.CreateThread(function()
+--[[ Citizen.CreateThread(function()
 
 
     RequestIpl("vw_casino_penthouse")
@@ -52,4 +52,4 @@ Citizen.CreateThread(function()
     
         end
     
-    end)
+    end) ]]

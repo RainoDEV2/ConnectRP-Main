@@ -39,7 +39,7 @@ DiamondCasino = {
     end
 }  ]]
 
-CreateThread(function()
+--[[ CreateThread(function()
 	RequestIpl("vw_casino_main")
     RequestIpl("hei_dlc_casino_aircon")
     RequestIpl("hei_dlc_casino_aircon_lod")
@@ -62,4 +62,4 @@ CreateThread(function()
 	RequestIpl("vw_casino_garage")
 	RequestIpl("vw_casino_carpark")
 	
-end)
+end) ]]
