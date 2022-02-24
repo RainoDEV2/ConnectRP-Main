@@ -84,26 +84,27 @@ Citizen.CreateThread(function()
                             if VehicleNitrous[Plate].level > 12 then
                                 count = 0
                                 while count < 90 do
-                                    StartScreenEffect("ExplosionJosh3", 30.0, 0) 
+                                    --StartScreenEffect("ExplosionJosh3", 30.0, 0) 
                                     VehicleNitrous[Plate].level = VehicleNitrous[Plate].level - 3
                                     TriggerServerEvent('nitrous:server:UpdateNitroLevel', Plate, (VehicleNitrous[Plate].level))
-                                    TriggerEvent('rl-hud:nitro', VehicleNitrous[Plate].level)
+                                    TriggerEvent('hud:client:UpdateNitrous', VehicleNitrous[Plate].hasnitro,  VehicleNitrous[Plate].level, true)
                                     Citizen.Wait(1000)
                                     count = count + 30
                                 end
                             else
-                                StartScreenEffect("ExplosionJosh3", 30.0, 0) 
+                                --StartScreenEffect("ExplosionJosh3", 30.0, 0) 
                                 VehicleNitrous[Plate].level = VehicleNitrous[Plate].level - 3
                                 TriggerServerEvent('nitrous:server:UpdateNitroLevel', Plate, (VehicleNitrous[Plate].level))
-                                TriggerEvent('rl-hud:nitro', VehicleNitrous[Plate].level)
+                                TriggerEvent('hud:client:UpdateNitrous', VehicleNitrous[Plate].hasnitro,  VehicleNitrous[Plate].level, true)
                             end
                             
-                            StartScreenEffect("ExplosionJosh3", 0, 0)
+                            --StartScreenEffect("ExplosionJosh3", 0, 0)
 
                             if VehicleNitrous[Plate].level - 12 >= 0 then
                                 VehicleNitrous[Plate].level = VehicleNitrous[Plate].level - 12
                                 TriggerServerEvent('nitrous:server:UpdateNitroLevel', Plate, (VehicleNitrous[Plate].level))
-                                TriggerEvent('rl-hud:nitro', VehicleNitrous[Plate].level)
+                                --TriggerEvent('rl-hud:nitro', VehicleNitrous[Plate].level)
+                                TriggerEvent('hud:client:UpdateNitrous', VehicleNitrous[Plate].hasnitro,  VehicleNitrous[Plate].level, true)
                                 NitrousActivated = false
 
                                 for index,_ in pairs(Fxs) do
@@ -115,7 +116,7 @@ Citizen.CreateThread(function()
                                 Wait(250) -- Otherwise it depletes instantly, as line 107, has no wait, so this is stopped, as soon as it is started.
                                 TriggerServerEvent('nitrous:server:UnloadNitrous', Plate)
                                 NitrousActivated = false
-                                TriggerEvent('rl-hud:nitro', 0)
+                                TriggerEvent('hud:client:UpdateNitrous', false, nil, false)
                                 SetVehicleBoostActive(CurrentVehicle, 0)
                                 SetVehicleEnginePowerMultiplier(CurrentVehicle, LastEngineMultiplier)
                                 SetVehicleEngineTorqueMultiplier(CurrentVehicle, 1.0)
@@ -135,7 +136,7 @@ Citizen.CreateThread(function()
                 end
             else
                 if not nosupdated then
-                    TriggerEvent('rl-hud:nitro', 0)
+                    TriggerEvent('hud:client:UpdateNitrous', false, nil, false)
                     nosupdated = true
                 end
             end
@@ -310,7 +311,7 @@ AddEventHandler('nitrous:client:LoadNitrous', function(Plate)
     local CurrentVehicle = GetVehiclePedIsIn(GetPlayerPed(-1))
     local CPlate = GetVehicleNumberPlateText(CurrentVehicle)
     if CPlate == Plate then
-        TriggerEvent('rl-hud:nitro', 100)
+        TriggerEvent('hud:client:UpdateNitrous', VehicleNitrous[Plate].hasnitro,  VehicleNitrous[Plate].level, false)
     end
 end)
 
@@ -322,6 +323,6 @@ AddEventHandler('nitrous:client:UnloadNitrous', function(Plate)
     local CPlate = GetVehicleNumberPlateText(CurrentVehicle)
     if CPlate == Plate then
         NitrousActivated = false
-        TriggerEvent('rl-hud:nitro', 0)
+        TriggerEvent('hud:client:UpdateNitrous', false, nil, false)
     end
 end)
