@@ -277,7 +277,7 @@ end)
 RegisterNUICallback('getCloserToCharacter', function(data)
     local pedData = getPedFromCharID(tonumber(data.charid))
     currentChar = pedData
-    createCamera('char', pedData.ped)
+    --createCamera('char', pedData.ped)
 
     if currentChar.isreg then
         SendNUIMessage({
