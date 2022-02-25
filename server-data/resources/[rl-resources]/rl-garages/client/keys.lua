@@ -360,7 +360,7 @@ function LockpickDoorAnim(time)
     end)
 end
 
-function LockpickIgnition(isAdvanced)
+function LockpickIgnition(isAdvanced) 
     if not HasKey then 
         local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
         if vehicle ~= nil and vehicle ~= 0 then
@@ -377,7 +377,7 @@ function LockpickIgnition(isAdvanced)
                     Citizen.Wait(100)
                 end
 
-                if exports["rl-taskbarskill"]:taskBar(math.random(5000,25000),math.random(10,20)) ~= 100 then             
+                if not exports["tgiann-skillbar"]:taskBar(math.random(5000,25000),math.random(10,20)) then             
 					StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
                     HasKey = false
                     SetVehicleEngineOn(vehicle, false, false, true)
@@ -391,7 +391,7 @@ function LockpickIgnition(isAdvanced)
                     return
                 end
     
-                if exports["rl-taskbarskill"]:taskBar(math.random(5000,25000),math.random(10,20)) ~= 100 then
+                if not exports["tgiann-skillbar"]:taskBar(math.random(5000,25000),math.random(10,20)) then
                     StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
                     HasKey = false
                     SetVehicleEngineOn(vehicle, false, false, true)
@@ -405,7 +405,35 @@ function LockpickIgnition(isAdvanced)
                     return
                 end
 
-                if exports["rl-taskbarskill"]:taskBar(1500,math.random(5,15)) ~= 100 then
+                if not exports["tgiann-skillbar"]:taskBar(1500,math.random(5,15)) then
+                    StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
+                    HasKey = false
+                    SetVehicleEngineOn(vehicle, false, false, true)
+                    RLCore.Functions.Notify("Lockpicking failed!", "error")
+                    IsHotwiring = false
+                    local c = math.random(2)
+                    local o = math.random(2)
+                    if c == o then
+                        TriggerServerEvent('hud:server:GainStress', math.random(1, 4))
+                    end  
+                    return
+                end 
+
+                if not exports["tgiann-skillbar"]:taskBar(1500,math.random(1,5)) then
+                    StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
+                    HasKey = false
+                    SetVehicleEngineOn(vehicle, false, false, true)
+                    RLCore.Functions.Notify("Lockpicking failed!", "error")
+                    IsHotwiring = false
+                    local c = math.random(2)
+                    local o = math.random(2)
+                    if c == o then
+                        TriggerServerEvent('hud:server:GainStress', math.random(1, 4))
+                    end
+                    return
+                end 
+
+                if not exports["tgiann-skillbar"]:taskBar(1500,math.random(5,20)) then
                     StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
                     HasKey = false
                     SetVehicleEngineOn(vehicle, false, false, true)
