@@ -56,7 +56,7 @@ RegisterNetEvent('seatbelt:client:UseHarness', function(ItemData) -- On Item Use
             TriggerEvent('hud:client:UpdateHarness', harnessHp)
         else
             LocalPlayer.state:set("inv_busy", true, true)
-            RLCore.Functions.Progressbar("harness_equip", "Removing Race Harness", 5000, false, true, {
+            RLCore.Functions.Progressbar("harness_equip", "Removing Race Harness", 1200, false, true, {
                 disableMovement = false,
                 disableCarMovement = false,
                 disableMouse = false,
@@ -113,7 +113,7 @@ CreateThread(function()
         sleep = 1000
         if IsPedInAnyVehicle(PlayerPedId()) then
             sleep = 10
-            if seatbeltOn or harnessOn then
+            if harnessOn then
                 DisableControlAction(0, 75, true)
                 DisableControlAction(27, 75, true)
             end
