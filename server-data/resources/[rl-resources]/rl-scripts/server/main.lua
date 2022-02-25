@@ -11,12 +11,17 @@ RLCore.Functions.CreateUseableItem("harness", function(source, item)
     TriggerClientEvent('seatbelt:client:UseHarness', source, item)
 end)
 
-RegisterServerEvent('equip:harness')
-AddEventHandler('equip:harness', function(item)
+RLCore.Functions.CreateUseableItem("harness", function(source, item)
     local src = source
     local Player = RLCore.Functions.GetPlayer(src)
-    if Player.PlayerData.items[item.slot].info.uses - 1 == 0 then
-        TriggerClientEvent("inventory:client:ItemBox", source, RLCore.Shared.Items['harness'], "remove")
+    TriggerClientEvent('seatbelt:client:UseHarness', src, item)
+end)
+
+RegisterNetEvent('equip:harness', function(item)
+    local src = source
+    local Player = RLCore.Functions.GetPlayer(src)
+    if Player.PlayerData.items[item.slot].info.uses == 1 then
+        TriggerClientEvent("inventory:client:ItemBox", src, RLCore.Shared.Items['harness'], "remove")
         Player.Functions.RemoveItem('harness', 1)
     else
         Player.PlayerData.items[item.slot].info.uses = Player.PlayerData.items[item.slot].info.uses - 1
@@ -24,8 +29,7 @@ AddEventHandler('equip:harness', function(item)
     end
 end)
 
-RegisterServerEvent('seatbelt:DoHarnessDamage')
-AddEventHandler('seatbelt:DoHarnessDamage', function(hp, data)
+RegisterNetEvent('seatbelt:DoHarnessDamage', function(hp, data)
     local src = source
     local Player = RLCore.Functions.GetPlayer(src)
 
@@ -35,9 +39,4 @@ AddEventHandler('seatbelt:DoHarnessDamage', function(hp, data)
         Player.PlayerData.items[data.slot].info.uses = Player.PlayerData.items[data.slot].info.uses - 1
         Player.Functions.SetInventory(Player.PlayerData.items)
     end
-end)
-
-RegisterServerEvent('carhud:ejection:server')
-AddEventHandler('carhud:ejection:server', function(plyID, veloc)
-    TriggerClientEvent("carhud:ejection:client", plyID, veloc)
 end)

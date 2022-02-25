@@ -442,7 +442,7 @@ Citizen.CreateThread(function()
 end)
 
 -- Collision Thread --
-Citizen.CreateThread(function()
+--[[ Citizen.CreateThread(function()
     Citizen.Wait(1000)
     local lastCurrentVehicleBodyHealth = 0
     local lastCurrentVehicleSpeed = 0
@@ -534,7 +534,7 @@ Citizen.CreateThread(function()
             Citizen.Wait(4000)
         end
     end
-end)
+end) ]]
 
 Citizen.CreateThread(function()
     while true do

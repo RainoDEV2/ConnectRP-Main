@@ -38,6 +38,7 @@ client_scripts {
 	"client/weapdraw.lua",
 	"client/ragdoll.lua",
 	"client/push.lua",
+	"client/seatbelt.lua",
 	"client/heli_client.lua",
 	--"client/offroad.lua",
 	"@warmenu/warmenu.lua"
