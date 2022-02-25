@@ -13,7 +13,7 @@ Citizen.CreateThread(function()
     while true do
 		SetDiscordAppId(747671382690627624)
 		SetDiscordRichPresenceAsset('logo')
-        SetDiscordRichPresenceAssetText('TwitchCityRP')
+        SetDiscordRichPresenceAssetText('ConnectRP')
         if q > 0 then
             SetRichPresence(#GetActivePlayers() .. '/' .. sv_maxClients .. ' players | ' .. q .. ' Q.')
         else

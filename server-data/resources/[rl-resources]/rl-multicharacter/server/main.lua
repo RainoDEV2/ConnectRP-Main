@@ -5,7 +5,7 @@ RegisterServerEvent('rl-multicharacter:server:disconnect')
 AddEventHandler('rl-multicharacter:server:disconnect', function()
     local src = source
 
-    DropPlayer(src, "You have disconnected from TwitchCityRP")
+    DropPlayer(src, "You have disconnected from ConnectRP")
 end)
 
 RegisterServerEvent('rl-multicharacter:server:loadUserData')

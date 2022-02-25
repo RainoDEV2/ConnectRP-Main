@@ -182,7 +182,7 @@ function AddTextEntry(key, value)
 end
 
 Citizen.CreateThread(function()
-  AddTextEntry('FE_THDR_GTAO', 'TwitchCityRP')
+  AddTextEntry('FE_THDR_GTAO', 'ConnectRP')
 end)
 
 Citizen.CreateThread(function()

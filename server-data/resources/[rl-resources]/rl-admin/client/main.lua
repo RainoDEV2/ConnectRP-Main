@@ -491,7 +491,7 @@ Citizen.CreateThread(function()
     local currentPermIndex = 1
     local selectedPermIndex = 1
 
-    WarMenu.CreateMenu('admin', 'TwitchCity Admin')
+    WarMenu.CreateMenu('admin', 'ConnectRP Admin')
     WarMenu.CreateSubMenu('playerMan', 'admin')
     WarMenu.CreateSubMenu('serverMan', 'admin')
     WarMenu.CreateSubMenu('exitSpectate', 'admin')

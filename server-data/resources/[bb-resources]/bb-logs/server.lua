@@ -5,7 +5,7 @@ CreateThread(function()
                 ["color"] = "65450",
                 ["title"] = 'Server Started',
                 ["author"] = {
-                    ["name"] = 'TwitchCity Logs',
+                    ["name"] = 'ConnectRP Logs',
                     ["icon_url"] = "https://discord.com/api/webhooks/815435992579571722/RN4MfrObFMZ3JOIUmcSQ4FgJnOVf-QpuK0SyIZ6J1ArWRRHD7fJwf3VUTyFXkhrP5bPz",
                 },
             }
@@ -51,7 +51,7 @@ AddEventHandler('bb-logs:server:createLog', function(name, title, descText, _src
             ["color"] = "65450",
             ["title"] = title,
             ["author"] = {
-                ["name"] = 'TwitchCity Whitelist Logs',
+                ["name"] = 'Connect Whitelist Logs',
                 ["icon_url"] = "https://cdn.discordapp.com/attachments/706563400804597770/763610562147385375/logo.png",
             },
             ["description"] = description,

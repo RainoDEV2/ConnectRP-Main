@@ -1,6 +1,6 @@
 Config = {}
 
-local Prefix = "[TwitchCityRP] "
+local Prefix = "[ConnectRP] "
 Config.DiscordServerID = 632994117986549760
 Config.DiscordBotToken = "NzMxMDM5NDEzNTA0ODM1NjQ3.XwgPgg.O144uVibwvoyQWTRljF6JXK3rPM"
 Config.ApiLink = "http://realistic-life.co.il/api/queue.php/"
