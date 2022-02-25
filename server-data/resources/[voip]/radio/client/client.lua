@@ -1,6 +1,7 @@
 RLCore = nil
 local PlayerData                = {}
 local radioVolume = 0
+local inRadio = false
 
 Citizen.CreateThread(function()
   while true do
@@ -44,21 +45,7 @@ RegisterCommand('radio', function(source, args)
 end, false)
 
 
--- radio test
-
-RegisterCommand('radiotest', function(source, args)
-  local playerName = GetPlayerName(PlayerId())
-  local data = exports.tokovoip_script:getPlayerData(playerName, "radio:channel")
-
-  print(tonumber(data))
-
-  if data == "nil" then
-    exports['mythic_notify']:DoHudText('inform', Config.messages['not_on_radio'])
-  else
-   exports['mythic_notify']:DoHudText('inform', Config.messages['on_radio'] .. data .. '.00 MHz </b>')
- end
-
-end, false)
+-- radio tes
 
 function hasRadio()
   local retval = nil
@@ -74,102 +61,91 @@ function hasRadio()
   return retval
 end
 
+local function leaveradio()
+    RadioChannel = 0
+    onRadio = false
+    exports["pma-voice"]:setRadioChannel(0)
+    exports["pma-voice"]:setVoiceProperty("radioEnabled", false)
+    RLCore.Functions.Notify(Config.messages['you_leave'] , 'error')
+    inRadio = false
+end
+
+
+
 Citizen.CreateThread(function()
   while true do
     if RLCore ~= nil then
       if isLoggedIn then
         RLCore.Functions.TriggerCallback('radio:server:GetItem', function(hasItem)
-          if not hasItem then
-            if exports.tokovoip_script ~= nil and next(exports.tokovoip_script) ~= nil then
-              local playerName = GetPlayerName(PlayerId())
-              local getPlayerRadioChannel = exports.tokovoip_script:getPlayerData(playerName, "radio:channel")
-
-              if getPlayerRadioChannel ~= "nil" then
-                exports.tokovoip_script:removePlayerFromRadio(getPlayerRadioChannel)
-                exports.tokovoip_script:setPlayerData(playerName, "radio:channel", "nil", true)
-                RLCore.Functions.Notify('You are removed from your current frequency!', 'error')
-              end
+          if not hasItem then          
+            if inRadio then
+              leaveradio()
             end
           end
         end, "radio")
       end
     end
-    Citizen.Wait(10000)
+    Citizen.Wait(2000)
   end
 end)
+
 
 -- dołączanie do radia
 
 RegisterNUICallback('joinRadio', function(data, cb)
-    local _source = source
-    --local PlayerData = ESX.GetPlayerData(_source)
-    local job = RLCore.Functions.GetPlayerData().job.name
+  local _source = source
+  local job = RLCore.Functions.GetPlayerData().job.name
     local playerName = GetPlayerName(PlayerId())
-    local getPlayerRadioChannel = exports.tokovoip_script:getPlayerData(playerName, "radio:channel")
+--[[     local getPlayerRadioChannel = exports.tokovoip_script:getPlayerData(playerName, "radio:channel") ]]
 
-    if tonumber(data.channel) ~= tonumber(getPlayerRadioChannel) then
-        if tonumber(data.channel) <= Config.RestrictedChannels then
-          if job == "police" or job == "ambulance" or job == "doctor" or job == "mechanic" then
-            if( (tonumber(data.channel) <= Config.RestrictedChannels and job == 'ambulance' or job == 'police')) or ((tonumber(data.channel) == 11 or tonumber(data.channel) == 12 or tonumber(data.channel) == 13) and job == 'mechanic') or ((tonumber(data.channel) == 6 or tonumber(data.channel) == 7 or tonumber(data.channel) == 8 or tonumber(data.channel) == 9) and PlayerData.job.name == 'lawyer') then
-              exports.tokovoip_script:removePlayerFromRadio(getPlayerRadioChannel)
-              exports.tokovoip_script:setPlayerData(playerName, "radio:channel", tonumber(data.channel), true);
-              exports.tokovoip_script:addPlayerToRadio(tonumber(data.channel), true)
-              RLCore.Functions.Notify(Config.messages['joined_to_radio'] .. data.channel .. ' MHz </b>', 'error')
-              --exports['mythic_notify']:DoHudText('inform', Config.messages['joined_to_radio'] .. data.channel .. ' MHz </b>')
-              TriggerEvent("InteractSound_CL:PlayOnOne","radioclick",0.6)
-            else
-              RLCore.Functions.Notify(Config.messages['restricted_channel_error'], 'error')
-              --exports['mythic_notify']:DoHudText('error', Config.messages['restricted_channel_error'])
-            end
-          else
-            --- info że nie możesz dołączyć bo nie jesteś policjantem
-            RLCore.Functions.Notify(Config.messages['restricted_channel_error'], 'error')
-            --exports['mythic_notify']:DoHudText('error', Config.messages['restricted_channel_error'])
-          end
-        end
-        
-        if tonumber(data.channel) > Config.RestrictedChannels then
-          exports.tokovoip_script:removePlayerFromRadio(getPlayerRadioChannel)
-          exports.tokovoip_script:setPlayerData(playerName, "radio:channel", tonumber(data.channel), true);
-          exports.tokovoip_script:addPlayerToRadio(tonumber(data.channel), true)
+  if tonumber(data.channel) then
+    if tonumber(data.channel) == 999 then
+      
+      
+    end
+      if tonumber(data.channel) <= Config.RestrictedChannels then
+        if job == "police" or job == "ambulance" or job == "doctor" or job == "mechanic" then
+          exports["pma-voice"]:setRadioChannel(tonumber(data.channel))
+          exports["pma-voice"]:setVoiceProperty("radioEnabled", true) 
           RLCore.Functions.Notify(Config.messages['joined_to_radio'] .. data.channel .. ' MHz </b>', 'error')
-          --exports['mythic_notify']:DoHudText('inform', Config.messages['joined_to_radio'] .. data.channel .. 'MHz </b>')
+          inRadio = true
           TriggerEvent("InteractSound_CL:PlayOnOne","radioclick",0.6)
+        elseif not job == "police" or job == "ambulance" or job == "doctor" or job == "mechanic" then
+          RLCore.Functions.Notify(Config.messages['restricted_channel_error'], 'error')
         end
-      else
-        RLCore.Functions.Notify(Config.messages['you_on_radio'] .. data.channel .. 'MHz </b>')
-        --exports['mythic_notify']:DoHudText('error', Config.messages['you_on_radio'] .. data.channel .. 'MHz </b>')
       end
-      --[[
-    exports.tokovoip_script:removePlayerFromRadio(getPlayerRadioChannel)
-    exports.tokovoip_script:setPlayerData(playerName, "radio:channel", tonumber(data.channel), true);
-    exports.tokovoip_script:addPlayerToRadio(tonumber(data.channel))
-    PrintChatMessage("radio: " .. data.channel)
-    print('radiook')
-      ]]--
-    cb('ok')
+      if tonumber(data.channel) > Config.RestrictedChannels then
+        exports["pma-voice"]:setRadioChannel(tonumber(data.channel))
+        exports["pma-voice"]:setVoiceProperty("radioEnabled", true) 
+        RLCore.Functions.Notify(Config.messages['joined_to_radio'] .. data.channel .. ' MHz </b>', 'error')
+        inRadio = true
+    TriggerEvent("InteractSound_CL:PlayOnOne","radioclick",0.6)
+      end
+    else
+     -- exports['mythic_notify']:SendAlert('error', Config.messages['you_on_radio'] .. data.channel .. '.00 MHz </b>')
+  --TriggerEvent("notification",  Config.messages['you_on_radio'] .. data.channel .. '.00 MHz </b>', 2)
+    end
+    --[[
+  exports.tokovoip_script:removePlayerFromRadio(getPlayerRadioChannel)
+  exports.tokovoip_script:setPlayerData(playerName, "radio:channel", tonumber(data.channel), true);
+  exports.tokovoip_script:addPlayerToRadio(tonumber(data.channel))
+  PrintChatMessage("radio: " .. data.channel)
+  print('radiook')
+    ]]--
+  cb('ok')
 end)
+
 
 -- opuszczanie radia
 
 RegisterNUICallback('leaveRadio', function(data, cb)
-   local playerName = GetPlayerName(PlayerId())
-   local getPlayerRadioChannel = exports.tokovoip_script:getPlayerData(playerName, "radio:channel")
-
-
-    if getPlayerRadioChannel == "nil" then
-      exports['mythic_notify']:DoHudText('inform', Config.messages['not_on_radio'])
-        else
-          exports.tokovoip_script:removePlayerFromRadio(getPlayerRadioChannel)
-          exports.tokovoip_script:setPlayerData(playerName, "radio:channel", "nil", true)
-          TriggerEvent("InteractSound_CL:PlayOnOne","radioclick",0.6)
-          RLCore.Functions.Notify(Config.messages['you_leave'] .. getPlayerRadioChannel .. 'MHz </b>')
-          --exports['mythic_notify']:DoHudText('inform', Config.messages['you_leave'] .. getPlayerRadioChannel .. 'MHz </b>')
-    end
-
-   cb('ok')
+  local playerName = GetPlayerName(PlayerId())
+  TriggerEvent("InteractSound_CL:PlayOnOne","radioclick",0.6)
+  leaveradio()
+  cb('ok')
 
 end)
+
 
 RegisterNUICallback('escape', function(data, cb)
 
@@ -189,19 +165,15 @@ AddEventHandler('ls-radio:use', function()
 end)
 
 RegisterNetEvent('ls-radio:onRadioDrop')
-AddEventHandler('ls-radio:onRadioDrop', function(source)
+AddEventHandler('ls-radio:onRadioDrop', function()
   local playerName = GetPlayerName(PlayerId())
-   local getPlayerRadioChannel = exports.tokovoip_script:getPlayerData(playerName, "radio:channel")
-   local iDidItAllready = false
-
-    if getPlayerRadioChannel == "nil" then
-      --exports['mythic_notify']:DoHudText('inform', Config.messages['not_on_radio'])
-        else
-          exports.tokovoip_script:removePlayerFromRadio(getPlayerRadioChannel)
-          exports.tokovoip_script:setPlayerData(playerName, "radio:channel", "nil", true)
-          --exports['mythic_notify']:DoHudText('inform', Config.messages['you_leave'] .. getPlayerRadioChannel .. '.00 MHz </b>')
-    end
+--[[   local getPlayerRadioChannel = exports.tokovoip_script:getPlayerData(playerName, "radio:channel") ]]
+  --if getPlayerRadioChannel ~= "nil" then
+    exports["pma-voice"]:SetRadioChannel(0)
+    --exports['mythic_notify']:SendAlert('inform', Config.messages['you_leave'] .. getPlayerRadioChannel .. '.00 MHz </b>')
+ -- end
 end)
+
 
 Citizen.CreateThread(function()
     while true do
@@ -244,7 +216,9 @@ AddEventHandler('tp-radio:setVolume', function(radioVolume, total)
         volume = total
 
     })
-    TriggerEvent('TokoVoip:setRadioVolume', radioVolume)
+    exports["pma-voice"]:setRadioVolume(radioVolume)
+    print("Radio volume is now at:")
+    json.encode(print(radioVolume + 100))
 end)
 
 function setVolumeDown()

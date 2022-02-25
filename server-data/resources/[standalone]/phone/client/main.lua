@@ -2174,7 +2174,7 @@ end)
 RegisterNetEvent('phone:addToCall')
 AddEventHandler('phone:addToCall', function(voipchannel)
   local playerName = GetPlayerName(PlayerId())
-  exports.tokovoip_script:addPlayerToRadio(tonumber(voipchannel))
+  exports['pma-voice']:addPlayerToCall(tonumber(voipchannel))
 end)
 
 RegisterNetEvent('phone:callFullyInitiated')
@@ -2321,7 +2321,7 @@ end
 
 RegisterNetEvent('phone:removefromToko')
 AddEventHandler('phone:removefromToko', function(playerRadioChannel)
-  exports.tokovoip_script:removePlayerFromRadio(playerRadioChannel)
+  exports['pma-voice']:removePlayerFromCall(playerRadioChannel)
 end)
 
 function endCall()
