@@ -382,6 +382,11 @@ function LockpickIgnition(isAdvanced)
                     HasKey = false
                     SetVehicleEngineOn(vehicle, false, false, true)
                     RLCore.Functions.Notify("Lockpicking failed!", "error")
+                    local math = math.random(1,8)
+                    if math <= 3 then
+                        RLCore.Functions.Notify("You broke your lockpick!", "error")
+                        TriggerServerEvent("RLCore:Server:RemoveItem", "lockpick", 1)
+                    end
                     IsHotwiring = false
                     local c = math.random(2)
                     local o = math.random(2)
@@ -396,6 +401,10 @@ function LockpickIgnition(isAdvanced)
                     HasKey = false
                     SetVehicleEngineOn(vehicle, false, false, true)
                     RLCore.Functions.Notify("Lockpicking failed!", "error")
+                    local math = math.random(1,8)
+                    if math <= 3 then
+                        TriggerServerEvent("RLCore:Server:RemoveItem", "lockpick", 1)
+                    end
                     IsHotwiring = false
                     local c = math.random(2)
                     local o = math.random(2)
@@ -410,6 +419,11 @@ function LockpickIgnition(isAdvanced)
                     HasKey = false
                     SetVehicleEngineOn(vehicle, false, false, true)
                     RLCore.Functions.Notify("Lockpicking failed!", "error")
+                    local math = math.random(1,8)
+                    if math <= 3 then
+                        RLCore.Functions.Notify("You broke your lockpick!", "error")
+                        TriggerServerEvent("RLCore:Server:RemoveItem", "lockpick", 1)
+                    end
                     IsHotwiring = false
                     local c = math.random(2)
                     local o = math.random(2)
@@ -424,12 +438,17 @@ function LockpickIgnition(isAdvanced)
                     HasKey = false
                     SetVehicleEngineOn(vehicle, false, false, true)
                     RLCore.Functions.Notify("Lockpicking failed!", "error")
+                    local math = math.random(1,8)
+                    if math <= 3 then
+                        RLCore.Functions.Notify("You broke your lockpick!", "error")
+                        TriggerServerEvent("RLCore:Server:RemoveItem", "lockpick", 1)
+                    end
                     IsHotwiring = false
                     local c = math.random(2)
                     local o = math.random(2)
                     if c == o then
                         TriggerServerEvent('hud:server:GainStress', math.random(1, 4))
-                    end
+                    end 
                     return
                 end 
 
@@ -438,6 +457,11 @@ function LockpickIgnition(isAdvanced)
                     HasKey = false
                     SetVehicleEngineOn(vehicle, false, false, true)
                     RLCore.Functions.Notify("Lockpicking failed!", "error")
+                    local math = math.random(1,8)
+                    if math <= 3 then
+                        RLCore.Functions.Notify("You broke your lockpick!", "error")
+                        TriggerServerEvent("RLCore:Server:RemoveItem", "lockpick", 1)
+                    end
                     IsHotwiring = false
                     local c = math.random(2)
                     local o = math.random(2)
