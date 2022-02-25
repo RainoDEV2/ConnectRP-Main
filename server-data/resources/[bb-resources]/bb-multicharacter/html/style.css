@@ -31,7 +31,7 @@
     margin: 0 auto;
     left: 0;
     right: 0;
-    border-bottom: 2px solid rgb(72, 112, 158);
+    border-bottom: 2px solid rgb(35, 48, 67);
     box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.25);
     box-shadow: inset 0px 0px 150px 0px rgba(255, 255, 255, 0.1);
     overflow: visible !important;
@@ -42,7 +42,7 @@
     top: 0;
     width: 100%;
     height: 30px;
-    background-color: rgb(72, 112, 158);
+    background-color: rgb(35, 48, 67);
     border-bottom: 2px solid #fff;
     font-family: 'Lato' monospace;
     box-shadow: inset 0px 0px 150px 0px rgba(255, 255, 255, 0.1);
@@ -84,7 +84,7 @@
     position: absolute;
     right: 8px;
     top: 8px;
-    color: rgb(72, 112, 158);
+    color: rgb(35, 48, 67);
     background: rgb(226, 226, 226);
     border-radius: 50%;
 }
@@ -143,7 +143,7 @@
 }
 
 .char-selected {
-    background-color: rgb(72, 112, 158);
+    background-color: rgb(35, 48, 67);
 }
 
 .disabled {
@@ -197,7 +197,7 @@
 }
 
 #delete:hover {
-    background-color: rgb(72, 112, 158);
+    background-color: rgb(35, 48, 67);
     border-radius: 8px;
 }
 
@@ -252,7 +252,7 @@
     right: 0; 
     margin-left: auto; 
     margin-right: auto; 
-    border-bottom: 4px solid rgb(72, 112, 158);
+    border-bottom: 4px solid rgb(35, 48, 67);
     background-color: rgba(0, 0, 0, 0.7);
     box-shadow: 0px 0px 19px 1px rgba(0,0,0,0.54);
     text-align: center;
@@ -271,7 +271,7 @@
     font-size: 11px;
     line-height: 29px;
     font-family: 'Lato', monospace;
-    border-bottom: 2px solid rgb(72, 112, 158);
+    border-bottom: 2px solid rgb(35, 48, 67);
     overflow: visible !important;
 }
 
@@ -316,7 +316,7 @@
     bottom: 0;
     right: 5%;
     margin-bottom: 15px;
-    background-color: rgb(72, 112, 158);
+    background-color: rgb(35, 48, 67);
     border-radius: 4px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.342);
     transition: 0.2s;
@@ -324,7 +324,7 @@
 }
 
 .character-canceldel-btn:hover {
-    background-color: rgb(72, 112, 158);
+    background-color: rgb(35, 48, 67);
 }
 
 .character-acceptdel-btn > p {
@@ -353,9 +353,9 @@
     margin-left: auto;
     margin-right: auto;
     left: 32px;
-    background-color: rgb(72, 112, 158);
+    background-color: rgb(35, 48, 67);
     font-family: 'Lato', monospace;
-    border-bottom: 4px solid rgb(72, 112, 158);
+    border-bottom: 4px solid rgb(35, 48, 67);
 }
 
 .characters-register-block-header {
@@ -368,7 +368,7 @@
     font-size: 11px;
     line-height: 29px;
     font-family: 'Lato', monospace;
-    border-bottom: 2px solid rgb(72, 112, 158);
+    border-bottom: 2px solid rgb(35, 48, 67);
 }
 
 .char-register-inputs {
@@ -393,7 +393,7 @@
     padding: 4px;
     border-radius: 2px 2px 4px 4px;
     box-shadow: inset 0px 0px 10px 0px rgba(255, 255, 255, 0.1);
-    border: 1px solid rgb(72, 112, 158);
+    border: 1px solid rgb(35, 48, 67);
     font-family: 'Lato', monospace;
     text-align: center;
     transition: all 0.2s ease-in-out;
@@ -405,7 +405,7 @@
 
 .char-reg-input:focus {
     background-color: rgba(34, 34, 34, 0.808);
-    border: 1px solid rgb(72, 112, 158);
+    border: 1px solid rgb(35, 48, 67);
 }
 
 select {
@@ -422,7 +422,7 @@ select {
     padding: 4px;
     border-radius: 2px 2px 4px 4px;
     box-shadow: inset 0px 0px 10px 0px rgba(255, 255, 255, 0.1);
-    border: 1px solid rgb(72, 112, 158);
+    border: 1px solid rgb(35, 48, 67);
     font-family: 'Lato', monospace;
     text-align-last: center;
     -webkit-appearance: none;
@@ -438,7 +438,7 @@ select:hover {
 
 select:focus {
     background-color: rgba(34, 34, 34, 0.808);
-    border: 1px solid rgb(72, 112, 158);
+    border: 1px solid rgb(35, 48, 67);
 }
 
 #gender option {
@@ -542,7 +542,7 @@ input[type="date"]::-webkit-clear-button {
     left: 0;
     width: 100%;
     height: 7%;
-    border-top: 3px solid rgb(72, 112, 158);
+    border-top: 3px solid rgb(35, 48, 67);
 }
 
 .server-log {
@@ -555,7 +555,7 @@ input[type="date"]::-webkit-clear-button {
     background-color: rgba(0, 0, 0, 0.7);
     box-shadow: 0px 0px 19px 1px rgba(0,0,0,0.54);
     font-family: 'Lato', monospace;
-    border-bottom: 4px solid rgb(72, 112, 158);
+    border-bottom: 4px solid rgb(35, 48, 67);
     border-radius: 0px 0px 10px 10px;
 }
 
@@ -569,7 +569,7 @@ input[type="date"]::-webkit-clear-button {
     font-size: 11px;
     line-height: 30px;
     font-family: 'Lato', monospace;
-    border-bottom: 2px solid rgb(72, 112, 158);
+    border-bottom: 2px solid rgb(35, 48, 67);
 }
 
 .log {
@@ -581,7 +581,7 @@ input[type="date"]::-webkit-clear-button {
 }
 
 #log-date {
-    color: rgb(72, 112, 158);
+    color: rgb(35, 48, 67);
     font-size: 12px;
     padding-left: 10px;
     text-shadow: 0px 0px 4px rgba(0,0,0,0.35);
@@ -638,14 +638,14 @@ input[type="date"]::-webkit-clear-button {
     width: 45%;
     top: 75%;
     height: 3.6vh;
-    background-color: rgb(72, 112, 158);
+    background-color: rgb(35, 48, 67);
     border-radius: .2vh;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.342);
     transition: .1s linear;
 }
 
 .continue-btn:hover {
-    background-color: rgb(72, 112, 158);
+    background-color: rgb(35, 48, 67);
 }
 
 .continue-btn > p {
@@ -662,14 +662,14 @@ input[type="date"]::-webkit-clear-button {
     width: 45%;
     top: 75%;
     height: 3.6vh;
-    background-color: rgb(72, 112, 158);
+    background-color: rgb(35, 48, 67);
     border-radius: .2vh;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.342);
     transition: .1s linear;
 }
 
 .disconnect-btn:hover {
-    background-color: rgb(72, 112, 158);
+    background-color: rgb(35, 48, 67);
 }
 
 .disconnect-btn > p {
@@ -688,12 +688,12 @@ input[type="date"]::-webkit-clear-button {
 ::-webkit-scrollbar
 {
 	width: 3px;
-	background-color: rgb(72, 112, 158);
+	background-color: rgb(35, 48, 67);
 }
 
 ::-webkit-scrollbar-thumb
 {
-	background-color: rgb(72, 112, 158);
+	background-color: rgb(35, 48, 67);
 }
 
 .loading-rondje {
