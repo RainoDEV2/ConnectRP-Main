@@ -85,7 +85,7 @@ rootMenuConfig =  {
             local Data = RLCore.Functions.GetPlayerData()
             return not Data.metadata["isdead"] and not Data.metadata["inlaststand"]
         end,
-        subMenus = {"vehicle:giveKeys", "general:flipveh", "general:hotdog", "general:givenum", "general:getintrunk", "general:cornerselling"}
+        subMenus = {"vehicle:giveKeys", "general:flipveh", "general:givenum", "general:getintrunk", "general:cornerselling"}
     },
 
     {
