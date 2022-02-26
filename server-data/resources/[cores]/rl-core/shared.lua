@@ -15,6 +15,12 @@ RLShared.RandomStr = function(length)
 	end
 end
 
+RLShared.Round = function(value, numDecimalPlaces)
+    if not numDecimalPlaces then return math.floor(value + 0.5) end
+    local power = 10 ^ numDecimalPlaces
+    return math.floor((value * power) + 0.5) / (power)
+end
+
 RLShared.RandomInt = function(length)
 	if length > 0 then
 		return RLShared.RandomInt(length-1) .. NumberCharset[math.random(1, #NumberCharset)]
