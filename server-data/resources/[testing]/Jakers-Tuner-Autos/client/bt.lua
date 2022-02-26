@@ -226,7 +226,7 @@ exports["qb-target"]:AddTargetBone(bones, {
             --job = "tuner",
 
 
-        },
+        }, 
     },
 
     distance = 1.5
