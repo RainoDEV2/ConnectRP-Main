@@ -130,7 +130,7 @@ Config.Locations = {
     },
 }
 
-Config.Helicopter = "maverick2"
+Config.Helicopter = "polas350"
 Config.Boat = "predator"
 
 Config.SecurityCameras = {
