@@ -187,7 +187,7 @@ exports["qb-target"]:AddTargetBone(bones, {
     distance = 1.5
 })
 
---[[ local bones = {
+local bones = {
     "door_dside_f",
     "door_dside_r",
     "door_pside_f",
@@ -196,14 +196,40 @@ exports["qb-target"]:AddTargetBone(bones, {
 exports["qb-target"]:AddTargetBone(bones, {
     options = {
         {
-            event = "rl-vehfailure:client:CleanVehicle",
-            icon = "fas fa-hand-sparkles",
-            label = "CLEAN VEHICLE",
-            job = "tuner",
+            event = "vehiclekeys:client:GiveKeys",
+            icon = "fas fa-car-side",
+            label = "Give Keys",
+            --job = "tuner",
+
+
+        },
+        {
+            event = "vehicle:flipit",
+            icon = "fas fa-car-crash",
+            label = "Flip Vehicle",
+            --job = "tuner",
+
+
+        },
+        {
+            event = "police:client:PutPlayerInVehicle",
+            icon = "fas fa-arrow-circle-up",
+            label = "Seat Player",
+            --job = "tuner",
+
+
+        },
+        {
+            event = "police:client:SetPlayerOutVehicle",
+            icon = "fas fa-arrow-circle-down",
+            label = "Unseat Player",
+            --job = "tuner",
 
 
         },
     },
 
     distance = 1.5
-}) ]]
+})
+
+
