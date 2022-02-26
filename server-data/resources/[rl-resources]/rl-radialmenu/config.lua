@@ -159,7 +159,7 @@ rootMenuConfig =  {
         icon = "#mechanic",
         enableMenu =function()
             local Data = RLCore.Functions.GetPlayerData()
-            return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and Data.job ~= nil and Data.job.name == "mechanic")
+            return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and Data.job ~= nil and Data.job.name == "mechanic" )
         end,
         subMenus = { "mechanic:impound", "mechanic:flatbed", "tow:checkstatus", "mechanic:repoCheck" }
     },
@@ -211,7 +211,7 @@ rootMenuConfig =  {
     {
         id = "police-check",
         displayName = "Police Checks",
-        icon = "#police-check",
+        icon = "#police-checks",
         enableMenu = function()
             local Data = RLCore.Functions.GetPlayerData()
             return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and (Data.job ~= nil and Data.job.name == "police" and Data.job.onduty))
@@ -234,12 +234,23 @@ rootMenuConfig =  {
     {
         id = "objects",
         displayName = "Objects",
-        icon = "#objects",
+        icon = "#police-check",
         enableMenu =function()
             local Data = RLCore.Functions.GetPlayerData()
             return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and (Data.job ~= nil and Data.job.name == "police" and Data.job.onduty))
         end,
         subMenus = {"objects:barier", "objects:cone", "objects:tent", "objects:spike", "objects:spike2", "objects:light", "objects:remove"}
+    },
+
+    {
+        id = "mdt",
+        displayName = "MDT",
+        icon = "#police-mdt",
+        functionName = "mdt:Openc", 
+        enableMenu = function()
+            local Data = RLCore.Functions.GetPlayerData()
+            return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and (Data.job ~= nil and Data.job.name == "police" and Data.job.onduty))
+        end
     },
     
     {
@@ -1088,7 +1099,7 @@ newSubMenus = {
 
     ['police:seizeCash'] = {
         title = 'Seize Cash',
-        icon = "#police-gsr-test",
+        icon = "#police-cashrem",
         functionName = 'police:client:SeizeCash'
     },
 	
@@ -1208,6 +1219,11 @@ AddEventHandler("menu:garageCloseF", function()
     garageClose = false
 end)
 
+RegisterNetEvent("mdt:Openc")
+AddEventHandler("mdt:Openc", function()
+    Citizen.Wait(750)
+    TriggerServerEvent("mdt:Open")
+end)
 
 
 
