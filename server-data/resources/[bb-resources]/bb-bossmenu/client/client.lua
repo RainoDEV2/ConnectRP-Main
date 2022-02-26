@@ -127,7 +127,7 @@ RegisterNUICallback('openRecruit', function(data)
         for k,v in pairs(RLCore.Functions.GetPlayersFromCoords(GetEntityCoords(playerPed), 10.0)) do
             if v and v ~= PlayerId() then
                 table.insert(players, GetPlayerServerId(v))
-            end
+            end 
         end
 
         TriggerServerEvent("bb-bossmenu:server:updateNearbys", players)

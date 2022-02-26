@@ -589,8 +589,24 @@ RLShared.Items = {
 ["rainbowvmaxpikachu"] 			 = {["name"] = "rainbowvmaxpikachu", 			["label"] = "Rainbow Pikachu", 			["weight"] = 0, 		["type"] = "item", 		["image"] = "rainbowvmaxpikachu.png", 	["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,       ["combinable"] = nil,   ["description"] = "Rainbow Card"},
 ["snorlaxvmaxrainbow"] 			 = {["name"] = "snorlaxvmaxrainbow", 			["label"] = "Rainbox Snorlax", 			["weight"] = 0, 		["type"] = "item", 		["image"] = "snorlaxvmaxrainbow.png", 	["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,       ["combinable"] = nil,   ["description"] = "Rainbow Card"},
 ["pokebox"] 					 = {["name"] = "pokebox", 						["label"] = "Pokemon TCG Box", 			["weight"] = 50, 		["type"] = "item", 		["image"] = "pokebox.png", 				["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true, 	   ["combinable"] = nil,  ["description"] = "Pokemon TCG Storage Box"},
-['pixellaptop'] = {['name'] = 'pixellaptop', ['label'] = 'pixellaptop', ['weight'] = 2000, ['type'] = 'item', ['image'] = 'tunerchip.png', ['unique'] = true, ['useable'] = true,  ['shouldClose'] = true, ['combinable'] = nil, ['description'] = 'Boosting Laptop'}, 
+['pixellaptop'] = {['name'] = 'pixellaptop', ['label'] = 'pixellaptop', ['weight'] = 2000, ['type'] = 'item', ['image'] = 'laptop.png', ['unique'] = true, ['useable'] = true,  ['shouldClose'] = true, ['combinable'] = nil, ['description'] = 'Boosting Laptop'}, 
 ['disabler'] = {['name'] = 'disabler', ['label'] = 'disabler', ['weight'] = 500, ['type'] = 'item', ['image'] = 'tablet.png', ['unique'] = false, ['useable'] = true, ['shouldClose'] = true, ['combinable'] = nil, ['description'] = 'for the boosting contracts'},
+
+["turbo"] 	 		         = {["name"] = "turbo", 				["label"] = "Turbocharger", 			["weight"] = 10000, 		["type"] = "item", 		["image"] = "TURBO.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Big Snail"},
+    ["translv1"] 	 		 = {["name"] = "translv1", 				["label"] = "Transmission Level 1", 	        ["weight"] = 20000, 		["type"] = "item", 		["image"] = "TRANSLV1.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Level One Transmission"},
+    ["translv2"] 	 		 = {["name"] = "translv2", 				["label"] = "Transmission Level 2", 	        ["weight"] = 20000, 		["type"] = "item", 		["image"] = "TRANSLV2.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Level Two Transmission"},
+    ["translv3"] 	 		 = {["name"] = "translv3", 				["label"] = "Transmission Level 3", 	        ["weight"] = 20000, 		["type"] = "item", 		["image"] = "TRANSLV3.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Level Three Transmission"},
+    ["englv1"] 	 		         = {["name"] = "englv1", 				["label"] = "Engine Level 1", 			["weight"] = 30000, 		["type"] = "item", 		["image"] = "ENGLV1.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Level One Engine"},
+    ["englv2"] 	 		         = {["name"] = "englv2", 				["label"] = "Engine Level 2", 			["weight"] = 30000, 		["type"] = "item", 		["image"] = "ENGLV2.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Level Two Engine"},
+    ["englv3"] 	 		         = {["name"] = "englv3", 				["label"] = "Engine Level 3", 			["weight"] = 30000, 		["type"] = "item", 		["image"] = "ENGLV3.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Level Three Engine"},
+    ["englv4"] 	 		         = {["name"] = "englv4", 				["label"] = "Engine Level 4", 			["weight"] = 30000, 		["type"] = "item", 		["image"] = "ENGLV4.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Level Four Engine"},
+    ["brakeslv1"] 	 		 = {["name"] = "brakeslv1", 			        ["label"] = "Brakes Level 1", 			["weight"] = 2000, 		    ["type"] = "item", 		["image"] = "BRAKESLV1.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Level One Brakes"},
+    ["brakeslv2"] 	 		 = {["name"] = "brakeslv2", 			        ["label"] = "Brakes Level 2", 			["weight"] = 2000, 		    ["type"] = "item", 		["image"] = "BRAKESLV2.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Level Two Brakes"},
+    ["brakeslv3"] 	 		 = {["name"] = "brakeslv3", 			        ["label"] = "Brakes Level 3", 			["weight"] = 2000, 		    ["type"] = "item", 		["image"] = "BRAKESLV3.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Brembo Brakes"},
+    ["suslv1"] 	 	                 = {["name"] = "suslv1", 			        ["label"] = "Suspension Level 1", 		["weight"] = 2000, 		    ["type"] = "item", 		["image"] = "SUSLV1.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Lowering Springs 20mm"},
+    ["suslv2"] 	 	                 = {["name"] = "suslv2", 			        ["label"] = "Suspension Level 2", 		["weight"] = 2000, 		    ["type"] = "item", 		["image"] = "SUSLV2.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Lowering Springs 40mm"},
+    ["suslv3"] 	        	         = {["name"] = "suslv3", 			        ["label"] = "Suspension Level 3", 		["weight"] = 2000, 		    ["type"] = "item", 		["image"] = "SUSLV3.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Lowering Springs 55mm"},
+    ["suslv4"] 	 	                 = {["name"] = "suslv4", 			        ["label"] = "Suspension Level 4", 		["weight"] = 2000, 		    ["type"] = "item", 		["image"] = "SUSLV4.png", 		["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "BK Coilovers"},
 
 
 	 
@@ -7954,6 +7970,38 @@ RLShared.Jobs = {
 				name = "Boss",
 				isboss = true,
                 payment = 110
+            },
+        },
+		defaultDuty = true,
+	},
+
+	['tuner'] = {
+        label = 'Tuner Autos',
+        defaultDuty = false,
+        grades = {
+            ['0'] = {
+                name = 'Recruit',
+                payment = 50
+            },
+            ['1'] = {
+                name = 'Mechanic',
+                payment = 75
+            },
+            ['2'] = {
+                name = 'Manager',
+                isboss = true,
+                payment = 100
+            
+            },
+            ['3'] = {
+                name = 'Co-Owner',
+                isboss = true,
+                payment = 125
+            },
+            ['4'] = {
+                name = 'Owner',
+                isboss = true,
+                payment = 150
             },
         },
 		defaultDuty = true,

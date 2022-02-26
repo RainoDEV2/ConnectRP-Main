@@ -90,7 +90,7 @@ AddEventHandler('RLCore:Client:SetDuty', function(duty)
     onDuty = duty
 end)
 
-Citizen.CreateThread(function()
+--[[ Citizen.CreateThread(function()
     local c = Config.Locations["exit"]
     local Blip = AddBlipForCoord(c.x, c.y, c.z)
 
@@ -104,7 +104,7 @@ Citizen.CreateThread(function()
     BeginTextCommandSetBlipName("STRING")
     AddTextComponentSubstringPlayerName("Autocare Mechanic")
     EndTextCommandSetBlipName(Blip)
-end)
+end) ]]
 
 Citizen.CreateThread(function()
     while true do
