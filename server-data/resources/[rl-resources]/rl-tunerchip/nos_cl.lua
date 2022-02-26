@@ -130,7 +130,7 @@ Citizen.CreateThread(function()
                             end
                             useTimeout = GetGameTimer() + 15000
                         else
-                            RLCore.Functions.Notify("Please wait 15 seconds")
+                            RLCore.Functions.Notify("Rebuilding bottle pressure - Wait 15 seconds!")
                         end
                     end
                 end
