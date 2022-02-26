@@ -484,6 +484,15 @@ AddEventHandler('bb-multicharacter:client:chooseChar', function()
 
     print("Spawning choo choo")
 
+    Citizen.Wait(500)
+    SetRainFxIntensity(0.0)
+    TriggerEvent('rl-weathersync:client:DisableSync')
+    Citizen.Wait(100)
+    SetWeatherTypePersist('EXTRASUNNY')
+    SetWeatherTypeNow('EXTRASUNNY')
+    SetWeatherTypeNowPersist('EXTRASUNNY')
+    NetworkOverrideClockTime(22, 0, 0)
+
 
     SetEntityCoordsNoOffset(PlayerPedId(), vector3(-3972.28, 2017.22, 500.92), false, false, false, false)
     FreezeEntityPosition(PlayerPedId(), true)
