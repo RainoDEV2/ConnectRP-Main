@@ -318,7 +318,7 @@ AddEventHandler('vehicle:flipit', function()
         if DoesEntityExist(vehicle) then
         exports['progressbar']:Progress({
             name = "flipping_vehicle",
-            duration = 5000,
+            duration = 20000,
             label = "Flipping Vehicle Over",
             useWhileDead = false,
             canCancel = true,
