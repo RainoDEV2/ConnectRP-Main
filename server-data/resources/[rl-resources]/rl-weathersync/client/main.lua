@@ -25,7 +25,7 @@ end)
 RegisterNetEvent('RLCore:Client:OnPlayerLoaded')
 AddEventHandler('RLCore:Client:OnPlayerLoaded', function()
 	disable = false
-    TriggerServerEvent('rl-weathersync:server:RequestStateSync')
+    --TriggerServerEvent('rl-weathersync:server:RequestStateSync')
 end)
 
 RegisterNetEvent('rl-weathersync:client:EnableSync')
