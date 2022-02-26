@@ -19,7 +19,7 @@ client_scripts {
 	"client/clothes.lua",
 	"client/consumables.lua",
 	"client/crouchprone.lua",
-	--"client/cruise.lua",
+	"client/bikepickup.lua",
 	"client/weapons-on-back.lua",
 	"client/damage.lua",
 	"client/discord.lua",
