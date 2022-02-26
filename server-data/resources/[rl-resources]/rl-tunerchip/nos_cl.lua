@@ -85,7 +85,7 @@ Citizen.CreateThread(function()
                                 count = 0
                                 while count < 90 do
                                     --StartScreenEffect("ExplosionJosh3", 30.0, 0) 
-                                    VehicleNitrous[Plate].level = VehicleNitrous[Plate].level - 3
+                                    VehicleNitrous[Plate].level = VehicleNitrous[Plate].level - 7
                                     TriggerServerEvent('nitrous:server:UpdateNitroLevel', Plate, (VehicleNitrous[Plate].level))
                                     TriggerEvent('hud:client:UpdateNitrous', VehicleNitrous[Plate].hasnitro,  VehicleNitrous[Plate].level, true)
                                     Citizen.Wait(1000)
@@ -93,7 +93,7 @@ Citizen.CreateThread(function()
                                 end
                             else
                                 --StartScreenEffect("ExplosionJosh3", 30.0, 0) 
-                                VehicleNitrous[Plate].level = VehicleNitrous[Plate].level - 3
+                                VehicleNitrous[Plate].level = VehicleNitrous[Plate].level - 7
                                 TriggerServerEvent('nitrous:server:UpdateNitroLevel', Plate, (VehicleNitrous[Plate].level))
                                 TriggerEvent('hud:client:UpdateNitrous', VehicleNitrous[Plate].hasnitro,  VehicleNitrous[Plate].level, true)
                             end
@@ -128,9 +128,9 @@ Citizen.CreateThread(function()
                                     Fxs[index] = nil
                                 end
                             end
-                            useTimeout = GetGameTimer() + 3000
+                            useTimeout = GetGameTimer() + 15000
                         else
-                            RLCore.Functions.Notify("Please wait 3 seconds")
+                            RLCore.Functions.Notify("Please wait 15 seconds")
                         end
                     end
                 end
