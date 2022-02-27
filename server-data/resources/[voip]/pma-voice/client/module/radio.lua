@@ -143,7 +143,7 @@ RegisterCommand('+radiotalk', function()
 			TriggerServerEvent('pma-voice:setTalkingOnRadio', true)
 			radioPressed = true
 			playMicClicks(true)
-			if GetConvarInt('voice_enableRadioAnim', 0) == 1 and not (GetConvarInt('voice_disableVehicleRadioAnim', 0) == 1 and IsPedInAnyVehicle(PlayerPedId(), false)) then
+			if GetConvarInt('voice_enableRadioAnim', 0) == 0 and not (GetConvarInt('voice_disableVehicleRadioAnim', 0) == 1 and IsPedInAnyVehicle(PlayerPedId(), false)) then
 				RequestAnimDict('random@arrests')
 				while not HasAnimDictLoaded('random@arrests') do
 					Citizen.Wait(10)
@@ -170,14 +170,14 @@ RegisterCommand('-radiotalk', function()
 		playerTargets(MumbleIsPlayerTalking(PlayerId()) and callData or {})
 		TriggerEvent("pma-voice:radioActive", false)
 		playMicClicks(false)
-		if GetConvarInt('voice_enableRadioAnim', 0) == 1 then
+		if GetConvarInt('voice_enableRadioAnim', 0) == 0 then
 			StopAnimTask(PlayerPedId(), "random@arrests", "generic_radio_enter", -4.0)
 		end
 		TriggerServerEvent('pma-voice:setTalkingOnRadio', false)
 	end
 end, false)
 if gameVersion == 'fivem' then
-	RegisterKeyMapping('+radiotalk', 'Talk over Radio', 'keyboard', GetConvar('voice_defaultRadio', 'LMENU'))
+	RegisterKeyMapping('+radiotalk', 'Talk over Radio', 'keyboard', GetConvar('voice_defaultRadio', 'CAPITAL'))
 end
 
 --- event syncRadio
