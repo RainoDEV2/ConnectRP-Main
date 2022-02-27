@@ -94,7 +94,7 @@ function openCharMenu(bool)
     SetWeatherTypePersist('EXTRASUNNY')
     SetWeatherTypeNow('EXTRASUNNY')
     SetWeatherTypeNowPersist('EXTRASUNNY')
-    NetworkOverrideClockTime(22, 0, 0)
+    NetworkOverrideClockTime(12, 0, 0)
 
 
     if bool == true then
