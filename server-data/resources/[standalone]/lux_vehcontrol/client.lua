@@ -443,10 +443,10 @@ Citizen.CreateThread(function()
 							-- TOG DFLT SRN LIGHTS
 							if IsDisabledControlJustReleased(0, 85) then
 								if IsVehicleSirenOn(veh) then
-									--PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+									PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 									SetVehicleSiren(veh, false)
 								else
-									--PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+									PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 									SetVehicleSiren(veh, true)
 									count_bcast_timer = delay_bcast_timer
 								end		
