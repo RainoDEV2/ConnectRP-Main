@@ -47,7 +47,7 @@ end)
 local bike = {
     `bmx`,
 }
-exports["qb-target"]:AddTargetModel(bikes, {
+exports["qb-target"]:AddTargetModel(bike, {
 	options = {
 		{
 			event = "pickup:bike",
