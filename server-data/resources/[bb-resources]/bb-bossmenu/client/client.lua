@@ -12,8 +12,8 @@ end)
 
 local isInMenu = false
 
-RegisterNetEvent('bb-bossmenu:client:openMenu')
-AddEventHandler('bb-bossmenu:client:openMenu', function(employees, jobdata)
+RegisterNetEvent('rl-bossmenu:client:openMenu')
+AddEventHandler('rl-bossmenu:client:openMenu', function(employees, jobdata)
     local employeesHTML, gradesHTML, recruitHTML = '', '', ''
 
     for _, player in pairs(employees) do
@@ -52,8 +52,8 @@ AddEventHandler('bb-bossmenu:client:openMenu', function(employees, jobdata)
     })
 end)
 
-RegisterNetEvent('bb-bossmenu:client:refreshPage')
-AddEventHandler('bb-bossmenu:client:refreshPage', function(data, list)
+RegisterNetEvent('rl-bossmenu:client:refreshPage')
+AddEventHandler('rl-bossmenu:client:refreshPage', function(data, list)
     if data == 'employee' then
         local employeesHTML = ''
         for _, player in pairs(list) do
@@ -92,8 +92,8 @@ AddEventHandler('bb-bossmenu:client:refreshPage', function(data, list)
     end
 end)
 
-RegisterNetEvent('bb-bossmenu:client:refreshSociety')
-AddEventHandler('bb-bossmenu:client:refreshSociety', function(job, data)
+RegisterNetEvent('rl-bossmenu:client:refreshSociety')
+AddEventHandler('rl-bossmenu:client:refreshSociety', function(job, data)
     if RLCore and RLCore.Functions.GetPlayerData().job.name == job then
         SendNUIMessage({
             open = true,
@@ -117,7 +117,7 @@ RegisterNUICallback('openStash', function(data)
 end)
 
 RegisterNUICallback('giveJob', function(data)
-    TriggerServerEvent('bb-bossmenu:server:giveJob', data)
+    TriggerServerEvent('rl-bossmenu:server:giveJob', data)
 end)
 
 RegisterNUICallback('openRecruit', function(data)
@@ -130,16 +130,16 @@ RegisterNUICallback('openRecruit', function(data)
             end 
         end
 
-        TriggerServerEvent("bb-bossmenu:server:updateNearbys", players)
+        TriggerServerEvent("rl-bossmenu:server:updateNearbys", players)
     end)
 end)
 
 RegisterNUICallback('changeGrade', function(data)
-    TriggerServerEvent('bb-bossmenu:server:updateGrade', data)
+    TriggerServerEvent('rl-bossmenu:server:updateGrade', data)
 end)
 
 RegisterNUICallback('fireEmployee', function(data)
-    TriggerServerEvent('bb-bossmenu:server:fireEmployee', data)
+    TriggerServerEvent('rl-bossmenu:server:fireEmployee', data)
 end)
 
 RegisterNUICallback('closeNUI', function()
@@ -149,12 +149,12 @@ end)
 
 RegisterNUICallback('withdraw', function(data)
     local amount = tonumber(data.amount)
-    TriggerServerEvent("bb-bossmenu:server:withdrawMoney", amount)
+    TriggerServerEvent("rl-bossmenu:server:withdrawMoney", amount)
 end)
 
 RegisterNUICallback('deposit', function(data)
     local amount = tonumber(data.amount)
-    TriggerServerEvent("bb-bossmenu:server:depositMoney", amount)
+    TriggerServerEvent("rl-bossmenu:server:depositMoney", amount)
 end)
 
 RegisterCommand('closeboss', function()

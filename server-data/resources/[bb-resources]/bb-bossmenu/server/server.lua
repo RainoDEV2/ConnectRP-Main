@@ -20,8 +20,8 @@ CreateThread(function()
     end
 end)
 
-RegisterServerEvent("bb-bossmenu:server:withdrawMoney")
-AddEventHandler("bb-bossmenu:server:withdrawMoney", function(amount)
+RegisterServerEvent("rl-bossmenu:server:withdrawMoney")
+AddEventHandler("rl-bossmenu:server:withdrawMoney", function(amount)
     local src = source
     local xPlayer = RLCore.Functions.GetPlayer(src)
     local job = xPlayer.PlayerData.job.name
@@ -38,13 +38,13 @@ AddEventHandler("bb-bossmenu:server:withdrawMoney", function(amount)
         return
     end
 
-    TriggerClientEvent('bb-bossmenu:client:refreshSociety', -1, job, Accounts[job])
+    TriggerClientEvent('rl-bossmenu:client:refreshSociety', -1, job, Accounts[job])
     SaveResourceFile(GetCurrentResourceName(), "./database.json", json.encode(Accounts), -1)
     TriggerEvent('bb-logs:server:createLog', 'bossmenu', 'Withdraw Money', "Successfully withdrawn $" .. amount .. ' (' .. job .. ')', src)
 end)
 
-RegisterServerEvent("bb-bossmenu:server:depositMoney")
-AddEventHandler("bb-bossmenu:server:depositMoney", function(amount)
+RegisterServerEvent("rl-bossmenu:server:depositMoney")
+AddEventHandler("rl-bossmenu:server:depositMoney", function(amount)
     local src = source
     local xPlayer = RLCore.Functions.GetPlayer(src)
     local job = xPlayer.PlayerData.job.name
@@ -60,24 +60,24 @@ AddEventHandler("bb-bossmenu:server:depositMoney", function(amount)
         return
     end
 
-    TriggerClientEvent('bb-bossmenu:client:refreshSociety', -1, job, Accounts[job])
+    TriggerClientEvent('rl-bossmenu:client:refreshSociety', -1, job, Accounts[job])
     SaveResourceFile(GetCurrentResourceName(), "./database.json", json.encode(Accounts), -1)
     TriggerEvent('bb-logs:server:createLog', 'bossmenu', 'Deposit Money', "Successfully deposited $" .. amount .. ' (' .. job .. ')', src)
 end)
 
-RegisterServerEvent("bb-bossmenu:server:addAccountMoney")
-AddEventHandler("bb-bossmenu:server:addAccountMoney", function(account, amount)
+RegisterServerEvent("rl-bossmenu:server:addAccountMoney")
+AddEventHandler("rl-bossmenu:server:addAccountMoney", function(account, amount)
     if not Accounts[account] then
         Accounts[account] = 0
     end
     
     Accounts[account] = Accounts[account] + amount
-    TriggerClientEvent('bb-bossmenu:client:refreshSociety', -1, account, Accounts[account])
+    TriggerClientEvent('rl-bossmenu:client:refreshSociety', -1, account, Accounts[account])
     SaveResourceFile(GetCurrentResourceName(), "./database.json", json.encode(Accounts), -1)
 end)
 
-RegisterServerEvent("bb-bossmenu:server:removeAccountMoney")
-AddEventHandler("bb-bossmenu:server:removeAccountMoney", function(account, amount)
+RegisterServerEvent("rl-bossmenu:server:removeAccountMoney")
+AddEventHandler("rl-bossmenu:server:removeAccountMoney", function(account, amount)
     if not Accounts[account] then
         Accounts[account] = 0
     end
@@ -86,12 +86,12 @@ AddEventHandler("bb-bossmenu:server:removeAccountMoney", function(account, amoun
         Accounts[account] = Accounts[account] - amount
     end
 
-    TriggerClientEvent('bb-bossmenu:client:refreshSociety', -1, account, Accounts[account])
+    TriggerClientEvent('rl-bossmenu:client:refreshSociety', -1, account, Accounts[account])
     SaveResourceFile(GetCurrentResourceName(), "./database.json", json.encode(Accounts), -1)
 end)
 
-RegisterServerEvent("bb-bossmenu:server:openMenu")
-AddEventHandler("bb-bossmenu:server:openMenu", function()
+RegisterServerEvent("rl-bossmenu:server:openMenu")
+AddEventHandler("rl-bossmenu:server:openMenu", function()
     local src = source
     local xPlayer = RLCore.Functions.GetPlayer(src)
     local job = xPlayer.PlayerData.job
@@ -125,16 +125,16 @@ AddEventHandler("bb-bossmenu:server:openMenu", function()
                 end
             end
 
-            TriggerClientEvent('bb-bossmenu:client:openMenu', src, employees, RLCore.Shared.Jobs[job.name])
-            TriggerClientEvent('bb-bossmenu:client:refreshSociety', -1, job.name, Accounts[job.name])
+            TriggerClientEvent('rl-bossmenu:client:openMenu', src, employees, RLCore.Shared.Jobs[job.name])
+            TriggerClientEvent('rl-bossmenu:client:refreshSociety', -1, job.name, Accounts[job.name])
         end)
     else
         TriggerClientEvent('RLCore:Notify', src, "You are not the boss, how did you reach here bitch?!", "error")
     end
 end)
 
-RegisterServerEvent('bb-bossmenu:server:fireEmployee')
-AddEventHandler('bb-bossmenu:server:fireEmployee', function(data)
+RegisterServerEvent('rl-bossmenu:server:fireEmployee')
+AddEventHandler('rl-bossmenu:server:fireEmployee', function(data)
     local src = source
     local xPlayer = RLCore.Functions.GetPlayer(src)
     local xEmployee = RLCore.Functions.GetPlayerByCitizenId(data.source)
@@ -169,7 +169,7 @@ AddEventHandler('bb-bossmenu:server:fireEmployee', function(data)
                             })
                         end
                     end
-                    TriggerClientEvent('bb-bossmenu:client:refreshPage', src, 'employee', employees)
+                    TriggerClientEvent('rl-bossmenu:client:refreshPage', src, 'employee', employees)
                 end
             end)
         else
@@ -218,7 +218,7 @@ AddEventHandler('bb-bossmenu:server:fireEmployee', function(data)
                             end
                         end
 
-                        TriggerClientEvent('bb-bossmenu:client:refreshPage', src, 'employee', employees)
+                        TriggerClientEvent('rl-bossmenu:client:refreshPage', src, 'employee', employees)
                     end
                 end)
             else
@@ -228,8 +228,8 @@ AddEventHandler('bb-bossmenu:server:fireEmployee', function(data)
     end
 end)
 
-RegisterServerEvent('bb-bossmenu:server:giveJob')
-AddEventHandler('bb-bossmenu:server:giveJob', function(data)
+RegisterServerEvent('rl-bossmenu:server:giveJob')
+AddEventHandler('rl-bossmenu:server:giveJob', function(data)
     local src = source
     local xPlayer = RLCore.Functions.GetPlayer(src)
     local xTarget = RLCore.Functions.GetPlayerByCitizenId(data.source)
@@ -245,8 +245,8 @@ AddEventHandler('bb-bossmenu:server:giveJob', function(data)
     end
 end)
 
-RegisterServerEvent('bb-bossmenu:server:updateGrade')
-AddEventHandler('bb-bossmenu:server:updateGrade', function(data)
+RegisterServerEvent('rl-bossmenu:server:updateGrade')
+AddEventHandler('rl-bossmenu:server:updateGrade', function(data)
     local src = source
     local xPlayer = RLCore.Functions.GetPlayer(src)
     local xEmployee = RLCore.Functions.GetPlayerByCitizenId(data.source)
@@ -280,7 +280,7 @@ AddEventHandler('bb-bossmenu:server:updateGrade', function(data)
                         end
                     end
 
-                    TriggerClientEvent('bb-bossmenu:client:refreshPage', src, 'employee', employees)
+                    TriggerClientEvent('rl-bossmenu:client:refreshPage', src, 'employee', employees)
                 end
             end)
         else
@@ -320,7 +320,7 @@ AddEventHandler('bb-bossmenu:server:updateGrade', function(data)
                             end
                         end
 
-                        TriggerClientEvent('bb-bossmenu:client:refreshPage', src, 'employee', employees)
+                        TriggerClientEvent('rl-bossmenu:client:refreshPage', src, 'employee', employees)
                     end
                 end)
             else
@@ -330,8 +330,8 @@ AddEventHandler('bb-bossmenu:server:updateGrade', function(data)
     end
 end)
 
-RegisterServerEvent('bb-bossmenu:server:updateNearbys')
-AddEventHandler('bb-bossmenu:server:updateNearbys', function(data)
+RegisterServerEvent('rl-bossmenu:server:updateNearbys')
+AddEventHandler('rl-bossmenu:server:updateNearbys', function(data)
     local src = source
     local players = {}
     local xPlayer = RLCore.Functions.GetPlayer(src)
@@ -345,7 +345,7 @@ AddEventHandler('bb-bossmenu:server:updateNearbys', function(data)
         end
     end
 
-    TriggerClientEvent('bb-bossmenu:client:refreshPage', src, 'recruits', players)
+    TriggerClientEvent('rl-bossmenu:client:refreshPage', src, 'recruits', players)
 end)
 
 function GetAccount(account)
