@@ -377,7 +377,7 @@ Citizen.CreateThread(function()
 									count_ind_timer = 0
 									actv_ind_timer = false
 									state_indic[veh] = ind_state_o
-									PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+									--PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 									TogIndicStateForVeh(veh, state_indic[veh])
 									count_bcast_timer = delay_bcast_timer
 								else
@@ -427,12 +427,12 @@ Citizen.CreateThread(function()
 						end
 						
 						if not IsVehicleSirenOn(veh) and state_lxsiren[veh] > 0 then
-							PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+							--PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 							SetLxSirenStateForVeh(veh, 0)
 							count_bcast_timer = delay_bcast_timer
 						end
 						if not IsVehicleSirenOn(veh) and state_pwrcall[veh] == true then
-							PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+							--PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 							TogPowercallStateForVeh(veh, false)
 							count_bcast_timer = delay_bcast_timer
 						end
@@ -443,10 +443,10 @@ Citizen.CreateThread(function()
 							-- TOG DFLT SRN LIGHTS
 							if IsDisabledControlJustReleased(0, 85) then
 								if IsVehicleSirenOn(veh) then
-									PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+									--PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 									SetVehicleSiren(veh, false)
 								else
-									PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+									--PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 									SetVehicleSiren(veh, true)
 									count_bcast_timer = delay_bcast_timer
 								end		
@@ -456,12 +456,12 @@ Citizen.CreateThread(function()
 								local cstate = state_lxsiren[veh]
 								if cstate == 0 then
 									if IsVehicleSirenOn(veh) then
-										PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1) -- on
+										--PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1) -- on
 										SetLxSirenStateForVeh(veh, 1)
 										count_bcast_timer = delay_bcast_timer
 									end
 								else
-									PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1) -- off
+									--PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1) -- off
 									SetLxSirenStateForVeh(veh, 0)
 									count_bcast_timer = delay_bcast_timer
 								end
@@ -469,12 +469,12 @@ Citizen.CreateThread(function()
 							-- POWERCALL
 							elseif IsDisabledControlJustReleased(0, 172) then
 								if state_pwrcall[veh] == true then
-									PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+									--PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 									TogPowercallStateForVeh(veh, false)
 									count_bcast_timer = delay_bcast_timer
 								else
 									if IsVehicleSirenOn(veh) then
-										PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+										--PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 										TogPowercallStateForVeh(veh, true)
 										count_bcast_timer = delay_bcast_timer
 									end
@@ -488,7 +488,7 @@ Citizen.CreateThread(function()
 									if IsVehicleSirenOn(veh) then
 										local cstate = state_lxsiren[veh]
 										local nstate = 1
-										PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1) -- on
+										--PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1) -- on
 										if cstate == 1 then
 											nstate = 2
 										elseif cstate == 2 then
@@ -566,11 +566,11 @@ Citizen.CreateThread(function()
 								if cstate == ind_state_l then
 									state_indic[veh] = ind_state_o
 									actv_ind_timer = false
-									PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+									--PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 								else
 									state_indic[veh] = ind_state_l
 									actv_ind_timer = true
-									PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+									--PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 								end
 								TogIndicStateForVeh(veh, state_indic[veh])
 								count_ind_timer = 0
@@ -581,11 +581,11 @@ Citizen.CreateThread(function()
 								if cstate == ind_state_r then
 									state_indic[veh] = ind_state_o
 									actv_ind_timer = false
-									PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+									--PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 								else
 									state_indic[veh] = ind_state_r
 									actv_ind_timer = true
-									PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+									--PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 								end
 								TogIndicStateForVeh(veh, state_indic[veh])
 								count_ind_timer = 0
@@ -596,10 +596,10 @@ Citizen.CreateThread(function()
 									local cstate = state_indic[veh]
 									if cstate == ind_state_h then
 										state_indic[veh] = ind_state_o
-										PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+										--PlaySoundFrontend(-1, "NAV_UP_DOWN", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 									else
 										state_indic[veh] = ind_state_h
-										PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+										--PlaySoundFrontend(-1, "NAV_LEFT_RIGHT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
 									end
 									TogIndicStateForVeh(veh, state_indic[veh])
 									actv_ind_timer = false
