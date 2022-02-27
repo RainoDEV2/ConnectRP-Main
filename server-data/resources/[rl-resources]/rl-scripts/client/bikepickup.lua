@@ -44,8 +44,8 @@ AddEventHandler('pickup:bike', function()
     end
 end)
 
-local bikes = {
-	"bmx"
+local bike = {
+    `bmx`,
 }
 exports["qb-target"]:AddTargetModel(bikes, {
 	options = {
