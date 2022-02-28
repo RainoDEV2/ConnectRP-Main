@@ -106,7 +106,7 @@ Citizen.CreateThread(function()
                     type = "client",
                     event = "clothingMenuThanks",
                     icon = "fas fa-box",
-                    label = "CLothing Store",
+                    label = "Clothing Store",
                     job = "tuner",
                 }, 
         },
