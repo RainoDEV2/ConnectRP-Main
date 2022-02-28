@@ -241,4 +241,20 @@ exports["qb-target"]:AddTargetBone(bones, {
     distance = 1.5
 })
 
+local bike = {
+    `bmx`,
+}
+exports["qb-target"]:AddTargetModel(bike, {
+	options = {
+		{
+			event = "pickup:bike",
+			icon = "fas fa-bicycle",
+			label = "Pickup Bike",
+			--job = "tuner",
 
+
+		},
+	},
+
+	distance = 1.5
+})
