@@ -423,12 +423,13 @@ RegisterNUICallback('updateclothes', function(data, cb)
 end)
 
 RegisterNUICallback('customskin', function(data, cb)
-    if canUseCustomSkins() then
+    print("CHECKING MODEL")
+    --if canUseCustomSkins() then
         local valid_model = isInSkins(data)
         if valid_model then
             SetSkin(GetHashKey(data), true)
         end
-    end
+    --end
 end)
 
 RegisterNUICallback('setped', function(data, cb)
