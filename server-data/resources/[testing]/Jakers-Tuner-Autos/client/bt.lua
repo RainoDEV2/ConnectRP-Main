@@ -97,9 +97,9 @@ Citizen.CreateThread(function()
             options = {
                 {
                     type = "client",
-                    event = "qb-clothing:client:openOutfitMenu",
+                    event = "rl-outfits-ido:client:openOutfits",
                     icon = "fas fa-box",
-                    label = "Outfits SOONTM",
+                    label = "Outfits",
                     job = "tuner",
                 },
         },
