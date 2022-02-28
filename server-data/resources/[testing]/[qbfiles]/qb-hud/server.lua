@@ -3,17 +3,17 @@ local RLCore = exports['rl-core']:GetCoreObject()
 
 local ResetStress = false
 
-RLCore.Commands.Add('cash', 'Check Cash Balance', {}, false, function(source, args)
-    local Player = RLCore.Functions.GetPlayer(source)
-    local cashamount = Player.PlayerData.money.cash
-    TriggerClientEvent('hud:client:ShowAccounts', source, 'cash', cashamount)
+RLCore.Commands.Add("cash", "Check your cash balance", {}, false, function(source, args)
+	local src = source
+	local xPlayer = RLCore.Functions.GetPlayer(src)
+	TriggerClientEvent('hud:client:ShowMoney', source, xPlayer['PlayerData']['money']['cash'])
 end)
-
-RLCore.Commands.Add('bank', 'Check Bank Balance', {}, false, function(source, args)
-    local Player = RLCore.Functions.GetPlayer(source)
-    local bankamount = Player.PlayerData.money.bank
-    TriggerClientEvent('hud:client:ShowAccounts', source, 'bank', bankamount)
-end)
+--[[ 
+RLCore.Commands.Add("bank", "Check your bank balance", {}, false, function(source, args)
+	local src = source
+	local xPlayer = RLCore.Functions.GetPlayer(src)
+	TriggerClientEvent('hud:client:ShowMoney', source, xPlayer['PlayerData']['money']['bank'])
+end) ]]
 
 RLCore.Commands.Add("dev", "Enable/Disable developer Mode", {}, false, function(source, args)
     TriggerClientEvent("rl-admin:client:ToggleDevmode", source)
