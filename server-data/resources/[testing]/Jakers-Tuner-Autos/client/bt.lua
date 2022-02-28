@@ -97,15 +97,24 @@ Citizen.CreateThread(function()
             options = {
                 {
                     type = "client",
-                    event = "rl-outfits-ido:client:openOutfits",
+                    event = "rl-outfits-ido:client:forceUI",
                     icon = "fas fa-box",
                     label = "Outfits",
                     job = "tuner",
-                },
+                }, 
+                {
+                    type = "client",
+                    event = "clothingMenuThanks",
+                    icon = "fas fa-box",
+                    label = "CLothing Store",
+                    job = "tuner",
+                }, 
         },
             distance = 3.5
     })
 end)
+
+
 
 Citizen.CreateThread(function()
     exports['qb-target']:AddBoxZone("MechanicShop", vector3(128.62, -3014.76, 7.04), 1.8, 2.6, { Config.MechanicShop,

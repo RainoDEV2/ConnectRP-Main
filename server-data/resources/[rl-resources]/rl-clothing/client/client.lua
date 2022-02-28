@@ -811,6 +811,21 @@ function OpenMenu(name)
     end
 end
 
+RegisterNetEvent("clothingMenuThanks", function()
+    player = GetPlayerPed(-1)
+    oldPed = GetCurrentPed()
+    local isAllowed = false
+    if(oldPed.model == 1885233650 or oldPed.model == -1667301416) then isAllowed = true end
+    if((oldPed.model ~= 1885233650 or oldPed.model ~= -1667301416) and (name == "clothesmenu" or name == "tattoomenu" or name == "healmenu")) then isAllowed = true end
+    if isAllowed then
+        FreezePedCameraRotation(player, true)
+        RefreshUI()
+        EnableGUI(true, "clothesmenu")
+    else
+        RLCore.Functions.Notify('You are not welcome here!', 'error')
+    end
+end )
+
 function Save(save)
     if save then
         data = GetCurrentPed()
@@ -930,7 +945,7 @@ Citizen.CreateThread(function()
             end
 
             if (not enabled) then
-                DisplayHelpText(menu[2])
+                DisplayHelpText(menu[2]) 
 
                 if IsControlJustPressed(1, 311) then
                     TriggerServerEvent("clothing:checkMoney",menu[1],StoreCost)
