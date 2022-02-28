@@ -39,5 +39,7 @@ files({
 export "CreateHashList"
 export "GetTatCategs"
 export "GetCustomSkins"
+export "GetCurrentPed"
+export "IsNearShopMenu"
 
 client_script 'client/hook.lua'

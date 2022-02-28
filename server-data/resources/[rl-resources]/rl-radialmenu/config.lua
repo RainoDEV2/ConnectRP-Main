@@ -24,6 +24,8 @@ local cuffStates = {}
 
 local deadcooldown = false
 
+--
+
 rootMenuConfig =  {
     {
         id = "policeDeadA",
@@ -43,6 +45,18 @@ rootMenuConfig =  {
         enableMenu = function()
             local Data = RLCore.Functions.GetPlayerData()
             return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and IsPedInAnyVehicle(PlayerPedId(), false) and garageClose)
+        end
+    },
+
+    {
+        id = "clothingNear",
+        displayName = "Outfits",
+        icon = "#house-setoutift",
+        functionName = "rl-outfits-ido:client:openOutfits",
+        enableMenu = function()
+            local Data = RLCore.Functions.GetPlayerData()
+            local clothing = exports["rl-clothing"]:IsNearShopMenu()
+            return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and clothing <= 5.0)
         end
     },
 

@@ -838,6 +838,23 @@ function IsNearShop(shops)
 		end
 
 		if comparedst < 5.0 then
+			
+		end
+	end
+	return dstchecked
+end
+
+function IsNearShopMenu()
+    local dstchecked = 1000
+    local plyPos = GetEntityCoords(GetPlayerPed(PlayerId()), false)
+	for i = 1, #clothingShops do
+		shop = clothingShops[i]
+		local comparedst = Vdist(plyPos.x, plyPos.y, plyPos.z,shop[1], shop[2], shop[3])
+		if comparedst < dstchecked then
+			dstchecked = comparedst
+		end
+
+		if comparedst < 5.0 then
 			DrawMarker(27,shop[1], shop[2], shop[3], 0, 0, 0, 0, 0, 0, 1.001, 1.0001, 1.7001, 0, 55, 240, 20, 0, 0, 0, 0)
 		end
 	end
@@ -1123,7 +1140,9 @@ AddEventHandler("rl-clothing:restoreOutfit", function()
     end
 end)
 
-RegisterCommand("outfitadd", function(source, args, rawCommand)
+
+
+--[[ RegisterCommand("outfitadd", function(source, args, rawCommand)
     if exports["rl-houses"]:imClosesToRoom2() or exports["rl-apartments"]:imClosesToRoom3() or (IsNearShop(clothingShops) < 9.0) then
         if args[1] and args[2] then
             TriggerEvent('raid_clothes:outfits', 1, args[1], args[2])
@@ -1134,9 +1153,9 @@ RegisterCommand("outfitadd", function(source, args, rawCommand)
     else
         RLCore.Functions.Notify("You are not near a wardrobe!", "error")
     end
-end, false)
+end, false) ]]
 
-RegisterCommand("outfituse", function(source, args, rawCommand)
+--[[ RegisterCommand("outfituse", function(source, args, rawCommand)
     if exports["rl-houses"]:imClosesToRoom2() or exports["rl-apartments"]:imClosesToRoom3() or (IsNearShop(clothingShops) < 9.0) then
         if args[1] then
 
@@ -1153,9 +1172,9 @@ RegisterCommand("outfituse", function(source, args, rawCommand)
     else
         RLCore.Functions.Notify("You are not near a wardrobe!", "error")
     end
-end, false) 
+end, false)  ]]
 
-RegisterCommand("removeoutfit", function(source, args, rawCommand)
+--[[ RegisterCommand("removeoutfit", function(source, args, rawCommand)
     if exports["rl-houses"]:imClosesToRoom2() or exports["rl-apartments"]:imClosesToRoom3() or (IsNearShop(clothingShops) < 9.0) then
         if args[1] then
             TriggerEvent('raid_clothes:outfits', 2, args[1])
@@ -1166,7 +1185,7 @@ RegisterCommand("removeoutfit", function(source, args, rawCommand)
     else
         RLCore.Functions.Notify("You are not near a wardrobe!", "error")
     end
-end, false) 
+end, false)  ]]
  
 RegisterCommand("outfits", function(source, args, rawCommand)
     if exports["rl-houses"]:imClosesToRoom2() or exports["rl-apartments"]:imClosesToRoom3() or (IsNearShop(clothingShops) < 9.0) then 
