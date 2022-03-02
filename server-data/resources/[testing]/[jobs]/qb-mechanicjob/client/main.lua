@@ -851,7 +851,7 @@ CreateThread(function()
     SetBlipColour(Blip, 0)
     SetBlipAlpha(Blip, 0.7)
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName("Autocare Mechanic")
+    AddTextComponentSubstringPlayerName("Hayes Autos")
     EndTextCommandSetBlipName(Blip)
 end)
 
