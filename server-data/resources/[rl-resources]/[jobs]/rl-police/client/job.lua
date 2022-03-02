@@ -871,15 +871,15 @@ RegisterNetEvent('police:duty', function()
         },
         {
             id = 2,
-            header = "Go On Duty",
-            txt = "Time To Patrol",
+            header = "Clock In",
+            txt = "Start Work",
             params = {
                 event = "police:client:on",
             }
         },
         {
             id = 3,
-            header = "Go Off Duty",
+            header = "Clock Out",
             txt = "Time For Some Netflix",
             params = {
                 event = "police:client:off",

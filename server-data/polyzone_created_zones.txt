@@ -50,3 +50,39 @@ BoxZone:Create(vector3(-1427.13, -458.27, 35.91), 0.3, 0.5, {
   maxZ=35.86
 })
 
+--Name: storage2 | 2022-03-02T21:52:33Z
+BoxZone:Create(vector3(-1414.34, -452.67, 35.91), 4.8, 2, {
+  name="storage2",
+  heading=302,
+  --debugPoly=true,
+  minZ=34.91,
+  maxZ=37.11
+})
+
+--Name: mechout | 2022-03-02T22:00:28Z
+BoxZone:Create(vector3(-1425.59, -457.67, 35.91), 0.8, 2.6, {
+  name="mechout",
+  heading=302,
+  --debugPoly=true,
+  minZ=34.91,
+  maxZ=36.91
+})
+
+--Name: ee | 2022-03-02T22:09:22Z
+BoxZone:Create(vector3(-1430.25, -454.24, 35.91), 0.5, 0.3, {
+  name="ee",
+  heading=307,
+  --debugPoly=true,
+  minZ=35.91,
+  maxZ=36.06
+})
+
+--Name: ff | 2022-03-02T22:21:58Z
+BoxZone:Create(vector3(-1421.58, -456.45, 35.91), 3.8, 1, {
+  name="ff",
+  heading=302,
+  --debugPoly=true,
+  minZ=34.91,
+  maxZ=37.31
+})
+

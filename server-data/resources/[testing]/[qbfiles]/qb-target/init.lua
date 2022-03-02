@@ -92,6 +92,26 @@ Config.BoxZones = {
         },
         distance = 2.5
     },
+    ["boxzone8"] = {
+        name = "MechDutyClipboard",
+        coords = vector3(-1430.25, -454.24, 35.91),  
+        length = 0.5,  
+        width = 0.3,
+        heading = 307, 
+        debugPoly = false,
+        minZ = 35.91,
+        maxZ = 36.06,
+        options = { 
+            { 
+                type = "client",
+                event = "police:duty",
+                icon = "fas fa-sign-in-alt",
+                label = "Set Duty",
+                job = "mechanic",  
+            }, 
+        }, 
+        distance = 2.5
+    },
 	["boxzone2"] = {
         name = "pdbossmenu",
         coords = vector3(461.46, -986.19, 30.73),  
@@ -172,8 +192,75 @@ Config.BoxZones = {
         },
         distance = 2.5
     },
+    --STASHES
+    ["boxzone6"] = {
+        name = "mechstash",
+        coords = vector3(-1414.34, -452.67, 35.91),  
+        length = 4.8, 
+        width = 2.0,
+        heading = 302, 
+        debugPoly = false,
+        minZ = 34.91,
+        maxZ = 37.11,
+        options = { 
+            { 
+                type = "client",
+                event = "mech:openStash",
+                icon = "fas fa-sign-in-alt",
+                label = "Open Storage",
+                job = "mechanic", 
+            }, 
+        },
+        distance = 2.5
+    },
+    --OUTFITS
+    ["boxzone7"] = {
+        name = "mechoutfits",
+        coords = vector3(-1425.59, -457.67, 35.91),  
+        length = 0.8,  
+        width = 2.6,
+        heading = 302, 
+        debugPoly = false,
+        minZ = 34.91,
+        maxZ = 36.91,
+        options = { 
+            { 
+                type = "client",
+                event = "rl-outfits-ido:client:forceUI",
+                icon = "fas fa-sign-in-alt",
+                label = "Outfits",
+                job = "mechanic", 
+            }, 
+        }, 
+        distance = 2.5
+    },
+    --shops
+    ["boxzone10"] = {
+        name = "mechshop",
+        coords = vector3(-1421.58, -456.45, 35.91),  
+        length = 3.8,  
+        width = 1.0,
+        heading = 302, 
+        debugPoly = false,
+        minZ = 34.91,
+        maxZ = 37.31,
+        options = { 
+            { 
+                type = "client",
+                event = "inventory:client:OpenMechanicShop",
+                icon = "fas fa-sign-in-alt",
+                label = "Shop",
+                job = "mechanic", 
+            }, 
+        }, 
+        distance = 2.5
+    },
 
 }
+
+
+
+
 
 Config.PolyZones = {
 
@@ -356,3 +443,13 @@ end
         TriggerServerEvent("police:server:UpdateBlips")
     end)
 ]]--
+
+RegisterNetEvent('mech:openStash')
+AddEventHandler('mech:openStash', function()
+    TriggerEvent("inventory:client:SetCurrentStash", "mechanicstash")
+    TriggerServerEvent("inventory:server:OpenInventory", "stash", "mechanicstash", {
+    maxweight = 4000000,
+    slots = 250,
+    })
+end)
+
