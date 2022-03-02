@@ -74,8 +74,8 @@ Citizen.CreateThread(function()
         }, {
             options = {
                 {
-                    type = "server",
-                    event = "bb-bossmenu:server:openMenu",
+                    type = "client",
+                    event = "qb-bossmenu:client:OpenMenu",  
                     icon = "fas fa-shield-alt",
                     label = "Staff room",
                     job = "tuner",

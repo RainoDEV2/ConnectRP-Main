@@ -1,1 +1,15 @@
-[32m[ghmattimysql][0m Database server connection established.
+[ERROR] connect ETIMEDOUT
+[ERROR] [MySQL] [phone] An error happens on MySQL for query "DELETE FROM phone_yp : []": connect ETIMEDOUT
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query " : []": ER_EMPTY_QUERY: Query was empty
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query " : []": ER_EMPTY_QUERY: Query was empty
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query " : []": ER_EMPTY_QUERY: Query was empty
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query " : []": ER_EMPTY_QUERY: Query was empty
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query " : []": ER_EMPTY_QUERY: Query was empty
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query " : []": ER_EMPTY_QUERY: Query was empty
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query "50,tuner : []": ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '50,tuner' at line 1
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query " : []": ER_EMPTY_QUERY: Query was empty
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query " : []": ER_EMPTY_QUERY: Query was empty
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query "50,tuner : []": ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '50,tuner' at line 1
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query "0,tuner : []": ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '0,tuner' at line 1
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query "5,tuner : []": ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '5,tuner' at line 1
+[ERROR] [MySQL] [rl-core] An error happens on MySQL for query " : []": ER_EMPTY_QUERY: Query was empty

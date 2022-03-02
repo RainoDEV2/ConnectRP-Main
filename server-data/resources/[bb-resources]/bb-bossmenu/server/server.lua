@@ -135,7 +135,7 @@ end)
 
 RegisterServerEvent('rl-bossmenu:server:fireEmployee')
 AddEventHandler('rl-bossmenu:server:fireEmployee', function(data)
-    local src = source
+    local src = source 
     local xPlayer = RLCore.Functions.GetPlayer(src)
     local xEmployee = RLCore.Functions.GetPlayerByCitizenId(data.source)
 
