@@ -1,35 +1,9 @@
-RLCore = nil
+local RLCore = exports['rl-core']:GetCoreObject()
 
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(10)
-        if RLCore == nil then
-            TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
-            Citizen.Wait(200)
-        end
-    end
-end)
-
---[[
-cl_bennys.lua
-Functionality that handles the player for Benny's.
-Handles applying mods, etc.
-]]
-
---#[Global Variables]#--
-isPlyInBennys = false
-
---#[Local Variables]#--
+local isPlyInBennys = false
 local plyFirstJoin = false
-
-
 local nearDefault = false
-local bennyLocation = vector3(144.95903, -3030.305, 6.438694)
-local bennyPaletoLocation = vector3(109.89, 6627.07, 31.78)
-
-
 local bennyHeading = 319.73135375977
-
 local originalCategory = nil
 local originalMod = nil
 local originalPrimaryColour = nil
@@ -51,9 +25,25 @@ local originalNeonColourB = nil
 local originalXenonColour = nil
 local originalOldLivery = nil
 local originalPlateIndex = nil
-
 local attemptingPurchase = false
 local isPurchaseSuccessful = false
+local bennyLocation
+
+--Blips
+
+CreateThread(function()
+    for k, v in pairs(bennyGarages) do
+        if v.blip then
+        local blip = AddBlipForCoord(v.coords.x,v.coords.y,v.coords.z)
+        SetBlipSprite(blip, 72)
+        SetBlipScale(blip, 0.7)
+        SetBlipAsShortRange(blip,true)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentString("Benny's Motorworks")
+        EndTextCommandSetBlipName(blip)
+        end
+    end
+end)
 
 --#[Local Functions]#--
 local function isNear(pos1, pos2, distMustBe)
@@ -66,60 +56,8 @@ end
 local function saveVehicle()
     local plyPed = PlayerPedId()
     local veh = GetVehiclePedIsIn(plyPed, false)
-    local vehicleMods = {
-        neon = {},
-        colors = {},
-        extracolors = {},
-        dashColour = -1,
-        interColour = -1,
-        lights = {},
-        tint = GetVehicleWindowTint(veh),
-        wheeltype = GetVehicleWheelType(veh),
-        platestyle = GetVehicleNumberPlateTextIndex(veh),
-        mods = {},
-        smokecolor = {},
-        xenonColor = -1,
-        oldLiveries = 24,
-        extras = {},
-        plateIndex = 0,
-    }
-
-    vehicleMods.xenonColor = GetCurrentXenonColour(veh)
-    vehicleMods.lights[1], vehicleMods.lights[2], vehicleMods.lights[3] = GetVehicleNeonLightsColour(veh)
-    vehicleMods.colors[1], vehicleMods.colors[2] = GetVehicleColours(veh)
-    vehicleMods.extracolors[1], vehicleMods.extracolors[2] = GetVehicleExtraColours(veh)
-    vehicleMods.smokecolor[1], vehicleMods.smokecolor[2], vehicleMods.smokecolor[3] = GetVehicleTyreSmokeColor(veh)
-    vehicleMods.dashColour = GetVehicleInteriorColour(veh)
-    vehicleMods.interColour = GetVehicleDashboardColour(veh)
-    vehicleMods.oldLiveries = GetVehicleLivery(veh)
-    vehicleMods.plateIndex = GetVehicleNumberPlateTextIndex(veh)
-
-    for i = 0, 3 do
-        vehicleMods.neon[i] = IsVehicleNeonLightEnabled(veh, i)
-    end
-
-    for i = 0,16 do
-        vehicleMods.mods[i] = GetVehicleMod(veh,i)
-    end
-
-    for i = 17, 22 do
-        vehicleMods.mods[i] = IsToggleModOn(veh, i)
-    end
-
-    for i = 23, 48 do
-        vehicleMods.mods[i] = GetVehicleMod(veh,i)
-    end
-
-    for i = 1, 12 do
-        local ison = IsVehicleExtraTurnedOn(veh, i)
-        if 1 == tonumber(ison) then
-            vehicleMods.extras[i] = 1
-        else
-            vehicleMods.extras[i] = 0
-        end
-    end
-	local myCar = RLCore.Functions.GetVehicleProperties(veh)
-    TriggerServerEvent('updateVehicle',myCar)  
+    local myCar = RLCore.Functions.GetVehicleProperties(veh)
+    TriggerServerEvent('updateVehicle',myCar)
 end
 
 --#[Global Functions]#--
@@ -128,12 +66,12 @@ function AttemptPurchase(type, upgradeLevel)
     if upgradeLevel ~= nil then
         upgradeLevel = upgradeLevel + 2
     end
-    TriggerServerEvent("rl-bennys:attemptPurchase", type, upgradeLevel)
+    TriggerServerEvent("rl-customs:attemptPurchase", type, upgradeLevel)
 
     attemptingPurchase = true
 
     while attemptingPurchase do
-        Citizen.Wait(1)
+        Wait(1)
     end
 
     if not isPurchaseSuccessful then
@@ -146,10 +84,12 @@ end
 function RepairVehicle()
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local getFuel = GetVehicleFuelLevel(plyVeh)
 
     SetVehicleFixed(plyVeh)
 	SetVehicleDirtLevel(plyVeh, 0.0)
     SetVehiclePetrolTankHealth(plyVeh, 4000.0)
+    SetVehicleFuelLevel(plyVeh, getFuel)
     TriggerEvent('veh.randomDegredation',10,plyVeh,3)
 end
 
@@ -280,7 +220,7 @@ function CheckValidMods(category, id, wheelType)
     end
 
     if id == 14 then
-        for k, v in pairs(vehicleCustomisation) do 
+        for k, v in pairs(vehicleCustomisation) do
             if vehicleCustomisation[k].category == category then
                 hornNames = vehicleCustomisation[k].hornNames
 
@@ -306,7 +246,7 @@ function CheckValidMods(category, id, wheelType)
             end
         end
 
-        validMods[i] = 
+        validMods[i] =
         {
             id = (i - 1),
             name = modName
@@ -376,7 +316,7 @@ function RestoreOriginalWheels()
 
     if originalWheelCategory ~= nil then
         SetVehicleMod(plyVeh, originalWheelCategory, originalWheel, originalCustomWheels)
-        
+
         if GetVehicleClass(plyVeh) == 8 then --Motorcycle
             SetVehicleMod(plyVeh, 24, originalWheel, originalCustomWheels)
         end
@@ -657,7 +597,7 @@ function ApplyWheel(categoryID, wheelID, wheelType)
 
     SetVehicleWheelType(plyVeh, wheelType)
     SetVehicleMod(plyVeh, categoryID, wheelID, doesHaveCustomWheels)
-    
+
     if GetVehicleClass(plyVeh) == 8 then --Motorcycle
         SetVehicleMod(plyVeh, 24, wheelID, doesHaveCustomWheels)
     end
@@ -668,7 +608,7 @@ function ApplyCustomWheel(state)
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
 
     SetVehicleMod(plyVeh, 23, GetVehicleMod(plyVeh, 23), state)
-    
+
     if GetVehicleClass(plyVeh) == 8 then --Motorcycle
         SetVehicleMod(plyVeh, 24, GetVehicleMod(plyVeh, 24), state)
     end
@@ -753,26 +693,11 @@ function ExitBennys()
     isPlyInBennys = false
 end
 
-
-
-
-
-RegisterNetEvent('event:control:bennys')
-AddEventHandler('event:control:bennys', function(useID)
+RegisterNetEvent('event:control:bennys', function(useID)
     if IsPedInAnyVehicle(PlayerPedId(), false) then
-        bennyHeading = 319.73135375977
-        if useID == 1 and not isPlyInBennys then -- Bennys
+        bennyHeading = bennyGarages[useID].coords.w
+        if not isPlyInBennys then -- Bennys
             enterLocation(bennyLocation)
-        end
-    end
-end)
-
-RegisterNetEvent('event:control:bennyss')
-AddEventHandler('event:control:bennyss', function(useID)
-    if IsPedInAnyVehicle(PlayerPedId(), false) then
-        bennyHeading = 221.7938
-        if useID == 1 and not isPlyInBennys then -- Bennys
-            enterLocation(bennyPaletoLocation)
         end
     end
 end)
@@ -802,7 +727,7 @@ function enterLocation(locationsPos)
         else
             DisplayMenu(true, "mainMenu")
         end
-        
+
         DisplayMenuContainer(true)
         PlaySoundFrontend(-1, "OK", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
     end)
@@ -846,97 +771,70 @@ end
 
 -- #MarkedForMarker
 --#[Citizen Threads]#--
-Citizen.CreateThread(function()
-    while true do 
+CreateThread(function()
+    while true do
         local plyPed = PlayerPedId()
 
         if IsPedInAnyVehicle(plyPed, false) then
             local plyPos = GetEntityCoords(plyPed)
+            for k, v in pairs(bennyGarages) do
 
-
-            nearDefault = isNear(plyPos, bennyLocation, 10) 
-
-            if nearDefault then
-
-                if not isPlyInBennys and nearDefault then
-                    DrawMarker(21, bennyLocation.x, bennyLocation.y, bennyLocation.z + 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 148, 0, 211, 255, true, false, 2, true, nil, nil, false)
-                end
-
-
+                nearDefault = isNear(plyPos, vector3(v.coords.x,v.coords.y,v.coords.z), 10)
 
                 if nearDefault then
-                    if not isPlyInBennys then
-                        Draw3DText(bennyLocation.x, bennyLocation.y, bennyLocation.z + 0.5, "[Press ~p~E~w~ - Enter Benny's Motorworks]", 255, 255, 255, 255, 4, 0.45, true, true, true, true, 0, 0, 0, 0, 55)
-                        if IsControlJustReleased(1, 38) then
-                            TriggerEvent('event:control:bennys', 1)
+                    if not isPlyInBennys and nearDefault then
+                        DrawMarker(21, v.coords.x, v.coords.y, v.coords.z + 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 148, 0, 211, 255, true, false, 2, true, nil, nil, false)
+                    end
+
+                    bennyLocation = vector3(v.coords.x, v.coords.y, v.coords.z)
+
+                    if nearDefault then
+                        if not isPlyInBennys then
+                            Draw3DText(v.coords.x, v.coords.y, v.coords.z + 0.5, "[Press ~p~E~w~ - Enter Benny's Motorworks]", 255, 255, 255, 255, 4, 0.45, true, true, true, true, 0, 0, 0, 0, 55)
+                            if IsControlJustReleased(1, 38) then
+				if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
+					if (v.useJob and isAuthorized((RLCore.Functions.GetPlayerData().job.name), k)) or not v.useJob then
+					    TriggerEvent('event:control:bennys', k)
+					else
+					    RLCore.Functions.Notify("You are not authorized", "error")
+					end
+				end
+                            end
+                        else
+                            disableControls()
                         end
-                    else
-                        disableControls()
                     end
                 end
-
-            else
-                Wait(1000)
             end
         else
             Wait(2000)
         end
 
-        Citizen.Wait(1)
-    end
-end)
-
-Citizen.CreateThread(function()
-    while true do 
-        local plyPed = PlayerPedId()
-
-        if IsPedInAnyVehicle(plyPed, false) then
-            local plyPos = GetEntityCoords(plyPed)
-
-
-            nearDefault = isNear(plyPos, bennyPaletoLocation, 10) 
-
-            if nearDefault then
-
-                if not isPlyInBennys and nearDefault then
-                    DrawMarker(21, bennyPaletoLocation.x, bennyPaletoLocation.y, bennyPaletoLocation.z + 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 148, 0, 211, 255, true, false, 2, true, nil, nil, false)
-                end
-
-
-
-                if nearDefault then
-                    if not isPlyInBennys then
-                        Draw3DText(bennyPaletoLocation.x, bennyPaletoLocation.y, bennyPaletoLocation.z + 0.5, "[Press ~p~E~w~ - Enter Billy's Motorworks]", 255, 255, 255, 255, 4, 0.45, true, true, true, true, 0, 0, 0, 0, 55)
-                        if IsControlJustReleased(1, 38) then
-                            TriggerEvent('event:control:bennyss', 1)
-                        end
-                    else
-                        disableControls()
-                    end
-                end
-
-            else
-                Wait(1000)
-            end
-        else
-            Wait(2000)
-        end
-
-        Citizen.Wait(1)
+        Wait(1)
     end
 end)
 
 --#[Event Handlers]#--
-RegisterNetEvent("rl-bennys:purchaseSuccessful")
-AddEventHandler("rl-bennys:purchaseSuccessful", function()
+RegisterNetEvent("rl-customs:purchaseSuccessful", function()
     isPurchaseSuccessful = true
     attemptingPurchase = false
     RLCore.Functions.Notify("Purchase Successful")
 end)
 
-RegisterNetEvent("rl-bennys:purchaseFailed")
-AddEventHandler("rl-bennys:purchaseFailed", function()
+RegisterNetEvent("rl-customs:purchaseFailed", function()
     isPurchaseSuccessful = false
     attemptingPurchase = false
     RLCore.Functions.Notify("Not enough money", "error")
 end)
+
+
+--helper function
+
+function isAuthorized(job, location)
+    for a=1, #bennyGarages[location].job do
+        if job == bennyGarages[location].job[a] then
+            return true
+        end
+    end
+    return false
+end
