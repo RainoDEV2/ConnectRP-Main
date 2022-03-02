@@ -94,7 +94,7 @@ Config.BoxZones = {
     },
 	["boxzone2"] = {
         name = "pdbossmenu",
-        coords = vector3(461.46, -986.19, 30.73),
+        coords = vector3(461.46, -986.19, 30.73),  
         length = 0.5,
         width = 0.6,
         heading = 351,
@@ -106,8 +106,68 @@ Config.BoxZones = {
                 type = "client",
                 event = "qb-bossmenu:client:OpenMenu",
                 icon = "fas fa-sign-in-alt",
-                label = "Toggle Duty",
+                label = "Boss Actions",
                 job = "police", 
+            }, 
+        },
+        distance = 2.5
+    },
+	["boxzone3"] = {
+        name = "emsbossmenu",
+        coords = vector3(310.25, -597.5, 43.28),  
+        length = 0.5,
+        width = 0.6,
+        heading = 335,
+        debugPoly = false,
+        minZ = 38.64,
+        maxZ = 43.48,
+        options = { 
+            {
+                type = "client",
+                event = "qb-bossmenu:client:OpenMenu",
+                icon = "fas fa-sign-in-alt",
+                label = "Boss Actions",
+                job = "ambulance", 
+            }, 
+        },
+        distance = 2.5
+    },
+	["boxzone4"] = {
+        name = "restatebossmenu",
+        coords = vector3(-126.65, -641.76, 168.82),  
+        length = 0.4, 
+        width = 0.25,
+        heading = 5, 
+        debugPoly = false,
+        minZ = 168.62,
+        maxZ = 168.72,
+        options = { 
+            {
+                type = "client",
+                event = "qb-bossmenu:client:OpenMenu",
+                icon = "fas fa-sign-in-alt",
+                label = "Boss Actions",
+                job = "realestate", 
+            }, 
+        },
+        distance = 2.5
+    },
+	["boxzone5"] = {
+        name = "mechbossmenu",
+        coords = vector3(-1427.13, -458.27, 35.91),  
+        length = 0.3, 
+        width = 0.5,
+        heading = 305, 
+        debugPoly = false,
+        minZ = 35.66,
+        maxZ = 35.86,
+        options = { 
+            {
+                type = "client",
+                event = "qb-bossmenu:client:OpenMenu",
+                icon = "fas fa-sign-in-alt",
+                label = "Boss Actions",
+                job = "mechanic", 
             }, 
         },
         distance = 2.5

@@ -23,3 +23,30 @@ BoxZone:Create(vector3(461.46, -986.19, 30.73), 0.5, 0.6, {
   maxZ=30.73
 })
 
+--Name: emsboss | 2022-03-02T20:02:56Z
+BoxZone:Create(vector3(310.25, -597.5, 43.28), 0.3, 0.3, {
+  name="emsboss",
+  heading=335,
+  --debugPoly=true,
+  minZ=38.68,
+  maxZ=43.48
+})
+
+--Name: restateboss | 2022-03-02T20:07:49Z
+BoxZone:Create(vector3(-126.65, -641.76, 168.82), 0.4, 0.25, {
+  name="restateboss",
+  heading=5,
+  --debugPoly=true,
+  minZ=168.62,
+  maxZ=168.72
+})
+
+--Name: mechbossmneu | 2022-03-02T20:16:29Z
+BoxZone:Create(vector3(-1427.13, -458.27, 35.91), 0.3, 0.5, {
+  name="mechbossmneu",
+  heading=305,
+  --debugPoly=true,
+  minZ=35.66,
+  maxZ=35.86
+})
+
