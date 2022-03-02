@@ -97,16 +97,28 @@ function GetAccount(account)
 	return Accounts[account] or 0
 end
 
+function dump(o)
+	if type(o) == 'table' then
+	   local s = '{ '
+	   for k,v in pairs(o) do
+		  if type(k) ~= 'number' then k = '"'..k..'"' end
+		  s = s .. '['..k..'] = ' .. dump(v) .. ','
+	   end
+	   return s .. '} '
+	else
+	   return tostring(o)
+	end
+ end
+
 -- Get Employees
 RLCore.Functions.CreateCallback('qb-bossmenu:server:GetEmployees', function(source, cb, jobname)
 	local src = source
-    local xPlayer = RLCore.Functions.GetPlayer(src)
-    local job = xPlayer.PlayerData.job
 	local employees = {}
 	if not Accounts[jobname] then
 		Accounts[jobname] = 0
 	end
-	RLCore.Functions.ExecuteSql(false, "SELECT * FROM `players` WHERE `job` LIKE '%".. job.name .."%'", function(players) 
+	RLCore.Functions.ExecuteSql(false, "SELECT * FROM `players` WHERE `job` LIKE '%".. jobname .."%'", function(players)
+
 		if players[1] ~= nil then
 			for key, value in pairs(players) do
 				local isOnline = RLCore.Functions.GetPlayerByCitizenId(value.citizenid)
@@ -127,7 +139,10 @@ RLCore.Functions.CreateCallback('qb-bossmenu:server:GetEmployees', function(sour
 					}
 				end
 			end
+			
 			table.sort(employees, function(a, b)
+				print("a:", dump(a.grade.level))
+				print("b:", dump(b.grade.level))
 				return a.grade.level > b.grade.level
 			end)
 		end

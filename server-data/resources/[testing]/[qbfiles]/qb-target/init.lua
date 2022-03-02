@@ -92,6 +92,26 @@ Config.BoxZones = {
         },
         distance = 2.5
     },
+	["boxzone2"] = {
+        name = "pdbossmenu",
+        coords = vector3(461.46, -986.19, 30.73),
+        length = 0.5,
+        width = 0.6,
+        heading = 351,
+        debugPoly = false,
+        minZ = 30.33,
+        maxZ = 30.73,
+        options = { 
+            {
+                type = "client",
+                event = "qb-bossmenu:client:OpenMenu",
+                icon = "fas fa-sign-in-alt",
+                label = "Toggle Duty",
+                job = "police", 
+            }, 
+        },
+        distance = 2.5
+    },
 
 }
 

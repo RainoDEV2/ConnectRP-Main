@@ -14,3 +14,12 @@ BoxZone:Create(vector3(213.1, -796.15, 30.77), 15, 15, {
   --debugPoly=true
 })
 
+--Name: pdbossmenu | 2022-03-02T19:35:21Z
+BoxZone:Create(vector3(461.46, -986.19, 30.73), 0.5, 0.6, {
+  name="pdbossmenu",
+  heading=351,
+  --debugPoly=true,
+  minZ=30.33,
+  maxZ=30.73
+})
+

@@ -286,39 +286,3 @@ RegisterNetEvent('qb-gangmenu:client:SocietyWithdraw', function(saldoattuale)
         TriggerServerEvent("qb-gangmenu:server:withdrawMoney", tonumber(withdraw.amount))
     end
 end)
-
--- MAIN THREAD
-CreateThread(function()
-    while true do
-        local pos = GetEntityCoords(PlayerPedId())
-        local inRangeGang = false
-        local nearGangmenu = false
-        for k, v in pairs(Config.Gangs) do
-            if k == PlayerGang.name and PlayerGang.isboss then
-                if #(pos - v) < 5.0 then
-                    inRangeGang = true
-                    if #(pos - v) <= 1.5 then
-                        if not shownGangMenu then DrawText3DGang(v, "~b~E~w~ - Open Gang Management") end
-                        nearGangmenu = true
-                        if IsControlJustReleased(0, 38) then
-                            TriggerEvent("qb-gangmenu:client:OpenMenu")
-                        end
-                    end
-                    
-                    if not nearGangmenu and shownGangMenu then
-                        CloseMenuFullGang()
-                        shownGangMenu = false
-                    end
-                end
-            end
-        end
-        if not inRangeGang then
-            Wait(1500)
-            if shownGangMenu then
-                CloseMenuFullGang()
-                shownGangMenu = false
-            end
-        end
-        Wait(5)
-    end
-end)
