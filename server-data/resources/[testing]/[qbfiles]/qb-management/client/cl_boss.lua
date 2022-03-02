@@ -81,7 +81,7 @@ RegisterNetEvent('qb-bossmenu:client:OpenMenu', function()
             header = "🚪 Outfits",
             txt = "See Saved Outfits",
             params = {
-                event = "rl-outfits-ido:client:openOutfits",
+                event = "rl-outfits-ido:client:openOutfitsMenu",
             }
         },
         {

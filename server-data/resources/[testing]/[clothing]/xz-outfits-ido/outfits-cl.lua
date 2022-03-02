@@ -82,6 +82,45 @@ RegisterNetEvent("rl-outfits-ido:client:openOutfits", function()
             break 
         end
     end
+end)
+
+RegisterNetEvent("rl-outfits-ido:client:openOutfitsMenu", function()
+    --for k, v in pairs(Config.Zones) do
+    --    if #(GetEntityCoords(PlayerPedId()) - v) < Config.Distance then
+            local menuOptions = {}
+            for k, v in pairs(charOutfits) do
+                local miniTable = {
+                    title = v[1], 
+                    description = "",
+                    sub_menu = {
+                        {
+                            title = "Wear outfit",
+                            description = "",
+                            close = true,
+                            event = "rl-outfits-ido:client:wearOutfit",
+                            eventType = "client",
+                            args = k
+                        },
+                        {
+                            title = "Delete outfit",
+                            description = "You will no longer have the outfit.",
+                            close = true, 
+                            event = "rl-outfits-ido:client:deleteOutfit",
+                            eventType = "client",
+                            args = k,
+                        }
+                    }
+                }
+                menuOptions[#menuOptions + 1] = miniTable
+            end
+            if (#menuOptions >= 1) then
+                exports["xz-menu"]:openMenu(menuOptions)
+            else
+                RLCore.Functions.Notify("You don't have any outfits.", "error", 3500)
+            end        
+            --break 
+    --    end
+    --end
 
 end)
 
