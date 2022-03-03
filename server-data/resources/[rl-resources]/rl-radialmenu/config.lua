@@ -19,6 +19,7 @@ local isHandcuffed = false
 local isHandcuffedAndWalking = false
 local hasOxygenTankOn = false
 local garageClose = false
+local bennysClose = false
 local gangNum = 0
 local cuffStates = {}
 
@@ -37,7 +38,7 @@ rootMenuConfig =  {
             return (Data.metadata["isdead"] or Data.metadata["inlaststand"]) and (Data.job.name == 'police' and Data.job.onduty)
         end
     },
-    {
+    { 
         id = "policeDeadA",
         displayName = "Park",
         icon = "#parking",
@@ -47,6 +48,16 @@ rootMenuConfig =  {
             return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and IsPedInAnyVehicle(PlayerPedId(), false) and garageClose)
         end
     },
+   --[[  {
+        id = "bennysClose",
+        displayName = "Bennys",
+        icon = "#bennys",
+        functionName = "event:control:bennys",
+        enableMenu = function()
+            local Data = RLCore.Functions.GetPlayerData()
+            return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and IsPedInAnyVehicle(PlayerPedId(), false) and (Data.job.name == 'mechanic' and Data.job.onduty) or (Data.job.name == 'tuner' and Data.job.onduty) and bennysClose)
+        end
+    }, ]]
 
     {
         id = "clothingNear",
@@ -1232,6 +1243,17 @@ RegisterNetEvent("menu:garageCloseF")
 AddEventHandler("menu:garageCloseF", function()
     garageClose = false
 end)
+
+RegisterNetEvent("menu:bennysClose")
+AddEventHandler("menu:bennysClose", function()
+    bennysClose = true
+end)
+ 
+RegisterNetEvent("menu:bennysCloseF")
+AddEventHandler("menu:bennysCloseF", function()
+    bennysClose = false
+end)
+
 
 RegisterNetEvent("mdt:Openc")
 AddEventHandler("mdt:Openc", function()

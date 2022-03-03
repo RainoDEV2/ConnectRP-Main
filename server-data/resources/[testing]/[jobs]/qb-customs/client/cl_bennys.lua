@@ -708,10 +708,10 @@ function enterLocation(locationsPos)
     local isMotorcycle = false
 
     SetVehicleModKit(plyVeh, 0)
-    SetEntityCoords(plyVeh, locationsPos)
-    SetEntityHeading(plyVeh, bennyHeading)
-    FreezeEntityPosition(plyVeh, true)
-    SetEntityCollision(plyVeh, false, true)
+    --SetEntityCoords(plyVeh, locationsPos)
+    --SetEntityHeading(plyVeh, bennyHeading)
+    --FreezeEntityPosition(plyVeh, true)
+    --SetEntityCollision(plyVeh, false, true)
 
     if GetVehicleClass(plyVeh) == 8 then --Motorcycle
         isMotorcycle = true
@@ -779,7 +779,43 @@ CreateThread(function()
             local plyPos = GetEntityCoords(plyPed)
             for k, v in pairs(bennyGarages) do
 
-                nearDefault = isNear(plyPos, vector3(v.coords.x,v.coords.y,v.coords.z), 10)
+                --[[ nearOne = isNear(plyPos, vector3(-1423.457, -450.3034, 35.299568), 4)
+                nearTwo = isNear(plyPos, vector3(-1417.736, -445.6535, 35.301452), 4)
+                nearThree = isNear(plyPos, vector3(144.92152, -3030.187, 6.4309024), 4)
+                nearFour = isNear(plyPos, vector3(135.98611, -3029.968, 6.4313211), 4) 
+
+                bennyLocation = vector3(v.coords.x, v.coords.y, v.coords.z)
+
+                if nearOne then 
+                    if not isPlyInBennys then
+                        TriggerEvent("menu:bennysClose", k)
+                    else
+                        disableControls() 
+                    end
+                elseif nearTwo then 
+                    if not isPlyInBennys then
+                        TriggerEvent("menu:bennysClose", k)
+                    else
+                        disableControls() 
+                    end
+                elseif nearThree then 
+                    if not isPlyInBennys then
+                        TriggerEvent("menu:bennysClose", k)
+                    else
+                        disableControls() 
+                    end
+                elseif nearFour then
+                    if not isPlyInBennys then
+                        TriggerEvent("menu:bennysClose", k)
+                    else
+                        disableControls() 
+                    end
+                else
+                    TriggerEvent("menu:bennysCloseF")
+                end ]]
+
+                nearDefault = isNear(plyPos, vector3(v.coords.x, v.coords.y, v.coords.z), 4)
+
 
                 if nearDefault then
                     if not isPlyInBennys and nearDefault then
@@ -792,13 +828,13 @@ CreateThread(function()
                         if not isPlyInBennys then
                             Draw3DText(v.coords.x, v.coords.y, v.coords.z + 0.5, "[Press ~p~E~w~ - Enter Benny's Motorworks]", 255, 255, 255, 255, 4, 0.45, true, true, true, true, 0, 0, 0, 0, 55)
                             if IsControlJustReleased(1, 38) then
-				if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
-					if (v.useJob and isAuthorized((RLCore.Functions.GetPlayerData().job.name), k)) or not v.useJob then
-					    TriggerEvent('event:control:bennys', k)
-					else
-					    RLCore.Functions.Notify("You are not authorized", "error")
-					end
-				end
+                                if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
+                                    if (v.useJob and isAuthorized((RLCore.Functions.GetPlayerData().job.name), k)) or not v.useJob then
+                                        TriggerEvent('event:control:bennys', k)
+                                    else
+                                        RLCore.Functions.Notify("You are not authorized", "error")
+                                    end
+                                end
                             end
                         else
                             disableControls()
