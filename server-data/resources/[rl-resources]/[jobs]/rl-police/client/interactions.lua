@@ -479,10 +479,12 @@ AddEventHandler('police:client:GetCuffed', function(playerId, softCuff)
     loadAnimDict("mp_arresting")
     if not isHandcuffed then
         if not RLCore.Functions.GetPlayerData().metadata["isdead"] then
-            finished = exports["tgiann-skillbar"]:taskBar(2)  
+            finished = exports["tgiann-skillbar"]:taskBar(math.random(1,2))  
         else
             finished = 100
         end
+
+        print(finished)
 
         if softCuff then
             cuffType = 49
@@ -490,7 +492,10 @@ AddEventHandler('police:client:GetCuffed', function(playerId, softCuff)
             cuffType = 16
         end
 
-        if finished == 100 then return end
+        if finished then 
+            RLCore.Functions.Notify("You broke free!!")
+            return 
+        end
         isHandcuffed = true
         TriggerEvent("tokovoip_script:ToggleRadioTalk", true)
         TriggerServerEvent("police:server:SetHandcuffStatus", true)
