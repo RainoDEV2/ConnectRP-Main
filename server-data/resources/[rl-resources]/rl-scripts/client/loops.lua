@@ -156,18 +156,18 @@ Citizen.CreateThread(function()
 	end
 end)
 
---[[ Citizen.CreateThread(function()
+Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(1)
 		local ped = GetPlayerPed(-1)
 		
 		if IsPedBeingStunned(ped) then
-			SetPedMinGroundTimeForStungun(GetPlayerPed(-1),3500)
+			SetPedMinGroundTimeForStungun(GetPlayerPed(-1),1000)
 		else
 			Citizen.Wait(1000)
 		end
 	end
-end) ]]
+end)
 
 Citizen.CreateThread(function()
 	while true do
