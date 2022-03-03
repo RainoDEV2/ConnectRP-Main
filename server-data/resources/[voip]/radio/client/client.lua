@@ -1,6 +1,6 @@
 RLCore = nil
 local PlayerData                = {}
-local radioVolume = 0
+local radioVolume = 100
 local inRadio = false
 
 Citizen.CreateThread(function()
@@ -218,28 +218,28 @@ AddEventHandler('tp-radio:setVolume', function(radioVolume, total)
     })
     exports["pma-voice"]:setRadioVolume(radioVolume)
     print("Radio volume is now at:")
-    json.encode(print(radioVolume + 100))
+    json.encode(print(radioVolume))
 end)
 
 function setVolumeDown()
-    if radioVolume <= -100 then
-        radioVolume = -100
+    if radioVolume <= 0 then
+        radioVolume = 0
     else
         radioVolume = radioVolume - 10
     end
-    total = (radioVolume + 100)
+    total = (radioVolume)
     RLCore.Functions.Notify("Radio volume is now: " .. total .. "%")
     --exports['mythic_notify']:DoHudText('inform', "Radio volume is now: " .. total .. "%")
     TriggerEvent('tp-radio:setVolume', radioVolume, total)
 end
 
 function setVolumeUp()
-    if radioVolume >= 0 then
-        radioVolume = 0
+    if radioVolume >= 100 then
+        radioVolume = 100
     else
         radioVolume = radioVolume + 10
     end
-    total = (radioVolume + 100)
+    total = (radioVolume)
     RLCore.Functions.Notify("Radio volume is now: " .. total .. "%")
     --exports['mythic_notify']:DoHudText('inform', "Radio volume is now: " .. total .. "%")
     TriggerEvent('tp-radio:setVolume', radioVolume, total)
