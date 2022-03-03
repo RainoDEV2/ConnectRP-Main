@@ -479,7 +479,7 @@ AddEventHandler('police:client:GetCuffed', function(playerId, softCuff)
     loadAnimDict("mp_arresting")
     if not isHandcuffed then
         if not RLCore.Functions.GetPlayerData().metadata["isdead"] then
-            finished = exports["tgiann-skillbar"]:taskBar(1)  
+            finished = exports["tgiann-skillbar"]:taskBar(2)  
         else
             finished = 100
         end
