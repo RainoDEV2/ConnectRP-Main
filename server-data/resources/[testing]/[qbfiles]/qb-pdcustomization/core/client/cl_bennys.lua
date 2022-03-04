@@ -10,7 +10,7 @@ local nearDefault = false
 local nearImport = false
 local nearTuner = false
 
-local policecustomization = vector3(435.72171, -976.0993, 25.699836)
+local policecustomization = vector3(452.5603, -976.1621, 25.508319)
 
 local mechanicHeading = 83.42
 
