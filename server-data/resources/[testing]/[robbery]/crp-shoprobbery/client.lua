@@ -2,6 +2,8 @@
 
 local RLCore = exports['rl-core']:GetCoreObject()
 
+local failed = false 
+
 local shops = {
     [1] = {
         ["basic_kasa"] = vector3(373.49, 328.49, 103.37),
@@ -106,14 +108,28 @@ AddEventHandler('vny-shoprobbery:onrobbery', function()
 		if atat then
             local obj = GetClosestObjectOfType(GetEntityCoords(PlayerPedId()), 2.0, "prop_till_01", false, false, false)
             if GetEntityHealth(obj) < 800 then
-                TriggerServerEvent("vny-shoprobbery:givereward", "basic", kasaNo)
                 TriggerEvent('dispatch:storeRobbery', 'Store Robbery In Progress - Please Respond.')
+                RLCore.Functions.Progressbar("fuckoff", "Taking Cash", 20000, false, true, {
+                    disableMovement = true,
+                    disableCarMovement = true,
+                    disableMouse = false,
+                    disableCombat = true,
+                }, {
+                    animDict = "mini@repair",
+                    anim = "fixing_a_player",
+                    flags = 16,
+                }, {}, {}, function() 
+            
+                TriggerServerEvent("vny-shoprobbery:givereward", "basic", kasaNo)
+                end)
             else
                 RLCore.Functions.Notify("You couldn't break the store", "error")
             end
 		end
 	end, kasaNo, "basic")
 end)
+
+
 
 RegisterNetEvent('vny-shoprobbery:backrobbery')
 AddEventHandler('vny-shoprobbery:backrobbery', function()
@@ -135,28 +151,45 @@ AddEventHandler('vny-shoprobbery:backrobbery', function()
     RLCore.Functions.TriggerCallback('vny-shoprobbery:serversidecooldown', function(atat)
         print(atat)
 		if atat then
-            exports["memorygame"]:thermiteminigame(9, 6, 2, 5,
-            function()
-                Citizen.Wait(10000)
-                TriggerEvent('dispatch:storeRobbery', 'SAFE SECURE: Safe Alarm Triggered')
-                RLCore.Functions.Notify("You can collect money now", "error")
-                collectmoney = true
-            end,
-            function()
-                TriggerEvent('dispatch:storeRobbery', 'SAFE SECURE: Safe Alarm Triggered')
-                RLCore.Functions.Notify("You couldn't open the safe", "error")
-            end)
+            if failed == true then
+                RLCore.Functions.Notify("Safe Secure: Security Mode Active", "error")
+            else
+                exports["memorygame"]:thermiteminigame(9, 6, 2, 5,
+                function()
+                    TriggerEvent('dispatch:storeRobbery', 'SAFE SECURE: Safe Alarm Triggered')
+                    RLCore.Functions.Progressbar("tuner_Transmission", "Opening Safe..", 45000, false, true, {
+                        disableMovement = true,
+                        disableCarMovement = true,
+                        disableMouse = false,
+                        disableCombat = true,
+                    }, {
+                        animDict = "mini@repair",
+                        anim = "fixing_a_player",
+                        flags = 16,
+                    }, {}, {}, function()
+
+                    RLCore.Functions.Notify("You can collect money now", "error")
+                    collectmoney = true
+                end)
+                end,
+                function()
+                    TriggerEvent('dispatch:storeRobbery', 'SAFE SECURE: Safe Alarm Triggered')
+                    RLCore.Functions.Notify("You couldn't open the safe", "error")
+                    failed = true
+                end)
+            end
 		end
 	end, kasaNo, "hard")
+end)
+
+RegisterNetEvent('shop:reset')
+AddEventHandler('shop:reset', function()
+    Failed = false
 end)
 
 RegisterNetEvent('vny-shoprobbery:collectmoney')
 AddEventHandler('vny-shoprobbery:collectmoney', function()
 	if collectmoney then
-
-        --ADD ANIMATION
-
-
 		TriggerServerEvent("vny-shoprobbery:givereward", "hard", kasaNo)
 	else
         RLCore.Functions.Notify("First you have to get past the safe's password", "error")

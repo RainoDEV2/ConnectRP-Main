@@ -83,13 +83,16 @@ local shops = {
 }
 
 RLCore.Functions.CreateCallback('vny-shoprobbery:serversidecooldown', function(source, cb, marketNo, tip)
+    local src = source
     if marketNo ~= nil then
         if tip == "basic" and (os.time() - shops[marketNo]["son_basic_cd"]) > basicBeklemeCd then
             cb(true)
+            TriggerClientEvent("shop:reset")
         elseif tip == "hard" and (os.time() - shops[marketNo]["son_advanced_cd"]) > hardBeklemeCd then
             cb(true)
+            TriggerClientEvent("shop:reset")
         else
-            TriggerClientEvent('RLCore:Notify', src, ('This place is already robbed!'), 'success', 5000)
+            TriggerClientEvent('RLCore:Notify', src, ('This place has already been robbed!'), 'error', 5000) 
             cb(false)
         end   
     else
@@ -103,12 +106,12 @@ AddEventHandler("vny-shoprobbery:givereward", function(tip, kasaNo)
     local src = source
     local xPlayer = RLCore.Functions.GetPlayer(src)
     if tip == "basic" and (os.time() - shops[kasaNo]["son_basic_cd"]) > basicBeklemeCd then
-        local random = math.random(500, 650)
+        local random = math.random(350, 830)
         xPlayer.Functions.AddMoney('cash', random, "bla")
         TriggerClientEvent('RLCore:Notify', src, ('You Found $' .. random .. ''), 'success', 5000)
         shops[kasaNo]["son_basic_cd"] = os.time()
     elseif tip == "hard" and (os.time() - shops[kasaNo]["son_advanced_cd"]) > hardBeklemeCd then
-        local random1 = math.random(4000, 6000)
+        local random1 = math.random(1450, 1900)
         xPlayer.Functions.AddMoney('cash', random1, "bla")
         TriggerClientEvent('RLCore:Notify', src, ('You Found $' .. random1 .. ''), 'success', 5000)
         shops[kasaNo]["son_advanced_cd"] = os.time()
