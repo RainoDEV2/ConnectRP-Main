@@ -62,7 +62,7 @@ Config.BoxZones = {
         debugPoly = true,
         minZ=42.12,
   		maxZ=42.70,
-        options = { 
+        options = {  
             {
                 type = "client", 
                 event = "qb-policejob:ToggleDuty",
@@ -256,6 +256,192 @@ Config.BoxZones = {
         distance = 2.5
     },
 
+    ["backstorerobbery"] = {
+        name = "backstorerobbery",
+        coords = vector3(28.24616, -1338.567, 29.4989),
+        length = 0.80,
+        width = 0.80,
+        heading = 11.0,
+        debugPoly = true,
+        options = {
+            {
+                type = "client",
+                event = "vny-shoprobbery:backrobbery",
+                icon = "fas fa-circle",
+                label = "Crack Password",
+            },
+            {
+                type = "client",
+                event = "vny-shoprobbery:collectmoney",
+                icon = "fas fa-circle",
+                label = "Collect Money",
+            },
+        },
+        distance = 1.5
+    },
+    ["backstorerobbery2"] = {
+        name = "backstorerobbery2",
+        coords = vector3(-710.5124, -904.295, 19.07403),
+        length = 0.50,
+        width = 0.50,
+        heading = 11.0,
+        debugPoly = true,
+        options = {
+            {
+                type = "client",
+                event = "vny-shoprobbery:backrobbery",
+                icon = "fas fa-circle",
+                label = "Crack Password",
+            },
+            {
+                type = "client",
+                event = "vny-shoprobbery:collectmoney",
+                icon = "fas fa-circle",
+                label = "Collect Money",
+            },
+        },
+        distance = 1.5
+    },
+    ["backstorerobbery3"] = {
+        name = "backstorerobbery3",
+        coords = vector3(1126.80, -979.76, 45.4157),
+        length = 0.50,
+        width = 0.50,
+        heading = 11.0,
+        debugPoly = true,
+        options = {
+            {
+                type = "client",
+                event = "vny-shoprobbery:backrobbery",
+                icon = "fas fa-circle",
+                label = "Crack Password",
+            },
+            {
+                type = "client",
+                event = "vny-shoprobbery:collectmoney",
+                icon = "fas fa-circle",
+                label = "Collect Money",
+            },
+        },
+        distance = 1.5
+    },
+    ["backstorerobbery4"] = {
+        name = "backstorerobbery4",
+        coords = vector3(378.2701, 334.0500, 103.6725),
+        length = 0.50,
+        width = 0.50,
+        heading = 11.0,
+        debugPoly = true,
+        options = {
+            {
+                type = "client",
+                event = "vny-shoprobbery:backrobbery",
+                icon = "fas fa-circle",
+                label = "Crack Password",
+            },
+            {
+                type = "client",
+                event = "vny-shoprobbery:collectmoney",
+                icon = "fas fa-circle",
+                label = "Collect Money",
+            },
+        },
+        distance = 1.5
+    },
+    ["backstorerobbery5"] = {
+        name = "backstorerobbery5",
+        coords = vector3(-1478.5, -375.75, 39.1634),
+        length = 0.50,
+        width = 0.50,
+        heading = 11.0,
+        debugPoly = true,
+        options = {
+            {
+                type = "client",
+                event = "vny-shoprobbery:backrobbery",
+                icon = "fas fa-circle",
+                label = "Crack Password",
+            },
+            {
+                type = "client",
+                event = "vny-shoprobbery:collectmoney",
+                icon = "fas fa-circle",
+                label = "Collect Money",
+            },
+        },
+        distance = 1.5
+    },
+    ["backstorerobbery6"] = {
+        name = "backstorerobbery6",
+        coords = vector3(1734.99, 6421.37, 34.7778),
+        length = 0.50,
+        width = 0.50,
+        heading = 11.0,
+        debugPoly = true,
+        options = {
+            {
+                type = "client",
+                event = "vny-shoprobbery:backrobbery",
+                icon = "fas fa-circle",
+                label = "Crack Password",
+            },
+            {
+                type = "client",
+                event = "vny-shoprobbery:collectmoney",
+                icon = "fas fa-circle",
+                label = "Collect Money",
+            },
+        },
+        distance = 1.5
+    },
+    ["backstorerobbery7"] = {
+        name = "backstorerobbery7",
+        coords = vector3(-1221.3, -916.29, 11.1923),
+        length = 0.50,
+        width = 0.50,
+        heading = 11.0,
+        debugPoly = true,
+        options = {
+            {
+                type = "client",
+                event = "vny-shoprobbery:backrobbery",
+                icon = "fas fa-circle",
+                label = "Crack Password",
+            },
+            {
+                type = "client",
+                event = "vny-shoprobbery:collectmoney",
+                icon = "fas fa-circle",
+                label = "Collect Money",
+            },
+        },
+        distance = 1.5
+    },
+    ["backstorerobbery8"] = {
+        name = "backstorerobbery8",
+        coords = vector3(-3048.4, 585.427, 7.34192),
+        length = 0.50,
+        width = 0.50,
+        heading = 11.0,
+        debugPoly = true,
+        options = {
+            {
+                type = "client",
+                event = "vny-shoprobbery:backrobbery",
+                icon = "fas fa-circle",
+                label = "Crack Password",
+            },
+            {
+                type = "client",
+                event = "vny-shoprobbery:collectmoney",
+                icon = "fas fa-circle",
+                label = "Collect Money",
+            },
+        },
+        distance = 1.5
+    },
+    
+
 }
 
 
@@ -297,6 +483,20 @@ Config.TargetModels = {
 			
         },
         distance = 2.5,
+    },
+    ["targetmodelstore"] = {
+        models = {
+            "prop_till_01"
+        },
+        options = {
+            {
+                event = "vny-shoprobbery:onrobbery",
+                icon = "fas fa-dollar-sign",
+                label = "Collect Money",
+            },
+        },
+        job = {"all"},
+        distance = 1.5
     },
 	
 }
@@ -452,4 +652,3 @@ AddEventHandler('mech:openStash', function()
     slots = 250,
     })
 end)
-
