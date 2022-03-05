@@ -17,6 +17,5 @@ ui_page "client/html/index.html"
 files {
     'client/html/index.html',
     -- Begin Sound Files Here...
-    -- client/html/sounds/ ... .ogg
-    'client/html/sounds/demo.ogg'
+    'client/html/sounds/*.ogg'
 }
