@@ -12,6 +12,7 @@ server_scripts {
 	"server/commands.lua",
 	"server/debug.lua",
 	"server/exports_s.lua",
+	"locale.lua",
 }
 
 client_scripts {
@@ -24,6 +25,7 @@ client_scripts {
 	"client/debug.lua",
 	"client/commands.lua",
 	"client/exports.lua",
+	"locale.lua",
 }
 
 ui_page {
