@@ -37,7 +37,7 @@ AddEventHandler('pdcustomization:updateRepairCost', function(cost)
     chicken = cost
 end)
 
-RegisterServerEvent("updateVehicle")
+--[[ RegisterServerEvent("updateVehicle")
 AddEventHandler("updateVehicle", function(myCar)
 	local src = source
     if IsVehicleOwned(myCar.plate) then
@@ -53,4 +53,4 @@ function IsVehicleOwned(plate)
         end
     end)
     return retval
-end
+end ]]
