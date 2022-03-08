@@ -86,3 +86,10 @@ BoxZone:Create(vector3(-1421.58, -456.45, 35.91), 3.8, 1, {
   maxZ=37.31
 })
 
+--Name: test | 2022-03-05T04:58:06Z
+CircleZone:Create(vector3(-46.72, -1758.04, 29.42), 0.5, {
+  name="test",
+  useZ=false,
+  --debugPoly=true
+})
+
