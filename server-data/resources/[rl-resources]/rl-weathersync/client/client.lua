@@ -102,7 +102,7 @@ end)
 CreateThread(function()
     while true do
         if not disable then
-            Wait(100)
+            Wait(0)
             SetArtificialLightsState(blackout)
             SetArtificialLightsStateAffectsVehicles(blackoutVehicle)
         else
