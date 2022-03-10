@@ -44,7 +44,7 @@ Config['Utils'] = {
         ["RewardAccount"] = "cash", -- this can be only ywo values (no need to config if you are using an item as a reward)
     },
     ["Contracts"] = {
-        ["TimeBetweenContracts"] = math.random(300000,400000) -- Time in (ms) between contract creations
+        ["TimeBetweenContracts"] = math.random(300000,450000), -- Time in (ms) between contract creations
         ["ContractChance"] = 60, -- This is the luck percentage of getting a contract
     },
     ["VIN"] = {
@@ -52,12 +52,12 @@ Config['Utils'] = {
         ["AmountBneAfterDropOff"] = 50, 
         ["VinLocations"] = {x = 472.08, y = -1310.73, z = 29.22}, -- laptop coords
         ["ForceVin"] = true, -- this will force vin contract optiion on any created contract turn to false to use days instead
-        ["VinDays"] = 7, -- amount of days between vin contracts , (irl days) 
+        ["VinDays"] = 5, -- amount of days between vin contracts , (irl days) 
     },
     ["ClassPrices"] = {
-        ['X'] = "35",
-        ['A'] = "30",
-        ['B'] = "25",
+        ['X'] = "55",
+        ['A'] = "40",
+        ['B'] = "30",
         ['C'] = "20",
         ['D'] = "15",
         ['M'] = "10",
