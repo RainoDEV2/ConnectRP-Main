@@ -44,7 +44,7 @@ Config['Utils'] = {
         ["RewardAccount"] = "cash", -- this can be only ywo values (no need to config if you are using an item as a reward)
     },
     ["Contracts"] = {
-        ["TimeBetweenContracts"] = math.random(300000,450000), -- Time in (ms) between contract creations
+        ["TimeBetweenContracts"] = math.random(1800000,2700000), -- Time in (ms) between contract creations
         ["ContractChance"] = 60, -- This is the luck percentage of getting a contract
     },
     ["VIN"] = {
