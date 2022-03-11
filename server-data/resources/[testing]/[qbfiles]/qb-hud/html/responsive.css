@@ -283,7 +283,7 @@
 @media (width: 1920px) and (height: 1080px) {
   .responsive {
     margin-left: 32vh!important;
-    transform: scale(1, 1);
+    transform: scale(0.9, 0.9);
     bottom: 6.9vh!important;
   }
   #speedometer {
