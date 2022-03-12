@@ -20,12 +20,11 @@ client_scripts {
 }
 
 server_scripts {
-	'@oxmysql/lib/MySQL.lua',
     '/server/server.lua',
 }
 
 shared_scripts {
-	'@qb-core/shared/locale.lua',
+	'@rl-core/shared/locale.lua',
 	'locales/en.lua',
 	'/shared/config.lua',
 }
