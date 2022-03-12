@@ -8,6 +8,32 @@ AddEventHandler('esx:setJob', function(job)
     PlayerData.job = job
 end)
 
+function isCloseVeh()
+    local ped = PlayerPedId()
+    coordA = GetEntityCoords(ped, 1)
+    coordB = GetOffsetFromEntityInWorldCoords(ped, 0.0, 100.0, 0.0)
+    vehicle = getVehicleInDirection(coordA, coordB)
+    if DoesEntityExist(vehicle) and NetworkHasControlOfEntity(vehicle) then
+        return true
+    end
+    return false
+end
+
+function getVehicleInDirection(coordFrom, coordTo)
+    local offset = 0
+    local rayHandle
+    local vehicle
+    for i = 0, 100 do
+        rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z + offset, 10, PlayerPedId(), 0)    
+        a, b, c, d, vehicle = GetRaycastResult(rayHandle)
+        offset = offset - 1
+        if vehicle ~= 0 then break end
+    end
+    local distance = Vdist2(coordFrom, GetEntityCoords(vehicle))
+    if distance > 25 then vehicle = nil end
+    return vehicle ~= nil and vehicle or 0
+end
+
 local isJudge = false
 local isPolice = false
 local isMedic = false
@@ -40,7 +66,7 @@ rootMenuConfig =  {
     },
     { 
         id = "policeDeadA",
-        displayName = "Park",
+        displayName = "Park", 
         icon = "#parking",
         functionName = "rl-garages:client:garageClose",
         enableMenu = function()
@@ -58,6 +84,66 @@ rootMenuConfig =  {
             return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"] and IsPedInAnyVehicle(PlayerPedId(), false) and (Data.job.name == 'mechanic' and Data.job.onduty) or (Data.job.name == 'tuner' and Data.job.onduty) and bennysClose)
         end
     }, ]]
+    {
+        id = "open-garage",
+        displayName = "Vehicle List",
+        icon = "#warehouse",
+        functionName = "Garages:Open",
+        enableMenu = function()
+            local pData = RLCore.Functions.GetPlayerData()
+            return (not pData.metadata["isdead"] and not pData.metadata["inlaststand"] and inGarage and not isCloseVeh() and not IsPedInAnyVehicle(PlayerPedId(), false))
+        end
+    },
+    {
+        id = "park-vehicle-garage",
+        displayName = "Park",
+        icon = "#parking",
+        functionName = "Garages:Store",
+        enableMenu = function()
+            local pData = RLCore.Functions.GetPlayerData()
+            return (not pData.metadata["isdead"] and not pData.metadata["inlaststand"] and inGarage and isCloseVeh() and not IsPedInAnyVehicle(PlayerPedId(), false))
+        end
+    },
+    {
+        id = "general:depots",
+        displayName = "Depot",
+        icon = "#warehouse",
+        functionName = "Garages:OpenDepot",
+        enableMenu = function()
+            local pData = RLCore.Functions.GetPlayerData()
+            return (not pData.metadata["isdead"] and not pData.metadata["inlaststand"] and inDepots and not IsPedInAnyVehicle(PlayerPedId(), false))
+        end
+    },
+    {
+        id = "open-garage-housing",
+        displayName = "Vehicle List",
+        icon = "#warehouse",
+        functionName = "Garages:OpenHouseGarage",
+        enableMenu = function()
+            local pData = RLCore.Functions.GetPlayerData()
+            local isAtHouseGarage = false
+            RLCore.Functions.TriggerCallback('qb-garages:isAtHouseGar', function(result)
+                isAtHouseGarage = result
+            end)
+            Wait(100)
+            return (not pData.metadata["isdead"] and not pData.metadata["inlaststand"] and isAtHouseGarage and not isCloseVeh() and not IsPedInAnyVehicle(PlayerPedId(), false))
+        end
+    },
+    {
+        id = "park-vehicle-garage-housing",
+        displayName = "Park",
+        icon = "#parking",
+        functionName = "Garages:StoreInHouseGarage",
+        enableMenu = function()
+            local pData = RLCore.Functions.GetPlayerData()
+            local isAtHouseGarage = false
+            RLCore.Functions.TriggerCallback('qb-garages:isAtHouseGar', function(result)
+                isAtHouseGarage = result
+            end)
+            Wait(100)
+            return (not pData.metadata["isdead"] and not pData.metadata["inlaststand"] and isAtHouseGarage and isCloseVeh() and not IsPedInAnyVehicle(PlayerPedId(), false))
+        end
+    }, 
 
     {
         id = "clothingNear",
@@ -110,7 +196,7 @@ rootMenuConfig =  {
             local Data = RLCore.Functions.GetPlayerData()
             return not Data.metadata["isdead"] and not Data.metadata["inlaststand"]
         end,
-        subMenus = {"vehicle:giveKeys", "general:flipveh", "general:givenum", "general:getintrunk", "general:cornerselling"}
+        subMenus = {"vehicle:giveKeys", "general:Blips", "general:givenum", "general:getintrunk", "general:cornerselling"}
     },
 
     {
@@ -386,7 +472,13 @@ newSubMenus = {
         functionName = "phone:client:GiveContactDetails"
     },
 
-    ['general:getintrunk'] = {
+    ['general:Blips'] = {
+        title = "Toggle Garages",
+        icon = "#warehouse",
+        functionName = "garages:Blips"
+    },
+
+    ['general:getintrunk'] = { 
         title = "Enter Trunk",
         icon = "#getintrunk",
         functionName = "rl-trunk:client:GetIn"
@@ -1323,3 +1415,69 @@ TrunkClasses = {
     [20] = { allowed = true, x = 0.0, y = -1.0, z = 0.25 }, --Commercial  
     [21] = { allowed = true, x = 0.0, y = -1.0, z = 0.25 }, --Trains  
 }
+
+Citizen.CreateThread(function()
+    for k, v in pairs(Garages) do 
+        exports["polyzonehelper"]:AddBoxZone("garages", vector3(Garages[k].polyzone.x, Garages[k].polyzone.y, Garages[k].polyzone.z), Garages[k].polyzone1, Garages[k].polyzone2, {
+            name="garages",
+            heading=Garages[k].heading,
+            minZ = Garages[k].minZ,
+            maxZ = Garages[k].maxZ,
+            debugPoly=false
+        }) 
+    end
+    for k, v in pairs(GangGarages) do
+        exports["polyzonehelper"]:AddBoxZone("ganggarages", vector3(GangGarages[k].polyzone.x, GangGarages[k].polyzone.y, GangGarages[k].polyzone.z), GangGarages[k].polyzone1, GangGarages[k].polyzone2, {
+            name="ganggarages",
+            heading=GangGarages[k].heading,
+            minZ = GangGarages[k].minZ,
+            maxZ = GangGarages[k].maxZ,
+            debugPoly=false
+        }) 
+    end
+    for k, v in pairs(JobGarages) do
+        exports["polyzonehelper"]:AddBoxZone("jobgarages", vector3(JobGarages[k].polyzone.x, JobGarages[k].polyzone.y, JobGarages[k].polyzone.z), JobGarages[k].polyzone1, JobGarages[k].polyzone2, {
+            name="jobgarages",
+            heading=JobGarages[k].heading,
+            minZ = JobGarages[k].minZ,
+            maxZ = JobGarages[k].maxZ,
+            debugPoly=false
+        }) 
+    end
+    for k, v in pairs(Depots) do
+        exports["polyzonehelper"]:AddBoxZone("depots", vector3(Depots[k].polyzone.x, Depots[k].polyzone.y, Depots[k].polyzone.z), Depots[k].polyzone1, Depots[k].polyzone2, {
+            name="depots",
+            heading=Depots[k].heading,
+            minZ = Depots[k].minZ,
+            maxZ = Depots[k].maxZ,
+            debugPoly=false
+        }) 
+    end
+end)
+
+RegisterNetEvent('polyzonehelper:enter')
+AddEventHandler('polyzonehelper:enter', function(name)
+    local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
+    if name == "garages" then
+        inGarage = true
+    elseif name == "ganggarages" then
+        inGarage = true
+    elseif name == "jobgarages" then
+        inGarage = true
+    elseif name == "depots" then
+        inDepots = true
+    end
+end)
+
+RegisterNetEvent('polyzonehelper:exit')
+AddEventHandler('polyzonehelper:exit', function(name)
+    if name == "garages" then
+        inGarage = false
+    elseif name == "ganggarages" then
+        inGarage = false
+    elseif name == "jobgarages" then
+        inGarage = false
+    elseif name == "depots" then
+        inDepots = false
+    end
+end)

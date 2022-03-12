@@ -3,6 +3,7 @@ fx_version 'adamant'
 game 'gta5'
 
 shared_script "@nevo-scripts/cl_errorlog.lua"
+shared_script "@qb-garages/config.lua"
 
 client_script {
     "config.lua",
