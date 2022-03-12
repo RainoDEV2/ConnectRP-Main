@@ -192,4 +192,13 @@ Config.PedList = {
 		animDict = 'anim@heists@prison_heiststation@cop_reactions',
 		animName = 'cop_b_idle'
 	},
+	--PD 
+	{
+		model = `ig_trafficwarden`, 
+		coords = vector4(413.0473, -1024.108, 29.503236, 94.807708), 
+		gender = 'male', 
+		animDict = 'anim@heists@prison_heiststation@cop_reactions',
+		animName = 'cop_b_idle'
+	},
+	
 }
