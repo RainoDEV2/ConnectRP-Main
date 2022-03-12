@@ -729,7 +729,7 @@ Citizen.CreateThread(function()
                 local vgehicle = (GetVehiclePedIsIn(PlayerPedId()))
 				local props = RLCore.Functions.GetVehicleProperties(vgehicle)
 				local model = string.lower(GetDisplayNameFromVehicleModel(GetEntityModel(vgehicle)))
-				TriggerServerEvent('bb-garages:server:setVehicleOwned', props, {damage = 10, fuel = 10}, model)
+				TriggerServerEvent('BuyForVeh', props, {damage = 10, fuel = 10}, model)
             end
 
             if WarMenu.MenuButton('Fill Fuel', 'vehOptions') then
