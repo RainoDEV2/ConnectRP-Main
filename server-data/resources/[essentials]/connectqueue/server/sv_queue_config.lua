@@ -9,7 +9,7 @@ Config.Priority = {
     ["steam:110000136f8f5d8"] = 95, -- FRAG
     ["steam:11000010b15d112"] = 20, -- Small_wenis
     ["steam:1100001129665FE"] = 20, -- SouthAmherst
-    ["steam:1100001036be9ab"] = 70, -- NME
+    ["steam:1100001036be9ab"] = 70, -- NME 
     ["steam:11000010ce10a89"] = 30, -- pkrack5
     ["steam:11000010e0f20bb"] = 20, -- SacrificeHero -- Temp stream prio
 
