@@ -1,6 +1,8 @@
 resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
 
 shared_script "@nevo-scripts/cl_errorlog.lua"
+shared_script "locale/en.lua"
+shared_script "locale.lua"
 
 server_scripts {
 	"config.lua",
@@ -12,7 +14,6 @@ server_scripts {
 	"server/commands.lua",
 	"server/debug.lua",
 	"server/exports_s.lua",
-	"locale.lua",
 }
 
 client_scripts {
@@ -25,7 +26,6 @@ client_scripts {
 	"client/debug.lua",
 	"client/commands.lua",
 	"client/exports.lua",
-	"locale.lua",
 }
 
 ui_page {
