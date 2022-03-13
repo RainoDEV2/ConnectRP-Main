@@ -945,7 +945,7 @@ Citizen.CreateThread(function()
             end
 
             if (not enabled) then
-                DisplayHelpText(menu[2]) 
+                --DisplayHelpText(menu[2]) 
 
                 if IsControlJustPressed(1, 311) then
                     TriggerServerEvent("clothing:checkMoney",menu[1],StoreCost)

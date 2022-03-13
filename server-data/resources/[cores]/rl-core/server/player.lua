@@ -223,7 +223,7 @@ RLCore.Player.CreatePlayer = function(PlayerData)
             return
         end
         if self.PlayerData.money[moneytype] then
-            for _, mtype in pairs(QBCore.Config.Money.DontAllowMinus) do
+            for _, mtype in pairs(RLCore.Config.Money.DontAllowMinus) do
                 if mtype == moneytype then
                     if self.PlayerData.money[moneytype] - amount < 0 then
                         return false
