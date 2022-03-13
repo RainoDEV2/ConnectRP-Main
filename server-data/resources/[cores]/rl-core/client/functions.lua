@@ -317,99 +317,112 @@ RLCore.Functions.IsSpawnPointClear = function(coords, radius)
 end
 
 RLCore.Functions.GetVehicleProperties = function(vehicle)
-	local color1, color2 = GetVehicleColours(vehicle)
-	local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
-	local extras = {}
+	if DoesEntityExist(vehicle) then
+        local colorPrimary, colorSecondary = GetVehicleColours(vehicle)
+        local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
+        local extras = {}
 
-	for id=0, 12 do
-		if DoesExtraExist(vehicle, id) then
-			local state = IsVehicleExtraTurnedOn(vehicle, id) == 1
-			extras[tostring(id)] = state
-		end
-	end
+        if GetIsVehiclePrimaryColourCustom(vehicle) then
+            r, g, b = GetVehicleCustomPrimaryColour(vehicle)
+            colorPrimary = { r, g, b }
+        end
 
-	return {
-		model             = GetEntityModel(vehicle),
+        if GetIsVehicleSecondaryColourCustom(vehicle) then
+            r, g, b = GetVehicleCustomSecondaryColour(vehicle)
+            colorSecondary = { r, g, b }
+        end
 
-		plate             = GetVehicleNumberPlateText(vehicle),
-		plateIndex        = GetVehicleNumberPlateTextIndex(vehicle),
+        for extraId = 0, 12 do
+            if DoesExtraExist(vehicle, extraId) then
+                local state = IsVehicleExtraTurnedOn(vehicle, extraId) == 1
+                extras[tostring(extraId)] = state
+            end
+        end
 
-		bodyHealth        = GetVehicleBodyHealth(vehicle),
-		engineHealth      = GetVehicleEngineHealth(vehicle),
+        if GetVehicleMod(vehicle, 48) == -1 and GetVehicleLivery(vehicle) ~= -1 then
+            modLivery = GetVehicleLivery(vehicle)
+        else
+            modLivery = GetVehicleMod(vehicle, 48)
+        end
 
-		fuelLevel         = GetVehicleFuelLevel(vehicle),
-		dirtLevel         = GetVehicleDirtLevel(vehicle),
-		color1            = color1,
-		color2            = color2,
-
-		pearlescentColor  = pearlescentColor,
-		wheelColor        = wheelColor,
-
-		wheels            = GetVehicleWheelType(vehicle),
-		windowTint        = GetVehicleWindowTint(vehicle),
-
-		neonEnabled       = {
-			IsVehicleNeonLightEnabled(vehicle, 0),
-			IsVehicleNeonLightEnabled(vehicle, 1),
-			IsVehicleNeonLightEnabled(vehicle, 2),
-			IsVehicleNeonLightEnabled(vehicle, 3)
-		},
-
-		extras            = extras,
-
-		neonColor         = table.pack(GetVehicleNeonLightsColour(vehicle)),
-		tyreSmokeColor    = table.pack(GetVehicleTyreSmokeColor(vehicle)),
-
-		modSpoilers       = GetVehicleMod(vehicle, 0),
-		modFrontBumper    = GetVehicleMod(vehicle, 1),
-		modRearBumper     = GetVehicleMod(vehicle, 2),
-		modSideSkirt      = GetVehicleMod(vehicle, 3),
-		modExhaust        = GetVehicleMod(vehicle, 4),
-		modFrame          = GetVehicleMod(vehicle, 5),
-		modGrille         = GetVehicleMod(vehicle, 6),
-		modHood           = GetVehicleMod(vehicle, 7),
-		modFender         = GetVehicleMod(vehicle, 8),
-		modRightFender    = GetVehicleMod(vehicle, 9),
-		modRoof           = GetVehicleMod(vehicle, 10),
-
-		modEngine         = GetVehicleMod(vehicle, 11),
-		modBrakes         = GetVehicleMod(vehicle, 12),
-		modTransmission   = GetVehicleMod(vehicle, 13),
-		modHorns          = GetVehicleMod(vehicle, 14),
-		modSuspension     = GetVehicleMod(vehicle, 15),
-		modArmor          = GetVehicleMod(vehicle, 16),
-
-		modTurbo          = IsToggleModOn(vehicle, 18),
-		modSmokeEnabled   = IsToggleModOn(vehicle, 20),
-		modXenon          = IsToggleModOn(vehicle, 22),
-
-		modFrontWheels    = GetVehicleMod(vehicle, 23),
-		modBackWheels     = GetVehicleMod(vehicle, 24),
-
-		modPlateHolder    = GetVehicleMod(vehicle, 25),
-		modVanityPlate    = GetVehicleMod(vehicle, 26),
-		modTrimA          = GetVehicleMod(vehicle, 27),
-		modOrnaments      = GetVehicleMod(vehicle, 28),
-		modDashboard      = GetVehicleMod(vehicle, 29),
-		modDial           = GetVehicleMod(vehicle, 30),
-		modDoorSpeaker    = GetVehicleMod(vehicle, 31),
-		modSeats          = GetVehicleMod(vehicle, 32),
-		modSteeringWheel  = GetVehicleMod(vehicle, 33),
-		modShifterLeavers = GetVehicleMod(vehicle, 34),
-		modAPlate         = GetVehicleMod(vehicle, 35),
-		modSpeakers       = GetVehicleMod(vehicle, 36),
-		modTrunk          = GetVehicleMod(vehicle, 37),
-		modHydrolic       = GetVehicleMod(vehicle, 38),
-		modEngineBlock    = GetVehicleMod(vehicle, 39),
-		modAirFilter      = GetVehicleMod(vehicle, 40),
-		modStruts         = GetVehicleMod(vehicle, 41),
-		modArchCover      = GetVehicleMod(vehicle, 42),
-		modAerials        = GetVehicleMod(vehicle, 43),
-		modTrimB          = GetVehicleMod(vehicle, 44),
-		modTank           = GetVehicleMod(vehicle, 45),
-		modWindows        = GetVehicleMod(vehicle, 46),
-		modLivery         = GetVehicleLivery(vehicle)
-	}
+        return {
+            model = GetEntityModel(vehicle),
+            plate = GetVehicleNumberPlateText(vehicle),
+            plateIndex = GetVehicleNumberPlateTextIndex(vehicle),
+            bodyHealth = RLCore.Shared.Round(GetVehicleBodyHealth(vehicle), 0.1),
+            engineHealth = RLCore.Shared.Round(GetVehicleEngineHealth(vehicle), 0.1),
+            tankHealth = RLCore.Shared.Round(GetVehiclePetrolTankHealth(vehicle), 0.1),
+            fuelLevel = RLCore.Shared.Round(GetVehicleFuelLevel(vehicle), 0.1),
+            dirtLevel = RLCore.Shared.Round(GetVehicleDirtLevel(vehicle), 0.1),
+            color1 = colorPrimary,
+            color2 = colorSecondary,
+            pearlescentColor = pearlescentColor,
+            interiorColor = GetVehicleInteriorColor(vehicle),
+            dashboardColor = GetVehicleDashboardColour(vehicle),
+            wheelColor = wheelColor,
+            wheels = GetVehicleWheelType(vehicle),
+            windowTint = GetVehicleWindowTint(vehicle),
+            xenonColor = GetVehicleXenonLightsColour(vehicle),
+            neonEnabled = {
+                IsVehicleNeonLightEnabled(vehicle, 0),
+                IsVehicleNeonLightEnabled(vehicle, 1),
+                IsVehicleNeonLightEnabled(vehicle, 2),
+                IsVehicleNeonLightEnabled(vehicle, 3)
+            },
+            neonColor = table.pack(GetVehicleNeonLightsColour(vehicle)),
+            extras = extras,
+            tyreSmokeColor = table.pack(GetVehicleTyreSmokeColor(vehicle)),
+            modSpoilers = GetVehicleMod(vehicle, 0),
+            modFrontBumper = GetVehicleMod(vehicle, 1),
+            modRearBumper = GetVehicleMod(vehicle, 2),
+            modSideSkirt = GetVehicleMod(vehicle, 3),
+            modExhaust = GetVehicleMod(vehicle, 4),
+            modFrame = GetVehicleMod(vehicle, 5),
+            modGrille = GetVehicleMod(vehicle, 6),
+            modHood = GetVehicleMod(vehicle, 7),
+            modFender = GetVehicleMod(vehicle, 8),
+            modRightFender = GetVehicleMod(vehicle, 9),
+            modRoof = GetVehicleMod(vehicle, 10),
+            modEngine = GetVehicleMod(vehicle, 11),
+            modBrakes = GetVehicleMod(vehicle, 12),
+            modTransmission = GetVehicleMod(vehicle, 13),
+            modHorns = GetVehicleMod(vehicle, 14),
+            modSuspension = GetVehicleMod(vehicle, 15),
+            modArmor = GetVehicleMod(vehicle, 16),
+            modTurbo = IsToggleModOn(vehicle, 18),
+            modSmokeEnabled = IsToggleModOn(vehicle, 20),
+            modXenon = IsToggleModOn(vehicle, 22),
+            modFrontWheels = GetVehicleMod(vehicle, 23),
+            modBackWheels = GetVehicleMod(vehicle, 24),
+            modCustomTiresF = GetVehicleModVariation(vehicle, 23),
+            modCustomTiresR = GetVehicleModVariation(vehicle, 24),
+            modPlateHolder = GetVehicleMod(vehicle, 25),
+            modVanityPlate = GetVehicleMod(vehicle, 26),
+            modTrimA = GetVehicleMod(vehicle, 27),
+            modOrnaments = GetVehicleMod(vehicle, 28),
+            modDashboard = GetVehicleMod(vehicle, 29),
+            modDial = GetVehicleMod(vehicle, 30),
+            modDoorSpeaker = GetVehicleMod(vehicle, 31),
+            modSeats = GetVehicleMod(vehicle, 32),
+            modSteeringWheel = GetVehicleMod(vehicle, 33),
+            modShifterLeavers = GetVehicleMod(vehicle, 34),
+            modAPlate = GetVehicleMod(vehicle, 35),
+            modSpeakers = GetVehicleMod(vehicle, 36),
+            modTrunk = GetVehicleMod(vehicle, 37),
+            modHydrolic = GetVehicleMod(vehicle, 38),
+            modEngineBlock = GetVehicleMod(vehicle, 39),
+            modAirFilter = GetVehicleMod(vehicle, 40),
+            modStruts = GetVehicleMod(vehicle, 41),
+            modArchCover = GetVehicleMod(vehicle, 42),
+            modAerials = GetVehicleMod(vehicle, 43),
+            modTrimB = GetVehicleMod(vehicle, 44),
+            modTank = GetVehicleMod(vehicle, 45),
+            modWindows = GetVehicleMod(vehicle, 46),
+            modLivery = modLivery,
+        }
+    else
+        return
+    end
 end
 
 RLCore.Functions.SetVehicleProperties = function(vehicle, props)
