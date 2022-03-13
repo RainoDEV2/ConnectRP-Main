@@ -17,6 +17,7 @@ client_scripts {
 	"client/binoculars.lua",
 	"client/blips.lua",
 	"client/clothes.lua",
+	"client/cruise.lua",
 	"client/consumables.lua",
 	"client/crouchprone.lua",
 	"client/bikepickup.lua",
