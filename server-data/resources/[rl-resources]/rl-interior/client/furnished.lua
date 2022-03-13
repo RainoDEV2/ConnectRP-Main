@@ -96,23 +96,23 @@ function CreateApartmentFurnished(spawn)
 	local objects = {}
 
     local POIOffsets = {}
-	POIOffsets.exit = json.decode('{"z":1.2,"y":4.29636328125,"x":1.172736328125,"h":2.2633972168}')
-	POIOffsets.clothes = json.decode('{"z":1.2,"y":-2.6444736328,"x":1.824350097,"h":2.2633972168}')
-	POIOffsets.stash = json.decode('{"z":1.2,"y":-1.3440585937501,"x":2.58997509763,"h":2.2633972168}')
-	POIOffsets.logout = json.decode('{"z":1.0,"y":0.0555111328,"x":-2.0689604492,"h":2.2633972168}')
+	POIOffsets.exit = json.decode('{"z":1.2,"y":4.29636328125,"x":3.572736328125,"h":2.2633972168}')
+	POIOffsets.clothes = json.decode('{"z":1.2,"y":-2.6444736328,"x":0.524350097,"h":2.2633972168}')
+	POIOffsets.stash = json.decode('{"z":0.5,"y":1.9440585937501,"x":-1.08997509763,"h":2.2633972168}')
+	POIOffsets.logout = json.decode('{"z":0.8,"y":-3.0555111328,"x":-4.5689604492,"h":2.2633972168}')
     DoScreenFadeOut(500)
     while not IsScreenFadedOut() do
         Citizen.Wait(10)
     end
-	RequestModel(`playerhouse_appartment_motel`)
-	while not HasModelLoaded(`playerhouse_appartment_motel`) do
+	RequestModel(`gabz_pinkcage`)
+	while not HasModelLoaded(`gabz_pinkcage`) do
 	    Citizen.Wait(3)
 	end
-	local house = CreateObject(`playerhouse_appartment_motel`, spawn.x, spawn.y, spawn.z, false, false, false)
+	local house = CreateObject(`gabz_pinkcage`, spawn.x, spawn.y, spawn.z, false, false, false)
     FreezeEntityPosition(house, true)
 	table.insert(objects, house)
 
-	TeleportToInterior(spawn.x - 1.52089355468, spawn.y - 4.00144140625, spawn.z + 1.5, POIOffsets.exit.h)
+	TeleportToInterior(spawn.x - 3.32089355468, spawn.y - 3.69636328125, spawn.z + 1.2, POIOffsets.exit.h)
 	if IsNew then
 		SetTimeout(750, function()
 			TriggerEvent('rl-clothes:client:CreateFirstCharacter')
