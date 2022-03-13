@@ -1,8 +1,8 @@
 Config = {}
 
-Config.Invincible = true -- Is the ped going to be invincible?
-Config.Frozen = true -- Is the ped frozen in place?
-Config.Stoic = true -- Will the ped react to events around them?
+Config.Invincible = false -- Is the ped going to be invincible?
+Config.Frozen = false -- Is the ped frozen in place?
+Config.Stoic = false -- Will the ped react to events around them?
 Config.FadeIn = true -- Will the ped fade in and out based on the distance. (Looks a lot better.)
 Config.DistanceSpawn = 20.0 -- Distance before spawning/despawning the ped. (GTA Units.)
 
@@ -200,5 +200,189 @@ Config.PedList = {
 		animDict = 'anim@heists@prison_heiststation@cop_reactions',
 		animName = 'cop_b_idle'
 	},
-	
+	-- Store Clerks
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(1727.8383, 6415.2998, 35.0372, 237.7803), -- 24/7 Senora Freeway Utool
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'		
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(2677.8523, 3279.2815, 55.2411, 327.3371), -- 24/7 Senora Paleto
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'		
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(1698.0909, 4922.7100, 42.0636, 318.4146), -- LTD. Gas - Grapeseed
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'		
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(1959.8857, 3739.9534, 32.3438, 298.0646), -- Sandy Shores 24/7
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'		
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(2557.2183, 380.6950, 108.6230, 1.9620), -- 24/7 Gas Palimino Fwy
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'		
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(1166.0024, 2710.8669, 38.1577, 171.9204), -- Harmony Robs Liquor
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'		
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(549.2151, 2671.2429, 42.1565, 85.3526), -- 24/7 Harmony
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'		
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(-3242.3149, 999.8690, 12.8307, 354.1691), -- 24/7 Barbareono Rd. 
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'		
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(-3038.9753, 584.5553, 7.9089, 13.4241), -- 24/7 Inseno Rd. 
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'		
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(-2966.4250, 390.8515, 15.0433, 84.9697), -- Robs Liquor GOH
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'		
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(-1221.9572, -908.3364, 12.3263, 32.2396), -- Robs Liquor San Andreas Ave
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'		
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(-706.0817, -915.4422, 19.2156, 91.6470), -- LTD. Little Seoul
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'		
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(-46.7397, -1757.8669, 29.4210, 43.2014), -- LTD. Grove
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'		
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(372.5850, 326.4227, 103.5664, 247.0649), -- 24/7 Clinton Ave. 
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'		
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(1164.6998, -322.6867, 69.2051, 98.0899), -- LTD Gas. Mirror Park
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'	
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(1134.2421, -982.4398, 46.4158, 272.1794), -- Robs Liquor El Rancho	
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'	
+	},
+	{
+		model = `mp_m_shopkeep_01`, 
+		coords = vector4(24.5012, -1347.3879, 29.4970, 271.8180), -- 24/7 Innocence
+		gender = 'male',
+		animDict = 'anim@amb@nightclub@lazlow@ig1_vip@',
+		animName = 'clubvip_base_laz'	
+	},
+	{ -- Ammunations
+		model = `s_m_y_ammucity_01`, 
+		coords = vector4(23.8852, -1105.9779, 29.7970, 154.4946), -- San Andreas Ave
+		gender = 'male',
+		animDict = 'anim@heists@heist_corona@single_team',
+		animName = 'single_team_loop_boss'	
+	},
+	{ 
+		model = `s_m_y_ammucity_01`, 
+		coords = vector4(808.8728, -2159.0381, 29.6190, 1.6373), -- Popular St
+		gender = 'male',
+		animDict = 'anim@heists@heist_corona@single_team',
+		animName = 'single_team_loop_boss'	
+	},		
+	{
+		model = `s_m_y_ammucity_01`, 
+		coords = vector4(-660.9344, -933.5817, 21.8292, 165.5856), -- Little Seoul
+		gender = 'male',
+		animDict = 'anim@heists@heist_corona@single_team',
+		animName = 'single_team_loop_boss'	
+	},		
+	{
+		model = `s_m_y_ammucity_01`, 
+		coords = vector4(-1304.4987, -395.9834, 36.6958, 76.6630), -- Marathon Ave / Boulevard Del Pero
+		gender = 'male',
+		animDict = 'anim@heists@heist_corona@single_team',
+		animName = 'single_team_loop_boss'	
+	},		
+	{ 
+		model = `s_m_y_ammucity_01`, 
+		coords = vector4(-3173.0732, 1089.5426, 20.8387, 250.1212), -- GOH
+		gender = 'male',
+		animDict = 'anim@heists@heist_corona@single_team',
+		animName = 'single_team_loop_boss'	
+	},		
+	{ 
+		model = `s_m_y_ammucity_01`, 
+		coords = vector4(-1117.9327, 2700.6331, 18.5541, 228.5580), --R68
+		gender = 'male',
+		animDict = 'anim@heists@heist_corona@single_team',
+		animName = 'single_team_loop_boss'	
+	},		
+	{
+		model = `s_m_y_ammucity_01`, 
+		coords = vector4(-330.6958, 6085.9702, 31.4548, 224.5260), -- Paleto
+		gender = 'male',
+		animDict = 'anim@heists@heist_corona@single_team',
+		animName = 'single_team_loop_boss'	
+	},		
+	{
+		model = `s_m_y_ammucity_01`, 
+		coords = vector4(1693.1450, 3762.0181, 34.7053, 217.5376), -- Sandy Shores
+		gender = 'male',
+		animDict = 'anim@heists@heist_corona@single_team',
+		animName = 'single_team_loop_boss'	
+	},		
+	{
+		model = `s_m_y_ammucity_01`, 
+		coords = vector4(2566.6487, 292.6444, 108.7349, 2.8016), -- Palimino Fwy
+		gender = 'male',
+		animDict = 'anim@heists@heist_corona@single_team',
+		animName = 'single_team_loop_boss'	
+	},		
+			
+
 }
+
+
