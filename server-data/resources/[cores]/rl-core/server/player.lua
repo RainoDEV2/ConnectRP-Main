@@ -195,49 +195,56 @@ RLCore.Player.CreatePlayer = function(PlayerData)
 	end
 
 	self.Functions.AddMoney = function(moneytype, amount, reason)
-		reason = reason ~= nil and reason or "unkown"
-		local moneytype = moneytype:lower()
-		local amount = tonumber(amount)
-		if amount < 0 then return end
-		if self.PlayerData.money[moneytype] ~= nil then
-			self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype]+amount
-			self.Functions.UpdatePlayerData()
-			if amount > 100000 then
-				TriggerEvent("bb-logs:server:createLog", "playermoney", "AddMoney", "lightgreen", "**"..GetPlayerName(self.PlayerData.source) .. " (citizenid: "..self.PlayerData.citizenid.." | id: "..self.PlayerData.source..")** $"..amount .. " ("..moneytype..") erbij, nieuw "..moneytype.." balans: "..self.PlayerData.money[moneytype], true)
-			else
-				TriggerEvent("bb-logs:server:createLog", "playermoney", "AddMoney", "lightgreen", "**"..GetPlayerName(self.PlayerData.source) .. " (citizenid: "..self.PlayerData.citizenid.." | id: "..self.PlayerData.source..")** $"..amount .. " ("..moneytype..") erbij, nieuw "..moneytype.." balans: "..self.PlayerData.money[moneytype])
-			end
-			TriggerClientEvent("hud:client:OnMoneyChange", self.PlayerData.source, moneytype, amount, false)
-			return true
-		end
-		return false
-	end
+        reason = reason or 'unknown'
+        local moneytype = moneytype:lower()
+        local amount = tonumber(amount)
+        if amount < 0 then
+            return
+        end
+        if self.PlayerData.money[moneytype] then
+            self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] + amount
+            self.Functions.UpdatePlayerData()
+            if amount > 100000 then
+                TriggerEvent('rl-log:server:CreateLog', 'playermoney', 'AddMoney', 'lightgreen', '**' .. GetPlayerName(self.PlayerData.source) .. ' (citizenid: ' .. self.PlayerData.citizenid .. ' | id: ' .. self.PlayerData.source .. ')** $' .. amount .. ' (' .. moneytype .. ') added, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], true)
+            else
+                TriggerEvent('rl-log:server:CreateLog', 'playermoney', 'AddMoney', 'lightgreen', '**' .. GetPlayerName(self.PlayerData.source) .. ' (citizenid: ' .. self.PlayerData.citizenid .. ' | id: ' .. self.PlayerData.source .. ')** $' .. amount .. ' (' .. moneytype .. ') added, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype])
+            end
+            TriggerClientEvent('hud:client:OnMoneyChange', self.PlayerData.source, moneytype, amount, false, reason)
+            return true
+        end
+        return false
+    end
 
-	self.Functions.RemoveMoney = function(moneytype, amount, reason)
-		reason = reason ~= nil and reason or "unkown"
-		local moneytype = moneytype:lower()
-		local amount = tonumber(amount)
-		if amount < 0 then return end
-		if self.PlayerData.money[moneytype] ~= nil then
-			for _, mtype in pairs(RLCore.Config.Money.DontAllowMinus) do
-				if mtype == moneytype then
-					if self.PlayerData.money[moneytype] - amount < 0 then return false end
-				end
-			end
-			self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] - amount
-			self.Functions.UpdatePlayerData()
-			TriggerEvent("RL-log:server:sendLog", self.PlayerData.citizenid, "moneyremoved", {amount=amount, moneytype=moneytype, newbalance=self.PlayerData.money[moneytype], reason=reason})
-			if amount > 100000 then
-				TriggerEvent("bb-logs:server:createLog", "playermoney", "RemoveMoney", "red", "**"..GetPlayerName(self.PlayerData.source) .. " (citizenid: "..self.PlayerData.citizenid.." | id: "..self.PlayerData.source..")** $"..amount .. " ("..moneytype..") eraf, nieuw "..moneytype.." balans: "..self.PlayerData.money[moneytype], true)
-			else
-				TriggerEvent("bb-logs:server:createLog", "playermoney", "RemoveMoney", "red", "**"..GetPlayerName(self.PlayerData.source) .. " (citizenid: "..self.PlayerData.citizenid.." | id: "..self.PlayerData.source..")** $"..amount .. " ("..moneytype..") eraf, nieuw "..moneytype.." balans: "..self.PlayerData.money[moneytype])
-			end
-			TriggerClientEvent("hud:client:OnMoneyChange", self.PlayerData.source, moneytype, amount, true)
-			TriggerClientEvent('rl-phone:client:RemoveBankMoney', self.PlayerData.source, amount)
-			return true
-		end
-		return false
-	end
+    self.Functions.RemoveMoney = function(moneytype, amount, reason)
+        reason = reason or 'unknown'
+        local moneytype = moneytype:lower()
+        local amount = tonumber(amount)
+        if amount < 0 then
+            return
+        end
+        if self.PlayerData.money[moneytype] then
+            for _, mtype in pairs(QBCore.Config.Money.DontAllowMinus) do
+                if mtype == moneytype then
+                    if self.PlayerData.money[moneytype] - amount < 0 then
+                        return false
+                    end
+                end
+            end
+            self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] - amount
+            self.Functions.UpdatePlayerData()
+            if amount > 100000 then
+                TriggerEvent('qb-log:server:CreateLog', 'playermoney', 'RemoveMoney', 'red', '**' .. GetPlayerName(self.PlayerData.source) .. ' (citizenid: ' .. self.PlayerData.citizenid .. ' | id: ' .. self.PlayerData.source .. ')** $' .. amount .. ' (' .. moneytype .. ') removed, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], true)
+            else
+                TriggerEvent('qb-log:server:CreateLog', 'playermoney', 'RemoveMoney', 'red', '**' .. GetPlayerName(self.PlayerData.source) .. ' (citizenid: ' .. self.PlayerData.citizenid .. ' | id: ' .. self.PlayerData.source .. ')** $' .. amount .. ' (' .. moneytype .. ') removed, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype])
+            end
+            TriggerClientEvent('hud:client:OnMoneyChange', self.PlayerData.source, moneytype, amount, true, reason)
+            if moneytype == 'bank' then
+                TriggerClientEvent('qb-phone:client:RemoveBankMoney', self.PlayerData.source, amount)
+            end
+            return true
+        end
+        return false
+    end
 
 	self.Functions.SetMoney = function(moneytype, amount, reason)
 		reason = reason ~= nil and reason or "unkown"
