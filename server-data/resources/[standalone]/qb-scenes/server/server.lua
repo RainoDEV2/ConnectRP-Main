@@ -30,7 +30,7 @@ end)
 
 function UpdateAllScenes()
     scenes = {}
-    MySQL.Async.fetchAll('SELECT * FROM scenes', {}, function(result)
+    exports.ghmattimysql:execute('SELECT * FROM scenes', {}, function(result)
         if result[1] then
             for _, v in pairs(result) do
                 local newCoords = json.decode(v.coords)
@@ -50,25 +50,43 @@ function UpdateAllScenes()
     end)
 end
 
+function dump(o)
+	if type(o) == 'table' then
+	   local s = '{ '
+	   for k,v in pairs(o) do
+		  if type(k) ~= 'number' then k = '"'..k..'"' end
+		  s = s .. '['..k..'] = ' .. dump(v) .. ','
+	   end
+	   return s .. '} '
+	else
+	   return tostring(o)
+	end
+ end
+
 function DeleteExpiredScenes()
-    MySQL.Async.execute('DELETE FROM scenes WHERE date_deletion < NOW()', {}, function(result)
-        if result > 0 then
-            print('Deleted '..result..' expired scenes from the database.')
-            UpdateAllScenes()
+
+    exports.ghmattimysql:execute('SELECT * FROM scenes', {}, function(result)
+        if result[1] then
+            if result[1].expiration > 0 then
+                --print('Deleted '..result[1].expiration..' expired scenes from the database.') 
+                exports.ghmattimysql:execute('DELETE FROM scenes WHERE date_deletion < NOW()', {}, function(result) 
+                UpdateAllScenes()
+                end)
+            end
         end
     end)
 end
 
 RegisterNetEvent('rl-scenes:server:DeleteScene', function(id)
-    MySQL.Async.execute('DELETE FROM scenes WHERE id = ?', {id}, function(result)
+    exports.ghmattimysql:execute('DELETE FROM scenes WHERE id = ?', {id}, function(result)
         UpdateAllScenes()
     end)
-end)
+end) 
 
-RegisterNetEvent('rl-scenes:server:CreateScene', function(sceneData)
+RegisterNetEvent('rl-scenes:server:CreateScene', function(sceneData) 
     local src = source 
 
-    MySQL.Async.insert('INSERT INTO scenes (creator, text, color, viewdistance, expiration, fontsize, fontstyle, coords, date_creation, date_deletion) VALUES (? ,?, ?, ?, ?, ?, ?, ?, NOW(), DATE_ADD(NOW(), INTERVAL ? HOUR))', {
+    exports.ghmattimysql:execute('INSERT INTO scenes (creator, text, color, viewdistance, expiration, fontsize, fontstyle, coords, date_creation, date_deletion) VALUES (? ,?, ?, ?, ?, ?, ?, ?, NOW(), DATE_ADD(NOW(), INTERVAL ? HOUR))', {
         RLCore.Functions.GetPlayer(src).PlayerData.citizenid, 
         sceneData.text,
         sceneData.color,

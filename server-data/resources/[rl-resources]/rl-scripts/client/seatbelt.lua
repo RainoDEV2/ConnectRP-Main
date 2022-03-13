@@ -276,6 +276,17 @@ function EjectFromVehicle()
     local ped = PlayerPedId()
     local veh = GetVehiclePedIsIn(ped,false)
     local coords = GetOffsetFromEntityInWorldCoords(veh, 1.0, 0.0, 1.0)
+    local veloc = GetEntityVelocity(veh)
+
+    SetEntityCoords(ped,coords)
+    Citizen.Wait(1)
+    SetPedToRagdoll(ped, 5511, 5511, 0, 0, 0, 0)
+    SetEntityVelocity(ped, veloc.x*4,veloc.y*4,veloc.z*4)
+
+    SmashVehicleWindow(veh, 6)
+    --[[ local ped = PlayerPedId()
+    local veh = GetVehiclePedIsIn(ped,false)
+    local coords = GetOffsetFromEntityInWorldCoords(veh, 1.0, 0.0, 1.0)
     SetEntityCoords(ped,coords)
     Wait(1)
     SetPedToRagdoll(ped, 5511, 5511, 0, 0, 0, 0)
@@ -285,5 +296,6 @@ function EjectFromVehicle()
         SetEntityHealth(ped, (GetEntityHealth(ped) - ejectspeed) )
     elseif GetEntityHealth(ped) ~= 0 then
         SetEntityHealth(ped, 0)
-    end
-end
+    end ]]
+end 
+
