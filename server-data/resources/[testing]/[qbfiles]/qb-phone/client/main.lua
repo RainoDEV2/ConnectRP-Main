@@ -139,7 +139,7 @@ local function findVehFromPlateAndLocate(plate)
     for i = 1, #gameVehicles do
         local vehicle = gameVehicles[i]
         if DoesEntityExist(vehicle) then
-            if RLCore.Functions.GetPlate(vehicle) == plate then
+            if GetVehicleNumberPlateText(vehicle) == plate then
                 local vehCoords = GetEntityCoords(vehicle)
                 SetNewWaypoint(vehCoords.x, vehCoords.y)
                 return true
@@ -923,21 +923,21 @@ RegisterNUICallback('GetCryptoTransactions', function(data, cb)
 end)
 
 RegisterNUICallback('GetAvailableRaces', function(data, cb)
-    RLCore.Functions.TriggerCallback('qb-lapraces:server:GetRaces', function(Races)
+    RLCore.Functions.TriggerCallback('rl-lapraces:server:GetRaces', function(Races)
         cb(Races)
     end)
 end)
 
 RegisterNUICallback('JoinRace', function(data)
-    TriggerServerEvent('qb-lapraces:server:JoinRace', data.RaceData)
+    TriggerServerEvent('rl-lapraces:server:JoinRace', data.RaceData)
 end)
 
 RegisterNUICallback('LeaveRace', function(data)
-    TriggerServerEvent('qb-lapraces:server:LeaveRace', data.RaceData)
+    TriggerServerEvent('rl-lapraces:server:LeaveRace', data.RaceData)
 end)
 
 RegisterNUICallback('StartRace', function(data)
-    TriggerServerEvent('qb-lapraces:server:StartRace', data.RaceData.RaceId)
+    TriggerServerEvent('rl-lapraces:server:StartRace', data.RaceData.RaceId)
 end)
 
 RegisterNUICallback('SetAlertWaypoint', function(data)
@@ -973,7 +973,7 @@ end)
 
 RegisterNUICallback('FetchVehicleScan', function(data, cb)
     local vehicle = RLCore.Functions.GetClosestVehicle()
-    local plate = RLCore.Functions.GetPlate(vehicle)
+    local plate = GetVehicleNumberPlateText(vehicle)
     local vehname = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle)):lower()
     RLCore.Functions.TriggerCallback('qb-phone:server:ScanPlate', function(result)
         RLCore.Functions.TriggerCallback('police:IsPlateFlagged', function(flagged)
@@ -989,38 +989,38 @@ RegisterNUICallback('FetchVehicleScan', function(data, cb)
 end)
 
 RegisterNUICallback('GetRaces', function(data, cb)
-    RLCore.Functions.TriggerCallback('qb-lapraces:server:GetListedRaces', function(Races)
+    RLCore.Functions.TriggerCallback('rl-lapraces:server:GetListedRaces', function(Races)
         cb(Races)
     end)
 end)
 
 RegisterNUICallback('GetTrackData', function(data, cb)
-    RLCore.Functions.TriggerCallback('qb-lapraces:server:GetTrackData', function(TrackData, CreatorData)
+    RLCore.Functions.TriggerCallback('rl-lapraces:server:GetTrackData', function(TrackData, CreatorData)
         TrackData.CreatorData = CreatorData
         cb(TrackData)
     end, data.RaceId)
 end)
 
 RegisterNUICallback('SetupRace', function(data, cb)
-    TriggerServerEvent('qb-lapraces:server:SetupRace', data.RaceId, tonumber(data.AmountOfLaps))
+    TriggerServerEvent('rl-lapraces:server:SetupRace', data.RaceId, tonumber(data.AmountOfLaps))
 end)
 
 RegisterNUICallback('HasCreatedRace', function(data, cb)
-    RLCore.Functions.TriggerCallback('qb-lapraces:server:HasCreatedRace', function(HasCreated)
+    RLCore.Functions.TriggerCallback('rl-lapraces:server:HasCreatedRace', function(HasCreated)
         cb(HasCreated)
     end)
 end)
 
 RegisterNUICallback('IsInRace', function(data, cb)
-    local InRace = exports['qb-lapraces']:IsInRace()
+    local InRace = exports['rl-lapraces']:IsInRace()
     cb(InRace)
 end)
 
 RegisterNUICallback('IsAuthorizedToCreateRaces', function(data, cb)
-    RLCore.Functions.TriggerCallback('qb-lapraces:server:IsAuthorizedToCreateRaces', function(IsAuthorized, NameAvailable)
+    RLCore.Functions.TriggerCallback('rl-lapraces:server:IsAuthorizedToCreateRaces', function(IsAuthorized, NameAvailable)
         local data = {
             IsAuthorized = IsAuthorized,
-            IsBusy = exports['qb-lapraces']:IsInEditor(),
+            IsBusy = exports['rl-lapraces']:IsInEditor(),
             IsNameAvailable = NameAvailable,
         }
         cb(data)
@@ -1028,24 +1028,24 @@ RegisterNUICallback('IsAuthorizedToCreateRaces', function(data, cb)
 end)
 
 RegisterNUICallback('StartTrackEditor', function(data, cb)
-    TriggerServerEvent('qb-lapraces:server:CreateLapRace', data.TrackName)
+    TriggerServerEvent('rl-lapraces:server:CreateLapRace', data.TrackName)
 end)
 
 RegisterNUICallback('GetRacingLeaderboards', function(data, cb)
-    RLCore.Functions.TriggerCallback('qb-lapraces:server:GetRacingLeaderboards', function(Races)
+    RLCore.Functions.TriggerCallback('rl-lapraces:server:GetRacingLeaderboards', function(Races)
         cb(Races)
     end)
 end)
 
 RegisterNUICallback('RaceDistanceCheck', function(data, cb)
-    RLCore.Functions.TriggerCallback('qb-lapraces:server:GetRacingData', function(RaceData)
+    RLCore.Functions.TriggerCallback('rl-lapraces:server:GetRacingData', function(RaceData)
         local ped = PlayerPedId()
         local coords = GetEntityCoords(ped)
         local checkpointcoords = RaceData.Checkpoints[1].coords
         local dist = #(coords - vector3(checkpointcoords.x, checkpointcoords.y, checkpointcoords.z))
         if dist <= 115.0 then
             if data.Joined then
-                TriggerEvent('qb-lapraces:client:WaitingDistanceCheck')
+                TriggerEvent('rl-lapraces:client:WaitingDistanceCheck')
             end
             cb(true)
         else
@@ -1058,14 +1058,14 @@ end)
 
 RegisterNUICallback('IsBusyCheck', function(data, cb)
     if data.check == "editor" then
-        cb(exports['qb-lapraces']:IsInEditor())
+        cb(exports['rl-lapraces']:IsInEditor())
     else
-        cb(exports['qb-lapraces']:IsInRace())
+        cb(exports['rl-lapraces']:IsInRace())
     end
 end)
 
 RegisterNUICallback('CanRaceSetup', function(data, cb)
-    RLCore.Functions.TriggerCallback('qb-lapraces:server:CanRaceSetup', function(CanSetup)
+    RLCore.Functions.TriggerCallback('rl-lapraces:server:CanRaceSetup', function(CanSetup)
         cb(CanSetup)
     end)
 end)
