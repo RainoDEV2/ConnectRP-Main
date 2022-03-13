@@ -3,6 +3,7 @@ resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
 shared_script "@nevo-scripts/cl_errorlog.lua"
 shared_script "locale/en.lua"
 shared_script "shared/locale.lua"
+shared_script "import.lua"
 
 server_scripts {
 	"config.lua",

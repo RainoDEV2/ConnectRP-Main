@@ -62,7 +62,7 @@ RLCore.Functions.SpawnVehicle = function(model, cb, coords, isnetworked)
     local veh = CreateVehicle(model, coords.x, coords.y, coords.z, coords.a, isnetworked, false)
     local netid = NetworkGetNetworkIdFromEntity(veh)
 
-	SetVehicleHasBeenOwnedByPlayer(vehicle,  true)
+	SetVehicleHasBeenOwnedByPlayer(veh,  true)
 	SetNetworkIdCanMigrate(netid, true)
     SetVehicleNeedsToBeHotwired(veh, false)
     SetVehRadioStation(veh, "OFF")
