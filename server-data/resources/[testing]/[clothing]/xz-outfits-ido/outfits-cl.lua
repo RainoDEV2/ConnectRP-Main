@@ -46,8 +46,8 @@ RegisterCommand("outfits", function()
 end)
 
 RegisterNetEvent("rl-outfits-ido:client:openOutfits", function()
-    for k, v in pairs(Config.Zones) do
-        if #(GetEntityCoords(PlayerPedId()) - v) < Config.Distance then
+    --for k, v in pairs(Config.Zones) do
+        --if #(GetEntityCoords(PlayerPedId()) - v) < Config.Distance then
             local menuOptions = {}
             for k, v in pairs(charOutfits) do
                 local miniTable = {
@@ -79,9 +79,9 @@ RegisterNetEvent("rl-outfits-ido:client:openOutfits", function()
             else
                 RLCore.Functions.Notify("You don't have any outfits.", "error", 3500)
             end        
-            break 
-        end
-    end
+            --break 
+        --end
+    --end
 end)
 
 RegisterNetEvent("rl-outfits-ido:client:openOutfitsMenu", function()

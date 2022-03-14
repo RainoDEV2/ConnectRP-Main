@@ -165,7 +165,7 @@ RegisterNUICallback('spawnplayer', function(data)
         end)
         if insideMeta.house ~= nil then
             local houseId = insideMeta.house
-            TriggerEvent('rl-houses:client:LastLocationHouse', houseId)
+            TriggerEvent('qb-houses:client:LastLocationHouse', houseId)
         elseif insideMeta.apartment.apartmentType ~= nil or insideMeta.apartment.apartmentId ~= nil then
             local apartmentType = insideMeta.apartment.apartmentType
             local apartmentId = insideMeta.apartment.apartmentId
@@ -188,10 +188,10 @@ RegisterNUICallback('spawnplayer', function(data)
         SetDisplay(false)
         DoScreenFadeOut(500)
         Citizen.Wait(2000)
-        TriggerEvent('rl-houses:client:enterOwnedHouse', location)
+        TriggerEvent('qb-houses:client:enterOwnedHouse', location)
         TriggerServerEvent('RLCore:Server:OnPlayerLoaded')
         TriggerEvent('RLCore:Client:OnPlayerLoaded')
-        TriggerServerEvent('rl-houses:server:SetInsideMeta', 0, false)
+        TriggerServerEvent('qb-houses:server:SetInsideMeta', 0, false)
         TriggerServerEvent('rl-apartments:server:SetInsideMeta', 0, 0, false)
         FreezeEntityPosition(ped, false)
         RenderScriptCams(false, true, 500, true, true)
@@ -212,7 +212,7 @@ RegisterNUICallback('spawnplayer', function(data)
         SetEntityCoords(ped, pos.x, pos.y, pos.z)
         TriggerServerEvent('RLCore:Server:OnPlayerLoaded')
         TriggerEvent('RLCore:Client:OnPlayerLoaded')
-        TriggerServerEvent('rl-houses:server:SetInsideMeta', 0, false)
+        TriggerServerEvent('qb-houses:server:SetInsideMeta', 0, false)
         TriggerServerEvent('rl-apartments:server:SetInsideMeta', 0, 0, false)
         Citizen.Wait(500)
         SetEntityCoords(ped, pos.x, pos.y, pos.z)
@@ -252,8 +252,8 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent('rl-houses:client:setHouseConfig')
-AddEventHandler('rl-houses:client:setHouseConfig', function(houseConfig)
+RegisterNetEvent('qb-houses:client:setHouseConfig')
+AddEventHandler('qb-houses:client:setHouseConfig', function(houseConfig)
     Config.Houses = houseConfig
 end)
 

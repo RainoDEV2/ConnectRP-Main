@@ -26,8 +26,8 @@ Citizen.CreateThread(function()
 				}
 			end
 		end
-		TriggerClientEvent("rl-garages:client:houseGarageConfig", -1, HouseGarages)
-		TriggerClientEvent("rl-houses:client:setHouseConfig", -1, Config.Houses)
+		TriggerClientEvent("qb-garages:client:houseGarageConfig", -1, HouseGarages)
+		TriggerClientEvent("qb-houses:client:setHouseConfig", -1, Config.Houses)
 	end)
 end)
 

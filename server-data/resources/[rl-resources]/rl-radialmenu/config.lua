@@ -561,31 +561,31 @@ newSubMenus = {
     ['house:give'] = {
         title = "Give House Key",
         icon = "#house-givekey",
-        functionName = "rl-houses:client:giveHouseKey"
+        functionName = "qb-houses:client:giveHouseKey" 
     },
 
     ['house:remove'] = {
         title = "Remove House Key",
         icon = "#house-removekey",
-        functionName = "rl-houses:client:removeHouseKey"
+        functionName = "qb-houses:client:removeHouseKey"
     },
 
     ['house:doorlock'] = {
         title = "Toggle Door lock",
         icon = "#house-doorlock",
-        functionName = "rl-houses:client:toggleDoorlock"
+        functionName = "qb-houses:client:toggleDoorlock"
     },
 
     ['house:reset'] = {
         title = "Reset Home lock",
         icon = "#house-resetlock",
-        functionName = "rl-houses:client:ResetHouse"
+        functionName = "qb-houses:client:ResetHouse"
     },
 
     ['house:decorate'] = {
         title = "Decorate house",
         icon = "#house-decorate",
-        functionName = "rl-houses:client:decorate",
+        functionName = "qb-houses:client:decorate",
         enableMenu = function()
             local Data = RLCore.Functions.GetPlayerData()
             return not Data.metadata["isdead"] and not Data.metadata["inlaststand"]
@@ -595,22 +595,19 @@ newSubMenus = {
     ['house:setstash'] = {
         title = "Set Stash",
         icon = "#house-setstash",
-        functionName = "rl-houses:client:setLocation",
-        functionParameters =  "setstash"
+        functionName = "qb-houses:client:setStash",
     },
 
     ['house:setoutift'] = {
         title = "Outfit Set",
         icon = "#house-setoutift",
-        functionName = "rl-houses:client:setLocation",
-        functionParameters =  "setoutift"
+        functionName = "qb-houses:client:setOutfit",
     },
 
     ['house:setlogout'] = {
         title = "Logout",
         icon = "#house-logout",
-        functionName = "rl-houses:client:setLocation",
-        functionParameters =  "setlogout"
+        functionName = "qb-houses:client:setLogout",
     },
 
     --------------------------------------
