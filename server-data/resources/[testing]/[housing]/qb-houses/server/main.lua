@@ -679,3 +679,67 @@ RLCore.Functions.CreateCallback('qb-phone:server:MeosGetPlayerHouses', function(
         cb(nil)
     end
 end)
+
+--REALESTATE JOB
+RegisterNetEvent('qb-houses:server:updateTier', function()
+    local HouseGarages = {}
+    RLCore.Functions.ExecuteSql(false, "SELECT * FROM `houselocations`", function(result)
+        if result[1] then
+            for k, v in pairs(result) do
+                local owned = false
+                if tonumber(v.owned) == 1 then
+                    owned = true
+                end
+                local garage = json.decode(v.garage) or {}
+                Config.Houses[v.name] = {
+                    coords = json.decode(v.coords),
+                    owned = v.owned,
+                    price = newprice,
+                    locked = true,
+                    adress = v.label,
+                    tier = v.tier,
+                    garage = garage,
+                    decorations = {}
+                }
+                HouseGarages[v.name] = {
+                    label = v.label,
+                    takeVehicle = garage
+                }
+            end
+        end
+    end)
+    TriggerClientEvent("qb-garages:client:houseGarageConfig", -1, HouseGarages)
+    TriggerClientEvent("qb-houses:client:setHouseConfig", -1, Config.Houses)
+end)
+
+RegisterNetEvent('qb-houses:server:updatePrice', function(price)
+    local newprice = price
+    local HouseGarages = {}
+    RLCore.Functions.ExecuteSql(false, "SELECT * FROM `houselocations`", function(result)
+        if result[1] then
+            for k, v in pairs(result) do
+                local owned = false
+                if tonumber(v.owned) == 1 then
+                    owned = true
+                end
+                local garage = json.decode(v.garage) or {}
+                Config.Houses[v.name] = {
+                    coords = json.decode(v.coords),
+                    owned = v.owned,
+                    price = newprice,
+                    locked = true,
+                    adress = v.label,
+                    tier = v.tier,
+                    garage = garage,
+                    decorations = {}
+                }
+                HouseGarages[v.name] = {
+                    label = v.label,
+                    takeVehicle = garage
+                }
+            end
+        end
+        TriggerClientEvent("qb-garages:client:houseGarageConfig", -1, HouseGarages)
+        TriggerClientEvent("qb-houses:client:setHouseConfig", -1, Config.Houses)    
+    end)
+end)

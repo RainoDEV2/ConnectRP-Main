@@ -805,6 +805,22 @@ RegisterNetEvent('qb-houses:client:createHouses', function(price, tier)
     if Config.UnownedBlips then TriggerServerEvent('qb-houses:server:createBlip') end
 end)
 
+RegisterNetEvent('qb-houses:client:createHousesM', function()
+    local pos = GetEntityCoords(PlayerPedId())
+    local heading = GetEntityHeading(PlayerPedId())
+	local s1, s2 = GetStreetNameAtCoord(pos.x, pos.y, pos.z)
+    local street = GetStreetNameFromHashKey(s1)
+    local coords = {
+        enter 	= { x = pos.x, y = pos.y, z = pos.z, h = heading},
+        cam 	= { x = pos.x, y = pos.y, z = pos.z, h = heading, yaw = -10.00},
+    }
+    street = street:gsub("%-", " ")
+    local price = "10000"
+    local tier = "1"
+    TriggerServerEvent('qb-houses:server:addNewHouse', street, coords, price, tier)
+    if Config.UnownedBlips then TriggerServerEvent('qb-houses:server:createBlip') end
+end)
+
 RegisterNetEvent('qb-houses:client:addGarage', function()
     if ClosestHouse ~= nil then
         local pos = GetEntityCoords(PlayerPedId())
@@ -1075,8 +1091,8 @@ RegisterNetEvent('qb-houses:client:HomeInvasion', function()
     local pos = GetEntityCoords(ped)
     local Skillbar = exports['qb-skillbar']:GetSkillbarObject()
     if ClosestHouse ~= nil then
-        RLCore.Functions.TriggerCallback('police:server:IsPoliceForcePresent', function(IsPresent)
-            if IsPresent then
+        --RLCore.Functions.TriggerCallback('police:server:IsPoliceForcePresent', function(IsPresent) 
+            --if IsPresent then
                 local dist = #(pos - vector3(Config.Houses[ClosestHouse].coords.enter.x, Config.Houses[ClosestHouse].coords.enter.y, Config.Houses[ClosestHouse].coords.enter.z))
                 if Config.Houses[ClosestHouse].IsRaming == nil then
                     Config.Houses[ClosestHouse].IsRaming = false
@@ -1121,10 +1137,10 @@ RegisterNetEvent('qb-houses:client:HomeInvasion', function()
                 else
                     RLCore.Functions.Notify(Lang:t("error.no_house"), "error")
                 end
-            else
-                RLCore.Functions.Notify(Lang:t("error.no_police"), 'error')
-            end
-        end)
+            --else
+            --    RLCore.Functions.Notify(Lang:t("error.no_police"), 'error')
+            --end
+        --end)
     else
         RLCore.Functions.Notify(Lang:t("error.no_house"), "error")
     end
@@ -1284,17 +1300,21 @@ CreateThread(function()
                 inRange = true
                 if HasHouseKey then
                     -- ENTER HOUSE
+                    --local houseAddress = json.encode(Config.Houses[ClosestHouse])
 
                     if not IsInside then
                         if ClosestHouse ~= nil then
                             if #(pos - dist2) <= 1.5 then
                                 houseMenu = {
                                     {
-                                        header = Lang:t("menu.house_options"),
+                                        
+                                        header = "Home Address:",
+                                        txt = "["..ClosestHouse.."]",
                                         isMenuHeader = true, -- Set to true to make a nonclickable title
                                     },
                                     {
                                         header = Lang:t("menu.enter_house"),
+                                        
                                         params = {
                                             event = "qb-houses:client:EnterHouse",
 
@@ -1383,7 +1403,7 @@ CreateThread(function()
                                         header = Lang:t("menu.enter_unlocked_house"),
                                         params = {
                                             event = "qb-houses:client:EnterHouse",
-                                        }
+                                        } 
                                     }
                                     if RLCore.Functions.GetPlayerData().job.name == 'police' then
                                         houseMenu[#houseMenu+1] = {

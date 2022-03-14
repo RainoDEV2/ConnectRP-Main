@@ -103,6 +103,16 @@ rootMenuConfig =  {
             local pData = RLCore.Functions.GetPlayerData()
             return (not pData.metadata["isdead"] and not pData.metadata["inlaststand"] and inGarage and isCloseVeh() and not IsPedInAnyVehicle(PlayerPedId(), false))
         end
+    }, 
+    {
+        id = "housemenu",
+        displayName = "Realestate",
+        icon = "#animation-business",
+        functionName = "qb-realestate:client:OpenHouseListMenu",
+        enableMenu = function()
+            local Data = RLCore.Functions.GetPlayerData()
+            return (not Data.metadata["isdead"] and not Data.metadata["inlaststand"]) and (Data.job.name == 'realestate' and Data.job.onduty)
+        end
     },
     {
         id = "general:depots",
