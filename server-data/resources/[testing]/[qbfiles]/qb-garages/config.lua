@@ -475,15 +475,15 @@ Garages = {
             [79] = { ['x'] = 245.18977, ['y'] = -772.2796, ['z'] = 30.712118, ['h'] = 250.00000 }, -- 88
         }
     },
-    ["tunerparking"] = {
+    ["tuner"] = {
         label = "Tunershop parking",
         Blip = vector3(163.77, -2999.79, 5.93),
-        polyzone = vector3(163.77, -2999.79, 5.93),
-        polyzone1 = 23.4,
+        polyzone = vector3(163.78, -2999.62, 5.9),
+        polyzone1 = 26.2,
         polyzone2 = 10,
-        heading=1,
-        minZ = 4.93,
-        maxZ = 8.93,
+        heading= 0,
+        minZ = 4.9,
+        maxZ = 8.9,
         showBlip = true,
         spawns = {
             [1] = { ['x'] = 163.12199, ['y'] = -3009.21, ['z'] = 5.5895209, ['h'] = 269.60586},
@@ -494,13 +494,13 @@ Garages = {
             [6] = { ['x'] = 163.0467, ['y'] = -2989.863, ['z'] = 5.5653381, ['h'] = 269.60586},
         }
     },
-    ["mechanicparking"] = {
+    ["mechanic"] = {
         label = "Mechanic parking",
         Blip = vector3(-1376.62, -452.3, 34.48),
-        polyzone = vector3(-1376.62, -452.3, 34.48),
-        polyzone1 = 13.6,
-        polyzone2 = 10,
-        heading=306,
+        polyzone = vector3(-1377.84, -450.64, 34.48),
+        polyzone1 = 20.0,
+        polyzone2 = 10.0,
+        heading= 305,
         minZ = 33.48,
         maxZ = 37.48,
         showBlip = true,
@@ -511,15 +511,15 @@ Garages = {
             [4] = { ['x'] = -1374.65, ['y'] = -447.8951, ['z'] = 34.126838, ['h'] = 214.66168},
         }
     },
-    ["mirrorparking"] = {
+    ["mirror"] = {
         label = "Mirror Park Garge",
         Blip = vector3(1026.42, -771.98, 57.94),
-        polyzone = vector3(1026.42, -771.98, 57.94),
+        polyzone = vector3(1026.37, -771.16, 58.02),
         polyzone1 = 35.0,
-        polyzone2 = 20.0,
-        heading=220,
-        minZ = 56.94,
-        maxZ = 60.94,
+        polyzone2 = 28.0,
+        heading= 223,
+        minZ = 57.02,
+        maxZ = 61.02,
         showBlip = true,
         spawns = {
             [1] = { ['x'] = 1029.5379, ['y'] = -763.8229, ['z'] = 57.633739, ['h'] = 55.848857},
@@ -565,9 +565,21 @@ Garages = {
             [14] = { ['x'] = 1854.7772, ['y'] = 2578.8378, ['z'] = 45.323776, ['h'] = 270.46398},
         }
     },
+    ["casino"] = {
+        label = "Casino Garage",
+        Blip = vector3(933.69, -2.67, 78.76),
+        polyzone = vector3(933.69, -2.67, 78.76),
+        polyzone1 = 10.0,
+        polyzone2 = 5.0,
+        heading=329,
+        minZ = 77.76,
+        maxZ = 81.76,
+        showBlip = true,
+        spawns = {
+            [1] = { ['x'] = 934.30407, ['y'] = -1.866059, ['z'] = 78.339675, ['h'] = 147.54113},  
+        }
+    },
 }
-
-HouseGarages = {}
 
 GangGarages = {
     ["ballasgarage"] = {

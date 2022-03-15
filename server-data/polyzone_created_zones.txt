@@ -93,3 +93,66 @@ CircleZone:Create(vector3(-46.72, -1758.04, 29.42), 0.5, {
   --debugPoly=true
 })
 
+--Name: bolling | 2022-03-14T02:47:36Z
+BoxZone:Create(vector3(1869.72, 2586.46, 45.67), 33.4, 50, {
+  name="bolling",
+  heading=271,
+  --debugPoly=true,
+  minZ=44.67,
+  maxZ=48.67
+})
+
+--Name: blah | 2022-03-15T04:12:12Z
+BoxZone:Create(vector3(1030.97, -772.75, 58.06), 33.4, 50, {
+  name="blah",
+  heading=335,
+  --debugPoly=true,
+  minZ=57.06,
+  maxZ=61.06
+})
+
+--Name: Mechanicshop | 2022-03-15T04:27:02Z
+BoxZone:Create(vector3(-1378.16, -452.34, 34.48), 20, 10, {
+  name="Mechanicshop",
+  heading=305,
+  --debugPoly=true,
+  minZ=33.48,
+  maxZ=37.48
+})
+
+--Name: tuner | 2022-03-15T04:46:24Z
+BoxZone:Create(vector3(163.78, -2999.62, 5.9), 26.2, 10, {
+  name="tuner",
+  heading=0,
+  --debugPoly=true,
+  minZ=4.9,
+  maxZ=8.9
+})
+
+--Name: mechanic | 2022-03-15T04:51:34Z
+BoxZone:Create(vector3(-1377.84, -450.64, 34.48), 20, 10, {
+  name="mechanic",
+  heading=305,
+  --debugPoly=true,
+  minZ=33.48,
+  maxZ=37.48
+})
+
+--Name: mirror | 2022-03-15T04:55:25Z
+BoxZone:Create(vector3(1026.37, -771.16, 58.02), 35, 28, {
+  name="mirror",
+  heading=223,
+  --debugPoly=true,
+  minZ=57.02,
+  maxZ=61.02
+})
+
+--Name: fuckthis | 2022-03-15T05:51:33Z
+BoxZone:Create(vector3(933.69, -2.67, 78.76), 10, 5, {
+  name="fuckthis",
+  heading=329,
+  --debugPoly=true,
+  minZ=77.76,
+  maxZ=81.76
+})
+
