@@ -581,6 +581,8 @@ Garages = {
     },
 }
 
+HouseGarages = {}
+
 GangGarages = {
     ["ballasgarage"] = {
         label = "Ballas Garage",
