@@ -6480,76 +6480,63 @@ RLShared.Jobs = {
 		payment = 850,
         grades = {
 			['0'] = {
-                name = "S.A.L.E. Cadet",
-                payment = 375
+                name = "Cadet",
+                payment = 175
             },
             ['1'] = {
                 name = "Officer",
-				payment = 450
+				payment = 250
 			},
             ['2'] = {
                 name = "Deputy",
-				payment = 450
+				payment = 250
 			},
             ['3'] = {
                 name = "Trooper",
-                payment = 700
+				isboss = true,
+                payment = 450
             },
-            ['4'] = {
-                name = "Senior Officer",
-                payment = 550
-			},
-			['5'] = {
+			['4'] = {
                 name = "Senior Deputy",
-                payment = 550
+                payment = 300
+            },
+            ['5'] = {
+                name = "Corporal",
+                payment = 325
             },
             ['6'] = {
-                name = "Corporal",
-                payment = 650
+                name = "Sergeant",
+                payment = 350
             },
             ['7'] = {
-                name = "Sergeant",
-                payment = 700
+                name = "Lieutenant",
+                payment = 375
             },
             ['8'] = {
-                name = "Lieutenant",
-                payment = 775
-            },
-            ['9'] = {
                 name = "Captian",
 				isboss = true,
-                payment = 800
+                payment = 375
             },
-            ['10'] = {
+            ['9'] = {
 				name = "Assistant Chief of Police",
 				isboss = true,
-                payment = 850
+                payment = 400
             },
-            ['11'] = {
+            ['10'] = {
 				name = "Chief of Police",
 				isboss = true,
-                payment = 850
+                payment = 400
 			},
-			['12'] = {
+			['11'] = {
 				name = "Undersheriff",
 				isboss = true,
-				payment = 850
+				payment = 400
 			},
-			['13'] = {
+			['12'] = {
 				name = "Sheriff",
 				isboss = true,
-                payment = 850
+                payment = 400
 			},
-			['14'] = {
-				name = "Lieutenant Colonel",
-				isboss = true,
-                payment = 850
-			},
-			['15'] = {
-				name = "Colonel",
-				isboss = true,
-                payment = 850
-            },
         },
         defaultDuty = false,
 	},
@@ -6560,7 +6547,7 @@ RLShared.Jobs = {
 		grades = {
 			['0'] = {
                 name = "Rookie",
-                payment = 400
+                payment = 175
             },
             ['1'] = {
                 name = "Medical Orderly",
