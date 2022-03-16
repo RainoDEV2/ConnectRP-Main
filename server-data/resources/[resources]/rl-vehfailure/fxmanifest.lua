@@ -1,11 +1,16 @@
-fx_version 'adamant'
-
+fx_version 'cerulean'
 game 'gta5'
 
-shared_script "@nevo-scripts/cl_errorlog.lua"
+description 'QB-VehicleFailure'
+version '1.0.0'
 
-client_scripts {
-	"config.lua",
-	"client.lua"
+shared_scripts {
+    '@rl-core/shared/locale.lua',
+    'locales/en.lua',
+    'config.lua'
 }
-client_script 'client/hook.lua'
+
+client_script 'client.lua'
+server_script 'server.lua'
+
+lua54 'yes'

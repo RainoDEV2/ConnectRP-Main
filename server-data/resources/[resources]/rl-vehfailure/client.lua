@@ -1,3 +1,4 @@
+local RLCore = exports['rl-core']:GetCoreObject()
 local pedInSameVehicleLast=false
 local vehicle
 local lastVehicle
@@ -8,56 +9,161 @@ local fEngineDamageMult = 0.0
 local fBrakeForce = 1.0
 local isBrakingForward = false
 local isBrakingReverse = false
-
 local healthEngineLast = 1000.0
 local healthEngineCurrent = 1000.0
 local healthEngineNew = 1000.0
 local healthEngineDelta = 0.0
 local healthEngineDeltaScaled = 0.0
-
 local healthBodyLast = 1000.0
 local healthBodyCurrent = 1000.0
 local healthBodyNew = 1000.0
 local healthBodyDelta = 0.0
 local healthBodyDeltaScaled = 0.0
-
 local healthPetrolTankLast = 1000.0
 local healthPetrolTankCurrent = 1000.0
 local healthPetrolTankNew = 1000.0
 local healthPetrolTankDelta = 0.0
 local healthPetrolTankDeltaScaled = 0.0
 local tireBurstLuckyNumber
+local fixMessagePos = math.random(repairCfg.fixMessageCount)
+local noFixMessagePos = math.random(repairCfg.noFixMessageCount)
+local tireBurstMaxNumber = cfg.randomTireBurstInterval * 1200;
+if cfg.randomTireBurstInterval ~= 0 then tireBurstLuckyNumber = math.random(tireBurstMaxNumber) end
 
-math.randomseed(GetGameTimer());
+local DamageComponents = {
+    "radiator",
+    "axle",
+    "clutch",
+	"fuel",
+	"brakes",
+}
 
-local tireBurstMaxNumber = cfg.randomTireBurstInterval * 1200; 			-- 192,000							-- the tire burst lottery runs roughly 1200 times per minute
-if cfg.randomTireBurstInterval ~= 0 then tireBurstLuckyNumber = math.random(tireBurstMaxNumber) end			-- If we hit this number again randomly, a tire will burst.
+-- Functions
 
-local fixMessagePos = ""
-local noFixMessagePos = ""
+local function DamageRandomComponent()
+	print("KILL IT")
+	local dmgFctr = math.random() + math.random(0, 2)
+	local randomComponent = DamageComponents[math.random(1, #DamageComponents)]
+	local randomDamage = (math.random() + math.random(0, 1)) * dmgFctr
+	exports['qb-mechanicjob']:SetVehicleStatus(GetVehicleNumberPlateText(vehicle), randomComponent, exports['qb-mechanicjob']:GetVehicleStatus(GetVehicleNumberPlateText(vehicle), randomComponent) - randomDamage)
+end 
 
+local function CleanVehicle(vehicle)
+	local ped = PlayerPedId()
+	local pos = GetEntityCoords(ped)
+	TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, true)
+	RLCore.Functions.Progressbar("cleaning_vehicle", Lang:t("progress.clean_veh"), math.random(10000, 20000), false, true, {
+		disableMovement = true,
+		disableCarMovement = true,
+		disableMouse = false,
+		disableCombat = true,
+	}, {}, {}, {}, function() -- Done
+		RLCore.Functions.Notify(Lang:t("success.cleaned_veh"))
+		SetVehicleDirtLevel(vehicle, 0.1)
+        SetVehicleUndriveable(vehicle, false)
+		WashDecalsFromVehicle(vehicle, 1.0)
+		TriggerServerEvent('qb-vehiclefailure:server:removewashingkit', vehicle)
+		TriggerEvent('inventory:client:ItemBox', RLCore.Shared.Items["cleaningkit"], "remove")
+		ClearAllPedProps(ped)
+		ClearPedTasks(ped)
+	end, function() -- Cancel
+		RLCore.Functions.Notify(Lang:t("error.failed_notification"), "error")
+		ClearAllPedProps(ped)
+		ClearPedTasks(ped)
+	end)
+end
 
---SetFueltank to pop and leak
---[[ Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
-        if GetVehicleEngineHealth(vehicle) <=150 then
-            if GetVehiclePetrolTankHealth(vehicle) >= 505 then
-                SetVehiclePetrolTankHealth(vehicle, 500)
-            end
-        end
+local function IsBackEngine(vehModel)
+	if BackEngineVehicles[vehModel] then return true else return false end
+end
+
+local function RepairVehicleFull(vehicle)
+	if (IsBackEngine(GetEntityModel(vehicle))) then
+        SetVehicleDoorOpen(vehicle, 5, false, false)
+    else
+        SetVehicleDoorOpen(vehicle, 4, false, false)
     end
-end) ]]
+	
+	RLCore.Functions.Progressbar("repair_vehicle", Lang:t("progress.repair_veh"), math.random(20000, 30000), false, true, {
+		disableMovement = true,
+		disableCarMovement = true,
+		disableMouse = false,
+		disableCombat = true,
+	}, {
+		animDict = "mini@repair",
+		anim = "fixing_a_player",
+		flags = 16,
+	}, {}, {}, function() -- Done
+		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
+		RLCore.Functions.Notify(Lang:t("success.repaired_veh"))
+		SetVehicleEngineHealth(vehicle, 1000.0)
+		SetVehicleEngineOn(vehicle, true, false)
+		SetVehicleTyreFixed(vehicle, 0)
+		SetVehicleTyreFixed(vehicle, 1)
+		SetVehicleTyreFixed(vehicle, 2)
+		SetVehicleTyreFixed(vehicle, 3)
+		SetVehicleTyreFixed(vehicle, 4)
+		if (IsBackEngine(GetEntityModel(vehicle))) then
+			SetVehicleDoorShut(vehicle, 5, false)
+		else
+			SetVehicleDoorShut(vehicle, 4, false)
+		end
+		TriggerServerEvent('qb-vehiclefailure:removeItem', "advancedrepairkit")
+	end, function() -- Cancel
+		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
+		RLCore.Functions.Notify(Lang:t("error.failed_notification"), "error")
+		if (IsBackEngine(GetEntityModel(vehicle))) then
+			SetVehicleDoorShut(vehicle, 5, false)
+		else
+			SetVehicleDoorShut(vehicle, 4, false)
+		end
+	end)
+end
 
-local function notification(msg)
-	SetNotificationTextEntry("STRING")
-	AddTextComponentString(msg)
-	DrawNotification(false, false)
+local function RepairVehicle(vehicle)
+	if (IsBackEngine(GetEntityModel(vehicle))) then
+        SetVehicleDoorOpen(vehicle, 5, false, false)
+    else
+        SetVehicleDoorOpen(vehicle, 4, false, false)
+    end
+	RLCore.Functions.Progressbar("repair_vehicle", Lang:t("progress.repair_veh"), math.random(10000, 20000), false, true, {
+		disableMovement = true,
+		disableCarMovement = true,
+		disableMouse = false,
+		disableCombat = true,
+	}, {
+		animDict = "mini@repair",
+		anim = "fixing_a_player",
+		flags = 16,
+	}, {}, {}, function() -- Done
+		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
+		RLCore.Functions.Notify(Lang:t("success.repaired_veh"))
+		SetVehicleEngineHealth(vehicle, 500.0)
+		SetVehicleEngineOn(vehicle, true, false)
+		SetVehicleTyreFixed(vehicle, 0)
+		SetVehicleTyreFixed(vehicle, 1)
+		SetVehicleTyreFixed(vehicle, 2)
+		SetVehicleTyreFixed(vehicle, 3)
+		SetVehicleTyreFixed(vehicle, 4)
+		if (IsBackEngine(GetEntityModel(vehicle))) then
+			SetVehicleDoorShut(vehicle, 5, false)
+		else
+			SetVehicleDoorShut(vehicle, 4, false)
+		end
+		TriggerServerEvent('qb-vehiclefailure:removeItem', "repairkit")
+	end, function() -- Cancel
+		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
+		RLCore.Functions.Notify(Lang:t("error.failed_notification"), "error")
+		if (IsBackEngine(GetEntityModel(vehicle))) then
+			SetVehicleDoorShut(vehicle, 5, false)
+		else
+			SetVehicleDoorShut(vehicle, 4, false)
+		end
+	end)
 end
 
 local function isPedDrivingAVehicle()
-	local ped = GetPlayerPed(-1)
+	local ped = PlayerPedId()
 	vehicle = GetVehiclePedIsIn(ped, false)
 	if IsPedInAnyVehicle(ped, false) then
 		-- Check if ped is in driver seat
@@ -73,10 +179,10 @@ local function isPedDrivingAVehicle()
 end
 
 local function IsNearMechanic()
-	local ped = GetPlayerPed(-1)
+	local ped = PlayerPedId()
 	local pedLocation = GetEntityCoords(ped, 0)
 	for _, item in pairs(repairCfg.mechanics) do
-		local distance = GetDistanceBetweenCoords(item.x, item.y, item.z,  pedLocation["x"], pedLocation["y"], pedLocation["z"], true)
+		local distance = #(vector3(item.x, item.y, item.z) - pedLocation)
 		if distance <= item.r then
 			return true
 		end
@@ -98,10 +204,10 @@ local function fscale(inputValue, originalMin, originalMax, newBegin, newEnd, cu
 	curve = 10.0 ^ curve
 
 	if (inputValue < originalMin) then
-	  inputValue = originalMin
+		inputValue = originalMin
 	end
 	if inputValue > originalMax then
-	  inputValue = originalMax
+		inputValue = originalMax
 	end
 
 	OriginalRange = originalMax - originalMin
@@ -109,15 +215,15 @@ local function fscale(inputValue, originalMin, originalMax, newBegin, newEnd, cu
 	if (newEnd > newBegin) then
 		NewRange = newEnd - newBegin
 	else
-	  NewRange = newBegin - newEnd
-	  invFlag = 1
+		NewRange = newBegin - newEnd
+		invFlag = 1
 	end
 
 	zeroRefCurVal = inputValue - originalMin
 	normalizedCurVal  =  zeroRefCurVal / OriginalRange
 
 	if (originalMin > originalMax ) then
-	  return 0
+		return 0
 	end
 
 	if (invFlag == 0) then
@@ -129,10 +235,8 @@ local function fscale(inputValue, originalMin, originalMax, newBegin, newEnd, cu
 	return rangedValue
 end
 
-
-
 local function tireBurstLottery()
-	local tireBurstNumber = math.random(tireBurstMaxNumber) --192k
+	local tireBurstNumber = math.random(tireBurstMaxNumber)
 	if tireBurstNumber == tireBurstLuckyNumber then
 		-- We won the lottery, lets burst a tire.
 		if GetVehicleTyresCanBurst(vehicle) == false then return end
@@ -153,11 +257,166 @@ local function tireBurstLottery()
 	end
 end
 
+-- Events
+
+RegisterNetEvent('qb-vehiclefailure:client:RepairVehicle', function()
+	local vehicle = RLCore.Functions.GetClosestVehicle()
+	local engineHealth = GetVehicleEngineHealth(vehicle) --This is to prevent people from "repairing" a vehicle and setting engine health lower than what the vehicles engine health was before repairing.
+	if vehicle ~= nil and vehicle ~= 0 and engineHealth < 500 then
+		local ped = PlayerPedId()
+		local pos = GetEntityCoords(ped)
+		local vehpos = GetEntityCoords(vehicle)
+		if #(pos - vehpos) < 5.0 and not IsPedInAnyVehicle(ped) then
+			local drawpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, 2.5, 0)
+			if (IsBackEngine(GetEntityModel(vehicle))) then
+				drawpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, -2.5, 0)
+			end
+			if #(pos - drawpos) < 2.0 and not IsPedInAnyVehicle(ped) then
+				RepairVehicle(vehicle)
+			else
+				ShowEnginePos = true
+			end
+    	else
+      		if #(pos - vehpos) > 4.9 then
+       			RLCore.Functions.Notify(Lang:t("error.out_range_veh"), "error")
+      		else
+       			RLCore.Functions.Notify(Lang:t("error.inside_veh"), "error")
+      		end
+		end
+  	else
+		if vehicle == nil or vehicle == 0 then
+			RLCore.Functions.Notify(Lang:t("error.not_near_veh"), "error")
+		else
+			RLCore.Functions.Notify(Lang:t("error.healthy_veh"), "error")
+		end
+	end
+end)
+
+RegisterNetEvent('qb-vehiclefailure:client:SyncWash', function(veh)
+	SetVehicleDirtLevel(veh, 0.1)
+	SetVehicleUndriveable(veh, false)
+	WashDecalsFromVehicle(veh, 1.0)
+end)
+
+RegisterNetEvent('qb-vehiclefailure:client:CleanVehicle', function()
+	local vehicle = RLCore.Functions.GetClosestVehicle()
+	if vehicle ~= nil and vehicle ~= 0 then
+		local ped = PlayerPedId()
+		local pos = GetEntityCoords(ped)
+		local vehpos = GetEntityCoords(vehicle)
+		if #(pos - vehpos) < 3.0 and not IsPedInAnyVehicle(ped) then
+			CleanVehicle(vehicle)
+		end
+	end
+end)
+
+RegisterNetEvent('qb-vehiclefailure:client:RepairVehicleFull', function()
+	local vehicle = RLCore.Functions.GetClosestVehicle()
+	if vehicle ~= nil and vehicle ~= 0 then
+		local ped = PlayerPedId()
+		local pos = GetEntityCoords(ped)
+		local vehpos = GetEntityCoords(vehicle)
+		if #(pos - vehpos) < 5.0 and not IsPedInAnyVehicle(ped) then
+			local drawpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, 2.5, 0)
+			if (IsBackEngine(GetEntityModel(vehicle))) then
+				drawpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, -2.5, 0)
+			end
+			if #(pos - drawpos) < 2.0 and not IsPedInAnyVehicle(ped) then
+				RepairVehicleFull(vehicle)
+			else
+				ShowEnginePos = true
+			end
+    	else
+      		if #(pos - vehpos) > 4.9 then
+        		RLCore.Functions.Notify(Lang:t("error.out_range_veh"), "error")
+      		else
+        		RLCore.Functions.Notify(Lang:t("error.inside_veh"), "error")
+      		end
+		end
+  	else
+    	RLCore.Functions.Notify(Lang:t("error.not_near_veh"), "error")
+	end
+end)
+
+RegisterNetEvent('iens:repaira', function()
+	if isPedDrivingAVehicle() then
+		local ped = PlayerPedId()
+		vehicle = GetVehiclePedIsIn(ped, false)
+		SetVehicleDirtLevel(vehicle)
+		SetVehicleUndriveable(vehicle, false)
+		WashDecalsFromVehicle(vehicle, 1.0)
+		RLCore.Functions.Notify(Lang:t("success.repaired_veh"))
+		SetVehicleFixed(vehicle)
+		healthBodyLast=1000.0
+		healthEngineLast=1000.0
+		healthPetrolTankLast=1000.0
+		SetVehicleEngineOn(vehicle, true, false )
+		return
+	else
+		RLCore.Functions.Notify(Lang:t("error.inside_veh_req"))
+	end
+end)
+
+RegisterNetEvent('iens:besked', function()
+	RLCore.Functions.Notify(Lang:t("error.roadside_avail"))
+end)
+
+RegisterNetEvent('iens:notAllowed', function()
+	RLCore.Functions.Notify(Lang:t("error.no_permission"))
+end)
+
+RegisterNetEvent('iens:repair', function()
+	if isPedDrivingAVehicle() then
+		local ped = PlayerPedId()
+		vehicle = GetVehiclePedIsIn(ped, false)
+		if IsNearMechanic() then
+			return
+		end
+		if GetVehicleEngineHealth(vehicle) < cfg.cascadingFailureThreshold + 5 then
+			if GetVehicleOilLevel(vehicle) > 0 then
+				SetVehicleUndriveable(vehicle,false)
+				SetVehicleEngineHealth(vehicle, cfg.cascadingFailureThreshold + 5)
+				SetVehiclePetrolTankHealth(vehicle, 750.0)
+				healthEngineLast=cfg.cascadingFailureThreshold +5
+				healthPetrolTankLast=750.0
+				SetVehicleEngineOn(vehicle, true, false )
+				SetVehicleOilLevel(vehicle,(GetVehicleOilLevel(vehicle)/3)-0.5)
+				RLCore.Functions.Notify(Lang:t(('fix_message_%s'):format(fixMessagePos)))
+				fixMessagePos = fixMessagePos + 1
+				if fixMessagePos > repairCfg.fixMessageCount then fixMessagePos = 1 end
+			else 
+				RLCore.Functions.Notify(Lang:t("error.veh_damaged"))
+			end
+		else
+			RLCore.Functions.Notify(Lang:t(('nofix_message_%s'):format(noFixMessagePos)))
+			noFixMessagePos = noFixMessagePos + 1
+			if noFixMessagePos > repairCfg.noFixMessageCount then noFixMessagePos = 1 end
+		end
+	else
+		RLCore.Functions.Notify(Lang:t("error.inside_veh_req"))
+	end
+end)
+
+-- Threads
+
+CreateThread(function()
+	if (cfg.displayBlips == true) then
+		for _, item in pairs(repairCfg.mechanics) do
+			item.blip = AddBlipForCoord(item.x, item.y, item.z)
+			SetBlipSprite(item.blip, item.id)
+			SetBlipScale(item.blip, 0.8)
+			SetBlipAsShortRange(item.blip, true)
+			BeginTextCommandSetBlipName("STRING")
+			AddTextComponentString(item.name)
+			EndTextCommandSetBlipName(item.blip)
+		end
+	end
+end)
 
 if cfg.torqueMultiplierEnabled or cfg.preventVehicleFlip or cfg.limpMode then
-	Citizen.CreateThread(function()
+	CreateThread(function()
 		while true do
-			Citizen.Wait(0)
+			Wait(0)
 			if cfg.torqueMultiplierEnabled or cfg.sundayDriver or cfg.limpMode then
 				if pedInSameVehicleLast then
 					local factor = 1.0
@@ -181,6 +440,7 @@ if cfg.torqueMultiplierEnabled or cfg.preventVehicleFlip or cfg.limpMode then
 								-- Forward and braking
 								isBrakingForward = true
 								brk = fscale(brake, 127.0, 254.0, 0.01, fBrakeForce, 10.0-(cfg.sundayDriverBrakeCurve*2.0))
+								exports['qb-mechanicjob']:SetVehicleStatus(GetVehicleNumberPlateText(vehicle), "brakes", exports['qb-mechanicjob']:GetVehicleStatus(GetVehicleNumberPlateText(vehicle), "brakes") - 0.01)
 							end
 						elseif speed <= -1.0 then
 							-- Going reverse
@@ -188,6 +448,7 @@ if cfg.torqueMultiplierEnabled or cfg.preventVehicleFlip or cfg.limpMode then
 								-- Reversing and accelerating (using the brake)
 								local rev = fscale(brake, 127.0, 254.0, 0.1, 1.0, 10.0-(cfg.sundayDriverAcceleratorCurve*2.0))
 								factor = factor * rev
+								exports['qb-mechanicjob']:SetVehicleStatus(GetVehicleNumberPlateText(vehicle), "brakes", exports['qb-mechanicjob']:GetVehicleStatus(GetVehicleNumberPlateText(vehicle), "brakes") - 0.01)
 							end
 							if accelerator > 127 then
 								-- Reversing and braking (Using the accelerator)
@@ -241,10 +502,10 @@ if cfg.torqueMultiplierEnabled or cfg.preventVehicleFlip or cfg.limpMode then
 	end)
 end
 
-Citizen.CreateThread(function()
+CreateThread(function()
 	while true do
-		Citizen.Wait(50)
-		local ped = GetPlayerPed(-1)
+		Wait(50)
+		local ped = PlayerPedId()
 		if isPedDrivingAVehicle() then
 			vehicle = GetVehiclePedIsIn(ped, false)
 			vehicleClass = GetVehicleClass(vehicle)
@@ -276,6 +537,9 @@ Citizen.CreateThread(function()
 			end
 
 			if healthEngineCurrent <= cfg.engineSafeGuard+1 and cfg.limpMode == false then
+				local vehpos = GetEntityCoords(vehicle)
+
+				StartParticleFxLoopedAtCoord("ent_ray_ch2_farm_smoke_dble", vehpos.x, vehpos.y, vehpos.z-0.7, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
 				SetVehicleUndriveable(vehicle,true)
 			end
 
@@ -369,25 +633,30 @@ Citizen.CreateThread(function()
 			-- set the actual new values
 			if healthEngineNew ~= healthEngineCurrent then
 				SetVehicleEngineHealth(vehicle, healthEngineNew)
+				local dmgFactr = (healthEngineCurrent - healthEngineNew)
+				if dmgFactr > 0.8 then
+					DamageRandomComponent()
+				end
 			end
-			if healthBodyNew ~= healthBodyCurrent then SetVehicleBodyHealth(vehicle, healthBodyNew) end
-			if healthPetrolTankNew ~= healthPetrolTankCurrent then SetVehiclePetrolTankHealth(vehicle, healthPetrolTankNew) end
+			if healthBodyNew ~= healthBodyCurrent then
+				SetVehicleBodyHealth(vehicle, healthBodyNew)
+				local dmgFactr = (healthBodyCurrent - healthBodyNew)
+				DamageRandomComponent()
+			end
+			if healthPetrolTankNew ~= healthPetrolTankCurrent then
+				SetVehiclePetrolTankHealth(vehicle, healthPetrolTankNew)
+			end
 
 			-- Store current values, so we can calculate delta next time around
 			healthEngineLast = healthEngineNew
 			healthBodyLast = healthBodyNew
 			healthPetrolTankLast = healthPetrolTankNew
 			lastVehicle=vehicle
-			if cfg.randomTireBurstInterval ~= 0 and GetEntitySpeed(vehicle) > 38 then 
-				if GetVehicleClass(vehicle) == 18 then
-				else
-				tireBurstLottery() 
-				end
-			end 
+			if cfg.randomTireBurstInterval ~= 0 and GetEntitySpeed(vehicle) > 10 then tireBurstLottery() end
 		else
 			if pedInSameVehicleLast == true then
 				-- We just got out of the vehicle
-				lastVehicle = GetVehiclePedIsIn(ped, true)				
+				lastVehicle = GetVehiclePedIsIn(ped, true)
 				if cfg.deformationMultiplier ~= -1 then SetVehicleHandlingFloat(lastVehicle, 'CHandlingData', 'fDeformationDamageMult', fDeformationDamageMult) end -- Restore deformation multiplier
 				SetVehicleHandlingFloat(lastVehicle, 'CHandlingData', 'fBrakeForce', fBrakeForce)  -- Restore Brake Force multiplier
 				if cfg.weaponsDamageMultiplier ~= -1 then SetVehicleHandlingFloat(lastVehicle, 'CHandlingData', 'fWeaponDamageMult', cfg.weaponsDamageMultiplier) end	-- Since we are out of the vehicle, we should no longer compensate for bodyDamageFactor
@@ -398,21 +667,3 @@ Citizen.CreateThread(function()
 		end
 	end
 end)
-
-function SelectRandomTowable()
-	local index = GetRandomIntInRange(1,  #Config.Towables)
-
-	for k,v in pairs(Config.Zones) do
-		if v.Pos.x == Config.Towables[index].x and v.Pos.y == Config.Towables[index].y and v.Pos.z == Config.Towables[index].z then
-			return k
-		end
-	end
-end
-
-
-
-
-
-
-
-

@@ -16,4 +16,10 @@ server_scripts {
 	'server/main.lua'
 }
 
+exports {
+	'GetVehicleStatusList',
+	'GetVehicleStatus',
+	'SetVehicleStatus',
+}
+
 lua54 'yes'
