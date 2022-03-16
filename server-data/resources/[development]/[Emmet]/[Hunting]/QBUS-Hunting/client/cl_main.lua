@@ -223,7 +223,7 @@ AddEventHandler('Dox-hunting:skinAnimal', function()
           LoadAnimDict('anim@gangops@facility@servers@bodysearch@')
           TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
           TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
-          local finished = exports["taskbar"]:taskBar(5000,"Skinning")
+          local finished = exports["rl-taskbar"]:taskBar(5000,"Skinning")
           if finished == 100 then
             ClearPedTasksImmediately(PlayerPedId())
             DeleteEntity(baitAnimal)
@@ -245,7 +245,7 @@ AddEventHandler('Dox-hunting:usedBait', function()
       if cooldown <= 0 then
         LoadAnimDict('amb@medic@standing@kneel@base')
         TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
-        local finished = exports["taskbar"]:taskBar(5000,"Placing Bait",false,false,playerVeh)
+        local finished = exports["rl-taskbar"]:taskBar(5000,"Placing Bait",false,false,playerVeh)
         Citizen.Wait(100)
         cooldown = useBaitCooldown * 10000
         ClearPedTasksImmediately(PlayerPedId())
