@@ -6574,62 +6574,71 @@ RLShared.Jobs = {
 		payment = 700,
 		grades = {
 			['0'] = {
-                name = "Rookie",
+                name = "Trainee",
                 payment = 175
             },
             ['1'] = {
-                name = "Medical Orderly",
-                payment = 450
+                name = "EMT",
+                payment = 250
             },
             ['2'] = {
-                name = "Paramedic",
-                payment = 500
+                name = "Advanced EMT",
+                payment = 250
             },
             ['3'] = {
-                name = "Doctor",
-                payment = 550
+                name = "Paramedic",
+                payment = 300
             },
             ['4'] = {
-                name = "Commander-in-Chief",
-                payment = 550
+                name = "Senior Paramedic",
+                payment = 300
             },
             ['5'] = {
-                name = "Supervisor",
-                payment = 675
+                name = "Lieutenant",
+                payment = 325
             },
 			['6'] = {
-                name = "Certified Nursing Assistant",
-                payment = 675
+                name = "Captain",
+                payment = 350
             },
 			['7'] = {
-                name = "Registered Nurse",
-                payment = 675
+                name = "Cheif Of EMS",
+				isboss = true,
+                payment = 400
             },
 			['8'] = {
-                name = "Head Nurse",
-                payment = 675
+                name = "Certified Nursing Assistant",
+                payment = 175
             },
 			['9'] = {
-                name = "Resident Doctor",
-                payment = 675
+                name = "Registered Nurse",
+                payment = 250
             },
 			['10'] = {
-                name = "Doctor",
-                payment = 675
+                name = "Head Nurse",
+                payment = 300
             },
 			['11'] = {
-                name = "Surgeon",
-                payment = 675
+                name = "Resident Doctor",
+                payment = 325
             },
 			['12'] = {
+                name = "Doctor",
+                payment = 350
+            },
+			['13'] = {
+                name = "Surgeon",
+                payment = 375
+            },
+			['14'] = {
                 name = "Assistant Chief of Medicine",
 				isboss = true,
-                payment = 675
+                payment = 400
             },
-            ['13'] = {
+            ['15'] = {
                 name = "Cheif of Medicine",
                 isboss = true,
-                payment = 700
+                payment = 400
             },
         },
 		defaultDuty = false,
