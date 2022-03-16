@@ -504,7 +504,7 @@ Config.TargetModels = {
         },
         options = {
             {
-                event = "Dox-shops:client:openShop",
+                event = "Dox-hunting:client:openShop",
                 icon = "fas fa-shopping-cart",
                 label = "Open Shop",
             },
