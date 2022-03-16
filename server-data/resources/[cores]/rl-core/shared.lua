@@ -6466,11 +6466,11 @@ RLShared.Gangs = {
 RLShared.Jobs = {
 	["unemployed"] = {
 		label = "Unemployed",
-		payment = 180,
+		payment = 65,
 		grades = {
             ['0'] = {
                 name = "Unemployed",
-                payment = 180
+                payment = 65
 			},
 		},
 		defaultDuty = true,
@@ -6582,8 +6582,37 @@ RLShared.Jobs = {
                 name = "Supervisor",
                 payment = 675
             },
-            ['6'] = {
-                name = "EMS Chief",
+			['6'] = {
+                name = "Certified Nursing Assistant",
+                payment = 675
+            },
+			['7'] = {
+                name = "Registered Nurse",
+                payment = 675
+            },
+			['8'] = {
+                name = "Head Nurse",
+                payment = 675
+            },
+			['9'] = {
+                name = "Resident Doctor",
+                payment = 675
+            },
+			['10'] = {
+                name = "Doctor",
+                payment = 675
+            },
+			['11'] = {
+                name = "Surgeon",
+                payment = 675
+            },
+			['12'] = {
+                name = "Assistant Chief of Medicine",
+				isboss = true,
+                payment = 675
+            },
+            ['13'] = {
+                name = "Cheif of Medicine",
                 isboss = true,
                 payment = 700
             },
