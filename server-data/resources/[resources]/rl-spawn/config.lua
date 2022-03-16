@@ -21,7 +21,7 @@ Config.Spawns = {
             h = 3.5 
         },
         location = "policedp",
-        label = "Los Santos Police Department",
+        label = "Misson Row PD",
     },
 
     ["integrity"] = {
