@@ -84,7 +84,7 @@ BackEngineVehicles = {
 					0.15,		--	5: Sports Classics
 					0.15,		--	6: Sports
 					0.15,		--	7: Super
-					0.005,		--	8: Motorcycles
+					0.5,		--	8: Motorcycles
 					0.10,		--	9: Off-road
 					0.09,		--	10: Industrial
 					0.07,		--	11: Utility
