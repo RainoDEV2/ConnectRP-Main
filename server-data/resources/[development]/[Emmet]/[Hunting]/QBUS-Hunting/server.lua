@@ -72,7 +72,8 @@ local rifleprice = 500
 local baitprice = 50
 local knifeprice = 75
 
-RegisterNetEvent('hunting:server:BuyHuntingGear', function(args)
+RegisterNetEvent('Dox-hunting:server:sell')
+  AddEventHandler('Dox-hunting:server:sell', function(args)
 	local src = source
     local Player = RLCore.Functions.GetPlayer(src)
 	local args = tonumber(args)
