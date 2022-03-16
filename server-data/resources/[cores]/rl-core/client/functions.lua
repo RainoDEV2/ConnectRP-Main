@@ -50,29 +50,27 @@ RLCore.Functions.GetCoords = function(entity)
 end
 
 RLCore.Functions.SpawnVehicle = function(model, cb, coords, isnetworked)
-    local model = GetHashKey(model)
-    local ped = PlayerPedId()
-    if coords then
-        coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords
-    else
-        coords = GetEntityCoords(ped)
-    end
-    local isnetworked = isnetworked or true
-    if not IsModelInCdimage(model) then
-        return
-    end
+    local model = (type(model)=="number" and model or GetHashKey(model))
+    local coords = coords ~= nil and coords or RLCore.Functions.GetCoords(GetPlayerPed(-1))
+    local isnetworked = isnetworked ~= nil and isnetworked or true
+
     RequestModel(model)
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
     end
-    local veh = CreateVehicle(model, coords.x, coords.y, coords.z, coords.w, isnetworked, false)
+
+    local veh = CreateVehicle(model, coords.x, coords.y, coords.z, coords.a, isnetworked, false)
     local netid = NetworkGetNetworkIdFromEntity(veh)
-    SetVehicleHasBeenOwnedByPlayer(veh, true)
-    SetNetworkIdCanMigrate(netid, true)
+
+	SetVehicleHasBeenOwnedByPlayer(veh,  true)
+	SetNetworkIdCanMigrate(netid, true)
     SetVehicleNeedsToBeHotwired(veh, false)
-    SetVehRadioStation(veh, 'OFF')
-    SetModelAsNoLongerNeeded(model)
-    if cb then
+    SetVehRadioStation(veh, "OFF")
+
+	SetModelAsNoLongerNeeded(model)
+	TriggerEvent("debug", 'RLCore: Spawn ' .. model .. ' (' .. (isnetworked and 'Networked' or 'Local') .. ')', 'normal')
+
+    if cb ~= nil then
         cb(veh)
     end
 end
