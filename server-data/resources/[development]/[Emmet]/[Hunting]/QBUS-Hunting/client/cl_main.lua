@@ -51,7 +51,7 @@ Citizen.CreateThread(function()
     `u_m_y_gunvend_01`,
   }
 
-	exports['Dox-target']:AddTargetModel(legalHunts, {
+	exports['qb-target']:AddTargetModel(legalHunts, {
     options = {
       {
         event = "Dox-hunting:skinAnimal",
@@ -187,8 +187,9 @@ AddEventHandler('Dox-hunting:spawnAnimal', function()
     Wait(10)
   end
   if outPosition.x > 1 or outPosition.x < -1  then
-    --Wait(2000)
-    Wait(8000)
+    RLCore.Functions.Notify("You have set the bait, Get into position and wait for the wildlife")
+    --Wait(1000)
+    Wait(math.random(22000,60000)) --wait 22-60 seconds
     baitAnimal = CreatePed(28, hash, outPosition.x, outPosition.y, outPosition.z, 0, true, false)
   else
     print('Debug: Too Far to Spawn')
@@ -207,7 +208,7 @@ Citizen.CreateThread(function()
       local animalCoords = GetEntityCoords(baitAnimal)
       local dst = #(coords - animalCoords)
       HideHudComponentThisFrame(14)
-      if dst < 2.5 then -- spook animal
+      if dst < 40 then -- spook animal
         TaskCombatPed(baitAnimal,ped,0,16)
       end
     end
@@ -219,16 +220,22 @@ AddEventHandler('Dox-hunting:skinAnimal', function()
   RLCore.Functions.TriggerCallback('RLCore:HasItem', function(hasItem)
     if hasItem then
       if DoesEntityExist(baitAnimal) then
-          LoadAnimDict('amb@medic@standing@kneel@base')
-          LoadAnimDict('anim@gangops@facility@servers@bodysearch@')
-          TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
-          TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
-          local finished = exports["rl-taskbar"]:taskBar(5000,"Skinning")
-          if finished == 100 then
-            ClearPedTasksImmediately(PlayerPedId())
-            DeleteEntity(baitAnimal)
-            TriggerServerEvent('Dox-hunting:skinReward')
-          end
+        LoadAnimDict('amb@medic@standing@kneel@base')
+        LoadAnimDict('anim@gangops@facility@servers@bodysearch@')
+        TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
+        TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
+
+        RLCore.Functions.Progressbar("fuckoff", "Skinning", 10000, false, true, {
+          disableMovement = false,
+          disableCarMovement = false,
+          disableMouse = false,
+          disableCombat = true,
+        }, {}, {}, {}, function()
+          ClearPedTasksImmediately(PlayerPedId())
+          DeleteEntity(baitAnimal) 
+          TriggerServerEvent('Dox-hunting:skinReward')
+        end)
+
       else
         print('Not your shit Bitch')
       end
@@ -245,18 +252,27 @@ AddEventHandler('Dox-hunting:usedBait', function()
       if cooldown <= 0 then
         LoadAnimDict('amb@medic@standing@kneel@base')
         TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
-        local finished = exports["rl-taskbar"]:taskBar(5000,"Placing Bait",false,false,playerVeh)
-        Citizen.Wait(100)
-        cooldown = useBaitCooldown * 10000
-        ClearPedTasksImmediately(PlayerPedId())
-        used = true
-        usedBait()
-        TriggerEvent('Dox-hunting:spawnAnimal')
-        TriggerServerEvent('Dox-hunting:removeBait')
-        baitCooldown()
+
+
+        RLCore.Functions.Progressbar("fuckoff", "Placing Bait", 7500, false, true, {
+          disableMovement = false,
+          disableCarMovement = false,
+          disableMouse = false,
+          disableCombat = true,
+        }, {}, {}, {}, function()
+          Citizen.Wait(500)
+          cooldown = useBaitCooldown * 10000
+          used = true
+          usedBait()
+          --TriggerEvent('Dox-hunting:spawnAnimal')
+          TriggerServerEvent('Dox-hunting:removeBait')
+          baitCooldown()
+          Citizen.Wait(1500)
+          ClearPedTasksImmediately(PlayerPedId())
+        end)
       end
     else
-    --  TriggerEvent("RLCore:Notify", "UHMMM FIND SOMETHING TO WRITE HERE",2)
+      --RLCore.Functions.Notify("There is no wildlife here", "error")
     end
   end
 end)
@@ -274,7 +290,7 @@ function usedBait()
   Citizen.CreateThread(function()
     while used do
       print('waiting to spawn')
-      Wait(1500)
+      Wait(500)
       print('spawning')
       TriggerEvent('Dox-hunting:spawnAnimal')
       used = false

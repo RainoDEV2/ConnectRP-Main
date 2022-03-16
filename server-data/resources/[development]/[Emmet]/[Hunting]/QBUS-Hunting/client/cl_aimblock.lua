@@ -6,7 +6,7 @@ local isFreeAiming = false
 local function processScope(freeAiming)
     if not isFreeAiming and freeAiming then
         isFreeAiming = true
-        TriggerEvent("hidexhair")
+        --SendNUIMessage("xhairHide") 
         SendNUIMessage({
             display = true,
         })
@@ -45,6 +45,7 @@ local function blockShooting()
         end
         blockShotActive = false
         processScope(false)
+        --SendNUIMessage("xhairShow")
     end)
 end
 
