@@ -498,6 +498,25 @@ Config.TargetModels = {
         job = {"all"},
         distance = 1.5
     },
+    ["hunting"] = {
+        models = {
+            "ig_hunter"
+        },
+        options = {
+            {
+                event = "Dox-shops:client:openShop",
+                icon = "fas fa-shopping-cart",
+                label = "Open Shop",
+            },
+            {
+                event = "Dox-hunting:payammo",
+                icon = "fas fa-circle",
+                label = "Purchase Bullets $500",
+            },
+        },
+        job = {"all"},
+        distance = 2.5
+    },
 	
 }
 
