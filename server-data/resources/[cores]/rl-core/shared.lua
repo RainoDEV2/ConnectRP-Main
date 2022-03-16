@@ -6599,6 +6599,7 @@ RLShared.Jobs = {
             },
 			['6'] = {
                 name = "Captain",
+				isboss = true,
                 payment = 350
             },
 			['7'] = {
