@@ -67,3 +67,42 @@ AddEventHandler('Dox-hunting:server:sell', function()
         end
     end
 end)
+
+local rifleprice = 500
+local baitprice = 50
+local knifeprice = 75
+
+RegisterNetEvent('hunting:server:BuyHuntingGear', function(args)
+	local src = source
+    local Player = RLCore.Functions.GetPlayer(src)
+	local args = tonumber(args)
+	local bankBalance = Player.PlayerData.money["bank"]
+  
+	if args == 1 then 
+		if bankBalance >= rifleprice then
+			Player.Functions.RemoveMoney('bank', rifleprice, "CHANGEME")
+			Player.Functions.AddItem('fishbait', 1, nil, {["quality"] = 100})
+			TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items['CHANGEME'], "add", 1)
+			TriggerClientEvent("doj:client:buyFishingGear", source)
+		else
+			TriggerClientEvent('RLCore:Notify', src, "You dont have enough money..", "error")
+		end 
+	elseif args == 2 then 
+		if bankBalance >= baitprice then
+			Player.Functions.RemoveMoney('bank', baitprice, "huntingbait")
+			Player.Functions.AddItem('fishingrod', 1, nil, {["quality"] = 100})
+			TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items['huntingbait'], "add", 1)
+			TriggerClientEvent("doj:client:buyFishingGear", source)
+		else
+			TriggerClientEvent('RLCore:Notify', src, "You dont have enough money..", "error")
+		end
+	elseif args == 3 then 
+		if bankBalance >= knifeprice then
+			Player.Functions.RemoveMoney('bank', knifeprice, "WEAPON_KNIFE")
+			Player.Functions.AddItem('anchor', 1, nil, {["quality"] = 100})
+			TriggerClientEvent('inventory:client:ItemBox', src, RLCore.Shared.Items['WEAPON_KNIFE'], "add", 1)
+			TriggerClientEvent("doj:client:buyFishingGear", source)
+		else
+			TriggerClientEvent('RLCore:Notify', src, "You dont have enough money..", "error")
+		end
+end)
