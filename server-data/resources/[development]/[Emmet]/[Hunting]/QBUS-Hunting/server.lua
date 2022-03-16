@@ -105,4 +105,5 @@ RegisterNetEvent('hunting:server:BuyHuntingGear', function(args)
 		else
 			TriggerClientEvent('RLCore:Notify', src, "You dont have enough money..", "error")
 		end
+  end
 end)
