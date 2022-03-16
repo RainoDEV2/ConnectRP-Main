@@ -701,7 +701,6 @@ RegisterNetEvent('qb-vehicletuning:client:RepaireeePart', function(part)
 end)
 
 RegisterNetEvent('vehiclemod:client:setVehicleStatus', function(plate, status)
-    print("DAMN")
     VehicleStatus[plate] = status
 end)
 
