@@ -308,7 +308,6 @@ RegisterCommand('testhuntingspawn',function()
    TriggerEvent('Dox-hunting:spawnAnimal')
 end)
 
-
 RegisterNetEvent('Dox-hunting:client:openShop')
 AddEventHandler('Dox-hunting:client:openShop', function()
     exports['qb-menu']:openMenu({
@@ -321,7 +320,7 @@ AddEventHandler('Dox-hunting:client:openShop', function()
             txt = "Current Price: $500",
             params = {
 				    isServer = true,
-            event = "hunting:server:BuyHuntingGear", 
+            event = "Dox-hunting:server:sell", 
 			      args = 1
             }
         },
@@ -330,7 +329,7 @@ AddEventHandler('Dox-hunting:client:openShop', function()
             txt = "Current Price: $CHANGEME each",
             params = {
 				    isServer = true,
-            event = "hunting:server:BuyHuntingGear",
+            event = "Dox-hunting:server:sell",
 				    args = 2
             }
         },
@@ -339,7 +338,7 @@ AddEventHandler('Dox-hunting:client:openShop', function()
             txt = "Current Price: $CHANGEME each",
             params = {
 				    isServer = true,
-            event = "hunting:server:BuyHuntingGear",
+            event = "Dox-hunting:server:sell",
 				    args = 3 
             }
         },
