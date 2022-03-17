@@ -105,8 +105,9 @@ AddEventHandler('vny-shoprobbery:onrobbery', function()
         end
     end
 	RLCore.Functions.TriggerCallback('vny-shoprobbery:serversidecooldown', function(atat)
+        print(atat)
 		if atat then
-            local obj = GetClosestObjectOfType(GetEntityCoords(PlayerPedId()), 2.0, "prop_till_01", false, false, false)
+            local obj = GetClosestObjectOfType(GetEntityCoords(PlayerPedId()), 5.0, GetHashKey('prop_till_01'))
             if GetEntityHealth(obj) < 800 then
                 TriggerEvent('dispatch:storeRobbery', 'Store Robbery In Progress - Please Respond.')
                 RLCore.Functions.Progressbar("fuckoff", "Taking Cash", 20000, false, true, {
@@ -123,7 +124,16 @@ AddEventHandler('vny-shoprobbery:onrobbery', function()
                 TriggerServerEvent("vny-shoprobbery:givereward", "basic", kasaNo)
                 end)
             else
-                RLCore.Functions.Notify("You couldn't break the store", "error")
+                local math = math.random(1,3)
+                if math == 1 then 
+                    RLCore.Functions.Notify("Draw is locked, Find a way to open it", "error")
+                elseif math == 2 then 
+                    RLCore.Functions.Notify("Seems your girly hands can't do the job, Try something harder.", "error")
+                elseif math == 3 then
+                    RLCore.Functions.Notify("Anti-Tamper latch active, Smash it off!", "error")
+                else
+                    RLCore.Functions.Notify("Try swinging at it.", "error")
+                end
             end
 		end
 	end, kasaNo, "basic")
@@ -149,7 +159,6 @@ AddEventHandler('vny-shoprobbery:backrobbery', function()
         end
     end
     RLCore.Functions.TriggerCallback('vny-shoprobbery:serversidecooldown', function(atat)
-        print(atat)
 		if atat then
             if failed == true then
                 RLCore.Functions.Notify("Safe Secure: Security Mode Active", "error")
@@ -189,7 +198,7 @@ end)
 
 RegisterNetEvent('vny-shoprobbery:collectmoney')
 AddEventHandler('vny-shoprobbery:collectmoney', function()
-	if collectmoney then
+	if collectmoney then 
 		TriggerServerEvent("vny-shoprobbery:givereward", "hard", kasaNo)
 	else
         RLCore.Functions.Notify("First you have to get past the safe's password", "error")

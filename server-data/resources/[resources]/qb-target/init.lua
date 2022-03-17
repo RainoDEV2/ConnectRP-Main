@@ -274,7 +274,7 @@ Config.BoxZones = {
                 type = "client",
                 event = "vny-shoprobbery:collectmoney",
                 icon = "fas fa-circle",
-                label = "Collect Money",
+                label = "Try Open Draw", 
             },
         },
         distance = 1.5
@@ -297,7 +297,7 @@ Config.BoxZones = {
                 type = "client",
                 event = "vny-shoprobbery:collectmoney",
                 icon = "fas fa-circle",
-                label = "Collect Money",
+                label = "Try Open Draw",
             },
         },
         distance = 1.5
@@ -320,7 +320,7 @@ Config.BoxZones = {
                 type = "client",
                 event = "vny-shoprobbery:collectmoney",
                 icon = "fas fa-circle",
-                label = "Collect Money",
+                label = "Try Open Draw",
             },
         },
         distance = 1.5
@@ -343,7 +343,7 @@ Config.BoxZones = {
                 type = "client",
                 event = "vny-shoprobbery:collectmoney",
                 icon = "fas fa-circle",
-                label = "Collect Money",
+                label = "Try Open Draw",
             },
         },
         distance = 1.5
@@ -366,7 +366,7 @@ Config.BoxZones = {
                 type = "client",
                 event = "vny-shoprobbery:collectmoney",
                 icon = "fas fa-circle",
-                label = "Collect Money",
+                label = "Try Open Draw",
             },
         },
         distance = 1.5
@@ -389,7 +389,7 @@ Config.BoxZones = {
                 type = "client",
                 event = "vny-shoprobbery:collectmoney",
                 icon = "fas fa-circle",
-                label = "Collect Money",
+                label = "Try Open Draw",
             },
         },
         distance = 1.5
@@ -412,7 +412,7 @@ Config.BoxZones = {
                 type = "client",
                 event = "vny-shoprobbery:collectmoney",
                 icon = "fas fa-circle",
-                label = "Collect Money",
+                label = "Try Open Draw",
             },
         },
         distance = 1.5
@@ -435,7 +435,7 @@ Config.BoxZones = {
                 type = "client",
                 event = "vny-shoprobbery:collectmoney",
                 icon = "fas fa-circle",
-                label = "Collect Money",
+                label = "Try Open Draw",
             },
         },
         distance = 1.5
@@ -492,7 +492,7 @@ Config.TargetModels = {
             {
                 event = "vny-shoprobbery:onrobbery",
                 icon = "fas fa-dollar-sign",
-                label = "Collect Money",
+                label = "Try Open Draw",
             },
         },
         job = {"all"},

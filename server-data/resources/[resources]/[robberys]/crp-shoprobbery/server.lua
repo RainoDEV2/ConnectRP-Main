@@ -65,7 +65,7 @@ local shops = {
         ["son_advanced_cd"] = 0,
     },
 	[16] = {
-		["son_basic_cd"] = 0,
+		["son_basic_cd"] = 0, 
         ["son_advanced_cd"] = 0,
     },
     [17] = {
@@ -75,7 +75,7 @@ local shops = {
 	[18] = {
 		["son_basic_cd"] = 0,
         ["son_advanced_cd"] = 0,
-    },
+    }, 
 	[19] = {
 		["son_basic_cd"] = 0,
         ["son_advanced_cd"] = 0,
@@ -87,10 +87,8 @@ RLCore.Functions.CreateCallback('vny-shoprobbery:serversidecooldown', function(s
     if marketNo ~= nil then
         if tip == "basic" and (os.time() - shops[marketNo]["son_basic_cd"]) > basicBeklemeCd then
             cb(true)
-            TriggerClientEvent("shop:reset")
         elseif tip == "hard" and (os.time() - shops[marketNo]["son_advanced_cd"]) > hardBeklemeCd then
             cb(true)
-            TriggerClientEvent("shop:reset")
         else
             TriggerClientEvent('RLCore:Notify', src, ('This place has already been robbed!'), 'error', 5000) 
             cb(false)
