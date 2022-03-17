@@ -1,0 +1,9 @@
+--Name: med | 2022-03-17T16:43:10Z
+BoxZone:Create(vector3(306.53, -602.24, 43.28), 2.0, 0.5, {
+  name="med",
+  heading=252,
+  --debugPoly=true,
+  minZ=40.58,
+  maxZ=44.58
+})
+
