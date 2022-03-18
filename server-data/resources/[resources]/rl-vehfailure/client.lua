@@ -635,12 +635,17 @@ CreateThread(function()
 				SetVehicleEngineHealth(vehicle, healthEngineNew)
 				local dmgFactr = (healthEngineCurrent - healthEngineNew)
 				if dmgFactr > 0.8 then
-					DamageRandomComponent()
+					--33.3% chance of causing internal damage
+					local math = math.random(1,3)
+					if math == 1 then
+						DamageRandomComponent()
+					end
 				end
 			end
 			if healthBodyNew ~= healthBodyCurrent then
 				SetVehicleBodyHealth(vehicle, healthBodyNew)
 				local dmgFactr = (healthBodyCurrent - healthBodyNew)
+				print("2")
 				DamageRandomComponent()
 			end
 			if healthPetrolTankNew ~= healthPetrolTankCurrent then
