@@ -1065,8 +1065,10 @@ CreateThread(function()
                 local plate = GetVehicleNumberPlateText(veh)  
                 
                 if VehicleStatus[plate] == nil then
+                    print("updating vehicle - plate was NIL")
                     TriggerServerEvent("vehiclemod:server:setupVehicleStatus", plate, engineHealth, bodyHealth)
                 else
+                    print("updating vehicle")
                     TriggerServerEvent("vehiclemod:server:updatePart", plate, "engine", engineHealth)
                     TriggerServerEvent("vehiclemod:server:updatePart", plate, "body", bodyHealth)
                     effectTimer = effectTimer + 1
