@@ -983,7 +983,7 @@ CreateThread(function() -- Not event sure what this is even for
             local veh = GetVehiclePedIsIn(PlayerPedId(),false)
             if ModdedVehicles[tostring(veh)] == nil and not IsThisModelABicycle(GetEntityModel(veh)) then
                 local fSteeringLock = GetVehicleHandlingFloat(veh, 'CHandlingData', 'fSteeringLock')
-                fSteeringLock = math.ceil((fSteeringLock * 0.7)) + 0.1
+                fSteeringLock = math.ceil((fSteeringLock * 0.6)) + 0.1
 
                 SetVehicleHandlingFloat(veh, 'CHandlingData', 'fSteeringLock', fSteeringLock)
                 SetVehicleHandlingField(veh, 'CHandlingData', 'fSteeringLock', fSteeringLock)
