@@ -234,7 +234,7 @@ Citizen.CreateThread(function()
     end
 end) ]]
 
-Citizen.CreateThread(function() -- While shooting
+--[[ Citizen.CreateThread(function() -- While shooting
     while true do
         local ped = PlayerPedId()
         local status = IsPedShooting(ped)
@@ -247,7 +247,7 @@ Citizen.CreateThread(function() -- While shooting
             Citizen.Wait(5)
         end
     end
-end)
+end) ]]
 
 Citizen.CreateThread(function() -- Aiming with a melee, hitting with a melee or getting hit by a melee
     while true do
@@ -332,22 +332,6 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-   Citizen.Wait(5000)
-    local ped = PlayerPedId()
-    local vehicle = GetVehiclePedIsIn(ped)
-    local speed = GetEntitySpeed(vehicle)
-        if IsPedInAnyVehicle(ped) and speed > 57 and speed < 65 then --130MPH
-            TriggerServerEvent('hud:server:GainStress', math.random(1, 10))
-        end
-        if IsPedInAnyVehicle(ped) and speed >= 66 then --150MPH
-            TriggerServerEvent('hud:server:GainStress', math.random(1, 14))
-        end
-    end
-end)
-
-
-Citizen.CreateThread(function()
-    while true do
 		Citizen.Wait(2500)
         ClearAreaOfPeds(969.40423, -124.5897, 74.031448, 50.0, 1)
     end
@@ -372,7 +356,7 @@ Citizen.CreateThread(function()
 			end
 		else
 		    if check == true then
-		        SetFollowVehicleCamViewMode(1)
+		        SetFollowVehicleCamViewMode(0)
 				check = false
 			end
 		end
@@ -385,4 +369,80 @@ Citizen.CreateThread(function()
 	SetMapZoomDataLevel(2, 8.6, 0.9, 0.08, 0.0, 0.0)
 	SetMapZoomDataLevel(3, 12.3, 0.9, 0.08, 0.0, 0.0)
 	SetMapZoomDataLevel(4, 22.3, 0.9, 0.08, 0.0, 0.0)
+end)
+
+local INPUT_AIM = 0
+local INPUT_AIM = 0
+local UseFPS = false
+local justpressed = 0
+
+local disable = 0
+Citizen.CreateThread( function()
+
+  while true do    
+    
+    Citizen.Wait(0)
+
+
+        if IsControlPressed(0, INPUT_AIM) then
+          justpressed = justpressed + 1
+        end
+
+        if IsControlJustReleased(0, INPUT_AIM) then
+
+        	if justpressed < 15 then
+        		UseFPS = true
+        	end
+        	justpressed = 0
+        end
+
+        if GetFollowPedCamViewMode() == 1 or GetFollowVehicleCamViewMode() == 1 then
+        	Citizen.Wait(1)
+        	SetFollowPedCamViewMode(0)
+        	SetFollowVehicleCamViewMode(0)
+        end
+
+
+        if UseFPS then
+        	if GetFollowPedCamViewMode() == 0 or GetFollowVehicleCamViewMode() == 0 then
+        		Citizen.Wait(0)
+        		
+        		SetFollowPedCamViewMode(4)
+        		SetFollowVehicleCamViewMode(4)
+        	else
+        		Citizen.Wait(0)
+        		
+        		SetFollowPedCamViewMode(0)
+        		SetFollowVehicleCamViewMode(0)
+        	end
+    		UseFPS = false
+        end
+
+
+        if IsPedArmed(ped,1) or not IsPedArmed(ped,7) then
+            if IsControlJustPressed(0,24) or IsControlJustPressed(0,141) or IsControlJustPressed(0,142) or IsControlJustPressed(0,140)  then
+               disable = 50
+            end
+        end
+
+        if disable > 0 then
+            disable = disable - 1
+            DisableControlAction(0,24)
+            DisableControlAction(0,140)
+            DisableControlAction(0,141)
+            DisableControlAction(0,142)
+        end
+  end
+
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        if IsPedArmed(PlayerPedId(), 6) then
+            DisableControlAction(1, 140, true)
+            DisableControlAction(1, 141, true)
+            DisableControlAction(1, 142, true)
+        end
+    end
 end)
