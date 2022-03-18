@@ -95,7 +95,7 @@ RLCore.Functions.CreateCallback('vny-shoprobbery:serversidecooldown', function(s
         end   
     else
         -- Drop the ban code here to catch cheaters :D 
-        TriggerClientEvent('RLCore:Notify', src, ('Theres no safe here are u stupid or what :D'), 'success', 5000)
+        TriggerClientEvent('RLCore:Notify', src, ('Safe Secure: Anti-Tamper device is active.'), 'error', 5000)
     end
 end)
 
