@@ -1,175 +1,360 @@
+local currentHospital = 1
+local menuItem = {}
+
 function DrawText3D(x, y, z, text)
-    SetTextScale(0.35, 0.35)
-    SetTextFont(4)
-    SetTextProportional(1)
-    SetTextColour(255, 255, 255, 215)
-    SetTextEntry("STRING")
-    SetTextCentre(true)
-    AddTextComponentString(text)
-    SetDrawOrigin(x,y,z, 0)
-    DrawText(0.0, 0.0)
-    local factor = (string.len(text)) / 370
-    DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
-    ClearDrawOrigin()
+    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+    local p = GetGameplayCamCoords()
+    local distance = GetDistanceBetweenCoords(p.x, p.y, p.z, x, y, z, 1)
+    local scale = (1 / distance) * 2
+    local fov = (1 / GetGameplayCamFov()) * 100
+    local scale = scale * fov
+    if onScreen then
+      SetTextScale(0.30, 0.30)
+      SetTextFont(4)
+      SetTextProportional(1)
+      SetTextColour(255, 255, 255, 215)
+      SetTextEntry("STRING")
+      SetTextCentre(1)
+      AddTextComponentString(text)
+      DrawText(_x,_y)
+      local factor = (string.len(text)) / 370
+      DrawRect(_x,_y+0.0120, factor, 0.026, 41, 11, 41, 68)
+    end
 end
+
+Citizen.CreateThread(function()
+    for k, v in pairs(Config.Vehicles) do
+        menuItem[#menuItem + 1] = {
+            title = v,
+            description = "Take out " .. v,
+            event = "rl-ems:client:takeOutVehicle",
+            eventType = "client",
+            args = {
+                ["model"] = k
+            },
+            close = true,
+            func = function()
+                return true;
+            end
+        }
+    end
+end)
+
+RegisterNetEvent('rl-ems:client:toggleDuty', function()
+    onDuty = not onDuty
+    TriggerServerEvent("RLCore:ToggleDuty")
+    TriggerServerEvent("police:server:UpdateBlips")
+end)
+
+RegisterNetEvent('rl-ems:client:openStash', function()
+    if onDuty then
+        TriggerEvent("InteractSound_CL:PlayOnOne","zipper",0.5)
+        TriggerServerEvent("inventory:server:OpenInventory", "stash", "emsstash_"..RLCore.Functions.GetPlayerData().citizenid)
+        TriggerEvent("inventory:client:SetCurrentStash", "emsstash_"..RLCore.Functions.GetPlayerData().citizenid)
+    end
+end)
+
+RegisterNetEvent('rl-ems:client:openBossMenu', function()
+    if onDuty then
+        TriggerServerEvent("rl-bossmenu:server:openMenu")
+    end
+end)
+
+RegisterNetEvent('rl-ems:client:openArmory', function()
+    if onDuty then
+        TriggerServerEvent("inventory:server:OpenInventory", "shop", "hospital", Config.Items)
+    end
+end)
+
+RegisterNetEvent('rl-ems:client:toRoof', function()
+    Progressbar(10000,"Waiting For Elevator")
+    DoScreenFadeOut(500)
+    while not IsScreenFadedOut() do
+        Citizen.Wait(10)
+    end
+
+    local coords = Config.Locations["roof"][currentHospital]
+    SetEntityCoords(PlayerPedId(), coords.x, coords.y, coords.z, 0, 0, 0, false)
+    SetEntityHeading(PlayerPedId(), coords.h)
+
+    Citizen.Wait(100)
+
+    DoScreenFadeIn(1000)
+end)
+
+RegisterNetEvent('rl-ems:client:toMain', function()
+    Progressbar(10000,"Waiting For Elevator")
+    DoScreenFadeOut(500)
+    while not IsScreenFadedOut() do
+        Citizen.Wait(10)
+    end
+
+    local coords = Config.Locations["main"][currentHospital]
+    SetEntityCoords(PlayerPedId(), coords.x, coords.y, coords.z, 0, 0, 0, false)
+    SetEntityHeading(PlayerPedId(), coords.h)
+
+    Citizen.Wait(100)
+
+    DoScreenFadeIn(1000)
+end)
+
+RegisterNetEvent('rl-ems:client:toBottom', function()
+    Progressbar(10000,"Waiting For Elevator")
+    DoScreenFadeOut(500)
+    while not IsScreenFadedOut() do
+        Citizen.Wait(10)
+    end
+
+    local coords = Config.Locations["bottom"][currentHospital]
+    SetEntityCoords(PlayerPedId(), coords.x, coords.y, coords.z, 0, 0, 0, false)
+    SetEntityHeading(PlayerPedId(), coords.h)
+
+    Citizen.Wait(100)
+
+    DoScreenFadeIn(1000)
+end)
 
 local currentGarage = 1
 Citizen.CreateThread(function()
+
+    for k, v in pairs(Config.Locations["duty"]) do
+        exports['qb-target']:AddBoxZone("emsduty"..k, vector3(v.x, v.y, v.z), v.l, v.w, {
+            name = "emsduty"..k,
+            heading = v.h,
+            debugPoly = false,
+            minZ = v.minZ,
+            maxZ = v.maxZ,
+        }, {
+            options = {
+                {
+                    event = 'rl-ems:client:toggleDuty',
+                    icon = 'far fa-clipboard',
+                    label = 'Toggle Duty',
+                    job = {['ambulance'] = 0, ['doctor'] = 0}
+                }
+            },
+            distance = 2.0
+        })
+    end
+
+    for k, v in pairs(Config.Locations["stash"]) do
+        exports['qb-target']:AddBoxZone("emsstash"..k, vector3(v.x, v.y, v.z), v.l, v.w, {
+            name = "emsstash"..k,
+            heading = v.h,
+            debugPoly = false,
+            minZ = v.minZ,
+            maxZ = v.maxZ,
+        }, {
+            options = {
+                {
+                    event = 'rl-ems:client:openStash',
+                    icon = 'fas fa-box',
+                    label = 'Personal Locker',
+                    job = {['ambulance'] = 0, ['doctor'] = 0}
+                }
+            },
+            distance = 2.0
+        })
+    end
+
+    for k, v in pairs(Config.Locations["boss"]) do
+        exports['qb-target']:AddBoxZone("emsbossmenu"..k, vector3(v.x, v.y, v.z), v.l, v.w, {
+            name = "emsbossmenu"..k,
+            heading = v.h,
+            debugPoly = false,
+            minZ = v.minZ,
+            maxZ = v.maxZ,
+        }, {
+            options = {
+                {
+                    event = 'rl-ems:client:openBossMenu',
+                    icon = 'fas fa-user-tie',
+                    label = 'Boss Menu',
+                    job = {['ambulance'] = 0, ['doctor'] = 0},
+                    canInteract = function()
+                        if PlayerJob.isboss then
+                            return true
+                        else
+                            return false
+                        end
+                    end,
+                }
+            },
+            distance = 2.0
+        })
+    end
+
+    for k, v in pairs(Config.Locations["armory"]) do
+        exports['qb-target']:AddBoxZone("emsarmory"..k, vector3(v.x, v.y, v.z), v.l, v.w, {
+            name = "emsarmory"..k,
+            heading = v.h,
+            debugPoly = false,
+            minZ = v.minZ,
+            maxZ = v.maxZ,
+        }, {
+            options = {
+                {
+                    event = 'rl-ems:client:openArmory',
+                    icon = 'far fa-clipboard',
+                    label = 'Hospital Safe',
+                    job = {['ambulance'] = 0, ['doctor'] = 0},
+                }
+            },
+            distance = 2.0
+        })
+    end
+
+    exports['qb-target']:AddBoxZone('emsclothingoutfits', vector3(300.2009, -598.8107, 43.27745), 1.5, 2.5, {
+        name = 'emsclothingoutfits',
+        heading = 250.0,
+        debugPoly = false,
+        minZ = 42.0,
+        maxZ = 44.4
+    }, {
+        options = {
+            {
+                action = function()
+                    TriggerServerEvent("clothing:checkMoney", "clothesmenu")
+                end,
+                icon = 'fas fa-tshirt',
+                label = 'Change Clothes',
+                job = {['ambulance'] = 0, ['doctor'] = 0},
+            },
+            {
+                type = "command",
+                event = 'outfits',
+                icon = 'fas fa-clipboard-list',
+                label = 'Manage Outfits',
+                job = {['ambulance'] = 0, ['doctor'] = 0},
+            }
+        },
+        distance = 2.5
+    })
+
+    exports['qb-target']:AddBoxZone("emselevatormain", vector3(332.45095, -595.6943, 43.284053), 0.7, 2.5, {
+        name = "emselevatormain",
+        heading = 70.0,
+        debugPoly = false,
+        minZ = 42.5,
+        maxZ = 44.6,
+    }, {
+        options = {
+            {
+                event = 'rl-ems:client:toRoof',
+                icon = 'fas fa-arrow-circle-up',
+                label = 'Elevator to roof',
+            },
+            {
+                event = 'rl-ems:client:toBottom',
+                icon = 'fas fa-arrow-circle-down',
+                label = 'Elevator to bottom',
+            }
+        },
+        distance = 2.0
+    })
+
+    exports['qb-target']:AddBoxZone("emselevatorroof", vector3(338.54479, -583.7456, 74.161705), 0.7, 2.8, {
+        name = "emselevatorroof",
+        heading = 250.0,
+        debugPoly = false,
+        minZ = 73.3,
+        maxZ = 75.4,
+    }, {
+        options = {
+            {
+                event = 'rl-ems:client:toMain',
+                icon = 'fas fa-arrow-circle-down',
+                label = 'Elevator to main',
+            }
+        },
+        distance = 2.0
+    })
+
+    exports['qb-target']:AddBoxZone("emselevatorroof", vector3(345.7102, -580.8406, 28.797988), 0.2, 0.2, {
+        name = "emselevatorroof",
+        heading = 250.0,
+        debugPoly = false,
+        minZ = 29.0,
+        maxZ = 29.4,
+    }, {
+        options = {
+            {
+                event = 'rl-ems:client:toMain',
+                icon = 'fas fa-arrow-circle-up',
+                label = 'Elevator to main',
+            }
+        },
+        distance = 2.0
+    })
+
     while true do
         Citizen.Wait(1)
-        if isLoggedIn and RLCore ~= nil then
-            local pos = GetEntityCoords(GetPlayerPed(-1))
+        if isLoggedIn then
+            local pos = GetEntityCoords(PlayerPedId())
             if PlayerJob.name == "doctor" or PlayerJob.name == "ambulance" then
 
-                for k, v in pairs(Config.Locations["duty"]) do
-                    if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 5) then
-                        if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.5) then
-                            if not onDuty then
-                                DrawText3D(v.x, v.y, v.z, "~g~E~w~ - On Duty")
-                            else
-                                DrawText3D(v.x, v.y, v.z, "~r~E~w~ - Off Duty")
-                            end
-                            if IsControlJustReleased(0, Keys["E"]) then
-                                onDuty = not onDuty
-                                TriggerServerEvent("RLCore:ToggleDuty")
-                                TriggerServerEvent("police:server:UpdateBlips")
-                            end
-                        elseif (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 4.5) then
-                            DrawText3D(v.x, v.y, v.z, "Duty Docs")
-                        end  
-                    end
-                end
-
-                for k, v in pairs(Config.Locations["armory"]) do
-                    if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 4.5) then
-                        if onDuty then
-                            if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.5) then
-                                DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Safe")
-                                if IsControlJustReleased(0, Keys["E"]) then
-                                    TriggerServerEvent("inventory:server:OpenInventory", "shop", "hospital", Config.Items)
-                                end
-                            elseif (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 2.5) then
-                                DrawText3D(v.x, v.y, v.z, "Safe")
-                            end  
-                        end
-                    end
-                end
-        
                 for k, v in pairs(Config.Locations["vehicle"]) do
                     if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 4.5) then
                         DrawMarker(2, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
                         if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.5) then
-                            if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+                            if IsPedInAnyVehicle(PlayerPedId(), false) then
                                 DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Store the vehicle")
                             else
                                 DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Vehicles")
                             end
                             if IsControlJustReleased(0, Keys["E"]) then
-                                if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
-                                    RLCore.Functions.DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
+                                if IsPedInAnyVehicle(PlayerPedId(), false) then
+                                    RLCore.Functions.DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
                                 else
-                                    MenuGarage()
-                                    currentGarage = k
-                                    Menu.hidden = not Menu.hidden
+                                    exports["qb-menu"]:openMenu(menuItem)
                                 end
                             end
                             Menu.renderGUI()
                         end
                     end
                 end
-        
+
                 for k, v in pairs(Config.Locations["helicopter"]) do
                     if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 7.5) then
                         if onDuty then
                             DrawMarker(2, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
                             if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.5) then
-                                if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+                                if IsPedInAnyVehicle(PlayerPedId(), false) then
                                     DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Store the helicopter")
                                 else
                                     DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Spawn Helicopter")
                                 end
                                 if IsControlJustReleased(0, Keys["E"]) then
-                                    if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
-                                        RLCore.Functions.DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
+                                    if IsPedInAnyVehicle(PlayerPedId(), false) then
+                                        RLCore.Functions.DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
                                     else
                                         local coords = Config.Locations["helicopter"][k]
                                         RLCore.Functions.SpawnVehicle(Config.Helicopter, function(veh)
                                             SetVehicleLivery(veh, 1)
                                             SetVehicleNumberPlateText(veh, "LIFE"..tostring(math.random(1000, 9999)))
                                             SetEntityHeading(veh, coords.h)
-                                            exports['lj-fuel']:SetFuel(veh, 100)
+                                            exports['LegacyFuel']:SetFuel(veh, 100)
                                             closeMenuFull()
-                                            TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+                                            TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
                                             TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
                                             SetVehicleEngineOn(veh, true, true)
                                         end, coords, true)
                                     end
                                 end
-                            end  
+                            end
                         end
                     end
                 end
-                
-                for k, v in pairs(Config.Locations["boss"]) do
-                    if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 4.5) then
-                        if onDuty and PlayerJob.isboss then
-                            if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.5) then
-                                DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Boss Menu")
-                                if IsControlJustReleased(0, Keys["E"]) then
-                                    TriggerServerEvent("bb-bossmenu:server:openMenu")
-                                end
-                            elseif (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 2.5) then
-                                DrawText3D(v.x, v.y, v.z, "Boss Menu")
-                            end  
-                        end
-                    end
-                end
-
+            else
+                Wait(2800)
             end
 
-            local currentHospital = 1
+            currentHospital = 1
 
             for k, v in pairs(Config.Locations["main"]) do
-                if (GetDistanceBetweenCoords(pos,v.x,v.y,v.z, true) < 1.5) then
-                    DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Take the elevator to the roof")
-                    if IsControlJustReleased(0, Keys["E"]) then
-                        DoScreenFadeOut(500)
-                        while not IsScreenFadedOut() do
-                            Citizen.Wait(10)
-                        end
-
-                        currentHospital = k
-
-                        local coords = Config.Locations["roof"][currentHospital]
-                        SetEntityCoords(PlayerPedId(), coords.x, coords.y, coords.z, 0, 0, 0, false)
-                        SetEntityHeading(PlayerPedId(), coords.h)
-
-                        Citizen.Wait(100)
-
-                        DoScreenFadeIn(1000)
-                    end
-                end
-            end
-
-            for k, v in pairs(Config.Locations["roof"]) do
-                if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.5) then
-                    DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Take the elevator down")
-                    if IsControlJustReleased(0, Keys["E"]) then
-                        DoScreenFadeOut(500)
-                        while not IsScreenFadedOut() do
-                            Citizen.Wait(10)
-                        end
-
-                        currentHospital = k
-
-                        local coords = Config.Locations["main"][currentHospital]
-                        SetEntityCoords(PlayerPedId(), coords.x, coords.y, coords.z, 0, 0, 0, false)
-                        SetEntityHeading(PlayerPedId(), coords.h)
-
-                        Citizen.Wait(100)
-
-                        DoScreenFadeIn(1000)
-                    end
+                local dist = #(pos - vector3(v.x, v.y, v.z))
+                if dist < 10.0 then
+                    currentHospital = k
                 end
             end
         else
@@ -177,6 +362,7 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
 
 Citizen.CreateThread(function()
     while true do
@@ -189,9 +375,9 @@ Citizen.CreateThread(function()
         end
 
         if isHealingPerson then
-            if not IsEntityPlayingAnim(GetPlayerPed(-1), healAnimDict, healAnim, 3) then
+            if not IsEntityPlayingAnim(PlayerPedId(), healAnimDict, healAnim, 3) then
                 loadAnimDict(healAnimDict)	
-                TaskPlayAnim(GetPlayerPed(-1), healAnimDict, healAnim, 3.0, 3.0, -1, 49, 0, 0, 0, 0)
+                TaskPlayAnim(PlayerPedId(), healAnimDict, healAnim, 3.0, 3.0, -1, 49, 0, 0, 0, 0)
             end
         end
     end
@@ -203,6 +389,26 @@ AddEventHandler('hospital:client:SendAlert', function(msg)
     TriggerEvent("chatMessage", "PAGER", "error", msg)
 end)
 
+RegisterNetEvent("ems:stash")
+AddEventHandler("ems:stash", function()
+    if PlayerJob.name ~= 'ambulance' then return RLCore.Functions.Notify("You're not EMS lmfao..", "error") end
+    TriggerServerEvent("inventory:server:OpenInventory", "stash", "emsstash_"..RLCore.Functions.GetPlayerData().citizenid)
+    TriggerEvent("inventory:client:SetCurrentStash", "emsstash_"..RLCore.Functions.GetPlayerData().citizenid)
+end)
+
+RegisterNetEvent("ems:duty")
+AddEventHandler("ems:duty", function()
+    if PlayerJob.name ~= 'ambulance' then return RLCore.Functions.Notify("You're not EMS lmfao..", "error") end
+    TriggerServerEvent("RLCore:ToggleDuty")
+    TriggerServerEvent("police:server:UpdateBlips")
+end)
+
+RegisterNetEvent("ems:armory")
+AddEventHandler("ems:armory", function()
+    if PlayerJob.name ~= 'ambulance' then return RLCore.Functions.Notify("You're not EMS lmfao..", "error") end
+TriggerServerEvent("inventory:server:OpenInventory", "shop", "hospital", Config.Items)
+end)
+
 RegisterNetEvent('hospital:client:AiCall')
 AddEventHandler('hospital:client:AiCall', function()
     local PlayerPeds = {}
@@ -210,7 +416,7 @@ AddEventHandler('hospital:client:AiCall', function()
         local ped = GetPlayerPed(player)
         table.insert(PlayerPeds, ped)
     end
-    local player = GetPlayerPed(-1)
+    local player = PlayerPedId()
     local coords = GetEntityCoords(player)
     local closestPed, closestDistance = RLCore.Functions.GetClosestPed(coords, PlayerPeds)
     local gender = RLCore.Functions.GetPlayerData().gender
@@ -224,7 +430,7 @@ function MakeCall(ped, male)
     local callAnim = "cellphone_call_listen_base"
     local rand = (math.random(6,9) / 100) + 0.3
     local rand2 = (math.random(6,9) / 100) + 0.3
-    local coords = GetEntityCoords(GetPlayerPed(-1))
+    local coords = GetEntityCoords(PlayerPedId())
     local blipsettings = {
         x = coords.x,
         y = coords.y,
@@ -243,7 +449,7 @@ function MakeCall(ped, male)
         rand2 = 0.0 - rand2
     end
 
-    local moveto = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), rand, rand2, 0.0)
+    local moveto = GetOffsetFromEntityInWorldCoords(PlayerPedId(), rand, rand2, 0.0)
 
     TaskGoStraightToCoord(ped, moveto, 2.5, -1, 0.0, 0.0)
     SetPedKeepTask(ped, true) 
@@ -257,8 +463,8 @@ function MakeCall(ped, male)
     end
 
     ClearPedTasksImmediately(ped)
-    TaskLookAtEntity(ped, GetPlayerPed(-1), 5500.0, 2048, 3)
-    TaskTurnPedToFaceEntity(ped, GetPlayerPed(-1), 5500)
+    TaskLookAtEntity(ped, PlayerPedId(), 5500.0, 2048, 3)
+    TaskTurnPedToFaceEntity(ped, PlayerPedId(), 5500)
 
     Citizen.Wait(3000)
 
@@ -279,7 +485,7 @@ end
 RegisterNetEvent('hospital:client:RevivePlayer')
 AddEventHandler('hospital:client:RevivePlayer', function()
     RLCore.Functions.GetPlayerData(function(PlayerData)
-        if PlayerJob.name == "ambulance" or PlayerJob.name == "police" then
+        if PlayerJob.name == "ambulance" then
             local player, distance = RLCore.Functions.GetClosestPlayer()
             if player ~= -1 and distance < 5.0 then
                 local playerId = GetPlayerServerId(player)
@@ -295,12 +501,12 @@ AddEventHandler('hospital:client:RevivePlayer', function()
                     flags = 16,
                 }, {}, {}, function() -- Done
                     isHealingPerson = false
-                    StopAnimTask(GetPlayerPed(-1), healAnimDict, "exit", 1.0)
+                    StopAnimTask(PlayerPedId(), healAnimDict, "exit", 1.0)
                     RLCore.Functions.Notify("You helped the person!")
                     TriggerServerEvent("hospital:server:RevivePlayer", playerId)
                 end, function() -- Cancel
                     isHealingPerson = false
-                    StopAnimTask(GetPlayerPed(-1), healAnimDict, "exit", 1.0)
+                    StopAnimTask(PlayerPedId(), healAnimDict, "exit", 1.0)
                     RLCore.Functions.Notify("Failed!", "error")
                 end)
             end
@@ -340,12 +546,12 @@ AddEventHandler('hospital:client:TreatWounds', function()
                     flags = 16,
                 }, {}, {}, function() -- Done
                     isHealingPerson = false
-                    StopAnimTask(GetPlayerPed(-1), healAnimDict, "exit", 1.0)
+                    StopAnimTask(PlayerPedId(), healAnimDict, "exit", 1.0)
                     RLCore.Functions.Notify("You helped the person!")
                     TriggerServerEvent("hospital:server:TreatWounds", playerId)
                 end, function() -- Cancel
                     isHealingPerson = false
-                    StopAnimTask(GetPlayerPed(-1), healAnimDict, "exit", 1.0)
+                    StopAnimTask(PlayerPedId(), healAnimDict, "exit", 1.0)
                     RLCore.Functions.Notify("Failed!", "error")
                 end)
             end
@@ -354,7 +560,7 @@ AddEventHandler('hospital:client:TreatWounds', function()
 end)
 
 function MenuGarage(isDown)
-    ped = GetPlayerPed(-1);
+    ped = PlayerPedId();
     MenuTitle = "Garage"
     ClearMenu()
     Menu.addButton("Vehicles", "VehicleList", isDown)
@@ -362,9 +568,10 @@ function MenuGarage(isDown)
 end
 
 function VehicleList(isDown)
-    ped = GetPlayerPed(-1);
+    ped = PlayerPedId();
     MenuTitle = "Vehicles:"
     ClearMenu()
+
     for k, v in pairs(Config.Vehicles) do
         Menu.addButton(Config.Vehicles[k], "TakeOutVehicle", {k, isDown}, "Garage", " Motor: 100%", " Body: 100%", " Fuel: 100%")
     end
@@ -372,24 +579,43 @@ function VehicleList(isDown)
     Menu.addButton("Back", "MenuGarage",nil)
 end
 
-function TakeOutVehicle(vehicleInfo)
+RegisterNetEvent("rl-ems:client:takeOutVehicle", function(data)
+    if(currentGarage ~= nil) then
+        local coords = Config.Locations["vehicle"][currentGarage]
+
+        if not IsModelValid(data.model) then
+            RLCore.Functions.Notify("Invaild Vehicle Model", "error")
+            return false
+        end
+    
+        RLCore.Functions.SpawnVehicle(data.model, function(veh)
+            SetVehicleNumberPlateText(veh, "AMBU"..tostring(math.random(1000, 9999)))
+            SetEntityHeading(veh, coords.h)
+            exports['LegacyFuel']:SetFuel(veh, 100)
+            closeMenuFull()
+            TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+            TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
+            SetVehicleEngineOn(veh, true, true)
+        end, coords, true)
+    end
+end)
+
+function TakeOutVehicle(model)
     local coords = Config.Locations["vehicle"][currentGarage]
 
-    if not IsModelValid(vehicleInfo[1]) then
+    if not IsModelValid(model) then
         RLCore.Functions.Notify("Invaild Vehicle Model", "error")
         return false
     end
 
-    RLCore.Functions.SpawnVehicle(vehicleInfo[1], function(veh)
+    RLCore.Functions.SpawnVehicle(model, function(veh)
         SetVehicleNumberPlateText(veh, "AMBU"..tostring(math.random(1000, 9999)))
         SetEntityHeading(veh, coords.h)
-        exports['lj-fuel']:SetFuel(veh, 100)
+        exports['LegacyFuel']:SetFuel(veh, 100)
         closeMenuFull()
-        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh), veh)
         SetVehicleEngineOn(veh, true, true)
-        --SetVehicleFuelLevel(veh, 100.00)
-        --print("SETTING FUEL AND STUFF")
     end, coords, true)
 
     return true
@@ -397,6 +623,25 @@ end
 
 function closeMenuFull()
     Menu.hidden = true
-    currentGarage = nil
     ClearMenu()
+end
+
+function Progressbar(duration, label)
+	local retval = nil
+	RLCore.Functions.Progressbar("ems", label, duration, false, false, {
+		disableMovement = true,
+		disableCarMovement = false,
+		disableMouse = false,
+		disableCombat = true,
+	}, {}, {}, {}, function()
+		retval = true
+	end, function()
+		retval = false
+	end)
+
+	while retval == nil do
+		Wait(1)
+	end
+
+	return retval
 end

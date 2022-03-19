@@ -1,38 +1,39 @@
 Config = {}
 
-Config.MinimalDoctors = 3
+Config.MinimalDoctors = 4 
+Config.MinimalParamedic = 4
+Config.CheckInCost = 250
 
 Config.Locations = {
-    ["checking"] = {x = 312.07571, y = -593.4837, z = 43.284061, h = 0.0},
-    ["pharmacy"] = {x = 309.08, y = -592.91, z = 43.28, h = 0.0},
-
+    ["checking"] = {x = 307.93, y = -594.99, z = 43.28, h = 0.0},
     ["duty"] = {
-        [1] = {x = 304.27, y = -600.33, z = 43.28, h = 0.0},
-    },    
+        [1] = {x = 307.2524, y = -597.1915, z = 43.8804, h = 345.0, l = 0.1, w = 0.6, minZ = 43.5, maxZ = 43.9},
+    },
     ["vehicle"] = {
         [1] = {x = 294.578, y = -574.761, z = 43.179, h = 35.792},
-        [2] = {x = 337.63403, y = -578.8991, z = 28.796844, h = 156.24035},
-        [3] = {x = 317.77432, y = -573.7828, z = 28.796842, h = 252.14067 },
-        [4] = {x = 318.88052, y = -569.4916, z = 28.796842, h = 248.68237 },
-        [5] = {x = 320.51202, y = -565.1149, z = 28.796842, h = 247.20288 },
-        [6] = {x = 315.9385, y = -578.1325, z = 28.796842, h = 245.12908 },
+        [2] = {x = 328.224, y = -578.491, z = 28.796, h = 335.968},
     },
     ["helicopter"] = {
         [1] = {x = 351.58, y = -587.45, z = 74.16, h = 160.5},
-        [2] = {x = 449.168, y = -981.325, z = 43.691, h = 87.234},
-    },    
+    },
     ["armory"] = {
-        [1] = {x = 306.26, y = -601.7, z = 43.28, h = 90.654},
+        [1] = {x = 306.5541, y = -602.498, z = 43.28405, h = 160.0, l = 0.8, w = 2.0, minZ = 42.4, maxZ = 44.6},
     },
     ["roof"] = {
         [1] = {x = 338.5, y = -583.85, z = 74.16, h = 245.5},
     },
     ["main"] = {
         [1] = {x = 332.51, y = -595.74, z = 43.28, h = 76.0},
-    }, 
+    },
+    ["bottom"] = {
+        [1] = {x = 343.56265, y = -581.7986, z = 28.799303, h = 244.37307},
+    },
+    ["stash"] = {
+        [1] = {x = 298.0334, y = -598.1032, z = 43.28, h = 70.0, l = 0.7, w = 2.5, minZ = 42.5, maxZ = 44.5},
+    },
     ["boss"] = {
-        [1] = { ['x'] = 334.50164, ['y'] = -593.7958, ['z'] = 43.284034, ['h'] = 247.5538 },
-    },        
+        [1] = {x = 335.1285, y = -595.3185, z = 43.284034, h = 225.1288, l = 0.5, w = 0.6, minZ = 43.18, maxZ = 43.28},
+    },
     ["beds"] = {
         [1] = {x = 307.84, y = -581.56, z = 44.20, h = 339.60, taken = false, model = 1631638868},
         [2] = {x = 309.18, y = -577.50, z = 44.20, h = 154.97, taken = false, model = 1631638868},
@@ -41,14 +42,12 @@ Config.Locations = {
     }
 }
 
-
 Config.Vehicles = {
-    ["emsnspeedo"] = "Ambulance",
+    ["emsnspeedo"] = "Paramadic Ambulance",
     ["emsc"] = "Dodge Charger",
-	["emsf"] = "Paramedic F-350",
-	["emst"] = "Paramedic Tahoe",
-    ["emsv"] = "Coroner Van",
-
+	["emsf"] = "Paramedic SUV",
+	["emst"] = "Paramedic Van",
+    ["madabike"] = "EMS Bike",
 }
 
 Config.Helicopter = "emsaw139"
@@ -105,7 +104,7 @@ Config.Items = {
             slot = 3,
         },
         [4] = {
-            name = "painkillers",
+            name = "medicalbag",
             price = 0,
             amount = 50,
             info = {},
@@ -113,35 +112,35 @@ Config.Items = {
             slot = 4,
         },
         [5] = {
-            name = "signalradar",
+            name = "painkillers",
             price = 0,
-            amount = 500,
+            amount = 50,
             info = {},
             type = "item",
             slot = 5,
         },
         [6] = {
-            name = "radio",
-            price = 400,
-            amount = 50,
+            name = "signalradar",
+            price = 0,
+            amount = 500,
             info = {},
             type = "item",
             slot = 6,
         },
         [7] = {
-            name = "weapon_fireextinguisher",
-            price = 150,
-            amount = 1,
+            name = "radio",
+            price = 400,
+            amount = 50,
             info = {},
             type = "item",
             slot = 7,
         },
         [8] = {
-            name = "weapon_stungun",
-            price = 25,
+            name = "weapon_fireextinguisher",
+            price = 150,
             amount = 1,
             info = {},
-            type = "weapon",
+            type = "item",
             slot = 8,
         },
         [9] = {
@@ -155,7 +154,6 @@ Config.Items = {
     }
 }
 
-Config.BillCost = 250
 Config.DeathTime = 300
 
 Config.AIHealTimer = 20

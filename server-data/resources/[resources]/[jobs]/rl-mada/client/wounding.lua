@@ -128,14 +128,14 @@ AddEventHandler('hospital:client:UseBandage', function()
 		anim = "idle_c",
 		flags = 50,
     }, {}, {}, function() -- Done
-        StopAnimTask(GetPlayerPed(-1), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
+        StopAnimTask(PlayerPedId(), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", "bandage", 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["bandage"], "remove")
-        --SetEntityHealth(GetPlayerPed(-1), GetEntityHealth(GetPlayerPed(-1)) + 10)
+        --SetEntityHealth(PlayerPedId(), GetEntityHealth(PlayerPedId()) + 10)
 		ClearPedBloodDamage(PlayerPedId())
 		HealSlow()
     end, function() -- Cancel
-        StopAnimTask(GetPlayerPed(-1), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
+        StopAnimTask(PlayerPedId(), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
         RLCore.Functions.Notify("Canceled", "error")
     end)
 end)
@@ -152,14 +152,14 @@ AddEventHandler('hospital:client:UseFirstAid', function()
 		anim = "idle_c",
 		flags = 50,
     }, {}, {}, function() -- Done
-        StopAnimTask(GetPlayerPed(-1), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
+        StopAnimTask(PlayerPedId(), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", "firstaid", 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["firstaid"], "remove")
-        --SetEntityHealth(GetPlayerPed(-1), GetEntityHealth(GetPlayerPed(-1)) + 40)
+        --SetEntityHealth(PlayerPedId(), GetEntityHealth(PlayerPedId()) + 40)
 		ClearPedBloodDamage(PlayerPedId())
 		HealFirstAid()
     end, function() -- Cancel
-        StopAnimTask(GetPlayerPed(-1), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
+        StopAnimTask(PlayerPedId(), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
         RLCore.Functions.Notify("Canceled", "error")
     end)
 end)
@@ -176,10 +176,10 @@ AddEventHandler('hospital:client:UseMedkit', function()
 		anim = "idle_c",
 		flags = 50,
     }, {}, {}, function() -- Done
-        StopAnimTask(GetPlayerPed(-1), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
+        StopAnimTask(PlayerPedId(), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", "medkit", 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["medkit"], "remove")
-        --SetEntityHealth(GetPlayerPed(-1), GetEntityHealth(GetPlayerPed(-1)) + 45)
+        --SetEntityHealth(PlayerPedId(), GetEntityHealth(PlayerPedId()) + 45)
 		ClearPedBloodDamage(PlayerPedId())
 		HealMedkit()
 
@@ -187,7 +187,7 @@ AddEventHandler('hospital:client:UseMedkit', function()
         ResetPedMovementClipset(PlayerPedId())
         TriggerEvent("dpemotes:WalkCommandStart")
     end, function() -- Cancel
-        StopAnimTask(GetPlayerPed(-1), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
+        StopAnimTask(PlayerPedId(), "amb@world_human_clipboard@male@idle_a", "idle_c", 1.0)
         RLCore.Functions.Notify("Canceled", "error")
     end)
 end)
@@ -204,12 +204,12 @@ AddEventHandler('hospital:client:UsePainkillers', function()
 		anim = "pill",
 		flags = 49,
     }, {}, {}, function() -- Done
-        StopAnimTask(GetPlayerPed(-1), "mp_suicide", "pill", 1.0)
+        StopAnimTask(PlayerPedId(), "mp_suicide", "pill", 1.0)
         TriggerServerEvent("RLCore:Server:RemoveItem", "painkillers", 1)
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items["painkillers"], "remove")
     
     end, function() -- Cancel
-        StopAnimTask(GetPlayerPed(-1), "mp_suicide", "pill", 1.0)
+        StopAnimTask(PlayerPedId(), "mp_suicide", "pill", 1.0)
         RLCore.Functions.Notify("Canceled", "error")
     end)
 end)

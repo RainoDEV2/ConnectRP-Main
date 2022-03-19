@@ -9,10 +9,6 @@ AddEventHandler('hospital:server:SendToBed', function(bedId, isRevive)
     local Player = RLCore.Functions.GetPlayer(src)
     TriggerClientEvent('hospital:client:SendToBed', src, bedId, Config.Locations["beds"][bedId], isRevive)
     TriggerClientEvent('hospital:client:SetBed', -1, bedId, true)
-
-    Player.Functions.RemoveMoney("bank", Config.BillCost, "checkin-at-hospital")
-	TriggerEvent("bb-bossmenu:server:addAccountMoney", "ambulance", 250)
-    TriggerClientEvent('hospital:client:SendBillEmail', src, Config.BillCost)
 end)
 
 RegisterServerEvent('hospital:server:RespawnAtHospital')
@@ -22,9 +18,6 @@ AddEventHandler('hospital:server:RespawnAtHospital', function()
     for k, v in pairs(Config.Locations["beds"]) do
         TriggerClientEvent('hospital:client:SendToBed', src, k, v, true)
         TriggerClientEvent('hospital:client:SetBed', -1, k, true)
-        --Player.Functions.ClearInventory()
-        --RLCore.Functions.ExecuteSql(true, "UPDATE `players` SET `inventory` = '"..RLCore.EscapeSqli(json.encode({})).."' WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'")
-        --TriggerClientEvent('RLCore:Notify', src, 'All your belongings have been taken..', 'error')
         return
     end
 end)
@@ -59,7 +52,7 @@ AddEventHandler('hospital:server:SetArmor', function(amount)
     local src = source
     local Player = RLCore.Functions.GetPlayer(src)
     if Player ~= nil then
-        Player.Functions.SetMetaData("armor", amount) 
+        Player.Functions.SetMetaData("armor", amount)
     end
 end)
 
@@ -93,10 +86,6 @@ AddEventHandler('hospital:server:RevivePlayer', function(playerId, isOldMan)
     local Player = RLCore.Functions.GetPlayer(src)
     local Patient = RLCore.Functions.GetPlayer(tonumber(playerId))
     if Patient ~= nil then
-        Player.Functions.AddMoney("bank", 250, "checkin-at-hospital") 
-        print(json.encode(Player))
-	    TriggerEvent("bb-bossmenu:server:addAccountMoney", "ambulance", 250)
-
         TriggerClientEvent('hospital:client:Revive', Patient.PlayerData.source)
         TriggerServerEvent("RLCore:Server:SetMetaData", "hunger", RLCore.Functions.GetPlayerData().metadata["hunger"] + 100)
         TriggerServerEvent("RLCore:Server:SetMetaData", "thirst", RLCore.Functions.GetPlayerData().metadata["thirst"] + 100)
@@ -110,9 +99,11 @@ AddEventHandler('hospital:server:SendDoctorAlert', function()
         local Player = RLCore.Functions.GetPlayer(v)
         if Player ~= nil then 
             if (Player.PlayerData.job.name == "ambulance" and Player.PlayerData.job.onduty) then
-			TriggerClientEvent('chat:addMessage', v, {
-			template = '<div class="chat-message advert">A doctor is needed at Pillbox Hospital  </div>',
-			})
+                TriggerClientEvent("RLCore:Notify", v, "Mada: A doctor is needed at Pillbox Hospital!", "error")
+                TriggerClientEvent("InteractSound_CL:PlayOnOne", v, "demo", 0.4)
+			-- TriggerClientEvent('chat:addMessage', v, {
+			-- template = '<div class="chat-message advert">A doctor is needed at Pillbox Hospital  </div>',
+			-- })
             end
         end
     end
@@ -125,8 +116,33 @@ AddEventHandler('hospital:server:MakeDeadCall', function(blipSettings, gender, s
 
     if gender == 1 then genderstr = "Woman" end
 
-    TriggerClientEvent("112:client:SendAlert", -1, "A ".. genderstr .." injured in " ..street1 .. " "..street2, blipSettings)
+    if street2 ~= nil then 
+        TriggerClientEvent("112:client:SendAlert", -1, "A ".. genderstr .." injured in " ..street1 .. " "..street2, blipSettings)
+    end
     TriggerClientEvent('dispatch:death', src)
+end)
+
+RLCore.Functions.CreateCallback('hospital:getCheckin', function(source, cb)
+    local src = source
+    local Player = RLCore.Functions.GetPlayer(src)
+    local retval = false
+    
+    if Player then
+        if Player.Functions.GetMoney("cash") >= Config.CheckInCost then
+            Player.Functions.RemoveMoney("cash", Config.CheckInCost, 'hospital:getCheckin')
+            retval = true
+        elseif Player.Functions.GetMoney("bank") >= Config.CheckInCost then
+            Player.Functions.RemoveMoney("bank", Config.CheckInCost, 'hospital:getCheckin')
+            retval = true
+        end
+    end
+
+    if retval then
+        --TriggerEvent("rl-bossmenu:server:addAccountMoney", "ambulance", 250) --FIX
+        TriggerClientEvent('hospital:client:SendBillEmail', src, Config.CheckInCost)
+    end
+
+    cb(retval)
 end)
 
 RLCore.Functions.CreateCallback('hospital:GetDoctors', function(source, cb)
@@ -145,7 +161,7 @@ end)
 RLCore.Commands.Add("status", "Check a person's health (EMS Only)", {}, false, function(source, args)
     local Player = RLCore.Functions.GetPlayer(source)
     if Player.PlayerData.job.name == "ambulance" then
-        TriggerClientEvent("hospital:client:CheckStatus", source) 
+        TriggerClientEvent("hospital:client:CheckStatus", source)
     else
         TriggerClientEvent('chat:addMessage', source , {
             template = '<div class="chat-message emergency"><b>SYSTEM:</b> {0}</div>',
@@ -190,6 +206,19 @@ RLCore.Commands.Add("revivep", "Help a person up (EMS Only)", {}, false, functio
         TriggerClientEvent('chat:addMessage', source , {
             template = '<div class="chat-message emergency"><b>SYSTEM:</b> {0}</div>',
             args = { "This command is for emergency services!" }
+        })
+    end
+end)
+
+RLCore.Commands.Add("edv", "Delete a vehicle | EMS Only", {}, false, function(source, args)
+    local src = source
+    local Player = RLCore.Functions.GetPlayer(src)
+    if Player.PlayerData.job.name == "ambulance" then
+        TriggerClientEvent('RLCore:Command:DeleteVehicle', src)
+    else
+        TriggerClientEvent('chat:addMessage', source , {
+            template = '<div class="chat-message emergency"><b>SYSTEM:</b> {0}</div>',
+            args = { "This command is for ems only!" }
         })
     end
 end)
@@ -252,6 +281,11 @@ RLCore.Functions.CreateUseableItem("medkit", function(source, item)
     if Player.Functions.GetItemByName(item.name) ~= nil then
         TriggerClientEvent("hospital:client:UseMedkit", source)
     end
+end)
+
+RLCore.Functions.CreateUseableItem("medicalbag", function(source, item)
+    local Player = RLCore.Functions.GetPlayer(source)
+    TriggerClientEvent("attachItemPerm", source, "medicalBag")
 end)
 
 RegisterServerEvent('hospital:server:UseFirstAid')

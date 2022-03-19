@@ -1,4 +1,4 @@
-local animDict = 'missfbi5ig_0'
+ local animDict = 'missfbi5ig_0'
 local animName = 'lyinginpain_loop_steve'
 local inBedDicts = "anim@gangops@morgue@table@"
 local inBedAnims = "ko_front"
@@ -13,7 +13,7 @@ AddEventHandler("police:client:deleteObject", function()
         DeleteEntity(bed)
 	elseif DoesEntityExist(wheelchair) then
 		DeleteEntity(wheelchair)
-	end
+	end 
 end)
 
 RegisterNetEvent("rl-mada:client:bed")
@@ -67,7 +67,7 @@ Citizen.CreateThread(function()
 			local pickupCoords = (stretcherCoords + stretcherForward * 1.2)
 
 			if GetDistanceBetweenCoords(pedCoords, sitCoords, true) <= 1.5 then
-				DrawText3Ds(sitCoords, "[G] Lay down")
+				DrawText3Ds(sitCoords, "~g~G~w~ - Lay down")
 
 				if IsDisabledControlJustPressed(0, 47) then
 					LayOut(closestBed)
@@ -75,7 +75,7 @@ Citizen.CreateThread(function()
 			end
 
 			if not IsEntityAttached(closestBed) and GetDistanceBetweenCoords(pedCoords, pickupCoords, true) <= 2.5 and isLoggedIn and RLCore ~= nil and PlayerJob.name == 'ambulance' then
-				DrawText3Ds(pickupCoords, "[H] Grab")
+				DrawText3Ds(pickupCoords, "~g~H~w~ - Grab")
 
 				if IsControlJustPressed(0, 74) then
 					PickUp(closestBed)
@@ -91,7 +91,7 @@ Citizen.CreateThread(function()
 			local pickupCoords = (wheelChairCoords + wheelChairForward * 0.3)
 
 			if GetDistanceBetweenCoords(pedCoords, sitCoords, true) <= 1.0 then
-				DrawText3Ds(sitCoords, "[E] Sit", 0.4)
+				DrawText3Ds(sitCoords, "~g~E~w~ Sit", 0.4)
 
 				if IsControlJustPressed(0, 38) then
 					ChairSit(closestChair)
@@ -99,7 +99,7 @@ Citizen.CreateThread(function()
 			end
 
 			if GetDistanceBetweenCoords(pedCoords, pickupCoords, true) <= 1.0 then
-				DrawText3Ds(pickupCoords, "[E] Pick up", 0.4)
+				DrawText3Ds(pickupCoords, "~g~E~w~ Pick up", 0.4)
 
 				if IsControlJustPressed(0, 38) then
 					ChairPickUp(closestChair)
@@ -133,7 +133,7 @@ LayOut = function(stretcherObject)
 		Citizen.Wait(5)
 
 		if not IsEntityPlayingAnim(PlayerPedId(), 'dead', 'dead_a', 1) then
-			TaskPlayAnim(GetPlayerPed(-1), "dead", "dead_a", 1.0, 1.0, -1, 33, 0, 0, 0, 0)
+			TaskPlayAnim(PlayerPedId(), "dead", "dead_a", 1.0, 1.0, -1, 33, 0, 0, 0, 0)
 		end
 
 		if IsDisabledControlJustPressed(0, 47) then
@@ -198,21 +198,26 @@ PickUp = function(stretcherObject)
 	ClearPedSecondaryTask(PlayerPedId())
 end
 
-DrawText3Ds = function(coords, text)
-	local x,y,z = coords.x, coords.y, coords.z
-    local onScreen,_x,_y=World3dToScreen2d(x,y,z)
-    local px,py,pz=table.unpack(GetGameplayCamCoords())
-    
-    SetTextScale(0.35, 0.35)
-    SetTextFont(4)
-    SetTextProportional(1)
-    SetTextColour(255, 255, 255, 215)
-    SetTextEntry("STRING")
-    SetTextCentre(1)
-    AddTextComponentString(text)
-    DrawText(_x,_y)
-    local factor = (string.len(text)) / 370
-    DrawRect(_x,_y+0.0125, 0.015+ factor, 0.03, 41, 11, 41, 68)
+function DrawText3Ds(coords, text)
+    local x,y,z = coords.x, coords.y, coords.z
+	local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+    local p = GetGameplayCamCoords()
+    local distance = GetDistanceBetweenCoords(p.x, p.y, p.z, coords.x, coords.y, coords.z, 1)
+    local scale = (1 / distance) * 2
+    local fov = (1 / GetGameplayCamFov()) * 100
+    local scale = scale * fov
+    if onScreen then
+      SetTextScale(0.30, 0.30)
+      SetTextFont(4)
+      SetTextProportional(1)
+      SetTextColour(255, 255, 255, 215)
+      SetTextEntry("STRING")
+      SetTextCentre(1)
+      AddTextComponentString(text)
+      DrawText(_x,_y)
+      local factor = (string.len(text)) / 370
+      DrawRect(_x,_y+0.0120, factor, 0.026, 41, 11, 41, 68)
+    end
 end
 
 GetPlayers = function()
