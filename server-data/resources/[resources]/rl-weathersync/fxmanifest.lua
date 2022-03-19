@@ -6,7 +6,7 @@ version '2.0.0'
 
 shared_scripts {
 	'config.lua',
-	'@rl-core/locale.lua',
+	'@rl-core/shared/locale.lua',
 	'locales/en.lua'
 }
 
