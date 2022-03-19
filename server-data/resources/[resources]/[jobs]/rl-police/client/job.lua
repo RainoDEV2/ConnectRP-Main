@@ -253,7 +253,7 @@ Citizen.CreateThread(function()
                     end
                 end
 
-                for k, v in pairs(Config.Locations["armory"]) do
+                --[[ for k, v in pairs(Config.Locations["armory"]) do
                     if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 4.5) then
                         if onDuty then
                             if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 2) then
@@ -265,9 +265,9 @@ Citizen.CreateThread(function()
                             end  
                         end
                     end
-                end
+                end ]]
 
-                for k, v in pairs(Config.Locations["vest"]) do
+                --[[ for k, v in pairs(Config.Locations["vest"]) do
                     if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 4.5) then
                         if onDuty then
                             if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 2) then
@@ -280,7 +280,7 @@ Citizen.CreateThread(function()
                             end  
                         end
                     end
-                end
+                end ]]
 
                 for k, v in pairs(Config.Locations["jail"]) do
                     if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 4.5) then
@@ -329,7 +329,7 @@ Citizen.CreateThread(function()
                     end
                 end
 
-                for k, v in pairs(Config.Locations["boss"]) do
+               --[[  for k, v in pairs(Config.Locations["boss"]) do
                     if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 4.5) then
                         if onDuty and PlayerJob.isboss then
                             if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.5) then
@@ -340,7 +340,7 @@ Citizen.CreateThread(function()
                             end  
                         end
                     end
-                end
+                end ]]
             else
                 Citizen.Wait(2000)
             end

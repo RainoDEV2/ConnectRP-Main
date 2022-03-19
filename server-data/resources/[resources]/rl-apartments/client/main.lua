@@ -319,6 +319,7 @@ function LeaveApartment(house)
         CurrentOffset = 0
         DoScreenFadeIn(1000)
         TriggerServerEvent("InteractSound_SV:PlayOnSource", "houses_door_close", 0.1)
+        TriggerEvent("attachWeapons") --Re-attacth all weapons.
         TriggerServerEvent("RLCore:Server:SetMetaData", "currentapartment", nil)
     end)
 end

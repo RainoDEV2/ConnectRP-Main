@@ -157,6 +157,7 @@ RegisterNUICallback('spawnplayer', function(data)
         DoScreenFadeOut(500)
         print("Re-enabled weather sync")
         TriggerEvent('rl-weathersync:client:EnableSync')
+        TriggerEvent("attachWeapons") --re-attach all weapons
         Citizen.Wait(2000)
         RLCore.Functions.GetPlayerData(function(PlayerData)
             SetEntityCoords(GetPlayerPed(-1), PlayerData.position.x, PlayerData.position.y, PlayerData.position.z)

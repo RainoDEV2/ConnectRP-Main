@@ -197,8 +197,14 @@ Config.PedList = {
 		model = `ig_trafficwarden`, 
 		coords = vector4(413.0473, -1024.108, 29.503236, 94.807708), 
 		gender = 'male', 
-		animDict = 'anim@heists@prison_heiststation@cop_reactions',
+		animDict = 'anim@heists@prison_heiststation@cop_reactions', 
 		animName = 'cop_b_idle'
+	},
+	--ToolPeds
+	{
+		model = `cs_floyd`, 
+		coords = vector4(45.141063, -1748.34, 29.555221, 45.292907), 
+		gender = 'male', 
 	},
 	-- Store Clerks
 	{

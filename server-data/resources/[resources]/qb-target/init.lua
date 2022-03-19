@@ -1,3 +1,20 @@
+
+RLCore = nil
+
+Citizen.CreateThread(function() 
+    while true do
+        Citizen.Wait(10)
+        if RLCore == nil then
+            TriggerEvent("RLCore:GetObject", function(obj) RLCore = obj end)    
+            Citizen.Wait(200)
+
+            if RLCore ~= nil then
+                return
+            end
+        end
+    end
+end)
+
 function Load(name)
 	local resourceName = GetCurrentResourceName()
 	local chunk = LoadResourceFile(resourceName, ('data/%s.lua'):format(name))
@@ -10,6 +27,8 @@ function Load(name)
 		return chunk()
 	end
 end
+
+
 
 -------------------------------------------------------------------------------
 -- Settings
@@ -205,8 +224,8 @@ Config.BoxZones = {
         options = { 
             { 
                 type = "client",
-                event = "mech:openStash",
-                icon = "fas fa-sign-in-alt",
+                event = "invent:mechstorage",
+                icon = "fas fa-sign-in-alt", --mechhere
                 label = "Open Storage",
                 job = "mechanic", 
             }, 
@@ -244,10 +263,10 @@ Config.BoxZones = {
         debugPoly = false,
         minZ = 34.91,
         maxZ = 37.31,
-        options = { 
+        options = {  
             { 
                 type = "client",
-                event = "inventory:client:OpenMechanicShop",
+                event = "invent:mechshop", 
                 icon = "fas fa-sign-in-alt",
                 label = "Shop",
                 job = "mechanic", 
@@ -423,7 +442,7 @@ Config.BoxZones = {
         length = 0.80,
         width = 0.80,
         heading = 11.0,
-        debugPoly = true,
+        debugPoly = false,
         options = {
             {
                 type = "client",
@@ -440,8 +459,86 @@ Config.BoxZones = {
         },
         distance = 1.5
     },
-    
-
+    ["emsshop"] = {
+        name = "emsshop",
+        coords = vector3(306.53, -602.24, 43.28),
+        length = 2.0,
+        width = 0.5,
+        heading = 252,
+        debugPoly = false,
+        minZ = 40.58,
+        maxZ = 44.58,
+        options = {
+            {
+                type = "client",
+                event = "invent:openEmsStore",
+                icon = "fas fa-shopping-cart",
+                label = "EMS Store",
+                job = "police",
+            },
+        },
+        distance = 1.5 
+    }, 
+    ["emsshop2"] = {
+        name = "emsshop2",
+        coords = vector3(306.53, -602.24, 43.28),
+        length = 2.0,
+        width = 0.5,
+        heading = 252,
+        debugPoly = false,
+        minZ = 40.58,
+        maxZ = 44.58,
+        options = {
+            {
+                type = "client",
+                event = "invent:openEmsStore",
+                icon = "fas fa-shopping-cart",
+                label = "EMS Store",
+                job = "ambulance",
+            },
+        },
+        distance = 1.5 
+    }, 
+    ["pdarmo"] = {
+        name = "pdarmo",
+        coords = vector3(482.56, -994.71, 30.69),
+        length = 1.1,
+        width = 0.5,
+        heading = 270,
+        debugPoly = false,
+        minZ = 27.54,
+        maxZ = 31.54,
+        options = {
+            {
+                type = "client",
+                event = "invent:openPDStore", 
+                icon = "fas fa-shopping-cart",
+                label = "PD Armory",
+                job = "police",
+            },
+        },
+        distance = 1.5 
+    }, 
+    ["pdarmovest"] = {
+        name = "pdarmovest",
+        coords = vector3(487.54, -995.32, 30.69),
+        length = 0.85,
+        width = 0.5,
+        heading = 45,
+        debugPoly = false,
+        minZ = 26.89,
+        maxZ = 30.89,
+        options = {
+            {
+                type = "client",
+                event = "invent:setArmo", 
+                icon = "fas fa-user-shield", 
+                label = "Pickup Vest",
+                job = "police",
+            },
+        },
+        distance = 1.5 
+    },     
 }
 
 
@@ -517,7 +614,76 @@ Config.TargetModels = {
         job = {"all"},
         distance = 2.5
     },
-	
+    ["stores"] = {
+        models = {
+            "prop_till_01"
+        },
+        options = {
+            {
+                event = "invent:openStore", 
+                icon = "fas fa-shopping-cart",
+                label = "Open Shop",
+            },
+        },
+        job = {"all"},
+        distance = 2.5
+    },
+    ["hardware"] = {
+        models = {
+            "cs_floyd"
+        },
+        options = {
+            {
+                event = "invent:openHardStore", 
+                icon = "fas fa-shopping-cart", 
+                label = "Open Hardware Store", 
+            },
+        },
+        job = {"all"},
+        distance = 2.5
+    },
+    ["weapon"] = {
+        models = {
+            "prop_box_ammo07b"
+        },
+        options = {
+            {
+                event = "invent:openWepStore", 
+                icon = "fas fa-shopping-cart",
+                label = "Open Weapon Store", 
+            },
+        },
+        job = {"all"},
+        distance = 2.5
+    },
+    ["pdvending"] = {
+        models = {
+            "prop_vend_coffe_01" 
+        },
+        options = {
+            {
+                event = "invent:pdvending", 
+                icon = "fas fa-shopping-cart",
+                label = "Grab Some Snacks", 
+            },
+        },
+        job = {"all"},
+        distance = 2.5
+    },
+    ["bikepickup"] = {
+        models = {
+            "bmx" 
+        },
+        options = {
+            {
+                event = "pickup:bike", 
+                icon = "fas fa-bicycle",
+                label = "Pickup Bike", 
+            },
+        },
+        job = {"all"},
+        distance = 2.5
+    },    
 }
 
 
@@ -648,7 +814,7 @@ end
                     type = "client",
                     event = "Toggle:Duty",
                     icon = "fas fa-clipboard",
-                    label = "Go On/Off Duty",
+                    label = "Go On/Off Duty", 
                     job = "police",
                 },
             },
@@ -671,3 +837,62 @@ AddEventHandler('mech:openStash', function()
     slots = 250,
     })
 end)
+
+RegisterNetEvent('invent:openStore')
+AddEventHandler('invent:openStore', function()
+    TriggerEvent("server-inventory-open", "2", "Shop")
+end)
+
+RegisterNetEvent('invent:openHardStore')
+AddEventHandler('invent:openHardStore', function()
+    TriggerEvent("server-inventory-open", "4", "Shop")
+end)
+
+RegisterNetEvent('invent:openEmsStore')
+AddEventHandler('invent:openEmsStore', function()
+    TriggerEvent("server-inventory-open", "47", "Shop")
+end)
+
+RegisterNetEvent('invent:openPDStore')
+AddEventHandler('invent:openPDStore', function()
+    TriggerEvent("server-inventory-open", "10", "Shop")
+end)
+
+RegisterNetEvent('invent:pdvending')
+AddEventHandler('invent:pdvending', function()
+    TriggerEvent("server-inventory-open", "600", "Shop")
+end)
+
+RegisterNetEvent('invent:mechshop')
+AddEventHandler('invent:mechshop', function()
+    TriggerEvent("server-inventory-open", "27", "Shop")
+end)
+
+RegisterNetEvent('invent:mechstorage')
+AddEventHandler('invent:mechstorage', function()
+    TriggerEvent("server-inventory-open", "1", "Mechanic-Stash")
+end)
+
+
+RegisterNetEvent('invent:setArmo')
+AddEventHandler('invent:setArmo', function()
+    local playerPed = PlayerPedId()
+
+    local finished = exports["np-taskbar"]:taskBar(1500,"Putting On Vest",false,false)
+    if finished == 100 then
+        RLCore.Functions.Notify("You put on a vest...") --ADD AN ANIMATION YOU LAZY FUCK
+        SetPedArmour(playerPed, 60) 
+    end
+end)
+ 
+RegisterNetEvent('invent:openWepStore')
+AddEventHandler('invent:openWepStore', function()
+    RLCore.Functions.TriggerCallback('RLCore:server:checklicence', function(result, type)
+        if result == 'has licence' then
+            TriggerEvent("server-inventory-open", "5", "Shop") --Have a licence.
+        else
+            TriggerEvent("server-inventory-open", "6969", "Shop") --Dont have a licence
+        end
+    end, 'weapon1')
+end)
+

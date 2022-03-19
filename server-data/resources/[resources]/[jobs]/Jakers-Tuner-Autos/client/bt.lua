@@ -10,7 +10,7 @@ Citizen.CreateThread(function()
             options = {
                 {
                     type = "client",
-                    event = "tuner:stash",
+                    event = "invent:tunerstash", 
                     icon = "fas fa-box",
                     label = "Stash",
                     job = "tuner",
@@ -18,6 +18,11 @@ Citizen.CreateThread(function()
         },
             distance = 3.5
     })
+end)
+
+RegisterNetEvent('invent:tunerstash')
+AddEventHandler('invent:tunerstash', function()
+    TriggerEvent("server-inventory-open", "1", "Tuner-Stash")
 end)
 
 
@@ -126,7 +131,7 @@ Citizen.CreateThread(function()
         }, {
         options = {
             {
-                event = "inventory:client:OpenMechanicShop",
+                event = "invent:tunershop",
                 icon = "fas fa-box", 
                 label = "Open Store",
                 job = "tuner",
@@ -135,6 +140,13 @@ Citizen.CreateThread(function()
         distance = 3.5
     })
 end)
+
+
+RegisterNetEvent('invent:tunershop')
+AddEventHandler('invent:tunershop', function()
+    TriggerEvent("server-inventory-open", "28", "Shop")
+end)
+
 
 Citizen.CreateThread(function()
     exports['qb-target']:AddBoxZone("TunerPay", vector3(133.13, -3015.12, 7.04), 0.6, 0.6, { Config.MechanicShopPay,
@@ -241,20 +253,3 @@ exports["qb-target"]:AddTargetBone(bones, {
     distance = 1.5
 })
 
-local bike = {
-    `bmx`,
-}
-exports["qb-target"]:AddTargetModel(bike, {
-	options = {
-		{
-			event = "pickup:bike",
-			icon = "fas fa-bicycle",
-			label = "Pickup Bike",
-			--job = "tuner",
-
-
-		},
-	},
-
-	distance = 1.5
-})
