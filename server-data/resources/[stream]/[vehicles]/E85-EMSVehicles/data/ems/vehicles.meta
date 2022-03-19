@@ -617,7 +617,7 @@
 	<Item> <!--EMST--> <!--15 Tahoe-->
       <modelName>EMST</modelName>
       <txdName>EMST</txdName>
-      <handlingId>f150</handlingId>
+      <handlingId>FBI2</handlingId>
       <gameName>firesuv</gameName>
       <vehicleMakeName />
       <expressionDictName>null</expressionDictName>
@@ -861,7 +861,7 @@
 	<Item> <!--EMSF--> <!--13 F350-->
       <modelName>EMSF</modelName>
       <txdName>EMSF</txdName>
-      <handlingId>f150</handlingId>
+      <handlingId>ambobruv2</handlingId>
       <gameName>SHERIFF2</gameName>
       <vehicleMakeName />
       <expressionDictName>null</expressionDictName>
