@@ -419,6 +419,7 @@ RLCore.Functions.GetVehicleProperties = function(vehicle)
             modTank = GetVehicleMod(vehicle, 45),
             modWindows = GetVehicleMod(vehicle, 46),
             modLivery = modLivery,
+			deformation = exports["VehicleDeformation"]:GetVehicleDeformation(vehicle),
         }
     else
         return
@@ -688,5 +689,8 @@ RLCore.Functions.SetVehicleProperties = function(vehicle, props)
 	if props.modLivery ~= nil then
 		SetVehicleMod(vehicle, 48, props.modLivery, false)
 		SetVehicleLivery(vehicle, props.modLivery)
+	end
+	if props.deformation ~= nil then
+		exports["VehicleDeformation"]:SetVehicleDeformation(vehicle, props.deformation)
 	end
 end
