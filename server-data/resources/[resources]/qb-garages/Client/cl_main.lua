@@ -158,7 +158,7 @@ RegisterNetEvent('Garages:Store', function()
     local vehmods = RLCore.Functions.GetVehicleProperties(curVeh)
     local totalFuel = exports['lj-fuel']:GetFuel(curVeh)
     RLCore.Functions.TriggerCallback('qb-garage:server:checkVehicleOwner', function(owned)
-        Citizen.Wait(1000)
+        Citizen.Wait(100)
         if owned then
             local pGarage = GetCurrentGarage()
             if pGarage ~= nil then
