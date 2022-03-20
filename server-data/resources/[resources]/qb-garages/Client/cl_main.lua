@@ -157,6 +157,8 @@ RegisterNetEvent('Garages:Store', function()
     local engineDamage = math.ceil(GetVehicleEngineHealth(curVeh))
     local vehmods = RLCore.Functions.GetVehicleProperties(curVeh)
     local totalFuel = exports['lj-fuel']:GetFuel(curVeh)
+    local vehicleProps = GetVehicleProperties(curVeh)
+
     RLCore.Functions.TriggerCallback('qb-garage:server:checkVehicleOwner', function(owned)
         Citizen.Wait(100)
         if owned then
@@ -164,7 +166,8 @@ RegisterNetEvent('Garages:Store', function()
             if pGarage ~= nil then
                 TriggerServerEvent('qb-garage:server:updateVehicleStatus', totalFuel, engineDamage, bodyDamage, plate, pGarage)
                 TriggerServerEvent('qb-garage:server:updateVehicleState', 1, plate, pGarage)
-                TriggerServerEvent('qb-garages:server:SaveVehicleMods', plate, vehmods)
+                TriggerServerEvent('qb-garages:server:SaveVehicleMods', plate, vehmods) 
+                TriggerServerEvent('qb-garages:server:modifystate', vehicleProps)
                 RemoveOutsideVeh(plate)
                 RLCore.Functions.DeleteVehicle(curVeh)
                 RLCore.Functions.Notify("Vehicle Parked In : "..Garages[pGarage].label, "success", 44)
@@ -955,3 +958,78 @@ end)
 -- Haritha#3955 --
 -- Haritha#3955 --
 -- Haritha#3955 --
+
+GetVehicleProperties = function(vehicle)
+    if DoesEntityExist(vehicle) then
+        local vehicleProps = RLCore.Functions.GetVehicleProperties(vehicle)
+
+        vehicleProps["tyres"] = {}
+        vehicleProps["windows"] = {}
+        vehicleProps["doors"] = {}
+
+        for id = 1, 7 do
+            local tyreId = IsVehicleTyreBurst(vehicle, id, false)
+        
+            if tyreId then
+                vehicleProps["tyres"][#vehicleProps["tyres"] + 1] = tyreId
+        
+                if tyreId == false then
+                    tyreId = IsVehicleTyreBurst(vehicle, id, true)
+                    vehicleProps["tyres"][ #vehicleProps["tyres"]] = tyreId
+                end
+            else
+                vehicleProps["tyres"][#vehicleProps["tyres"] + 1] = false
+            end
+        end
+
+        for id = 1, 13 do
+            local windowId = IsVehicleWindowIntact(vehicle, id)
+
+            if windowId ~= nil then
+                vehicleProps["windows"][#vehicleProps["windows"] + 1] = windowId
+            else
+                vehicleProps["windows"][#vehicleProps["windows"] + 1] = true
+            end
+        end
+        
+        for id = 0, 5 do
+            local doorId = IsVehicleDoorDamaged(vehicle, id)
+        
+            if doorId then
+                vehicleProps["doors"][#vehicleProps["doors"] + 1] = doorId
+            else
+                vehicleProps["doors"][#vehicleProps["doors"] + 1] = false
+            end
+        end
+
+        return vehicleProps
+    end
+end
+
+SetVehicleProperties = function(vehicle, vehicleProps)
+    RLCore.Functions.SetVehicleProperties(vehicle, vehicleProps)
+
+    if vehicleProps["windows"] then
+        for windowId = 1, 13, 1 do
+            if vehicleProps["windows"][windowId] == false then
+                SmashVehicleWindow(vehicle, windowId)
+            end
+        end
+    end
+
+    if vehicleProps["tyres"] then
+        for tyreId = 1, 7, 1 do
+            if vehicleProps["tyres"][tyreId] ~= false then
+                SetVehicleTyreBurst(vehicle, tyreId, true, 1000)
+            end
+        end
+    end
+
+    if vehicleProps["doors"] then
+        for doorId = 0, 5, 1 do
+            if vehicleProps["doors"][doorId] ~= false then
+                SetVehicleDoorBroken(vehicle, doorId - 1, true)
+            end
+        end
+    end
+end

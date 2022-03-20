@@ -283,6 +283,7 @@ function SpawnVehicle(vehicle, pGarage, Fuel, body, engine, plate, gType, IsView
                 doCarDamage(veh, body, engine)
                 SetEntityAsMissionEntity(veh, true, true)
                 SetVehicleEngineOn(veh, false, false)
+                SetVehicleProperties(veh, properties)
             end, plate, IsShared)
         else
             if IsShared then
@@ -331,9 +332,11 @@ function SpawnDepotVehicle(Data)
                                     SetModelAsNoLongerNeeded(model)
 
                                     if Data.plate ~= nil then
+                                        local vehicleProps = GetVehicleProperties(OutsideVehicles)
                                         DeleteVehicle(OutsideVehicles[Data.plate])
                                         OutsideVehicles[Data.plate] = veh
                                         TriggerServerEvent('qb-garages:server:UpdateOutsideVehicles', OutsideVehicles)
+                                        TriggerServerEvent('crpmofify:modifystate', vehicleProps) 
                                     end
                                     RLCore.Functions.TriggerCallback('qb-garage:server:GetVehicleProperties', function(properties)
                                         RLCore.Functions.SetVehicleProperties(veh, properties)
@@ -345,6 +348,7 @@ function SpawnDepotVehicle(Data)
                                         RLCore.Functions.Notify("Vehicle OFF: Engine " .. enginePercent .. "% Body: " .. bodyPercent.. "% Fuel: "..currentFuel.. "%", "primary", 4500)
                                         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
                                         SetVehicleEngineOn(veh, false, false)
+                                        SetVehicleProperties(veh, properties)
                                     end, Data.plate)
                                 end
                              end, Data.plate, Data.fine)
@@ -389,6 +393,7 @@ function SpawnDepotVehicle(Data)
                                 RLCore.Functions.Notify("Vehicle OFF: Engine " .. enginePercent .. "% Body: " .. bodyPercent.. "% Fuel: "..currentFuel.. "%", "primary", 4500)
                                 TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
                                 SetVehicleEngineOn(veh, false, false)
+                                SetVehicleProperties(veh, properties)
                             end, Data.plate)
                         end
                     end, Data.plate, Data.fine)
@@ -426,6 +431,7 @@ function SpawnDepotVehicle(Data)
                             RLCore.Functions.Notify("Vehicle OFF: Engine " .. enginePercent .. "% Body: " .. bodyPercent.. "% Fuel: "..currentFuel.. "%", "primary", 4500)
                             TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
                             SetVehicleEngineOn(veh, false, false)
+                            SetVehicleProperties(veh, properties)
                         end, Data.plate)
                     end
                 end, Data.plate, Data.fine)
@@ -463,6 +469,7 @@ function SpawnDepotVehicle(Data)
                         RLCore.Functions.Notify("Vehicle OFF: Engine " .. enginePercent .. "% Body: " .. bodyPercent.. "% Fuel: "..currentFuel.. "%", "primary", 4500)
                         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
                         SetVehicleEngineOn(veh, false, false)
+                        SetVehicleProperties(veh, properties)
                     end, Data.plate)
                 end
             end, Data.plate, Data.fine)
@@ -557,3 +564,79 @@ end
 -- Haritha#3955 --
 -- Haritha#3955 --
 -- Haritha#3955 --
+
+
+SetVehicleProperties = function(vehicle, vehicleProps)
+    RLCore.Functions.SetVehicleProperties(vehicle, vehicleProps)
+
+    if vehicleProps["windows"] then
+        for windowId = 1, 13, 1 do
+            if vehicleProps["windows"][windowId] == false then
+                SmashVehicleWindow(vehicle, windowId)
+            end
+        end
+    end
+
+    if vehicleProps["tyres"] then
+        for tyreId = 1, 7, 1 do
+            if vehicleProps["tyres"][tyreId] ~= false then
+                SetVehicleTyreBurst(vehicle, tyreId, true, 1000)
+            end
+        end
+    end
+
+    if vehicleProps["doors"] then
+        for doorId = 0, 5, 1 do
+            if vehicleProps["doors"][doorId] ~= false then
+                SetVehicleDoorBroken(vehicle, doorId - 1, true)
+            end
+        end
+    end
+end
+
+GetVehicleProperties = function(vehicle)
+    if DoesEntityExist(vehicle) then
+        local vehicleProps = RLCore.Functions.GetVehicleProperties(vehicle)
+
+        vehicleProps["tyres"] = {}
+        vehicleProps["windows"] = {}
+        vehicleProps["doors"] = {}
+
+        for id = 1, 7 do
+            local tyreId = IsVehicleTyreBurst(vehicle, id, false)
+        
+            if tyreId then
+                vehicleProps["tyres"][#vehicleProps["tyres"] + 1] = tyreId
+        
+                if tyreId == false then
+                    tyreId = IsVehicleTyreBurst(vehicle, id, true)
+                    vehicleProps["tyres"][ #vehicleProps["tyres"]] = tyreId
+                end
+            else
+                vehicleProps["tyres"][#vehicleProps["tyres"] + 1] = false
+            end
+        end
+
+        for id = 1, 13 do
+            local windowId = IsVehicleWindowIntact(vehicle, id)
+
+            if windowId ~= nil then
+                vehicleProps["windows"][#vehicleProps["windows"] + 1] = windowId
+            else
+                vehicleProps["windows"][#vehicleProps["windows"] + 1] = true
+            end
+        end
+        
+        for id = 0, 5 do
+            local doorId = IsVehicleDoorDamaged(vehicle, id)
+        
+            if doorId then
+                vehicleProps["doors"][#vehicleProps["doors"] + 1] = doorId
+            else
+                vehicleProps["doors"][#vehicleProps["doors"] + 1] = false
+            end
+        end
+
+        return vehicleProps
+    end
+end

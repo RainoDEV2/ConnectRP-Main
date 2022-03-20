@@ -68,6 +68,12 @@ RegisterNetEvent('qb-garages:server:SaveVehicleMods', function(plate, vehmods, i
     end
 end)
 
+RegisterServerEvent('qb-garages:server:modifystate')
+AddEventHandler('qb-garages:server:modifystate', function(vehicleProps)
+	local plate = vehicleProps.plate
+    exports.ghmattimysql:execute('UPDATE player_vehicles SET mods = ? WHERE plate = ?', {json.encode(vehicleProps), plate})
+end)
+
 RegisterNetEvent('qb-garages:server:UpdateParkingLog', function(plate)
     local pData = RLCore.Functions.GetPlayer(source)
     local ctime = os.date('%H:%M %p')
