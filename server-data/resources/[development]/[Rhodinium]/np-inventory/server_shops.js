@@ -1,20 +1,30 @@
 function PoliceArmory() {
     var shopItems = [
-        { item_id: "3219281620", id: 0, name: "Shop", information: "{}", slot: 1, amount: 5 },
-        { item_id: "-86904375", id: 0, name: "Shop", information: "{}", slot: 2, amount: 5 },
-        { item_id: "-2084633992", id: 0, name: "Shop", information: "{}", slot:3, amount: 5 },
-        { item_id: "911657153", id: 0, name: "Shop", information: "{}", slot: 4, amount: 5 },
-        { item_id: "2343591895", id: 0, name: "Shop", information: "{}", slot: 5, amount: 5 },
-        { item_id: "1737195953", id: 0, name: "Shop", information: "{}", slot: 6, amount: 5 },
+        { item_id: "-120179019", id: 0, name: "Shop", information: "{}", slot: 1, amount: 5 }, //Glock
+        { item_id: "-820634585", id: 0, name: "Shop", information: "{}", slot: 2, amount: 5 }, //TAZER
+        { item_id: "-1768145561", id: 0, name: "Shop", information: "{}", slot:3, amount: 5 }, //SCAR
+        { item_id: "1192676223", id: 0, name: "Shop", information: "{}", slot: 4, amount: 5 }, //M4
+        { item_id: "2343591895", id: 0, name: "Shop", information: "{}", slot: 5, amount: 5 }, //Flashlight
+        { item_id: "1737195953", id: 0, name: "Shop", information: "{}", slot: 6, amount: 5 }, //Nightstick
         { item_id: "pistolammo", id: 0, name: "Shop", information: "{}", slot: 7, amount: 50 },
         { item_id: "rifleammo", id: 0, name: "Shop", information: "{}", slot: 8, amount: 50 },
-        { item_id: "armor", id: 0, name: "Shop", information: "{}", slot: 9, amount: 50 },
-        { item_id: "watch", id: 0, name: "Shop", information: "{}", slot: 10, amount: 50 },
-        { item_id: "IFAK", id: 0, name: "Shop", information: "{}", slot: 11, amount: 50 },
-        { item_id: "repairkit", id: 0, name: "Shop", information: "{}", slot: 12, amount: 50 },
-        { item_id: "radio", id: 0, name: "Shop", information: "{}", slot: 13, amount: 50 },
-        { item_id: "camera", id: 0, name: "Shop", information: "{}", slot: 14, amount: 50 },
-        { item_id: "evidencebag", id: 0, name: "Shop", information: "{}", slot: 15, amount: 50 },
+        { item_id: "taserammo", id: 0, name: "Shop", information: "{}", slot: 9, amount: 50 },
+        
+
+        { item_id: "armor", id: 0, name: "Shop", information: "{}", slot: 10, amount: 50 },
+        { item_id: "watch", id: 0, name: "Shop", information: "{}", slot: 11, amount: 50 },
+        { item_id: "IFAK", id: 0, name: "Shop", information: "{}", slot: 12, amount: 50 },
+        { item_id: "adrenaline", id: 0, name: "Shop", information: "{}", slot: 13, amount: 50 },
+        
+        { item_id: "repairkit", id: 0, name: "Shop", information: "{}", slot: 14, amount: 50 },
+        { item_id: "radio", id: 0, name: "Shop", information: "{}", slot: 15, amount: 50 },
+        { item_id: "camera", id: 0, name: "Shop", information: "{}", slot: 16, amount: 50 },
+        { item_id: "evidencebag", id: 0, name: "Shop", information: "{}", slot: 17, amount: 50 },
+        //New Additions
+        { item_id: "cuffs", id: 0, name: "Shop", information: "{}", slot: 18, amount: 50 }, //Handcuffs
+        { item_id: "doorram", id: 0, name: "Shop", information: "{}", slot: 19, amount: 50 }, //Battering Ram
+        { item_id: "binoculars", id: 0, name: "Shop", information: "{}", slot: 20, amount: 50 }, //Binoculars
+        { item_id: "signalradar", id: 0, name: "Shop", information: "{}", slot: 21, amount: 50 }, //signalradar
     ];
     return JSON.stringify(shopItems);
 }
@@ -149,6 +159,7 @@ function ConvenienceStore() {
         { item_id: "ciggy", id: 0, name: "Shop", information: "{}", slot: 10, amount: 50 },
         { item_id: "mobilephone", id: 0, name: "Shop", information: "{}", slot: 11, amount: 50 },
         { item_id: "rollingpaper", id: 0, name: "Shop", information: "{}", slot: 12, amount: 50 },
+        { item_id: "lighter", id: 0, name: "Shop", information: "{}", slot: 13, amount: 50 },
     ];
     return JSON.stringify(shopItems);
 }
@@ -168,9 +179,9 @@ function HardwareStore() {
         { item_id: "MedicalBag", id: 0, name: "Shop", information: "{}", slot: 11, amount: 5 },
         { item_id: "lockpick", id: 0, name: "Shop", information: "{}", slot: 12, amount: 5 },
         { item_id: "fishingrod", id: 0, name: "Shop", information: "{}", slot: 13, amount: 1 },
-        { item_id: "washedpan", id: 0, name: "Shop", information: "{}", slot: 14, amount: 1 },
-        { item_id: "pickaxe", id: 0, name: "Shop", information: "{}", slot: 15, amount: 1 },
-        // { item_id: "fishbait", id: 0, name: "Shop", information: "{}", slot: 14, amount: 5 },
+        { item_id: "-72657034", id: 0, name: "Shop", information: "{}", slot: 14, amount: 1 }, //parachute
+        { item_id: "notepad", id: 0, name: "Shop", information: "{}", slot: 15, amount: 1 }, //notepad
+        { item_id: "2227010557", id: 0, name: "Shop", information: "{}", slot: 16, amount: 1 }, //crowbar
    
     ];
     return JSON.stringify(shopItems);

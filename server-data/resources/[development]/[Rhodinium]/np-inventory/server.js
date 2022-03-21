@@ -183,13 +183,13 @@ onNet("server-inventory-open", async (playerPos, cid, secondInventory, targetNam
         } else if (secondInventory == "2") {
             var targetInventory = targetName;
             var shopArray = ConvenienceStore();
-            var shopAmount = 12;
+            var shopAmount = 13;
             emitNet("inventory-open-target", src, [invArray, arrayCount, playerInventory, shopArray, shopAmount, targetInventory, 500, false]);
         }
         else if (secondInventory == "4") {
             var targetInventory = targetName;
             var shopArray = HardwareStore();
-            var shopAmount = 15;
+            var shopAmount = 16;
             emitNet("inventory-open-target", src, [invArray, arrayCount, playerInventory, shopArray, shopAmount, targetInventory, 500, false]);
         }
         else if (secondInventory == "5") {
@@ -201,7 +201,7 @@ onNet("server-inventory-open", async (playerPos, cid, secondInventory, targetNam
         else if (secondInventory == "10") {
             var targetInventory = targetName; 
             var shopArray = PoliceArmory();
-            var shopAmount = 15;
+            var shopAmount = 21;
             emitNet("inventory-open-target", src, [invArray, arrayCount, playerInventory, shopArray, shopAmount, targetInventory, 500, false]);
         }
         else if (secondInventory == "47") {
