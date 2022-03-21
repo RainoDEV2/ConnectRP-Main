@@ -157,7 +157,7 @@ Citizen.CreateThread(function()
         })
     end
 
-    for k, v in pairs(Config.Locations["boss"]) do
+    --[[ for k, v in pairs(Config.Locations["boss"]) do
         exports['qb-target']:AddBoxZone("emsbossmenu"..k, vector3(v.x, v.y, v.z), v.l, v.w, {
             name = "emsbossmenu"..k,
             heading = v.h,
@@ -182,9 +182,9 @@ Citizen.CreateThread(function()
             },
             distance = 2.0
         })
-    end
+    end ]]
 
-    for k, v in pairs(Config.Locations["armory"]) do
+    --[[ for k, v in pairs(Config.Locations["armory"]) do
         exports['qb-target']:AddBoxZone("emsarmory"..k, vector3(v.x, v.y, v.z), v.l, v.w, {
             name = "emsarmory"..k,
             heading = v.h,
@@ -202,7 +202,7 @@ Citizen.CreateThread(function()
             },
             distance = 2.0
         })
-    end
+    end ]]
 
     exports['qb-target']:AddBoxZone('emsclothingoutfits', vector3(300.2009, -598.8107, 43.27745), 1.5, 2.5, {
         name = 'emsclothingoutfits',
