@@ -217,7 +217,7 @@ AddEventHandler("consumables:client:DrinkAlcohol", function(itemName)
     RLCore.Functions.Progressbar("snort_coke", "Drinking", math.random(3000, 6000), false, true, {
         disableMovement = false,
         disableCarMovement = false,
-        disableMouse = false,
+        disableMouse = false, 
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         TriggerEvent("debug", 'Consumables: Alcohol', 'success')
@@ -402,16 +402,16 @@ end)
 
 RegisterNetEvent("consumables:client:Eat")
 AddEventHandler("consumables:client:Eat", function(itemName)
-    TriggerEvent('animations:client:EmoteCommandStart', {"eat"})
+    --[[ TriggerEvent('animations:client:EmoteCommandStart', {"eat"})
     RLCore.Functions.Progressbar("eat_something", "Eating", 2500, false, true, {
         disableMovement = false,
-        disableCarMovement = false,
+        disableCarMovement = false, 
 		disableMouse = false,
 		disableCombat = true,
     }, {}, {}, {}, function() -- Done
         TriggerEvent("debug", 'Consumables: ' .. RLCore.Shared.Items[itemName].label, 'success')
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items[itemName], "remove")
-        TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+        TriggerEvent('animations:client:EmoteCommandStart', {"c"}) ]]
         TriggerServerEvent("RLCore:Server:SetMetaData", "hunger", RLCore.Functions.GetPlayerData().metadata["hunger"] + Consumeables[itemName])
         TriggerServerEvent('hud:server:RelieveStress', math.random(2, 4))
     end)
@@ -419,7 +419,7 @@ end)
 
 RegisterNetEvent("consumables:client:Drink")
 AddEventHandler("consumables:client:Drink", function(itemName)
-    TriggerEvent('animations:client:EmoteCommandStart', {"drink"})
+   --[[  TriggerEvent('animations:client:EmoteCommandStart', {"drink"})
     RLCore.Functions.Progressbar("drink_something", "Drinking", 2500, false, true, {
         disableMovement = false,
         disableCarMovement = false,
@@ -428,7 +428,7 @@ AddEventHandler("consumables:client:Drink", function(itemName)
     }, {}, {}, {}, function() -- Done
         TriggerEvent("debug", 'Consumables: ' .. RLCore.Shared.Items[itemName].label, 'success')
         TriggerEvent("inventory:client:ItemBox", RLCore.Shared.Items[itemName], "remove")
-        TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+        TriggerEvent('animations:client:EmoteCommandStart', {"c"}) ]]
         TriggerServerEvent("RLCore:Server:SetMetaData", "thirst", RLCore.Functions.GetPlayerData().metadata["thirst"] + Consumeables[itemName])
     end)
 end)

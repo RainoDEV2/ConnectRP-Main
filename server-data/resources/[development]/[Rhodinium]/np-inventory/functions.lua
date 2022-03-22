@@ -1,3 +1,6 @@
+RLCore = nil
+TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
+
 local fixingvehicle = false
 local justUsed = false
 local retardCounter = 0
@@ -3130,13 +3133,23 @@ function DrawText3Ds(x,y,z, text)
 
 end
 
+RegisterNetEvent('changehunger')
+AddEventHandler('changehunger', function()
+    TriggerServerEvent("RLCore:Server:SetMetaData", "hunger", RLCore.Functions.GetPlayerData().metadata["hunger"] + 35)
+end)
+ 
+RegisterNetEvent('changethirst')
+AddEventHandler('changethirst', function()
+    TriggerServerEvent("RLCore:Server:SetMetaData", "thirst", RLCore.Functions.GetPlayerData().metadata["thirst"] + 35)
+end)
+
 RegisterNetEvent('inv:wellfed')
 AddEventHandler('inv:wellfed', function()
     TriggerEvent("Evidence:StateSet",25,3600)
     TriggerEvent("changehunger")
     TriggerEvent("changehunger")
     TriggerEvent("changehunger")
-    TriggerEvent("client:newStress", false, 3000)
+    TriggerEvent("client:newStress", false, 3000) 
     if myJob == "police" then
       processStressBlock()
     end
