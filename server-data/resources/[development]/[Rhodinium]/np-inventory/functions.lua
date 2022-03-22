@@ -3135,12 +3135,12 @@ end
 
 RegisterNetEvent('changehunger')
 AddEventHandler('changehunger', function()
-    TriggerServerEvent("RLCore:Server:SetMetaData", "hunger", RLCore.Functions.GetPlayerData().metadata["hunger"] + 35)
+    TriggerServerEvent("RLCore:Server:SetMetaData", "hunger", RLCore.Functions.GetPlayerData().metadata["hunger"] + 30)
 end)
  
 RegisterNetEvent('changethirst')
 AddEventHandler('changethirst', function()
-    TriggerServerEvent("RLCore:Server:SetMetaData", "thirst", RLCore.Functions.GetPlayerData().metadata["thirst"] + 35)
+    TriggerServerEvent("RLCore:Server:SetMetaData", "thirst", RLCore.Functions.GetPlayerData().metadata["thirst"] + 30)
 end)
 
 RegisterNetEvent('changeStress')
