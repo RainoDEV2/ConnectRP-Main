@@ -725,8 +725,8 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
         TriggerEvent("animation:PlayAnimation","pill")
         local finished = exports["np-taskbar"]:taskBar(3000,"Placing LSD Strip on 👅",false,false,playerVeh)
         if ( finished == 100 and hasEnoughOfItem(itemid, 1, false) ) then
-            TriggerEvent("Evidence:StateSet",2,1200)
-            TriggerEvent("Evidence:StateSet",24,1200)
+            TriggerEvent("changeStress",2)
+            TriggerEvent("changeStress",24)
             TriggerEvent("fx:run", "lsd", 180, -1, (itemid == "badlsdtab" and true or false))
             remove = true
         end
@@ -736,8 +736,8 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
         TriggerEvent("animation:PlayAnimation","pill")
         local finished = exports["np-taskbar"]:taskBar(3000,"Taking the Red Pill",false,false,playerVeh)
         if ( finished == 100 and hasEnoughOfItem(itemid, 1, false) ) then
-            TriggerEvent("Evidence:StateSet",2,1200)
-            TriggerEvent("Evidence:StateSet",24,1200)
+            TriggerEvent("changeStress",2)
+            TriggerEvent("changeStress",24)
             TriggerEvent("fx:run", "lsd", 180, -1, false)
             remove = true
         end
@@ -800,13 +800,13 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
 
 
     if (itemid == "femaleseed") then
-     --  TriggerEvent("Evidence:StateSet",4,1600)
+     --  TriggerEvent("changeStress",4,1600)
       -- TriggerEvent("weed:startcropInsideCheck","female")
  
     end
 
     if (itemid == "maleseed") then
-      --  TriggerEvent("Evidence:StateSet",4,1600)
+      --  TriggerEvent("changeStress",4,1600)
       --  TriggerEvent("weed:startcropInsideCheck","male")
 
     end
@@ -865,8 +865,8 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
             local effectiveness = itemid == "customjointitem" and 1.6 or (1.0 * (quality / 100))
 
             TriggerEvent("animation:PlayAnimation","weed")
-            TriggerEvent("Evidence:StateSet",3,600)
-            TriggerEvent("Evidence:StateSet",4,600)
+            TriggerEvent("changeStress",3)
+            TriggerEvent("changeStress",4)
             TriggerEvent(
               "weed",
               5000,
@@ -921,7 +921,7 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
     ) then
         local success = itemid == "winemilkshake" and true or (AttachPropAndPlayAnimation("amb@world_human_drinking@coffee@male@idle_a", "idle_c", 49,6000,"Drink","changethirst",true,itemid,playerVeh))
         if success then
-            TriggerEvent("Evidence:StateSet", 8, 600)
+            TriggerEvent("changeStress", 8)
             local alcoholStrength = 0.5
             if itemid == "vodka" or itemid == "whiskey" then alcoholStrength = 1.0 end
             if itemid == "absinthe" then alcoholStrength = 2.5 end
@@ -1244,8 +1244,8 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
         TriggerEvent("animation:PlayAnimation","pill")
         local finished = exports["np-taskbar"]:taskBar(3000,"Consuming edibles 😉",false,false,playerVeh)
         if ( finished == 100 and hasEnoughOfItem(itemid, 1, false) ) then
-            TriggerEvent("Evidence:StateSet",3,1200)
-            TriggerEvent("Evidence:StateSet",7,1200)
+            TriggerEvent("changeStress",3)
+            TriggerEvent("changeStress",7)
             TriggerEvent("fx:run", "weed", 180, -1, false)
             remove = true
         end
@@ -1740,8 +1740,8 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
 
             TriggerEvent( "player:receiveItem","Desomorphine_used",1)
             WillOD = WillOD + 1
-            TriggerEvent("Evidence:StateSet",2,1200)
-            TriggerEvent("Evidence:StateSet",24,1200)
+            TriggerEvent("changeStress",2)
+            TriggerEvent("changeStress",24)
             TriggerEvent("fx:run", "metamorphine", 180, -1, false)
             if not HasAnimSetLoaded("move_m@drunk@slightlydrunk") then
                 RequestAnimSet("move_m@drunk@slightlydrunk")
@@ -1822,8 +1822,8 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
                     currentUses = currentUses - 1
                     TriggerEvent("inventory:updateItem", itemid, slot, json.encode({ uses = currentUses }))
                     TriggerEvent("attachItemObjectnoanim","drugpackage01")
-                    TriggerEvent("Evidence:StateSet",2,1200)
-                    TriggerEvent("Evidence:StateSet",6,1200)
+                    TriggerEvent("changeStress",2)
+                    TriggerEvent("changeStress",6)
                     TaskItem("anim@amb@nightclub@peds@", "missfbi3_party_snort_coke_b_male3", 49, 2500, "Coke Gaming", "hadcocaine", false, itemid, playerVeh)
                     
                     local cid = RLCore.Functions.GetPlayerData().citizenid
@@ -1846,8 +1846,8 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
                     currentUses = currentUses - 1
                     TriggerEvent("inventory:updateItem", itemid, slot, json.encode({ uses = currentUses }))
                     TriggerEvent("attachItemObjectnoanim", "crackpipe01")
-                    TriggerEvent("Evidence:StateSet", 2, 1200)
-                    TriggerEvent("Evidence:StateSet", 6, 1200)
+                    TriggerEvent("changeStress", 2)
+                    TriggerEvent("changeStress", 6)
                     TaskItem("switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 49, 3000, "Smoking Quack", "hadcrack", false, itemid, playerVeh)
                     
                     local cid = RLCore.Functions.GetPlayerData().citizenid
@@ -1870,8 +1870,8 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
                     local purity = currentPurities[#currentPurities].purity
                     
                     TriggerEvent("attachItemObjectnoanim","crackpipe01")
-                    TriggerEvent("Evidence:StateSet",2,1200)
-                    TriggerEvent("Evidence:StateSet",6,1200)
+                    TriggerEvent("changeStress",2)
+                    TriggerEvent("changeStress",6)
                     local success = TaskItem( "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 49, 1500, "Smoking Meth", "hadmeth", false, itemid, playerVeh, nil, nil, purity)
                     
                     if success then
@@ -1893,8 +1893,8 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
 
 
     if (itemid == "nosballoon") then
-        TriggerEvent("Evidence:StateSet",2,1200)
-        TriggerEvent("Evidence:StateSet",6,1200)
+        TriggerEvent("changeStress",2)
+        TriggerEvent("changeStress",6)
         TaskItem("switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 49, 5000, "Huffing Nos", "hadcrack", true,itemid,playerVeh)
     end
 
@@ -2128,8 +2128,8 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
     --     local finished = exports["np-taskbarskill"]:taskBar(2400, math.random(12, 18))
     --     if ( finished == 100 and hasEnoughOfItem(itemid, 1, false) ) then
     --         TriggerEvent("attachItemObjectnoanim","crackpipe01")
-    --         TriggerEvent("Evidence:StateSet",2,1200)
-    --         TriggerEvent("Evidence:StateSet",6,1200)
+    --         TriggerEvent("changeStress",2,1200)
+    --         TriggerEvent("changeStress",6,1200)
 
     --         TaskItem(
     --           "switch@trevor@trev_smoking_meth",
@@ -2155,8 +2155,8 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
         local finished = exports["np-taskbarskill"]:taskBar(2000, math.random(10, 15))
         if ( finished == 100 and hasEnoughOfItem(itemid, 1, false) ) then
             TriggerEvent("attachItemObjectnoanim","drugpackage01")
-            TriggerEvent("Evidence:StateSet",2,1200)
-            TriggerEvent("Evidence:StateSet",6,1200)
+            TriggerEvent("changeStress",2)
+            TriggerEvent("changeStress",6)
             TaskItem("anim@amb@nightclub@peds@", "missfbi3_party_snort_coke_b_male3", 49, 5000, "Entering the K-Hole", "inventory:ketamine", true,itemid,playerVeh, nil, nil, json.decode(passedItemInfo).purity)
         end
     end
@@ -3143,13 +3143,19 @@ AddEventHandler('changethirst', function()
     TriggerServerEvent("RLCore:Server:SetMetaData", "thirst", RLCore.Functions.GetPlayerData().metadata["thirst"] + 35)
 end)
 
+RegisterNetEvent('changeStress')
+AddEventHandler('changeStress', function(stress)
+    local amount = stress + 10
+    TriggerServerEvent('hud:server:RelieveStress', amount)
+end)
+
 RegisterNetEvent('inv:wellfed')
 AddEventHandler('inv:wellfed', function()
-    TriggerEvent("Evidence:StateSet",25,3600)
+    TriggerEvent("changeStress",25)
     TriggerEvent("changehunger")
     TriggerEvent("changehunger")
     TriggerEvent("changehunger")
-    TriggerEvent("client:newStress", false, 3000) 
+    
     if myJob == "police" then
       processStressBlock()
     end
@@ -3178,7 +3184,7 @@ end)
 
 RegisterNetEvent('inv:wellfedNoStress')
 AddEventHandler('inv:wellfedNoStress', function()
-    TriggerEvent("Evidence:StateSet",25,3600)
+    TriggerServerEvent('hud:server:RelieveStress', math.random(17, 21))
     TriggerEvent("changehunger")
     TriggerEvent("changehunger")
     TriggerEvent("changehunger")
