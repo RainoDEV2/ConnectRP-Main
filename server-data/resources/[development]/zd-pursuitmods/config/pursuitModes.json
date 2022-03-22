@@ -3,11 +3,9 @@
     "client": {
         "global": {
             "vehicles": [
-                { "model": "t20", "preset": "generic" },
                 { "model": "npolchar", "preset": "generic" },
-                { "model": "NPOLCHAR", "preset": "generic" },            
-                { "model": "npolstang", "preset": "generic" },
-                { "model": "mustang", "preset": "generic" },
+                { "model": "npolstang", "preset": "generic" },            
+                { "model": "npolchal", "preset": "generic" },
                 { "model": "npolvette", "preset": "generic" },
                 { "model": "npolmm", "preset": "motorbike" },
                 { "model": "npolvic", "preset": "cruiser" }
