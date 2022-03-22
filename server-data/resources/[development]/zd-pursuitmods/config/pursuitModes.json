@@ -29,7 +29,7 @@
                                 "XenonHeadlights": 1
                             },
                             "handling": [
-                                { "field": "fInitialDriveForce", "multiplier": 0.95 }
+                                { "field": "fInitialDriveForce", "multiplier": 1.2 }
                             ]
                         },
                         {
@@ -47,7 +47,7 @@
                                 "XenonHeadlights": 1
                             },
                             "handling": [
-                                { "field": "fInitialDriveForce", "multiplier": 0.95 }
+                                { "field": "fInitialDriveForce", "multiplier": 1.2 }
                             ]
                         },
                         {
@@ -65,7 +65,7 @@
                                 "XenonHeadlights": 1
                             },
                             "handling": [
-                                { "field": "fInitialDriveForce", "multiplier": 1.2 }
+                                { "field": "fInitialDriveForce", "multiplier": 1.6 }
                             ]
                         }
                     ]
