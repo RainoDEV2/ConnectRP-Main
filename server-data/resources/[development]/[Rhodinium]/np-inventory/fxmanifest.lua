@@ -35,6 +35,7 @@ client_scripts {
   'cl_vehicleweights.js',
   'cl_craftingspots.js',
   'cl_attach.lua',
+  'cl_anims.lua',
 }
 
 server_scripts {

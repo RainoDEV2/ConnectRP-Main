@@ -865,14 +865,12 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
             local effectiveness = itemid == "customjointitem" and 1.6 or (1.0 * (quality / 100))
 
             TriggerEvent("animation:PlayAnimation","weed")
+            print("Triggering Anim")
             TriggerEvent("changeStress",3)
             TriggerEvent("changeStress",4)
-            TriggerEvent(
-              "weed",
-              5000,
-              "WORLD_HUMAN_SMOKING_POT",
-              effectiveness
-            )
+            TriggerEvent("weed",5000,"WORLD_HUMAN_SMOKING_POT",effectiveness) 
+            Citizen.Wait(2000)
+            TriggerEvent("animation:PlayAnimation","cancel")
             remove = true
         end
     end
