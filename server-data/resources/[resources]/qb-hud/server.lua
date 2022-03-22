@@ -28,7 +28,7 @@ RegisterNetEvent('hud:server:GainStress', function(amount)
         if not Player.PlayerData.metadata['stress'] then
             Player.PlayerData.metadata['stress'] = 0
         end
-        newStress = Player.PlayerData.metadata['stress'] + amount
+        newStress = Player.PlayerData.metadata['stress'] + amount / 2
         if newStress <= 0 then newStress = 0 end
     else
         newStress = 0
