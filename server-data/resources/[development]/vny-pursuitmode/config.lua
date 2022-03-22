@@ -1,6 +1,6 @@
 Veny = {}
 
-Veny.PursuitCar1 = -1136796853          -- STANG --
+Veny.PursuitCar1 = -1336796853          -- STANG --
 Veny.PursuitCar2 = -1109563416           -- corvette --
 Veny.PursuitCar3 = 1949729657           -- challenger --
 Veny.PursuitCar4 = 2067820283           -- Type your pursuit car model --
