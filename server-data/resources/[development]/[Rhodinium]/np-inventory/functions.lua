@@ -3145,8 +3145,7 @@ end)
 
 RegisterNetEvent('changeStress')
 AddEventHandler('changeStress', function(stress)
-    local amount = stress + 10
-    TriggerServerEvent('hud:server:RelieveStress', amount)
+    TriggerServerEvent('hud:server:RelieveStress', stress)
 end)
 
 RegisterNetEvent('inv:wellfed')
