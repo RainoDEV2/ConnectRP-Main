@@ -290,43 +290,42 @@ local function LoadPhone()
 end
 
 local function OpenPhone()
-    RLCore.Functions.TriggerCallback('qb-phone:server:HasPhone', function(HasPhone)
-        if HasPhone then
-            PhoneData.PlayerData = RLCore.Functions.GetPlayerData()
-    	    SetNuiFocus(true, true)
-            SendNUIMessage({
-                action = "open",
-                Tweets = PhoneData.Tweets,
-                AppData = Config.PhoneApplications,
-                CallData = PhoneData.CallData,
-                PlayerData = PhoneData.PlayerData,
-            })
-            PhoneData.isOpen = true
+    HasPhone = exports["np-inventory"]:hasEnoughOfItem("mobilephone", 1)
+    if HasPhone then
+        PhoneData.PlayerData = RLCore.Functions.GetPlayerData()
+        SetNuiFocus(true, true)
+        SendNUIMessage({
+            action = "open",
+            Tweets = PhoneData.Tweets,
+            AppData = Config.PhoneApplications,
+            CallData = PhoneData.CallData,
+            PlayerData = PhoneData.PlayerData,
+        })
+        PhoneData.isOpen = true
 
-            CreateThread(function()
-                while PhoneData.isOpen do
-                    DisableDisplayControlActions()
-                    Wait(1)
-                end
-            end)
-
-            if not PhoneData.CallData.InCall then
-                DoPhoneAnimation('cellphone_text_in')
-            else
-                DoPhoneAnimation('cellphone_call_to_text')
+        CreateThread(function()
+            while PhoneData.isOpen do
+                DisableDisplayControlActions()
+                Wait(1)
             end
+        end)
 
-            SetTimeout(250, function()
-                newPhoneProp()
-            end)
-
-            RLCore.Functions.TriggerCallback('qb-phone:server:GetGarageVehicles', function(vehicles)
-                PhoneData.GarageVehicles = vehicles
-            end)
+        if not PhoneData.CallData.InCall then
+            DoPhoneAnimation('cellphone_text_in')
         else
-            RLCore.Functions.Notify("You don't have a phone?", "error")
+            DoPhoneAnimation('cellphone_call_to_text')
         end
-    end)
+
+        SetTimeout(250, function()
+            newPhoneProp()
+        end)
+
+        RLCore.Functions.TriggerCallback('qb-phone:server:GetGarageVehicles', function(vehicles)
+            PhoneData.GarageVehicles = vehicles
+        end)
+    else
+        RLCore.Functions.Notify("You don't have a phone?", "error")
+    end
 end
 
 local function GenerateCallId(caller, target)
