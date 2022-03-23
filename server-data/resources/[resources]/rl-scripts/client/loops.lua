@@ -191,6 +191,7 @@ Citizen.CreateThread(function()
 		for i = 1, 12 do
 			EnableDispatchService(i, false)
 		end
+		SetAudioFlag('DisableFlightMusic', true)
 		SetPlayerWantedLevel(PlayerId(), 0, false)
 		SetPlayerWantedLevelNow(PlayerId(), false)
 		SetPlayerWantedLevelNoDrop(PlayerId(), 0, false)
