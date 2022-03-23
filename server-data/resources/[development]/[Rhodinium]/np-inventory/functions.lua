@@ -1225,16 +1225,8 @@ AddEventHandler('RunUseItem', function(itemid, slot, inventoryName, isWeapon, pa
         local finished = exports["np-taskbar"]:taskBar(5000,"Armor",true,false,playerVeh)
         if ( finished == 100 and hasEnoughOfItem(itemid, 1, false) ) then
             SetPlayerMaxArmour(PlayerId(), 60 )
-
-            local wasBeatdown = exports["police"]:getBeatmodeDebuff()
-
-            if not wasBeatdown then
-                SetPedArmour( player, 60 )
-                TriggerEvent("UseBodyArmor")
-                remove = true
-            else
-                TriggerEvent("DoLongHudText","You cannot apply armor because you were beat down.")
-            end
+            SetPedArmour( player, 60 )
+            TriggerEvent("UseBodyArmor")
         end
     end
 
