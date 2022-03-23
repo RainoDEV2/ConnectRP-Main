@@ -300,34 +300,35 @@ RLCore.Player.CreatePlayer = function(PlayerData)
 	end
 
 	self.Functions.AddItem = function(item, amount, slot, info)
-		print(item)
-		print(amount)
 		TriggerClientEvent("player:receiveItem", source, item, amount)
 	end
 
 	self.Functions.RemoveItem = function(item, amount, slot)
-		print(item)
-		print(amount)
 		TriggerClientEvent("inventory:removeItem", source, item, amount)
 	end
 
 	self.Functions.SetInventory = function(items)
 		self.PlayerData.items = items
-		self.Functions.UpdatePlayerData()
+		self.Functions.UpdatePlayerData()  
 	end
 
 	self.Functions.ClearInventory = function()
-		self.PlayerData.items = {}
+		self.PlayerData.items = {} 
 		self.Functions.UpdatePlayerData()
-	end
+	end 
 
 	self.Functions.GetItemByName = function(item)
-		local item = tostring(item):lower()
-		local slot = RLCore.Player.GetFirstSlotByItem(self.PlayerData.items, item)
-		if slot ~= nil then
-			return self.PlayerData.items[slot]
-		end
-		return nil
+		RLCore.Functions.ExecuteSql(true, "SELECT * FROM player_inventory WHERE name = 'ply-"..PlayerData.citizenid.."'", function(result)
+			for k,v in pairs(result) do
+				if v.item_id == item then
+					print(item)
+					passed = true
+				end 
+			end
+		end)
+		if passed then 
+			return item
+		end 
 	end
 	
 	self.Functions.GetCardSlot = function(cardNumber, cardType)
