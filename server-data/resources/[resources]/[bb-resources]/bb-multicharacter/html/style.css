@@ -13,6 +13,67 @@
     display: none;
 }
 
+.character-info {
+    height: 9%;
+    width: 20%;
+    margin-top: 8.5%;
+    margin-left: 39.2%;
+    padding: 0% 1%;
+    background: #222831e8;
+    border-radius: 1vh;
+    color: #fff;
+    flex-grow: 1;
+    border-width: 6px;
+    background-size: 100% 100%;
+    min-width: 0;
+    text-align: center;
+}
+
+
+
+.character-box-btn {
+    text-align: center;
+    font-weight: 0;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    height: 2.5vh;
+    font-size: 1.15vh;
+    text-decoration: none;
+    background-color: #95ef77;
+    color: #222831;
+    border-radius: 1vh;
+    text-transform: uppercase;
+    border: none;
+}
+
+.Spawn-Button {
+    
+    margin-left: 10px;
+    width: 50%;
+}
+.Remove-Button {
+    background-color: #f2a365;
+    width: 50%;
+}
+.Button-Index {
+    flex-grow: 1;
+    padding: 5% 0;
+    display: flex;
+    flex-direction: row;
+    min-width: 0;
+    margin: 0 auto;
+    border-top: solid 0.1vh white;
+}
+
+.nameboxarea {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 2vh;
+}
+
+.Close-Button {
+    margin-left: 115%;    
+}
 .main-screen {
     position: absolute;
     height: 100vh;
