@@ -300,94 +300,15 @@ RLCore.Player.CreatePlayer = function(PlayerData)
 	end
 
 	self.Functions.AddItem = function(item, amount, slot, info)
-		local totalWeight = RLCore.Player.GetTotalWeight(self.PlayerData.items)
-		local itemInfo = RLCore.Shared.Items[item:lower()]
-
-		if itemInfo == nil then 
-			TriggerClientEvent('chat:addMessage', source , {
-				template = '<div class="chat-message server"><b>SYSTEM:</b> {0}</div>',
-				args = { "Invaild Item" }
-			})
-			return 
-		end
-		
-		local amount = tonumber(amount)
-		local slot = tonumber(slot) ~= nil and tonumber(slot) or RLCore.Player.GetFirstSlotByItem(self.PlayerData.items, item)
-		if itemInfo["type"] == "weapon" and info == nil then
-			info = {
-				serie = tostring(RLCore.Shared.RandomInt(2) .. RLCore.Shared.RandomStr(3) .. RLCore.Shared.RandomInt(1) .. RLCore.Shared.RandomStr(2) .. RLCore.Shared.RandomInt(3) .. RLCore.Shared.RandomStr(4)),
-			}
-		end
-		if (totalWeight + (itemInfo["weight"] * amount)) <= RLCore.Config.Player.MaxWeight then
-			if (slot ~= nil and self.PlayerData.items[slot] ~= nil) and (self.PlayerData.items[slot].name:lower() == item:lower()) and (itemInfo["type"] == "item" and not itemInfo["unique"]) then
-				self.PlayerData.items[slot].amount = self.PlayerData.items[slot].amount + amount
-				self.Functions.UpdatePlayerData()
-				TriggerEvent("RLCore:Player:OnAddedItem", self.PlayerData.source, { name = item, amount = amount, slot = slot, info = info })
-				TriggerEvent("RL-log:server:sendLog", self.PlayerData.citizenid, "itemadded", {name=self.PlayerData.items[slot].name, amount=amount, slot=slot, newamount=self.PlayerData.items[slot].amount, reason="unkown"})
-				TriggerEvent("bb-logs:server:createLog", "playerinventory", "AddItem", "green", "**"..GetPlayerName(self.PlayerData.source) .. " (citizenid: "..self.PlayerData.citizenid.." | id: "..self.PlayerData.source..")** krijgt item: [slot:" ..slot.."], itemname: " .. self.PlayerData.items[slot].name .. ", added amount: " .. amount ..", new total amount: ".. self.PlayerData.items[slot].amount)
-				--TriggerClientEvent('RLCore:Notify', self.PlayerData.source, itemInfo["label"].. " toegevoegd!", "success")
-				return true
-			elseif (not itemInfo["unique"] and slot or slot ~= nil and self.PlayerData.items[slot] == nil) then
-				self.PlayerData.items[slot] = {name = itemInfo["name"], amount = amount, info = info ~= nil and info or "", label = itemInfo["label"], description = itemInfo["description"] ~= nil and itemInfo["description"] or "", weight = itemInfo["weight"], type = itemInfo["type"], unique = itemInfo["unique"], useable = itemInfo["useable"], image = itemInfo["image"], shouldClose = itemInfo["shouldClose"], slot = slot, combinable = itemInfo["combinable"]}
-				self.Functions.UpdatePlayerData()
-				TriggerEvent("RLCore:Player:OnAddedItem", self.PlayerData.source, { name = item, amount = amount, slot = slot, info = info })
-				TriggerEvent("RL-log:server:sendLog", self.PlayerData.citizenid, "itemadded", {name=self.PlayerData.items[slot].name, amount=amount, slot=slot, newamount=self.PlayerData.items[slot].amount, reason="unkown"})
-				TriggerEvent("bb-logs:server:createLog", "playerinventory", "AddItem", "green", "**"..GetPlayerName(self.PlayerData.source) .. " (citizenid: "..self.PlayerData.citizenid.." | id: "..self.PlayerData.source..")** krijgt item: [slot:" ..slot.."], itemname: " .. self.PlayerData.items[slot].name .. ", added amount: " .. amount ..", new total amount: ".. self.PlayerData.items[slot].amount)
-				--TriggerClientEvent('RLCore:Notify', self.PlayerData.source, itemInfo["label"].. " toegevoegd!", "success")
-				return true
-			elseif (itemInfo["unique"]) or (not slot or slot == nil) or (itemInfo["type"] == "weapon") then
-				for i = 1, RLConfig.Player.MaxInvSlots, 1 do
-					if self.PlayerData.items[i] == nil then
-						self.PlayerData.items[i] = {name = itemInfo["name"], amount = amount, info = info ~= nil and info or "", label = itemInfo["label"], description = itemInfo["description"] ~= nil and itemInfo["description"] or "", weight = itemInfo["weight"], type = itemInfo["type"], unique = itemInfo["unique"], useable = itemInfo["useable"], image = itemInfo["image"], shouldClose = itemInfo["shouldClose"], slot = i, combinable = itemInfo["combinable"]}
-						self.Functions.UpdatePlayerData()
-						TriggerEvent("RLCore:Player:OnAddedItem", self.PlayerData.source, { name = item, amount = amount, slot = slot, info = info })
-						TriggerEvent("RL-log:server:sendLog", self.PlayerData.citizenid, "itemadded", {name=self.PlayerData.items[i].name, amount=amount, slot=i, newamount=self.PlayerData.items[i].amount, reason="unkown"})
-						TriggerEvent("bb-logs:server:createLog", "playerinventory", "AddItem", "green", "**"..GetPlayerName(self.PlayerData.source) .. " (citizenid: "..self.PlayerData.citizenid.." | id: "..self.PlayerData.source..")** krijgt item: [slot:" ..i.."], itemname: " .. self.PlayerData.items[i].name .. ", added amount: " .. amount ..", new total amount: ".. self.PlayerData.items[i].amount)
-						--TriggerClientEvent('RLCore:Notify', self.PlayerData.source, itemInfo["label"].. " toegevoegd!", "success")
-						return true
-					end
-				end
-			end
-		end
-		return false
+		print(item)
+		print(amount)
+		TriggerClientEvent("player:receiveItem", source, item, amount)
 	end
 
 	self.Functions.RemoveItem = function(item, amount, slot)
-		local itemInfo = RLCore.Shared.Items[item:lower()]
-		local amount = tonumber(amount)
-		local slot = tonumber(slot)
-		if slot ~= nil then
-			if self.PlayerData.items[slot].amount > amount then
-				self.PlayerData.items[slot].amount = self.PlayerData.items[slot].amount - amount
-				self.Functions.UpdatePlayerData()
-				TriggerEvent("RLCore:Player:OnRemovedItem", self.PlayerData.source, { name = item, amount = amount, slot = slot })
-				return true
-			else
-				self.PlayerData.items[slot] = nil
-				self.Functions.UpdatePlayerData()
-				TriggerEvent("RLCore:Player:OnRemovedItem", self.PlayerData.source, { name = item, amount = amount, slot = slot })
-				return true
-			end
-		else
-			local slots = RLCore.Player.GetSlotsByItem(self.PlayerData.items, item)
-			local amountToRemove = amount
-			if slots ~= nil then
-				for _, slot in pairs(slots) do
-					if self.PlayerData.items[slot].amount > amountToRemove then
-						self.PlayerData.items[slot].amount = self.PlayerData.items[slot].amount - amountToRemove
-						self.Functions.UpdatePlayerData()
-						TriggerEvent("RLCore:Player:OnRemovedItem", self.PlayerData.source, { name = item, amount = amount, slot = slot })
-						return true
-					elseif self.PlayerData.items[slot].amount == amountToRemove then
-						self.PlayerData.items[slot] = nil
-						self.Functions.UpdatePlayerData()
-						TriggerEvent("RLCore:Player:OnRemovedItem", self.PlayerData.source, { name = item, amount = amount, slot = slot })
-						return true
-					end
-				end
-			end
-		end
-		return false
+		print(item)
+		print(amount)
+		TriggerClientEvent("inventory:removeItem", source, item, amount)
 	end
 
 	self.Functions.SetInventory = function(items)
