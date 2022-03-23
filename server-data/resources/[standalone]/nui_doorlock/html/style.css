@@ -16,7 +16,8 @@
     display: flex;
     flex-flow: row;
     flex-wrap: wrap;
-    text-shadow: 0.05vh 0.05vh 0.01vh rgba(0, 0, 0, 0.389);
+    opacity: 100%;
+    
 }
 
 #doorlock {
@@ -24,9 +25,9 @@
     position: relative;
     padding: 0.9vh;
     width: fit-content;
-    border-radius: .4vh;
-    font-family: "Staatliches";
-    font-size: 1.7vh;
+    border-radius: .4vh; 
+    font-family: "Staatliches"; 
+    font-size: 1.5vh;
     float: left;
     color: #fff;
     right: 13vh;
