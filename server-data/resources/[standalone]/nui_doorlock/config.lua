@@ -38,7 +38,7 @@ Config.DoorList['PD Main Doors'] = {
 }
 
 -- entryright_mrpd created by DAD?
-Config.DoorList['entryright_mrpd'] = {
+Config.DoorList['entryleft_mrpd'] = {
     objHash = -96679321,
     objCoords = vec3(440.520081, -986.233459, 30.823193),
     audioRemote = false,
