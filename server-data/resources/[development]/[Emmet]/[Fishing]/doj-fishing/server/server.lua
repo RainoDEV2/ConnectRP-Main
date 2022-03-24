@@ -271,10 +271,10 @@ RegisterNetEvent('fishing:server:SellLegalFish', function(args)
 		    TriggerClientEvent('RLCore:Notify', src, "You dont have any Cods to sell", "error")
 		end
 	elseif args == 3 then
-		local bass = Player.Functions.GetItemByName("bass") 
+		local bass = Player.Functions.GetItemByName("fishingbass") 
 		if bass ~= nil then
 			local payment = Config.bassPrice
-			Player.Functions.RemoveItem("bass", 1, k)
+			Player.Functions.RemoveItem("fishingbass", 1)
 			Player.Functions.AddMoney('bank', payment , "bass-sell")
 			TriggerClientEvent('inventory:client:ItemBox', source, RLCore.Shared.Items['bass'], "remove", 1)
 			TriggerClientEvent('RLCore:Notify', src, "1 Bass Sold for $"..payment, "success")
